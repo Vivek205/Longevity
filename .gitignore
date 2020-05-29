@@ -1,0 +1,24 @@
+## Build generated
+build/
+DerivedData/
+
+## Locally installed Pods
+Pods/
+
+# Carthage/Checkouts
+Carthage/Build/
+
+## Playgrounds
+timeline.xctimeline
+playground.xcworkspace
+
+## App packaging
+*.ipa
+*.dSYM.zip
+*.dSYM
+
+## Obj-C/Swift specific
+*.hmap
+
+## User settings
+xcuserdata/
