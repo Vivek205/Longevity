@@ -9,12 +9,13 @@
 /* Begin PBXBuildFile section */
 		9C203B52955FAE959983EB89 /* libPods-Longevity.a in Frameworks */ = {isa = PBXBuildFile; fileRef = C234C475AEB7D221DDEE18A6 /* libPods-Longevity.a */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
-		E23A2CCD24813BE40051EE7A /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E23A2CCC24813BE40051EE7A /* Muli-Regular.ttf */; };
+		E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */; };
+		E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */; };
+		E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA5212485007B007204B9 /* Assets.xcassets */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
 		E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */; };
-		E2ECB8C3247FE2BA0020A27E /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* ViewController.swift */; };
+		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
 		E2ECB8C6247FE2BA0020A27E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C4247FE2BA0020A27E /* Main.storyboard */; };
-		E2ECB8C8247FE2BE0020A27E /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C7247FE2BE0020A27E /* Assets.xcassets */; };
 		E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -23,13 +24,14 @@
 		C34CA09B51C44E4979E23741 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		CF7A81595EB766C43240C5BE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
-		E23A2CCC24813BE40051EE7A /* Muli-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Muli-Regular.ttf"; path = "../../../../../Downloads/Muli/static/Muli-Regular.ttf"; sourceTree = "<group>"; };
+		E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Bold.ttf"; sourceTree = "<group>"; };
+		E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Regular.ttf"; sourceTree = "<group>"; };
+		E2BCA5212485007B007204B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		E2ECB8C2247FE2BA0020A27E /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
-		E2ECB8C7247FE2BE0020A27E /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		E2ECB8CA247FE2BE0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2ECB8CC247FE2BE0020A27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -66,7 +68,8 @@
 		E23A2CCB24813BCD0051EE7A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
-				E23A2CCC24813BE40051EE7A /* Muli-Regular.ttf */,
+				E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */,
+				E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */,
 			);
 			path = Fonts;
 			sourceTree = "<group>";
@@ -74,6 +77,7 @@
 		E2ECB8B2247FE2BA0020A27E = {
 			isa = PBXGroup;
 			children = (
+				E2BCA5212485007B007204B9 /* Assets.xcassets */,
 				E2ECB8BD247FE2BA0020A27E /* Longevity */,
 				E2ECB8BC247FE2BA0020A27E /* Products */,
 				04C2A7532EFF18097D0A9CCF /* Pods */,
@@ -98,7 +102,6 @@
 				E2ECB8D3247FE3950020A27E /* Controller */,
 				E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */,
 				E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */,
-				E2ECB8C7247FE2BE0020A27E /* Assets.xcassets */,
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
 			);
 			path = Longevity;
@@ -117,7 +120,7 @@
 			isa = PBXGroup;
 			children = (
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
-				E2ECB8C2247FE2BA0020A27E /* ViewController.swift */,
+				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -189,10 +192,11 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */,
+				E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */,
 				E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */,
-				E2ECB8C8247FE2BE0020A27E /* Assets.xcassets in Resources */,
-				E23A2CCD24813BE40051EE7A /* Muli-Regular.ttf in Resources */,
 				E2ECB8C6247FE2BA0020A27E /* Main.storyboard in Resources */,
+				E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +250,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				E2ECB8C3247FE2BA0020A27E /* ViewController.swift in Sources */,
+				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,

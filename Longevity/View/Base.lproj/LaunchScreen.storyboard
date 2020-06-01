@@ -43,16 +43,16 @@
                                         <rect key="frame" x="80" y="432.5" width="254" height="385.5"/>
                                         <subviews>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="POWERED BY" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Kfj-db-Iys">
-                                                <rect key="frame" x="80.5" y="20" width="93.5" height="18"/>
+                                                <rect key="frame" x="81" y="20" width="92" height="16.5"/>
                                                 <fontDescription key="fontDescription" name="Muli-Regular" family="Muli" pointSize="14"/>
                                                 <color key="textColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <nil key="highlightedColor"/>
                                             </label>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="studioNamedLogo" translatesAutoresizingMaskIntoConstraints="NO" id="dNr-wY-Rb3">
-                                                <rect key="frame" x="24.5" y="131" width="205" height="30"/>
+                                                <rect key="frame" x="24.5" y="129.5" width="205" height="30"/>
                                             </imageView>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="snetNamedLogo" adjustsImageSizeForAccessibilityContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="e3x-Ld-mKf">
-                                                <rect key="frame" x="20" y="58" width="214" height="53"/>
+                                                <rect key="frame" x="20" y="56.5" width="214" height="53"/>
                                             </imageView>
                                         </subviews>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>

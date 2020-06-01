@@ -63,6 +63,7 @@
 	<key>UIAppFonts</key>
 	<array>
 		<string>Muli-Regular.ttf</string>
+		<string>Muli-Bold.ttf</string>
 	</array>
 </dict>
 </plist>

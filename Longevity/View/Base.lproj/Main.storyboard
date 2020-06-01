@@ -6,32 +6,123 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
+    <customFonts key="customFonts">
+        <array key="Muli-Bold.ttf">
+            <string>Muli-Bold</string>
+        </array>
+        <array key="Muli-Regular.ttf">
+            <string>Muli-Regular</string>
+        </array>
+    </customFonts>
     <scenes>
-        <!--View Controller-->
+        <!--OnboardingVC-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="OnboardingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="sJd-j9-Qjv" customClass="GradientView" customModule="Longevity" customModuleProvider="target">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <userDefinedRuntimeAttributes>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="FirstColor">
-                                        <color key="value" red="0.25490196078431371" green="0.80784313725490198" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                    <userDefinedRuntimeAttribute type="color" keyPath="SecondColor">
-                                        <color key="value" red="0.35686274509803922" green="0.18823529411764706" blue="0.94509803921568625" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                    </userDefinedRuntimeAttribute>
-                                </userDefinedRuntimeAttributes>
-                            </view>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="2" translatesAutoresizingMaskIntoConstraints="NO" id="LMs-WI-2Jl">
+                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ifP-SM-bqv" userLabel="TopView">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="430"/>
+                                        <subviews>
+                                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0JO-HU-HgL">
+                                                <rect key="frame" x="0.0" y="0.0" width="414" height="447"/>
+                                                <viewLayoutGuide key="contentLayoutGuide" id="I7M-Ve-vwb"/>
+                                                <viewLayoutGuide key="frameLayoutGuide" id="Zur-6a-qim"/>
+                                            </scrollView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
+                                                <rect key="frame" x="0.0" y="221" width="104.5" height="209"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="209" id="Lvh-bA-JRl"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Muli-Bold" family="Muli" pointSize="40"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <constraints>
+                                            <constraint firstItem="0JO-HU-HgL" firstAttribute="leading" secondItem="ifP-SM-bqv" secondAttribute="leading" id="G6T-v2-fQx"/>
+                                            <constraint firstItem="M2I-P1-5PW" firstAttribute="leading" secondItem="ifP-SM-bqv" secondAttribute="leading" id="LGy-t6-8KU"/>
+                                            <constraint firstItem="0JO-HU-HgL" firstAttribute="top" secondItem="ifP-SM-bqv" secondAttribute="top" id="QM0-ln-HrM"/>
+                                            <constraint firstAttribute="bottom" secondItem="0JO-HU-HgL" secondAttribute="bottom" constant="-17" id="XRx-2g-EAZ"/>
+                                            <constraint firstAttribute="bottom" secondItem="M2I-P1-5PW" secondAttribute="bottom" id="aXh-IH-fLo"/>
+                                            <constraint firstAttribute="trailing" secondItem="0JO-HU-HgL" secondAttribute="trailing" id="sKJ-0R-qw8"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="gj3-rT-S17" userLabel="BottomView">
+                                        <rect key="frame" x="0.0" y="432" width="414" height="430"/>
+                                        <subviews>
+                                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="equalSpacing" alignment="center" spacing="38" translatesAutoresizingMaskIntoConstraints="NO" id="LLO-6Q-pME">
+                                                <rect key="frame" x="0.0" y="5" width="414" height="425"/>
+                                                <subviews>
+                                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
+                                                        <rect key="frame" x="10" y="0.0" width="394" height="30.5"/>
+                                                        <fontDescription key="fontDescription" name="Muli-Regular" family="Muli" pointSize="24"/>
+                                                        <nil key="textColor"/>
+                                                        <nil key="highlightedColor"/>
+                                                    </label>
+                                                    <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="rid-Oo-Hz0">
+                                                        <rect key="frame" x="187.5" y="194.5" width="39" height="37"/>
+                                                        <color key="pageIndicatorTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                        <color key="currentPageIndicatorTintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    </pageControl>
+                                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="19" translatesAutoresizingMaskIntoConstraints="NO" id="EeB-Go-aVM">
+                                                        <rect key="frame" x="149.5" y="395" width="115" height="30"/>
+                                                        <subviews>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi9-oa-dZr">
+                                                                <rect key="frame" x="0.0" y="0.0" width="48" height="30"/>
+                                                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                <state key="normal" title="Signup">
+                                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                </state>
+                                                            </button>
+                                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKO-6b-4ge">
+                                                                <rect key="frame" x="67" y="0.0" width="48" height="30"/>
+                                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                                <state key="normal" title="Login">
+                                                                    <color key="titleColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                                </state>
+                                                            </button>
+                                                        </subviews>
+                                                    </stackView>
+                                                </subviews>
+                                                <constraints>
+                                                    <constraint firstItem="pX9-ou-fMP" firstAttribute="leading" secondItem="LLO-6Q-pME" secondAttribute="leading" constant="10" id="rxb-DD-dG4"/>
+                                                </constraints>
+                                            </stackView>
+                                        </subviews>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="LLO-6Q-pME" secondAttribute="bottom" id="4xg-G3-PaJ"/>
+                                            <constraint firstItem="LLO-6Q-pME" firstAttribute="leading" secondItem="gj3-rT-S17" secondAttribute="leading" id="Dzm-Xr-vuv"/>
+                                            <constraint firstAttribute="trailing" secondItem="LLO-6Q-pME" secondAttribute="trailing" id="NqX-6M-8ma"/>
+                                            <constraint firstItem="LLO-6Q-pME" firstAttribute="top" secondItem="gj3-rT-S17" secondAttribute="top" constant="5" id="rIv-HM-Mo9"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                            </stackView>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                        <constraints>
+                            <constraint firstItem="LMs-WI-2Jl" firstAttribute="top" secondItem="8bC-Xf-vdC" secondAttribute="top" id="36r-Sz-vHi"/>
+                            <constraint firstItem="LMs-WI-2Jl" firstAttribute="bottom" secondItem="6Tk-OE-BBY" secondAttribute="bottom" id="N3y-S8-qKd"/>
+                            <constraint firstItem="LMs-WI-2Jl" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leading" id="O52-Ny-gKd"/>
+                            <constraint firstAttribute="trailing" secondItem="LMs-WI-2Jl" secondAttribute="trailing" id="xil-by-HXW"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
+                    <connections>
+                        <outlet property="loginButton" destination="PKO-6b-4ge" id="hcP-bE-D7f"/>
+                        <outlet property="pageControl" destination="rid-Oo-Hz0" id="eYY-bI-2O4"/>
+                        <outlet property="pageDescription" destination="pX9-ou-fMP" id="sG5-B5-Zlm"/>
+                        <outlet property="pageHeading" destination="M2I-P1-5PW" id="KbW-Gx-WAT"/>
+                        <outlet property="scrollView" destination="0JO-HU-HgL" id="ThC-Fb-diA"/>
+                        <outlet property="signupButton" destination="xi9-oa-dZr" id="b9m-cZ-bQL"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
