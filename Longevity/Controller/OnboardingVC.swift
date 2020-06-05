@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplify
 
 class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
@@ -37,19 +38,19 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             yourself?
         """]
     let pageDescriptions:[String] = [
-    """
+        """
         Let us help you to find
         useful aspects of your
         health that supports you
         and health research.
     """,
-    """
+        """
         Our mission is to connect
         people with the places in
         which they spend their time.
     """
-    ,
-    """
+        ,
+        """
         Our app offers
         comprehensive guides and
         analysis about you.
@@ -62,6 +63,12 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         setInitialContent()
         initScrollViewWithImages()
         styleButtons()
+        hideNavigationBar()
+        getCurrentUser()
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        hideNavigationBar()
     }
 
     func setInitialContent(){
@@ -77,13 +84,13 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             let imgView = UIImageView(frame: frame)
             imgView.image = images[index]
             // MARK: Adding gradient to the selected Image
-//            let gradientLayer = CAGradientLayer.init()
-//            gradientLayer.frame = imgView.bounds
-//            gradientLayer.colors = [UIColor.init(red: 0, green: 0, blue: 0, alpha: 0).cgColor,
-//                                    UIColor.init(red: 0, green: 0, blue: 0, alpha: 1).cgColor]
-//            gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-//            gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-//            imgView.layer.mask = gradientLayer
+            //            let gradientLayer = CAGradientLayer.init()
+            //            gradientLayer.frame = imgView.bounds
+            //            gradientLayer.colors = [UIColor.init(red: 0, green: 0, blue: 0, alpha: 0).cgColor,
+            //                                    UIColor.init(red: 0, green: 0, blue: 0, alpha: 1).cgColor]
+            //            gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
+            //            gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
+            //            imgView.layer.mask = gradientLayer
             scrollView.addSubview(imgView)
         }
 
@@ -103,6 +110,31 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         loginButton.layer.masksToBounds = true
     }
 
+    func hideNavigationBar(){
+        self.navigationController?.setNavigationBarHidden(true, animated: true)
+    }
+
+    func getCurrentUser(){
+        var userSignedIn = false
+        let group = DispatchGroup()
+        group.enter()
+
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            switch result {
+            case .success(let session):
+                print("Is user signed in - \(session.isSignedIn)")
+                userSignedIn = session.isSignedIn
+                group.leave()
+            case .failure(let error):
+                    print("Fetch session failed with error \(error)")
+            }
+        }
+        group.wait()
+        if userSignedIn{
+            self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
+        }
+    }
+
     // MARK: ScrolView delegate method
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = Int( scrollView.contentOffset.x / scrollView.frame.size.width)
@@ -112,10 +144,5 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         pageDescription.text = pageDescriptions[pageNumber]
     }
 
-    func viewForZooming(in scrollView: UIScrollView) -> UIView? {
-        if(!scrollView.subviews.isEmpty){
-            return scrollView.subviews[0]
-        }
-        return nil
-    }
+
 }
