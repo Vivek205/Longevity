@@ -78,34 +78,35 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
     func initScrollViewWithImages(){
+        let screenRect = UIScreen.main.bounds
+        let screenHeight = screenRect.size.height
+        let screenWidth = screenRect.size.width
+
         for index in 0..<images.count {
-            frame.origin.x = scrollView.frame.size.width * CGFloat(index)
+            frame.origin.x = screenWidth * CGFloat(index)
             frame.size = scrollView.frame.size
+
+            frame.size.height = screenHeight * CGFloat(11) / CGFloat(13)
+            frame.size.width = screenWidth
             let imgView = UIImageView(frame: frame)
             imgView.image = images[index]
-            // MARK: Adding gradient to the selected Image
-            //            let gradientLayer = CAGradientLayer.init()
-            //            gradientLayer.frame = imgView.bounds
-            //            gradientLayer.colors = [UIColor.init(red: 0, green: 0, blue: 0, alpha: 0).cgColor,
-            //                                    UIColor.init(red: 0, green: 0, blue: 0, alpha: 1).cgColor]
-            //            gradientLayer.startPoint = CGPoint(x: 0.0, y: 1.0)
-            //            gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.0)
-            //            imgView.layer.mask = gradientLayer
-            scrollView.addSubview(imgView)
+            imgView.contentMode = .scaleToFill
+            imgView.clipsToBounds = true
+
+            scrollView.insertSubview(imgView, at: 0)
         }
 
-        scrollView.contentSize = CGSize(width: scrollView.frame.size.width *
-            CGFloat(images.count), height: scrollView.frame.size.height)
+        scrollView.contentSize = CGSize(width: screenWidth * CGFloat(images.count), height: scrollView.frame.size.height)
         scrollView.contentSize.height = 1.0
         scrollView.delegate =  self
     }
 
     func styleButtons(){
-        signupButton.layer.cornerRadius = CGFloat(4)
+        signupButton.layer.cornerRadius = CGFloat(10)
         signupButton.layer.masksToBounds = true
 
-        loginButton.layer.borderColor = UIColor.blue.cgColor
-        loginButton.layer.cornerRadius = CGFloat(4)
+        loginButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        loginButton.layer.cornerRadius = CGFloat(10)
         loginButton.layer.borderWidth = 2
         loginButton.layer.masksToBounds = true
     }
@@ -126,7 +127,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
                 userSignedIn = session.isSignedIn
                 group.leave()
             case .failure(let error):
-                    print("Fetch session failed with error \(error)")
+                print("Fetch session failed with error \(error)")
             }
         }
         group.wait()

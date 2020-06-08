@@ -41,12 +41,21 @@ class LoginVC: UIViewController {
         customizeButtonWithImage(button: facebookButton)
         customizeImageButton(imgButton: personalImageView)
         customizeImageButton(imgButton: clinicalTrialImageView)
+        addButtonShadow(button: googleButton)
 
     }
 
     func customizeButtonWithImage(button: UIButton){
         button.layer.cornerRadius = 10
         button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+    }
+
+    func addButtonShadow(button:UIButton){
+        googleButton.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
+        googleButton.layer.shadowOffset = CGSize(width: 0.0, height: 2.0)
+        googleButton.layer.shadowOpacity = 1.0
+        googleButton.layer.shadowRadius = 0.0
+        googleButton.layer.cornerRadius = 4.0
     }
 
     func customizeImageButton(imgButton: UIView){
