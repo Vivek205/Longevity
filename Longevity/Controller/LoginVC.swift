@@ -15,11 +15,66 @@ class LoginVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var formEmail: UITextField!
     @IBOutlet weak var formPassword: UITextField!
+    @IBOutlet weak var parentStackContainer: UIStackView!
+    @IBOutlet weak var personalUseImageButton: UIImageView!
+    @IBOutlet weak var clinicalTrialImageButton: UIImageView!
+    @IBOutlet weak var loginButton: UIButton!
+    @IBOutlet weak var appleButton: UIButton!
+    @IBOutlet weak var googleButton: UIButton!
+    @IBOutlet weak var facebookButton: UIButton!
+    @IBOutlet weak var personalImageView: UIView!
+    @IBOutlet weak var clinicalTrialImageView: UIView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
         getuserAttributes()
+        customizeButtons()
+        highlightImageButton(imgButton: personalImageView)
+        normalizeImageButton(imgButton: clinicalTrialImageView)
+    }
+
+    func customizeButtons(){
+        customizeButtonWithImage(button: loginButton)
+        customizeButtonWithImage(button: appleButton)
+        customizeButtonWithImage(button: googleButton)
+        customizeButtonWithImage(button: facebookButton)
+        customizeImageButton(imgButton: personalImageView)
+        customizeImageButton(imgButton: clinicalTrialImageView)
+
+    }
+
+    func customizeButtonWithImage(button: UIButton){
+        button.layer.cornerRadius = 10
+        button.imageEdgeInsets = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 20)
+    }
+
+    func customizeImageButton(imgButton: UIView){
+        imgButton.layer.masksToBounds = true
+        imgButton.layer.borderWidth = 2
+        imgButton.layer.cornerRadius = 10
+    }
+
+    func highlightImageButton(imgButton: UIView){
+        imgButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        imgButton.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        for subview in imgButton.subviews{
+            if let item = subview as? UIImageView{
+                item.image = item.image?.withRenderingMode(.alwaysTemplate)
+                item.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+            }
+        }
+    }
+
+    func normalizeImageButton(imgButton: UIView){
+        imgButton.layer.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9294117647, blue: 0.9450980392, alpha: 1)
+        imgButton.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
+        for subview in imgButton.subviews{
+            if let item = subview as? UIImageView{
+                 item.image = item.image?.withRenderingMode(.alwaysTemplate)
+                item.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
+            }
+        }
     }
     
 
@@ -57,40 +112,58 @@ class LoginVC: UIViewController {
             performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
         }
     }
-//
-//    @IBAction func handleResetPassword(_ sender: Any) {
-//        var resetSuccess = false
-//        let group = DispatchGroup()
-//        group.enter()
-//
-//        DispatchQueue.global().async {
-//            _ = Amplify.Auth.resetPassword(for: self.username) {(result) in
-//                do {
-//                    let resetResult = try result.get()
-//                    switch resetResult.nextStep {
-//                    case .confirmResetPasswordWithCode(let deliveryDetails, let info):
-//                        print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
-//                        resetSuccess = true
-//                        group.leave()
-//                    case .done:
-//                        print("Reset completed")
-//                        resetSuccess = true
-//                        group.leave()
-//                    }
-//                } catch {
-//                    print("Reset passowrd failed with error \(error)")
-//                    group.leave()
-//                }
-//            }
-//        }
-//
-//        group.wait()
-//
-//        if resetSuccess {
-//            performSegue(withIdentifier: "LoginToResetPassword", sender: self)
-//        }
-//
-//    }
+
+    @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
+        let containerView = sender.view! as UIView
+        for subview in containerView.subviews{
+            if let item = subview as? UILabel{
+                print(UserAccountType.personal.rawValue)
+                if item.text == UserAccountType.personal.rawValue{
+                    highlightImageButton(imgButton: personalImageView)
+                    normalizeImageButton(imgButton: clinicalTrialImageView)
+                } else {
+                    highlightImageButton(imgButton: clinicalTrialImageView)
+                    normalizeImageButton(imgButton: personalImageView)
+                }
+
+            }
+        }
+    }
+    
+    //
+    //    @IBAction func handleResetPassword(_ sender: Any) {
+    //        var resetSuccess = false
+    //        let group = DispatchGroup()
+    //        group.enter()
+    //
+    //        DispatchQueue.global().async {
+    //            _ = Amplify.Auth.resetPassword(for: self.username) {(result) in
+    //                do {
+    //                    let resetResult = try result.get()
+    //                    switch resetResult.nextStep {
+    //                    case .confirmResetPasswordWithCode(let deliveryDetails, let info):
+    //                        print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
+    //                        resetSuccess = true
+    //                        group.leave()
+    //                    case .done:
+    //                        print("Reset completed")
+    //                        resetSuccess = true
+    //                        group.leave()
+    //                    }
+    //                } catch {
+    //                    print("Reset passowrd failed with error \(error)")
+    //                    group.leave()
+    //                }
+    //            }
+    //        }
+    //
+    //        group.wait()
+    //
+    //        if resetSuccess {
+    //            performSegue(withIdentifier: "LoginToResetPassword", sender: self)
+    //        }
+    //
+    //    }
 
 
     func getCurrentUser(){
@@ -124,3 +197,4 @@ class LoginVC: UIViewController {
     }
 
 }
+
