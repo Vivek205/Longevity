@@ -22,13 +22,6 @@
                     "DOMAINWHITELIST": "\"gmail.com, singularitynet.io\"",
                     "DOMAINBLACKLIST": "\"grr.la, shakelakers.com\""
                 }
-            },
-            "auth": {
-                "longevityDev5": {
-                    "facebookAppId": "721380498616396",
-                    "googleClientId": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-                    "googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
-                }
             }
         }
     }

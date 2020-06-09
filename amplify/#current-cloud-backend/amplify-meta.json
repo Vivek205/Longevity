@@ -59,29 +59,5 @@
 			}
 		}
 	},
-	"auth": {
-		"longevityDev5": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/auth/longevityDev5-cloudformation-template.yml",
-				"logicalId": "authlongevityDev5"
-			},
-			"lastPushTimeStamp": "2020-06-02T11:23:36.043Z",
-			"output": {
-				"GoogleWebClient": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-				"AppClientSecret": "8vnfirfbi1kn20ep3nrpifu57ljsjv72iuepqu5aq0t934rshb2",
-				"UserPoolId": "us-west-2_QuNpGfanQ",
-				"AppClientIDWeb": "2tphp591uss7n07c639aa65gom",
-				"AppClientID": "3amcfobt6m3t9kkeketvak2mqi",
-				"FacebookWebClient": "721380498616396",
-				"IdentityPoolId": "us-west-2:897692a1-7e33-4924-9c97-25a84a38a089",
-				"IdentityPoolName": "longevity_dev_5_id_pool__dev",
-				"UserPoolName": "longevity_dev_5_user_pool",
-				"GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
-			},
-			"lastPushDirHash": "f+9hLfyFyt+6yU9dM86hVMbLFIc="
-		}
-	}
+	"auth": {}
 }

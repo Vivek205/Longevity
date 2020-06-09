@@ -1,87 +1,63 @@
 {
-	"providers": {
-		"awscloudformation": {
-			"AuthRoleName": "amplify-longevity-dev-115806-authRole",
-			"UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevity-dev-115806-unauthRole",
-			"AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevity-dev-115806-authRole",
-			"Region": "us-west-2",
-			"DeploymentBucketName": "amplify-longevity-dev-115806-deployment",
-			"UnauthRoleName": "amplify-longevity-dev-115806-unauthRole",
-			"StackName": "amplify-longevity-dev-115806",
-			"StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevity-dev-115806/3bcbc3f0-a49a-11ea-9550-0621d00a30ea",
-			"AmplifyAppId": "d1a245d8tbpvc8"
-		},
-		"categories": {
-			"function": {
-				"longevityDevCustomMessage": {
-					"REDIRECTURL": "",
-					"EMAILSUBJECT": "vivek.n@singularitynet.io",
-					"EMAILMESSAGE": "Please click this link to reset your password"
-				},
-				"longevityDevPreSignup": {
-					"DOMAINWHITELIST": "\"gmail.com, singularitynet.io\"",
-					"DOMAINBLACKLIST": "\"grr.la, shakelakers.com\""
-				}
-			}
-		}
-	},
-	"function": {
-		"longevityDevCustomMessage": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda",
-			"output": {
-				"Region": "us-west-2",
-				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:longevityDevCustomMessage-dev",
-				"Name": "longevityDevCustomMessage-dev",
-				"LambdaExecutionRole": "longevityDevCustomMessage-dev"
-			},
-			"lastPushTimeStamp": "2020-06-02T11:23:36.031Z",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevCustomMessage-cloudformation-template.json",
-				"logicalId": "functionlongevityDevCustomMessage"
-			}
-		},
-		"longevityDevPreSignup": {
-			"build": true,
-			"providerPlugin": "awscloudformation",
-			"service": "Lambda",
-			"output": {
-				"Region": "us-west-2",
-				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:longevityDevPreSignup-dev",
-				"Name": "longevityDevPreSignup-dev",
-				"LambdaExecutionRole": "longevityDevPreSignup-dev"
-			},
-			"lastPushTimeStamp": "2020-06-02T11:23:36.036Z",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevPreSignup-cloudformation-template.json",
-				"logicalId": "functionlongevityDevPreSignup"
-			}
-		}
-	},
-	"auth": {
-		"longevityDev5": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/auth/longevityDev5-cloudformation-template.yml",
-				"logicalId": "authlongevityDev5"
-			},
-			"lastPushTimeStamp": "2020-06-02T11:23:36.043Z",
-			"output": {
-				"GoogleWebClient": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-				"AppClientSecret": "8vnfirfbi1kn20ep3nrpifu57ljsjv72iuepqu5aq0t934rshb2",
-				"UserPoolId": "us-west-2_QuNpGfanQ",
-				"AppClientIDWeb": "2tphp591uss7n07c639aa65gom",
-				"AppClientID": "3amcfobt6m3t9kkeketvak2mqi",
-				"FacebookWebClient": "721380498616396",
-				"IdentityPoolId": "us-west-2:897692a1-7e33-4924-9c97-25a84a38a089",
-				"IdentityPoolName": "longevity_dev_5_id_pool__dev",
-				"UserPoolName": "longevity_dev_5_user_pool",
-				"GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
-			},
-			"lastPushDirHash": "f+9hLfyFyt+6yU9dM86hVMbLFIc="
-		}
-	}
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-longevity-dev-115806-authRole",
+            "UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevity-dev-115806-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevity-dev-115806-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-longevity-dev-115806-deployment",
+            "UnauthRoleName": "amplify-longevity-dev-115806-unauthRole",
+            "StackName": "amplify-longevity-dev-115806",
+            "StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevity-dev-115806/3bcbc3f0-a49a-11ea-9550-0621d00a30ea",
+            "AmplifyAppId": "d1a245d8tbpvc8"
+        },
+        "categories": {
+            "function": {
+                "longevityDevCustomMessage": {
+                    "REDIRECTURL": "",
+                    "EMAILSUBJECT": "vivek.n@singularitynet.io",
+                    "EMAILMESSAGE": "Please click this link to reset your password"
+                },
+                "longevityDevPreSignup": {
+                    "DOMAINWHITELIST": "\"gmail.com, singularitynet.io\"",
+                    "DOMAINBLACKLIST": "\"grr.la, shakelakers.com\""
+                }
+            }
+        }
+    },
+    "function": {
+        "longevityDevCustomMessage": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "output": {
+                "Region": "us-west-2",
+                "Arn": "arn:aws:lambda:us-west-2:533793137436:function:longevityDevCustomMessage-dev",
+                "Name": "longevityDevCustomMessage-dev",
+                "LambdaExecutionRole": "longevityDevCustomMessage-dev"
+            },
+            "lastPushTimeStamp": "2020-06-09T07:58:15.742Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevCustomMessage-cloudformation-template.json",
+                "logicalId": "functionlongevityDevCustomMessage"
+            }
+        },
+        "longevityDevPreSignup": {
+            "build": true,
+            "providerPlugin": "awscloudformation",
+            "service": "Lambda",
+            "output": {
+                "Region": "us-west-2",
+                "Arn": "arn:aws:lambda:us-west-2:533793137436:function:longevityDevPreSignup-dev",
+                "Name": "longevityDevPreSignup-dev",
+                "LambdaExecutionRole": "longevityDevPreSignup-dev"
+            },
+            "lastPushTimeStamp": "2020-06-09T07:58:15.743Z",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevPreSignup-cloudformation-template.json",
+                "logicalId": "functionlongevityDevPreSignup"
+            }
+        }
+    },
+    "auth": {}
 }
