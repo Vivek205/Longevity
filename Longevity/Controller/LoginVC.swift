@@ -16,8 +16,6 @@ class LoginVC: UIViewController {
     @IBOutlet weak var formEmail: UITextField!
     @IBOutlet weak var formPassword: UITextField!
     @IBOutlet weak var parentStackContainer: UIStackView!
-    @IBOutlet weak var personalUseImageButton: UIImageView!
-    @IBOutlet weak var clinicalTrialImageButton: UIImageView!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var appleButton: UIButton!
     @IBOutlet weak var googleButton: UIButton!
@@ -96,7 +94,7 @@ class LoginVC: UIViewController {
 
         if let username = self.formEmail.text, let password = self.formPassword.text{
             DispatchQueue.global().async {
-                print("email", username)
+                print("email==================================================", username)
                 print("password", password)
                 _ = Amplify.Auth.signIn(username: username, password: password) { result in
                     print("result", result)
@@ -118,7 +116,7 @@ class LoginVC: UIViewController {
 
         group.wait()
         if signinSuccess{
-            performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
         }
     }
 

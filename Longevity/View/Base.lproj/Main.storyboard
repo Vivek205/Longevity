@@ -4,7 +4,6 @@
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
-        <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
@@ -16,7 +15,7 @@
         </array>
     </customFonts>
     <scenes>
-        <!--OnboardingVC-->
+        <!--Onboarding-->
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="OnboardingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
@@ -109,7 +108,7 @@
                                     <constraint firstItem="tGi-HZ-JMG" firstAttribute="leading" secondItem="LMs-WI-2Jl" secondAttribute="leading" id="yUd-wt-dlQ"/>
                                 </constraints>
                             </stackView>
-                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" pagingEnabled="YES" translatesAutoresizingMaskIntoConstraints="NO" id="0JO-HU-HgL">
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleAspectFill" ambiguous="YES" pagingEnabled="YES" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0JO-HU-HgL">
                                 <rect key="frame" x="0.0" y="224" width="414" height="447"/>
                                 <viewLayoutGuide key="contentLayoutGuide" id="I7M-Ve-vwb"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Zur-6a-qim"/>
@@ -200,7 +199,7 @@ Explore the App</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Tk-OE-BBY"/>
                     </view>
-                    <navigationItem key="navigationItem" id="KQh-4M-n3G"/>
+                    <navigationItem key="navigationItem" title="Onboarding" id="KQh-4M-n3G"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="loginButton" destination="PKO-6b-4ge" id="hcP-bE-D7f"/>
@@ -332,7 +331,6 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="cXF-HS-EPA"/>
                                                 </constraints>
-                                                <size key="titleShadowOffset" width="0.0" height="2"/>
                                                 <state key="normal" title="Continue with Google" image="Google logo">
                                                     <color key="titleColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -507,70 +505,6 @@ Explore the App</string>
                 </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="2279.7101449275365" y="-240.40178571428569"/>
-        </scene>
-        <!--SwipingVC-->
-        <scene sceneID="l0g-Zu-e4M">
-            <objects>
-                <viewController id="FcO-go-qgB" customClass="SwipingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="eTP-GH-2qF">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="WuW-Vu-PlM">
-                                <rect key="frame" x="0.0" y="0.0" width="414" height="862"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" automaticEstimatedItemSize="YES" minimumLineSpacing="10" minimumInteritemSpacing="10" id="B2k-pX-280">
-                                    <size key="itemSize" width="263" height="513"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="onboardingCollectionCell" id="sh5-kf-va2" customClass="OnboardingCollectionViewCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="75.5" y="0.0" width="263" height="513"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mK3-nV-BR6">
-                                            <rect key="frame" x="0.0" y="0.0" width="263" height="513"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Collection View Cell" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GYs-sP-RKk">
-                                                    <rect key="frame" x="56" y="220" width="152" height="21"/>
-                                                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="263" height="513"/>
-                                        <connections>
-                                            <outlet property="number" destination="GYs-sP-RKk" id="m9Z-Uc-oW4"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                                <connections>
-                                    <outlet property="dataSource" destination="FcO-go-qgB" id="dZ0-yr-CG5"/>
-                                    <outlet property="delegate" destination="FcO-go-qgB" id="gMa-dI-ZCe"/>
-                                </connections>
-                            </collectionView>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="WuW-Vu-PlM" firstAttribute="leading" secondItem="v5d-TN-XDV" secondAttribute="leading" id="Ix5-Ta-ucE"/>
-                            <constraint firstItem="WuW-Vu-PlM" firstAttribute="top" secondItem="eTP-GH-2qF" secondAttribute="top" id="QlE-ne-TAB"/>
-                            <constraint firstItem="WuW-Vu-PlM" firstAttribute="bottom" secondItem="v5d-TN-XDV" secondAttribute="bottom" id="gc5-i9-nuO"/>
-                            <constraint firstItem="WuW-Vu-PlM" firstAttribute="trailing" secondItem="v5d-TN-XDV" secondAttribute="trailing" id="gd0-XX-6sg"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="v5d-TN-XDV"/>
-                    </view>
-                    <navigationItem key="navigationItem" id="itg-cT-Vha"/>
-                    <connections>
-                        <outlet property="pageCollectionView" destination="WuW-Vu-PlM" id="7PC-7N-Xqv"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RX5-wr-7g8" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="1095.6521739130435" y="1031.9196428571429"/>
         </scene>
         <!--Login-->
         <scene sceneID="BcJ-Ph-HFX">
@@ -878,7 +812,7 @@ Explore the App</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Ny-9Dy">
-                                <rect key="frame" x="91" y="198" width="233" height="91"/>
+                                <rect key="frame" x="20" y="0.0" width="233" height="44"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="22"/>
@@ -901,16 +835,59 @@ Explore the App</string>
                                     <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="jVL-7I-tif"/>
                                 </connections>
                             </button>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8qi-Py-E0u">
+                                <rect key="frame" x="0.0" y="86" width="414" height="724"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeG-g8-7eJ" userLabel="Footer">
+                                <rect key="frame" x="0.0" y="768" width="414" height="128"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-Hz-IDg">
+                                        <rect key="frame" x="15" y="28" width="384" height="48"/>
+                                        <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="ag4-On-wSD"/>
+                                        </constraints>
+                                        <state key="normal" title="Accept">
+                                            <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="vzF-tj-V5Z"/>
+                                        </connections>
+                                    </button>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="aOZ-Hz-IDg" firstAttribute="leading" secondItem="zeG-g8-7eJ" secondAttribute="leading" constant="15" id="33F-r4-KSB"/>
+                                    <constraint firstAttribute="trailing" secondItem="aOZ-Hz-IDg" secondAttribute="trailing" constant="15" id="FAk-Zq-T4P"/>
+                                    <constraint firstAttribute="height" constant="128" id="YIv-nx-EBk"/>
+                                    <constraint firstItem="aOZ-Hz-IDg" firstAttribute="top" secondItem="zeG-g8-7eJ" secondAttribute="top" constant="28" id="iDo-Dc-p7P"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="zeG-g8-7eJ" firstAttribute="trailing" secondItem="hp5-7a-Yhr" secondAttribute="trailing" id="VRn-Jf-EYf"/>
+                            <constraint firstAttribute="bottom" secondItem="zeG-g8-7eJ" secondAttribute="bottom" id="nqa-74-HO3"/>
+                            <constraint firstItem="zeG-g8-7eJ" firstAttribute="leading" secondItem="hp5-7a-Yhr" secondAttribute="leading" id="qs2-qF-9Dc"/>
+                        </constraints>
                         <viewLayoutGuide key="safeArea" id="hp5-7a-Yhr"/>
                     </view>
                     <navigationItem key="navigationItem" title="Terms of Service" id="nM0-Fk-zzC"/>
                     <connections>
+                        <outlet property="acceptButton" destination="aOZ-Hz-IDg" id="lcd-K3-ocQ"/>
+                        <outlet property="footer" destination="zeG-g8-7eJ" id="SA7-p8-fGM"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="TOSToLogin" id="uRB-KK-7Nb"/>
+                        <segue destination="enB-li-R9B" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="klm-62-r2F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2a8-yj-IyV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="enB-li-R9B" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3398.5507246376815" y="105.80357142857143"/>
         </scene>
@@ -966,7 +943,7 @@ Explore the App</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8H1-zs-CKr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4360.8695652173919" y="-240.40178571428569"/>
+            <point key="canvasLocation" x="4371" y="106"/>
         </scene>
         <!--Reset Password-->
         <scene sceneID="tMU-qX-czS">
@@ -1044,7 +1021,7 @@ Explore the App</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="bFA-M4-tBp"/>
-        <segue reference="EyO-Hz-vMi"/>
+        <segue reference="uRB-KK-7Nb"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>
