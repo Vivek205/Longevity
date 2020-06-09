@@ -1,0 +1,18 @@
+{
+    "trigger": true,
+    "modules": [
+        "email-filter-blacklist",
+        "email-filter-whitelist"
+    ],
+    "parentResource": "longevityDev",
+    "functionName": "longevityDevPreSignup",
+    "resourceName": "longevityDevPreSignup",
+    "parentStack": "auth",
+    "triggerEnvs": [],
+    "triggerDir": "/usr/local/lib/node_modules/@aws-amplify/cli/node_modules/amplify-category-auth/provider-utils/awscloudformation/utils/../triggers/PreSignup",
+    "triggerTemplate": "PreSignup.json.ejs",
+    "roleName": "longevityDevPreSignup",
+    "skipEdit": true,
+    "DOMAINWHITELIST": "\"gmail.com, singularitynet.io\"",
+    "DOMAINBLACKLIST": "\"grr.la, shakelakers.com\""
+}
