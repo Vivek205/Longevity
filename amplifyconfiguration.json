@@ -8,6 +8,36 @@
                 "Version": "0.1.0",
                 "IdentityManager": {
                     "Default": {}
+                },
+                "CredentialsProvider": {
+                    "CognitoIdentity": {
+                        "Default": {
+                            "PoolId": "us-west-2:e8743b67-3497-4492-806e-4f45891f7cfe",
+                            "Region": "us-west-2"
+                        }
+                    }
+                },
+                "CognitoUserPool": {
+                    "Default": {
+                        "PoolId": "us-west-2_KPzGsAdjH",
+                        "AppClientId": "48h0cv88cfdbhdual1fpjopocn",
+                        "AppClientSecret": "cokln09ao9skv7ba3eiceg98nfcjlm26cre39oqllm28tkvgq06",
+                        "Region": "us-west-2"
+                    }
+                },
+                "GoogleSignIn": {
+                    "Permissions": "email,profile,openid",
+                    "ClientId-WebApp": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
+                    "ClientId-iOS": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
+                },
+                "FacebookSignIn": {
+                    "AppId": "721380498616396",
+                    "Permissions": "public_profile"
+                },
+                "Auth": {
+                    "Default": {
+                        "authenticationFlowType": "USER_SRP_AUTH"
+                    }
                 }
             }
         }

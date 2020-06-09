@@ -11,5 +11,11 @@
 			"service": "Lambda"
 		}
 	},
-	"auth": {}
+	"auth": {
+		"longevityDev6": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": []
+		}
+	}
 }

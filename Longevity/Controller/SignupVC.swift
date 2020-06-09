@@ -137,10 +137,9 @@ class SignupVC: UIViewController {
         }
     }
 
-
-
-
     func redirectToLoginPage() {
         self.performSegue(withIdentifier: "SignupToLogin", sender: self)
     }
+
+
 }

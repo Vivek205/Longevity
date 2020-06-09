@@ -12,6 +12,8 @@
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
+		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
+		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E2B9893A248E014000453E0E /* OnboardingCollectionViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B98939248E013F00453E0E /* OnboardingCollectionViewCell.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
 		E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */; };
@@ -36,6 +38,8 @@
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
+		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E2B98939248E013F00453E0E /* OnboardingCollectionViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingCollectionViewCell.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Bold.ttf"; sourceTree = "<group>"; };
@@ -147,14 +151,16 @@
 		E2ECB8D3247FE3950020A27E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
-				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
 				E2BCA56F24865303007204B9 /* LoginVC.swift */,
+				E2B98939248E013F00453E0E /* OnboardingCollectionViewCell.swift */,
+				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
+				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
+				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
 				E2BCA5712486542C007204B9 /* SignupVC.swift */,
 				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
-				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
-				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
-				E2B98939248E013F00453E0E /* OnboardingCollectionViewCell.swift */,
+				E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -307,7 +313,9 @@
 			files = (
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
+				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
+				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,

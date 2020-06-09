@@ -12,7 +12,7 @@
 		}
 	},
 	"auth": {
-		"longevityDev5": {
+		"longevityDev6": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []
