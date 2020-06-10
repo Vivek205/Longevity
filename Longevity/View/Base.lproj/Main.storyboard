@@ -676,35 +676,35 @@ Explore the App</string>
             <objects>
                 <viewController id="DKT-YJ-RMe" customClass="LoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nsU-81-HcD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="4R1-zd-EM3" userLabel="ParentStackContainer">
-                                <rect key="frame" x="20" y="15" width="374" height="793"/>
+                                <rect key="frame" x="20" y="103" width="374" height="759"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8G-5q-BQM">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="55.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fk0-H1-Ea0">
-                                        <rect key="frame" x="0.0" y="73.5" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="70.5" width="374" height="55"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bEq-K9-ead">
-                                        <rect key="frame" x="0.0" y="147" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="140.5" width="374" height="55.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EKG-Y7-kE3">
-                                        <rect key="frame" x="0.0" y="220.5" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="211" width="374" height="55.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MrL-Sq-rIV" userLabel="LoginButtonView">
-                                        <rect key="frame" x="0.0" y="294" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="281.5" width="374" height="55.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXh-3g-ICe">
-                                                <rect key="frame" x="0.0" y="5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="Q53-b1-h0k"/>
@@ -726,20 +726,20 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-kz-GU0" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="367.5" width="374" height="58"/>
+                                        <rect key="frame" x="0.0" y="352" width="374" height="55"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8D-Dn-4gV" userLabel="Line">
-                                                <rect key="frame" x="0.0" y="28" width="374" height="2"/>
+                                                <rect key="frame" x="0.0" y="26.5" width="374" height="2"/>
                                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="bgh-Qx-nNj"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30t-T3-iYn">
-                                                <rect key="frame" x="166" y="0.0" width="42" height="58"/>
+                                                <rect key="frame" x="166" y="0.0" width="42" height="55"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgN-1T-lbe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="42" height="58"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="42" height="55"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -766,10 +766,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CyN-wF-u4G" userLabel="AppleButtonView">
-                                        <rect key="frame" x="0.0" y="440.5" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="422" width="374" height="55.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKC-yC-SY2">
-                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="4" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="A0S-6s-8IZ"/>
@@ -787,10 +787,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ma0-Be-Gc3" userLabel="GoogleButtonView">
-                                        <rect key="frame" x="0.0" y="514" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="492.5" width="374" height="55.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPv-0i-5Qw">
-                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="K3l-BL-ocL"/>
@@ -808,10 +808,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PKn-Yc-uyE" userLabel="FacebookButtonView">
-                                        <rect key="frame" x="0.0" y="587.5" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="563" width="374" height="55.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIN-kF-9FI">
-                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.14509803921568626" green="0.27843137254901962" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="U0t-5G-Y3H"/>
@@ -829,13 +829,13 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahw-N0-hRL">
-                                        <rect key="frame" x="0.0" y="661" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="633.5" width="374" height="55"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQt-NB-i37">
-                                        <rect key="frame" x="0.0" y="734.5" width="374" height="58.5"/>
+                                        <rect key="frame" x="0.0" y="703.5" width="374" height="55.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                 </subviews>
@@ -846,17 +846,17 @@ Explore the App</string>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="lxM-1Q-d3b">
-                                <rect key="frame" x="40" y="15" width="334" height="132"/>
+                                <rect key="frame" x="40" y="103" width="334" height="125.5"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnn-F6-5fL" userLabel="PersonalImageView">
-                                        <rect key="frame" x="0.0" y="0.0" width="152" height="132"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="152" height="125.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user logo" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-ea-X11" userLabel="image">
-                                                <rect key="frame" x="20" y="20" width="112" height="92"/>
+                                                <rect key="frame" x="20" y="20" width="112" height="85.5"/>
                                                 <color key="tintColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBR-55-xiq" userLabel="label">
-                                                <rect key="frame" x="0.0" y="109.5" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -878,14 +878,14 @@ Explore the App</string>
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbJ-sJ-pbZ" userLabel="ClinicalTrialImageView">
-                                        <rect key="frame" x="182" y="0.0" width="152" height="132"/>
+                                        <rect key="frame" x="182" y="0.0" width="152" height="125.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon - medical" translatesAutoresizingMaskIntoConstraints="NO" id="gKk-FB-Rwb" userLabel="image">
-                                                <rect key="frame" x="40" y="20" width="72" height="72"/>
+                                                <rect key="frame" x="40" y="20" width="72" height="65.5"/>
                                                 <gestureRecognizers/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clinical Trial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY6-G2-ag1" userLabel="label">
-                                                <rect key="frame" x="0.0" y="109.5" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -973,7 +973,7 @@ Explore the App</string>
             <objects>
                 <viewController id="veM-Z9-1Sd" customClass="TermsOfServiceVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Jp-XA-s1n">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qTH-jQ-VUM" userLabel="Signout">
@@ -998,7 +998,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeG-g8-7eJ" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="586" width="414" height="256"/>
+                                <rect key="frame" x="0.0" y="640" width="414" height="256"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-Hz-IDg">
                                         <rect key="frame" x="15" y="28" width="384" height="48"/>
@@ -1129,7 +1129,7 @@ Explore the App</string>
             <objects>
                 <viewController id="Jks-3U-puK" customClass="ChangePasswordVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6kc-yb-fBO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="old password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I4e-lY-ya8">
@@ -1258,7 +1258,7 @@ Explore the App</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="L1O-8m-Fgx"/>
-        <segue reference="I24-Rs-0yh"/>
+        <segue reference="U5g-zc-jaq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>
