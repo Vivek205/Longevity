@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cPA-DM-ls0">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
+        <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -253,7 +254,7 @@ Explore the App</string>
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
-                                                    <segue destination="Gsb-QW-NL5" kind="showDetail" id="nej-xY-pj8"/>
+                                                    <segue destination="Gsb-QW-NL5" kind="show" id="nej-xY-pj8"/>
                                                 </connections>
                                             </button>
                                         </subviews>
@@ -509,16 +510,16 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="2280" y="-585"/>
         </scene>
-        <!--Signup By EmailVC-->
+        <!--Signup By Email-->
         <scene sceneID="MKm-v7-LmT">
             <objects>
                 <viewController id="Gsb-QW-NL5" customClass="SignupByEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YjP-6U-3tf">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-ie-KfK">
-                                <rect key="frame" x="20" y="20" width="374" height="48"/>
+                                <rect key="frame" x="20" y="108" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="SiI-7C-epF"/>
                                 </constraints>
@@ -526,7 +527,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XXo-Ca-vDu">
-                                <rect key="frame" x="20" y="120" width="374" height="48"/>
+                                <rect key="frame" x="20" y="208" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="lnN-9J-vzz"/>
                                 </constraints>
@@ -534,7 +535,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-Y8-xZm">
-                                <rect key="frame" x="20" y="220" width="374" height="48"/>
+                                <rect key="frame" x="20" y="308" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="F83-hh-35L"/>
                                 </constraints>
@@ -542,7 +543,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WgZ-ja-rgS">
-                                <rect key="frame" x="20" y="320" width="374" height="48"/>
+                                <rect key="frame" x="20" y="408" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="UCN-ab-6a5"/>
                                 </constraints>
@@ -550,7 +551,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DKM-b8-Trc">
-                                <rect key="frame" x="20" y="420" width="374" height="48"/>
+                                <rect key="frame" x="20" y="508" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="1eU-4m-ddy"/>
                                 </constraints>
@@ -558,7 +559,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-B2-m6A">
-                                <rect key="frame" x="20" y="520" width="374" height="48"/>
+                                <rect key="frame" x="20" y="608" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Aa6-5i-wvh"/>
@@ -596,7 +597,7 @@ Explore the App</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Mb-m3-ime"/>
                     </view>
-                    <navigationItem key="navigationItem" id="xQR-XP-6PK"/>
+                    <navigationItem key="navigationItem" title="Signup By Email" id="xQR-XP-6PK"/>
                     <connections>
                         <outlet property="formConfirmPassword" destination="DKM-b8-Trc" id="KDN-BL-xky"/>
                         <outlet property="formEmail" destination="XXo-Ca-vDu" id="uoc-ey-fqw"/>
@@ -604,23 +605,23 @@ Explore the App</string>
                         <outlet property="formPassword" destination="WgZ-ja-rgS" id="rfQ-hd-ytI"/>
                         <outlet property="formPhone" destination="ygo-Y8-xZm" id="h6R-tu-d1R"/>
                         <outlet property="submitButton" destination="b9r-B2-m6A" id="uVb-jc-Xrj"/>
-                        <segue destination="3Ph-2d-HrV" kind="showDetail" identifier="SignupEmailToConfirm" id="jC7-ov-rup"/>
+                        <segue destination="3Ph-2d-HrV" kind="show" identifier="SignupEmailToConfirm" id="jC7-ov-rup"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="0Ag-V9-lji" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="3399" y="-585"/>
         </scene>
-        <!--Signup ConfirmVC-->
+        <!--Confirm Phone-->
         <scene sceneID="6l3-xd-TeN">
             <objects>
                 <viewController id="3Ph-2d-HrV" customClass="SignupConfirmVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="scc-I3-3Fm">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the OTP to confirm your phone number" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1F-dX-9v2" userLabel="Title">
-                                <rect key="frame" x="107" y="20" width="200" height="41"/>
+                                <rect key="frame" x="107" y="108" width="200" height="41"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="200" id="YNd-B6-sPI"/>
                                 </constraints>
@@ -629,12 +630,12 @@ Explore the App</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SX8-KI-dYv" userLabel="OTP">
-                                <rect key="frame" x="20" y="113" width="374" height="34"/>
+                                <rect key="frame" x="20" y="201" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USy-gZ-vST">
-                                <rect key="frame" x="20" y="199" width="374" height="48"/>
+                                <rect key="frame" x="20" y="287" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="MB3-1V-fOj"/>
@@ -660,13 +661,13 @@ Explore the App</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zso-ih-Ias"/>
                     </view>
+                    <navigationItem key="navigationItem" title="Confirm Phone" id="Bsw-ad-XvU"/>
                     <connections>
                         <outlet property="formOTP" destination="SX8-KI-dYv" id="ucW-qk-FrA"/>
-                        <segue destination="GtT-em-oYa" kind="unwind" identifier="UnwindSignupConfirmToOnboarding" unwindAction="unwindToOnboarding:" id="bWK-G7-w7Y"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="ppv-oQ-y3h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aNc-jZ-0pa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="GtT-em-oYa" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="4369.5652173913049" y="-585.26785714285711"/>
         </scene>
@@ -675,35 +676,35 @@ Explore the App</string>
             <objects>
                 <viewController id="DKT-YJ-RMe" customClass="LoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nsU-81-HcD">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" spacing="15" translatesAutoresizingMaskIntoConstraints="NO" id="4R1-zd-EM3" userLabel="ParentStackContainer">
-                                <rect key="frame" x="20" y="103" width="374" height="759"/>
+                                <rect key="frame" x="20" y="15" width="374" height="793"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b8G-5q-BQM">
-                                        <rect key="frame" x="0.0" y="0.0" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="374" height="58.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fk0-H1-Ea0">
-                                        <rect key="frame" x="0.0" y="70.5" width="374" height="55"/>
+                                        <rect key="frame" x="0.0" y="73.5" width="374" height="58.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter email id" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bEq-K9-ead">
-                                        <rect key="frame" x="0.0" y="140.5" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="147" width="374" height="58.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" textContentType="email"/>
                                     </textField>
                                     <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EKG-Y7-kE3">
-                                        <rect key="frame" x="0.0" y="211" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="220.5" width="374" height="58.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                         <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                     </textField>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MrL-Sq-rIV" userLabel="LoginButtonView">
-                                        <rect key="frame" x="0.0" y="281.5" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="294" width="374" height="58.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXh-3g-ICe">
-                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="Q53-b1-h0k"/>
@@ -725,20 +726,20 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i9h-kz-GU0" userLabel="Divider">
-                                        <rect key="frame" x="0.0" y="352" width="374" height="55"/>
+                                        <rect key="frame" x="0.0" y="367.5" width="374" height="58"/>
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8D-Dn-4gV" userLabel="Line">
-                                                <rect key="frame" x="0.0" y="26.5" width="374" height="2"/>
+                                                <rect key="frame" x="0.0" y="28" width="374" height="2"/>
                                                 <color key="backgroundColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="bgh-Qx-nNj"/>
                                                 </constraints>
                                             </view>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="30t-T3-iYn">
-                                                <rect key="frame" x="166" y="0.0" width="42" height="55"/>
+                                                <rect key="frame" x="166" y="0.0" width="42" height="58"/>
                                                 <subviews>
                                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="OR" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="AgN-1T-lbe">
-                                                        <rect key="frame" x="0.0" y="0.0" width="42" height="55"/>
+                                                        <rect key="frame" x="0.0" y="0.0" width="42" height="58"/>
                                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                         <nil key="textColor"/>
                                                         <nil key="highlightedColor"/>
@@ -765,10 +766,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CyN-wF-u4G" userLabel="AppleButtonView">
-                                        <rect key="frame" x="0.0" y="422" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="440.5" width="374" height="58.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hKC-yC-SY2">
-                                                <rect key="frame" x="0.0" y="4" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="A0S-6s-8IZ"/>
@@ -786,10 +787,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Ma0-Be-Gc3" userLabel="GoogleButtonView">
-                                        <rect key="frame" x="0.0" y="492.5" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="514" width="374" height="58.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QPv-0i-5Qw">
-                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
                                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="K3l-BL-ocL"/>
@@ -807,10 +808,10 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PKn-Yc-uyE" userLabel="FacebookButtonView">
-                                        <rect key="frame" x="0.0" y="563" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="587.5" width="374" height="58.5"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xIN-kF-9FI">
-                                                <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
+                                                <rect key="frame" x="0.0" y="5.5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.14509803921568626" green="0.27843137254901962" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="U0t-5G-Y3H"/>
@@ -828,13 +829,13 @@ Explore the App</string>
                                         </constraints>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahw-N0-hRL">
-                                        <rect key="frame" x="0.0" y="633.5" width="374" height="55"/>
+                                        <rect key="frame" x="0.0" y="661" width="374" height="58.5"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                         <color key="textColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQt-NB-i37">
-                                        <rect key="frame" x="0.0" y="703.5" width="374" height="55.5"/>
+                                        <rect key="frame" x="0.0" y="734.5" width="374" height="58.5"/>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                     </view>
                                 </subviews>
@@ -845,17 +846,17 @@ Explore the App</string>
                                 </constraints>
                             </stackView>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="30" translatesAutoresizingMaskIntoConstraints="NO" id="lxM-1Q-d3b">
-                                <rect key="frame" x="40" y="103" width="334" height="125.5"/>
+                                <rect key="frame" x="40" y="15" width="334" height="132"/>
                                 <subviews>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Fnn-F6-5fL" userLabel="PersonalImageView">
-                                        <rect key="frame" x="0.0" y="0.0" width="152" height="125.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="152" height="132"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user logo" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-ea-X11" userLabel="image">
-                                                <rect key="frame" x="20" y="20" width="112" height="85.5"/>
+                                                <rect key="frame" x="20" y="20" width="112" height="92"/>
                                                 <color key="tintColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBR-55-xiq" userLabel="label">
-                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="109.5" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -877,14 +878,14 @@ Explore the App</string>
                                         </connections>
                                     </view>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AbJ-sJ-pbZ" userLabel="ClinicalTrialImageView">
-                                        <rect key="frame" x="182" y="0.0" width="152" height="125.5"/>
+                                        <rect key="frame" x="182" y="0.0" width="152" height="132"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon - medical" translatesAutoresizingMaskIntoConstraints="NO" id="gKk-FB-Rwb" userLabel="image">
-                                                <rect key="frame" x="40" y="20" width="72" height="65.5"/>
+                                                <rect key="frame" x="40" y="20" width="72" height="72"/>
                                                 <gestureRecognizers/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clinical Trial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY6-G2-ag1" userLabel="label">
-                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="109.5" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -972,21 +973,9 @@ Explore the App</string>
             <objects>
                 <viewController id="veM-Z9-1Sd" customClass="TermsOfServiceVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="0Jp-XA-s1n">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Ny-9Dy">
-                                <rect key="frame" x="20" y="0.0" width="233" height="44"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Change Password">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <segue destination="Jks-3U-puK" kind="show" id="soF-bI-ZRn"/>
-                                </connections>
-                            </button>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qTH-jQ-VUM" userLabel="Signout">
                                 <rect key="frame" x="91" y="474" width="233" height="88"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
@@ -1002,14 +991,14 @@ Explore the App</string>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8qi-Py-E0u">
                                 <rect key="frame" x="0.0" y="86" width="414" height="724"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                 <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                             </textView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeG-g8-7eJ" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="768" width="414" height="128"/>
+                                <rect key="frame" x="0.0" y="586" width="414" height="256"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-Hz-IDg">
                                         <rect key="frame" x="15" y="28" width="384" height="48"/>
@@ -1024,13 +1013,52 @@ Explore the App</string>
                                             <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="vzF-tj-V5Z"/>
                                         </connections>
                                     </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Li8-pq-dzX">
+                                        <rect key="frame" x="20" y="128" width="374" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVO-Wv-cCA">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
+                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Confirm Email">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendEmailVerification" destination="veM-Z9-1Sd" eventType="touchUpInside" id="7iH-Jr-fw5"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Ny-9Dy">
+                                                <rect key="frame" x="131.5" y="0.0" width="111" height="30"/>
+                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <state key="normal" title="Change Password">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <segue destination="Jks-3U-puK" kind="show" id="soF-bI-ZRn"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjZ-x4-f48">
+                                                <rect key="frame" x="262.5" y="0.0" width="111.5" height="30"/>
+                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Signout">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="WOF-pV-Y6Z"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
                                 <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                 <constraints>
                                     <constraint firstItem="aOZ-Hz-IDg" firstAttribute="leading" secondItem="zeG-g8-7eJ" secondAttribute="leading" constant="15" id="33F-r4-KSB"/>
                                     <constraint firstAttribute="trailing" secondItem="aOZ-Hz-IDg" secondAttribute="trailing" constant="15" id="FAk-Zq-T4P"/>
-                                    <constraint firstAttribute="height" constant="128" id="YIv-nx-EBk"/>
+                                    <constraint firstAttribute="height" constant="256" id="YIv-nx-EBk"/>
+                                    <constraint firstAttribute="trailing" secondItem="Li8-pq-dzX" secondAttribute="trailing" constant="20" id="Zwd-J7-P7s"/>
+                                    <constraint firstItem="Li8-pq-dzX" firstAttribute="leading" secondItem="zeG-g8-7eJ" secondAttribute="leading" constant="20" id="a1D-q3-8KO"/>
                                     <constraint firstItem="aOZ-Hz-IDg" firstAttribute="top" secondItem="zeG-g8-7eJ" secondAttribute="top" constant="28" id="iDo-Dc-p7P"/>
+                                    <constraint firstItem="Li8-pq-dzX" firstAttribute="top" secondItem="aOZ-Hz-IDg" secondAttribute="bottom" constant="52" id="zA1-ps-4hc"/>
                                 </constraints>
                             </view>
                         </subviews>
@@ -1045,22 +1073,63 @@ Explore the App</string>
                     <navigationItem key="navigationItem" title="Terms of Service" id="nM0-Fk-zzC"/>
                     <connections>
                         <outlet property="acceptButton" destination="aOZ-Hz-IDg" id="lcd-K3-ocQ"/>
+                        <outlet property="confirmEmailButton" destination="HVO-Wv-cCA" id="NG9-MD-pHC"/>
                         <outlet property="footer" destination="zeG-g8-7eJ" id="SA7-p8-fGM"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="TOSToLogin" id="uRB-KK-7Nb"/>
                         <segue destination="enB-li-R9B" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="klm-62-r2F"/>
+                        <segue destination="mxF-6k-xVv" kind="showDetail" identifier="TOSToConfirmEmail" id="QsL-Sd-qMl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2a8-yj-IyV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="enB-li-R9B" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3398.5507246376815" y="105.80357142857143"/>
+            <point key="canvasLocation" x="3398.5507246376815" y="1030.5803571428571"/>
+        </scene>
+        <!--Confirm EmailVC-->
+        <scene sceneID="Wjb-Tu-Gce">
+            <objects>
+                <viewController id="mxF-6k-xVv" customClass="ConfirmEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="ENF-RW-Peu">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ConfirmationCode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmo-WL-ZmO">
+                                <rect key="frame" x="159" y="125" width="97" height="34"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-K6-Bhb">
+                                <rect key="frame" x="131" y="248" width="153" height="48"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <state key="normal" title="Verify">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleConfirmation:" destination="mxF-6k-xVv" eventType="touchUpInside" id="Un9-7b-4n5"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="ojE-Ep-a3Q"/>
+                    </view>
+                    <connections>
+                        <outlet property="formConfirmationCode" destination="fmo-WL-ZmO" id="Wqd-Ib-Mzr"/>
+                        <segue destination="U5N-QU-brL" kind="unwind" identifier="UnwindConfirmEmailToTOS" unwindAction="unwindToTermsOfService:" id="26S-yK-oWW"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="3Wj-nP-Kr7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="U5N-QU-brL" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3398.5507246376815" y="1806.6964285714284"/>
         </scene>
         <!--change password-->
         <scene sceneID="uv0-iu-ftz">
             <objects>
                 <viewController id="Jks-3U-puK" customClass="ChangePasswordVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6kc-yb-fBO">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="old password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="I4e-lY-ya8">
@@ -1103,11 +1172,13 @@ Explore the App</string>
                         <outlet property="formNewPassword" destination="1sL-uI-l7X" id="Sh8-EA-HS3"/>
                         <outlet property="formOldPassword" destination="I4e-lY-ya8" id="EA4-ll-4nB"/>
                         <outlet property="formResult" destination="ESK-i1-L7k" id="NDr-k8-CfU"/>
+                        <segue destination="Mvb-1h-NjO" kind="unwind" identifier="UnwindChangePasswordToTOS" unwindAction="unwindToTermsOfService:" id="Xmq-5W-wsU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8H1-zs-CKr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="Mvb-1h-NjO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="4371" y="106"/>
+            <point key="canvasLocation" x="5359" y="106"/>
         </scene>
         <!--Reset Password-->
         <scene sceneID="tMU-qX-czS">
@@ -1176,16 +1247,18 @@ Explore the App</string>
                         <outlet property="formNewPassword" destination="dD8-Yb-J9G" id="lvS-IS-2wx"/>
                         <outlet property="formUsername" destination="NnJ-O8-itc" id="Zve-PU-VYG"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="ResetPasswordToLogin" id="I24-Rs-0yh"/>
+                        <segue destination="ZmH-yP-8JG" kind="unwind" identifier="UnwindResetPasswordToTOS" unwindAction="unwindToTermsOfService:" id="EbA-24-vvx"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="JsE-h9-5Lc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="ZmH-yP-8JG" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3398.5507246376815" y="1030.5803571428571"/>
+            <point key="canvasLocation" x="4812" y="1031"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bFA-M4-tBp"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="L1O-8m-Fgx"/>
+        <segue reference="I24-Rs-0yh"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

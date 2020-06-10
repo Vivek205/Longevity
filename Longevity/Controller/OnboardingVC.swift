@@ -19,47 +19,12 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var loginButton: UIButton!
 
-    let images:[UIImage] = [ #imageLiteral(resourceName: "onboardingOne") , #imageLiteral(resourceName: "onboardingTwo"), #imageLiteral(resourceName: "onboardingThree")]
-    let pageHeadings:[String] = [
-        """
-            Discover
-            Yourself in new
-            ways with AI
-        """,
-        """
-            Connect your
-            Health data in
-            one place
-        """
-        ,
-        """
-            Ready to
-            explore
-            yourself?
-        """]
-    let pageDescriptions:[String] = [
-        """
-        Let us help you to find
-        useful aspects of your
-        health that supports you
-        and health research.
-    """,
-        """
-        Our mission is to connect
-        people with the places in
-        which they spend their time.
-    """
-        ,
-        """
-        Our app offers
-        comprehensive guides and
-        analysis about you.
-    """]
+    let onboardingContent = OnboardingContent()
+
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
         setInitialContent()
         initScrollViewWithImages()
         styleButtons()
@@ -72,9 +37,9 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
     func setInitialContent(){
-        pageHeading.text = pageHeadings[0]
-        pageDescription.text = pageDescriptions[0]
-        pageControl.numberOfPages = images.count
+        pageHeading.text = onboardingContent.pageHeadings[0]
+        pageDescription.text = onboardingContent.pageDescriptions[0]
+        pageControl.numberOfPages = onboardingContent.imageCount
     }
 
     func initScrollViewWithImages(){
@@ -82,21 +47,19 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         let screenHeight = screenRect.size.height
         let screenWidth = screenRect.size.width
 
-        for index in 0..<images.count {
+        for index in 0..<onboardingContent.imageCount {
             frame.origin.x = screenWidth * CGFloat(index)
             frame.size = scrollView.frame.size
-
             frame.size.height = screenHeight * CGFloat(11) / CGFloat(13)
             frame.size.width = screenWidth
             let imgView = UIImageView(frame: frame)
-            imgView.image = images[index]
+            imgView.image = onboardingContent.images[index]
             imgView.contentMode = .scaleToFill
             imgView.clipsToBounds = true
-
             scrollView.insertSubview(imgView, at: 0)
         }
 
-        scrollView.contentSize = CGSize(width: screenWidth * CGFloat(images.count), height: scrollView.frame.size.height)
+        scrollView.contentSize = CGSize(width: screenWidth * CGFloat(onboardingContent.imageCount), height: scrollView.frame.size.height)
         scrollView.contentSize.height = 1.0
         scrollView.delegate =  self
     }
@@ -119,7 +82,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         var userSignedIn = false
         let group = DispatchGroup()
         group.enter()
-
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
@@ -139,10 +101,9 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     // MARK: ScrolView delegate method
     func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
         let pageNumber = Int( scrollView.contentOffset.x / scrollView.frame.size.width)
-        print("page number", pageNumber)
         pageControl.currentPage = pageNumber
-        pageHeading.text = pageHeadings[pageNumber]
-        pageDescription.text = pageDescriptions[pageNumber]
+        pageHeading.text = onboardingContent.pageHeadings[pageNumber]
+        pageDescription.text = onboardingContent.pageDescriptions[pageNumber]
     }
 
     // MARK: Actions

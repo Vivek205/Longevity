@@ -81,7 +81,7 @@ class ResetPasswordVC: UIViewController {
         }
         group.wait()
         if resetSuccess {
-            performSegue(withIdentifier: "ResetPasswordToLogin", sender: self)
+            performSegue(withIdentifier: "UnwindResetPasswordToTOS", sender: self)
         }
 
     }

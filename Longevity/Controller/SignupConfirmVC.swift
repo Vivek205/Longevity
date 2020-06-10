@@ -42,10 +42,10 @@ class SignupConfirmVC: UIViewController {
             }
 
             group.wait()
-            self.performSegue(withIdentifier: "UnwindSignupConfirmToOnboarding", sender: self)
+            self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
         }
 
-
+self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
 
     }
 

@@ -36,12 +36,6 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
     @IBAction func handleSignup(_ sender: Any) {
         if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
             var signupSuccess = false
-            print("======================")
-            print(name)
-            print(email)
-            print(phone)
-            print(password)
-            print(confirmPassword)
 
             if(password != confirmPassword){
                 let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
@@ -59,6 +53,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
                            _ = Amplify.Auth.signUp(username: phone, password: password, options: options) { result in
                                switch result {
                                case .success(let signUpResult):
+                                    print("======================signup result \n \n", signUpResult, "\n \n")
                                    if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
                                        print("Delivery details \(String(describing: deliveryDetails))")
                                         signupSuccess=true

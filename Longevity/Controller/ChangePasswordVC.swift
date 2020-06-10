@@ -46,6 +46,9 @@ class ChangePasswordVC: UIViewController {
 
             group.wait()
             updateUIOnPasswordChange(success: changeSuccess)
+            if changeSuccess {
+                performSegue(withIdentifier: "UnwindChangePasswordToTOS", sender: self)
+            }
             print("done", changeSuccess)
         }
     }
