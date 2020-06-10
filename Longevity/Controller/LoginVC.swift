@@ -94,8 +94,6 @@ class LoginVC: UIViewController {
 
         if let username = self.formEmail.text, let password = self.formPassword.text{
             DispatchQueue.global().async {
-                print("email==================================================", username)
-                print("password", password)
                 _ = Amplify.Auth.signIn(username: username, password: password) { result in
                     print("result", result)
                     switch result {
