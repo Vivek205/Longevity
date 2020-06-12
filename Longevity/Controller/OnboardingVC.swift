@@ -90,6 +90,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
                 group.leave()
             case .failure(let error):
                 print("Fetch session failed with error \(error)")
+                group.leave()
             }
         }
         group.wait()

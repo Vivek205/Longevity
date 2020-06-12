@@ -31,6 +31,20 @@
     },
     "Auth": {
         "Default": {
+            "OAuth": {
+                "WebDomain": "longevityba58b98d-ba58b98d-dev.auth.us-west-2.amazoncognito.com",
+                "AppClientId": "48h0cv88cfdbhdual1fpjopocn",
+                "AppClientSecret": "cokln09ao9skv7ba3eiceg98nfcjlm26cre39oqllm28tkvgq06",
+                "SignInRedirectURI": "myapp://",
+                "SignOutRedirectURI": "myapp://",
+                "Scopes": [
+                    "phone",
+                    "email",
+                    "openid",
+                    "profile",
+                    "aws.cognito.signin.user.admin"
+                ]
+            },
             "authenticationFlowType": "USER_SRP_AUTH"
         }
     }

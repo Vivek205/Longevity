@@ -27,7 +27,8 @@
                 "longevityDev6": {
                     "facebookAppId": "721380498616396",
                     "googleClientId": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-                    "googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
+                    "googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com\",\"client_secret\":\"rqaQE-uM89d4fSk2z5HmqGyd\"}]"
                 }
             }
         }

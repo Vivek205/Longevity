@@ -798,6 +798,9 @@ Explore the App</string>
                                                 <state key="normal" title="Sign in with Google" image="Google logo">
                                                     <color key="titleColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithGoogle:" destination="DKT-YJ-RMe" eventType="touchUpInside" id="Aey-hp-71y"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -819,6 +822,9 @@ Explore the App</string>
                                                 <state key="normal" title="Sign in with Facebook" image="Facebook logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithFacebook:" destination="DKT-YJ-RMe" eventType="touchUpInside" id="haV-f2-AZt"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1258,7 +1264,7 @@ Explore the App</string>
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="L1O-8m-Fgx"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="ppv-oQ-y3h"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

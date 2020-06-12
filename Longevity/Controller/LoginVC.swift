@@ -78,7 +78,7 @@ class LoginVC: UIViewController {
         imgButton.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
         for subview in imgButton.subviews{
             if let item = subview as? UIImageView{
-                 item.image = item.image?.withRenderingMode(.alwaysTemplate)
+                item.image = item.image?.withRenderingMode(.alwaysTemplate)
                 item.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
             }
         }
@@ -135,6 +135,39 @@ class LoginVC: UIViewController {
         }
     }
 
+    @IBAction func handleSigninWithFacebook(_ sender: Any) {
+        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
+            switch result {
+            case .success(let session):
+                print("Sign in succeeded")
+                print("session", session)
+                self.onSuccess()
+            case .failure(let error):
+                print("Sign in failed \(error)")
+            }
+        }
+    }
+
+    @IBAction func handleSigninWithGoogle(_ sender: Any) {
+            _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
+                switch result {
+                case .success(let session):
+                    print("Sign in succeeded")
+                    print("session", session)
+                    self.onSuccess()
+                case .failure(let error):
+                    print("Sign in failed \(error)")
+                }
+            }
+
+    }
+
+    func onSuccess(){
+        DispatchQueue.main.async {
+            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+        }
+    }
+
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
     }
@@ -181,6 +214,7 @@ class LoginVC: UIViewController {
             case .success(let session):
                 print()
                 print("Is user signed in - \(session)")
+                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
             case .failure(let error):
                 print("Fetch session failed with error \(error)")
             }

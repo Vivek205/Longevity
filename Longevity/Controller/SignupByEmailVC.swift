@@ -50,13 +50,16 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             DispatchQueue.global().async {
                  let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
                            let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-                           _ = Amplify.Auth.signUp(username: phone, password: password, options: options) { result in
+                           _ = Amplify.Auth.signUp(username: name, password: password, options: options) { result in
                                switch result {
                                case .success(let signUpResult):
                                     print("======================signup result \n \n", signUpResult, "\n \n")
+
                                    if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
                                        print("Delivery details \(String(describing: deliveryDetails))")
                                         signupSuccess=true
+                                        self.getCurrentUser()
+//                                    self.verifyPhone()
                                         group.leave()
                                    } else {
                                        print("SignUp Complete")
@@ -75,6 +78,33 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         }
     }
 
+
+    func verifyPhone(){
+        _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
+            switch result {
+            case .success(let deliveryDetails):
+                print("Resend code send to - \(deliveryDetails)")
+            case .failure(let error):
+                print("Resend code failed with error \(error)")
+            }
+        }
+    }
+
+    func getCurrentUser(){
+        let group = DispatchGroup()
+        group.enter()
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            switch result {
+            case .success(let session):
+                print("Is user signed in - \(session.isSignedIn)")
+                group.leave()
+            case .failure(let error):
+                print("Fetch session failed with error \(error)")
+            }
+        }
+        group.wait()
+    }
+
     // MARK: Delegate Textfield
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
 //        textField.resignFirstResponder()
@@ -84,7 +114,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! SignupConfirmVC
-        destinationVC.username = formPhone.text!
+        destinationVC.userPhoneNumber = formPhone.text!
     }
 
 }

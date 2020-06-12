@@ -98,7 +98,7 @@ class SignupVC: UIViewController {
             group.enter()
 
             DispatchQueue.global().async {
-                _ = Amplify.Auth.signUp(username: email, password: password, options: options, listener: { (result) in
+                _ = Amplify.Auth.signUp(username: name, password: password, options: options, listener: { (result) in
                     switch result{
                     case .success(let signupResult):
                         if case let .confirmUser(deliveryDetails, _) = signupResult.nextStep {
@@ -106,6 +106,7 @@ class SignupVC: UIViewController {
                             group.leave()
                         } else {
                             print("Singup Complete")
+                            group.leave()
                         }
                     case .failure(let error):
                         print("============= \n An error occured while registering a user \(error)")
@@ -119,6 +120,7 @@ class SignupVC: UIViewController {
 
         }
     }
+    
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
         let containerView = sender.view! as UIView
