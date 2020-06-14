@@ -1,0 +1,11 @@
+syntax = "proto3";
+package escrow;
+service ExampleService {
+    rpc Ping(Input) returns (Output) {}
+}
+message Input {
+    string message = 1;
+}
+message Output {
+    string message = 1;
+}

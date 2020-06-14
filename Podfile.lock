@@ -19,11 +19,29 @@ PODS:
     - Amplify (= 1.0.0)
     - AWSCore (~> 2.13.4)
     - AWSMobileClient (~> 2.13.4)
+  - BoringSSL-GRPC (0.0.4):
+    - BoringSSL-GRPC/Implementation (= 0.0.4)
+    - BoringSSL-GRPC/Interface (= 0.0.4)
+  - BoringSSL-GRPC/Implementation (0.0.4):
+    - BoringSSL-GRPC/Interface (= 0.0.4)
+  - BoringSSL-GRPC/Interface (0.0.4)
+  - gRPC-Core (1.24.2):
+    - gRPC-Core/Implementation (= 1.24.2)
+    - gRPC-Core/Interface (= 1.24.2)
+  - gRPC-Core/Implementation (1.24.2):
+    - BoringSSL-GRPC (= 0.0.4)
+    - gRPC-Core/Interface (= 1.24.2)
+  - gRPC-Core/Interface (1.24.2)
+  - SwiftGRPC (0.11.0):
+    - gRPC-Core (~> 1.24.1)
+    - SwiftProtobuf (~> 1.7.0)
   - SwiftLint (0.39.2)
+  - SwiftProtobuf (1.7.0)
 
 DEPENDENCIES:
   - Amplify
   - AmplifyPlugins/AWSCognitoAuthPlugin
+  - SwiftGRPC
   - SwiftLint (~> 0.39)
 
 SPEC REPOS:
@@ -36,7 +54,11 @@ SPEC REPOS:
     - AWSCore
     - AWSMobileClient
     - AWSPluginsCore
+    - BoringSSL-GRPC
+    - gRPC-Core
+    - SwiftGRPC
     - SwiftLint
+    - SwiftProtobuf
 
 SPEC CHECKSUMS:
   Amplify: d993f9ab89645ffa58616b23f95a22e1038f46a2
@@ -47,8 +69,12 @@ SPEC CHECKSUMS:
   AWSCore: 06beea22b6bdbfe9f5ab5015c6901e8475c746a8
   AWSMobileClient: 33ecce524fbc011d543dae8306ca29a43ecb72e5
   AWSPluginsCore: bf9e284d77603892740526377af767498697b729
+  BoringSSL-GRPC: b8d2e9fca6d3870aec81ee7d583869caec2a6076
+  gRPC-Core: 5ca379163f100dfbc55214942ab7d23423513a17
+  SwiftGRPC: daeb5abeec734ee2a09072aed3fca1c2341a4869
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
+  SwiftProtobuf: 4fd9645e69b72cbae6ec8da5be0cdd20ca6565dd
 
-PODFILE CHECKSUM: 8826e25549c90c97f1ee74d03cdf7986890f6161
+PODFILE CHECKSUM: 399335223e1cb5224735bf1e9ed32847032899a1
 
 COCOAPODS: 1.9.3

@@ -8,6 +8,7 @@
 
 import UIKit
 import Amplify
+import SwiftGRPC
 
 class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
@@ -110,6 +111,35 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     // MARK: Actions
     @IBAction func unwindToOnboarding(_ sender: UIStoryboardSegue){
         print("un wound")
+    }
+
+    @IBAction func handleGRPC(_ sender: Any) {
+
+        self.add()
+
+    }
+
+    func add(){
+        let address = "example-service-a.singularitynet.io:8092"
+        print("version", gRPC.version)
+        let channel = Channel(address: address, secure: false)
+        let service = Escrow_ExampleServiceServiceClient(channel: channel)
+
+        let messageData = "hello, I'm Vivek!".data(using: .utf8)
+
+        let method = "/escrow.ExampleService/Ping"
+
+        let metadata = Metadata()
+
+        do {
+            let call = try channel.makeCall(method)
+            try call.start(.unary, metadata: metadata, message: messageData) { (callResult) in
+                print("result   ",callResult.statusCode, callResult.statusMessage, callResult.resultData)
+            }
+        } catch  {
+            print("make call error", error)
+        }
+
     }
 
 }
