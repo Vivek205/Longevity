@@ -5,6 +5,7 @@ target 'Longevity' do
   use_frameworks!
   pod 'Amplify'
   pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
+  pod 'AmplifyPlugins/AWSAPIPlugin'
   pod 'SwiftLint', '~> 0.39'
   pod 'gRPC-Swift', '1.0.0-alpha.12'
   # Pods for Longevity

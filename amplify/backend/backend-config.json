@@ -1,20 +1,5 @@
 {
-	"function": {
-		"AdminQueries9a47b0da": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "auth",
-					"resourceName": "longevityNewResource",
-					"attributes": [
-						"UserPoolId"
-					]
-				}
-			]
-		}
-	},
+	"function": {},
 	"api": {},
 	"auth": {
 		"longevityNewResource": {
