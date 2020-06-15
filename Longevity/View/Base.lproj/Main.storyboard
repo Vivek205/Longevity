@@ -135,7 +135,7 @@
                                 <rect key="frame" x="20" y="664.5" width="374" height="64.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi9-oa-dZr">
-                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="64.5"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="64.5"/>
                                         <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <state key="normal" title="Signup">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -145,20 +145,13 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKO-6b-4ge">
-                                        <rect key="frame" x="131.5" y="0.0" width="111" height="64.5"/>
+                                        <rect key="frame" x="197" y="0.0" width="177" height="64.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <state key="normal" title="Login">
                                             <color key="titleColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="DKT-YJ-RMe" kind="show" identifier="onboardingToLogin" id="U5g-zc-jaq"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yu5-Fc-EZK" userLabel="GRPC">
-                                        <rect key="frame" x="262.5" y="0.0" width="111.5" height="64.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="handleGRPC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o6P-LW-Jc8"/>
                                         </connections>
                                     </button>
                                 </subviews>
