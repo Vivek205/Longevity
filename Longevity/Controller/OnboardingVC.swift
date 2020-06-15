@@ -57,7 +57,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             frame.size.width = screenWidth
             let imgView = UIImageView(frame: frame)
             imgView.image = onboardingContent.images[index]
-            imgView.contentMode = .scaleToFill
+            imgView.contentMode = .scaleAspectFit
             imgView.clipsToBounds = true
             scrollView.insertSubview(imgView, at: 0)
         }
@@ -71,7 +71,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         signupButton.layer.cornerRadius = CGFloat(10)
         signupButton.layer.masksToBounds = true
 
-        loginButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        loginButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         loginButton.layer.cornerRadius = CGFloat(10)
         loginButton.layer.borderWidth = 2
         loginButton.layer.masksToBounds = true
@@ -149,3 +149,23 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
 }
+
+// MARK: Spinner
+fileprivate var spinnerView: UIView?
+extension UIViewController{
+    func showSpinner() {
+        spinnerView = UIView(frame: self.view.bounds)
+        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = spinnerView?.center as! CGPoint
+        spinner.startAnimating()
+        spinnerView?.addSubview(spinner)
+        self.view.addSubview(spinnerView!)
+    }
+
+    func removeSpinner() {
+        spinnerView?.removeFromSuperview()
+        spinnerView = nil
+    }
+}
+

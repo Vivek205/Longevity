@@ -63,12 +63,12 @@ class LoginVC: UIViewController {
     }
 
     func highlightImageButton(imgButton: UIView){
-        imgButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
-        imgButton.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        imgButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        imgButton.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         for subview in imgButton.subviews{
             if let item = subview as? UIImageView{
                 item.image = item.image?.withRenderingMode(.alwaysTemplate)
-                item.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+                item.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
             }
         }
     }
@@ -221,21 +221,3 @@ class LoginVC: UIViewController {
 
 }
 
-// MARK: Spinner
-fileprivate var spinnerView: UIView?
-extension UIViewController{
-    func showSpinner() {
-        spinnerView = UIView(frame: self.view.bounds)
-        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
-        spinner.center = spinnerView?.center as! CGPoint
-        spinner.startAnimating()
-        spinnerView?.addSubview(spinner)
-        self.view.addSubview(spinnerView!)
-    }
-
-    func removeSpinner() {
-        spinnerView?.removeFromSuperview()
-        spinnerView = nil
-    }
-}

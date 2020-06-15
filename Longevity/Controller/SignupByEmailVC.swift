@@ -39,13 +39,17 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "SignupEmailToConfirm", sender: self)
+                self.removeSpinner()
             }
         }
 
         func onFailure() {
-            let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
-            alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-            return self.present(alert, animated: true, completion: nil)
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
+                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
+                return self.present(alert, animated: true, completion: nil)
+            }
         }
 
         if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
@@ -58,7 +62,8 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             }
 
             validate()
-
+            self.showSpinner()
+            
             let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
             let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
             
@@ -104,3 +109,4 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
     }
 
 }
+
