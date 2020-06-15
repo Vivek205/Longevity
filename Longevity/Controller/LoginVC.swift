@@ -92,9 +92,9 @@ class LoginVC: UIViewController {
         group.enter()
 
 
-        if let username = self.formEmail.text, let password = self.formPassword.text{
+        if let email = self.formEmail.text, let password = self.formPassword.text{
             DispatchQueue.global().async {
-                _ = Amplify.Auth.signIn(username: username, password: password) { result in
+                _ = Amplify.Auth.signIn(username: email, password: password) { result in
                     print("result", result)
                     switch result {
                     case .success(_):
