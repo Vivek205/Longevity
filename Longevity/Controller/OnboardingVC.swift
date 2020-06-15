@@ -8,6 +8,9 @@
 
 import UIKit
 import Amplify
+import GRPC
+import NIO
+
 
 class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
@@ -110,6 +113,50 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     // MARK: Actions
     @IBAction func unwindToOnboarding(_ sender: UIStoryboardSegue){
         print("un wound")
+    }
+
+    @IBAction func handleGRPC(_ sender: Any) {
+
+        self.add()
+
+    }
+
+    func add(){
+        let address = "example-service-a.singularitynet.io:8092"
+        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+        let channel = ClientConnection.insecure(group: group).connect(host: "example-service-a.singularitynet.io", port: 8092)
+
+        let service = Escrow_ExampleServiceClient(channel: channel)
+
+        var input = Escrow_Input()
+        input.message = "Hello Vivek here"
+
+        let request = service.ping(input)
+
+        do {
+            let response = try request.response.wait()
+            print("response" , response)
+        } catch  {
+            print("error", error)
+        }
+//        let channel = Channel(address: address, secure: false)
+//        let service = Escrow_ExampleServiceServiceClient(channel: channel)
+//
+//        let messageData = "hello, I'm Vivek!".data(using: .utf8)
+//
+//        let method = "/escrow.ExampleService/Ping"
+//
+//        let metadata = Metadata()
+//
+//        do {
+//            let call = try channel.makeCall(method)
+//            try call.start(.unary, metadata: metadata, message: messageData) { (callResult) in
+//                print("result   ",callResult.statusCode, callResult.statusMessage, callResult.resultData)
+//            }
+//        } catch  {
+//            print("make call error", error)
+//        }
+
     }
 
 }

@@ -43,39 +43,7 @@
 			"lastPushDirHash": "hwsBAnNC5Su0Fe4izqF9GJ63vwk="
 		}
 	},
-	"api": {
-		"AdminQueries": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "auth",
-					"resourceName": "longevityNewResource",
-					"attributes": [
-						"UserPoolId"
-					]
-				},
-				{
-					"category": "function",
-					"resourceName": "AdminQueries9a47b0da",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			],
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
-				"logicalId": "apiAdminQueries"
-			},
-			"lastPushTimeStamp": "2020-06-15T03:30:08.168Z",
-			"output": {
-				"ApiName": "AdminQueries",
-				"RootUrl": "https://kgx2hb5rvh.execute-api.us-west-2.amazonaws.com/dev"
-			},
-			"lastPushDirHash": "zpDP/PHaCaFD0lp6diFO2ftUowo="
-		}
-	},
+	"api": {},
 	"auth": {
 		"longevityNewResource": {
 			"service": "Cognito",

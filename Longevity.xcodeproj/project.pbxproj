@@ -8,6 +8,9 @@
 
 /* Begin PBXBuildFile section */
 		AC0C416F4AA8C4C13933C2DB /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 5B311A3AEA3AD0E49E7A68FD /* Pods_Longevity.framework */; };
+		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
+		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
+		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
 		E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A332487B7A40068030E /* TermsOfServiceVC.swift */; };
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
@@ -36,6 +39,9 @@
 		5B311A3AEA3AD0E49E7A68FD /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C34CA09B51C44E4979E23741 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		CF7A81595EB766C43240C5BE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
+		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
+		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
 		E2386A332487B7A40068030E /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
@@ -91,6 +97,24 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E23269A824938E6200D2384C /* GRPC */ = {
+			isa = PBXGroup;
+			children = (
+				E23269A924938E6D00D2384C /* ExampleService */,
+			);
+			path = GRPC;
+			sourceTree = "<group>";
+		};
+		E23269A924938E6D00D2384C /* ExampleService */ = {
+			isa = PBXGroup;
+			children = (
+				E23269AE2493B5AA00D2384C /* example_service.grpc.swift */,
+				E23269AC2493AFF600D2384C /* example_service.proto */,
+				E23269AA2493922700D2384C /* example_service.pb.swift */,
+			);
+			path = ExampleService;
+			sourceTree = "<group>";
+		};
 		E23A2CCB24813BCD0051EE7A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -131,6 +155,7 @@
 		E2ECB8BD247FE2BA0020A27E /* Longevity */ = {
 			isa = PBXGroup;
 			children = (
+				E23269A824938E6200D2384C /* GRPC */,
 				E2BCA52724853826007204B9 /* AWS */,
 				E23A2CCB24813BCD0051EE7A /* Fonts */,
 				E2ECB8D4247FE3AE0020A27E /* Model */,
@@ -318,8 +343,10 @@
 			buildActionMask = 2147483647;
 			files = (
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
+				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
+				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
@@ -332,6 +359,7 @@
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E2BCA57024865303007204B9 /* LoginVC.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
+				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
