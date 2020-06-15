@@ -1,6 +1,18 @@
 {
     "UserAgent": "aws-amplify-cli/2.0",
     "Version": "1.0",
+    "api": {
+        "plugins": {
+            "awsAPIPlugin": {
+                "AdminQueries": {
+                    "endpointType": "REST",
+                    "endpoint": "https://kgx2hb5rvh.execute-api.us-west-2.amazonaws.com/dev",
+                    "region": "us-west-2",
+                    "authorizationType": "AWS_IAM"
+                }
+            }
+        }
+    },
     "auth": {
         "plugins": {
             "awsCognitoAuthPlugin": {
@@ -12,16 +24,16 @@
                 "CredentialsProvider": {
                     "CognitoIdentity": {
                         "Default": {
-                            "PoolId": "us-west-2:e8743b67-3497-4492-806e-4f45891f7cfe",
+                            "PoolId": "us-west-2:347c52fa-eb4d-4d51-8fa6-e5d0979d1660",
                             "Region": "us-west-2"
                         }
                     }
                 },
                 "CognitoUserPool": {
                     "Default": {
-                        "PoolId": "us-west-2_KPzGsAdjH",
-                        "AppClientId": "48h0cv88cfdbhdual1fpjopocn",
-                        "AppClientSecret": "cokln09ao9skv7ba3eiceg98nfcjlm26cre39oqllm28tkvgq06",
+                        "PoolId": "us-west-2_vTgAvx6V8",
+                        "AppClientId": "gv8idv85nrbkop4p0843daks9",
+                        "AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
                         "Region": "us-west-2"
                     }
                 },
@@ -36,6 +48,20 @@
                 },
                 "Auth": {
                     "Default": {
+                        "OAuth": {
+                            "WebDomain": "longevity-new-dev.auth.us-west-2.amazoncognito.com",
+                            "AppClientId": "gv8idv85nrbkop4p0843daks9",
+                            "AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
+                            "SignInRedirectURI": "myapp://",
+                            "SignOutRedirectURI": "myapp://",
+                            "Scopes": [
+                                "phone",
+                                "email",
+                                "openid",
+                                "profile",
+                                "aws.cognito.signin.user.admin"
+                            ]
+                        },
                         "authenticationFlowType": "USER_SRP_AUTH"
                     }
                 }

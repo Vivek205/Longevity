@@ -1,18 +1,45 @@
 {
 	"function": {
-		"longevityDevCustomMessage": {
-			"build": true,
+		"AdminQueries9a47b0da": {
+			"service": "Lambda",
 			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
-		},
-		"longevityDevPreSignup": {
 			"build": true,
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "longevityNewResource",
+					"attributes": [
+						"UserPoolId"
+					]
+				}
+			]
+		}
+	},
+	"api": {
+		"AdminQueries": {
+			"service": "API Gateway",
 			"providerPlugin": "awscloudformation",
-			"service": "Lambda"
+			"dependsOn": [
+				{
+					"category": "auth",
+					"resourceName": "longevityNewResource",
+					"attributes": [
+						"UserPoolId"
+					]
+				},
+				{
+					"category": "function",
+					"resourceName": "AdminQueries9a47b0da",
+					"attributes": [
+						"Arn",
+						"Name"
+					]
+				}
+			]
 		}
 	},
 	"auth": {
-		"longevityDev6": {
+		"longevityNewResource": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []

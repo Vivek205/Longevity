@@ -1,4 +1,0 @@
-{
-    "modules": "email-filter-blacklist,email-filter-whitelist",
-    "resourceName": "longevityDevPreSignup"
-}

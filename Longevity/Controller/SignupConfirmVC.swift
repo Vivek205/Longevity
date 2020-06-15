@@ -10,7 +10,7 @@ import UIKit
 import Amplify
 
 class SignupConfirmVC: UIViewController {
-    var userPhoneNumber: String?
+    var userEmail: String?
 
     // MARK: Outlets
     @IBOutlet weak var formOTP: UITextField!
@@ -21,7 +21,7 @@ class SignupConfirmVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleConfirmSignup(_ sender: Any) {
-        print("username", userPhoneNumber)
+        print("username", userEmail)
         var confirmationSuccess = false
 
         if let confirmationCode = formOTP.text {
@@ -29,7 +29,7 @@ class SignupConfirmVC: UIViewController {
             group.enter()
 
             DispatchQueue.global().async {
-                _ = Amplify.Auth.confirm(userAttribute: .phoneNumber, confirmationCode: confirmationCode) { result in
+                _ = Amplify.Auth.confirmSignUp(for: self.   userEmail!, confirmationCode: confirmationCode) { result in
                     switch result {
                     case .success(_):
                         print("Confirm signUp succeeded")

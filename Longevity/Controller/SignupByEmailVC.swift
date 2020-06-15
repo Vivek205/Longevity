@@ -50,7 +50,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             DispatchQueue.global().async {
                  let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
                            let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-                           _ = Amplify.Auth.signUp(username: name, password: password, options: options) { result in
+                           _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
                                switch result {
                                case .success(let signUpResult):
                                     print("======================signup result \n \n", signUpResult, "\n \n")
@@ -114,7 +114,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
 
     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
         let destinationVC = segue.destination as! SignupConfirmVC
-        destinationVC.userPhoneNumber = formPhone.text!
+        destinationVC.userEmail = formEmail.text!
     }
 
 }

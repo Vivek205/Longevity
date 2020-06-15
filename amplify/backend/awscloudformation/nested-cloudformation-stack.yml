@@ -68,43 +68,64 @@
 				}
 			}
 		},
-		"functionlongevityDevCustomMessage": {
+		"functionAdminQueries9a47b0da": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevCustomMessage-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/function/AdminQueries9a47b0da-cloudformation-template.json",
 				"Parameters": {
-					"modules": "verification-link",
-					"resourceName": "longevityDevCustomMessage",
-					"REDIRECTURL": "",
-					"EMAILSUBJECT": "vivek.n@singularitynet.io",
-					"EMAILMESSAGE": "Please click this link to reset your password",
+					"authlongevityNewResourceUserPoolId": {
+						"Fn::GetAtt": [
+							"authlongevityNewResource",
+							"Outputs.UserPoolId"
+						]
+					},
 					"env": "dev"
 				}
 			}
 		},
-		"functionlongevityDevPreSignup": {
+		"apiAdminQueries": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/function/longevityDevPreSignup-cloudformation-template.json",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
 				"Parameters": {
-					"modules": "email-filter-blacklist,email-filter-whitelist",
-					"resourceName": "longevityDevPreSignup",
-					"DOMAINWHITELIST": "\"gmail.com, singularitynet.io\"",
-					"DOMAINBLACKLIST": "\"grr.la, shakelakers.com\"",
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"authlongevityNewResourceUserPoolId": {
+						"Fn::GetAtt": [
+							"authlongevityNewResource",
+							"Outputs.UserPoolId"
+						]
+					},
+					"functionAdminQueries9a47b0daArn": {
+						"Fn::GetAtt": [
+							"functionAdminQueries9a47b0da",
+							"Outputs.Arn"
+						]
+					},
+					"functionAdminQueries9a47b0daName": {
+						"Fn::GetAtt": [
+							"functionAdminQueries9a47b0da",
+							"Outputs.Name"
+						]
+					},
 					"env": "dev"
 				}
 			}
 		},
-		"authlongevityDev6": {
+		"authlongevityNewResource": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-longevity-dev-115806-deployment/amplify-cfn-templates/auth/longevityDev6-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
 				"Parameters": {
-					"identityPoolName": "longevity_dev_6_id_pool",
-					"allowUnauthenticatedIdentities": true,
-					"resourceNameTruncated": "longev3a23c480",
-					"userPoolName": "longevity_dev_6_user_pool",
-					"autoVerifiedAttributes": "email",
+					"identityPoolName": "longevityNewIdPool",
+					"allowUnauthenticatedIdentities": false,
+					"resourceNameTruncated": "longev5356d278",
+					"userPoolName": "longevityNewUserPool",
+					"autoVerifiedAttributes": "phone_number",
 					"mfaConfiguration": "OPTIONAL",
 					"mfaTypes": "SMS Text Message",
 					"smsAuthenticationMessage": "Your authentication code is {####}",
@@ -114,25 +135,30 @@
 					"defaultPasswordPolicy": false,
 					"passwordPolicyMinLength": 8,
 					"passwordPolicyCharacters": "",
-					"requiredAttributes": "email,phone_number",
+					"requiredAttributes": "email",
 					"userpoolClientGenerateSecret": true,
 					"userpoolClientRefreshTokenValidity": "1",
 					"userpoolClientWriteAttributes": "email",
 					"userpoolClientReadAttributes": "email",
-					"userpoolClientLambdaRole": "longev3a23c480_userpoolclient_lambda_role",
+					"userpoolClientLambdaRole": "longev5356d278_userpoolclient_lambda_role",
 					"userpoolClientSetAttributes": false,
 					"useDefault": "manual",
 					"authSelections": "identityPoolAndUserPool",
-					"resourceName": "longevityDev6",
+					"resourceName": "longevityNewResource",
 					"thirdPartyAuth": true,
 					"authProviders": "graph.facebook.com,accounts.google.com",
-					"usernameAttributes": "email, phone_number",
+					"usernameAttributes": "email",
 					"userPoolGroups": false,
 					"adminQueries": true,
 					"triggers": "{}",
-					"hostedUI": false,
+					"hostedUI": true,
+					"hostedUIDomainName": "longevity-new",
+					"authProvidersUserPool": "Facebook,Google",
 					"audiences": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com,689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
+					"hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
+					"oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
 					"userPoolGroupList": "",
+					"adminQueryGroup": "customGroup",
 					"authRoleArn": {
 						"Fn::GetAtt": [
 							"AuthRole",
@@ -153,6 +179,7 @@
 					"facebookAppId": "721380498616396",
 					"googleClientId": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
 					"googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
+					"hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"721380498616396\",\"client_secret\":\"1d9dbfb062f86e2bab1c46760503d822\"},{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com\",\"client_secret\":\"9g8eGQkQIF1OqkyNcxtPb43z\"}]",
 					"env": "dev"
 				}
 			}
@@ -161,7 +188,7 @@
 			"DependsOn": [
 				"AuthRole",
 				"UnauthRole",
-				"authlongevityDev6"
+				"authlongevityNewResource"
 			],
 			"Type": "AWS::Lambda::Function",
 			"Properties": {
@@ -244,7 +271,7 @@
 				},
 				"idpId": {
 					"Fn::GetAtt": [
-						"authlongevityDev6",
+						"authlongevityNewResource",
 						"Outputs.IdentityPoolId"
 					]
 				},

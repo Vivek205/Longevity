@@ -85,41 +85,6 @@ class SignupVC: UIViewController {
             }
         }
     }
-
-    @IBAction func handleSignup(_ sender: Any) {
-        if let email = userEmail.text, let name = userName.text, let password = userPassword.text {
-            print("email", email)
-            print("name", name)
-            print("password", password)
-            let userAttributes = [AuthUserAttribute(.email, value: email ), AuthUserAttribute(.name, value: name)]
-            let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-
-            let group = DispatchGroup()
-            group.enter()
-
-            DispatchQueue.global().async {
-                _ = Amplify.Auth.signUp(username: name, password: password, options: options, listener: { (result) in
-                    switch result{
-                    case .success(let signupResult):
-                        if case let .confirmUser(deliveryDetails, _) = signupResult.nextStep {
-                            print("delivery details =========== \(String(describing: deliveryDetails))")
-                            group.leave()
-                        } else {
-                            print("Singup Complete")
-                            group.leave()
-                        }
-                    case .failure(let error):
-                        print("============= \n An error occured while registering a user \(error)")
-                        group.leave()
-                    }
-                })
-            }
-
-            group.wait()
-            redirectToLoginPage()
-
-        }
-    }
     
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
