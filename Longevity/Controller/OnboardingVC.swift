@@ -81,25 +81,29 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    func getCurrentUser(){
-        var userSignedIn = false
-        let group = DispatchGroup()
-        group.enter()
+    func getCurrentUser() {
+        func onSuccess(userSignedIn: Bool) {
+            if userSignedIn {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
+                }
+            }
+        }
+
+        func onFailure(error: AuthError) {
+            print("Fetch session failed with error \(error)")
+            print(error)
+        }
+
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
-                print("Is user signed in - \(session.isSignedIn)")
-                userSignedIn = session.isSignedIn
-                group.leave()
+                onSuccess(userSignedIn: session.isSignedIn)
             case .failure(let error):
-                print("Fetch session failed with error \(error)")
-                group.leave()
+                onFailure(error: error)
             }
         }
-        group.wait()
-        if userSignedIn{
-            self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
-        }
+
     }
 
     // MARK: ScrolView delegate method
@@ -139,23 +143,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         } catch  {
             print("error", error)
         }
-//        let channel = Channel(address: address, secure: false)
-//        let service = Escrow_ExampleServiceServiceClient(channel: channel)
-//
-//        let messageData = "hello, I'm Vivek!".data(using: .utf8)
-//
-//        let method = "/escrow.ExampleService/Ping"
-//
-//        let metadata = Metadata()
-//
-//        do {
-//            let call = try channel.makeCall(method)
-//            try call.start(.unary, metadata: metadata, message: messageData) { (callResult) in
-//                print("result   ",callResult.statusCode, callResult.statusMessage, callResult.resultData)
-//            }
-//        } catch  {
-//            print("make call error", error)
-//        }
 
     }
 
