@@ -17,7 +17,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
          do {
-//                try Amplify.add(plugin: AWSCognitoAuthPlugin())
+                try Amplify.add(plugin: AWSCognitoAuthPlugin())
                 try Amplify.configure()
                 print("Amplify configured with auth plugin")
             } catch {

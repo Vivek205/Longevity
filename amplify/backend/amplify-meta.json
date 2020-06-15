@@ -1,107 +1,75 @@
 {
-	"providers": {
-		"awscloudformation": {
-			"AuthRoleName": "amplify-longevitynew-dev-84548-authRole",
-			"UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-unauthRole",
-			"AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-authRole",
-			"Region": "us-west-2",
-			"DeploymentBucketName": "amplify-longevitynew-dev-84548-deployment",
-			"UnauthRoleName": "amplify-longevitynew-dev-84548-unauthRole",
-			"StackName": "amplify-longevitynew-dev-84548",
-			"StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevitynew-dev-84548/87efc4e0-aeb6-11ea-b93d-0aa1d8d9d478",
-			"AmplifyAppId": "dc23k0zidmfz5"
-		}
-	},
-	"function": {
-		"AdminQueries9a47b0da": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "auth",
-					"resourceName": "longevityNewResource",
-					"attributes": [
-						"UserPoolId"
-					]
-				}
-			],
-			"lastBuildTimeStamp": "2020-06-15T03:24:04.164Z",
-			"lastPackageTimeStamp": "2020-06-15T03:24:06.386Z",
-			"distZipFilename": "AdminQueries9a47b0da-426f7154766154545a4f-build.zip",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/function/AdminQueries9a47b0da-cloudformation-template.json",
-				"logicalId": "functionAdminQueries9a47b0da"
-			},
-			"lastPushTimeStamp": "2020-06-15T03:30:08.168Z",
-			"output": {
-				"Region": "us-west-2",
-				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:AdminQueries9a47b0da-dev",
-				"Name": "AdminQueries9a47b0da-dev",
-				"LambdaExecutionRole": "AdminQueries9a47b0daLambdaRole-dev"
-			},
-			"lastPushDirHash": "hwsBAnNC5Su0Fe4izqF9GJ63vwk="
-		}
-	},
-	"api": {
-		"AdminQueries": {
-			"service": "API Gateway",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [
-				{
-					"category": "auth",
-					"resourceName": "longevityNewResource",
-					"attributes": [
-						"UserPoolId"
-					]
-				},
-				{
-					"category": "function",
-					"resourceName": "AdminQueries9a47b0da",
-					"attributes": [
-						"Arn",
-						"Name"
-					]
-				}
-			],
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/api/admin-queries-cloudformation-template.json",
-				"logicalId": "apiAdminQueries"
-			},
-			"lastPushTimeStamp": "2020-06-15T03:30:08.168Z",
-			"output": {
-				"ApiName": "AdminQueries",
-				"RootUrl": "https://kgx2hb5rvh.execute-api.us-west-2.amazonaws.com/dev"
-			},
-			"lastPushDirHash": "zpDP/PHaCaFD0lp6diFO2ftUowo="
-		}
-	},
-	"auth": {
-		"longevityNewResource": {
-			"service": "Cognito",
-			"providerPlugin": "awscloudformation",
-			"dependsOn": [],
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
-				"logicalId": "authlongevityNewResource"
-			},
-			"lastPushTimeStamp": "2020-06-15T03:30:08.168Z",
-			"output": {
-				"AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
-				"AppClientID": "gv8idv85nrbkop4p0843daks9",
-				"HostedUIDomain": "longevity-new-dev",
-				"FacebookWebClient": "721380498616396",
-				"OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
-				"UserPoolName": "longevityNewUserPool",
-				"GoogleWebClient": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-				"CreatedSNSRole": "arn:aws:iam::533793137436:role/snsundefined84548-dev",
-				"UserPoolId": "us-west-2_vTgAvx6V8",
-				"AppClientIDWeb": "7qkn46e7uc1fl33malnnqbmtih",
-				"IdentityPoolId": "us-west-2:347c52fa-eb4d-4d51-8fa6-e5d0979d1660",
-				"IdentityPoolName": "longevityNewIdPool__dev",
-				"GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
-			},
-			"lastPushDirHash": "40r0UfA/PcLUsT4wBqeSqL80Nrg="
-		}
-	}
+    "providers": {
+        "awscloudformation": {
+            "AuthRoleName": "amplify-longevitynew-dev-84548-authRole",
+            "UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-authRole",
+            "Region": "us-west-2",
+            "DeploymentBucketName": "amplify-longevitynew-dev-84548-deployment",
+            "UnauthRoleName": "amplify-longevitynew-dev-84548-unauthRole",
+            "StackName": "amplify-longevitynew-dev-84548",
+            "StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevitynew-dev-84548/87efc4e0-aeb6-11ea-b93d-0aa1d8d9d478",
+            "AmplifyAppId": "dc23k0zidmfz5"
+        }
+    },
+    "function": {
+        "AdminQueries9a47b0da": {
+            "service": "Lambda",
+            "providerPlugin": "awscloudformation",
+            "build": true,
+            "dependsOn": [
+                {
+                    "category": "auth",
+                    "resourceName": "longevityNewResource",
+                    "attributes": [
+                        "UserPoolId"
+                    ]
+                }
+            ],
+            "lastBuildTimeStamp": "2020-06-15T03:24:04.164Z",
+            "lastPackageTimeStamp": "2020-06-15T03:24:06.386Z",
+            "distZipFilename": "AdminQueries9a47b0da-426f7154766154545a4f-build.zip",
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/function/AdminQueries9a47b0da-cloudformation-template.json",
+                "logicalId": "functionAdminQueries9a47b0da"
+            },
+            "lastPushTimeStamp": "2020-06-15T06:29:52.279Z",
+            "output": {
+                "Region": "us-west-2",
+                "Arn": "arn:aws:lambda:us-west-2:533793137436:function:AdminQueries9a47b0da-dev",
+                "Name": "AdminQueries9a47b0da-dev",
+                "LambdaExecutionRole": "AdminQueries9a47b0daLambdaRole-dev"
+            },
+            "lastPushDirHash": "hwsBAnNC5Su0Fe4izqF9GJ63vwk="
+        }
+    },
+    "api": {},
+    "auth": {
+        "longevityNewResource": {
+            "service": "Cognito",
+            "providerPlugin": "awscloudformation",
+            "dependsOn": [],
+            "providerMetadata": {
+                "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
+                "logicalId": "authlongevityNewResource"
+            },
+            "lastPushTimeStamp": "2020-06-15T06:29:52.280Z",
+            "output": {
+                "AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
+                "AppClientID": "gv8idv85nrbkop4p0843daks9",
+                "HostedUIDomain": "longevity-new-dev",
+                "FacebookWebClient": "721380498616396",
+                "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
+                "UserPoolName": "longevityNewUserPool",
+                "GoogleWebClient": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
+                "CreatedSNSRole": "arn:aws:iam::533793137436:role/snsundefined84548-dev",
+                "UserPoolId": "us-west-2_vTgAvx6V8",
+                "AppClientIDWeb": "7qkn46e7uc1fl33malnnqbmtih",
+                "IdentityPoolId": "us-west-2:347c52fa-eb4d-4d51-8fa6-e5d0979d1660",
+                "IdentityPoolName": "longevityNewIdPool__dev",
+                "GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
+            },
+            "lastPushDirHash": "40r0UfA/PcLUsT4wBqeSqL80Nrg="
+        }
+    }
 }

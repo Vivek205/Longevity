@@ -32,7 +32,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         initScrollViewWithImages()
         styleButtons()
         hideNavigationBar()
-//        getCurrentUser()
+        getCurrentUser()
     }
 
     override func viewDidAppear(_ animated: Bool) {
