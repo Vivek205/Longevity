@@ -20,82 +20,71 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 //
-import Dispatch
 import Foundation
-import SwiftGRPC
+import GRPC
+import NIO
+import NIOHTTP1
 import SwiftProtobuf
 
-internal protocol Escrow_ExampleServicePingCall: ClientCallUnary {}
 
-fileprivate final class Escrow_ExampleServicePingCallBase: ClientCallUnaryBase<Escrow_Input, Escrow_Output>, Escrow_ExampleServicePingCall {
-  override class var method: String { return "/escrow.ExampleService/Ping" }
+/// Usage: instantiate Escrow_ExampleServiceClient, then call methods of this protocol to make API calls.
+public protocol Escrow_ExampleServiceClientProtocol {
+  func ping(_ request: Escrow_Input, callOptions: CallOptions?) -> UnaryCall<Escrow_Input, Escrow_Output>
 }
 
+public final class Escrow_ExampleServiceClient: GRPCClient, Escrow_ExampleServiceClientProtocol {
+  public let channel: GRPCChannel
+  public var defaultCallOptions: CallOptions
 
-/// Instantiate Escrow_ExampleServiceServiceClient, then call methods of this protocol to make API calls.
-internal protocol Escrow_ExampleServiceService: ServiceClient {
-  /// Synchronous. Unary.
-  func ping(_ request: Escrow_Input, metadata customMetadata: Metadata) throws -> Escrow_Output
-  /// Asynchronous. Unary.
-  @discardableResult
-  func ping(_ request: Escrow_Input, metadata customMetadata: Metadata, completion: @escaping (Escrow_Output?, CallResult) -> Void) throws -> Escrow_ExampleServicePingCall
-
-}
-
-internal extension Escrow_ExampleServiceService {
-  /// Synchronous. Unary.
-  func ping(_ request: Escrow_Input) throws -> Escrow_Output {
-    return try self.ping(request, metadata: self.metadata)
-  }
-  /// Asynchronous. Unary.
-  @discardableResult
-  func ping(_ request: Escrow_Input, completion: @escaping (Escrow_Output?, CallResult) -> Void) throws -> Escrow_ExampleServicePingCall {
-    return try self.ping(request, metadata: self.metadata, completion: completion)
+  /// Creates a client for the escrow.ExampleService service.
+  ///
+  /// - Parameters:
+  ///   - channel: `GRPCChannel` to the service host.
+  ///   - defaultCallOptions: Options to use for each service call if the user doesn't provide them.
+  public init(channel: GRPCChannel, defaultCallOptions: CallOptions = CallOptions()) {
+    self.channel = channel
+    self.defaultCallOptions = defaultCallOptions
   }
 
-}
-
-internal final class Escrow_ExampleServiceServiceClient: ServiceClientBase, Escrow_ExampleServiceService {
-  /// Synchronous. Unary.
-  internal func ping(_ request: Escrow_Input, metadata customMetadata: Metadata) throws -> Escrow_Output {
-    return try Escrow_ExampleServicePingCallBase(channel)
-      .run(request: request, metadata: customMetadata)
-  }
-  /// Asynchronous. Unary.
-  @discardableResult
-  internal func ping(_ request: Escrow_Input, metadata customMetadata: Metadata, completion: @escaping (Escrow_Output?, CallResult) -> Void) throws -> Escrow_ExampleServicePingCall {
-    return try Escrow_ExampleServicePingCallBase(channel)
-      .start(request: request, metadata: customMetadata, completion: completion)
+  /// Unary call to Ping
+  ///
+  /// - Parameters:
+  ///   - request: Request to send to Ping.
+  ///   - callOptions: Call options; `self.defaultCallOptions` is used if `nil`.
+  /// - Returns: A `UnaryCall` with futures for the metadata, status and response.
+  public func ping(_ request: Escrow_Input, callOptions: CallOptions? = nil) -> UnaryCall<Escrow_Input, Escrow_Output> {
+    return self.makeUnaryCall(path: "/escrow.ExampleService/Ping",
+                              request: request,
+                              callOptions: callOptions ?? self.defaultCallOptions)
   }
 
 }
 
 /// To build a server, implement a class that conforms to this protocol.
-/// If one of the methods returning `ServerStatus?` returns nil,
-/// it is expected that you have already returned a status to the client by means of `session.close`.
-internal protocol Escrow_ExampleServiceProvider: ServiceProvider {
-  func ping(request: Escrow_Input, session: Escrow_ExampleServicePingSession) throws -> Escrow_Output
+public protocol Escrow_ExampleServiceProvider: CallHandlerProvider {
+  func ping(request: Escrow_Input, context: StatusOnlyCallContext) -> EventLoopFuture<Escrow_Output>
 }
 
 extension Escrow_ExampleServiceProvider {
-  internal var serviceName: String { return "escrow.ExampleService" }
+  public var serviceName: String { return "escrow.ExampleService" }
 
-  /// Determines and calls the appropriate request handler, depending on the request's method.
-  /// Throws `HandleMethodError.unknownMethod` for methods not handled by this service.
-  internal func handleMethod(_ method: String, handler: Handler) throws -> ServerStatus? {
-    switch method {
-    case "/escrow.ExampleService/Ping":
-      return try Escrow_ExampleServicePingSessionBase(
-        handler: handler,
-        providerBlock: { try self.ping(request: $0, session: $1 as! Escrow_ExampleServicePingSessionBase) })
-          .run()
-    default:
-      throw HandleMethodError.unknownMethod
+  /// Determines, calls and returns the appropriate request handler, depending on the request's method.
+  /// Returns nil for methods not handled by this service.
+  public func handleMethod(_ methodName: String, callHandlerContext: CallHandlerContext) -> GRPCCallHandler? {
+    switch methodName {
+    case "Ping":
+      return UnaryCallHandler(callHandlerContext: callHandlerContext) { context in
+        return { request in
+          self.ping(request: request, context: context)
+        }
+      }
+
+    default: return nil
     }
   }
 }
 
-internal protocol Escrow_ExampleServicePingSession: ServerSessionUnary {}
 
-fileprivate final class Escrow_ExampleServicePingSessionBase: ServerSessionUnaryBase<Escrow_Input, Escrow_Output>, Escrow_ExampleServicePingSession {}
-
+// Provides conformance to `GRPCPayload`
+extension Escrow_Input: GRPCProtobufPayload {}
+extension Escrow_Output: GRPCProtobufPayload {}
