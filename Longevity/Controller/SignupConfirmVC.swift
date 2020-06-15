@@ -29,7 +29,7 @@ class SignupConfirmVC: UIViewController {
             group.enter()
 
             DispatchQueue.global().async {
-                _ = Amplify.Auth.confirmSignUp(for: self.   userEmail!, confirmationCode: confirmationCode) { result in
+                _ = Amplify.Auth.confirmSignUp(for: self.userEmail!, confirmationCode: confirmationCode) { result in
                     switch result {
                     case .success(_):
                         print("Confirm signUp succeeded")
