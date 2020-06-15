@@ -83,8 +83,10 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
     func getCurrentUser() {
         func onSuccess(userSignedIn: Bool) {
+            print("usersigned in", userSignedIn)
             if userSignedIn {
                 DispatchQueue.main.async {
+                    print("is main thread",Thread.isMainThread)
                     self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
                 }
             }

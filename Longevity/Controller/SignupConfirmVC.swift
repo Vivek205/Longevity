@@ -21,33 +21,24 @@ class SignupConfirmVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleConfirmSignup(_ sender: Any) {
-        print("username", userEmail)
-        var confirmationSuccess = false
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
+            }
+        }
 
         if let confirmationCode = formOTP.text {
-            let group = DispatchGroup()
-            group.enter()
-
             DispatchQueue.global().async {
                 _ = Amplify.Auth.confirmSignUp(for: self.userEmail!, confirmationCode: confirmationCode) { result in
                     switch result {
                     case .success(_):
                         print("Confirm signUp succeeded")
-                        group.leave()
+                        onSuccess()
                     case .failure(let error):
                         print("An error occured while registering a user \(error)")
-                        group.leave()
                     }
                 }
             }
-
-            group.wait()
-            self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
         }
-
-self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
-
     }
-
-
 }

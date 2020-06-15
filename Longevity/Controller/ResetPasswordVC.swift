@@ -20,7 +20,6 @@ class ResetPasswordVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view.
     }
 
     // MARK: Actions
@@ -34,16 +33,11 @@ class ResetPasswordVC: UIViewController {
                            switch resetResult.nextStep {
                            case .confirmResetPasswordWithCode(let deliveryDetails, let info):
                                print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
-//                               resetSuccess = true
-//                               group.leave()
                            case .done:
                                print("Reset completed")
-//                               resetSuccess = true
-//                               group.leave()
                            }
                        } catch {
                            print("Reset passowrd failed with error \(error)")
-//                           group.leave()
                        }
                    }
         
@@ -85,6 +79,4 @@ class ResetPasswordVC: UIViewController {
         }
 
     }
-
-
 }

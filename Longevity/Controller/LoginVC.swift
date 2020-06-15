@@ -9,6 +9,8 @@
 import UIKit
 import Amplify
 
+fileprivate var spinnerView: UIView?
+
 class LoginVC: UIViewController {
     var username = ""
     
@@ -83,39 +85,41 @@ class LoginVC: UIViewController {
             }
         }
     }
+
+
+
     
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
-        var signinSuccess = false
-        let group = DispatchGroup()
-        group.enter()
-
-
-        if let email = self.formEmail.text, let password = self.formPassword.text{
-            DispatchQueue.global().async {
-                _ = Amplify.Auth.signIn(username: email, password: password) { result in
-                    print("result", result)
-                    switch result {
-                    case .success(_):
-                        print("Sign in succeeded")
-                        signinSuccess = true
-                        group.leave()
-                    case .failure(let error):
-                        print("Sign in failed \(error)")
-                        group.leave()
-                    }
+        if let email = self.formEmail.text, let password = self.formPassword.text {
+            self.showSpinner()
+            func onSuccess() {
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
                 }
             }
-        } else {
-            group.leave()
+
+            func onFailure(error: AuthError) {
+                print("Sign in failed \(error)")
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                }
+            }
+
+            _ = Amplify.Auth.signIn(username: email, password: password) { result in
+                print("result", result)
+                switch result {
+                case .success(_):
+                    print("Sign in succeeded")
+                    onSuccess()
+                case .failure(let error):
+                    onFailure(error: error)
+                }
+            }
         }
 
-
-        group.wait()
-        if signinSuccess{
-            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
-        }
     }
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
@@ -136,37 +140,64 @@ class LoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
+        self.showSpinner()
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+            }
+        }
+
+        func onFailure(error: AuthError) {
+            print("Sign in failed \(error)")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+
         _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
             switch result {
             case .success(let session):
                 print("Sign in succeeded")
                 print("session", session)
-                self.onSuccess()
+                onSuccess()
             case .failure(let error):
                 print("Sign in failed \(error)")
+                onFailure(error: error)
             }
         }
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
-            _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
-                switch result {
-                case .success(let session):
-                    print("Sign in succeeded")
-                    print("session", session)
-                    self.onSuccess()
-                case .failure(let error):
-                    print("Sign in failed \(error)")
-                }
+        self.showSpinner()
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
             }
-
-    }
-
-    func onSuccess(){
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
         }
+
+        func onFailure(error: AuthError) {
+            print("Sign in failed \(error)")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
+            switch result {
+            case .success(let session):
+                print("Sign in succeeded")
+                print("session", session)
+                onSuccess()
+            case .failure(let error):
+                print("Sign in failed \(error)")
+                onFailure(error: error)
+            }
+        }
+
     }
+
+
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
@@ -222,7 +253,7 @@ class LoginVC: UIViewController {
     }
 
 
-    func getuserAttributes(){
+    func getuserAttributes() {
         _ = Amplify.Auth.fetchUserAttributes() { (result) in
             switch result {
             case .success(let userAttributes):
@@ -241,3 +272,20 @@ class LoginVC: UIViewController {
 
 }
 
+ // MARK: Spinner
+extension UIViewController{
+    func showSpinner() {
+        spinnerView = UIView(frame: self.view.bounds)
+        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = spinnerView?.center as! CGPoint
+        spinner.startAnimating()
+        spinnerView?.addSubview(spinner)
+        self.view.addSubview(spinnerView!)
+    }
+
+    func removeSpinner() {
+        spinnerView?.removeFromSuperview()
+        spinnerView = nil
+    }
+}
