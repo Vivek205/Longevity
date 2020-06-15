@@ -49,7 +49,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         }
 
         if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
-            func validate(){
+            func validate() {
                 if(password != confirmPassword) {
                     let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
                     alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
@@ -81,8 +81,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
 
     }
 
-
-    func verifyPhone(){
+    func verifyPhone() {
         _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
             switch result {
             case .success(let deliveryDetails):

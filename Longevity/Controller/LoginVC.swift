@@ -9,8 +9,6 @@
 import UIKit
 import Amplify
 
-fileprivate var spinnerView: UIView?
-
 class LoginVC: UIViewController {
     var username = ""
     
@@ -202,55 +200,6 @@ class LoginVC: UIViewController {
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
     }
-    
-    //
-    //    @IBAction func handleResetPassword(_ sender: Any) {
-    //        var resetSuccess = false
-    //        let group = DispatchGroup()
-    //        group.enter()
-    //
-    //        DispatchQueue.global().async {
-    //            _ = Amplify.Auth.resetPassword(for: self.username) {(result) in
-    //                do {
-    //                    let resetResult = try result.get()
-    //                    switch resetResult.nextStep {
-    //                    case .confirmResetPasswordWithCode(let deliveryDetails, let info):
-    //                        print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
-    //                        resetSuccess = true
-    //                        group.leave()
-    //                    case .done:
-    //                        print("Reset completed")
-    //                        resetSuccess = true
-    //                        group.leave()
-    //                    }
-    //                } catch {
-    //                    print("Reset passowrd failed with error \(error)")
-    //                    group.leave()
-    //                }
-    //            }
-    //        }
-    //
-    //        group.wait()
-    //
-    //        if resetSuccess {
-    //            performSegue(withIdentifier: "LoginToResetPassword", sender: self)
-    //        }
-    //
-    //    }
-
-
-    func getCurrentUser(){
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                print()
-                print("Is user signed in - \(session)")
-                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
-            case .failure(let error):
-                print("Fetch session failed with error \(error)")
-            }
-        }
-    }
 
 
     func getuserAttributes() {
@@ -272,7 +221,8 @@ class LoginVC: UIViewController {
 
 }
 
- // MARK: Spinner
+// MARK: Spinner
+fileprivate var spinnerView: UIView?
 extension UIViewController{
     func showSpinner() {
         spinnerView = UIView(frame: self.view.bounds)
