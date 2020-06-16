@@ -43,30 +43,23 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     
 
     @IBAction func handleSignout(_ sender: Any) {
-        var signoutSuccess = false
-        let group = DispatchGroup()
-        group.enter()
-        print("entered group")
-        DispatchQueue.global().async {
-            _ = Amplify.Auth.signOut() { (result) in
-                switch result {
-                case .success:
-                    print("Successfully signed out")
-                    signoutSuccess = true
-                    group.leave()
-                case .failure(let error):
-                    print("Sign out failed with error \(error)")
-                    group.leave()
+        func onSuccess(isSignedOut: Bool) {
+            DispatchQueue.main.async {
+                if isSignedOut{
+                    self.performSegue(withIdentifier: "unwindTOCToOnboarding", sender: self)
                 }
             }
         }
-        print("outside dispatch")
-        group.wait()
-        print("signoutSuccess", signoutSuccess)
-        if signoutSuccess{
-            performSegue(withIdentifier: "unwindTOCToOnboarding", sender: self)
-        }
 
+        _ = Amplify.Auth.signOut() { (result) in
+            switch result {
+            case .success:
+                print("Successfully signed out")
+                onSuccess(isSignedOut: true)
+            case .failure(let error):
+                print("Sign out failed with error \(error)")
+            }
+        }
     }
 
     @IBAction func unwindToTermsOfService(_ sender: UIStoryboardSegue){
@@ -82,73 +75,57 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     }
     
     func getUserSession(){
-        let group = DispatchGroup()
-        group.enter()
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
                 print("Is user signed in - \(session)")
-                group.leave()
             case .failure(let error):
                 print("Fetch session failed with error \(error)")
             }
         }
-        group.wait()
     }
 
     func getUserAttributes(){
-        var emailVerified = false
-        let group = DispatchGroup()
-        group.enter()
-
-        DispatchQueue.global().async {
-            _ = Amplify.Auth.fetchUserAttributes() { result in
-                switch result {
-                case .success(let attributes):
-                    print("User attribtues - \(attributes)")
-                    for attribute in attributes {
-                        if attribute.key == .unknown("email_verified"){
-                            emailVerified = attribute.value == "true"
-                        }
-                    }
-                    group.leave()
-                case .failure(let error):
-                    print("Fetching user attributes failed with error \(error)")
-                    group.leave()
-                }
+        func onSuccess(isEmailVerified: Bool) {
+            DispatchQueue.main.async {
+                self.confirmEmailButton.isEnabled = !isEmailVerified
+                self.confirmEmailButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
             }
         }
 
-        group.wait()
-        print("got user attributes")
-        print("email verified", emailVerified)
-        confirmEmailButton.isEnabled = !emailVerified
-        confirmEmailButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
-
+        _ = Amplify.Auth.fetchUserAttributes() { result in
+            switch result {
+            case .success(let attributes):
+                print("User attribtues - \(attributes)")
+                for attribute in attributes {
+                    if attribute.key == .unknown("email_verified"){
+                        onSuccess(isEmailVerified: attribute.value == "true")
+                    }
+                }
+            case .failure(let error):
+                print("Fetching user attributes failed with error \(error)")
+            }
+        }
     }
 
     @IBAction func sendEmailVerification(){
-        var sendingEmailCodeSuccess = false
-        let group = DispatchGroup()
-        group.enter()
-
-        DispatchQueue.global().async {
-            _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
-                switch result {
-                case .success(let deliveryDetails):
-                    print("Resend code send to - \(deliveryDetails)")
-                    sendingEmailCodeSuccess = true
-                    group.leave()
-                case .failure(let error):
-                    print("Resend code failed with error \(error)")
-                    group.leave()
+        func onSuccess(isEmailSent: Bool) {
+            DispatchQueue.main.async {
+                if isEmailSent {
+                    self.performSegue(withIdentifier: "TOSToConfirmEmail", sender: self)
                 }
             }
         }
 
-        group.wait()
-        if sendingEmailCodeSuccess {
-            performSegue(withIdentifier: "TOSToConfirmEmail", sender: self)
+        _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
+            switch result {
+            case .success(let deliveryDetails):
+                print("Resend code send to - \(deliveryDetails)")
+                onSuccess(isEmailSent: true)
+            case .failure(let error):
+                print("Resend code failed with error \(error)")
+            }
         }
+
     }
 }

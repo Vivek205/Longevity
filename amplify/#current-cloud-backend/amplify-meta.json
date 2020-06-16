@@ -12,37 +12,7 @@
 			"AmplifyAppId": "dc23k0zidmfz5"
 		}
 	},
-	"function": {
-		"AdminQueries9a47b0da": {
-			"service": "Lambda",
-			"providerPlugin": "awscloudformation",
-			"build": true,
-			"dependsOn": [
-				{
-					"category": "auth",
-					"resourceName": "longevityNewResource",
-					"attributes": [
-						"UserPoolId"
-					]
-				}
-			],
-			"lastBuildTimeStamp": "2020-06-15T03:24:04.164Z",
-			"lastPackageTimeStamp": "2020-06-15T03:24:06.386Z",
-			"distZipFilename": "AdminQueries9a47b0da-426f7154766154545a4f-build.zip",
-			"providerMetadata": {
-				"s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/function/AdminQueries9a47b0da-cloudformation-template.json",
-				"logicalId": "functionAdminQueries9a47b0da"
-			},
-			"lastPushTimeStamp": "2020-06-15T03:30:08.168Z",
-			"output": {
-				"Region": "us-west-2",
-				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:AdminQueries9a47b0da-dev",
-				"Name": "AdminQueries9a47b0da-dev",
-				"LambdaExecutionRole": "AdminQueries9a47b0daLambdaRole-dev"
-			},
-			"lastPushDirHash": "hwsBAnNC5Su0Fe4izqF9GJ63vwk="
-		}
-	},
+	"function": {},
 	"api": {},
 	"auth": {
 		"longevityNewResource": {

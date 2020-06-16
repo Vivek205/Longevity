@@ -21,32 +21,33 @@ class ConfirmEmailVC: UIViewController {
     
     // MARK: Actions
     @IBAction func handleConfirmation(_ sender: Any) {
-        var confirmationSuccess = false
+
         if let confirmationCode = formConfirmationCode.text {
-            let group = DispatchGroup()
-            group.enter()
+            func onSuccess() {
+                DispatchQueue.main.async {
+                    self.performSegue(withIdentifier: "UnwindConfirmEmailToTOS", sender: self)
+                }
+            }
+
+            func onFailure() {
+                DispatchQueue.main.async {
+                    let alert = UIAlertController(title: "Error", message: "Unable to confirm email", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.cancel, handler: nil))
+                    return self.present(alert, animated: true, completion: nil)
+                }
+            }
 
             DispatchQueue.global().async {
                 _ = Amplify.Auth.confirm(userAttribute: .email, confirmationCode: confirmationCode) { result in
                     switch result {
                     case .success:
                         print("Attribute verified")
-                        confirmationSuccess = true
-                        group.leave()
+                        onSuccess()
                     case .failure(let error):
                         print("Update attribute failed with error \(error)")
-                        group.leave()
+                        onFailure()
                     }
                 }
-            }
-
-            group.wait()
-            if confirmationSuccess {
-                performSegue(withIdentifier: "UnwindConfirmEmailToTOS", sender: self)
-            } else {
-                let alert = UIAlertController(title: "Error", message: "Unable to confirm email", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.cancel, handler: nil))
-                return self.present(alert, animated: true, completion: nil)
             }
         }
     }

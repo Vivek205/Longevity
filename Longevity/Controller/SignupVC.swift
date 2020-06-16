@@ -65,12 +65,12 @@ class SignupVC: UIViewController {
     }
 
     func highlightImageButton(imgButton: UIView){
-        imgButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
-        imgButton.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        imgButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        imgButton.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         for subview in imgButton.subviews{
             if let item = subview as? UIImageView{
                 item.image = item.image?.withRenderingMode(.alwaysTemplate)
-                item.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+                item.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
             }
         }
     }

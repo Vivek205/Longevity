@@ -63,12 +63,12 @@ class LoginVC: UIViewController {
     }
 
     func highlightImageButton(imgButton: UIView){
-        imgButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
-        imgButton.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        imgButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        imgButton.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         for subview in imgButton.subviews{
             if let item = subview as? UIImageView{
                 item.image = item.image?.withRenderingMode(.alwaysTemplate)
-                item.tintColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+                item.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
             }
         }
     }
@@ -83,39 +83,41 @@ class LoginVC: UIViewController {
             }
         }
     }
+
+
+
     
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
-        var signinSuccess = false
-        let group = DispatchGroup()
-        group.enter()
-
-
-        if let email = self.formEmail.text, let password = self.formPassword.text{
-            DispatchQueue.global().async {
-                _ = Amplify.Auth.signIn(username: email, password: password) { result in
-                    print("result", result)
-                    switch result {
-                    case .success(_):
-                        print("Sign in succeeded")
-                        signinSuccess = true
-                        group.leave()
-                    case .failure(let error):
-                        print("Sign in failed \(error)")
-                        group.leave()
-                    }
+        if let email = self.formEmail.text, let password = self.formPassword.text {
+            self.showSpinner()
+            func onSuccess() {
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
                 }
             }
-        } else {
-            group.leave()
+
+            func onFailure(error: AuthError) {
+                print("Sign in failed \(error)")
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                }
+            }
+
+            _ = Amplify.Auth.signIn(username: email, password: password) { result in
+                print("result", result)
+                switch result {
+                case .success(_):
+                    print("Sign in succeeded")
+                    onSuccess()
+                case .failure(let error):
+                    onFailure(error: error)
+                }
+            }
         }
 
-
-        group.wait()
-        if signinSuccess{
-            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
-        }
     }
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
@@ -136,93 +138,71 @@ class LoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
+        self.showSpinner()
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+            }
+        }
+
+        func onFailure(error: AuthError) {
+            print("Sign in failed \(error)")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+
         _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
             switch result {
             case .success(let session):
                 print("Sign in succeeded")
                 print("session", session)
-                self.onSuccess()
+                onSuccess()
             case .failure(let error):
                 print("Sign in failed \(error)")
+                onFailure(error: error)
             }
         }
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
-            _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
-                switch result {
-                case .success(let session):
-                    print("Sign in succeeded")
-                    print("session", session)
-                    self.onSuccess()
-                case .failure(let error):
-                    print("Sign in failed \(error)")
-                }
+        self.showSpinner()
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
             }
-
-    }
-
-    func onSuccess(){
-        DispatchQueue.main.async {
-            self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
         }
+
+        func onFailure(error: AuthError) {
+            print("Sign in failed \(error)")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
+            switch result {
+            case .success(let session):
+                print("Sign in succeeded")
+                print("session", session)
+                onSuccess()
+            case .failure(let error):
+                print("Sign in failed \(error)")
+                onFailure(error: error)
+            }
+        }
+
     }
+
+
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
     }
-    
-    //
-    //    @IBAction func handleResetPassword(_ sender: Any) {
-    //        var resetSuccess = false
-    //        let group = DispatchGroup()
-    //        group.enter()
-    //
-    //        DispatchQueue.global().async {
-    //            _ = Amplify.Auth.resetPassword(for: self.username) {(result) in
-    //                do {
-    //                    let resetResult = try result.get()
-    //                    switch resetResult.nextStep {
-    //                    case .confirmResetPasswordWithCode(let deliveryDetails, let info):
-    //                        print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
-    //                        resetSuccess = true
-    //                        group.leave()
-    //                    case .done:
-    //                        print("Reset completed")
-    //                        resetSuccess = true
-    //                        group.leave()
-    //                    }
-    //                } catch {
-    //                    print("Reset passowrd failed with error \(error)")
-    //                    group.leave()
-    //                }
-    //            }
-    //        }
-    //
-    //        group.wait()
-    //
-    //        if resetSuccess {
-    //            performSegue(withIdentifier: "LoginToResetPassword", sender: self)
-    //        }
-    //
-    //    }
 
 
-    func getCurrentUser(){
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                print()
-                print("Is user signed in - \(session)")
-                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
-            case .failure(let error):
-                print("Fetch session failed with error \(error)")
-            }
-        }
-    }
-
-
-    func getuserAttributes(){
+    func getuserAttributes() {
         _ = Amplify.Auth.fetchUserAttributes() { (result) in
             switch result {
             case .success(let userAttributes):

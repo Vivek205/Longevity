@@ -18,6 +18,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
          do {
                 try Amplify.add(plugin: AWSCognitoAuthPlugin())
+                try Amplify.add(plugin: AWSAPIPlugin())
                 try Amplify.configure()
                 print("Amplify configured with auth plugin")
             } catch {

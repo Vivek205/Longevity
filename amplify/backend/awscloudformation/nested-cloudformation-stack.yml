@@ -68,21 +68,6 @@
 				}
 			}
 		},
-		"functionAdminQueries9a47b0da": {
-			"Type": "AWS::CloudFormation::Stack",
-			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/function/AdminQueries9a47b0da-cloudformation-template.json",
-				"Parameters": {
-					"authlongevityNewResourceUserPoolId": {
-						"Fn::GetAtt": [
-							"authlongevityNewResource",
-							"Outputs.UserPoolId"
-						]
-					},
-					"env": "dev"
-				}
-			}
-		},
 		"authlongevityNewResource": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {

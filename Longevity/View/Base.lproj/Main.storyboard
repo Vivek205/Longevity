@@ -8,11 +8,14 @@
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <customFonts key="customFonts">
-        <array key="Muli-Bold.ttf">
-            <string>Muli-Bold</string>
+        <array key="Montserrat-Medium.ttf">
+            <string>Montserrat-Medium</string>
         </array>
-        <array key="Muli-Regular.ttf">
-            <string>Muli-Regular</string>
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
+        <array key="Montserrat-SemiBold.ttf">
+            <string>Montserrat-SemiBold</string>
         </array>
     </customFonts>
     <scenes>
@@ -114,15 +117,15 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="I7M-Ve-vwb"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Zur-6a-qim"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
-                                <rect key="frame" x="0.0" y="266" width="414" height="197"/>
-                                <fontDescription key="fontDescription" name="Muli-Bold" family="Muli" pointSize="40"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
+                                <rect key="frame" x="20" y="266" width="394" height="197"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="40"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
-                                <rect key="frame" x="0.0" y="465" width="414" height="131"/>
-                                <fontDescription key="fontDescription" name="Muli-Regular" family="Muli" pointSize="24"/>
+                                <rect key="frame" x="20" y="465" width="394" height="131"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
@@ -135,8 +138,9 @@
                                 <rect key="frame" x="20" y="664.5" width="374" height="64.5"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="xi9-oa-dZr">
-                                        <rect key="frame" x="0.0" y="0.0" width="111.5" height="64.5"/>
-                                        <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <rect key="frame" x="0.0" y="0.0" width="177" height="64.5"/>
+                                        <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="24"/>
                                         <state key="normal" title="Signup">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
@@ -145,31 +149,25 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKO-6b-4ge">
-                                        <rect key="frame" x="131.5" y="0.0" width="111" height="64.5"/>
+                                        <rect key="frame" x="197" y="0.0" width="177" height="64.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
                                         <state key="normal" title="Login">
-                                            <color key="titleColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                            <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </state>
                                         <connections>
                                             <segue destination="DKT-YJ-RMe" kind="show" identifier="onboardingToLogin" id="U5g-zc-jaq"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Yu5-Fc-EZK" userLabel="GRPC">
-                                        <rect key="frame" x="262.5" y="0.0" width="111.5" height="64.5"/>
-                                        <state key="normal" title="Button"/>
-                                        <connections>
-                                            <action selector="handleGRPC:" destination="BYZ-38-t0r" eventType="touchUpInside" id="o6P-LW-Jc8"/>
                                         </connections>
                                     </button>
                                 </subviews>
                             </stackView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="wordWrap" translatesAutoresizingMaskIntoConstraints="NO" id="TPe-GX-wQe">
                                 <rect key="frame" x="0.0" y="731" width="414" height="64.5"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                 <state key="normal">
                                     <string key="title">Not ready to signup?
 Explore the App</string>
-                                    <color key="titleColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                    <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
                         </subviews>
@@ -180,7 +178,7 @@ Explore the App</string>
                             <constraint firstItem="dC6-cV-7I2" firstAttribute="trailing" secondItem="EeB-Go-aVM" secondAttribute="trailing" constant="20" id="5kB-Vp-OY6"/>
                             <constraint firstItem="M2I-P1-5PW" firstAttribute="top" secondItem="qay-po-S7I" secondAttribute="top" id="9kL-8M-BJ8"/>
                             <constraint firstItem="rid-Oo-Hz0" firstAttribute="leading" secondItem="zhr-5z-oaD" secondAttribute="leading" id="DvB-pV-2Op"/>
-                            <constraint firstItem="pX9-ou-fMP" firstAttribute="leading" secondItem="HEh-Md-Orb" secondAttribute="leading" id="ET8-kL-YZN"/>
+                            <constraint firstItem="pX9-ou-fMP" firstAttribute="leading" secondItem="HEh-Md-Orb" secondAttribute="leading" constant="20" id="ET8-kL-YZN"/>
                             <constraint firstItem="rid-Oo-Hz0" firstAttribute="bottom" secondItem="zhr-5z-oaD" secondAttribute="bottom" id="JvL-og-e65"/>
                             <constraint firstItem="0JO-HU-HgL" firstAttribute="bottom" secondItem="dC6-cV-7I2" secondAttribute="bottom" id="Jyz-b3-lqR"/>
                             <constraint firstItem="M2I-P1-5PW" firstAttribute="bottom" secondItem="F3S-fB-7xG" secondAttribute="bottom" id="LQu-c5-8mB"/>
@@ -194,7 +192,7 @@ Explore the App</string>
                             <constraint firstItem="EeB-Go-aVM" firstAttribute="top" secondItem="dC6-cV-7I2" secondAttribute="top" id="dgi-xW-G4M"/>
                             <constraint firstItem="EeB-Go-aVM" firstAttribute="bottom" secondItem="dC6-cV-7I2" secondAttribute="bottom" id="fV4-dI-mg3"/>
                             <constraint firstItem="M2I-P1-5PW" firstAttribute="trailing" secondItem="qay-po-S7I" secondAttribute="trailing" id="fZB-4k-YS1"/>
-                            <constraint firstItem="M2I-P1-5PW" firstAttribute="leading" secondItem="qay-po-S7I" secondAttribute="leading" id="gRe-mn-aXY"/>
+                            <constraint firstItem="M2I-P1-5PW" firstAttribute="leading" secondItem="qay-po-S7I" secondAttribute="leading" constant="20" id="gRe-mn-aXY"/>
                             <constraint firstItem="pX9-ou-fMP" firstAttribute="top" secondItem="HEh-Md-Orb" secondAttribute="top" id="gzL-Hm-qj4"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="top" secondItem="07i-de-uQH" secondAttribute="top" id="iYC-zM-Dry"/>
                             <constraint firstItem="0JO-HU-HgL" firstAttribute="trailing" secondItem="HtH-q5-ZgO" secondAttribute="trailing" id="lnI-Do-TJ4"/>
@@ -236,7 +234,7 @@ Explore the App</string>
                                 <subviews>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Choose Account type" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kiu-fm-O4L">
                                         <rect key="frame" x="0.0" y="0.0" width="374" height="61.5"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                         <nil key="textColor"/>
                                         <nil key="highlightedColor"/>
                                     </label>
@@ -253,10 +251,11 @@ Explore the App</string>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zqu-hP-fCs">
                                                 <rect key="frame" x="0.0" y="6.5" width="374" height="48"/>
-                                                <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="IrT-JN-Ajj"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Signup with Email" image="icon: email">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -321,6 +320,7 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="R51-tC-dRJ"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Continue with Apple" image="Apple logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -342,8 +342,9 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="cXF-HS-EPA"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Continue with Google" image="Google logo">
-                                                    <color key="titleColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                             </button>
@@ -364,6 +365,7 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="OeG-HZ-5sZ"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Continue with Facebook" image="Facebook logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -378,8 +380,9 @@ Explore the App</string>
                                     </view>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="1S6-M3-GDZ">
                                         <rect key="frame" x="0.0" y="570" width="374" height="61.5"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                         <state key="normal" title="Already have an account? Login">
-                                            <color key="titleColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
+                                            <color key="titleColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
                                         </state>
                                     </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="qlq-eT-vtc">
@@ -419,11 +422,11 @@ Explore the App</string>
                                         <rect key="frame" x="0.0" y="0.0" width="152" height="132.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user logo" translatesAutoresizingMaskIntoConstraints="NO" id="Ibu-K3-hXM" userLabel="image">
-                                                <rect key="frame" x="40" y="20" width="72" height="72.5"/>
+                                                <rect key="frame" x="40" y="20" width="72" height="78.5"/>
                                                 <color key="tintColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="h9z-mw-uVK" userLabel="label">
-                                                <rect key="frame" x="0.0" y="110" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="102" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -432,9 +435,9 @@ Explore the App</string>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="h9z-mw-uVK" secondAttribute="bottom" constant="2" id="7dP-Aq-3HH"/>
+                                            <constraint firstAttribute="bottom" secondItem="h9z-mw-uVK" secondAttribute="bottom" constant="10" id="7dP-Aq-3HH"/>
                                             <constraint firstItem="Ibu-K3-hXM" firstAttribute="top" secondItem="m7l-mx-2g4" secondAttribute="top" constant="20" id="G8D-OF-yw3"/>
-                                            <constraint firstAttribute="bottom" secondItem="Ibu-K3-hXM" secondAttribute="bottom" constant="40" id="JbC-gE-SWP"/>
+                                            <constraint firstAttribute="bottom" secondItem="Ibu-K3-hXM" secondAttribute="bottom" constant="34" id="JbC-gE-SWP"/>
                                             <constraint firstItem="h9z-mw-uVK" firstAttribute="leading" secondItem="m7l-mx-2g4" secondAttribute="leading" id="WXJ-N5-WkF"/>
                                             <constraint firstItem="Ibu-K3-hXM" firstAttribute="leading" secondItem="m7l-mx-2g4" secondAttribute="leading" constant="40" id="d8R-1D-tWO"/>
                                             <constraint firstAttribute="trailing" secondItem="h9z-mw-uVK" secondAttribute="trailing" id="oAt-lj-f35"/>
@@ -448,11 +451,11 @@ Explore the App</string>
                                         <rect key="frame" x="182" y="0.0" width="152" height="132.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon - medical" translatesAutoresizingMaskIntoConstraints="NO" id="1jm-91-tC5" userLabel="image">
-                                                <rect key="frame" x="40" y="20" width="72" height="72.5"/>
+                                                <rect key="frame" x="40" y="20" width="72" height="78.5"/>
                                                 <gestureRecognizers/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clinical Trial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="oe5-D3-bzC" userLabel="label">
-                                                <rect key="frame" x="0.0" y="110" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="102" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -461,8 +464,8 @@ Explore the App</string>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                                         <gestureRecognizers/>
                                         <constraints>
-                                            <constraint firstAttribute="bottom" secondItem="oe5-D3-bzC" secondAttribute="bottom" constant="2" id="CLM-Y6-HQ8"/>
-                                            <constraint firstAttribute="bottom" secondItem="1jm-91-tC5" secondAttribute="bottom" constant="40" id="Gjo-cV-uWQ"/>
+                                            <constraint firstAttribute="bottom" secondItem="oe5-D3-bzC" secondAttribute="bottom" constant="10" id="CLM-Y6-HQ8"/>
+                                            <constraint firstAttribute="bottom" secondItem="1jm-91-tC5" secondAttribute="bottom" constant="34" id="Gjo-cV-uWQ"/>
                                             <constraint firstItem="1jm-91-tC5" firstAttribute="leading" secondItem="M30-jN-qX5" secondAttribute="leading" constant="40" id="Nms-Hl-7ud"/>
                                             <constraint firstAttribute="trailing" secondItem="oe5-D3-bzC" secondAttribute="trailing" id="oWs-tf-k7e"/>
                                             <constraint firstItem="1jm-91-tC5" firstAttribute="top" secondItem="M30-jN-qX5" secondAttribute="top" constant="20" id="qCB-Xa-CHO"/>
@@ -517,7 +520,7 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="2280" y="-585"/>
         </scene>
-        <!--Signup By Email-->
+        <!--Signup-->
         <scene sceneID="MKm-v7-LmT">
             <objects>
                 <viewController id="Gsb-QW-NL5" customClass="SignupByEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
@@ -525,8 +528,14 @@ Explore the App</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPD-Mf-LYM">
+                                <rect key="frame" x="0.0" y="108" width="414" height="22"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-ie-KfK">
-                                <rect key="frame" x="20" y="108" width="374" height="48"/>
+                                <rect key="frame" x="20" y="160" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="SiI-7C-epF"/>
                                 </constraints>
@@ -534,7 +543,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" textContentType="name"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="XXo-Ca-vDu">
-                                <rect key="frame" x="20" y="208" width="374" height="48"/>
+                                <rect key="frame" x="20" y="260" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="lnN-9J-vzz"/>
                                 </constraints>
@@ -542,7 +551,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-Y8-xZm">
-                                <rect key="frame" x="20" y="308" width="374" height="48"/>
+                                <rect key="frame" x="20" y="360" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="F83-hh-35L"/>
                                 </constraints>
@@ -550,7 +559,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="WgZ-ja-rgS">
-                                <rect key="frame" x="20" y="408" width="374" height="48"/>
+                                <rect key="frame" x="20" y="460" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="UCN-ab-6a5"/>
                                 </constraints>
@@ -558,7 +567,7 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DKM-b8-Trc">
-                                <rect key="frame" x="20" y="508" width="374" height="48"/>
+                                <rect key="frame" x="20" y="560" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="1eU-4m-ddy"/>
                                 </constraints>
@@ -566,11 +575,12 @@ Explore the App</string>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-B2-m6A">
-                                <rect key="frame" x="20" y="608" width="374" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="660" width="374" height="48"/>
+                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Aa6-5i-wvh"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                 <state key="normal" title="Submit">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -583,17 +593,20 @@ Explore the App</string>
                         <constraints>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="WgZ-ja-rgS" secondAttribute="trailing" constant="20" id="1oa-1M-Qzh"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="b9r-B2-m6A" secondAttribute="trailing" constant="20" id="1uc-PK-zGz"/>
+                            <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="nPD-Mf-LYM" secondAttribute="trailing" id="53V-0D-1yc"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="dvL-ie-KfK" secondAttribute="trailing" constant="20" id="71r-DF-53e"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="DKM-b8-Trc" secondAttribute="trailing" constant="20" id="HQZ-PL-9uO"/>
+                            <constraint firstItem="dvL-ie-KfK" firstAttribute="top" secondItem="nPD-Mf-LYM" secondAttribute="top" constant="52" id="LW1-hW-clF"/>
                             <constraint firstItem="dvL-ie-KfK" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="VMq-bI-Z6S"/>
                             <constraint firstItem="DKM-b8-Trc" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="WAa-aU-m0F"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="ygo-Y8-xZm" secondAttribute="trailing" constant="20" id="XAs-51-M4s"/>
                             <constraint firstItem="b9r-B2-m6A" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="Xtg-7S-TxW"/>
                             <constraint firstItem="ygo-Y8-xZm" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="Zao-1B-g9N"/>
-                            <constraint firstItem="dvL-ie-KfK" firstAttribute="top" secondItem="6Mb-m3-ime" secondAttribute="top" constant="20" id="bhK-aj-Q8N"/>
                             <constraint firstItem="XXo-Ca-vDu" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="dgW-cg-bo9"/>
+                            <constraint firstItem="nPD-Mf-LYM" firstAttribute="top" secondItem="6Mb-m3-ime" secondAttribute="top" constant="20" id="hv7-ic-jJ3"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="XXo-Ca-vDu" secondAttribute="trailing" constant="20" id="jlC-hJ-gTj"/>
                             <constraint firstItem="WgZ-ja-rgS" firstAttribute="top" secondItem="ygo-Y8-xZm" secondAttribute="bottom" constant="52" id="kdg-zW-TqU"/>
+                            <constraint firstItem="nPD-Mf-LYM" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" id="kzQ-k2-Fia"/>
                             <constraint firstItem="DKM-b8-Trc" firstAttribute="top" secondItem="WgZ-ja-rgS" secondAttribute="bottom" constant="52" id="ogP-D2-lZV"/>
                             <constraint firstItem="ygo-Y8-xZm" firstAttribute="top" secondItem="XXo-Ca-vDu" secondAttribute="bottom" constant="52" id="qHo-MM-QBY"/>
                             <constraint firstItem="b9r-B2-m6A" firstAttribute="top" secondItem="DKM-b8-Trc" secondAttribute="bottom" constant="52" id="rEB-dg-Ojy"/>
@@ -604,7 +617,7 @@ Explore the App</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="6Mb-m3-ime"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Signup By Email" id="xQR-XP-6PK"/>
+                    <navigationItem key="navigationItem" title="Signup" id="xQR-XP-6PK"/>
                     <connections>
                         <outlet property="formConfirmPassword" destination="DKM-b8-Trc" id="KDN-BL-xky"/>
                         <outlet property="formEmail" destination="XXo-Ca-vDu" id="uoc-ey-fqw"/>
@@ -619,7 +632,7 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="3399" y="-585"/>
         </scene>
-        <!--Confirm Phone-->
+        <!--Verify Account-->
         <scene sceneID="6l3-xd-TeN">
             <objects>
                 <viewController id="3Ph-2d-HrV" customClass="SignupConfirmVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
@@ -627,26 +640,27 @@ Explore the App</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Enter the OTP to confirm your phone number" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1F-dX-9v2" userLabel="Title">
-                                <rect key="frame" x="107" y="108" width="200" height="41"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please input the verification code that was sent as a text message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1F-dX-9v2" userLabel="Title">
+                                <rect key="frame" x="47" y="108" width="320" height="44"/>
                                 <constraints>
-                                    <constraint firstAttribute="width" constant="200" id="YNd-B6-sPI"/>
+                                    <constraint firstAttribute="width" constant="320" id="YNd-B6-sPI"/>
                                 </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SX8-KI-dYv" userLabel="OTP">
-                                <rect key="frame" x="20" y="201" width="374" height="34"/>
+                                <rect key="frame" x="20" y="204" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USy-gZ-vST">
-                                <rect key="frame" x="20" y="287" width="374" height="48"/>
-                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <rect key="frame" x="20" y="290" width="374" height="48"/>
+                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="MB3-1V-fOj"/>
                                 </constraints>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                 <state key="normal" title="Confirm">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -668,7 +682,7 @@ Explore the App</string>
                         </constraints>
                         <viewLayoutGuide key="safeArea" id="zso-ih-Ias"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Confirm Phone" id="Bsw-ad-XvU"/>
+                    <navigationItem key="navigationItem" title="Verify Account" id="Bsw-ad-XvU"/>
                     <connections>
                         <outlet property="formOTP" destination="SX8-KI-dYv" id="ucW-qk-FrA"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="ppv-oQ-y3h"/>
@@ -712,10 +726,11 @@ Explore the App</string>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXh-3g-ICe">
                                                 <rect key="frame" x="0.0" y="3.5" width="374" height="48"/>
-                                                <color key="backgroundColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="Q53-b1-h0k"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <state key="normal" title="Login" image="icon: email">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -781,6 +796,7 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="A0S-6s-8IZ"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Sign in with Apple" image="Apple logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -802,8 +818,9 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="K3l-BL-ocL"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Sign in with Google" image="Google logo">
-                                                    <color key="titleColor" red="0.0" green="0.71764705882352942" blue="0.50196078431372548" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                 </state>
                                                 <connections>
                                                     <action selector="handleSigninWithGoogle:" destination="DKT-YJ-RMe" eventType="touchUpInside" id="Aey-hp-71y"/>
@@ -826,6 +843,7 @@ Explore the App</string>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="48" id="U0t-5G-Y3H"/>
                                                 </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <state key="normal" title="Sign in with Facebook" image="Facebook logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -843,8 +861,8 @@ Explore the App</string>
                                     </view>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahw-N0-hRL">
                                         <rect key="frame" x="0.0" y="633.5" width="374" height="55"/>
-                                        <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                        <color key="textColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
+                                        <color key="textColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQt-NB-i37">
@@ -865,11 +883,11 @@ Explore the App</string>
                                         <rect key="frame" x="0.0" y="0.0" width="152" height="125.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="user logo" translatesAutoresizingMaskIntoConstraints="NO" id="v3f-ea-X11" userLabel="image">
-                                                <rect key="frame" x="20" y="20" width="112" height="85.5"/>
+                                                <rect key="frame" x="20" y="20" width="112" height="71.5"/>
                                                 <color key="tintColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="calibratedRGB"/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SBR-55-xiq" userLabel="label">
-                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="95" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -879,9 +897,9 @@ Explore the App</string>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="v3f-ea-X11" firstAttribute="leading" secondItem="Fnn-F6-5fL" secondAttribute="leading" constant="20" id="3IR-7o-u5s"/>
-                                            <constraint firstAttribute="bottom" secondItem="SBR-55-xiq" secondAttribute="bottom" constant="2" id="3dz-hp-wfq"/>
+                                            <constraint firstAttribute="bottom" secondItem="SBR-55-xiq" secondAttribute="bottom" constant="10" id="3dz-hp-wfq"/>
                                             <constraint firstItem="v3f-ea-X11" firstAttribute="top" secondItem="Fnn-F6-5fL" secondAttribute="top" constant="20" id="KMf-DO-Mvc"/>
-                                            <constraint firstAttribute="bottom" secondItem="v3f-ea-X11" secondAttribute="bottom" constant="20" id="QIR-Si-ETc"/>
+                                            <constraint firstAttribute="bottom" secondItem="v3f-ea-X11" secondAttribute="bottom" constant="34" id="QIR-Si-ETc"/>
                                             <constraint firstAttribute="trailing" secondItem="v3f-ea-X11" secondAttribute="trailing" constant="20" id="R4L-r4-gyh"/>
                                             <constraint firstItem="SBR-55-xiq" firstAttribute="leading" secondItem="Fnn-F6-5fL" secondAttribute="leading" id="hoq-Es-IMB"/>
                                             <constraint firstAttribute="trailing" secondItem="SBR-55-xiq" secondAttribute="trailing" id="yRZ-1X-ylO"/>
@@ -894,11 +912,11 @@ Explore the App</string>
                                         <rect key="frame" x="182" y="0.0" width="152" height="125.5"/>
                                         <subviews>
                                             <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon - medical" translatesAutoresizingMaskIntoConstraints="NO" id="gKk-FB-Rwb" userLabel="image">
-                                                <rect key="frame" x="40" y="20" width="72" height="65.5"/>
+                                                <rect key="frame" x="40" y="20" width="72" height="71.5"/>
                                                 <gestureRecognizers/>
                                             </imageView>
                                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Clinical Trial" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="iY6-G2-ag1" userLabel="label">
-                                                <rect key="frame" x="0.0" y="103" width="152" height="20.5"/>
+                                                <rect key="frame" x="0.0" y="95" width="152" height="20.5"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                 <nil key="textColor"/>
                                                 <nil key="highlightedColor"/>
@@ -908,12 +926,12 @@ Explore the App</string>
                                         <gestureRecognizers/>
                                         <constraints>
                                             <constraint firstItem="gKk-FB-Rwb" firstAttribute="top" secondItem="AbJ-sJ-pbZ" secondAttribute="top" constant="20" id="VQS-RS-HDh"/>
-                                            <constraint firstAttribute="bottom" secondItem="gKk-FB-Rwb" secondAttribute="bottom" constant="40" id="Vcb-ID-Orz"/>
+                                            <constraint firstAttribute="bottom" secondItem="gKk-FB-Rwb" secondAttribute="bottom" constant="34" id="Vcb-ID-Orz"/>
                                             <constraint firstAttribute="trailing" secondItem="gKk-FB-Rwb" secondAttribute="trailing" constant="40" id="czG-0a-Dsb"/>
                                             <constraint firstItem="gKk-FB-Rwb" firstAttribute="leading" secondItem="AbJ-sJ-pbZ" secondAttribute="leading" constant="40" id="fXc-Jp-Uoq"/>
                                             <constraint firstAttribute="trailing" secondItem="iY6-G2-ag1" secondAttribute="trailing" id="oHY-L5-8TU"/>
                                             <constraint firstItem="iY6-G2-ag1" firstAttribute="leading" secondItem="AbJ-sJ-pbZ" secondAttribute="leading" id="rkB-tD-EwO"/>
-                                            <constraint firstAttribute="bottom" secondItem="iY6-G2-ag1" secondAttribute="bottom" constant="2" id="xzb-kI-5Dr"/>
+                                            <constraint firstAttribute="bottom" secondItem="iY6-G2-ag1" secondAttribute="bottom" constant="10" id="xzb-kI-5Dr"/>
                                         </constraints>
                                         <connections>
                                             <outletCollection property="gestureRecognizers" destination="ak4-Av-xMD" appends="YES" id="Rn7-26-QIK"/>
@@ -1015,7 +1033,7 @@ Explore the App</string>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-Hz-IDg">
                                         <rect key="frame" x="15" y="28" width="384" height="48"/>
-                                        <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="ag4-On-wSD"/>
                                         </constraints>
@@ -1031,7 +1049,7 @@ Explore the App</string>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVO-Wv-cCA">
                                                 <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
-                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Confirm Email">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1041,7 +1059,7 @@ Explore the App</string>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Ny-9Dy">
                                                 <rect key="frame" x="131.5" y="0.0" width="111" height="30"/>
-                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="13"/>
                                                 <state key="normal" title="Change Password">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1052,7 +1070,7 @@ Explore the App</string>
                                             </button>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjZ-x4-f48">
                                                 <rect key="frame" x="262.5" y="0.0" width="111.5" height="30"/>
-                                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <state key="normal" title="Signout">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
@@ -1115,7 +1133,7 @@ Explore the App</string>
                             <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-K6-Bhb">
                                 <rect key="frame" x="131" y="248" width="153" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" red="0.0" green="0.71764705880000002" blue="0.50196078430000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <state key="normal" title="Verify">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 </state>
@@ -1270,8 +1288,8 @@ Explore the App</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="bFA-M4-tBp"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="L1O-8m-Fgx"/>
+        <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

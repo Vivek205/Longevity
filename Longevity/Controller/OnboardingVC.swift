@@ -57,7 +57,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             frame.size.width = screenWidth
             let imgView = UIImageView(frame: frame)
             imgView.image = onboardingContent.images[index]
-            imgView.contentMode = .scaleToFill
+            imgView.contentMode = .scaleAspectFit
             imgView.clipsToBounds = true
             scrollView.insertSubview(imgView, at: 0)
         }
@@ -71,7 +71,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         signupButton.layer.cornerRadius = CGFloat(10)
         signupButton.layer.masksToBounds = true
 
-        loginButton.layer.borderColor = #colorLiteral(red: 0, green: 0.7176470588, blue: 0.5019607843, alpha: 1)
+        loginButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         loginButton.layer.cornerRadius = CGFloat(10)
         loginButton.layer.borderWidth = 2
         loginButton.layer.masksToBounds = true
@@ -81,25 +81,31 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         self.navigationController?.setNavigationBarHidden(true, animated: true)
     }
 
-    func getCurrentUser(){
-        var userSignedIn = false
-        let group = DispatchGroup()
-        group.enter()
+    func getCurrentUser() {
+        func onSuccess(userSignedIn: Bool) {
+            print("usersigned in", userSignedIn)
+            if userSignedIn {
+                DispatchQueue.main.async {
+                    print("is main thread",Thread.isMainThread)
+                    self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
+                }
+            }
+        }
+
+        func onFailure(error: AuthError) {
+            print("Fetch session failed with error \(error)")
+            print(error)
+        }
+
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
-                print("Is user signed in - \(session.isSignedIn)")
-                userSignedIn = session.isSignedIn
-                group.leave()
+                onSuccess(userSignedIn: session.isSignedIn)
             case .failure(let error):
-                print("Fetch session failed with error \(error)")
-                group.leave()
+                onFailure(error: error)
             }
         }
-        group.wait()
-        if userSignedIn{
-            self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
-        }
+
     }
 
     // MARK: ScrolView delegate method
@@ -139,24 +145,27 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         } catch  {
             print("error", error)
         }
-//        let channel = Channel(address: address, secure: false)
-//        let service = Escrow_ExampleServiceServiceClient(channel: channel)
-//
-//        let messageData = "hello, I'm Vivek!".data(using: .utf8)
-//
-//        let method = "/escrow.ExampleService/Ping"
-//
-//        let metadata = Metadata()
-//
-//        do {
-//            let call = try channel.makeCall(method)
-//            try call.start(.unary, metadata: metadata, message: messageData) { (callResult) in
-//                print("result   ",callResult.statusCode, callResult.statusMessage, callResult.resultData)
-//            }
-//        } catch  {
-//            print("make call error", error)
-//        }
 
     }
 
 }
+
+// MARK: Spinner
+fileprivate var spinnerView: UIView?
+extension UIViewController{
+    func showSpinner() {
+        spinnerView = UIView(frame: self.view.bounds)
+        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+        let spinner = UIActivityIndicatorView(style: .whiteLarge)
+        spinner.center = spinnerView?.center as! CGPoint
+        spinner.startAnimating()
+        spinnerView?.addSubview(spinner)
+        self.view.addSubview(spinnerView!)
+    }
+
+    func removeSpinner() {
+        spinnerView?.removeFromSuperview()
+        spinnerView = nil
+    }
+}
+

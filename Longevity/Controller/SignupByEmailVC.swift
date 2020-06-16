@@ -34,52 +34,59 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
 
     // MARK: Actions
     @IBAction func handleSignup(_ sender: Any) {
-        if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
-            var signupSuccess = false
 
-            if(password != confirmPassword){
-                let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
+
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "SignupEmailToConfirm", sender: self)
+                self.removeSpinner()
+            }
+        }
+
+        func onFailure() {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
                 alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-                alert.title = "Something"
                 return self.present(alert, animated: true, completion: nil)
             }
-
-            let group =  DispatchGroup()
-            group.enter()
-
-            DispatchQueue.global().async {
-                 let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
-                           let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
-                           _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
-                               switch result {
-                               case .success(let signUpResult):
-                                    print("======================signup result \n \n", signUpResult, "\n \n")
-
-                                   if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
-                                       print("Delivery details \(String(describing: deliveryDetails))")
-                                        signupSuccess=true
-                                        self.getCurrentUser()
-//                                    self.verifyPhone()
-                                        group.leave()
-                                   } else {
-                                       print("SignUp Complete")
-                                        signupSuccess = true
-                                        group.leave()
-                                   }
-                               case .failure(let error):
-                                   print("An error occured while registering a user \(error)")
-                                   group.leave()
-                               }
-                           }
-            }
-            group.wait()
-            print("async singup operation completed")
-            performSegue(withIdentifier: "SignupEmailToConfirm", sender: self)
         }
+
+        if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
+            func validate() {
+                if(password != confirmPassword) {
+                    let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
+                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
+                    return self.present(alert, animated: true, completion: nil)
+                }
+            }
+
+            validate()
+            self.showSpinner()
+            
+            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
+            let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
+            
+            _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
+                switch result {
+                case .success(let signUpResult):
+                    print("======================signup result \n \n", signUpResult, "\n \n")
+                    if case let .confirmUser(deliveryDetails, _) = signUpResult.nextStep {
+                        print("Delivery details \(String(describing: deliveryDetails))")
+                    } else {
+                        print("SignUp Complete")
+                    }
+                    onSuccess()
+                case .failure(let error):
+                    print("An error occured while registering a user \(error)")
+                    onFailure()
+                }
+            }
+        }
+
     }
 
-
-    func verifyPhone(){
+    func verifyPhone() {
         _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
             switch result {
             case .success(let deliveryDetails):
@@ -90,24 +97,8 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         }
     }
 
-    func getCurrentUser(){
-        let group = DispatchGroup()
-        group.enter()
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                print("Is user signed in - \(session.isSignedIn)")
-                group.leave()
-            case .failure(let error):
-                print("Fetch session failed with error \(error)")
-            }
-        }
-        group.wait()
-    }
-
     // MARK: Delegate Textfield
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
-//        textField.resignFirstResponder()
         textField.endEditing(true)
         return true
     }
@@ -118,3 +109,4 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
     }
 
 }
+

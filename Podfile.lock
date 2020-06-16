@@ -2,9 +2,15 @@ PODS:
   - Amplify (1.0.0):
     - Amplify/Default (= 1.0.0)
   - Amplify/Default (1.0.0)
+  - AmplifyPlugins/AWSAPIPlugin (1.0.0):
+    - AppSyncRealTimeClient (~> 1.1.0)
+    - AWSPluginsCore (= 1.0.0)
+    - ReachabilitySwift (~> 5.0.0)
   - AmplifyPlugins/AWSCognitoAuthPlugin (1.0.0):
     - AWSMobileClient (~> 2.13.4)
     - AWSPluginsCore (= 1.0.0)
+  - AppSyncRealTimeClient (1.1.6):
+    - Starscream (= 3.0.6)
   - AWSAuthCore (2.13.4):
     - AWSCore (= 2.13.4)
   - AWSCognitoIdentityProvider (2.13.4):
@@ -37,6 +43,8 @@ PODS:
     - SwiftNIOTransportServices (= 1.3.0)
     - SwiftProtobuf (= 1.8.0)
   - Logging (1.2.0)
+  - ReachabilitySwift (5.0.0)
+  - Starscream (3.0.6)
   - SwiftLint (0.39.2)
   - SwiftNIO (2.15.0):
     - CNIOAtomics (= 2.15.0)
@@ -79,6 +87,7 @@ PODS:
 
 DEPENDENCIES:
   - Amplify
+  - AmplifyPlugins/AWSAPIPlugin
   - AmplifyPlugins/AWSCognitoAuthPlugin
   - gRPC-Swift (= 1.0.0-alpha.12)
   - SwiftLint (~> 0.39)
@@ -87,6 +96,7 @@ SPEC REPOS:
   trunk:
     - Amplify
     - AmplifyPlugins
+    - AppSyncRealTimeClient
     - AWSAuthCore
     - AWSCognitoIdentityProvider
     - AWSCognitoIdentityProviderASF
@@ -103,6 +113,8 @@ SPEC REPOS:
     - CNIOSHA1
     - gRPC-Swift
     - Logging
+    - ReachabilitySwift
+    - Starscream
     - SwiftLint
     - SwiftNIO
     - SwiftNIOConcurrencyHelpers
@@ -118,6 +130,7 @@ SPEC REPOS:
 SPEC CHECKSUMS:
   Amplify: d993f9ab89645ffa58616b23f95a22e1038f46a2
   AmplifyPlugins: 6f341b2013ba8a7389097287333324c8beeb43bd
+  AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
   AWSAuthCore: 72b4bd064c28985ea5345c62759632d511de342a
   AWSCognitoIdentityProvider: a2d1d2857316519c018c03ac8205cf78154db5c0
   AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
@@ -134,6 +147,8 @@ SPEC CHECKSUMS:
   CNIOSHA1: 7b1dcceef9682aef4c6578b9fc67f87a03f0c48e
   gRPC-Swift: d4432e8659f1d075b9d07963c18e6791c8b159c3
   Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
+  ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   SwiftNIO: c9889dcd8aed2655af9163b42fc11ebd4ce94252
   SwiftNIOConcurrencyHelpers: 2357037a16e9c51880c01b896a5ac3cd41066044
@@ -146,6 +161,6 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: 26d40c589fc8fe667af51b06ef0aa49fbc9ae7f2
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
 
-PODFILE CHECKSUM: cd090855da4f2ff78dc9fc1af34390dbad92f552
+PODFILE CHECKSUM: 36f140a2d68651b4e7745d5e3f69b095f4337081
 
 COCOAPODS: 1.9.3
