@@ -11,6 +11,9 @@
         <array key="Montserrat-Medium.ttf">
             <string>Montserrat-Medium</string>
         </array>
+        <array key="Montserrat-Regular.ttf">
+            <string>Montserrat-Regular</string>
+        </array>
         <array key="Montserrat-SemiBold.ttf">
             <string>Montserrat-SemiBold</string>
         </array>
@@ -27,6 +30,9 @@
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFe-F0-MCn">
                                 <rect key="frame" x="20" y="433" width="374" height="30"/>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <segue destination="fhG-o9-zlB" kind="show" id="gCv-j0-MK2"/>
+                                </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV">
                                 <rect key="frame" x="20" y="249.5" width="300" height="117.5"/>
@@ -52,11 +58,438 @@ your health profile.</string>
                         <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
                     </view>
                     <toolbarItems/>
+                    <navigationItem key="navigationItem" id="dz4-sf-FAa">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="9kP-H0-vdI" userLabel="ProgressBar">
+                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="rbe-fs-3a9" userLabel="ProgressStack">
+                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-qP-UJK" userLabel="One">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtj-UA-Mxf" userLabel="Two">
+                                            <rect key="frame" x="50" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4H-WM-5mX" userLabel="Three">
+                                            <rect key="frame" x="100" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eik-ze-FpG" userLabel="Four">
+                                            <rect key="frame" x="150" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8B-iL-V5x" userLabel="Five">
+                                            <rect key="frame" x="200" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="height" constant="3" id="3uD-mc-ug5"/>
+                                        <constraint firstAttribute="width" constant="250" id="YAg-io-GKt"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="rbe-fs-3a9" firstAttribute="centerX" secondItem="9kP-H0-vdI" secondAttribute="centerX" id="gYE-9b-w4B"/>
+                                <constraint firstItem="rbe-fs-3a9" firstAttribute="centerY" secondItem="9kP-H0-vdI" secondAttribute="centerY" id="iUT-lX-w2Z"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" title="Skip" id="FGl-OZ-MHE">
+                            <color key="tintColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mgK-hf-hZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3957" y="856"/>
+            <point key="canvasLocation" x="3841" y="856"/>
+        </scene>
+        <!--View Controller-->
+        <scene sceneID="KDP-dn-O9k">
+            <objects>
+                <viewController id="fhG-o9-zlB" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="bzC-Pd-f20">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="vFl-0a-59s">
+                                <rect key="frame" x="0.0" y="88" width="414" height="725"/>
+                                <subviews>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="KcL-8Q-8rA">
+                                        <rect key="frame" x="0.0" y="0.0" width="414" height="72.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="What are your biometrics and demographics? " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ZEk-fO-wb6">
+                                                <rect key="frame" x="20" y="0.0" width="374" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="ZEk-fO-wb6" secondAttribute="bottom" id="QFw-VG-dZh"/>
+                                            <constraint firstItem="ZEk-fO-wb6" firstAttribute="leading" secondItem="KcL-8Q-8rA" secondAttribute="leading" constant="20" id="gBe-aH-4Oi"/>
+                                            <constraint firstItem="ZEk-fO-wb6" firstAttribute="top" secondItem="KcL-8Q-8rA" secondAttribute="top" id="is3-lG-u5Y"/>
+                                            <constraint firstAttribute="trailing" secondItem="ZEk-fO-wb6" secondAttribute="trailing" constant="20" id="n6L-j1-OOk"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="miP-qj-dcX">
+                                        <rect key="frame" x="0.0" y="72.5" width="414" height="72.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your body and location data is kept private and never sold to any 3rd party. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="vub-0R-CZK">
+                                                <rect key="frame" x="20" y="0.0" width="374" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="vub-0R-CZK" firstAttribute="leading" secondItem="miP-qj-dcX" secondAttribute="leading" constant="20" id="9sT-oh-Hu0"/>
+                                            <constraint firstItem="vub-0R-CZK" firstAttribute="top" secondItem="miP-qj-dcX" secondAttribute="top" id="Cew-iL-SDn"/>
+                                            <constraint firstAttribute="bottom" secondItem="vub-0R-CZK" secondAttribute="bottom" id="Ry9-dk-71i"/>
+                                            <constraint firstAttribute="trailing" secondItem="vub-0R-CZK" secondAttribute="trailing" constant="20" id="S4F-0a-bX0"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="uOp-Op-nhN">
+                                        <rect key="frame" x="0.0" y="145" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="Z3E-pY-gNB">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="BvX-wX-m1d"/>
+                                                    <constraint firstAttribute="width" constant="48" id="cJ2-aS-i5n"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="9PC-sl-OUc">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I6d-T5-yC9">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="7Vw-QT-SSn"/>
+                                                    <constraint firstAttribute="width" constant="102" id="sCd-Lm-kz8"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="9PC-sl-OUc" secondAttribute="bottom" id="9GT-6D-xEC"/>
+                                            <constraint firstAttribute="trailing" secondItem="I6d-T5-yC9" secondAttribute="trailing" constant="20" id="APh-Ta-QE7"/>
+                                            <constraint firstItem="9PC-sl-OUc" firstAttribute="top" secondItem="uOp-Op-nhN" secondAttribute="top" id="Ez8-MB-fM9"/>
+                                            <constraint firstItem="Z3E-pY-gNB" firstAttribute="centerY" secondItem="uOp-Op-nhN" secondAttribute="centerY" id="GcQ-9P-zWb"/>
+                                            <constraint firstItem="9PC-sl-OUc" firstAttribute="trailing" secondItem="I6d-T5-yC9" secondAttribute="leading" id="YwM-Cb-OJC"/>
+                                            <constraint firstItem="I6d-T5-yC9" firstAttribute="centerY" secondItem="uOp-Op-nhN" secondAttribute="centerY" id="fJe-K7-Kcq"/>
+                                            <constraint firstItem="9PC-sl-OUc" firstAttribute="leading" secondItem="Z3E-pY-gNB" secondAttribute="trailing" constant="10" id="k7X-uY-Tt9"/>
+                                            <constraint firstItem="Z3E-pY-gNB" firstAttribute="leading" secondItem="uOp-Op-nhN" secondAttribute="leading" constant="20" id="tDS-Qb-gdW"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="sMm-Pi-RBl">
+                                        <rect key="frame" x="0.0" y="217.5" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="Aab-QR-rcn">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="RTU-ct-ybT"/>
+                                                    <constraint firstAttribute="height" constant="48" id="kUO-X2-OFA"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3j8-Yf-E3b">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FYs-gC-9qq">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="Uy1-jW-txr"/>
+                                                    <constraint firstAttribute="width" constant="102" id="tyV-d7-raw"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="Aab-QR-rcn" firstAttribute="leading" secondItem="sMm-Pi-RBl" secondAttribute="leading" constant="20" id="43x-n5-ZaI"/>
+                                            <constraint firstAttribute="bottom" secondItem="3j8-Yf-E3b" secondAttribute="bottom" id="5FS-Hn-7Lm"/>
+                                            <constraint firstItem="3j8-Yf-E3b" firstAttribute="trailing" secondItem="FYs-gC-9qq" secondAttribute="leading" id="ESf-Eu-VKr"/>
+                                            <constraint firstItem="3j8-Yf-E3b" firstAttribute="leading" secondItem="Aab-QR-rcn" secondAttribute="trailing" constant="10" id="Ncs-nD-3L2"/>
+                                            <constraint firstItem="Aab-QR-rcn" firstAttribute="centerY" secondItem="sMm-Pi-RBl" secondAttribute="centerY" id="Q9z-R8-27o"/>
+                                            <constraint firstAttribute="trailing" secondItem="FYs-gC-9qq" secondAttribute="trailing" constant="20" id="Sba-IG-sKd"/>
+                                            <constraint firstItem="FYs-gC-9qq" firstAttribute="centerY" secondItem="sMm-Pi-RBl" secondAttribute="centerY" id="iEw-7X-Zne"/>
+                                            <constraint firstItem="3j8-Yf-E3b" firstAttribute="top" secondItem="sMm-Pi-RBl" secondAttribute="top" id="pK7-kX-MnM"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NkV-CQ-H78">
+                                        <rect key="frame" x="0.0" y="290" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="BzM-LC-X0Q">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="HG7-eY-N2o"/>
+                                                    <constraint firstAttribute="width" constant="48" id="afA-Nx-bYo"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lHt-pK-SOh">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SEX-uy-Ouo">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="7dq-gx-lw2"/>
+                                                    <constraint firstAttribute="width" constant="102" id="q99-nd-9ow"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="SEX-uy-Ouo" firstAttribute="centerY" secondItem="NkV-CQ-H78" secondAttribute="centerY" id="33F-0F-5UE"/>
+                                            <constraint firstItem="lHt-pK-SOh" firstAttribute="top" secondItem="NkV-CQ-H78" secondAttribute="top" id="4mr-Mp-5ND"/>
+                                            <constraint firstAttribute="bottom" secondItem="lHt-pK-SOh" secondAttribute="bottom" id="AHo-nd-y9h"/>
+                                            <constraint firstItem="lHt-pK-SOh" firstAttribute="leading" secondItem="BzM-LC-X0Q" secondAttribute="trailing" constant="10" id="PF6-Nj-D6m"/>
+                                            <constraint firstItem="BzM-LC-X0Q" firstAttribute="leading" secondItem="NkV-CQ-H78" secondAttribute="leading" constant="20" id="ZM7-dY-Y0g"/>
+                                            <constraint firstAttribute="trailing" secondItem="SEX-uy-Ouo" secondAttribute="trailing" constant="20" id="cbu-W1-vsI"/>
+                                            <constraint firstItem="BzM-LC-X0Q" firstAttribute="centerY" secondItem="NkV-CQ-H78" secondAttribute="centerY" id="kMu-O6-pK6"/>
+                                            <constraint firstItem="lHt-pK-SOh" firstAttribute="trailing" secondItem="SEX-uy-Ouo" secondAttribute="leading" id="twP-np-N1b"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="7Fv-4z-zT6">
+                                        <rect key="frame" x="0.0" y="362.5" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="yMF-8b-GiJ">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="48" id="3il-6y-GJl"/>
+                                                    <constraint firstAttribute="height" constant="48" id="ykd-un-eKX"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="goT-yP-jpR">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="72q-FC-fZ2">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="8nW-zy-Rza"/>
+                                                    <constraint firstAttribute="width" constant="102" id="VkV-9v-39R"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="bottom" secondItem="goT-yP-jpR" secondAttribute="bottom" id="0lb-uB-2TJ"/>
+                                            <constraint firstItem="72q-FC-fZ2" firstAttribute="centerY" secondItem="7Fv-4z-zT6" secondAttribute="centerY" id="CDQ-Ub-zod"/>
+                                            <constraint firstItem="goT-yP-jpR" firstAttribute="top" secondItem="7Fv-4z-zT6" secondAttribute="top" id="Jf4-aQ-mEA"/>
+                                            <constraint firstItem="yMF-8b-GiJ" firstAttribute="centerY" secondItem="7Fv-4z-zT6" secondAttribute="centerY" id="Q14-GJ-odV"/>
+                                            <constraint firstAttribute="trailing" secondItem="72q-FC-fZ2" secondAttribute="trailing" constant="20" id="Rtm-Oi-c0u"/>
+                                            <constraint firstItem="goT-yP-jpR" firstAttribute="leading" secondItem="yMF-8b-GiJ" secondAttribute="trailing" constant="10" id="T4d-eS-HKf"/>
+                                            <constraint firstItem="yMF-8b-GiJ" firstAttribute="leading" secondItem="7Fv-4z-zT6" secondAttribute="leading" constant="20" id="aoI-tH-bgG"/>
+                                            <constraint firstItem="goT-yP-jpR" firstAttribute="trailing" secondItem="72q-FC-fZ2" secondAttribute="leading" id="c0o-P7-gzG"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GFF-9k-G3H">
+                                        <rect key="frame" x="0.0" y="435" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="nQt-J6-c2M">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="IfM-ja-cUv"/>
+                                                    <constraint firstAttribute="width" constant="48" id="nZC-2C-WvG"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="DQV-ve-BfJ">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="OMs-G1-eMk">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="12b-Um-36h"/>
+                                                    <constraint firstAttribute="width" constant="102" id="R97-y2-YMw"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="DQV-ve-BfJ" firstAttribute="leading" secondItem="nQt-J6-c2M" secondAttribute="trailing" constant="10" id="06x-gV-ufo"/>
+                                            <constraint firstItem="OMs-G1-eMk" firstAttribute="centerY" secondItem="GFF-9k-G3H" secondAttribute="centerY" id="8Bk-RE-MIQ"/>
+                                            <constraint firstItem="DQV-ve-BfJ" firstAttribute="trailing" secondItem="OMs-G1-eMk" secondAttribute="leading" id="Dd2-dB-0Df"/>
+                                            <constraint firstItem="DQV-ve-BfJ" firstAttribute="top" secondItem="GFF-9k-G3H" secondAttribute="top" id="ItR-q3-kzW"/>
+                                            <constraint firstAttribute="bottom" secondItem="DQV-ve-BfJ" secondAttribute="bottom" id="LnC-oC-zFy"/>
+                                            <constraint firstItem="nQt-J6-c2M" firstAttribute="centerY" secondItem="GFF-9k-G3H" secondAttribute="centerY" id="XUP-j5-0f8"/>
+                                            <constraint firstItem="nQt-J6-c2M" firstAttribute="leading" secondItem="GFF-9k-G3H" secondAttribute="leading" constant="20" id="Zea-PW-vVj"/>
+                                            <constraint firstAttribute="trailing" secondItem="OMs-G1-eMk" secondAttribute="trailing" constant="20" id="u9M-H0-bu2"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="GG1-nH-DZf">
+                                        <rect key="frame" x="0.0" y="507.5" width="414" height="72.5"/>
+                                        <subviews>
+                                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="Icon-Apple-Health" translatesAutoresizingMaskIntoConstraints="NO" id="5xp-bQ-lp0">
+                                                <rect key="frame" x="20" y="12.5" width="48" height="48"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="48" id="o4G-QO-cwh"/>
+                                                    <constraint firstAttribute="width" constant="48" id="xTr-Cy-eeH"/>
+                                                </constraints>
+                                            </imageView>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="x7h-tI-kFP">
+                                                <rect key="frame" x="78" y="0.0" width="214" height="72.5"/>
+                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mwB-hs-Ffe">
+                                                <rect key="frame" x="292" y="19.5" width="102" height="34"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="height" constant="34" id="4lc-Nr-vAU"/>
+                                                    <constraint firstAttribute="width" constant="102" id="wv2-7Q-z6O"/>
+                                                </constraints>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstAttribute="trailing" secondItem="mwB-hs-Ffe" secondAttribute="trailing" constant="20" id="1E0-u3-A0i"/>
+                                            <constraint firstAttribute="bottom" secondItem="x7h-tI-kFP" secondAttribute="bottom" id="9Ff-Zg-RYj"/>
+                                            <constraint firstItem="x7h-tI-kFP" firstAttribute="trailing" secondItem="mwB-hs-Ffe" secondAttribute="leading" id="OfP-5f-egJ"/>
+                                            <constraint firstItem="x7h-tI-kFP" firstAttribute="top" secondItem="GG1-nH-DZf" secondAttribute="top" id="RXn-4v-qgc"/>
+                                            <constraint firstItem="5xp-bQ-lp0" firstAttribute="leading" secondItem="GG1-nH-DZf" secondAttribute="leading" constant="20" id="Wpg-GT-UbM"/>
+                                            <constraint firstItem="x7h-tI-kFP" firstAttribute="leading" secondItem="5xp-bQ-lp0" secondAttribute="trailing" constant="10" id="fKQ-Jk-o5I"/>
+                                            <constraint firstItem="5xp-bQ-lp0" firstAttribute="centerY" secondItem="GG1-nH-DZf" secondAttribute="centerY" id="x6Z-j5-hNB"/>
+                                            <constraint firstItem="mwB-hs-Ffe" firstAttribute="centerY" secondItem="GG1-nH-DZf" secondAttribute="centerY" id="y5N-CY-acF"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="c97-ea-6LU">
+                                        <rect key="frame" x="0.0" y="580" width="414" height="72.5"/>
+                                        <subviews>
+                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Metric" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eOH-fo-AP2">
+                                                <rect key="frame" x="273" y="0.0" width="72" height="72.5"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="72" id="aBx-lw-HJe"/>
+                                                </constraints>
+                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
+                                                <nil key="textColor"/>
+                                                <nil key="highlightedColor"/>
+                                            </label>
+                                            <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="gig-5C-OBW">
+                                                <rect key="frame" x="343" y="21.5" width="53" height="30"/>
+                                                <constraints>
+                                                    <constraint firstAttribute="width" constant="51" id="mh6-AO-pEA"/>
+                                                    <constraint firstAttribute="height" constant="30" id="pqk-5Q-pLY"/>
+                                                </constraints>
+                                            </switch>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="gig-5C-OBW" firstAttribute="centerY" secondItem="c97-ea-6LU" secondAttribute="centerY" id="Muf-s4-BT3"/>
+                                            <constraint firstAttribute="trailing" secondItem="gig-5C-OBW" secondAttribute="trailing" constant="20" id="gaT-xg-JAj"/>
+                                            <constraint firstAttribute="trailing" secondItem="eOH-fo-AP2" secondAttribute="trailing" constant="69" id="kvh-Rs-myR"/>
+                                            <constraint firstItem="eOH-fo-AP2" firstAttribute="top" secondItem="c97-ea-6LU" secondAttribute="top" id="lBV-3r-Tt8"/>
+                                            <constraint firstAttribute="bottom" secondItem="eOH-fo-AP2" secondAttribute="bottom" id="mvi-eO-8xq"/>
+                                        </constraints>
+                                    </view>
+                                    <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="E1E-GT-089">
+                                        <rect key="frame" x="0.0" y="652.5" width="414" height="72.5"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoL-9Q-Pcy">
+                                                <rect key="frame" x="20" y="0.0" width="374" height="72.5"/>
+                                                <state key="normal" title="Button"/>
+                                            </button>
+                                        </subviews>
+                                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                        <constraints>
+                                            <constraint firstItem="eoL-9Q-Pcy" firstAttribute="leading" secondItem="E1E-GT-089" secondAttribute="leading" constant="20" id="TJj-6r-1fj"/>
+                                            <constraint firstItem="eoL-9Q-Pcy" firstAttribute="top" secondItem="E1E-GT-089" secondAttribute="top" id="X0E-ed-fe8"/>
+                                            <constraint firstAttribute="trailing" secondItem="eoL-9Q-Pcy" secondAttribute="trailing" constant="20" id="Zsh-aH-dJj"/>
+                                            <constraint firstAttribute="bottom" secondItem="eoL-9Q-Pcy" secondAttribute="bottom" id="v1I-cw-5xg"/>
+                                        </constraints>
+                                    </view>
+                                </subviews>
+                                <constraints>
+                                    <constraint firstItem="KcL-8Q-8rA" firstAttribute="leading" secondItem="vFl-0a-59s" secondAttribute="leading" id="TZ9-HL-7pF"/>
+                                    <constraint firstAttribute="trailing" secondItem="uOp-Op-nhN" secondAttribute="trailing" id="zci-vs-EL5"/>
+                                </constraints>
+                            </stackView>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="vFl-0a-59s" firstAttribute="bottom" secondItem="dhP-T8-5Kp" secondAttribute="bottom" id="3vY-xl-N5y"/>
+                            <constraint firstItem="dhP-T8-5Kp" firstAttribute="trailing" secondItem="vFl-0a-59s" secondAttribute="trailing" id="MOa-Sk-Op5"/>
+                            <constraint firstItem="vFl-0a-59s" firstAttribute="top" secondItem="dhP-T8-5Kp" secondAttribute="top" id="dqG-IK-izG"/>
+                            <constraint firstItem="vFl-0a-59s" firstAttribute="leading" secondItem="dhP-T8-5Kp" secondAttribute="leading" id="lIa-Mh-zZm"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="dhP-T8-5Kp"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="ss0-JS-bBJ">
+                        <nil key="title"/>
+                        <view key="titleView" contentMode="scaleToFill" id="ryx-Cv-E2C" userLabel="ProgressBar">
+                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
+                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                            <subviews>
+                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="PDO-pI-4Tg" userLabel="ProgressStack">
+                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
+                                    <subviews>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="vdN-Wo-5ma" userLabel="One">
+                                            <rect key="frame" x="0.0" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oYq-db-xby" userLabel="Two">
+                                            <rect key="frame" x="50" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="AYb-RQ-RME" userLabel="Three">
+                                            <rect key="frame" x="100" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="EPh-ys-9TF" userLabel="Four">
+                                            <rect key="frame" x="150" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Tgw-VO-hRq" userLabel="Five">
+                                            <rect key="frame" x="200" y="0.0" width="50" height="3"/>
+                                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        </view>
+                                    </subviews>
+                                    <constraints>
+                                        <constraint firstAttribute="width" constant="250" id="k2C-9I-mw6"/>
+                                        <constraint firstAttribute="height" constant="3" id="wTO-gB-RxN"/>
+                                    </constraints>
+                                </stackView>
+                            </subviews>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <constraints>
+                                <constraint firstItem="PDO-pI-4Tg" firstAttribute="centerY" secondItem="ryx-Cv-E2C" secondAttribute="centerY" id="9rE-xb-wfn"/>
+                                <constraint firstItem="PDO-pI-4Tg" firstAttribute="centerX" secondItem="ryx-Cv-E2C" secondAttribute="centerX" id="UDT-b7-I4s"/>
+                            </constraints>
+                        </view>
+                        <barButtonItem key="rightBarButtonItem" title="Skip" id="chn-vI-oeD">
+                            <color key="tintColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="F5I-XC-kx3" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="4839" y="856"/>
         </scene>
         <!--Terms Of ServiceVC-->
         <scene sceneID="3bW-kz-Ev3">
@@ -189,4 +622,7 @@ your health profile.</string>
             <point key="canvasLocation" x="2814" y="856"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="Icon-Apple-Health" width="56" height="56"/>
+    </resources>
 </document>
