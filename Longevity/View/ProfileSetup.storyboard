@@ -1,0 +1,192 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zqc-mS-75O">
+    <device id="retina6_1" orientation="portrait" appearance="light"/>
+    <dependencies>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
+    </dependencies>
+    <customFonts key="customFonts">
+        <array key="Montserrat-Medium.ttf">
+            <string>Montserrat-Medium</string>
+        </array>
+        <array key="Montserrat-SemiBold.ttf">
+            <string>Montserrat-SemiBold</string>
+        </array>
+    </customFonts>
+    <scenes>
+        <!--View Controller-->
+        <scene sceneID="Thj-ee-KuB">
+            <objects>
+                <viewController id="Zin-rP-KGp" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="A99-0r-8zI">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFe-F0-MCn">
+                                <rect key="frame" x="20" y="433" width="374" height="30"/>
+                                <state key="normal" title="Button"/>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV">
+                                <rect key="frame" x="20" y="249.5" width="300" height="117.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="300" id="3xC-FJ-nN7"/>
+                                </constraints>
+                                <string key="text">To help us personalize
+your results and reduce questions, please setup
+your health profile.</string>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="pFe-F0-MCn" firstAttribute="centerY" secondItem="A99-0r-8zI" secondAttribute="centerY" id="4I5-xr-JGB"/>
+                            <constraint firstItem="HO4-Wh-MeV" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="20" id="9RX-ua-QUu"/>
+                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="pFe-F0-MCn" secondAttribute="trailing" constant="20" id="BGy-bg-XW0"/>
+                            <constraint firstItem="pFe-F0-MCn" firstAttribute="top" secondItem="HO4-Wh-MeV" secondAttribute="bottom" constant="66" id="DLc-EU-SjE"/>
+                            <constraint firstItem="pFe-F0-MCn" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="20" id="pdd-GT-HKe"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
+                    </view>
+                    <toolbarItems/>
+                    <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="mgK-hf-hZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3957" y="856"/>
+        </scene>
+        <!--Terms Of ServiceVC-->
+        <scene sceneID="3bW-kz-Ev3">
+            <objects>
+                <viewController id="Zqc-mS-75O" customClass="TermsOfServiceVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="CgP-to-171">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Rb3-d9-Ljj" userLabel="Signout">
+                                <rect key="frame" x="91" y="474" width="233" height="88"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
+                                <state key="normal" title="Signout">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleSignout:" destination="Zqc-mS-75O" eventType="touchUpInside" id="x5I-2A-W6Y"/>
+                                </connections>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Terms Of Service" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gFl-VG-hEa">
+                                <rect key="frame" x="0.0" y="88" width="414" height="29.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Res-rd-qTK">
+                                <rect key="frame" x="12" y="138.5" width="390" height="757.5"/>
+                                <color key="backgroundColor" red="0.96470588235294119" green="0.96470588235294119" blue="0.96470588235294119" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YF2-08-RFx" userLabel="Footer">
+                                <rect key="frame" x="0.0" y="640" width="414" height="256"/>
+                                <subviews>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a">
+                                        <rect key="frame" x="15" y="28" width="384" height="48"/>
+                                        <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="iSF-Gp-Sk9"/>
+                                        </constraints>
+                                        <state key="normal" title="Accept">
+                                            <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleAcceptTerms:" destination="Zqc-mS-75O" eventType="touchUpInside" id="f7X-AS-6fG"/>
+                                        </connections>
+                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="2W4-cj-dLo">
+                                        <rect key="frame" x="20" y="128" width="374" height="30"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="DMt-cq-SLU">
+                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Confirm Email">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="sendEmailVerification" destination="Zqc-mS-75O" eventType="touchUpInside" id="q1U-IJ-0a1"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4Db-98-MVT">
+                                                <rect key="frame" x="131.5" y="0.0" width="111" height="30"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                <state key="normal" title="Change Password">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="2ZP-bM-nyi">
+                                                <rect key="frame" x="262.5" y="0.0" width="111.5" height="30"/>
+                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Signout">
+                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+                                                </state>
+                                                <connections>
+                                                    <action selector="handleSignout:" destination="Zqc-mS-75O" eventType="touchUpInside" id="Dxm-k8-lex"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <constraints>
+                                    <constraint firstItem="e95-nv-52a" firstAttribute="leading" secondItem="YF2-08-RFx" secondAttribute="leading" constant="15" id="Gn1-0h-q6v"/>
+                                    <constraint firstItem="e95-nv-52a" firstAttribute="top" secondItem="YF2-08-RFx" secondAttribute="top" constant="28" id="HLa-az-Gb5"/>
+                                    <constraint firstItem="2W4-cj-dLo" firstAttribute="top" secondItem="e95-nv-52a" secondAttribute="bottom" constant="52" id="OsD-FO-fwI"/>
+                                    <constraint firstAttribute="height" constant="256" id="aDc-TP-CGT"/>
+                                    <constraint firstAttribute="trailing" secondItem="2W4-cj-dLo" secondAttribute="trailing" constant="20" id="fs8-A0-3DO"/>
+                                    <constraint firstItem="2W4-cj-dLo" firstAttribute="leading" secondItem="YF2-08-RFx" secondAttribute="leading" constant="20" id="icY-kc-tDx"/>
+                                    <constraint firstAttribute="trailing" secondItem="e95-nv-52a" secondAttribute="trailing" constant="15" id="pU0-ot-lc1"/>
+                                </constraints>
+                            </view>
+                        </subviews>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <constraints>
+                            <constraint firstItem="Res-rd-qTK" firstAttribute="bottom" secondItem="YF2-08-RFx" secondAttribute="bottom" id="3fh-be-Uvm"/>
+                            <constraint firstItem="gFl-VG-hEa" firstAttribute="top" secondItem="D0D-7s-sN3" secondAttribute="top" id="6p4-j0-lgb"/>
+                            <constraint firstItem="gFl-VG-hEa" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" id="EZf-Mt-Txz"/>
+                            <constraint firstItem="Res-rd-qTK" firstAttribute="top" secondItem="gFl-VG-hEa" secondAttribute="bottom" constant="21" id="Hgv-xN-F1v"/>
+                            <constraint firstItem="D0D-7s-sN3" firstAttribute="trailing" secondItem="gFl-VG-hEa" secondAttribute="trailing" id="Oy9-Kv-ep7"/>
+                            <constraint firstItem="YF2-08-RFx" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" id="Urs-uj-4Uf"/>
+                            <constraint firstAttribute="bottom" secondItem="YF2-08-RFx" secondAttribute="bottom" id="WsP-e1-Kqv"/>
+                            <constraint firstItem="YF2-08-RFx" firstAttribute="trailing" secondItem="D0D-7s-sN3" secondAttribute="trailing" id="eNP-3Z-GLk"/>
+                            <constraint firstItem="D0D-7s-sN3" firstAttribute="trailing" secondItem="Res-rd-qTK" secondAttribute="trailing" constant="12" id="enq-1W-hI8"/>
+                            <constraint firstItem="Res-rd-qTK" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" constant="12" id="w7S-6s-gqE"/>
+                        </constraints>
+                        <viewLayoutGuide key="safeArea" id="D0D-7s-sN3"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="xL7-d0-VmB">
+                        <barButtonItem key="rightBarButtonItem" title="Decline" id="osr-Q9-gqR">
+                            <color key="tintColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        </barButtonItem>
+                    </navigationItem>
+                    <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
+                    <connections>
+                        <outlet property="acceptButton" destination="e95-nv-52a" id="9qB-X0-QWa"/>
+                        <outlet property="confirmEmailButton" destination="DMt-cq-SLU" id="8hd-xy-BQk"/>
+                        <outlet property="footer" destination="YF2-08-RFx" id="Unm-Qw-cly"/>
+                        <segue destination="9q7-ow-baX" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="vcb-Ui-ASK"/>
+                        <segue destination="Zin-rP-KGp" kind="show" identifier="TOSToProfileSetup" id="ExJ-ON-yDI"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="pIA-ov-eVW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="9q7-ow-baX" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="2814" y="856"/>
+        </scene>
+    </scenes>
+</document>

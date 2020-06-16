@@ -31,12 +31,17 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         setInitialContent()
         initScrollViewWithImages()
         styleButtons()
+        styleNavigationBar()
         hideNavigationBar()
         getCurrentUser()
     }
 
     override func viewDidAppear(_ animated: Bool) {
         hideNavigationBar()
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        showNavigationBar()
     }
 
     func setInitialContent(){
@@ -77,8 +82,22 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         loginButton.layer.masksToBounds = true
     }
 
+    func styleNavigationBar(){
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.barTintColor = UIColor.white
+        navigationBar?.isTranslucent = false
+        navigationBar?.setBackgroundImage(UIImage(), for: .default)
+        navigationBar?.shadowImage = UIImage()
+        navigationBar?.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
+    }
+
     func hideNavigationBar(){
-        self.navigationController?.setNavigationBarHidden(true, animated: true)
+        navigationController?.setNavigationBarHidden(true, animated: true)
+//        navigationItem.hid
+    }
+
+    func showNavigationBar() {
+        navigationController?.setNavigationBarHidden(false, animated: true)
     }
 
     func getCurrentUser() {
@@ -87,7 +106,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             if userSignedIn {
                 DispatchQueue.main.async {
                     print("is main thread",Thread.isMainThread)
-                    self.performSegue(withIdentifier: "OnboardingToTOS", sender: self)
+                    self.performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
                 }
             }
         }

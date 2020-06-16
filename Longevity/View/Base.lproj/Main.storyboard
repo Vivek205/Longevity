@@ -214,7 +214,7 @@ Explore the App</string>
                         <outlet property="pageHeading" destination="M2I-P1-5PW" id="KbW-Gx-WAT"/>
                         <outlet property="scrollView" destination="0JO-HU-HgL" id="ThC-Fb-diA"/>
                         <outlet property="signupButton" destination="xi9-oa-dZr" id="b9m-cZ-bQL"/>
-                        <segue destination="veM-Z9-1Sd" kind="show" identifier="OnboardingToTOS" id="bFA-M4-tBp"/>
+                        <segue destination="RlX-kq-iGh" kind="show" identifier="OnboardingToProfileSetup" id="jxn-dO-fRl"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
@@ -503,7 +503,7 @@ Explore the App</string>
                         <outlet property="personalImageView" destination="m7l-mx-2g4" id="n0G-dn-Vhs"/>
                         <outlet property="personalUseImageButton" destination="Ibu-K3-hXM" id="SvZ-l5-3IX"/>
                         <outlet property="signupButton" destination="zqu-hP-fCs" id="Bs9-eT-dBP"/>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" id="EyO-Hz-vMi"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rB-eB-Seu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -964,7 +964,7 @@ Explore the App</string>
                         <outlet property="loginButton" destination="VXh-3g-ICe" id="Uee-5g-vaC"/>
                         <outlet property="parentStackContainer" destination="4R1-zd-EM3" id="VT6-ek-d5U"/>
                         <outlet property="personalImageView" destination="Fnn-F6-5fL" id="RkV-96-Uo9"/>
-                        <segue destination="veM-Z9-1Sd" kind="show" identifier="LoginToTermsOfService" id="L1O-8m-Fgx"/>
+                        <segue destination="RlX-kq-iGh" kind="show" identifier="LoginToProfileSetup" id="5k2-Eq-Tba"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="2La-yb-axr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -981,6 +981,16 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="2279.7101449275365" y="1030.5803571428571"/>
         </scene>
+        <!--ProfileSetup-->
+        <scene sceneID="eYM-27-ALv">
+            <objects>
+                <viewControllerPlaceholder storyboardName="ProfileSetup" id="RlX-kq-iGh" sceneMemberID="viewController">
+                    <navigationItem key="navigationItem" id="PU4-PZ-oUD"/>
+                </viewControllerPlaceholder>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="hEi-B4-UJe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3175" y="106"/>
+        </scene>
         <!--Navigation Controller-->
         <scene sceneID="OES-hR-Xhr">
             <objects>
@@ -989,6 +999,7 @@ Explore the App</string>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vpw-QA-XBe">
                         <rect key="frame" x="0.0" y="44" width="414" height="44"/>
                         <autoresizingMask key="autoresizingMask"/>
+                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                     </navigationBar>
                     <nil name="viewControllers"/>
                     <connections>
@@ -999,129 +1010,12 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>
         </scene>
-        <!--Terms of Service-->
-        <scene sceneID="k3C-zi-mMt">
-            <objects>
-                <viewController id="veM-Z9-1Sd" customClass="TermsOfServiceVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
-                    <view key="view" contentMode="scaleToFill" id="0Jp-XA-s1n">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="qTH-jQ-VUM" userLabel="Signout">
-                                <rect key="frame" x="91" y="474" width="233" height="88"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="systemBlueColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="22"/>
-                                <state key="normal" title="Signout">
-                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                </state>
-                                <connections>
-                                    <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="jVL-7I-tif"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" fixedFrame="YES" editable="NO" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="8qi-Py-E0u">
-                                <rect key="frame" x="0.0" y="86" width="414" height="724"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <color key="backgroundColor" systemColor="opaqueSeparatorColor" red="0.77647058820000003" green="0.77647058820000003" blue="0.7843137255" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
-                                <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zeG-g8-7eJ" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="640" width="414" height="256"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="aOZ-Hz-IDg">
-                                        <rect key="frame" x="15" y="28" width="384" height="48"/>
-                                        <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="ag4-On-wSD"/>
-                                        </constraints>
-                                        <state key="normal" title="Accept">
-                                            <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="vzF-tj-V5Z"/>
-                                        </connections>
-                                    </button>
-                                    <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="Li8-pq-dzX">
-                                        <rect key="frame" x="20" y="128" width="374" height="30"/>
-                                        <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HVO-Wv-cCA">
-                                                <rect key="frame" x="0.0" y="0.0" width="111.5" height="30"/>
-                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Confirm Email">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="sendEmailVerification" destination="veM-Z9-1Sd" eventType="touchUpInside" id="7iH-Jr-fw5"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="5HX-Ny-9Dy">
-                                                <rect key="frame" x="131.5" y="0.0" width="111" height="30"/>
-                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <fontDescription key="fontDescription" type="system" pointSize="13"/>
-                                                <state key="normal" title="Change Password">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <segue destination="Jks-3U-puK" kind="show" id="soF-bI-ZRn"/>
-                                                </connections>
-                                            </button>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="CjZ-x4-f48">
-                                                <rect key="frame" x="262.5" y="0.0" width="111.5" height="30"/>
-                                                <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <state key="normal" title="Signout">
-                                                    <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                </state>
-                                                <connections>
-                                                    <action selector="handleSignout:" destination="veM-Z9-1Sd" eventType="touchUpInside" id="WOF-pV-Y6Z"/>
-                                                </connections>
-                                            </button>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <constraints>
-                                    <constraint firstItem="aOZ-Hz-IDg" firstAttribute="leading" secondItem="zeG-g8-7eJ" secondAttribute="leading" constant="15" id="33F-r4-KSB"/>
-                                    <constraint firstAttribute="trailing" secondItem="aOZ-Hz-IDg" secondAttribute="trailing" constant="15" id="FAk-Zq-T4P"/>
-                                    <constraint firstAttribute="height" constant="256" id="YIv-nx-EBk"/>
-                                    <constraint firstAttribute="trailing" secondItem="Li8-pq-dzX" secondAttribute="trailing" constant="20" id="Zwd-J7-P7s"/>
-                                    <constraint firstItem="Li8-pq-dzX" firstAttribute="leading" secondItem="zeG-g8-7eJ" secondAttribute="leading" constant="20" id="a1D-q3-8KO"/>
-                                    <constraint firstItem="aOZ-Hz-IDg" firstAttribute="top" secondItem="zeG-g8-7eJ" secondAttribute="top" constant="28" id="iDo-Dc-p7P"/>
-                                    <constraint firstItem="Li8-pq-dzX" firstAttribute="top" secondItem="aOZ-Hz-IDg" secondAttribute="bottom" constant="52" id="zA1-ps-4hc"/>
-                                </constraints>
-                            </view>
-                        </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                        <constraints>
-                            <constraint firstItem="zeG-g8-7eJ" firstAttribute="trailing" secondItem="hp5-7a-Yhr" secondAttribute="trailing" id="VRn-Jf-EYf"/>
-                            <constraint firstAttribute="bottom" secondItem="zeG-g8-7eJ" secondAttribute="bottom" id="nqa-74-HO3"/>
-                            <constraint firstItem="zeG-g8-7eJ" firstAttribute="leading" secondItem="hp5-7a-Yhr" secondAttribute="leading" id="qs2-qF-9Dc"/>
-                        </constraints>
-                        <viewLayoutGuide key="safeArea" id="hp5-7a-Yhr"/>
-                    </view>
-                    <navigationItem key="navigationItem" title="Terms of Service" id="nM0-Fk-zzC"/>
-                    <connections>
-                        <outlet property="acceptButton" destination="aOZ-Hz-IDg" id="lcd-K3-ocQ"/>
-                        <outlet property="confirmEmailButton" destination="HVO-Wv-cCA" id="NG9-MD-pHC"/>
-                        <outlet property="footer" destination="zeG-g8-7eJ" id="SA7-p8-fGM"/>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="TOSToLogin" id="uRB-KK-7Nb"/>
-                        <segue destination="enB-li-R9B" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="klm-62-r2F"/>
-                        <segue destination="mxF-6k-xVv" kind="showDetail" identifier="TOSToConfirmEmail" id="QsL-Sd-qMl"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="2a8-yj-IyV" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <exit id="enB-li-R9B" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="3398.5507246376815" y="1030.5803571428571"/>
-        </scene>
         <!--Confirm EmailVC-->
         <scene sceneID="Wjb-Tu-Gce">
             <objects>
                 <viewController id="mxF-6k-xVv" customClass="ConfirmEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ENF-RW-Peu">
-                        <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="ConfirmationCode" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="fmo-WL-ZmO">
@@ -1277,7 +1171,6 @@ Explore the App</string>
                         <outlet property="formConfirmationCode" destination="Tim-Tg-7qR" id="z5r-Gs-oql"/>
                         <outlet property="formNewPassword" destination="dD8-Yb-J9G" id="lvS-IS-2wx"/>
                         <outlet property="formUsername" destination="NnJ-O8-itc" id="Zve-PU-VYG"/>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="ResetPasswordToLogin" id="I24-Rs-0yh"/>
                         <segue destination="ZmH-yP-8JG" kind="unwind" identifier="UnwindResetPasswordToTOS" unwindAction="unwindToTermsOfService:" id="EbA-24-vvx"/>
                     </connections>
                 </viewController>
@@ -1288,8 +1181,8 @@ Explore the App</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="L1O-8m-Fgx"/>
-        <segue reference="EyO-Hz-vMi"/>
+        <segue reference="5k2-Eq-Tba"/>
+        <segue reference="U5g-zc-jaq"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

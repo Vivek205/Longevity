@@ -41,6 +41,12 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         footer.backgroundColor = UIColor.black
     }
     
+    // MARK: Actions
+    @IBAction func handleAcceptTerms(_ sender: Any) {
+        print("Terms Accepted")
+        performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
+    }
+
 
     @IBAction func handleSignout(_ sender: Any) {
         func onSuccess(isSignedOut: Bool) {
@@ -66,14 +72,29 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         print("unwound to terms of service")
     }
 
-    
-    // MARK: Navigation Delegate
-    func navigationController(_ navigationController: UINavigationController,
-                              didShow viewController: UIViewController,
-                              animated: Bool){
-        print("TOC shown =====================================================================")
+
+    @IBAction func sendEmailVerification(){
+        func onSuccess(isEmailSent: Bool) {
+            DispatchQueue.main.async {
+                if isEmailSent {
+                    self.performSegue(withIdentifier: "TOSToConfirmEmail", sender: self)
+                }
+            }
+        }
+
+        _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
+            switch result {
+            case .success(let deliveryDetails):
+                print("Resend code send to - \(deliveryDetails)")
+                onSuccess(isEmailSent: true)
+            case .failure(let error):
+                print("Resend code failed with error \(error)")
+            }
+        }
+
     }
-    
+
+    // MARK: User Session
     func getUserSession(){
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
@@ -108,24 +129,5 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         }
     }
 
-    @IBAction func sendEmailVerification(){
-        func onSuccess(isEmailSent: Bool) {
-            DispatchQueue.main.async {
-                if isEmailSent {
-                    self.performSegue(withIdentifier: "TOSToConfirmEmail", sender: self)
-                }
-            }
-        }
 
-        _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
-            switch result {
-            case .success(let deliveryDetails):
-                print("Resend code send to - \(deliveryDetails)")
-                onSuccess(isEmailSent: true)
-            case .failure(let error):
-                print("Resend code failed with error \(error)")
-            }
-        }
-
-    }
 }

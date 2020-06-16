@@ -95,7 +95,7 @@ class LoginVC: UIViewController {
             func onSuccess() {
                 DispatchQueue.main.async {
                     self.removeSpinner()
-                    self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+                    self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
                 }
             }
 
@@ -142,7 +142,7 @@ class LoginVC: UIViewController {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
             }
         }
 
@@ -171,7 +171,7 @@ class LoginVC: UIViewController {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.performSegue(withIdentifier: "LoginToTermsOfService", sender: self)
+                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
             }
         }
 
