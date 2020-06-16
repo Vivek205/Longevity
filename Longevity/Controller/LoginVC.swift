@@ -110,7 +110,6 @@ class LoginVC: UIViewController {
                 print("result", result)
                 switch result {
                 case .success(_):
-                    print("Sign in succeeded")
                     onSuccess()
                 case .failure(let error):
                     onFailure(error: error)
@@ -156,11 +155,8 @@ class LoginVC: UIViewController {
         _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
             switch result {
             case .success(let session):
-                print("Sign in succeeded")
-                print("session", session)
                 onSuccess()
             case .failure(let error):
-                print("Sign in failed \(error)")
                 onFailure(error: error)
             }
         }
@@ -176,7 +172,6 @@ class LoginVC: UIViewController {
         }
 
         func onFailure(error: AuthError) {
-            print("Sign in failed \(error)")
             DispatchQueue.main.async {
                 self.removeSpinner()
             }
@@ -184,11 +179,8 @@ class LoginVC: UIViewController {
         _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
             switch result {
             case .success(let session):
-                print("Sign in succeeded")
-                print("session", session)
                 onSuccess()
             case .failure(let error):
-                print("Sign in failed \(error)")
                 onFailure(error: error)
             }
         }
@@ -209,12 +201,10 @@ class LoginVC: UIViewController {
                 for attribute in userAttributes {
                     if attribute.key == .email {
                         self.username = attribute.value
-                        print("User email", attribute.value)
                     }
                 }
-                print("User attribtues - \("dfd")")
             case .failure(let error):
-                print("Fetching user attributes failed with error \(error)")
+                print("error getting attributes")
             }
         }
     }

@@ -63,11 +63,9 @@ class ResetPasswordVC: UIViewController {
 
                     switch result {
                     case .success:
-                        print("Password reset confirmed")
                         resetSuccess = true
                         group.leave()
                     case .failure(let error):
-                        print("Reset password failed with error \(error)")
                         group.leave()
                     }
             }

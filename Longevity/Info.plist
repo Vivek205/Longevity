@@ -105,8 +105,8 @@
 	<key>WebDomain</key>
 	<string>https://something.auth.us-west-2.amazoncognito.com</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>allow</string>
+	<string>We will use your health information to better track Prancercise workouts.</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>allow</string>
+	<string>We will use your health information to better track Prancercise workouts.</string>
 </dict>
 </plist>

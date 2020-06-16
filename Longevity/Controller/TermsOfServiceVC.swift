@@ -99,7 +99,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
-                print("Is user signed in - \(session)")
+                print("user signed in")
             case .failure(let error):
                 print("Fetch session failed with error \(error)")
             }
@@ -117,7 +117,6 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         _ = Amplify.Auth.fetchUserAttributes() { result in
             switch result {
             case .success(let attributes):
-                print("User attribtues - \(attributes)")
                 for attribute in attributes {
                     if attribute.key == .unknown("email_verified"){
                         onSuccess(isEmailVerified: attribute.value == "true")

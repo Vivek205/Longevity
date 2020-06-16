@@ -33,12 +33,9 @@ class ChangePasswordVC: UIViewController {
                 _ = Amplify.Auth.update(oldPassword: oldPassword, to: newPassword) { result in
                     switch result {
                     case .success:
-                        print("Change password succeeded")
                         changeSuccess = true
                         group.leave()
                     case .failure(let error):
-                        print("Change password failed with error \(error)")
-
                         group.leave()
                     }
                 }

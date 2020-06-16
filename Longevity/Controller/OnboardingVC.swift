@@ -73,9 +73,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
     func styleButtons(){
-        signupButton.layer.cornerRadius = CGFloat(10)
-        signupButton.layer.masksToBounds = true
-
         loginButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         loginButton.layer.cornerRadius = CGFloat(10)
         loginButton.layer.borderWidth = 2
@@ -102,17 +99,14 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
     func getCurrentUser() {
         func onSuccess(userSignedIn: Bool) {
-            print("usersigned in", userSignedIn)
             if userSignedIn {
                 DispatchQueue.main.async {
-                    print("is main thread",Thread.isMainThread)
                     self.performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
                 }
             }
         }
 
         func onFailure(error: AuthError) {
-            print("Fetch session failed with error \(error)")
             print(error)
         }
 
