@@ -104,5 +104,9 @@
 	</array>
 	<key>WebDomain</key>
 	<string>https://something.auth.us-west-2.amazoncognito.com</string>
+	<key>NSHealthUpdateUsageDescription</key>
+	<string>allow</string>
+	<key>NSHealthShareUsageDescription</key>
+	<string>allow</string>
 </dict>
 </plist>

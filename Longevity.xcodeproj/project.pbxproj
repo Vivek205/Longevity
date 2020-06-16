@@ -35,6 +35,7 @@
 		E2BCA57024865303007204B9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BCA56F24865303007204B9 /* LoginVC.swift */; };
 		E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BCA5712486542C007204B9 /* SignupVC.swift */; };
 		E2C59DFA2498A2DE00842105 /* ProfileSetup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */; };
+		E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C59DFC2498DE8C00842105 /* HealthKit.framework */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
 		E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */; };
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
@@ -73,6 +74,8 @@
 		E2BCA56F24865303007204B9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		E2BCA5712486542C007204B9 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileSetup.storyboard; sourceTree = "<group>"; };
+		E2C59DFB2498DE8B00842105 /* Longevity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Longevity.entitlements; sourceTree = "<group>"; };
+		E2C59DFC2498DE8C00842105 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -88,6 +91,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				AC0C416F4AA8C4C13933C2DB /* Pods_Longevity.framework in Frameworks */,
+				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -106,6 +110,7 @@
 		AC560302038330523AE32D20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
 				5B311A3AEA3AD0E49E7A68FD /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
@@ -175,6 +180,7 @@
 		E2ECB8BD247FE2BA0020A27E /* Longevity */ = {
 			isa = PBXGroup;
 			children = (
+				E2C59DFB2498DE8B00842105 /* Longevity.entitlements */,
 				E23269A824938E6200D2384C /* GRPC */,
 				E2BCA52724853826007204B9 /* AWS */,
 				E23A2CCB24813BCD0051EE7A /* Fonts */,
@@ -532,8 +538,9 @@
 			baseConfigurationReference = CF7A81595EB766C43240C5BE /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
@@ -551,8 +558,9 @@
 			baseConfigurationReference = C34CA09B51C44E4979E23741 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = "";
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
