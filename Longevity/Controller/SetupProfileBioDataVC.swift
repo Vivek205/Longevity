@@ -41,7 +41,45 @@ class SetupProfileBioDataVC: UIViewController {
                 return print("error in health kit", error)
             }
             print("success", success)
+            self.readHealthData()
         }
+    }
+
+    func readHealthData(){
+        do {
+            let birthDate = try healthKitStore.dateOfBirthComponents()
+            let calendar = Calendar.current
+            let currentYear = calendar.component(.year, from: Date())
+            let currentAge = currentYear - birthDate.year!
+            print(currentAge)
+        } catch  {
+             print(error)
+        }
+
+        do {
+           let biologicalSex = try healthKitStore.biologicalSex()
+            let unwrappedBioSex = biologicalSex.biologicalSex
+
+            switch unwrappedBioSex.rawValue{
+                case 0:
+                    print("biological sex not set")
+                case 1:
+                    print("female")
+                case 2:
+                    print("male")
+                case 3:
+                    print("other")
+                default:
+                   print("not set")
+            }
+        } catch  {}
+
+//        do {
+//            let bodyMass  = try healthKitStore.
+//        } catch <#pattern#> {
+//            <#statements#>
+        
+//        }
     }
 
 }
