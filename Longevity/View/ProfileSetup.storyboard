@@ -414,6 +414,9 @@ your health profile.</string>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eoL-9Q-Pcy">
                                                 <rect key="frame" x="20" y="0.0" width="374" height="72.5"/>
                                                 <state key="normal" title="Button"/>
+                                                <connections>
+                                                    <action selector="consentTappedWithSender:" destination="fhG-o9-zlB" eventType="touchUpInside" id="v3u-qZ-LVl"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

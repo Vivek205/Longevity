@@ -8,6 +8,7 @@
 
 import UIKit
 import HealthKit
+import ResearchKit
 
 let healthKitStore:HKHealthStore = HKHealthStore();
 
@@ -18,6 +19,18 @@ class SetupProfileBioDataVC: UIViewController {
         authorizeHealthKitInApp()
 
         // Do any additional setup after loading the view.
+    }
+
+    // MARK: Actions
+    @IBAction func consentTapped(sender: AnyObject) {
+//        MARK: Snippet for presenting consent
+//        let taskViewController = ORKTaskViewController(task: consentTask, taskRun: nil)
+//        taskViewController.delegate = self
+//        present(taskViewController, animated: true, completion: nil)
+
+        let taskViewController = ORKTaskViewController(task: surveyTask, taskRun: nil)
+        taskViewController.delegate = self
+        present(taskViewController, animated: true, completion: nil)
     }
 
     func authorizeHealthKitInApp() {
@@ -81,5 +94,16 @@ class SetupProfileBioDataVC: UIViewController {
         
 //        }
     }
+
+}
+
+
+extension SetupProfileBioDataVC: ORKTaskViewControllerDelegate {
+    func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+        taskViewController.dismiss(animated: true) {
+            print("task view controller dismissed")
+        }
+    }
+
 
 }

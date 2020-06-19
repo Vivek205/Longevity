@@ -9,6 +9,7 @@
 import UIKit
 import Amplify
 import AmplifyPlugins
+import ResearchKit
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
