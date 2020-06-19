@@ -12,22 +12,15 @@ import Amplify
 
 class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     // MARK: Outlets
-    @IBOutlet weak var acceptButton: UIButton!
     @IBOutlet weak var footer: UIView!
-    @IBOutlet weak var confirmEmailButton: UIButton!
 
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
         self.navigationItem.setHidesBackButton(true, animated: true)
-        customizeButton(button: acceptButton)
         getUserSession()
         getUserAttributes()
-    }
-
-    func customizeButton(button: UIButton){
-        button.layer.cornerRadius = 10
     }
 
     func customizeFooter(footer: UIView){
@@ -109,8 +102,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     func getUserAttributes(){
         func onSuccess(isEmailVerified: Bool) {
             DispatchQueue.main.async {
-                self.confirmEmailButton.isEnabled = !isEmailVerified
-                self.confirmEmailButton.backgroundColor = #colorLiteral(red: 0.2549019754, green: 0.2745098174, blue: 0.3019607961, alpha: 1)
+                // TODO: handle Email already Verified
             }
         }
 
