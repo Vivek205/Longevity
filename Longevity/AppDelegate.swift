@@ -17,14 +17,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
-         do {
-                try Amplify.add(plugin: AWSCognitoAuthPlugin())
-                try Amplify.add(plugin: AWSAPIPlugin())
-                try Amplify.configure()
-                print("Amplify configured with auth plugin")
-            } catch {
-                print("An error occurred setting up Amplify: \(error)")
-            }
+        do {
+            try Amplify.add(plugin: AWSCognitoAuthPlugin())
+            try Amplify.add(plugin: AWSAPIPlugin())
+            try Amplify.configure()
+            print("Amplify configured with auth plugin")
+        } catch {
+            print("An error occurred setting up Amplify: \(error)")
+        }
+
+        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         return true
     }
 
@@ -42,6 +44,34 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the user discards a scene session.
         // If any sessions were discarded while the application was not running, this will be called shortly after application:didFinishLaunchingWithOptions.
         // Use this method to release any resources that were specific to the discarded scenes, as they will not return.
+    }
+
+    func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
+        print("////////////////////////////////////////////////////////background fetch")
+        let weatherURL = URL(string: "https://samples.openweathermap.org/data/2.5/weather?q=London,uk&appid=439d4b804bc8187953eb36d2a8c26a02")
+
+        let urlSession = URLSession.shared.dataTask(with: weatherURL!) { (data, response, error) in
+            print("data", data)
+
+            guard let data = data, error == nil else {
+                return completionHandler(.failed)
+            }
+            do{
+               if let jsonData: [String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                    let main = jsonData["main"] as? [String: Any]
+                    let temp = main!["temp"]
+                    print("temp", temp!)
+                UserDefaults.standard.set("\(temp!)", forKey: "temparature")
+                }
+            }catch {
+
+            }
+            completionHandler(.newData)
+        }
+
+        urlSession.resume()
+
+
     }
 
 }
