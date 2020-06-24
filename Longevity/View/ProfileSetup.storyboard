@@ -30,7 +30,7 @@
                         <subviews>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="pFe-F0-MCn" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                 <rect key="frame" x="20" y="433" width="374" height="30"/>
-                                <state key="normal" title="Button"/>
+                                <state key="normal" title="Continue"/>
                                 <connections>
                                     <segue destination="fhG-o9-zlB" kind="show" id="gCv-j0-MK2"/>
                                 </connections>
@@ -117,7 +117,7 @@ your health profile.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mgK-hf-hZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3841" y="856"/>
+            <point key="canvasLocation" x="3840.579710144928" y="855.80357142857144"/>
         </scene>
         <!--Setup Profile Bio DataVC-->
         <scene sceneID="KDP-dn-O9k">

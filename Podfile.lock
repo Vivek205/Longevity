@@ -44,6 +44,9 @@ PODS:
     - SwiftProtobuf (= 1.8.0)
   - Logging (1.2.0)
   - ReachabilitySwift (5.0.0)
+  - Sentry (5.1.5):
+    - Sentry/Core (= 5.1.5)
+  - Sentry/Core (5.1.5)
   - Starscream (3.0.6)
   - SwiftLint (0.39.2)
   - SwiftNIO (2.15.0):
@@ -90,6 +93,7 @@ DEPENDENCIES:
   - AmplifyPlugins/AWSAPIPlugin
   - AmplifyPlugins/AWSCognitoAuthPlugin
   - gRPC-Swift (= 1.0.0-alpha.12)
+  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.1.5`)
   - SwiftLint (~> 0.39)
 
 SPEC REPOS:
@@ -127,6 +131,16 @@ SPEC REPOS:
     - SwiftNIOTransportServices
     - SwiftProtobuf
 
+EXTERNAL SOURCES:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 5.1.5
+
+CHECKOUT OPTIONS:
+  Sentry:
+    :git: https://github.com/getsentry/sentry-cocoa.git
+    :tag: 5.1.5
+
 SPEC CHECKSUMS:
   Amplify: d993f9ab89645ffa58616b23f95a22e1038f46a2
   AmplifyPlugins: 6f341b2013ba8a7389097287333324c8beeb43bd
@@ -148,6 +162,7 @@ SPEC CHECKSUMS:
   gRPC-Swift: d4432e8659f1d075b9d07963c18e6791c8b159c3
   Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
+  Sentry: e73af5462d1e7978c571aa2fdb861053938d7efd
   Starscream: ef3ece99d765eeccb67de105bfa143f929026cf5
   SwiftLint: 22ccbbe3b8008684be5955693bab135e0ed6a447
   SwiftNIO: c9889dcd8aed2655af9163b42fc11ebd4ce94252
@@ -161,6 +176,6 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: 26d40c589fc8fe667af51b06ef0aa49fbc9ae7f2
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
 
-PODFILE CHECKSUM: 36f140a2d68651b4e7745d5e3f69b095f4337081
+PODFILE CHECKSUM: 226727c2e238c19379a99ba6797665814d024285
 
 COCOAPODS: 1.9.3

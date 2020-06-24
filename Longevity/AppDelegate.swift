@@ -10,6 +10,7 @@ import UIKit
 import Amplify
 import AmplifyPlugins
 import ResearchKit
+import Sentry
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -22,9 +23,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             try Amplify.add(plugin: AWSAPIPlugin())
             try Amplify.configure()
             print("Amplify configured with auth plugin")
+            SentrySDK.start(options: [
+                "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
+                "enableAutoSessionTracking": true
+//                "debug": true // Enabled debug when first installing is always helpful
+            ])
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
+
+        SentrySDK.start(options: [
+            "dsn": "https://787179c6eada4905abbcf97ac92f749f@o338665.ingest.sentry.io/5286655",
+            "debug": true // Enabled debug when first installing is always helpful
+        ])
 
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         return true
@@ -52,26 +63,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         let urlSession = URLSession.shared.dataTask(with: weatherURL!) { (data, response, error) in
             print("data", data)
-
             guard let data = data, error == nil else {
                 return completionHandler(.failed)
             }
             do{
-               if let jsonData: [String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                if let jsonData: [String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
                     let main = jsonData["main"] as? [String: Any]
                     let temp = main!["temp"]
                     print("temp", temp!)
-                UserDefaults.standard.set("\(temp!)", forKey: "temparature")
+                    UserDefaults.standard.set("\(temp!)", forKey: "temparature")
                 }
-            }catch {
-
-            }
+            }catch {}
             completionHandler(.newData)
         }
-
         urlSession.resume()
-
-
     }
-
 }

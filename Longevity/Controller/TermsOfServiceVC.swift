@@ -8,6 +8,7 @@
 
 import UIKit
 import Amplify
+import Sentry
 
 
 class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
