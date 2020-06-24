@@ -9,7 +9,7 @@
 import UIKit
 import Amplify
 
-class LoginVC: UIViewController {
+class PersonalLoginVC: UIViewController {
     var username = ""
     
     // MARK: Outlets

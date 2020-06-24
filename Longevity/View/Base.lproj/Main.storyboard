@@ -695,7 +695,7 @@ Explore the App</string>
         <!--Login-->
         <scene sceneID="BcJ-Ph-HFX">
             <objects>
-                <viewController id="DKT-YJ-RMe" customClass="LoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="DKT-YJ-RMe" customClass="PersonalLoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nsU-81-HcD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -981,6 +981,21 @@ Explore the App</string>
             </objects>
             <point key="canvasLocation" x="2279.7101449275365" y="1030.5803571428571"/>
         </scene>
+        <!--Clinical LoginVC-->
+        <scene sceneID="js3-5l-GGr">
+            <objects>
+                <viewController hidesBottomBarWhenPushed="YES" id="ui0-Xv-jrI" customClass="ClinicalLoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="V9L-M9-TWB">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="gHA-MH-ZLk"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="J2M-xk-7SP" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3346" y="1033"/>
+        </scene>
         <!--ProfileSetup-->
         <scene sceneID="eYM-27-ALv">
             <objects>
@@ -1047,7 +1062,7 @@ Explore the App</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="3Wj-nP-Kr7" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="U5N-QU-brL" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3398.5507246376815" y="1806.6964285714284"/>
+            <point key="canvasLocation" x="5628" y="1031"/>
         </scene>
         <!--change password-->
         <scene sceneID="uv0-iu-ftz">
@@ -1181,7 +1196,7 @@ Explore the App</string>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jxn-dO-fRl"/>
+        <segue reference="5k2-Eq-Tba"/>
         <segue reference="U5g-zc-jaq"/>
     </inferredMetricsTieBreakers>
     <resources>

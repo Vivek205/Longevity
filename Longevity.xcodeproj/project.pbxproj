@@ -18,6 +18,7 @@
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
+		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E28CEDCA24977E3A00AB6595 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */; };
 		E28CEDCE2497801600AB6595 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */; };
 		E28CEDD02497803F00AB6595 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDCF2497803F00AB6595 /* Montserrat-Italic.ttf */; };
@@ -31,7 +32,7 @@
 		E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */; };
 		E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */; };
 		E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA5212485007B007204B9 /* Assets.xcassets */; };
-		E2BCA57024865303007204B9 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BCA56F24865303007204B9 /* LoginVC.swift */; };
+		E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BCA56F24865303007204B9 /* PersonalLoginVC.swift */; };
 		E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BCA5712486542C007204B9 /* SignupVC.swift */; };
 		E2C59DFA2498A2DE00842105 /* ProfileSetup.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */; };
 		E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C59DFC2498DE8C00842105 /* HealthKit.framework */; };
@@ -95,6 +96,7 @@
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Medium.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		E28CEDCF2497803F00AB6595 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Italic.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
@@ -108,7 +110,7 @@
 		E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Bold.ttf"; sourceTree = "<group>"; };
 		E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Regular.ttf"; sourceTree = "<group>"; };
 		E2BCA5212485007B007204B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		E2BCA56F24865303007204B9 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
+		E2BCA56F24865303007204B9 /* PersonalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PersonalLoginVC.swift; sourceTree = "<group>"; };
 		E2BCA5712486542C007204B9 /* SignupVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupVC.swift; sourceTree = "<group>"; };
 		E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = ProfileSetup.storyboard; sourceTree = "<group>"; };
 		E2C59DFB2498DE8B00842105 /* Longevity.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = Longevity.entitlements; sourceTree = "<group>"; };
@@ -190,6 +192,15 @@
 				E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */,
 			);
 			path = Fonts;
+			sourceTree = "<group>";
+		};
+		E28653C324A3958F00403729 /* Login */ = {
+			isa = PBXGroup;
+			children = (
+				E2BCA56F24865303007204B9 /* PersonalLoginVC.swift */,
+				E28653C124A3950000403729 /* ClinicalLoginVC.swift */,
+			);
+			path = Login;
 			sourceTree = "<group>";
 		};
 		E2BCA52724853826007204B9 /* AWS */ = {
@@ -281,7 +292,7 @@
 				E2D127E0249B26F200467E43 /* ResearchKitTasks */,
 				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
-				E2BCA56F24865303007204B9 /* LoginVC.swift */,
+				E28653C324A3958F00403729 /* Login */,
 				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
 				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
 				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
@@ -510,8 +521,9 @@
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
+				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
-				E2BCA57024865303007204B9 /* LoginVC.swift in Sources */,
+				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
