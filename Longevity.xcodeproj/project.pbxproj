@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */; };
+		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
 		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
 		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
 		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
@@ -85,6 +87,8 @@
 		92BDB3AD359C34F1CDC878EE /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		A2C279EAB639DBECC6A40316 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		C293736CFF81AD83CC8526DB /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOSTitleTableViewCell.swift; sourceTree = "<group>"; };
+		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
 		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
 		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
 		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
@@ -298,6 +302,7 @@
 				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
 				E2BCA5712486542C007204B9 /* SignupVC.swift */,
 				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
+				E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */,
 				E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */,
 				E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */,
 				E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */,
@@ -311,6 +316,7 @@
 			children = (
 				E2B9893B248E27EC00453E0E /* UserAccount.swift */,
 				E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */,
+				E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -505,6 +511,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
+				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,

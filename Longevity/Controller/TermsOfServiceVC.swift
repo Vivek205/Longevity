@@ -10,11 +10,14 @@ import UIKit
 import Amplify
 import Sentry
 
+let termsOfServiceContent = TermsOfServiceContent()
 
 class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     // MARK: Outlets
+    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var footer: UIView!
 
+    var tableViewDataSource: [String] = []
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +25,15 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         self.navigationItem.setHidesBackButton(true, animated: true)
         getUserSession()
         getUserAttributes()
+        initalizeTableView()
+    }
+
+    func initalizeTableView(){
+//        tableView.register(TOSTitleTableViewCell.self, forCellReuseIdentifier: "TOSTitleTableViewCell")
+//        tableView.register(UINib(), forCellReuseIdentifier: "TOSTitleTableViewCell")
+        tableViewDataSource.append(termsOfServiceContent.title)
+        tableViewDataSource.append(termsOfServiceContent.detailedTerms)
+        tableView.dataSource = self
     }
 
     func customizeFooter(footer: UIView){
@@ -119,6 +131,26 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
                 print("Fetching user attributes failed with error \(error)")
             }
         }
+    }
+
+
+}
+
+extension TermsOfServiceVC:UITableViewDataSource {
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return tableViewDataSource.count
+    }
+
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+//        let tosTitleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TOSTitleTableViewCell") as! TOSTitleTableViewCell
+        if  let tosTitleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TOSTitleTableViewCell") as? TOSTitleTableViewCell {
+            print("tableViewDataSource[indexPath.row]", tableViewDataSource[indexPath.row])
+            tosTitleTableViewCell.titleLabel.text = tableViewDataSource[indexPath.row]
+            print("tableViewDataSource[indexPath.row]", tableViewDataSource[indexPath.row])
+            return tosTitleTableViewCell
+        }
+        return UITableViewCell()
+
     }
 
 
