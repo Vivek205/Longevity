@@ -114,8 +114,12 @@ your health profile.</string>
                         </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
+                    <connections>
+                        <segue destination="zzR-Y2-5eR" kind="unwind" identifier="unwindTOSToOnboarding" unwindAction="unwindToOnboarding:" id="MGb-Pc-TaY"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mgK-hf-hZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+                <exit id="zzR-Y2-5eR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
             <point key="canvasLocation" x="3840.579710144928" y="855.80357142857144"/>
         </scene>

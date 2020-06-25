@@ -46,7 +46,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         func onSuccess(isSignedOut: Bool) {
             DispatchQueue.main.async {
                 if isSignedOut{
-                    self.performSegue(withIdentifier: "unwindTOCToOnboarding", sender: self)
+                    self.performSegue(withIdentifier: "unwindTOSToOnboarding", sender: self)
                 }
             }
         }
