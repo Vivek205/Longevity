@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */; };
 		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
+		E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */; };
 		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
 		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
 		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
@@ -30,7 +31,11 @@
 		E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */; };
 		E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */; };
 		E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8F24923309008DAD25 /* awsconfiguration.json */; };
+		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
+		E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */; };
+		E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */; };
+		E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */; };
 		E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */; };
 		E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */; };
 		E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E2BCA5212485007B007204B9 /* Assets.xcassets */; };
@@ -40,10 +45,13 @@
 		E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2C59DFC2498DE8C00842105 /* HealthKit.framework */; };
 		E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59DFF2498E37600842105 /* CustomButtonFill.swift */; };
 		E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */; };
+		E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */; };
+		E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5A24A5D359005CE57E /* SetupProfile.swift */; };
 		E2D127DB249B216200467E43 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; };
 		E2D127DC249B216200467E43 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E1249B272900467E43 /* ConsentTask.swift */; };
 		E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E3249B5BCF00467E43 /* SurveyTask.swift */; };
+		E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
 		E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */; };
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
@@ -89,6 +97,7 @@
 		C293736CFF81AD83CC8526DB /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOSTitleTableViewCell.swift; sourceTree = "<group>"; };
 		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
+		E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDisclaimerVC.swift; sourceTree = "<group>"; };
 		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
 		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
 		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
@@ -110,7 +119,11 @@
 		E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailVC.swift; sourceTree = "<group>"; };
 		E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2A25F8F24923309008DAD25 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
+		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
+		E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileNotificationVC.swift; sourceTree = "<group>"; };
+		E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesVC.swift; sourceTree = "<group>"; };
+		E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesConnectCell.swift; sourceTree = "<group>"; };
 		E2BCA51C2484B53B007204B9 /* Muli-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Bold.ttf"; sourceTree = "<group>"; };
 		E2BCA51F2484B597007204B9 /* Muli-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Muli-Regular.ttf"; sourceTree = "<group>"; };
 		E2BCA5212485007B007204B9 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
@@ -121,9 +134,12 @@
 		E2C59DFC2498DE8C00842105 /* HealthKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = HealthKit.framework; path = System/Library/Frameworks/HealthKit.framework; sourceTree = SDKROOT; };
 		E2C59DFF2498E37600842105 /* CustomButtonFill.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonFill.swift; sourceTree = "<group>"; };
 		E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioDataVC.swift; sourceTree = "<group>"; };
+		E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonOutlined.swift; sourceTree = "<group>"; };
+		E2C86D5A24A5D359005CE57E /* SetupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfile.swift; sourceTree = "<group>"; };
 		E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../../Apple/ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		E2D127E1249B272900467E43 /* ConsentTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTask.swift; sourceTree = "<group>"; };
 		E2D127E3249B5BCF00467E43 /* SurveyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTask.swift; sourceTree = "<group>"; };
+		E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioOptionCell.swift; sourceTree = "<group>"; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -163,6 +179,22 @@
 				C293736CFF81AD83CC8526DB /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		E22C1A4724A48A6300EC5B29 /* SetupProfile */ = {
+			isa = PBXGroup;
+			children = (
+				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
+				E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */,
+				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
+				E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */,
+				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
+				E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */,
+				E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */,
+				E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */,
+				E2B0333724AA04A600929D39 /* TempSignoutVC.swift */,
+			);
+			path = SetupProfile;
 			sourceTree = "<group>";
 		};
 		E23269A824938E6200D2384C /* GRPC */ = {
@@ -220,6 +252,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C59DFF2498E37600842105 /* CustomButtonFill.swift */,
+				E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -297,16 +330,14 @@
 				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
 				E28653C324A3958F00403729 /* Login */,
+				E22C1A4724A48A6300EC5B29 /* SetupProfile */,
 				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
 				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
 				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
 				E2BCA5712486542C007204B9 /* SignupVC.swift */,
-				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
-				E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */,
 				E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */,
 				E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */,
 				E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */,
-				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -317,6 +348,7 @@
 				E2B9893B248E27EC00453E0E /* UserAccount.swift */,
 				E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */,
 				E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */,
+				E2C86D5A24A5D359005CE57E /* SetupProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -486,7 +518,7 @@
 		};
 		E2CD373224A31F0C002ABBEC /* Sentry */ = {
 			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
+			buildActionMask = 8;
 			files = (
 			);
 			inputFileListPaths = (
@@ -499,7 +531,7 @@
 			);
 			outputPaths = (
 			);
-			runOnlyForDeploymentPostprocessing = 0;
+			runOnlyForDeploymentPostprocessing = 1;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=rejuve\nexport SENTRY_PROJECT=rejuve\nexport SENTRY_AUTH_TOKEN=f61c5bbd1ee24dd99d2f45fa189a29fe5af2fbcaa7e14c8891e046897b3f2665\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
@@ -510,17 +542,22 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
+				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
+				E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
 				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
+				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
+				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
@@ -529,11 +566,14 @@
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
+				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
+				E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */,
+				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

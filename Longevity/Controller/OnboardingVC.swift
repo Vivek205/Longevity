@@ -30,10 +30,14 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         setInitialContent()
         initScrollViewWithImages()
-        styleButtons()
         styleNavigationBar()
         hideNavigationBar()
         getCurrentUser()
+        self.removeBackButtonNavigation()
+    }
+
+    override func viewWillAppear(_ animated: Bool) {
+        hideNavigationBar()
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -70,13 +74,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         scrollView.contentSize = CGSize(width: screenWidth * CGFloat(onboardingContent.imageCount), height: scrollView.frame.size.height)
         scrollView.contentSize.height = 1.0
         scrollView.delegate =  self
-    }
-
-    func styleButtons(){
-        loginButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-        loginButton.layer.cornerRadius = CGFloat(10)
-        loginButton.layer.borderWidth = 2
-        loginButton.layer.masksToBounds = true
     }
 
     func styleNavigationBar(){

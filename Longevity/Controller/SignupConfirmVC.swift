@@ -17,6 +17,7 @@ class SignupConfirmVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.removeBackButtonNavigation()
     }
 
     // MARK: Actions

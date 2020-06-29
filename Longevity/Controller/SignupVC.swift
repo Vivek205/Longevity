@@ -32,6 +32,7 @@ class SignupVC: UIViewController {
         customizeButtons()
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
+        self.removeBackButtonNavigation()
     }
 
     func customizeButtons(){

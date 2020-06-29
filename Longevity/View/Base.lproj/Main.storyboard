@@ -120,19 +120,19 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
                                 <rect key="frame" x="20" y="266" width="394" height="197"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="40"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
                                 <rect key="frame" x="20" y="465" width="394" height="131"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                <nil key="textColor"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="3" translatesAutoresizingMaskIntoConstraints="NO" id="rid-Oo-Hz0">
                                 <rect key="frame" x="0.0" y="598" width="414" height="64.5"/>
-                                <color key="pageIndicatorTintColor" systemColor="systemGreenColor" red="0.20392156859999999" green="0.78039215689999997" blue="0.34901960780000002" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                <color key="currentPageIndicatorTintColor" systemColor="systemOrangeColor" red="1" green="0.58431372550000005" blue="0.0" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="pageIndicatorTintColor" red="0.84313725490196079" green="0.84313725490196079" blue="0.84313725490196079" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <color key="currentPageIndicatorTintColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                             </pageControl>
                             <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" spacing="20" translatesAutoresizingMaskIntoConstraints="NO" id="EeB-Go-aVM" userLabel="CTA">
                                 <rect key="frame" x="20" y="664.5" width="374" height="64.5"/>
@@ -148,7 +148,7 @@
                                             <segue destination="mT6-fh-4r1" kind="show" id="lSX-fJ-YI1"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKO-6b-4ge">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="PKO-6b-4ge" customClass="CustomButtonOutlined" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="197" y="0.0" width="177" height="64.5"/>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
@@ -165,8 +165,8 @@
                                 <rect key="frame" x="0.0" y="731" width="414" height="64.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                 <state key="normal">
-                                    <string key="title">Not ready to signup?
-Explore the App</string>
+                                    <string key="title">Not ready to Sign Up?
+    Explore the App.</string>
                                     <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 </state>
                             </button>
@@ -196,7 +196,7 @@ Explore the App</string>
                             <constraint firstItem="pX9-ou-fMP" firstAttribute="top" secondItem="HEh-Md-Orb" secondAttribute="top" id="gzL-Hm-qj4"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="top" secondItem="07i-de-uQH" secondAttribute="top" id="iYC-zM-Dry"/>
                             <constraint firstItem="0JO-HU-HgL" firstAttribute="trailing" secondItem="HtH-q5-ZgO" secondAttribute="trailing" id="lnI-Do-TJ4"/>
-                            <constraint firstItem="pX9-ou-fMP" firstAttribute="trailing" secondItem="HEh-Md-Orb" secondAttribute="trailing" id="oCB-zT-xZe"/>
+                            <constraint firstItem="pX9-ou-fMP" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="oCB-zT-xZe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TPe-GX-wQe" secondAttribute="trailing" symbolic="YES" id="ps1-4X-4tb"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="centerY" secondItem="07i-de-uQH" secondAttribute="centerY" id="rV3-XG-LhJ"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="leading" secondItem="07i-de-uQH" secondAttribute="leading" id="rnY-ml-m5W"/>
@@ -529,7 +529,7 @@ Explore the App</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personal Use Account" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="nPD-Mf-LYM">
-                                <rect key="frame" x="0.0" y="108" width="414" height="21"/>
+                                <rect key="frame" x="0.0" y="108" width="414" height="22"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -641,7 +641,7 @@ Explore the App</string>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Please input the verification code that was sent as a text message" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="c1F-dX-9v2" userLabel="Title">
-                                <rect key="frame" x="47" y="108" width="320" height="42"/>
+                                <rect key="frame" x="47" y="108" width="320" height="44"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="320" id="YNd-B6-sPI"/>
                                 </constraints>
@@ -650,12 +650,12 @@ Explore the App</string>
                                 <nil key="highlightedColor"/>
                             </label>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter OTP" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="SX8-KI-dYv" userLabel="OTP">
-                                <rect key="frame" x="20" y="202" width="374" height="34"/>
+                                <rect key="frame" x="20" y="204" width="374" height="34"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="USy-gZ-vST">
-                                <rect key="frame" x="20" y="288" width="374" height="48"/>
+                                <rect key="frame" x="20" y="290" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="MB3-1V-fOj"/>
@@ -732,7 +732,7 @@ Explore the App</string>
                                                 </constraints>
                                                 <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="18"/>
                                                 <color key="tintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                                <state key="normal" title="Login" image="icon: email">
+                                                <state key="normal" title="Login">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
                                                 <connections>
@@ -1626,7 +1626,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5k2-Eq-Tba"/>
+        <segue reference="jxn-dO-fRl"/>
         <segue reference="U5g-zc-jaq"/>
     </inferredMetricsTieBreakers>
     <resources>

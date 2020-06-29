@@ -19,7 +19,7 @@ class ClinicalLoginVC: UIViewController {
         customizeImageButton(imgButton: clinicalTrialImageView)
         customizeImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: personalImageView)
-        // Do any additional setup after loading the view.
+        self.removeBackButtonNavigation()
     }
 
     func customizeImageButton(imgButton: UIView){

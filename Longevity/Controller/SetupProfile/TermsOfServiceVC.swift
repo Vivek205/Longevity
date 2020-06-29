@@ -26,11 +26,12 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         getUserSession()
         getUserAttributes()
         initalizeTableView()
+        self.removeBackButtonNavigation()
     }
 
+
+
     func initalizeTableView(){
-//        tableView.register(TOSTitleTableViewCell.self, forCellReuseIdentifier: "TOSTitleTableViewCell")
-//        tableView.register(UINib(), forCellReuseIdentifier: "TOSTitleTableViewCell")
         tableViewDataSource.append(termsOfServiceContent.title)
         tableViewDataSource.append(termsOfServiceContent.detailedTerms)
         tableView.dataSource = self
@@ -54,25 +55,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     }
 
 
-    @IBAction func handleSignout(_ sender: Any) {
-        func onSuccess(isSignedOut: Bool) {
-            DispatchQueue.main.async {
-                if isSignedOut{
-                    self.performSegue(withIdentifier: "unwindTOSToOnboarding", sender: self)
-                }
-            }
-        }
-
-        _ = Amplify.Auth.signOut() { (result) in
-            switch result {
-            case .success:
-                print("Successfully signed out")
-                onSuccess(isSignedOut: true)
-            case .failure(let error):
-                print("Sign out failed with error \(error)")
-            }
-        }
-    }
+    
 
     @IBAction func unwindToTermsOfService(_ sender: UIStoryboardSegue){
         print("unwound to terms of service")
@@ -152,6 +135,11 @@ extension TermsOfServiceVC:UITableViewDataSource {
         return UITableViewCell()
 
     }
+}
 
-
+extension UIViewController {
+    func removeBackButtonNavigation() {
+        let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
+        self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
 }
