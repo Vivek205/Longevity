@@ -8,6 +8,10 @@
 
 import UIKit
 
+protocol SetupProfileDevicesConnectCellDelegate {
+    func connectBtn(wasPressedOnCell cell:SetupProfileDevicesConnectCell)
+}
+
 class SetupProfileDevicesConnectCell: UICollectionViewCell {
     // MARK: Outlets
     @IBOutlet weak var contentContainerView: UIView!
@@ -16,17 +20,11 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var connectBtn: UIButton!
 
-//    override init(frame: CGRect) {
-//        super.init(frame: frame)
-//        customizeContentContainerView()
-//    }
-//
-//    required init?(coder: NSCoder) {
-//        super.init(coder: coder)
-//        customizeContentContainerView()
-//    }
-//
-//    func customizeContentContainerView() {
-//        contentContainerView.layer.cornerRadius = 10
-//    }
+    var delegate: SetupProfileDevicesConnectCellDelegate?
+
+    @IBAction func handleConnectDevice(_ sender: UIButton) {
+        delegate?.connectBtn(wasPressedOnCell: self)
+    }
+
+
 }

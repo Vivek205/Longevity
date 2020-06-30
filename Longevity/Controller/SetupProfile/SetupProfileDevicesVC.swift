@@ -19,24 +19,25 @@ class SetupProfileDevicesVC: UIViewController {
         collectionView.dataSource = self
     }
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+}
+
+extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
+    func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
+        switch cell.titleLabel.text {
+        case "Fitbit":
+            print("connected fitbit data")
+            guard let fitbiturl = URL(string: "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22BN4J&redirect_uri=http%3A%2F%2Flocalhost&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight") else { return }
+            UIApplication.shared.open(fitbiturl)
+        default:
+            print(cell.titleLabel.text)
+        }
+    }
 }
 
 extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -62,6 +63,7 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
             cell.layer.shadowRadius = 2.0
             cell.layer.shadowOpacity = 0.14
             cell.layer.masksToBounds = false
+            cell.delegate = self
             return cell
         }
     }

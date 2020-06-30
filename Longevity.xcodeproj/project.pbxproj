@@ -32,6 +32,7 @@
 		E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */; };
 		E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8F24923309008DAD25 /* awsconfiguration.json */; };
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
+		E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
 		E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */; };
 		E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */; };
@@ -120,6 +121,7 @@
 		E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2A25F8F24923309008DAD25 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
+		E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerType.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileNotificationVC.swift; sourceTree = "<group>"; };
 		E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesVC.swift; sourceTree = "<group>"; };
@@ -239,6 +241,21 @@
 			path = Login;
 			sourceTree = "<group>";
 		};
+		E2B0333F24AB220100929D39 /* API */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = API;
+			sourceTree = "<group>";
+		};
+		E2B0337324AB327D00929D39 /* Protocols */ = {
+			isa = PBXGroup;
+			children = (
+				E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */,
+			);
+			path = Protocols;
+			sourceTree = "<group>";
+		};
 		E2BCA52724853826007204B9 /* AWS */ = {
 			isa = PBXGroup;
 			children = (
@@ -345,6 +362,8 @@
 		E2ECB8D4247FE3AE0020A27E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E2B0337324AB327D00929D39 /* Protocols */,
+				E2B0333F24AB220100929D39 /* API */,
 				E2B9893B248E27EC00453E0E /* UserAccount.swift */,
 				E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */,
 				E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */,
@@ -544,6 +563,7 @@
 			files = (
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
+				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,

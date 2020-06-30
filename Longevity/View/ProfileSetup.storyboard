@@ -673,6 +673,9 @@ up your health profile.</string>
                                                         <constraint firstAttribute="height" constant="40" id="jkc-1W-c4t"/>
                                                     </constraints>
                                                     <state key="normal" title="Button" image="icon: add"/>
+                                                    <connections>
+                                                        <action selector="handleConnectDevice:" destination="fDR-Fe-bHv" eventType="touchUpInside" id="wv8-e4-P1T"/>
+                                                    </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="apd-rW-3GS">
                                                     <rect key="frame" x="73" y="0.0" width="246" height="154"/>
