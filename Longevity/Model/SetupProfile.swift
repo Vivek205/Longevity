@@ -35,6 +35,6 @@ struct SetupProfileConnectDeviceOption {
 var setupProfileConnectDeviceOptionList:[Int: SetupProfileConnectDeviceOption] = [
     2: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:  fitbit logo"), title: "Fitbit", description: "Wearable device that tracks general health metrics"),
     3: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:apple dark"), title: "Apple Watch 2-3", description: "Wearable device that tracks general health metrics"),
-    4: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:Kinsa_Heart_Logo"), title: "Kinsa", description: "smart thermometer that you use orally? for tempeature tracking"),
-    5: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:iOximeter"), title: "iOximeter", description: "Smart heart monitor that you use on your finger")
+//    4: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:Kinsa_Heart_Logo"), title: "Kinsa", description: "smart thermometer that you use orally? for tempeature tracking"),
+//    5: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:iOximeter"), title: "iOximeter", description: "Smart heart monitor that you use on your finger")
 ]

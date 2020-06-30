@@ -117,14 +117,14 @@
                                 <viewLayoutGuide key="contentLayoutGuide" id="I7M-Ve-vwb"/>
                                 <viewLayoutGuide key="frameLayoutGuide" id="Zur-6a-qim"/>
                             </scrollView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
-                                <rect key="frame" x="20" y="266" width="394" height="197"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="M2I-P1-5PW">
+                                <rect key="frame" x="20" y="266" width="374" height="197"/>
                                 <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="40"/>
                                 <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="justified" lineBreakMode="tailTruncation" numberOfLines="4" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
-                                <rect key="frame" x="20" y="465" width="394" height="131"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="pX9-ou-fMP">
+                                <rect key="frame" x="20" y="465" width="374" height="131"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -141,7 +141,7 @@
                                         <rect key="frame" x="0.0" y="0.0" width="177" height="64.5"/>
                                         <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="24"/>
-                                        <state key="normal" title="Signup">
+                                        <state key="normal" title="Sign up">
                                             <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         </state>
                                         <connections>
@@ -191,12 +191,12 @@
                             <constraint firstItem="pX9-ou-fMP" firstAttribute="bottom" secondItem="km7-u2-zFo" secondAttribute="bottom" id="dUs-t4-GcZ"/>
                             <constraint firstItem="EeB-Go-aVM" firstAttribute="top" secondItem="dC6-cV-7I2" secondAttribute="top" id="dgi-xW-G4M"/>
                             <constraint firstItem="EeB-Go-aVM" firstAttribute="bottom" secondItem="dC6-cV-7I2" secondAttribute="bottom" id="fV4-dI-mg3"/>
-                            <constraint firstItem="M2I-P1-5PW" firstAttribute="trailing" secondItem="qay-po-S7I" secondAttribute="trailing" id="fZB-4k-YS1"/>
+                            <constraint firstItem="qay-po-S7I" firstAttribute="trailing" secondItem="M2I-P1-5PW" secondAttribute="trailing" constant="20" id="fZB-4k-YS1"/>
                             <constraint firstItem="M2I-P1-5PW" firstAttribute="leading" secondItem="qay-po-S7I" secondAttribute="leading" constant="20" id="gRe-mn-aXY"/>
                             <constraint firstItem="pX9-ou-fMP" firstAttribute="top" secondItem="HEh-Md-Orb" secondAttribute="top" id="gzL-Hm-qj4"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="top" secondItem="07i-de-uQH" secondAttribute="top" id="iYC-zM-Dry"/>
                             <constraint firstItem="0JO-HU-HgL" firstAttribute="trailing" secondItem="HtH-q5-ZgO" secondAttribute="trailing" id="lnI-Do-TJ4"/>
-                            <constraint firstItem="pX9-ou-fMP" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailing" id="oCB-zT-xZe"/>
+                            <constraint firstAttribute="trailing" secondItem="pX9-ou-fMP" secondAttribute="trailing" constant="20" id="oCB-zT-xZe"/>
                             <constraint firstItem="6Tk-OE-BBY" firstAttribute="trailing" relation="greaterThanOrEqual" secondItem="TPe-GX-wQe" secondAttribute="trailing" symbolic="YES" id="ps1-4X-4tb"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="centerY" secondItem="07i-de-uQH" secondAttribute="centerY" id="rV3-XG-LhJ"/>
                             <constraint firstItem="TPe-GX-wQe" firstAttribute="leading" secondItem="07i-de-uQH" secondAttribute="leading" id="rnY-ml-m5W"/>
@@ -752,7 +752,7 @@
                                         <subviews>
                                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="W8D-Dn-4gV" userLabel="Line">
                                                 <rect key="frame" x="0.0" y="26.5" width="374" height="2"/>
-                                                <color key="backgroundColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                                <color key="backgroundColor" red="0.83921568627450982" green="0.83921568627450982" blue="0.83921568627450982" alpha="1" colorSpace="calibratedRGB"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="2" id="bgh-Qx-nNj"/>
                                                 </constraints>

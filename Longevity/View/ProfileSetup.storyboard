@@ -166,9 +166,6 @@ up your health profile.</string>
                                 <constraint firstItem="rbe-fs-3a9" firstAttribute="centerY" secondItem="9kP-H0-vdI" secondAttribute="centerY" id="iUT-lX-w2Z"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Skip" id="FGl-OZ-MHE">
-                            <color key="tintColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -429,9 +426,6 @@ up your health profile.</string>
                                 <constraint firstItem="TNB-GM-J0U" firstAttribute="centerY" secondItem="4a2-ig-Zen" secondAttribute="centerY" id="Pox-9q-Nmb"/>
                             </constraints>
                         </view>
-                        <barButtonItem key="rightBarButtonItem" title="Skip" id="sUU-R7-gak">
-                            <color key="tintColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Rnv-cI-MYv" id="LNS-4s-9gl"/>
