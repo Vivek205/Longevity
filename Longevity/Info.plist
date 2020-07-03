@@ -111,6 +111,6 @@
 		<string>UIInterfaceOrientationLandscapeRight</string>
 	</array>
 	<key>WebDomain</key>
-	<string>https://something.auth.us-west-2.amazoncognito.com</string>
+	<string>https://development-rejuve.auth.us-west-2.amazoncognito.com</string>
 </dict>
 </plist>

@@ -85,15 +85,12 @@ class PersonalLoginVC: UIViewController {
         }
     }
 
-
-
-    
-
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
         if let email = self.formEmail.text, let password = self.formPassword.text {
             self.showSpinner()
             func onSuccess() {
+                getProfile()
                 DispatchQueue.main.async {
                     self.removeSpinner()
                     self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)

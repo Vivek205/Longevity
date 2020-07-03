@@ -11,7 +11,9 @@ import UIKit
 class SetupProfileDevicesVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
+    var fitbitModel: FitbitModel = FitbitModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
@@ -26,8 +28,23 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
         switch cell.titleLabel.text {
         case "Fitbit":
             print("connected fitbit data")
-            guard let fitbiturl = URL(string: "https://www.fitbit.com/oauth2/authorize?response_type=code&client_id=22BN4J&redirect_uri=http%3A%2F%2Flocalhost&scope=activity%20nutrition%20heartrate%20location%20nutrition%20profile%20settings%20sleep%20social%20weight") else { return }
-            UIApplication.shared.open(fitbiturl)
+            if let context = UIApplication.shared.keyWindow {
+                fitbitModel.contextProvider = AuthContextProvider(context)
+            }
+            fitbitModel.auth { authCode, error in
+                if error != nil {
+                    print("Auth flow finished with error \(String(describing: error))")
+                } else {
+                    print("Your auth code is \(String(describing: authCode))")
+                    self.fitbitModel.token(authCode: authCode!)
+                    DispatchQueue.main.async {
+                        let alert = UIAlertController(title: "Success", message: "auth code is \(String(describing: authCode))", preferredStyle: .alert)
+                        alert.addAction(UIAlertAction(title: "OK", style: .default))
+                        self.present(alert, animated: true)
+                    }
+                }
+            }
+
         default:
             print(cell.titleLabel.text)
         }

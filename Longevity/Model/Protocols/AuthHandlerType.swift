@@ -33,16 +33,16 @@ extension AuthContextProvider: ASWebAuthenticationPresentationContextProviding {
 protocol AuthHandlerType: class {
     var session: NSObject? { get set }
     var contextProvider: AuthContextProvider? { get set }
-    func auth(url: URL, callbackScheme: String, completion: @escaping AuthHandlerCompletion)
+    func auth(authURL: URL, callbackScheme: String, completion: @escaping AuthHandlerCompletion)
 }
 
 extension AuthHandlerType {
 
-    func auth(url: URL, callbackScheme: String, completion: @escaping AuthHandlerCompletion) {
+    func auth(authURL: URL, callbackScheme: String, completion: @escaping AuthHandlerCompletion) {
         if #available(iOS 12, *) {
-            let session = ASWebAuthenticationSession(url: url, callbackURLScheme: callbackScheme) {
-                url, error in
-                completion(url, error)
+            let session = ASWebAuthenticationSession(url: authURL, callbackURLScheme: callbackScheme) {
+                authURL, error in
+                completion(authURL, error)
             }
             if #available(iOS 13.0, *) {
                 session.presentationContextProvider = contextProvider
@@ -52,9 +52,9 @@ extension AuthHandlerType {
             session.start()
             self.session = session
         } else {
-            let session = SFAuthenticationSession(url: url, callbackURLScheme: callbackScheme) {
-                url, error in
-                completion(url, error)
+            let session = SFAuthenticationSession(url: authURL, callbackURLScheme: callbackScheme) {
+                authURL, error in
+                completion(authURL, error)
             }
             session.start()
             self.session = session

@@ -125,11 +125,8 @@ extension TermsOfServiceVC:UITableViewDataSource {
     }
 
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-//        let tosTitleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TOSTitleTableViewCell") as! TOSTitleTableViewCell
         if  let tosTitleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TOSTitleTableViewCell") as? TOSTitleTableViewCell {
-            print("tableViewDataSource[indexPath.row]", tableViewDataSource[indexPath.row])
             tosTitleTableViewCell.titleLabel.text = tableViewDataSource[indexPath.row]
-            print("tableViewDataSource[indexPath.row]", tableViewDataSource[indexPath.row])
             return tosTitleTableViewCell
         }
         return UITableViewCell()

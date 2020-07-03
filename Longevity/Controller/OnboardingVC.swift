@@ -97,6 +97,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     func getCurrentUser() {
         func onSuccess(userSignedIn: Bool) {
             if userSignedIn {
+                getProfile()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
                 }

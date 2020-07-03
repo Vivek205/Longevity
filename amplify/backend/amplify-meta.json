@@ -23,11 +23,10 @@
                 "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
                 "logicalId": "authlongevityNewResource"
             },
-            "lastPushTimeStamp": "2020-06-15T06:37:21.285Z",
+            "lastPushTimeStamp": "2020-07-02T13:00:30.173Z",
             "output": {
-                "AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
-                "AppClientID": "gv8idv85nrbkop4p0843daks9",
-                "HostedUIDomain": "longevity-new-dev",
+                "AppClientID": "1r8241544gbtjtuiv0vhc9bkd4",
+                "HostedUIDomain": "development-rejuve",
                 "FacebookWebClient": "721380498616396",
                 "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
                 "UserPoolName": "longevityNewUserPool",
@@ -35,9 +34,9 @@
                 "CreatedSNSRole": "arn:aws:iam::533793137436:role/snsundefined84548-dev",
                 "UserPoolId": "us-west-2_vTgAvx6V8",
                 "AppClientIDWeb": "7qkn46e7uc1fl33malnnqbmtih",
-                "IdentityPoolId": "us-west-2:347c52fa-eb4d-4d51-8fa6-e5d0979d1660",
+                "IdentityPoolId": "us-west-2:13b00d17-e309-4eda-a569-fcf30479c881",
                 "IdentityPoolName": "longevityNewIdPool__dev",
-                "GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
+                "GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
             },
             "lastPushDirHash": "40r0UfA/PcLUsT4wBqeSqL80Nrg="
         }

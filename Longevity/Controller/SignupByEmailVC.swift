@@ -33,6 +33,10 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         button.layer.cornerRadius = 10
     }
 
+//    func register(email) {
+//
+//    }
+
     // MARK: Actions
     @IBAction func handleSignup(_ sender: Any) {
 
