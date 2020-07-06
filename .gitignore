@@ -38,6 +38,3 @@ amplifyconfiguration.json
 amplify-build-config.json
 amplify-gradle-config.json
 amplifytools.xcconfig
-amplifyconfiguration.json
-awsconfiguration.json
-*configuration.json

@@ -1,8 +1,6 @@
 {
-	"function": {},
-	"api": {},
 	"auth": {
-		"longevityNewResource": {
+		"rejuvedevelopmentauthorizer": {
 			"service": "Cognito",
 			"providerPlugin": "awscloudformation",
 			"dependsOn": []

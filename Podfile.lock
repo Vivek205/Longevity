@@ -1,5 +1,4 @@
 PODS:
-  - Alamofire (5.2.1)
   - Amplify (1.0.0):
     - Amplify/Default (= 1.0.0)
   - Amplify/Default (1.0.0)
@@ -90,7 +89,6 @@ PODS:
   - SwiftProtobuf (1.8.0)
 
 DEPENDENCIES:
-  - Alamofire (~> 5.2)
   - Amplify
   - AmplifyPlugins/AWSAPIPlugin
   - AmplifyPlugins/AWSCognitoAuthPlugin
@@ -100,7 +98,6 @@ DEPENDENCIES:
 
 SPEC REPOS:
   trunk:
-    - Alamofire
     - Amplify
     - AmplifyPlugins
     - AppSyncRealTimeClient
@@ -145,7 +142,6 @@ CHECKOUT OPTIONS:
     :tag: 5.1.5
 
 SPEC CHECKSUMS:
-  Alamofire: e911732990610fe89af59ac0077f923d72dc3dfd
   Amplify: d993f9ab89645ffa58616b23f95a22e1038f46a2
   AmplifyPlugins: 6f341b2013ba8a7389097287333324c8beeb43bd
   AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
@@ -180,6 +176,6 @@ SPEC CHECKSUMS:
   SwiftNIOTransportServices: 26d40c589fc8fe667af51b06ef0aa49fbc9ae7f2
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
 
-PODFILE CHECKSUM: ff356815ab62ac30b0575c9fabb01612b70fd071
+PODFILE CHECKSUM: 226727c2e238c19379a99ba6797665814d024285
 
 COCOAPODS: 1.9.3

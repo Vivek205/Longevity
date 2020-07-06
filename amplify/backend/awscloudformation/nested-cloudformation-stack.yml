@@ -68,15 +68,15 @@
 				}
 			}
 		},
-		"authlongevityNewResource": {
+		"authrejuvedevelopmentauthorizer": {
 			"Type": "AWS::CloudFormation::Stack",
 			"Properties": {
-				"TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
+				"TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/auth/rejuvedevelopmentauthorizer-cloudformation-template.yml",
 				"Parameters": {
-					"identityPoolName": "longevityNewIdPool",
-					"allowUnauthenticatedIdentities": false,
-					"resourceNameTruncated": "longev5356d278",
-					"userPoolName": "longevityNewUserPool",
+					"identityPoolName": "rejuve_development_id_pool",
+					"allowUnauthenticatedIdentities": true,
+					"resourceNameTruncated": "rejuveb271a11d",
+					"userPoolName": "rejuve_development_user_pool",
 					"autoVerifiedAttributes": "phone_number",
 					"mfaConfiguration": "OPTIONAL",
 					"mfaTypes": "SMS Text Message",
@@ -89,28 +89,27 @@
 					"passwordPolicyCharacters": "",
 					"requiredAttributes": "email",
 					"userpoolClientGenerateSecret": true,
-					"userpoolClientRefreshTokenValidity": "1",
+					"userpoolClientRefreshTokenValidity": "2",
 					"userpoolClientWriteAttributes": "email",
 					"userpoolClientReadAttributes": "email",
-					"userpoolClientLambdaRole": "longev5356d278_userpoolclient_lambda_role",
+					"userpoolClientLambdaRole": "rejuveb271a11d_userpoolclient_lambda_role",
 					"userpoolClientSetAttributes": false,
 					"useDefault": "manual",
 					"authSelections": "identityPoolAndUserPool",
-					"resourceName": "longevityNewResource",
+					"resourceName": "rejuvedevelopmentauthorizer",
 					"thirdPartyAuth": true,
 					"authProviders": "graph.facebook.com,accounts.google.com",
-					"usernameAttributes": "email",
+					"usernameAttributes": "email, phone_number",
 					"userPoolGroups": false,
 					"adminQueries": true,
 					"triggers": "{}",
 					"hostedUI": true,
-					"hostedUIDomainName": "longevity-new",
+					"hostedUIDomainName": "rejuvedevelopment",
 					"authProvidersUserPool": "Facebook,Google",
-					"audiences": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com,689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
+					"audiences": "689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com,689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
 					"hostedUIProviderMeta": "[{\"ProviderName\":\"Facebook\",\"authorize_scopes\":\"email,public_profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"id\"}},{\"ProviderName\":\"Google\",\"authorize_scopes\":\"openid email profile\",\"AttributeMapping\":{\"email\":\"email\",\"username\":\"sub\"}}]",
 					"oAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
 					"userPoolGroupList": "",
-					"adminQueryGroup": "customGroup",
 					"authRoleArn": {
 						"Fn::GetAtt": [
 							"AuthRole",
@@ -129,9 +128,9 @@
 					"permissions": "",
 					"dependsOn": "",
 					"facebookAppId": "721380498616396",
-					"googleClientId": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
+					"googleClientId": "689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com",
 					"googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
-					"hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"721380498616396\",\"client_secret\":\"1d9dbfb062f86e2bab1c46760503d822\"},{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com\",\"client_secret\":\"9g8eGQkQIF1OqkyNcxtPb43z\"}]",
+					"hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"721380498616396\",\"client_secret\":\"1d9dbfb062f86e2bab1c46760503d822\"},{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com\",\"client_secret\":\"rqaQE-uM89d4fSk2z5HmqGyd\"}]",
 					"env": "dev"
 				}
 			}
@@ -140,7 +139,7 @@
 			"DependsOn": [
 				"AuthRole",
 				"UnauthRole",
-				"authlongevityNewResource"
+				"authrejuvedevelopmentauthorizer"
 			],
 			"Type": "AWS::Lambda::Function",
 			"Properties": {
@@ -223,7 +222,7 @@
 				},
 				"idpId": {
 					"Fn::GetAtt": [
-						"authlongevityNewResource",
+						"authrejuvedevelopmentauthorizer",
 						"Outputs.IdentityPoolId"
 					]
 				},

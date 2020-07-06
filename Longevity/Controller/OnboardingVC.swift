@@ -32,8 +32,8 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         initScrollViewWithImages()
         styleNavigationBar()
         hideNavigationBar()
-        getCurrentUser()
         self.removeBackButtonNavigation()
+        getCurrentUser()
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -95,6 +95,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
     func getCurrentUser() {
+        print("started getCurrent user")
         func onSuccess(userSignedIn: Bool) {
             if userSignedIn {
                 getProfile()
