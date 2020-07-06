@@ -26,7 +26,6 @@ class PersonalLoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-//        getuserAttributes()
         customizeButtons()
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
@@ -189,22 +188,6 @@ class PersonalLoginVC: UIViewController {
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
-    }
-
-
-    func getuserAttributes() {
-        _ = Amplify.Auth.fetchUserAttributes() { (result) in
-            switch result {
-            case .success(let userAttributes):
-                for attribute in userAttributes {
-                    if attribute.key == .email {
-                        self.username = attribute.value
-                    }
-                }
-            case .failure(let error):
-                print("error getting attributes")
-            }
-        }
     }
 
 }

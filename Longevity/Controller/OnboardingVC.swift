@@ -96,7 +96,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
     func getCurrentUser() {
         print("started getCurrent user")
-        func onSuccess(userSignedIn: Bool) {
+        func onSuccess(userSignedIn: Bool, idToken: String) {
             if userSignedIn {
                 getProfile()
                 DispatchQueue.main.async {
@@ -112,7 +112,8 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
-                onSuccess(userSignedIn: session.isSignedIn)
+//                print(session)
+                onSuccess(userSignedIn: session.isSignedIn, idToken: "")
             case .failure(let error):
                 onFailure(error: error)
             }

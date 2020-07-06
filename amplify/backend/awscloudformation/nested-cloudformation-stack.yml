@@ -135,6 +135,42 @@
 				}
 			}
 		},
+		"functionrejuveDevelopmentLambda": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/function/rejuveDevelopmentLambda-cloudformation-template.json",
+				"Parameters": {
+					"env": "dev"
+				}
+			}
+		},
+		"apirejuveDevelopmentAPI": {
+			"Type": "AWS::CloudFormation::Stack",
+			"Properties": {
+				"TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/api/rejuveDevelopmentAPI-cloudformation-template.json",
+				"Parameters": {
+					"authRoleName": {
+						"Ref": "AuthRoleName"
+					},
+					"unauthRoleName": {
+						"Ref": "UnauthRoleName"
+					},
+					"functionrejuveDevelopmentLambdaName": {
+						"Fn::GetAtt": [
+							"functionrejuveDevelopmentLambda",
+							"Outputs.Name"
+						]
+					},
+					"functionrejuveDevelopmentLambdaArn": {
+						"Fn::GetAtt": [
+							"functionrejuveDevelopmentLambda",
+							"Outputs.Arn"
+						]
+					},
+					"env": "dev"
+				}
+			}
+		},
 		"UpdateRolesWithIDPFunction": {
 			"DependsOn": [
 				"AuthRole",

@@ -21,7 +21,7 @@
 				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/auth/rejuvedevelopmentauthorizer-cloudformation-template.yml",
 				"logicalId": "authrejuvedevelopmentauthorizer"
 			},
-			"lastPushTimeStamp": "2020-07-03T13:57:38.749Z",
+			"lastPushTimeStamp": "2020-07-06T05:28:38.275Z",
 			"output": {
 				"AppClientSecret": "o1bmiq1t6vhrvk2qfkedleldt6d9reisas8v806k1fh30kr330q",
 				"AppClientID": "16eja2b7kuannsi591dd289jgk",
@@ -38,6 +38,55 @@
 				"GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
 			},
 			"lastPushDirHash": "GtpguAdovUNoi7PBsBITeFMH8D0="
+		}
+	},
+	"function": {
+		"rejuveDevelopmentLambda": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"lastBuildTimeStamp": "2020-07-06T05:26:38.716Z",
+			"lastPackageTimeStamp": "2020-07-06T05:26:39.344Z",
+			"distZipFilename": "rejuveDevelopmentLambda-5268754d5a532f777373-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/function/rejuveDevelopmentLambda-cloudformation-template.json",
+				"logicalId": "functionrejuveDevelopmentLambda"
+			},
+			"lastPushTimeStamp": "2020-07-06T05:28:38.286Z",
+			"output": {
+				"Region": "us-west-2",
+				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:initialFunction-dev",
+				"Name": "initialFunction-dev",
+				"LambdaExecutionRole": "rejuvedevelopmentLambdaRole5b38daaa-dev"
+			},
+			"lastPushDirHash": "FF2557B5dxSKwG3HfLhORYPAh+0="
+		}
+	},
+	"api": {
+		"rejuveDevelopmentAPI": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "rejuveDevelopmentLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/api/rejuveDevelopmentAPI-cloudformation-template.json",
+				"logicalId": "apirejuveDevelopmentAPI"
+			},
+			"lastPushTimeStamp": "2020-07-06T05:28:38.286Z",
+			"output": {
+				"ApiName": "rejuveDevelopmentAPI",
+				"RootUrl": "https://83ht6fygqe.execute-api.us-west-2.amazonaws.com/dev",
+				"ApiId": "83ht6fygqe"
+			},
+			"lastPushDirHash": "IGOvEeVQmen+GvswT6NqMlbkEGg="
 		}
 	}
 }
