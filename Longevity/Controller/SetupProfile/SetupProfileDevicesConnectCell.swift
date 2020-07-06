@@ -19,9 +19,11 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var descriptionLabel: UILabel!
     @IBOutlet weak var connectBtn: UIButton!
-
+    
+    // MARK: Delegate
     var delegate: SetupProfileDevicesConnectCellDelegate?
 
+    // MARK: Actions
     @IBAction func handleConnectDevice(_ sender: UIButton) {
         delegate?.connectBtn(wasPressedOnCell: self)
     }

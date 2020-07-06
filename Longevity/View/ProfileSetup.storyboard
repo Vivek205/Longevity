@@ -299,6 +299,9 @@ up your health profile.</string>
                                                     </constraints>
                                                     <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
                                                     <state key="normal" title="Button"/>
+                                                    <connections>
+                                                        <action selector="handleButtonPress:" destination="ciS-LT-VRg" eventType="touchUpInside" id="5KP-zp-V4U"/>
+                                                    </connections>
                                                 </button>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTf-cO-4YF">
                                                     <rect key="frame" x="83" y="24.5" width="159" height="41"/>

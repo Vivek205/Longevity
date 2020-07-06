@@ -13,6 +13,7 @@ public struct SetupProfileOption {
     let image: UIImage
     let label: String
     var buttonText: String = "ENTER"
+    var isSynced: Bool = false
 }
 
 public var setupProfileOptionList:[Int: SetupProfileOption] = [
