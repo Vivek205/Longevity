@@ -136,6 +136,7 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
+            getProfile()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
@@ -162,6 +163,7 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
+            getProfile()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)

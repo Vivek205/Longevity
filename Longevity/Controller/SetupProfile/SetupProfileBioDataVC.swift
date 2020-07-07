@@ -94,6 +94,11 @@ class SetupProfileBioDataVC: UIViewController {
             self.readHealthData()
         }
     }
+
+    func updateUserDefaults(value:Any,for name: String) {
+        let defaults = UserDefaults.standard
+
+    }
     
     func readHealthData(){
         // MARK: Read Age

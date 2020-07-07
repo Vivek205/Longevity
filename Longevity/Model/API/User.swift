@@ -15,7 +15,7 @@ func getProfile(){
     let credentials = getCredentials()
     print("idtoken", credentials.idToken)
     //    let userProfileURL = "https://edjyqewn8e.execute-api.us-west-2.amazonaws.com/development/profile"
-    let headers = ["authorization":credentials.idToken]
+    let headers = ["token":credentials.idToken]
     let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
     _ = Amplify.API.get(request: request, listener: { (result) in
         switch result{
