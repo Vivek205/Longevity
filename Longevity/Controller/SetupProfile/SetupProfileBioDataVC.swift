@@ -15,12 +15,14 @@ let healthKitStore:HKHealthStore = HKHealthStore();
 class SetupProfileBioDataVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
-    
+    @IBOutlet weak var continueButton: CustomButtonFill!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
+        continueButton.isEnabled = false
         // Do any additional setup after loading the view.
     }
     
@@ -36,38 +38,38 @@ class SetupProfileBioDataVC: UIViewController {
     }
 
     func getMostRecentSample(for sampleType: HKSampleType,
-                                   completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
+                             completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
 
-    //1. Use HKQuery to load the most recent samples.
-    let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
-                                                          end: Date(),
-                                                          options: .strictEndDate)
+        //1. Use HKQuery to load the most recent samples.
+        let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
+                                                              end: Date(),
+                                                              options: .strictEndDate)
 
-    let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
-                                          ascending: false)
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
+                                              ascending: false)
 
-    let limit = 1
+        let limit = 1
 
-    let sampleQuery = HKSampleQuery(sampleType: sampleType,
-                                    predicate: mostRecentPredicate,
-                                    limit: limit,
-                                    sortDescriptors: [sortDescriptor]) { (query, samples, error) in
+        let sampleQuery = HKSampleQuery(sampleType: sampleType,
+                                        predicate: mostRecentPredicate,
+                                        limit: limit,
+                                        sortDescriptors: [sortDescriptor]) { (query, samples, error) in
 
-        //2. Always dispatch to the main thread when complete.
-        DispatchQueue.main.async {
+                                            //2. Always dispatch to the main thread when complete.
+                                            DispatchQueue.main.async {
 
-          guard let samples = samples,
-                let mostRecentSample = samples.first as? HKQuantitySample else {
+                                                guard let samples = samples,
+                                                    let mostRecentSample = samples.first as? HKQuantitySample else {
 
-                completion(nil, error)
-                return
-          }
+                                                        completion(nil, error)
+                                                        return
+                                                }
 
-          completion(mostRecentSample, nil)
+                                                completion(mostRecentSample, nil)
+                                            }
         }
-      }
 
-    HKHealthStore().execute(sampleQuery)
+        HKHealthStore().execute(sampleQuery)
     }
 
     func authorizeHealthKitInApp() {
@@ -101,15 +103,26 @@ class SetupProfileBioDataVC: UIViewController {
     }
     
     func readHealthData(){
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
         // MARK: Read Age
         do {
             let birthDate = try healthKitStore.dateOfBirthComponents()
             let calendar = Calendar.current
+
+            let date = calendar.date(from: birthDate)!
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd-MM-yyyy"
+            let dateString = formatter.string(from: date)
+
             let currentYear = calendar.component(.year, from: Date())
             let currentAge = currentYear - birthDate.year!
-            print(currentAge)
+
+            print("dateString",dateString)
             setupProfileOptionList[4]?.buttonText = "\(currentAge)"
             setupProfileOptionList[4]?.isSynced = true
+            defaults.set(dateString, forKey: keys.birthday)
         } catch {
             print(error)
         }
@@ -124,12 +137,15 @@ class SetupProfileBioDataVC: UIViewController {
             case 1:
                 setupProfileOptionList[3]?.buttonText = "female"
                 setupProfileOptionList[3]?.isSynced = true
+                defaults.set("female", forKey: keys.gender)
             case 2:
                 setupProfileOptionList[3]?.buttonText = "male"
                 setupProfileOptionList[3]?.isSynced = true
+                defaults.set("male", forKey: keys.gender)
             case 3:
                 setupProfileOptionList[3]?.buttonText = "other"
                 setupProfileOptionList[3]?.isSynced = true
+                defaults.set("other", forKey: keys.gender)
             default:
                 print("not set")
             }
@@ -137,37 +153,41 @@ class SetupProfileBioDataVC: UIViewController {
 
         // MARK: Read Height
         guard let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) else {
-          print("Height Sample Type is no longer available in HealthKit")
-          return
+            print("Height Sample Type is no longer available in HealthKit")
+            return
         }
         getMostRecentSample(for: heightSampleType) { (sample, error) in
-          guard let sample = sample else {
-            if let error = error {print(error)}
-            return
-          }
-          let heightInMeters = sample.quantity.doubleValue(for: HKUnit.meter())
-          setupProfileOptionList[5]?.buttonText = "\(heightInMeters)"
- setupProfileOptionList[5]?.isSynced = true
+            guard let sample = sample else {
+                if let error = error {print(error)}
+                return
+            }
+            let heightInMeters = sample.quantity.doubleValue(for: HKUnit.meter())
+            setupProfileOptionList[5]?.buttonText = "\(heightInMeters)"
+            setupProfileOptionList[5]?.isSynced = true
+            defaults.set(heightInMeters, forKey: keys.height)
         }
 
         // MARK: Read Weight
         guard let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) else {
-          print("Body Mass Sample Type is no longer available in HealthKit")
-          return
+            print("Body Mass Sample Type is no longer available in HealthKit")
+            return
         }
         getMostRecentSample(for: weightSampleType){ (sample, error) in
-          guard let sample = sample else {
-            if let error = error {print(error)}
-            return
-          }
-          let weightInKilograms = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-          setupProfileOptionList[6]?.buttonText = "\(weightInKilograms)"
+            guard let sample = sample else {
+                if let error = error {print(error)}
+                return
+            }
+            let weightInKilograms = sample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
+            setupProfileOptionList[6]?.buttonText = "\(weightInKilograms)"
             setupProfileOptionList[6]?.isSynced = true
+            defaults.set(weightInKilograms, forKey: keys.weight)
         }
 
         // MARK: Reload the collection view
         DispatchQueue.main.async {
             self.collectionView.reloadData()
+            updateProfile()
+            self.continueButton.isEnabled = true
         }
     }
 }

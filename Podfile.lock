@@ -87,6 +87,7 @@ PODS:
     - SwiftNIOFoundationCompat (~> 2.0)
     - SwiftNIOTLS (~> 2.0)
   - SwiftProtobuf (1.8.0)
+  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
   - Amplify
@@ -95,6 +96,7 @@ DEPENDENCIES:
   - gRPC-Swift (= 1.0.0-alpha.12)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.1.5`)
   - SwiftLint (~> 0.39)
+  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   trunk:
@@ -130,6 +132,7 @@ SPEC REPOS:
     - SwiftNIOTLS
     - SwiftNIOTransportServices
     - SwiftProtobuf
+    - SwiftyJSON
 
 EXTERNAL SOURCES:
   Sentry:
@@ -175,7 +178,8 @@ SPEC CHECKSUMS:
   SwiftNIOTLS: 51580e51240d1a4d51efb2d317e92cf243181042
   SwiftNIOTransportServices: 26d40c589fc8fe667af51b06ef0aa49fbc9ae7f2
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
+  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 226727c2e238c19379a99ba6797665814d024285
+PODFILE CHECKSUM: 74668e912bd0fca769980ef1f1a4bdff22ef99c0
 
 COCOAPODS: 1.9.3

@@ -22,9 +22,29 @@ class CustomButtonFill: UIButton {
     func styleButton() {
         layer.cornerRadius = CGFloat(10)
         layer.masksToBounds = true
-        layer.backgroundColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        //        layer.backgroundColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        setBackgroundColor( #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
+        setBackgroundColor( UIColor.gray, for: .disabled)
         setTitleColor(UIColor.white, for: .normal)
         titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24)
+    }
+
+    private func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+        self.setBackgroundImage(image(withColor: color), for: state)
+    }
+
+    private func image(withColor color: UIColor) -> UIImage? {
+        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+        UIGraphicsBeginImageContext(rect.size)
+        let context = UIGraphicsGetCurrentContext()
+
+        context?.setFillColor(color.cgColor)
+        context?.fill(rect)
+
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return image
     }
 
 }

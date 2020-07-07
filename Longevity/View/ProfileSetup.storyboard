@@ -432,6 +432,7 @@ up your health profile.</string>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Rnv-cI-MYv" id="LNS-4s-9gl"/>
+                        <outlet property="continueButton" destination="HOc-Gh-tin" id="CRH-Hi-ahw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dmi-z6-pNq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
