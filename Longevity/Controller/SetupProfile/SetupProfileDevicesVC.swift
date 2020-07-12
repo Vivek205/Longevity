@@ -19,6 +19,22 @@ class SetupProfileDevicesVC: UIViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
+        checkIfDevicesAreConnectedAlready()
+    }
+
+    func checkIfDevicesAreConnectedAlready() {
+        // TODO: check from user defaults  FITBIT
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
+        let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]
+        print("devices", devices)
+        if let fitbitStatus = devices![ExternalDevices.FITBIT] as? [String: Int] {
+            print("fitbitstatus", fitbitStatus)
+            setupProfileConnectDeviceOptionList[2]?.isConnected = fitbitStatus["connected"] == 1
+            collectionView.reloadData() 
+        }
+
     }
     
 }
@@ -38,9 +54,8 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                     print("Your auth code is \(String(describing: authCode))")
                     self.fitbitModel.token(authCode: authCode!)
                     DispatchQueue.main.async {
-                        let alert = UIAlertController(title: "Success", message: "auth code is \(String(describing: authCode))", preferredStyle: .alert)
-                        alert.addAction(UIAlertAction(title: "OK", style: .default))
-                        self.present(alert, animated: true)
+                        setupProfileConnectDeviceOptionList[2]?.isConnected = true
+                        self.collectionView.reloadData()
                     }
                 }
             }
@@ -80,6 +95,16 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
             cell.layer.shadowRadius = 2.0
             cell.layer.shadowOpacity = 0.14
             cell.layer.masksToBounds = false
+            if option?.isConnected == true {
+                cell.connectBtn.setTitle("SYNCED", for: .normal)
+                cell.connectBtn.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
+                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
+            } else {
+                let image = UIImage(named: "")
+                cell.connectBtn.setTitle(nil, for: .normal)
+                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: add"), for: .normal)
+            }
+
             cell.delegate = self
             return cell
         }

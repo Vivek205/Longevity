@@ -8,6 +8,8 @@
 
 import Foundation
 import CommonCrypto
+import Amplify
+import SwiftyJSON
 
 func generateCodeVerifier() -> String {
     var buffer = [UInt8](repeating: 0, count: 32)
@@ -109,7 +111,6 @@ class FitbitModel: AuthHandlerType {
 
     func token(authCode:String) {
         let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
-
         var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
         urlComponents?.queryItems = [
             URLQueryItem(name: "code", value: authCode),
@@ -130,12 +131,84 @@ class FitbitModel: AuthHandlerType {
             do {
                 if let jsonData: [String:Any] =
                     try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-                      print(jsonData)
+                    print(jsonData)
+                    let accessToken = jsonData["access_token"] as! String
+                    let refreshToken = jsonData["refresh_token"] as! String
+                    let userId = jsonData["user_id"] as! String
+                    
+                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
+                    self.publishData(accessToken: accessToken, userId: userId)
                 }
             } catch {}
         }
-
         dataTask.resume()
     }
 
+    func publishData(accessToken: String, userId: String) {
+        let credentials = getCredentials()
+        let headers = ["token":credentials.idToken]
+        let body = JSON(["access_token":accessToken, "user_id":userId])
+        var bodyData:Data = Data();
+        do {
+            bodyData = try body.rawData()
+        } catch  {
+            print(error)
+        }
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/FITBIT/synchronize" , headers: headers, body: bodyData)
+        _ = Amplify.API.post(request: request, listener: { (result) in
+            switch result{
+            case .success(let data):
+                let responseString = String(data: data, encoding: .utf8)
+                print("sucess \(responseString)")
+
+            case .failure(let apiError):
+                print("failed \(apiError)")
+            }
+        })
+    }
+
+    func saveToken(accessToken: String, refreshToken: String) {
+        guard let accessTokenData = accessToken.data(using: .utf8),
+        let refreshTokenData = refreshToken.data(using: .utf8) else {
+            return
+        }
+
+        KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
+        KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+    }
+
+    func refreshTheToken() {
+        guard let refreshTokenData = KeyChain.load(name: KeychainKeys.FitbitRefreshToken) else {return}
+        let refreshToken = String(data: refreshTokenData, encoding: .utf8)
+
+        let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
+               var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
+               urlComponents?.queryItems = [
+                   URLQueryItem(name: "grant_type", value: "refresh_token"),
+                   URLQueryItem(name: "refresh_token", value:refreshToken),
+               ]
+
+        var urlRequest = URLRequest(url: (urlComponents?.url)!)
+               urlRequest.httpMethod = "POST"
+               urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
+               urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
+            guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200,
+                data != nil else { return }
+            do {
+                if let jsonData: [String:Any] =
+                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
+                    print(jsonData)
+                    let accessToken = jsonData["access_token"] as! String
+                    let refreshToken = jsonData["refresh_token"] as! String
+                    let userId = jsonData["user_id"] as! String
+                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
+                    self.publishData(accessToken: accessToken, userId: userId)
+                }
+            } catch {}
+        }
+        dataTask.resume()
+    }
 }

@@ -48,12 +48,13 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             }
         }
 
-        func onFailure() {
+        func onFailure(errorDescription: String) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-                return self.present(alert, animated: true, completion: nil)
+                self.showAlert(title: "Login Failed" , message: errorDescription)
+//                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
+//                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
+//                return self.present(alert, animated: true, completion: nil)
             }
         }
 
@@ -69,7 +70,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             validate()
             self.showSpinner()
             
-            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
+            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]
             let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
             
             _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
@@ -84,7 +85,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
                     onSuccess()
                 case .failure(let error):
                     print("An error occured while registering a user \(error)")
-                    onFailure()
+                    onFailure(errorDescription: error.errorDescription)
                 }
             }
         }

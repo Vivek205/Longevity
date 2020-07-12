@@ -13,6 +13,8 @@ PODS:
     - Starscream (= 3.0.6)
   - AWSAuthCore (2.13.4):
     - AWSCore (= 2.13.4)
+  - AWSCognito (2.13.4):
+    - AWSCore (= 2.13.4)
   - AWSCognitoIdentityProvider (2.13.4):
     - AWSCognitoIdentityProviderASF (= 1.0.1)
     - AWSCore (= 2.13.4)
@@ -21,10 +23,14 @@ PODS:
   - AWSMobileClient (2.13.4):
     - AWSAuthCore (= 2.13.4)
     - AWSCognitoIdentityProvider (= 2.13.4)
+  - AWSPinpoint (2.13.4):
+    - AWSCore (= 2.13.4)
   - AWSPluginsCore (1.0.0):
     - Amplify (= 1.0.0)
     - AWSCore (~> 2.13.4)
     - AWSMobileClient (~> 2.13.4)
+  - AWSSNS (2.13.4):
+    - AWSCore (= 2.13.4)
   - CGRPCZlib (1.0.0-alpha.12)
   - CNIOAtomics (2.15.0)
   - CNIOBoringSSL (2.7.1)
@@ -93,6 +99,9 @@ DEPENDENCIES:
   - Amplify
   - AmplifyPlugins/AWSAPIPlugin
   - AmplifyPlugins/AWSCognitoAuthPlugin
+  - AWSCognito
+  - AWSPinpoint
+  - AWSSNS
   - gRPC-Swift (= 1.0.0-alpha.12)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.1.5`)
   - SwiftLint (~> 0.39)
@@ -104,11 +113,14 @@ SPEC REPOS:
     - AmplifyPlugins
     - AppSyncRealTimeClient
     - AWSAuthCore
+    - AWSCognito
     - AWSCognitoIdentityProvider
     - AWSCognitoIdentityProviderASF
     - AWSCore
     - AWSMobileClient
+    - AWSPinpoint
     - AWSPluginsCore
+    - AWSSNS
     - CGRPCZlib
     - CNIOAtomics
     - CNIOBoringSSL
@@ -149,11 +161,14 @@ SPEC CHECKSUMS:
   AmplifyPlugins: 6f341b2013ba8a7389097287333324c8beeb43bd
   AppSyncRealTimeClient: 4a2ccdc1722750a1f4d76e216f9bfb1cf12f10de
   AWSAuthCore: 72b4bd064c28985ea5345c62759632d511de342a
+  AWSCognito: 24403b3cd53bf2821018c9f9860f1f51bc71e2e8
   AWSCognitoIdentityProvider: a2d1d2857316519c018c03ac8205cf78154db5c0
   AWSCognitoIdentityProviderASF: f94f1a502e72ef3d0a1de93e10bf7a79c8698118
   AWSCore: 06beea22b6bdbfe9f5ab5015c6901e8475c746a8
   AWSMobileClient: 33ecce524fbc011d543dae8306ca29a43ecb72e5
+  AWSPinpoint: 82468e86fc58a5f0b9d9c115d705f034fb142286
   AWSPluginsCore: bf9e284d77603892740526377af767498697b729
+  AWSSNS: 07725d5ab55c0fac5de373477f848ad8677e4602
   CGRPCZlib: a53e43fb0567e720e753dd172911b96baa3910d7
   CNIOAtomics: ba49b1c86f281e1ecfd84c9205fbc27a81826847
   CNIOBoringSSL: e4766830ab6d7c7fcd3618331f05fcb11638314d
@@ -180,6 +195,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 74668e912bd0fca769980ef1f1a4bdff22ef99c0
+PODFILE CHECKSUM: be34c0bb8d583942d6951d110d3246bb6282ca8c
 
 COCOAPODS: 1.9.3

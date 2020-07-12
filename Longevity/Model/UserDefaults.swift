@@ -8,14 +8,26 @@
 
 import Foundation
 
+struct MeasurementUnits {
+    static let metric = "metric"
+    static let imperial = "imperial"
+}
+
 struct UserDefaultsKeys {
     let name = "name"
     let weight = "weight"
     let height = "height"
     let gender = "gender"
     let birthday = "birthday"
+    let unit = "unit"
+    let isTermsAccepted = "isTermsAccepted"
+    let devices = "devices"
+    let endpointArnForSNS = "endpointArnForSNS"
 }
 
-func updateUserDefaults(name: String) {
-
+func clearUserDefaults() {
+    let domain = Bundle.main.bundleIdentifier!
+    UserDefaults.standard.removePersistentDomain(forName: domain)
+    UserDefaults.standard.synchronize()
+    print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
 }

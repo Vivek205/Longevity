@@ -29,6 +29,28 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         self.removeBackButtonNavigation()
     }
 
+//    override func viewDidAppear(_ animated: Bool){
+//        super.viewDidAppear(animated)
+//    }
+
+//    func checkIfAlreadyAccepted() {
+////        print("rootView COntroller", self.rootViewController)
+//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
+//
+//        print("rootViewController", rootViewController)
+//
+//        let defaults = UserDefaults.standard
+//        let keys = UserDefaultsKeys()
+//        let isAlreadyAccepted = defaults.value(forKey: keys.isTermsAccepted) as! Int
+//        print("isAlreadyAccepted", isAlreadyAccepted)
+//        if isAlreadyAccepted == 1 {
+//            print("inside alredduy accepted if")
+//            DispatchQueue.main.async() {
+//                self.performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
+//            }
+//        }
+//    }
+
 
 
     func initalizeTableView(){
@@ -51,6 +73,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     // MARK: Actions
     @IBAction func handleAcceptTerms(_ sender: Any) {
         print("Terms Accepted")
+        acceptTNC(value: true)
         performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
     }
 
@@ -115,8 +138,6 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
             }
         }
     }
-
-
 }
 
 extension TermsOfServiceVC:UITableViewDataSource {
@@ -130,7 +151,6 @@ extension TermsOfServiceVC:UITableViewDataSource {
             return tosTitleTableViewCell
         }
         return UITableViewCell()
-
     }
 }
 

@@ -20,6 +20,7 @@ class TempSignoutVC: UIViewController {
 
     @IBAction func handleSignout(_ sender: Any) {
         func onSuccess(isSignedOut: Bool) {
+            clearUserDefaults()
             DispatchQueue.main.async {
                 if isSignedOut{
                     self.performSegue(withIdentifier: "unwindTempToOnboarding", sender: self)

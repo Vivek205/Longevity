@@ -347,6 +347,9 @@
                                                     <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithGoogle:" destination="mT6-fh-4r1" eventType="touchUpInside" id="dDF-uU-dv7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -369,6 +372,9 @@
                                                 <state key="normal" title="Continue with Facebook" image="Facebook logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithFacebook:" destination="mT6-fh-4r1" eventType="touchUpInside" id="geW-gn-Fk7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -504,6 +510,7 @@
                         <outlet property="personalUseImageButton" destination="Ibu-K3-hXM" id="SvZ-l5-3IX"/>
                         <outlet property="signupButton" destination="zqu-hP-fCs" id="Bs9-eT-dBP"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
+                        <segue destination="RlX-kq-iGh" kind="show" identifier="SignupToProfileSetup" id="Z1Q-xo-ocY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rB-eB-Seu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1626,8 +1633,8 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jxn-dO-fRl"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="5k2-Eq-Tba"/>
+        <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

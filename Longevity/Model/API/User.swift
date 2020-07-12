@@ -11,8 +11,24 @@ import Amplify
 import AWSPluginsCore
 import SwiftyJSON
 
+struct CustomCognitoAttributes {
+    static let longevityTNC = "custom:longevity_tnc"
+}
+
+struct CustomCognitoAttributesDefaults {
+    static let longevityTNC = "{\"version\":1,\"isAccepted\":false}"
+}
+
+struct ExternalDevices {
+    static let FITBIT = "FITBIT"
+    static let HEALTHKIT = "HEALTHKIT"
+}
+
+let longevityTNCVersion = 1
+
 func getProfile(){
     let credentials = getCredentials()
+    getUserAttributes()
     print("idtoken", credentials.idToken)
     let headers = ["token":credentials.idToken]
     let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
@@ -25,11 +41,48 @@ func getProfile(){
                 let defaults = UserDefaults.standard
                 let keys = UserDefaultsKeys()
                 let userProfileData = jsonData["data"]
-                defaults.set(userProfileData[keys.name].rawString(), forKey: keys.name)
-                defaults.set(userProfileData[keys.weight].rawString(), forKey: keys.weight)
-                defaults.set(userProfileData[keys.height].rawString(), forKey: keys.height)
-                defaults.set(userProfileData[keys.gender].rawString(), forKey: keys.gender)
-                defaults.set(userProfileData[keys.birthday].rawString(), forKey: keys.birthday)
+                let name = userProfileData[keys.name].rawString()!
+                let weight = userProfileData[keys.weight].rawString()!
+                let height = userProfileData[keys.height].rawString()!
+                let gender = userProfileData[keys.gender].rawString()!
+                let birthday = userProfileData[keys.birthday].rawString()!
+                let unit = userProfileData[keys.unit].rawString()!
+                let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
+
+                var devicesStatus: [String:[String:Int]] = [:]
+
+                if !(name.isEmpty){
+                    defaults.set(name, forKey: keys.name)
+                }
+                if !(weight.isEmpty){
+                    defaults.set(weight, forKey: keys.weight)
+                }
+                if !(height.isEmpty) {
+                    defaults.set(height, forKey: keys.height)
+                }
+                if !(gender.isEmpty)  {
+                    defaults.set(gender, forKey: keys.gender)
+                }
+                if !(birthday.isEmpty) {
+                    defaults.set(birthday, forKey: keys.birthday)
+                }
+                if !(unit.isEmpty) {
+                    defaults.set(unit, forKey: keys.unit)
+                }
+
+
+                if let fitbitStatus = devices![ExternalDevices.FITBIT]  as? [String: Int]{
+                    print("devices", devices)
+                    devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
+
+                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+                        let enhancedDevices = devices.merging(devicesStatus) {(_, newValues) in newValues }
+                        defaults.set(enhancedDevices, forKey: keys.devices)
+                    }else {
+                        defaults.set(devicesStatus, forKey: keys.devices)
+                    }
+                }
+
             } catch {
                 print("json parse error", error)
             }
@@ -51,8 +104,10 @@ func updateProfile(){
         keys.weight: defaults.value(forKey: keys.weight),
         keys.height: defaults.value(forKey: keys.height),
         keys.gender: defaults.value(forKey: keys.gender),
-        keys.birthday: defaults.value(forKey: keys.birthday)
+        keys.birthday: defaults.value(forKey: keys.birthday),
+        keys.unit: defaults.value(forKey: keys.unit)
     ])
+    
     var bodyData:Data = Data();
     do {
         bodyData = try body.rawData()
@@ -66,7 +121,6 @@ func updateProfile(){
         case .success(let data):
             let responseString = String(data: data, encoding: .utf8)
             print("sucess \(responseString)")
-
         case .failure(let apiError):
             print("failed \(apiError)")
         }
@@ -143,3 +197,63 @@ func getCredentials() -> Credentials {
     group.wait()
     return credentials
 }
+
+
+func getUserAttributes() {
+    let defaults = UserDefaults.standard
+    let keys = UserDefaultsKeys()
+    _ = Amplify.Auth.fetchUserAttributes() { result in
+        switch result {
+        case .success(let attributes):
+            print("User attributes - \(attributes)")
+            print("json user attributes", JSON(attributes))
+            for attribute in attributes {
+                let name = attribute.key
+                let value = attribute.value
+                //                let value = "{\"version\":1,\"isAccepted\":false}"
+                print("Raw key valye", name.rawValue)
+                if name.rawValue == CustomCognitoAttributes.longevityTNC {
+                    let data: Data? = value.data(using: .utf8)!
+                    let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
+                    //                    guard let json = try JSON(data: value.data(using: .utf8)!) else {
+                    //                        return
+                    //                    }
+                    //                    if let valueDict = JSONSerialization.jsonObject(with: <#T##Data#>, options: <#T##JSONSerialization.ReadingOptions#>)
+                    print(json, json!["isAccepted"]);
+                    if json!["isAccepted"] as! NSNumber == 1 {
+                        defaults.set(1, forKey: keys.isTermsAccepted)
+                    }
+                }
+                //                if(
+            }
+        case .failure(let error):
+            print("Fetching user attributes failed with error \(error)")
+        }
+    }
+}
+
+
+func acceptTNC(value: Bool) {
+    let defaults = UserDefaults.standard
+    let keys = UserDefaultsKeys()
+    let tncValue = ["version" : 1, "isAccepted" : value] as [String: Any]
+    let json = JSON(tncValue)
+    //    print("json", json.rawString([.castNilToNSNull : true]))
+    let tncValueString = json.rawString([.castNilToNSNull : true])!
+    print("tncValueString", tncValueString)
+    _ = Amplify.Auth.update(userAttribute: AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: tncValueString)) { result in
+        do {
+            defaults.set(1, forKey: keys.isTermsAccepted)
+            let updateResult = try result.get()
+            switch updateResult.nextStep {
+            case .confirmAttributeWithCode(let deliveryDetails, let info):
+                print("Confirm the attribute with details send to - \(deliveryDetails) \(info)")
+            case .done:
+                print("Update completed")
+            }
+        } catch {
+            print("Update attribute failed with error \(error)")
+        }
+    }
+}
+

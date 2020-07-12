@@ -51,6 +51,10 @@
 		E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */; };
 		E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */; };
 		E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5A24A5D359005CE57E /* SetupProfile.swift */; };
+		E2CFD96424B87DF4009FE288 /* SetupProfileSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */; };
+		E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */; };
+		E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96A24B9D3D8009FE288 /* Notification.swift */; };
+		E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96C24BB5202009FE288 /* Keychain.swift */; };
 		E2D127DB249B216200467E43 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; };
 		E2D127DC249B216200467E43 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E1249B272900467E43 /* ConsentTask.swift */; };
@@ -110,6 +114,7 @@
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
+		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
 		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
@@ -143,6 +148,10 @@
 		E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioDataVC.swift; sourceTree = "<group>"; };
 		E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonOutlined.swift; sourceTree = "<group>"; };
 		E2C86D5A24A5D359005CE57E /* SetupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfile.swift; sourceTree = "<group>"; };
+		E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileSegue.swift; sourceTree = "<group>"; };
+		E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileUnitSelectionCell.swift; sourceTree = "<group>"; };
+		E2CFD96A24B9D3D8009FE288 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		E2CFD96C24BB5202009FE288 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../../Apple/ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		E2D127E1249B272900467E43 /* ConsentTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTask.swift; sourceTree = "<group>"; };
 		E2D127E3249B5BCF00467E43 /* SurveyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTask.swift; sourceTree = "<group>"; };
@@ -196,11 +205,13 @@
 				E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */,
 				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
 				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
+				E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */,
 				E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */,
 				E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */,
 				E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */,
 				E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */,
 				E2B0333724AA04A600929D39 /* TempSignoutVC.swift */,
+				E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */,
 			);
 			path = SetupProfile;
 			sourceTree = "<group>";
@@ -295,6 +306,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E14BF824AF0BFC007C0470 /* User.swift */,
+				E2CFD96A24B9D3D8009FE288 /* Notification.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -332,6 +344,7 @@
 				E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */,
 				E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */,
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
+				E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */,
 			);
 			path = Longevity;
 			sourceTree = "<group>";
@@ -340,8 +353,8 @@
 			isa = PBXGroup;
 			children = (
 				E2C59DFE2498E34D00842105 /* CustomViews */,
-				E2ECB8C4247FE2BA0020A27E /* Main.storyboard */,
 				E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */,
+				E2ECB8C4247FE2BA0020A27E /* Main.storyboard */,
 				E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */,
 			);
 			path = View;
@@ -377,6 +390,7 @@
 				E2C86D5A24A5D359005CE57E /* SetupProfile.swift */,
 				E2B0337B24AB33FE00929D39 /* Fitbit.swift */,
 				E24DED0F24B30B1500A61892 /* UserDefaults.swift */,
+				E2CFD96C24BB5202009FE288 /* Keychain.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -577,6 +591,7 @@
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
+				E2CFD96424B87DF4009FE288 /* SetupProfileSegue.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */,
@@ -595,6 +610,7 @@
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
+				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
@@ -604,9 +620,11 @@
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
 				E2E14BF924AF0BFC007C0470 /* User.swift in Sources */,
+				E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */,
 				E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */,
 				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
+				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -763,6 +781,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vivek/Documents/Rejuve/Longevity/Longevity/Longevity-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
@@ -784,6 +803,7 @@
 				);
 				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vivek/Documents/Rejuve/Longevity/Longevity/Longevity-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};

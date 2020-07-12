@@ -31,6 +31,7 @@ struct SetupProfileConnectDeviceOption {
     let image: UIImage
     let title: String
     let description: String
+    var isConnected: Bool = false
 }
 
 var setupProfileConnectDeviceOptionList:[Int: SetupProfileConnectDeviceOption] = [

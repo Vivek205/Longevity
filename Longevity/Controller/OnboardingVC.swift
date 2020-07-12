@@ -34,6 +34,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         hideNavigationBar()
         self.removeBackButtonNavigation()
         getCurrentUser()
+      
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -101,12 +102,30 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
                 getProfile()
                 DispatchQueue.main.async {
                     self.performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
+//                    let viewController = TermsOfServiceVC.init()
+//                    self.navigationController?.pushViewController(viewController, animated: true)
+
+//                                        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
+//                                        var nextViewController: UIViewController = UIViewController()
+//                                        let defaults = UserDefaults.standard
+//                                        let keys = UserDefaultsKeys()
+//
+//                                        let isTermsAccepted = defaults.bool(forKey: keys.isTermsAccepted)
+//                                        print("isTermsAccepted", isTermsAccepted)
+//
+//                                        if isTermsAccepted == true {
+//                                            nextViewController = storyBoard.instantiateInitialViewController() as! SetupProfileDisclaimerVC
+//                                            self.present(nextViewController, animated: true, completion: nil)
+//                                        }
+
+                    
                 }
             }
         }
 
         func onFailure(error: AuthError) {
             print(error)
+            showAlert(title: "Login Failed" , message: error.errorDescription)
         }
 
         _ = Amplify.Auth.fetchAuthSession { (result) in
@@ -182,3 +201,12 @@ extension UIViewController{
     }
 }
 
+
+// MARK: Alert
+extension UIViewController {
+    func showAlert(title: String, message: String) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(UIAlertAction(title: "OK", style: .default))
+        self.present(alert, animated: true)
+    }
+}

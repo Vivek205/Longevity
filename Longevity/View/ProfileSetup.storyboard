@@ -196,7 +196,7 @@ up your health profile.</string>
                                         </constraints>
                                         <state key="normal" title="Continue"/>
                                         <connections>
-                                            <segue destination="AXW-C6-PXE" kind="show" id="SPP-7B-Npk"/>
+                                            <action selector="handleContinue:" destination="YhE-Gr-gSC" eventType="touchUpInside" id="KzM-TI-S0r"/>
                                         </connections>
                                     </button>
                                 </subviews>
@@ -327,7 +327,7 @@ up your health profile.</string>
                                             <outlet property="logo" destination="ULU-H9-EG7" id="zQS-V6-MVC"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioMetric" id="WQR-t7-1eQ">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioMetric" id="WQR-t7-1eQ" customClass="SetupProfileUnitSelectionCell" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="9" y="308" width="396" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9EJ-Ej-88h">
@@ -340,6 +340,9 @@ up your health profile.</string>
                                                         <constraint firstAttribute="width" constant="51" id="NQZ-F7-zHJ"/>
                                                         <constraint firstAttribute="height" constant="30" id="e0A-h3-6lv"/>
                                                     </constraints>
+                                                    <connections>
+                                                        <action selector="handleMetricTogglePress:" destination="YhE-Gr-gSC" eventType="valueChanged" id="R0r-ta-8vT"/>
+                                                    </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Metric" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-e8-aR4">
                                                     <rect key="frame" x="250" y="34" width="60" height="22"/>
@@ -359,6 +362,9 @@ up your health profile.</string>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="396" height="90"/>
+                                        <connections>
+                                            <outlet property="unitSwitch" destination="ZsE-OO-MxG" id="ard-A3-0OE"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -433,6 +439,7 @@ up your health profile.</string>
                     <connections>
                         <outlet property="collectionView" destination="Rnv-cI-MYv" id="LNS-4s-9gl"/>
                         <outlet property="continueButton" destination="HOc-Gh-tin" id="CRH-Hi-ahw"/>
+                        <segue destination="AXW-C6-PXE" kind="show" identifier="SetupProfileBioDataToNotification" id="g0d-OV-Nok"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dmi-z6-pNq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -481,7 +488,7 @@ up your health profile.</string>
                                         </constraints>
                                         <state key="normal" title="Enable Now"/>
                                         <connections>
-                                            <segue destination="XcV-Lj-rTX" kind="show" id="xZR-Db-edZ"/>
+                                            <action selector="handleEnableNotification:" destination="AXW-C6-PXE" eventType="touchUpInside" id="mvL-3W-ziB"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-B4-IOn">
@@ -558,6 +565,9 @@ up your health profile.</string>
                             </constraints>
                         </view>
                     </navigationItem>
+                    <connections>
+                        <segue destination="XcV-Lj-rTX" kind="show" identifier="SetupNotificationsToDevices" id="15S-WO-TRn"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNH-L0-sGz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
