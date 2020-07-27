@@ -8,6 +8,11 @@
 
 /* Begin PBXBuildFile section */
 		908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
+		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
+		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
+		E21BD6AA24BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */; };
+		E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */; };
 		E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */; };
 		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
 		E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */; };
@@ -19,10 +24,20 @@
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
+		E25185EC24CF042000F3068C /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Questions.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
+		E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F07D24C55DA600969CD8 /* Dashboard.storyboard */; };
+		E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08524C57C7A00969CD8 /* HomeVC.swift */; };
+		E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08724C597C000969CD8 /* CovidCheckinVC.swift */; };
+		E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08924C5AAEC00969CD8 /* CovidCheckinSurvey.swift */; };
+		E274F08E24C820C900969CD8 /* CovidCheckin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */; };
+		E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */; };
+		E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09324C9982500969CD8 /* RKCQuestionView.swift */; };
+		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
+		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E28CEDCA24977E3A00AB6595 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */; };
 		E28CEDCE2497801600AB6595 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */; };
@@ -30,9 +45,14 @@
 		E28CEDD22497805400AB6595 /* Montserrat-Light.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDD12497805400AB6595 /* Montserrat-Light.ttf */; };
 		E28CEDD42497806B00AB6595 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDD32497806B00AB6595 /* Montserrat-Regular.ttf */; };
 		E28CEDD62497807900AB6595 /* Montserrat-SemiBold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDD52497807900AB6595 /* Montserrat-SemiBold.ttf */; };
+		E290B60624BC75D500C51655 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60524BC75D500C51655 /* String.swift */; };
+		E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60724BCA1EA00C51655 /* CheckboxButton.swift */; };
+		E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */; };
 		E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */; };
 		E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */; };
 		E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8F24923309008DAD25 /* awsconfiguration.json */; };
+		E2A5705824CAC88E00DC07AB /* BranchingOrderedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5705724CAC88E00DC07AB /* BranchingOrderedTask.swift */; };
+		E2A5705D24CB095000DC07AB /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5705C24CB095000DC07AB /* Array.swift */; };
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
 		E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */; };
 		E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337B24AB33FE00929D39 /* Fitbit.swift */; };
@@ -51,7 +71,6 @@
 		E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */; };
 		E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */; };
 		E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5A24A5D359005CE57E /* SetupProfile.swift */; };
-		E2CFD96424B87DF4009FE288 /* SetupProfileSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */; };
 		E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */; };
 		E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96A24B9D3D8009FE288 /* Notification.swift */; };
 		E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96C24BB5202009FE288 /* Keychain.swift */; };
@@ -103,6 +122,11 @@
 		279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
+		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
+		E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalHistoryAPI.swift; sourceTree = "<group>"; };
+		E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionOptionCell.swift; sourceTree = "<group>"; };
+		E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreExistingCondition.swift; sourceTree = "<group>"; };
 		E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOSTitleTableViewCell.swift; sourceTree = "<group>"; };
 		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
 		E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDisclaimerVC.swift; sourceTree = "<group>"; };
@@ -115,10 +139,20 @@
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
+		E25185EB24CF042000F3068C /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
 		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
+		E274F08524C57C7A00969CD8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
+		E274F08724C597C000969CD8 /* CovidCheckinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinVC.swift; sourceTree = "<group>"; };
+		E274F08924C5AAEC00969CD8 /* CovidCheckinSurvey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinSurvey.swift; sourceTree = "<group>"; };
+		E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = CovidCheckin.storyboard; sourceTree = "<group>"; };
+		E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerVC.swift; sourceTree = "<group>"; };
+		E274F09324C9982500969CD8 /* RKCQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCQuestionView.swift; sourceTree = "<group>"; };
+		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
+		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Medium.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -126,9 +160,14 @@
 		E28CEDD12497805400AB6595 /* Montserrat-Light.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Light.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Light.ttf"; sourceTree = "<group>"; };
 		E28CEDD32497806B00AB6595 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Regular.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		E28CEDD52497807900AB6595 /* Montserrat-SemiBold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-SemiBold.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-SemiBold.ttf"; sourceTree = "<group>"; };
+		E290B60524BC75D500C51655 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
+		E290B60724BCA1EA00C51655 /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
+		E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionVC.swift; sourceTree = "<group>"; };
 		E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailVC.swift; sourceTree = "<group>"; };
 		E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2A25F8F24923309008DAD25 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
+		E2A5705724CAC88E00DC07AB /* BranchingOrderedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchingOrderedTask.swift; sourceTree = "<group>"; };
+		E2A5705C24CB095000DC07AB /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
 		E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerType.swift; sourceTree = "<group>"; };
 		E2B0337B24AB33FE00929D39 /* Fitbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fitbit.swift; sourceTree = "<group>"; };
@@ -148,7 +187,6 @@
 		E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioDataVC.swift; sourceTree = "<group>"; };
 		E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonOutlined.swift; sourceTree = "<group>"; };
 		E2C86D5A24A5D359005CE57E /* SetupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfile.swift; sourceTree = "<group>"; };
-		E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileSegue.swift; sourceTree = "<group>"; };
 		E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileUnitSelectionCell.swift; sourceTree = "<group>"; };
 		E2CFD96A24B9D3D8009FE288 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		E2CFD96C24BB5202009FE288 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
@@ -198,6 +236,16 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		E216EFC524BEEE7A00B57A7F /* Signup */ = {
+			isa = PBXGroup;
+			children = (
+				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
+				E2BCA5712486542C007204B9 /* SignupVC.swift */,
+				E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */,
+			);
+			path = Signup;
+			sourceTree = "<group>";
+		};
 		E22C1A4724A48A6300EC5B29 /* SetupProfile */ = {
 			isa = PBXGroup;
 			children = (
@@ -210,8 +258,11 @@
 				E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */,
 				E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */,
 				E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */,
+				E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */,
+				E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */,
+				E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */,
+				E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */,
 				E2B0333724AA04A600929D39 /* TempSignoutVC.swift */,
-				E2CFD96324B87DF4009FE288 /* SetupProfileSegue.swift */,
 			);
 			path = SetupProfile;
 			sourceTree = "<group>";
@@ -249,6 +300,32 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E274F08424C57C5A00969CD8 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				E274F08524C57C7A00969CD8 /* HomeVC.swift */,
+			);
+			path = Dashboard;
+			sourceTree = "<group>";
+		};
+		E274F08F24C9667000969CD8 /* ResearchKitStepVC */ = {
+			isa = PBXGroup;
+			children = (
+				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
+			);
+			path = ResearchKitStepVC;
+			sourceTree = "<group>";
+		};
+		E274F09224C997E600969CD8 /* ResearchKitViews */ = {
+			isa = PBXGroup;
+			children = (
+				E274F09324C9982500969CD8 /* RKCQuestionView.swift */,
+				E274F09524C9B75000969CD8 /* RKCLabels.swift */,
+				E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */,
+			);
+			path = ResearchKitViews;
+			sourceTree = "<group>";
+		};
 		E28653C324A3958F00403729 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -256,6 +333,15 @@
 				E28653C124A3950000403729 /* ClinicalLoginVC.swift */,
 			);
 			path = Login;
+			sourceTree = "<group>";
+		};
+		E290B60124BC75B700C51655 /* Utils */ = {
+			isa = PBXGroup;
+			children = (
+				E290B60524BC75D500C51655 /* String.swift */,
+				E2A5705C24CB095000DC07AB /* Array.swift */,
+			);
+			path = Utils;
 			sourceTree = "<group>";
 		};
 		E2B0337324AB327D00929D39 /* Protocols */ = {
@@ -280,6 +366,7 @@
 			children = (
 				E2C59DFF2498E37600842105 /* CustomButtonFill.swift */,
 				E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */,
+				E290B60724BCA1EA00C51655 /* CheckboxButton.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -298,6 +385,8 @@
 			children = (
 				E2D127E1249B272900467E43 /* ConsentTask.swift */,
 				E2D127E3249B5BCF00467E43 /* SurveyTask.swift */,
+				E274F08924C5AAEC00969CD8 /* CovidCheckinSurvey.swift */,
+				E2A5705724CAC88E00DC07AB /* BranchingOrderedTask.swift */,
 			);
 			path = ResearchKitTasks;
 			sourceTree = "<group>";
@@ -307,6 +396,8 @@
 			children = (
 				E2E14BF824AF0BFC007C0470 /* User.swift */,
 				E2CFD96A24B9D3D8009FE288 /* Notification.swift */,
+				E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */,
+				E25185EB24CF042000F3068C /* Questions.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -352,10 +443,13 @@
 		E2ECB8D2247FE3760020A27E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E274F09224C997E600969CD8 /* ResearchKitViews */,
 				E2C59DFE2498E34D00842105 /* CustomViews */,
 				E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */,
 				E2ECB8C4247FE2BA0020A27E /* Main.storyboard */,
 				E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */,
+				E274F07D24C55DA600969CD8 /* Dashboard.storyboard */,
+				E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -363,18 +457,19 @@
 		E2ECB8D3247FE3950020A27E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E274F08F24C9667000969CD8 /* ResearchKitStepVC */,
+				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E2D127E0249B26F200467E43 /* ResearchKitTasks */,
 				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
+				E216EFC524BEEE7A00B57A7F /* Signup */,
 				E28653C324A3958F00403729 /* Login */,
 				E22C1A4724A48A6300EC5B29 /* SetupProfile */,
 				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
 				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
-				E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */,
-				E2BCA5712486542C007204B9 /* SignupVC.swift */,
-				E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */,
 				E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */,
 				E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */,
+				E274F08724C597C000969CD8 /* CovidCheckinVC.swift */,
 			);
 			path = Controller;
 			sourceTree = "<group>";
@@ -382,6 +477,7 @@
 		E2ECB8D4247FE3AE0020A27E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				E290B60124BC75B700C51655 /* Utils */,
 				E2E14BF424AF0B5C007C0470 /* API */,
 				E2B0337324AB327D00929D39 /* Protocols */,
 				E2B9893B248E27EC00453E0E /* UserAccount.swift */,
@@ -391,6 +487,7 @@
 				E2B0337B24AB33FE00929D39 /* Fitbit.swift */,
 				E24DED0F24B30B1500A61892 /* UserDefaults.swift */,
 				E2CFD96C24BB5202009FE288 /* Keychain.swift */,
+				E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -482,12 +579,14 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C59DFA2498A2DE00842105 /* ProfileSetup.storyboard in Resources */,
+				E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */,
 				E28CEDD42497806B00AB6595 /* Montserrat-Regular.ttf in Resources */,
 				E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */,
 				E28CEDD62497807900AB6595 /* Montserrat-SemiBold.ttf in Resources */,
 				E28CEDCE2497801600AB6595 /* Montserrat-Bold.ttf in Resources */,
 				E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */,
 				E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */,
+				E274F08E24C820C900969CD8 /* CovidCheckin.storyboard in Resources */,
 				E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */,
 				E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */,
 				E2ECB8C6247FE2BA0020A27E /* Main.storyboard in Resources */,
@@ -586,44 +685,61 @@
 			files = (
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
+				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
 				E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */,
+				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
+				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
-				E2CFD96424B87DF4009FE288 /* SetupProfileSegue.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
+				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
+				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
+				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
 				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
+				E290B60624BC75D500C51655 /* String.swift in Sources */,
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
+				E21BD6AA24BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift in Sources */,
+				E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
+				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
+				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
+				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
+				E25185EC24CF042000F3068C /* Questions.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
 				E2E14BF924AF0BFC007C0470 /* User.swift in Sources */,
 				E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */,
+				E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */,
+				E2A5705824CAC88E00DC07AB /* BranchingOrderedTask.swift in Sources */,
 				E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */,
 				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
+				E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */,
+				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -771,7 +887,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -794,7 +910,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

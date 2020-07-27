@@ -34,7 +34,11 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         hideNavigationBar()
         self.removeBackButtonNavigation()
         getCurrentUser()
-      
+
+
+        if let token = UserDefaults.standard.value(forKey: "deviceTokenForSNS") {
+            print("device token ====   \(token)")
+        }
     }
 
     override func viewWillAppear(_ animated: Bool) {
@@ -88,11 +92,48 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
     func hideNavigationBar(){
         navigationController?.setNavigationBarHidden(true, animated: true)
-//        navigationItem.hid
+        //        navigationItem.hid
     }
 
     func showNavigationBar() {
         navigationController?.setNavigationBarHidden(false, animated: true)
+    }
+
+    func navigateToTheNextScreen(){
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
+        let isTermsAccepted = defaults.bool(forKey: keys.isTermsAccepted)
+        let devices = (defaults.dictionary(forKey: keys.devices) ?? [:]) as [String:[String:Int]]
+        let fitbitStatus = (devices[ExternalDevices.FITBIT] ?? [:]) as [String:Int]
+        let healthkitStatus = (devices[ExternalDevices.HEALTHKIT] ?? [:]) as [String:Int]
+        let providedPreExistingMedicalConditions = defaults.bool(forKey: keys.providedPreExistingMedicalConditions)
+        print("isTermsAccepted", isTermsAccepted)
+
+        print("endpoint ARN" , defaults.value(forKey: keys.endpointArnForSNS))
+        
+        if isTermsAccepted == true {
+            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+            var homeVC:UIViewController = UIViewController()
+
+            if providedPreExistingMedicalConditions == true {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
+            }else if fitbitStatus["connected"] == 1 {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
+            }else if healthkitStatus["connected"] == 1 {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
+            } else {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
+            }
+            
+            let navigationController = UINavigationController(rootViewController: homeVC)
+            navigationController.modalPresentationStyle = .fullScreen
+
+            self.present(navigationController, animated: true, completion: nil)
+
+        } else {
+            performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
+        }
     }
 
     func getCurrentUser() {
@@ -101,24 +142,8 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
             if userSignedIn {
                 getProfile()
                 DispatchQueue.main.async {
-                    self.performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
-//                    let viewController = TermsOfServiceVC.init()
-//                    self.navigationController?.pushViewController(viewController, animated: true)
-
-//                                        let storyBoard: UIStoryboard = UIStoryboard(name: "Main", bundle: nil)
-//                                        var nextViewController: UIViewController = UIViewController()
-//                                        let defaults = UserDefaults.standard
-//                                        let keys = UserDefaultsKeys()
-//
-//                                        let isTermsAccepted = defaults.bool(forKey: keys.isTermsAccepted)
-//                                        print("isTermsAccepted", isTermsAccepted)
-//
-//                                        if isTermsAccepted == true {
-//                                            nextViewController = storyBoard.instantiateInitialViewController() as! SetupProfileDisclaimerVC
-//                                            self.present(nextViewController, animated: true, completion: nil)
-//                                        }
-
-                    
+                    self.navigateToTheNextScreen()
+                    retrieveARN()
                 }
             }
         }
@@ -131,7 +156,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
-//                print(session)
+                //                print(session)
                 onSuccess(userSignedIn: session.isSignedIn, idToken: "")
             case .failure(let error):
                 onFailure(error: error)

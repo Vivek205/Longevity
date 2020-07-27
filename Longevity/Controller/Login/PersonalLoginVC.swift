@@ -87,12 +87,31 @@ class PersonalLoginVC: UIViewController {
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
         if let email = self.formEmail.text, let password = self.formPassword.text {
+
+            func validate() -> Bool {
+                if email.isEmpty || !(email.isValidEmail){
+                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    return false
+                }
+                if password.isEmpty{
+                     showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    return false
+                }
+                return true
+            }
+
+            guard validate() else {
+                return
+            }
+
             self.showSpinner()
             func onSuccess() {
                 getProfile()
+                retrieveARN()
                 DispatchQueue.main.async {
                     self.removeSpinner()
                     self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                    updateSetupProfileCompletionStatus(currentState: .onboarding)
                 }
             }
 
@@ -138,9 +157,11 @@ class PersonalLoginVC: UIViewController {
         self.showSpinner()
         func onSuccess() {
             getProfile()
+            retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 
@@ -166,9 +187,11 @@ class PersonalLoginVC: UIViewController {
         self.showSpinner()
         func onSuccess() {
             getProfile()
+            retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 

@@ -139,7 +139,9 @@ class FitbitModel: AuthHandlerType {
                     self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
                     self.publishData(accessToken: accessToken, userId: userId)
                 }
-            } catch {}
+            } catch {
+                print("fitbit token error", error)
+            }
         }
         dataTask.resume()
     }
@@ -154,8 +156,8 @@ class FitbitModel: AuthHandlerType {
         } catch  {
             print(error)
         }
-        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/FITBIT/synchronize" , headers: headers, body: bodyData)
-        _ = Amplify.API.post(request: request, listener: { (result) in
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
+                _ = Amplify.API.post(request: request, listener: { (result) in
             switch result{
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)

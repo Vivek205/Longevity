@@ -20,7 +20,6 @@ class SetupProfileDisclaimerVC: UIViewController {
     }
 
     func customizeDisclaimerLabel() {
-//        disclaimer.attributedText = NSMutableAttributedString().bold("Disclaimer: ")
         let headingAttributes:[NSAttributedString.Key:Any] =
             [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18))]
         let heading = NSMutableAttributedString(string: "Disclaimer: ", attributes: headingAttributes)
@@ -40,5 +39,12 @@ class SetupProfileDisclaimerVC: UIViewController {
 
         disclaimer.attributedText = disclaimerContent
     }
+
+    // MARK: Actions
+    @IBAction func handleContinue(_ sender: Any) {
+        updateSetupProfileCompletionStatus(currentState: .disclaimer)
+        performSegue(withIdentifier: "SetupProfileDisclaimerToBioData", sender: self)
+    }
+
 
 }

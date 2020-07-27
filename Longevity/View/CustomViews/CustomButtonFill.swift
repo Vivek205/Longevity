@@ -8,6 +8,20 @@
 
 import UIKit
 
+func generateImage(fromColor color: UIColor) -> UIImage? {
+    let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+    UIGraphicsBeginImageContext(rect.size)
+    let context = UIGraphicsGetCurrentContext()
+
+    context?.setFillColor(color.cgColor)
+    context?.fill(rect)
+
+    let image = UIGraphicsGetImageFromCurrentImageContext()
+    UIGraphicsEndImageContext()
+
+    return image
+}
+
 class CustomButtonFill: UIButton {
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -28,23 +42,24 @@ class CustomButtonFill: UIButton {
         setTitleColor(UIColor.white, for: .normal)
         titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24)
     }
-
-    private func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
-        self.setBackgroundImage(image(withColor: color), for: state)
-    }
-
-    private func image(withColor color: UIColor) -> UIImage? {
-        let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
-        UIGraphicsBeginImageContext(rect.size)
-        let context = UIGraphicsGetCurrentContext()
-
-        context?.setFillColor(color.cgColor)
-        context?.fill(rect)
-
-        let image = UIGraphicsGetImageFromCurrentImageContext()
-        UIGraphicsEndImageContext()
-
-        return image
-    }
-
 }
+
+extension UIButton {
+    func setBackgroundColor(_ color: UIColor, for state: UIControl.State) {
+//        func image(withColor color: UIColor) -> UIImage? {
+//            let rect = CGRect(x: 0.0, y: 0.0, width: 1.0, height: 1.0)
+//            UIGraphicsBeginImageContext(rect.size)
+//            let context = UIGraphicsGetCurrentContext()
+//
+//            context?.setFillColor(color.cgColor)
+//            context?.fill(rect)
+//
+//            let image = UIGraphicsGetImageFromCurrentImageContext()
+//            UIGraphicsEndImageContext()
+//
+//            return image
+//        }
+        self.setBackgroundImage(generateImage(fromColor: color), for: state)
+    }
+}
+

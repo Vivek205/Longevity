@@ -15,7 +15,6 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var formEmail: UITextField!
     @IBOutlet weak var formPhone: UITextField!
     @IBOutlet weak var formPassword: UITextField!
-    @IBOutlet weak var formConfirmPassword: UITextField!
     @IBOutlet weak var submitButton: UIButton!
 
     override func viewDidLoad() {
@@ -25,7 +24,6 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         formEmail.delegate = self
         formPhone.delegate = self
         formPassword.delegate = self
-        formConfirmPassword.delegate = self
         self.removeBackButtonNavigation()
     }
 
@@ -52,22 +50,30 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.showAlert(title: "Login Failed" , message: errorDescription)
-//                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
-//                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-//                return self.present(alert, animated: true, completion: nil)
             }
         }
 
-        if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
-            func validate() {
-                if(password != confirmPassword) {
-                    let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-                    return self.present(alert, animated: true, completion: nil)
+        if let name = formName.text,
+            let email = formEmail.text,
+            let phone = formPhone.text ,
+            let password = formPassword.text{
+            func validate() -> Bool {
+                if email.isEmpty || !(email.isValidEmail){
+                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    return false
                 }
+                if phone.isEmpty || !(phone.isValidPhone){
+                     showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number.")
+                    return false
+                }
+                if password.isEmpty{
+                     showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    return false
+                }
+                return true
             }
 
-            validate()
+            guard validate() else { return }
             self.showSpinner()
             
             let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]

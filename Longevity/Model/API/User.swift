@@ -26,14 +26,15 @@ struct ExternalDevices {
 
 let longevityTNCVersion = 1
 
-func getProfile(){
+func getProfile() {
+    getHealthProfile()
     let credentials = getCredentials()
     getUserAttributes()
     print("idtoken", credentials.idToken)
     let headers = ["token":credentials.idToken]
     let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
     _ = Amplify.API.get(request: request, listener: { (result) in
-        switch result{
+        switch result {
         case .success(let data):
             do {
                 let jsonData = try JSON(data: data)
@@ -42,45 +43,11 @@ func getProfile(){
                 let keys = UserDefaultsKeys()
                 let userProfileData = jsonData["data"]
                 let name = userProfileData[keys.name].rawString()!
-                let weight = userProfileData[keys.weight].rawString()!
-                let height = userProfileData[keys.height].rawString()!
-                let gender = userProfileData[keys.gender].rawString()!
-                let birthday = userProfileData[keys.birthday].rawString()!
-                let unit = userProfileData[keys.unit].rawString()!
-                let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
 
                 var devicesStatus: [String:[String:Int]] = [:]
 
-                if !(name.isEmpty){
+                if !(name.isEmpty) && name != "null"{
                     defaults.set(name, forKey: keys.name)
-                }
-                if !(weight.isEmpty){
-                    defaults.set(weight, forKey: keys.weight)
-                }
-                if !(height.isEmpty) {
-                    defaults.set(height, forKey: keys.height)
-                }
-                if !(gender.isEmpty)  {
-                    defaults.set(gender, forKey: keys.gender)
-                }
-                if !(birthday.isEmpty) {
-                    defaults.set(birthday, forKey: keys.birthday)
-                }
-                if !(unit.isEmpty) {
-                    defaults.set(unit, forKey: keys.unit)
-                }
-
-
-                if let fitbitStatus = devices![ExternalDevices.FITBIT]  as? [String: Int]{
-                    print("devices", devices)
-                    devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
-
-                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                        let enhancedDevices = devices.merging(devicesStatus) {(_, newValues) in newValues }
-                        defaults.set(enhancedDevices, forKey: keys.devices)
-                    }else {
-                        defaults.set(devicesStatus, forKey: keys.devices)
-                    }
                 }
 
             } catch {
@@ -115,12 +82,13 @@ func updateProfile(){
         print(error)
     }
 
-    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/edit" , headers: headers, body: bodyData)
+    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers, body: bodyData)
     _ = Amplify.API.post(request: request, listener: { (result) in
         switch result{
         case .success(let data):
             let responseString = String(data: data, encoding: .utf8)
             print("sucess \(responseString)")
+            updateSetupProfileCompletionStatus(currentState: .biodata)
         case .failure(let apiError):
             print("failed \(apiError)")
         }
@@ -215,11 +183,7 @@ func getUserAttributes() {
                 if name.rawValue == CustomCognitoAttributes.longevityTNC {
                     let data: Data? = value.data(using: .utf8)!
                     let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
-                    //                    guard let json = try JSON(data: value.data(using: .utf8)!) else {
-                    //                        return
-                    //                    }
-                    //                    if let valueDict = JSONSerialization.jsonObject(with: <#T##Data#>, options: <#T##JSONSerialization.ReadingOptions#>)
-                    print(json, json!["isAccepted"]);
+
                     if json!["isAccepted"] as! NSNumber == 1 {
                         defaults.set(1, forKey: keys.isTermsAccepted)
                     }
@@ -250,6 +214,7 @@ func acceptTNC(value: Bool) {
                 print("Confirm the attribute with details send to - \(deliveryDetails) \(info)")
             case .done:
                 print("Update completed")
+                updateSetupProfileCompletionStatus(currentState: .acceptTerms)
             }
         } catch {
             print("Update attribute failed with error \(error)")

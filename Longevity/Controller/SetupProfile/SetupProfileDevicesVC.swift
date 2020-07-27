@@ -27,15 +27,21 @@ class SetupProfileDevicesVC: UIViewController {
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
 
-        let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]
-        print("devices", devices)
-        if let fitbitStatus = devices![ExternalDevices.FITBIT] as? [String: Int] {
-            print("fitbitstatus", fitbitStatus)
-            setupProfileConnectDeviceOptionList[2]?.isConnected = fitbitStatus["connected"] == 1
-            collectionView.reloadData() 
+        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+                print("fitbitstatus", fitbitStatus)
+                setupProfileConnectDeviceOptionList[2]?.isConnected = fitbitStatus["connected"] == 1
+                collectionView.reloadData()
+            }
         }
-
     }
+
+    // MARK: Actions
+    @IBAction func handleContinue(_ sender: Any) {
+        updateSetupProfileCompletionStatus(currentState: .connectDevices)
+        performSegue(withIdentifier: "SetupProfileDevicesToPreExistingConditions", sender: self)
+    }
+
     
 }
 

@@ -10,7 +10,10 @@ import Foundation
 import Amplify
 import SwiftyJSON
 
+
+
 func registerARN(platform:String, arnEndpoint: String) {
+    let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
     let credentials = getCredentials()
     let headers = ["token":credentials.idToken, "content-type":"application/json"]
     
@@ -26,7 +29,8 @@ func registerARN(platform:String, arnEndpoint: String) {
         print(error)
     }
 
-    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/notification/register" , headers: headers, body: bodyData)
+    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/register" , headers: headers, body: bodyData)
+
     _ = Amplify.API.post(request: request, listener: { (result) in
         switch result{
         case .success(let data):
@@ -36,4 +40,33 @@ func registerARN(platform:String, arnEndpoint: String) {
             print("failed \(apiError)")
         }
     })
+}
+
+
+func retrieveARN(){
+    let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
+    let credentials = getCredentials()
+    let headers = ["token":credentials.idToken, "content-type":"application/json"]
+
+    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification" , headers: headers)
+
+        _ = Amplify.API.get(request: request, listener: { (result) in
+            switch result{
+            case .success(let data):
+                do {
+                    let responseString = String(data: data, encoding: .utf8)
+                    let jsonResponse = try JSON(data: data)
+                    print(jsonResponse["endpoint_arn"].type,jsonResponse["endpoint_arn"])
+                    if let snsARN =  jsonResponse["endpoint_arn"].rawValue as? String {
+                        let defaults = UserDefaults.standard
+                        let keys = UserDefaultsKeys()
+                        defaults.set(snsARN, forKey: keys.endpointArnForSNS)
+                    }
+                } catch  {
+                    print(error)
+                }
+            case .failure(let apiError):
+                print("failed \(apiError)")
+            }
+        })
 }

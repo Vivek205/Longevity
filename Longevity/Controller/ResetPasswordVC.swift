@@ -40,7 +40,6 @@ class ResetPasswordVC: UIViewController {
                            print("Reset passowrd failed with error \(error)")
                        }
                    }
-        
     }
 
 
@@ -60,7 +59,6 @@ class ResetPasswordVC: UIViewController {
                 for: username,
                 with: newPassword,
                 confirmationCode: confirmationCode) {(result) in
-
                     switch result {
                     case .success:
                         resetSuccess = true
@@ -69,7 +67,6 @@ class ResetPasswordVC: UIViewController {
                         group.leave()
                     }
             }
-
         }
         group.wait()
         if resetSuccess {

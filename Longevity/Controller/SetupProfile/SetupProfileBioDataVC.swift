@@ -25,7 +25,7 @@ class SetupProfileBioDataVC: UIViewController {
     var selectedPickerValue:String = ""
     var selectedAgePickerValue:Date = Date()
     var selectedUnitSystem = MeasurementUnits.metric
-    var healthKitConnected:Bool = false
+    var healthKitConnectedLocally:Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -132,7 +132,7 @@ class SetupProfileBioDataVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateProfile()
+        updateHealthProfile()
         performSegue(withIdentifier: "SetupProfileBioDataToNotification", sender: self)
     }
 
@@ -360,17 +360,21 @@ class SetupProfileBioDataVC: UIViewController {
             defaults.set(weightInKilograms, forKey: keys.weight)
         }
 
-        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-            let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-            let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-            defaults.set(enhancedDevices, forKey: keys.devices)
-        }
+//        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//            let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//            let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+//            defaults.set(enhancedDevices, forKey: keys.devices)
+//        } else {
+//            let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//            defaults.set(newDevices, forKey: keys.devices)
+//        }
 
 
         // MARK: Reload the collection view
         DispatchQueue.main.async {
-            self.collectionView.reloadData()
             self.continueButton.isEnabled = true
+            self.healthKitConnectedLocally = true
+            self.collectionView.reloadData()
         }
     }
 }
@@ -547,7 +551,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return 8
     }
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -563,7 +567,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                     withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
         }
-        if indexPath.row == 8 {
+        if indexPath.row == 7 {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
@@ -584,6 +588,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         cell.logo.image = option?.image
         cell.label.text = option?.label
         cell.button.setTitle(option?.buttonText, for: .normal)
+        cell.button.setImage(nil, for: .normal)
         let isSynced = option?.isSynced
         if(isSynced == true){
             cell.button.layer.borderColor = UIColor.clear.cgColor
@@ -593,26 +598,39 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         cell.delegate = self
 
         // SYNC Button
-        if indexPath.row == 2 {
+        if indexPath.row == 2 && cell.label.text == "Sync Apple Health Profile" {
             let defaults = UserDefaults.standard
             let keys = UserDefaultsKeys()
             if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
                 if let healthKitStatus = devices[ExternalDevices.HEALTHKIT] {
                     if healthKitStatus["connected"] == 1 {
                         cell.button.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
+                        cell.button.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
                         cell.button.setTitle("SYNCED", for: .normal)
+                        cell.button.layer.borderColor = UIColor.clear.cgColor
                     }
                 } else {
+                    if self.healthKitConnectedLocally == true {
+                        cell.button.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
+                        cell.button.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
+                        cell.button.setTitle("SYNCED", for: .normal)
+                        cell.button.layer.borderColor = UIColor.clear.cgColor
+                    } else{
                     cell.button.setImage(nil, for: .normal)
                     cell.button.setTitle("SYNC", for: .normal)
+                    cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)}
                 }
             }else {
+                if self.healthKitConnectedLocally == true {
+                    cell.button.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
+                    cell.button.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
+                    cell.button.setTitle("SYNCED", for: .normal)
+                    cell.button.layer.borderColor = UIColor.clear.cgColor
+                }else{
                 cell.button.setImage(nil, for: .normal)
                 cell.button.setTitle("SYNC", for: .normal)
+                cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)}
             }
-
-
-
         }
         return cell
     }
