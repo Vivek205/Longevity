@@ -7,17 +7,6 @@
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
-    <customFonts key="customFonts">
-        <array key="Montserrat-Medium.ttf">
-            <string>Montserrat-Medium</string>
-        </array>
-        <array key="Montserrat-Regular.ttf">
-            <string>Montserrat-Regular</string>
-        </array>
-        <array key="Montserrat-SemiBold.ttf">
-            <string>Montserrat-SemiBold</string>
-        </array>
-    </customFonts>
     <scenes>
         <!--Home-->
         <scene sceneID="dh7-si-91z">
@@ -26,133 +15,12 @@
                     <view key="view" contentMode="scaleToFill" id="Jca-aP-UVt">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="D7F-Ta-DXC" userLabel="CovidChekinView">
-                                <rect key="frame" x="20" y="64" width="374" height="111"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eg0-LB-0kz">
-                                        <rect key="frame" x="0.0" y="0.0" width="111" height="111"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="Eg0-LB-0kz" secondAttribute="height" multiplier="1:1" id="3GL-T8-EsE"/>
-                                        </constraints>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="zqW-zj-rdO">
-                                        <rect key="frame" x="119" y="17" width="247" height="77"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="COVID Check-in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O1K-8m-12L">
-                                                <rect key="frame" x="0.0" y="0.0" width="163" height="24.5"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="20"/>
-                                                <color key="textColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How are you feeling today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="jos-Wa-U0d">
-                                                <rect key="frame" x="0.0" y="32.5" width="225.5" height="19"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="16"/>
-                                                <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last tracked: 3 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="BCH-3i-0cd">
-                                                <rect key="frame" x="0.0" y="59.5" width="167" height="17.5"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
-                                                <color key="textColor" red="0.60784313725490191" green="0.60784313725490191" blue="0.60784313725490191" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstItem="zqW-zj-rdO" firstAttribute="top" secondItem="D7F-Ta-DXC" secondAttribute="top" constant="17" id="5YW-u2-nvG"/>
-                                    <constraint firstAttribute="bottom" secondItem="zqW-zj-rdO" secondAttribute="bottom" constant="17" id="CSs-bC-eoR"/>
-                                    <constraint firstItem="Eg0-LB-0kz" firstAttribute="leading" secondItem="D7F-Ta-DXC" secondAttribute="leading" id="Hip-U2-9Ah"/>
-                                    <constraint firstItem="zqW-zj-rdO" firstAttribute="leading" secondItem="Eg0-LB-0kz" secondAttribute="trailing" constant="8" id="J0Y-A1-pw3"/>
-                                    <constraint firstItem="Eg0-LB-0kz" firstAttribute="top" secondItem="D7F-Ta-DXC" secondAttribute="top" id="QTq-B5-C95"/>
-                                    <constraint firstAttribute="height" constant="111" id="VMa-kg-ndg"/>
-                                    <constraint firstAttribute="bottom" secondItem="Eg0-LB-0kz" secondAttribute="bottom" id="VsZ-8u-YQi"/>
-                                    <constraint firstAttribute="trailing" secondItem="zqW-zj-rdO" secondAttribute="trailing" constant="8" id="aGc-G6-9hN"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="zlO-lS-l9g" appends="YES" id="911-j9-N1N"/>
-                                </connections>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZNQ-ug-5LE" userLabel="BranchedTaskSurvey">
-                                <rect key="frame" x="20" y="225" width="374" height="111"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="xPo-d0-ZeP">
-                                        <rect key="frame" x="0.0" y="0.0" width="111" height="111"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" secondItem="xPo-d0-ZeP" secondAttribute="height" multiplier="1:1" id="Anh-3c-Ggt"/>
-                                        </constraints>
-                                    </imageView>
-                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" alignment="top" spacing="8" translatesAutoresizingMaskIntoConstraints="NO" id="weM-PG-xPO">
-                                        <rect key="frame" x="119" y="17" width="247" height="77"/>
-                                        <subviews>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="COVID Check-in" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K0n-Xn-zFx">
-                                                <rect key="frame" x="0.0" y="0.0" width="163" height="24.5"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="20"/>
-                                                <color key="textColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="How are you feeling today?" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="FH5-eF-Sh7">
-                                                <rect key="frame" x="0.0" y="32.5" width="225.5" height="19"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="16"/>
-                                                <color key="textColor" red="0.2901960784" green="0.2901960784" blue="0.2901960784" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" verticalCompressionResistancePriority="751" text="Last tracked: 3 days ago" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="3ak-JX-df3">
-                                                <rect key="frame" x="0.0" y="59.5" width="167" height="17.5"/>
-                                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
-                                                <color key="textColor" red="0.60784313729999995" green="0.60784313729999995" blue="0.60784313729999995" alpha="1" colorSpace="calibratedRGB"/>
-                                                <nil key="highlightedColor"/>
-                                            </label>
-                                        </subviews>
-                                    </stackView>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="weM-PG-xPO" secondAttribute="trailing" constant="8" id="2L6-NS-kwo"/>
-                                    <constraint firstAttribute="height" constant="111" id="D65-EL-tjm"/>
-                                    <constraint firstAttribute="bottom" secondItem="weM-PG-xPO" secondAttribute="bottom" constant="17" id="DEM-XD-Vwo"/>
-                                    <constraint firstItem="xPo-d0-ZeP" firstAttribute="leading" secondItem="ZNQ-ug-5LE" secondAttribute="leading" id="Dx4-kQ-a4a"/>
-                                    <constraint firstAttribute="bottom" secondItem="xPo-d0-ZeP" secondAttribute="bottom" id="IUh-ZS-TIZ"/>
-                                    <constraint firstItem="weM-PG-xPO" firstAttribute="top" secondItem="ZNQ-ug-5LE" secondAttribute="top" constant="17" id="PIo-ji-sFl"/>
-                                    <constraint firstItem="xPo-d0-ZeP" firstAttribute="top" secondItem="ZNQ-ug-5LE" secondAttribute="top" id="WOy-1K-xld"/>
-                                    <constraint firstItem="weM-PG-xPO" firstAttribute="leading" secondItem="xPo-d0-ZeP" secondAttribute="trailing" constant="8" id="syj-G6-nPH"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="g5q-D9-P1f" appends="YES" id="GcU-iY-cwK"/>
-                                </connections>
-                            </view>
-                        </subviews>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="qUE-0B-1nv" firstAttribute="trailing" secondItem="D7F-Ta-DXC" secondAttribute="trailing" constant="20" id="0NQ-uw-rbe"/>
-                            <constraint firstItem="ZNQ-ug-5LE" firstAttribute="top" secondItem="D7F-Ta-DXC" secondAttribute="bottom" constant="50" id="3Kx-R3-qiH"/>
-                            <constraint firstItem="qUE-0B-1nv" firstAttribute="trailing" secondItem="ZNQ-ug-5LE" secondAttribute="trailing" constant="20" id="9QH-Zq-5oB"/>
-                            <constraint firstItem="D7F-Ta-DXC" firstAttribute="leading" secondItem="qUE-0B-1nv" secondAttribute="leading" constant="20" id="cbA-Wg-hTh"/>
-                            <constraint firstItem="ZNQ-ug-5LE" firstAttribute="leading" secondItem="qUE-0B-1nv" secondAttribute="leading" constant="20" id="nhK-xg-Oie"/>
-                            <constraint firstItem="D7F-Ta-DXC" firstAttribute="top" secondItem="qUE-0B-1nv" secondAttribute="top" constant="20" id="xjZ-w0-vpL"/>
-                        </constraints>
                         <viewLayoutGuide key="safeArea" id="qUE-0B-1nv"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="icon: home" selectedImage="icon: home" id="0OG-Yo-6ei"/>
-                    <connections>
-                        <outlet property="secondSurveyCard" destination="ZNQ-ug-5LE" id="1Cc-MS-LCV"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UN6-1I-Y6o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="zlO-lS-l9g" userLabel="CovidCheckinTap">
-                    <connections>
-                        <action selector="handleCovidCheckinPressed:" destination="1XV-wX-wka" id="vPC-ZW-pkJ"/>
-                    </connections>
-                </tapGestureRecognizer>
-                <tapGestureRecognizer id="g5q-D9-P1f" userLabel="BranchedTaskTap">
-                    <connections>
-                        <action selector="handleBranchedTaskPressed:" destination="1XV-wX-wka" id="srX-bi-jiL"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
             <point key="canvasLocation" x="-172.46376811594203" y="915.40178571428567"/>
         </scene>

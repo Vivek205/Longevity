@@ -11,20 +11,18 @@ import ResearchKit
 
 class HomeVC: UIViewController {
     var surveysData: [SurveyResponse]?
-
-    @IBOutlet weak var secondSurveyCard: UIView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         retrieveDataAndInitializeTheViews()
     }
 
-    @IBAction func handleCovidCheckinPressed(_ sender: Any) {
-        showCovidCheckinSurvey()
-    }
-
-    @IBAction func handleBranchedTaskPressed(_ sender: Any) {
-    }
+//    @IBAction func handleCovidCheckinPressed(_ sender: Any) {
+//        showCovidCheckinSurvey()
+//    }
+//
+//    @IBAction func handleBranchedTaskPressed(_ sender: Any) {
+//    }
 
     func retrieveDataAndInitializeTheViews() {
         self.showSpinner()
@@ -50,30 +48,44 @@ class HomeVC: UIViewController {
     }
 
     func presentViews() {
+        let scrollView = UIScrollView()
+        scrollView.translatesAutoresizingMaskIntoConstraints = false
+        scrollView.isDirectionalLockEnabled = true
+        self.view.addSubview(scrollView)
+
+        scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
+        scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
+
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.alignment = .fill
-        stackView.distribution = .fillEqually
-        stackView.spacing = 10.0
+        stackView.distribution = .equalSpacing
+        stackView.spacing = 10
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.view.addSubview(stackView)
+        scrollView.addSubview(stackView)
 
         if  self.surveysData != nil {
             for survey in self.surveysData! {
                 let avatarURL = URL(string: survey.imageUrl)
                 let surveyCardView = SurveyCardView(avatarUrl: avatarURL, header: survey.name, content: survey.description, extraContent: "last submission date")
                 surveyCardView.translatesAutoresizingMaskIntoConstraints = false
+
                 stackView.addArrangedSubview(surveyCardView)
-                surveyCardView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
-                surveyCardView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
-                surveyCardView.heightAnchor.constraint(equalToConstant: 111).isActive = true
+//                FIXME: Unable to set the height of the surveyCardView
+//                surveyCardView.heightAnchor.constraint(equalToConstant: CGFloat(111)).isActive = true
+
             }
         }
 
-        stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-        stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-        stackView.topAnchor.constraint(equalTo: secondSurveyCard.bottomAnchor, constant: 20).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
+        stackView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20).isActive = true
+        stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+
+        stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
     }
 
 }

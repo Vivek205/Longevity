@@ -89,8 +89,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
             footerView.heightAnchor.constraint(equalToConstant: 130).isActive = true
 
-
-
             continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15).isActive = true
             continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true

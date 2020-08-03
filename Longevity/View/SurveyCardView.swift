@@ -8,7 +8,7 @@
 
 import UIKit
 
-struct SurveyCardData{
+struct SurveyCardData {
     let avatarUrl: String
     let header: String
     let content: String
@@ -78,7 +78,6 @@ class SurveyCardView: CardView {
         avatar.heightAnchor.constraint(equalTo: self.heightAnchor, constant: -40).isActive = true
         avatar.widthAnchor.constraint(equalTo: self.heightAnchor, constant: -40).isActive = true
 
-
         let stackView = UIStackView()
         stackView.axis = .vertical
         stackView.distribution = .fillEqually
@@ -103,11 +102,10 @@ class SurveyCardView: CardView {
     }
 
 
-
     func setAvatarImage(from urlAddress: URL?) {
         guard urlAddress != nil else { return }
 
-        func getData(from urlAddress: URL, completion: @escaping (Data?, URLResponse?, Error?) -> ()) {
+        func getData(from urlAddress: URL, completion: @escaping (Data?, URLResponse?, Error?) -> Void) {
             URLSession.shared.dataTask(with: urlAddress, completionHandler: completion).resume()
         }
 
@@ -116,7 +114,8 @@ class SurveyCardView: CardView {
             guard let data = data, error == nil else { return }
             print(response?.suggestedFilename ?? urlAddress!.lastPathComponent)
             print("Download Finished")
-            DispatchQueue.main.async() { [weak self] in
+            DispatchQueue.main.async() {
+                [weak self] in
                 self?.avatar.image = UIImage(data: data)
             }
         }
