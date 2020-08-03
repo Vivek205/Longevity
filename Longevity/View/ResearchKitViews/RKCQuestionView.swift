@@ -90,23 +90,36 @@ class RKCQuestionView: UIView {
             headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
             headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
             headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
+            if let headerHeight = header?.height(
+                withConstrainedWidth: headerView.bounds.width,
+                font: headerLabel.font) {
+                headerLabel.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+            }
 
-             subHeaderLabel.text = subHeader
+            subHeaderLabel.text = subHeader
             headerView.addSubview(subHeaderLabel)
 
             subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
             subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
             subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor).isActive = true
+            if let subheaderHeight = subHeader?.height(
+                withConstrainedWidth: headerView.bounds.width,
+                font: subHeaderLabel.font) {
+                subHeaderLabel.heightAnchor.constraint(equalToConstant: subheaderHeight).isActive = true
+            }
 
             stackView.addArrangedSubview(headerView)
         }
-//        if  {
-//            subHeaderLabel.text = subHeader
-//            stackView.addArrangedSubview(subHeaderLabel)
-//        }
+
         if question != nil {
             questionLabel.text = question
             stackView.addArrangedSubview(questionLabel)
+            if let questionLabelHeight = question?.height(
+                withConstrainedWidth: stackView.bounds.width,
+                font: questionLabel.font) {
+                questionLabel.heightAnchor.constraint(equalToConstant: questionLabelHeight)
+            }
+
         }
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo

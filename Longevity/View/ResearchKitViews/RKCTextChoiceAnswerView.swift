@@ -102,7 +102,7 @@ class RKCTextChoiceAnswerView: UIView {
         if selected {
             // FIXME: BorderColor not working
             self.layer.borderColor =
-                UIColor(red: 90/255, green: 167/255, blue: 167/255, alpha: 1/255).cgColor
+                UIColor(red: 90/255, green: 167/255, blue: 167/255, alpha: 1).cgColor
             self.layer.borderWidth = 2
         }else {
             self.layer.borderColor = UIColor.white.cgColor

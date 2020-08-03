@@ -10,11 +10,13 @@ import UIKit
 import ResearchKit
 
 class HomeVC: UIViewController {
+    var surveysData: [SurveyResponse]?
 
+    @IBOutlet weak var secondSurveyCard: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-        customizeResearchKit()
-        // Do any additional setup after loading the view.
+        retrieveDataAndInitializeTheViews()
     }
 
     @IBAction func handleCovidCheckinPressed(_ sender: Any) {
@@ -24,18 +26,62 @@ class HomeVC: UIViewController {
     @IBAction func handleBranchedTaskPressed(_ sender: Any) {
     }
 
+    func retrieveDataAndInitializeTheViews() {
+        self.showSpinner()
 
-    func customizeResearchKit() {
-        //        ORKTaskViewController().
-        //        ORKStepViewController.init().continueButtonItem?.customView?.backgroundColor = UIColor.red
+        func completion(_ surveys:[SurveyResponse])->Void {
+            DispatchQueue.main.async {
+                print(surveys)
+                self.surveysData = surveys
+                self.presentViews()
+                self.removeSpinner()
+            }
+
+        }
+
+        func onFailure(_ error:Error) {
+            DispatchQueue.main.async {
+                print(error)
+                self.removeSpinner()
+            }
+
+        }
+        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
-    
+
+    func presentViews() {
+        let stackView = UIStackView()
+        stackView.axis = .vertical
+        stackView.alignment = .fill
+        stackView.distribution = .fillEqually
+        stackView.spacing = 10.0
+        stackView.translatesAutoresizingMaskIntoConstraints = false
+
+        self.view.addSubview(stackView)
+
+        if  self.surveysData != nil {
+            for survey in self.surveysData! {
+                let avatarURL = URL(string: survey.imageUrl)
+                let surveyCardView = SurveyCardView(avatarUrl: avatarURL, header: survey.name, content: survey.description, extraContent: "last submission date")
+                surveyCardView.translatesAutoresizingMaskIntoConstraints = false
+                stackView.addArrangedSubview(surveyCardView)
+                surveyCardView.leadingAnchor.constraint(equalTo: stackView.leadingAnchor).isActive = true
+                surveyCardView.trailingAnchor.constraint(equalTo: stackView.trailingAnchor).isActive = true
+                surveyCardView.heightAnchor.constraint(equalToConstant: 111).isActive = true
+            }
+        }
+
+        stackView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
+        stackView.topAnchor.constraint(equalTo: secondSurveyCard.bottomAnchor, constant: 20).isActive = true
+    }
+
 }
 
 extension HomeVC:ORKTaskViewControllerDelegate {
     func taskViewController(_ taskViewController: ORKTaskViewController, stepViewControllerWillAppear stepViewController: ORKStepViewController) {
         let taskViewAppearance = UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
-        taskViewAppearance.tintColor = UIColor.red
+        taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {

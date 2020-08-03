@@ -14,41 +14,52 @@ import SwiftyJSON
 
 func registerARN(platform:String, arnEndpoint: String) {
     let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
-    let credentials = getCredentials()
-    let headers = ["token":credentials.idToken, "content-type":"application/json"]
-    
-    let body = JSON([
-        "platform" : platform,
-        "endpoint_arn" : arnEndpoint
-    ])
 
-    var bodyData:Data = Data();
-    do {
-        bodyData = try body.rawData()
-    } catch  {
-        print(error)
+    func onGettingCredentials(_ credentials: Credentials){
+        let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
+
+        let body = JSON([
+            "platform" : platform,
+            "endpoint_arn" : arnEndpoint
+        ])
+
+        var bodyData:Data = Data();
+        do {
+            bodyData = try body.rawData()
+        } catch  {
+            print(error)
+        }
+
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/register" , headers: headers, body: bodyData)
+
+        _ = Amplify.API.post(request: request, listener: { (result) in
+            switch result{
+            case .success(let data):
+                let responseString = String(data: data, encoding: .utf8)
+                print("sucess \(responseString)")
+            case .failure(let apiError):
+                print("failed \(apiError)")
+            }
+        })
     }
 
-    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/register" , headers: headers, body: bodyData)
+    func onFailureCredentials(_ error: Error?) {
+        print("failed to fetch credentials \(error)")
+    }
 
-    _ = Amplify.API.post(request: request, listener: { (result) in
-        switch result{
-        case .success(let data):
-            let responseString = String(data: data, encoding: .utf8)
-            print("sucess \(responseString)")
-        case .failure(let apiError):
-            print("failed \(apiError)")
-        }
-    })
+    _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
+
+
 }
 
 
 func retrieveARN(){
     let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
-    let credentials = getCredentials()
-    let headers = ["token":credentials.idToken, "content-type":"application/json"]
 
-    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification" , headers: headers)
+    func onGettingCredentials(_ credentials: Credentials){
+        let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
+
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification" , headers: headers)
 
         _ = Amplify.API.get(request: request, listener: { (result) in
             switch result{
@@ -69,4 +80,13 @@ func retrieveARN(){
                 print("failed \(apiError)")
             }
         })
+    }
+
+    func onFailureCredentials(_ error: Error?) {
+          print("failed to fetch credentials \(error)")
+      }
+
+    _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
+
+
 }

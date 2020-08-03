@@ -24,7 +24,7 @@
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
-		E25185EC24CF042000F3068C /* Questions.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Questions.swift */; };
+		E25185EC24CF042000F3068C /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Survey.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
@@ -39,6 +39,8 @@
 		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
+		E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2524D7CE3A001F093F /* SurveyCardView.swift */; };
+		E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2A24D7D7AF001F093F /* CardView.swift */; };
 		E28CEDCA24977E3A00AB6595 /* Montserrat-Medium.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */; };
 		E28CEDCE2497801600AB6595 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */; };
 		E28CEDD02497803F00AB6595 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = E28CEDCF2497803F00AB6595 /* Montserrat-Italic.ttf */; };
@@ -139,7 +141,7 @@
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
-		E25185EB24CF042000F3068C /* Questions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Questions.swift; sourceTree = "<group>"; };
+		E25185EB24CF042000F3068C /* Survey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
@@ -154,6 +156,8 @@
 		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
+		E288BB2524D7CE3A001F093F /* SurveyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCardView.swift; sourceTree = "<group>"; };
+		E288BB2A24D7D7AF001F093F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
 		E28CEDC624977DFF00AB6595 /* Montserrat-Medium.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Medium.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Medium.ttf"; sourceTree = "<group>"; };
 		E28CEDCD2497801600AB6595 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Bold.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Bold.ttf"; sourceTree = "<group>"; };
 		E28CEDCF2497803F00AB6595 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; name = "Montserrat-Italic.ttf"; path = "../../../../../Downloads/Montserrat-2/Montserrat-Italic.ttf"; sourceTree = "<group>"; };
@@ -397,7 +401,7 @@
 				E2E14BF824AF0BFC007C0470 /* User.swift */,
 				E2CFD96A24B9D3D8009FE288 /* Notification.swift */,
 				E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */,
-				E25185EB24CF042000F3068C /* Questions.swift */,
+				E25185EB24CF042000F3068C /* Survey.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -443,6 +447,8 @@
 		E2ECB8D2247FE3760020A27E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E288BB2A24D7D7AF001F093F /* CardView.swift */,
+				E288BB2524D7CE3A001F093F /* SurveyCardView.swift */,
 				E274F09224C997E600969CD8 /* ResearchKitViews */,
 				E2C59DFE2498E34D00842105 /* CustomViews */,
 				E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */,
@@ -717,16 +723,18 @@
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
+				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
+				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
-				E25185EC24CF042000F3068C /* Questions.swift in Sources */,
+				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
@@ -887,7 +895,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -910,7 +918,7 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 3;
+				CURRENT_PROJECT_VERSION = 4;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

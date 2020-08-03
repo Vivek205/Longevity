@@ -147,26 +147,35 @@ class FitbitModel: AuthHandlerType {
     }
 
     func publishData(accessToken: String, userId: String) {
-        let credentials = getCredentials()
-        let headers = ["token":credentials.idToken]
-        let body = JSON(["access_token":accessToken, "user_id":userId])
-        var bodyData:Data = Data();
-        do {
-            bodyData = try body.rawData()
-        } catch  {
-            print(error)
-        }
-        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
-                _ = Amplify.API.post(request: request, listener: { (result) in
-            switch result{
-            case .success(let data):
-                let responseString = String(data: data, encoding: .utf8)
-                print("sucess \(responseString)")
+        func onGettingCredentials(_ credentials: Credentials){
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+                   let body = JSON(["access_token":accessToken, "user_id":userId])
+                   var bodyData:Data = Data();
+                   do {
+                       bodyData = try body.rawData()
+                   } catch  {
+                       print(error)
+                   }
+                   let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
+                           _ = Amplify.API.post(request: request, listener: { (result) in
+                       switch result{
+                       case .success(let data):
+                           let responseString = String(data: data, encoding: .utf8)
+                           print("sucess \(responseString)")
 
-            case .failure(let apiError):
-                print("failed \(apiError)")
-            }
-        })
+                       case .failure(let apiError):
+                           print("failed \(apiError)")
+                       }
+                   })
+        }
+
+        func onFailureCredentials(_ error: Error?) {
+              print("failed to fetch credentials \(error)")
+          }
+
+        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
+
+
     }
 
     func saveToken(accessToken: String, refreshToken: String) {

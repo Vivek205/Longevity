@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pEJ-B2-DC5">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="pEJ-B2-DC5">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -138,6 +138,9 @@
                         <viewLayoutGuide key="safeArea" id="qUE-0B-1nv"/>
                     </view>
                     <tabBarItem key="tabBarItem" title="Home" image="icon: home" selectedImage="icon: home" id="0OG-Yo-6ei"/>
+                    <connections>
+                        <outlet property="secondSurveyCard" destination="ZNQ-ug-5LE" id="1Cc-MS-LCV"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="UN6-1I-Y6o" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <tapGestureRecognizer id="zlO-lS-l9g" userLabel="CovidCheckinTap">

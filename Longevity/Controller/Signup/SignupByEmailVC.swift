@@ -58,15 +58,15 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             let phone = formPhone.text ,
             let password = formPassword.text{
             func validate() -> Bool {
-                if email.isEmpty || !(email.isValidEmail){
+                if email.isEmpty || !(email.isValidEmail) {
                      showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
                     return false
                 }
-                if phone.isEmpty || !(phone.isValidPhone){
+                if phone.isEmpty || !(phone.isValidPhone) {
                      showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number.")
                     return false
                 }
-                if password.isEmpty{
+                if password.isEmpty {
                      showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
                     return false
                 }
@@ -75,7 +75,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
 
             guard validate() else { return }
             self.showSpinner()
-            
+
             let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]
             let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
             

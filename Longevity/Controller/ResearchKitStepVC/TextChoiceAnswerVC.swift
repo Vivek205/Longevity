@@ -43,21 +43,16 @@ class TextChoiceAnswerVC: ORKStepViewController {
 
     func presentViews() {
         if let step = self.step as? ORKQuestionStep{
-            // FIXME: ScrollView not working
-//            let scrollView = UIScrollView()
-//            scrollView.translatesAutoresizingMaskIntoConstraints = false
-//            scrollView.isDirectionalLockEnabled = true
-//            scrollView.frame = CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 3000)
-//            self.view.addSubview(scrollView)
-//
-//            let contentView = UIView()
-//            contentView.translatesAutoresizingMaskIntoConstraints = false
-//            contentView.frame.size.height = view.bounds.size.height + 300
-//            scrollView.addSubview(contentView)
+            // MARK: Views
+            let scrollView = UIScrollView()
+            scrollView.translatesAutoresizingMaskIntoConstraints = false
+            scrollView.isDirectionalLockEnabled = true
+            self.view.addSubview(scrollView)
+
 
             let questionView = RKCQuestionView(header: step.title ?? "", subHeader:"Wed.Jun.10 for {patient name}", question: step.question, extraInfo: step.text )
             questionView.header = "Covid Questions"
-            self.view.addSubview(questionView)
+            scrollView.addSubview(questionView)
 
             let stackView = UIStackView()
             stackView.axis = .vertical
@@ -65,34 +60,29 @@ class TextChoiceAnswerVC: ORKStepViewController {
             stackView.alignment = .fill
             stackView.spacing = 20.0
             stackView.translatesAutoresizingMaskIntoConstraints = false
-            stackView.clipsToBounds = true
-            self.view.addSubview(stackView)
+            scrollView.addSubview(stackView)
 
             self.view.addSubview(footerView)
             footerView.addSubview(continueButton)
 
             // MARK: Constraints
-            // FIXME: ScrollView not working
-//            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-//            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-//            scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-//            scrollView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
+            scrollView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
 
-//            contentView.topAnchor.constraint(equalTo: scrollView.topAnchor).isActive = true
-//            contentView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-//            contentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
-//            contentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-
-            let questionViewHeight = step.text == nil ? CGFloat(150) : CGFloat(250) 
-            questionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20).isActive = true
-            questionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20).isActive = true
-            questionView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 20).isActive = true
+            let questionViewHeight = step.text == nil || step.text == "" ? CGFloat(150) : CGFloat(250)
+            questionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20).isActive = true
+            questionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
+            questionView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20).isActive = true
             questionView.heightAnchor.constraint(equalToConstant: questionViewHeight).isActive = true
+            questionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
 
-            stackView.leftAnchor.constraint(equalTo: self.view.leftAnchor, constant: 20).isActive = true
-            stackView.rightAnchor.constraint(equalTo: self.view.rightAnchor, constant: -20).isActive = true
+            stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
+            stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -20).isActive = true
             stackView.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 20).isActive = true
-
+            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
+            stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
 
             footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
             footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
@@ -123,7 +113,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
                     }else{
                         choiceViews[index] = choiceView
                     }
-
                     stackView.addArrangedSubview(choiceView)
                 }
 
@@ -145,9 +134,12 @@ class TextChoiceAnswerVC: ORKStepViewController {
         addResult(questionResult)
 
         for choiceView in choiceViews {
-            choiceView.setSelected(true)
+            choiceView.setSelected(false)
             choiceView.checkbox.isSelected = false
         }
+
+        let selectedChoice = choiceViews.first{$0.tag == sender.tag}
+        selectedChoice?.setSelected(true)
         sender.isSelected = true
     }
 

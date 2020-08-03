@@ -18,12 +18,13 @@ class BranchingOrderedTask: ORKOrderedTask {
             return self.steps[0]
         }
 
-        print(steps.filter{$0.identifier == "TextChoiceQuestionStep"})
+        if step is ORKInstructionStep || step is ORKCompletionStep {
+            return super.step(after: step, with: result)
+        }
 
+        if let firstTestResult = result.stepResult(forStepIdentifier: step?.identifier ?? "") {
 
-        if let firstTestResult = result.stepResult(forStepIdentifier: "TextChoiceQuestionStep") as? ORKStepResult {
-
-            guard step?.identifier == "TextChoiceQuestionStep" else {
+            guard step?.identifier == "abc111" else {
                 return super.step(after: step, with: result)
             }
 
@@ -38,13 +39,23 @@ class BranchingOrderedTask: ORKOrderedTask {
                     return nextStep
                 }
                 let latestResult = choiceQuestionResults.last
-                let latestAnswer = latestResult?.answer
 
-                if (latestResult?.choiceAnswers?.first?.isEqual(NSNumber(0)))!  {
+                let latestAnswer = latestResult?.answer
+                print("latest Answer", latestAnswer)
+                let decoder = NSCoder()
+                let answerValue = latestResult?.choiceAnswers?.first as! NSNumber
+
+                    print(answerValue.intValue)
+
+                print("answerValue", latestResult?.choiceAnswers, type(of: latestResult?.choiceAnswers?.first))
+                let nextStepIdentifier = findNextQuestion(questionId: step?.identifier ?? "", answerValue: answerValue.intValue)
+
+                print("nextStepIdentifier", nextStepIdentifier)
+
                     // navigate to appropriate step
-                    nextStep = self.steps.first { $0.identifier == "TextChoiceQuestionStepThree3"}!
+                    nextStep = self.steps.first { $0.identifier == nextStepIdentifier}!
                     var nextStep = nextStep
-                }
+
             }
             return nextStep
         }
