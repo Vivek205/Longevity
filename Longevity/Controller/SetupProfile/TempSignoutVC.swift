@@ -13,13 +13,14 @@ class TempSignoutVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.removeBackButtonNavigation()
         // Do any additional setup after loading the view.
     }
     
 
     @IBAction func handleSignout(_ sender: Any) {
         func onSuccess(isSignedOut: Bool) {
+            clearUserDefaults()
             DispatchQueue.main.async {
                 if isSignedOut{
                     self.performSegue(withIdentifier: "unwindTempToOnboarding", sender: self)

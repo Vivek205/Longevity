@@ -1,0 +1,34 @@
+{
+    "paths": [
+        {
+            "name": "/development",
+            "lambdaFunction": "rejuveDevelopmentLambda",
+            "privacy": {
+                "open": true
+            }
+        }
+    ],
+    "resourceName": "rejuveDevelopmentAPI",
+    "apiName": "rejuveDevelopmentAPI",
+    "functionArns": [
+        {
+            "lambdaFunction": "rejuveDevelopmentLambda"
+        }
+    ],
+    "privacy": {
+        "auth": 0,
+        "unauth": 0,
+        "authRoleName": "amplify-rejuvedevelopment-dev-182119-authRole",
+        "unAuthRoleName": "amplify-rejuvedevelopment-dev-182119-unauthRole"
+    },
+    "dependsOn": [
+        {
+            "category": "function",
+            "resourceName": "rejuveDevelopmentLambda",
+            "attributes": [
+                "Name",
+                "Arn"
+            ]
+        }
+    ]
+}

@@ -11,32 +11,71 @@ import UIKit
 class SetupProfileDevicesVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
-    
+
+    var fitbitModel: FitbitModel = FitbitModel()
+
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
+        checkIfDevicesAreConnectedAlready()
     }
+
+    func checkIfDevicesAreConnectedAlready() {
+        // TODO: check from user defaults  FITBIT
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
+        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+                print("fitbitstatus", fitbitStatus)
+                setupProfileConnectDeviceOptionList[2]?.isConnected = fitbitStatus["connected"] == 1
+                collectionView.reloadData()
+            }
+        }
+    }
+
+    // MARK: Actions
+    @IBAction func handleContinue(_ sender: Any) {
+        updateSetupProfileCompletionStatus(currentState: .connectDevices)
+        performSegue(withIdentifier: "SetupProfileDevicesToPreExistingConditions", sender: self)
+    }
+
     
-    
-    /*
-     // MARK: - Navigation
-     
-     // In a storyboard-based application, you will often want to do a little preparation before navigation
-     override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-     // Get the new view controller using segue.destination.
-     // Pass the selected object to the new view controller.
-     }
-     */
-    
+}
+
+extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
+    func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
+        switch cell.titleLabel.text {
+        case "Fitbit":
+            print("connected fitbit data")
+            if let context = UIApplication.shared.keyWindow {
+                fitbitModel.contextProvider = AuthContextProvider(context)
+            }
+            fitbitModel.auth { authCode, error in
+                if error != nil {
+                    print("Auth flow finished with error \(String(describing: error))")
+                } else {
+                    print("Your auth code is \(String(describing: authCode))")
+                    self.fitbitModel.token(authCode: authCode!)
+                    DispatchQueue.main.async {
+                        setupProfileConnectDeviceOptionList[2]?.isConnected = true
+                        self.collectionView.reloadData()
+                    }
+                }
+            }
+
+        default:
+            print(cell.titleLabel.text)
+        }
+    }
 }
 
 extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 1
     }
-    
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 4
@@ -62,6 +101,17 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
             cell.layer.shadowRadius = 2.0
             cell.layer.shadowOpacity = 0.14
             cell.layer.masksToBounds = false
+            if option?.isConnected == true {
+                cell.connectBtn.setTitle("SYNCED", for: .normal)
+                cell.connectBtn.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
+                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
+            } else {
+                let image = UIImage(named: "")
+                cell.connectBtn.setTitle(nil, for: .normal)
+                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: add"), for: .normal)
+            }
+
+            cell.delegate = self
             return cell
         }
     }

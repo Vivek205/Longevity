@@ -1,45 +1,92 @@
 {
-    "providers": {
-        "awscloudformation": {
-            "AuthRoleName": "amplify-longevitynew-dev-84548-authRole",
-            "UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-authRole",
-            "Region": "us-west-2",
-            "DeploymentBucketName": "amplify-longevitynew-dev-84548-deployment",
-            "UnauthRoleName": "amplify-longevitynew-dev-84548-unauthRole",
-            "StackName": "amplify-longevitynew-dev-84548",
-            "StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevitynew-dev-84548/87efc4e0-aeb6-11ea-b93d-0aa1d8d9d478",
-            "AmplifyAppId": "dc23k0zidmfz5"
-        }
-    },
-    "function": {},
-    "api": {},
-    "auth": {
-        "longevityNewResource": {
-            "service": "Cognito",
-            "providerPlugin": "awscloudformation",
-            "dependsOn": [],
-            "providerMetadata": {
-                "s3TemplateURL": "https://s3.amazonaws.com/amplify-longevitynew-dev-84548-deployment/amplify-cfn-templates/auth/longevityNewResource-cloudformation-template.yml",
-                "logicalId": "authlongevityNewResource"
-            },
-            "lastPushTimeStamp": "2020-06-15T06:37:21.285Z",
-            "output": {
-                "AppClientSecret": "vddpi46k2dtmmocl69oqiqhug859faggn8i2v9c343acs8cv8r",
-                "AppClientID": "gv8idv85nrbkop4p0843daks9",
-                "HostedUIDomain": "longevity-new-dev",
-                "FacebookWebClient": "721380498616396",
-                "OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
-                "UserPoolName": "longevityNewUserPool",
-                "GoogleWebClient": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
-                "CreatedSNSRole": "arn:aws:iam::533793137436:role/snsundefined84548-dev",
-                "UserPoolId": "us-west-2_vTgAvx6V8",
-                "AppClientIDWeb": "7qkn46e7uc1fl33malnnqbmtih",
-                "IdentityPoolId": "us-west-2:347c52fa-eb4d-4d51-8fa6-e5d0979d1660",
-                "IdentityPoolName": "longevityNewIdPool__dev",
-                "GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
-            },
-            "lastPushDirHash": "40r0UfA/PcLUsT4wBqeSqL80Nrg="
-        }
-    }
+	"providers": {
+		"awscloudformation": {
+			"AuthRoleName": "amplify-rejuvedevelopment-dev-182119-authRole",
+			"UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-rejuvedevelopment-dev-182119-unauthRole",
+			"AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-rejuvedevelopment-dev-182119-authRole",
+			"Region": "us-west-2",
+			"DeploymentBucketName": "amplify-rejuvedevelopment-dev-182119-deployment",
+			"UnauthRoleName": "amplify-rejuvedevelopment-dev-182119-unauthRole",
+			"StackName": "amplify-rejuvedevelopment-dev-182119",
+			"StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-rejuvedevelopment-dev-182119/e6ece670-bd2b-11ea-af98-0a88797ee3c4",
+			"AmplifyAppId": "d1sm6p67x7cg8s"
+		}
+	},
+	"auth": {
+		"rejuvedevelopmentauthorizer": {
+			"service": "Cognito",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/auth/rejuvedevelopmentauthorizer-cloudformation-template.yml",
+				"logicalId": "authrejuvedevelopmentauthorizer"
+			},
+			"lastPushTimeStamp": "2020-07-06T05:28:38.275Z",
+			"output": {
+				"AppClientSecret": "o1bmiq1t6vhrvk2qfkedleldt6d9reisas8v806k1fh30kr330q",
+				"AppClientID": "16eja2b7kuannsi591dd289jgk",
+				"HostedUIDomain": "rejuvedevelopment-dev",
+				"FacebookWebClient": "721380498616396",
+				"OAuthMetadata": "{\"AllowedOAuthFlows\":[\"code\"],\"AllowedOAuthScopes\":[\"phone\",\"email\",\"openid\",\"profile\",\"aws.cognito.signin.user.admin\"],\"CallbackURLs\":[\"myapp://\"],\"LogoutURLs\":[\"myapp://\"]}",
+				"UserPoolName": "rejuve_development_user_pool",
+				"GoogleWebClient": "689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com",
+				"CreatedSNSRole": "arn:aws:iam::533793137436:role/snsundefined182119-dev",
+				"UserPoolId": "us-west-2_6ivp2hnNf",
+				"AppClientIDWeb": "6k6qls4vlsjb7nma2sm6k9urdj",
+				"IdentityPoolId": "us-west-2:71e6c80c-3543-4a1c-b149-1dbfa77f0d40",
+				"IdentityPoolName": "rejuve_development_id_pool__dev",
+				"GoogleIOSClient": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com"
+			},
+			"lastPushDirHash": "GtpguAdovUNoi7PBsBITeFMH8D0="
+		}
+	},
+	"function": {
+		"rejuveDevelopmentLambda": {
+			"build": true,
+			"providerPlugin": "awscloudformation",
+			"service": "Lambda",
+			"lastBuildTimeStamp": "2020-07-06T05:26:38.716Z",
+			"lastPackageTimeStamp": "2020-07-06T05:26:39.344Z",
+			"distZipFilename": "rejuveDevelopmentLambda-5268754d5a532f777373-build.zip",
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/function/rejuveDevelopmentLambda-cloudformation-template.json",
+				"logicalId": "functionrejuveDevelopmentLambda"
+			},
+			"lastPushTimeStamp": "2020-07-06T05:28:38.286Z",
+			"output": {
+				"Region": "us-west-2",
+				"Arn": "arn:aws:lambda:us-west-2:533793137436:function:initialFunction-dev",
+				"Name": "initialFunction-dev",
+				"LambdaExecutionRole": "rejuvedevelopmentLambdaRole5b38daaa-dev"
+			},
+			"lastPushDirHash": "FF2557B5dxSKwG3HfLhORYPAh+0="
+		}
+	},
+	"api": {
+		"rejuveDevelopmentAPI": {
+			"service": "API Gateway",
+			"providerPlugin": "awscloudformation",
+			"dependsOn": [
+				{
+					"category": "function",
+					"resourceName": "rejuveDevelopmentLambda",
+					"attributes": [
+						"Name",
+						"Arn"
+					]
+				}
+			],
+			"providerMetadata": {
+				"s3TemplateURL": "https://s3.amazonaws.com/amplify-rejuvedevelopment-dev-182119-deployment/amplify-cfn-templates/api/rejuveDevelopmentAPI-cloudformation-template.json",
+				"logicalId": "apirejuveDevelopmentAPI"
+			},
+			"lastPushTimeStamp": "2020-07-06T05:28:38.286Z",
+			"output": {
+				"ApiName": "rejuveDevelopmentAPI",
+				"RootUrl": "https://83ht6fygqe.execute-api.us-west-2.amazonaws.com/dev",
+				"ApiId": "83ht6fygqe"
+			},
+			"lastPushDirHash": "IGOvEeVQmen+GvswT6NqMlbkEGg="
+		}
+	}
 }

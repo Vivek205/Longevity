@@ -347,6 +347,9 @@
                                                     <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                     <color key="titleShadowColor" white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithGoogle:" destination="mT6-fh-4r1" eventType="touchUpInside" id="dDF-uU-dv7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -369,6 +372,9 @@
                                                 <state key="normal" title="Continue with Facebook" image="Facebook logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithFacebook:" destination="mT6-fh-4r1" eventType="touchUpInside" id="geW-gn-Fk7"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -504,6 +510,7 @@
                         <outlet property="personalUseImageButton" destination="Ibu-K3-hXM" id="SvZ-l5-3IX"/>
                         <outlet property="signupButton" destination="zqu-hP-fCs" id="Bs9-eT-dBP"/>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
+                        <segue destination="RlX-kq-iGh" kind="show" identifier="SignupToProfileSetup" id="Z1Q-xo-ocY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="9rB-eB-Seu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -534,7 +541,7 @@
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-ie-KfK">
+                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Name (Optional)" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dvL-ie-KfK">
                                 <rect key="frame" x="20" y="160" width="374" height="48"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="SiI-7C-epF"/>
@@ -548,7 +555,7 @@
                                     <constraint firstAttribute="height" constant="48" id="lnN-9J-vzz"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" keyboardType="emailAddress" textContentType="email"/>
+                                <textInputTraits key="textInputTraits" autocorrectionType="no" keyboardType="emailAddress" textContentType="email"/>
                             </textField>
                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Phone" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="ygo-Y8-xZm">
                                 <rect key="frame" x="20" y="360" width="374" height="48"/>
@@ -566,16 +573,8 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="new-password"/>
                             </textField>
-                            <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Confirm Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="DKM-b8-Trc">
-                                <rect key="frame" x="20" y="560" width="374" height="48"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="1eU-4m-ddy"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" secureTextEntry="YES" textContentType="password"/>
-                            </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-B2-m6A">
-                                <rect key="frame" x="20" y="660" width="374" height="48"/>
+                                <rect key="frame" x="20" y="560" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="48" id="Aa6-5i-wvh"/>
@@ -595,21 +594,18 @@
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="b9r-B2-m6A" secondAttribute="trailing" constant="20" id="1uc-PK-zGz"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="nPD-Mf-LYM" secondAttribute="trailing" id="53V-0D-1yc"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="dvL-ie-KfK" secondAttribute="trailing" constant="20" id="71r-DF-53e"/>
-                            <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="DKM-b8-Trc" secondAttribute="trailing" constant="20" id="HQZ-PL-9uO"/>
                             <constraint firstItem="dvL-ie-KfK" firstAttribute="top" secondItem="nPD-Mf-LYM" secondAttribute="top" constant="52" id="LW1-hW-clF"/>
                             <constraint firstItem="dvL-ie-KfK" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="VMq-bI-Z6S"/>
-                            <constraint firstItem="DKM-b8-Trc" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="WAa-aU-m0F"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="ygo-Y8-xZm" secondAttribute="trailing" constant="20" id="XAs-51-M4s"/>
                             <constraint firstItem="b9r-B2-m6A" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="Xtg-7S-TxW"/>
                             <constraint firstItem="ygo-Y8-xZm" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="Zao-1B-g9N"/>
                             <constraint firstItem="XXo-Ca-vDu" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="dgW-cg-bo9"/>
                             <constraint firstItem="nPD-Mf-LYM" firstAttribute="top" secondItem="6Mb-m3-ime" secondAttribute="top" constant="20" id="hv7-ic-jJ3"/>
+                            <constraint firstItem="b9r-B2-m6A" firstAttribute="top" secondItem="WgZ-ja-rgS" secondAttribute="bottom" constant="52" id="if6-dr-SCV"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="XXo-Ca-vDu" secondAttribute="trailing" constant="20" id="jlC-hJ-gTj"/>
                             <constraint firstItem="WgZ-ja-rgS" firstAttribute="top" secondItem="ygo-Y8-xZm" secondAttribute="bottom" constant="52" id="kdg-zW-TqU"/>
                             <constraint firstItem="nPD-Mf-LYM" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" id="kzQ-k2-Fia"/>
-                            <constraint firstItem="DKM-b8-Trc" firstAttribute="top" secondItem="WgZ-ja-rgS" secondAttribute="bottom" constant="52" id="ogP-D2-lZV"/>
                             <constraint firstItem="ygo-Y8-xZm" firstAttribute="top" secondItem="XXo-Ca-vDu" secondAttribute="bottom" constant="52" id="qHo-MM-QBY"/>
-                            <constraint firstItem="b9r-B2-m6A" firstAttribute="top" secondItem="DKM-b8-Trc" secondAttribute="bottom" constant="52" id="rEB-dg-Ojy"/>
                             <constraint firstItem="WgZ-ja-rgS" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="sHx-JT-gfD"/>
                             <constraint firstItem="b9r-B2-m6A" firstAttribute="leading" secondItem="6Mb-m3-ime" secondAttribute="leading" constant="20" id="tb0-Wu-Nmf"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="b9r-B2-m6A" secondAttribute="trailing" constant="20" id="z3q-vS-PYt"/>
@@ -619,7 +615,6 @@
                     </view>
                     <navigationItem key="navigationItem" title="Signup" id="xQR-XP-6PK"/>
                     <connections>
-                        <outlet property="formConfirmPassword" destination="DKM-b8-Trc" id="KDN-BL-xky"/>
                         <outlet property="formEmail" destination="XXo-Ca-vDu" id="uoc-ey-fqw"/>
                         <outlet property="formName" destination="dvL-ie-KfK" id="wmY-Jf-Sy8"/>
                         <outlet property="formPassword" destination="WgZ-ja-rgS" id="rfQ-hd-ytI"/>
@@ -1627,7 +1622,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
     </scenes>
     <inferredMetricsTieBreakers>
         <segue reference="jxn-dO-fRl"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

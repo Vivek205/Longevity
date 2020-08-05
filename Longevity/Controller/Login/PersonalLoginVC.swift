@@ -26,7 +26,6 @@ class PersonalLoginVC: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.setNavigationBarHidden(false, animated: true)
-        getuserAttributes()
         customizeButtons()
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
@@ -85,18 +84,34 @@ class PersonalLoginVC: UIViewController {
         }
     }
 
-
-
-    
-
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
         if let email = self.formEmail.text, let password = self.formPassword.text {
+
+            func validate() -> Bool {
+                if email.isEmpty || !(email.isValidEmail){
+                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    return false
+                }
+                if password.isEmpty{
+                     showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    return false
+                }
+                return true
+            }
+
+            guard validate() else {
+                return
+            }
+
             self.showSpinner()
             func onSuccess() {
+                getProfile()
+                retrieveARN()
                 DispatchQueue.main.async {
                     self.removeSpinner()
                     self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                    updateSetupProfileCompletionStatus(currentState: .onboarding)
                 }
             }
 
@@ -104,6 +119,7 @@ class PersonalLoginVC: UIViewController {
                 print("Sign in failed \(error)")
                 DispatchQueue.main.async {
                     self.removeSpinner()
+                    self.showAlert(title: "Login Failed" , message: error.errorDescription)
                 }
             }
 
@@ -140,9 +156,12 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
+            getProfile()
+            retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 
@@ -150,6 +169,7 @@ class PersonalLoginVC: UIViewController {
             print("Sign in failed \(error)")
             DispatchQueue.main.async {
                 self.removeSpinner()
+                self.showAlert(title: "Login Failed" , message: error.errorDescription)
             }
         }
 
@@ -166,15 +186,19 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
+            getProfile()
+            retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 
         func onFailure(error: AuthError) {
             DispatchQueue.main.async {
                 self.removeSpinner()
+                self.showAlert(title: "Login Failed" , message: error.errorDescription)
             }
         }
         _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
@@ -192,22 +216,6 @@ class PersonalLoginVC: UIViewController {
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
-    }
-
-
-    func getuserAttributes() {
-        _ = Amplify.Auth.fetchUserAttributes() { (result) in
-            switch result {
-            case .success(let userAttributes):
-                for attribute in userAttributes {
-                    if attribute.key == .email {
-                        self.username = attribute.value
-                    }
-                }
-            case .failure(let error):
-                print("error getting attributes")
-            }
-        }
     }
 
 }

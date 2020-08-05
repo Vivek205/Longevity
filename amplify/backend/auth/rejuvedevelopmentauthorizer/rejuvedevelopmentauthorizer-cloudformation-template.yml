@@ -133,10 +133,7 @@ Parameters:
                       
   userPoolGroupList:
     Type: CommaDelimitedList
-      
-  adminQueryGroup:
-    Type: String
-                                            
+                                                
   parentStack:
     Type: String
                 
@@ -157,7 +154,7 @@ Resources:
   # Created to allow the UserPool SMS Config to publish via the Simple Notification Service during MFA Process
     Type: AWS::IAM::Role
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'longev5356d278_sns-role', !Join ['',[ 'sns', 'undefined', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_sns-role', !Join ['',[ 'sns', 'undefined', !Select [3, !Split ['-', !Ref 'AWS::StackName']], '-', !Ref env]]]
       AssumeRolePolicyDocument: 
         Version: "2012-10-17"
         Statement: 
@@ -169,10 +166,10 @@ Resources:
               - "sts:AssumeRole"
             Condition: 
               StringEquals:
-                sts:ExternalId: longev5356d278_role_external_id
+                sts:ExternalId: rejuveb271a11d_role_external_id
       Policies: 
         - 
-          PolicyName: longev5356d278-sns-policy
+          PolicyName: rejuveb271a11d-sns-policy
           PolicyDocument: 
             Version: "2012-10-17"
             Statement: 
@@ -217,8 +214,11 @@ Resources:
       SmsVerificationMessage: !Ref smsVerificationMessage
       SmsConfiguration: 
         SnsCallerArn: !GetAtt SNSRole.Arn
-        ExternalId: longev5356d278_role_external_id
-          
+        ExternalId: rejuveb271a11d_role_external_id
+      
+      UsernameConfiguration:
+        CaseSensitive: False 
+
     DependsOn: SNSRole
     
   
@@ -239,7 +239,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: longev5356d278_app_clientWeb
+      ClientName: rejuveb271a11d_app_clientWeb
       
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
       UserPoolId: !Ref UserPool
@@ -249,7 +249,7 @@ Resources:
   # Depends on UserPool for ID reference
     Type: "AWS::Cognito::UserPoolClient"
     Properties:
-      ClientName: longev5356d278_app_client
+      ClientName: rejuveb271a11d_app_client
       
       GenerateSecret: !Ref userpoolClientGenerateSecret
       RefreshTokenValidity: !Ref userpoolClientRefreshTokenValidity
@@ -314,7 +314,7 @@ Resources:
   # Marked as depending on UserPoolClientRole for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_userpoolclient_lambda_iam_policy
+      PolicyName: rejuveb271a11d_userpoolclient_lambda_iam_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -331,7 +331,7 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_userpoolclient_lambda_log_policy
+      PolicyName: rejuveb271a11d_userpoolclient_lambda_log_policy
       Roles: 
         - !Ref UserPoolClientRole
       PolicyDocument:
@@ -715,7 +715,7 @@ Resources:
   # Created to execute Lambda which sets MFA config values
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'longev5356d278_totp_lambda_role', !Join ['',['longev5356d278_totp_lambda_role', '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_totp_lambda_role', !Join ['',['rejuveb271a11d_totp_lambda_role', '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -726,14 +726,14 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Policies:
-      - PolicyName: longev5356d278_totp_pass_role_policy
+      - PolicyName: rejuveb271a11d_totp_pass_role_policy
         PolicyDocument:
           Version: 2012-10-17
           Statement:
             - Effect: Allow
               Action:
                 - 'iam:PassRole'
-              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/longev5356d278_totp_lambda_role', !Join ['',['arn:aws:iam:::role/longev5356d278_totp_lambda_role', '-', !Ref env]]]
+              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/rejuveb271a11d_totp_lambda_role', !Join ['',['arn:aws:iam:::role/rejuveb271a11d_totp_lambda_role', '-', !Ref env]]]
   MFALambda:
   # Lambda which sets MFA config values
   # Depends on MFALambdaRole for role ARN
@@ -789,9 +789,9 @@ Resources:
   # Marked as depending on MFALambda for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_totp_lambda_iam_policy
+      PolicyName: rejuveb271a11d_totp_lambda_iam_policy
       Roles: 
-        - !If [ShouldNotCreateEnvResources, 'longev5356d278_totp_lambda_role', !Join ['',['longev5356d278_totp_lambda_role', '-', !Ref env]]]
+        - !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_totp_lambda_role', !Join ['',['rejuveb271a11d_totp_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -805,9 +805,9 @@ Resources:
   # Marked as depending on MFALambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_totp_lambda_log_policy
+      PolicyName: rejuveb271a11d_totp_lambda_log_policy
       Roles: 
-        - !If [ShouldNotCreateEnvResources, 'longev5356d278_totp_lambda_role', !Join ['',['longev5356d278_totp_lambda_role', '-', !Ref env]]]
+        - !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_totp_lambda_role', !Join ['',['rejuveb271a11d_totp_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -833,7 +833,7 @@ Resources:
       totpEnabled: false
       smsConfigCaller: !GetAtt SNSRole.Arn
       smsAuthenticationMessage: !Ref smsAuthenticationMessage
-      smsConfigExternalId: longev5356d278_role_external_id
+      smsConfigExternalId: rejuveb271a11d_role_external_id
     DependsOn: MFALogPolicy
   
     
@@ -844,7 +844,7 @@ Resources:
   # Depends on UserPoolClientInputs to prevent further identity pool resources from being created before userpool is ready
     Type: 'AWS::IAM::Role'
     Properties:
-      RoleName: !If [ShouldNotCreateEnvResources, 'longev5356d278_openid_lambda_role', !Join ['',['longev5356d278_openid_lambda_role', '-', !Ref env]]]
+      RoleName: !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_openid_lambda_role', !Join ['',['rejuveb271a11d_openid_lambda_role', '-', !Ref env]]]
       AssumeRolePolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -855,14 +855,14 @@ Resources:
             Action:
               - 'sts:AssumeRole'
       Policies:
-      - PolicyName: longev5356d278_openid_pass_role_policy
+      - PolicyName: rejuveb271a11d_openid_pass_role_policy
         PolicyDocument:
           Version: 2012-10-17
           Statement:
             - Effect: Allow
               Action:
                 - 'iam:PassRole'
-              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/longev5356d278_openid_lambda_role', !Join ['',['arn:aws:iam:::role/longev5356d278_openid_lambda_role', '-', !Ref env]]]
+              Resource: !If [ShouldNotCreateEnvResources, 'arn:aws:iam:::role/rejuveb271a11d_openid_lambda_role', !Join ['',['arn:aws:iam:::role/rejuveb271a11d_openid_lambda_role', '-', !Ref env]]]
     DependsOn: UserPoolClientInputs
   OpenIdLambda:
   # Lambda which sets OpenId Values
@@ -948,9 +948,9 @@ Resources:
   # Marked as depending on MFALambda for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_openid_lambda_iam_policy
+      PolicyName: rejuveb271a11d_openid_lambda_iam_policy
       Roles: 
-        - !If [ShouldNotCreateEnvResources, 'longev5356d278_openid_lambda_role', !Join ['',['longev5356d278_openid_lambda_role', '-', !Ref env]]]
+        - !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_openid_lambda_role', !Join ['',['rejuveb271a11d_openid_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: '2012-10-17'
         Statement:
@@ -975,9 +975,9 @@ Resources:
   # Marked as depending on UserPoolClientLambdaPolicy for easier to understand CFN sequencing
     Type: 'AWS::IAM::Policy'
     Properties:
-      PolicyName: longev5356d278_openid_lambda_log_policy
+      PolicyName: rejuveb271a11d_openid_lambda_log_policy
       Roles: 
-        - !If [ShouldNotCreateEnvResources, 'longev5356d278_openid_lambda_role', !Join ['',['longev5356d278_openid_lambda_role', '-', !Ref env]]]
+        - !If [ShouldNotCreateEnvResources, 'rejuveb271a11d_openid_lambda_role', !Join ['',['rejuveb271a11d_openid_lambda_role', '-', !Ref env]]]
       PolicyDocument:
         Version: 2012-10-17
         Statement:
@@ -997,7 +997,7 @@ Resources:
     Type: 'Custom::LambdaCallout'
     Properties:
       ServiceToken: !GetAtt OpenIdLambda.Arn
-      clientIdList: 689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com,689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com
+      clientIdList: 689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com,689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com
       url: 'https://accounts.google.com'
     DependsOn: OpenIdLogPolicy
   
@@ -1006,7 +1006,7 @@ Resources:
   # Always created
     Type: AWS::Cognito::IdentityPool
     Properties: 
-      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'longevityNewIdPool', !Join ['',['longevityNewIdPool', '__', !Ref env]]]
+      IdentityPoolName: !If [ShouldNotCreateEnvResources, 'rejuve_development_id_pool', !Join ['',['rejuve_development_id_pool', '__', !Ref env]]]
       
       CognitoIdentityProviders:
         - ClientId:  !Ref UserPoolClient

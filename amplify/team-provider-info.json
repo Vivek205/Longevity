@@ -1,23 +1,23 @@
 {
     "dev": {
         "awscloudformation": {
-            "AuthRoleName": "amplify-longevitynew-dev-84548-authRole",
-            "UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-unauthRole",
-            "AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-longevitynew-dev-84548-authRole",
+            "AuthRoleName": "amplify-rejuvedevelopment-dev-182119-authRole",
+            "UnauthRoleArn": "arn:aws:iam::533793137436:role/amplify-rejuvedevelopment-dev-182119-unauthRole",
+            "AuthRoleArn": "arn:aws:iam::533793137436:role/amplify-rejuvedevelopment-dev-182119-authRole",
             "Region": "us-west-2",
-            "DeploymentBucketName": "amplify-longevitynew-dev-84548-deployment",
-            "UnauthRoleName": "amplify-longevitynew-dev-84548-unauthRole",
-            "StackName": "amplify-longevitynew-dev-84548",
-            "StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-longevitynew-dev-84548/87efc4e0-aeb6-11ea-b93d-0aa1d8d9d478",
-            "AmplifyAppId": "dc23k0zidmfz5"
+            "DeploymentBucketName": "amplify-rejuvedevelopment-dev-182119-deployment",
+            "UnauthRoleName": "amplify-rejuvedevelopment-dev-182119-unauthRole",
+            "StackName": "amplify-rejuvedevelopment-dev-182119",
+            "StackId": "arn:aws:cloudformation:us-west-2:533793137436:stack/amplify-rejuvedevelopment-dev-182119/e6ece670-bd2b-11ea-af98-0a88797ee3c4",
+            "AmplifyAppId": "d1sm6p67x7cg8s"
         },
         "categories": {
             "auth": {
-                "longevityNewResource": {
+                "rejuvedevelopmentauthorizer": {
                     "facebookAppId": "721380498616396",
-                    "googleClientId": "689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com",
+                    "googleClientId": "689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com",
                     "googleIos": "689968120772-8h1pmsn83h8qbfes4gd8sev6j8bj78ji.apps.googleusercontent.com",
-                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"721380498616396\",\"client_secret\":\"1d9dbfb062f86e2bab1c46760503d822\"},{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-atdpm60magtth238kf50pbh4e0boelo2.apps.googleusercontent.com\",\"client_secret\":\"9g8eGQkQIF1OqkyNcxtPb43z\"}]"
+                    "hostedUIProviderCreds": "[{\"ProviderName\":\"Facebook\",\"client_id\":\"721380498616396\",\"client_secret\":\"1d9dbfb062f86e2bab1c46760503d822\"},{\"ProviderName\":\"Google\",\"client_id\":\"689968120772-51alqc0t4q1cop1ut54b5630jo6po5ro.apps.googleusercontent.com\",\"client_secret\":\"rqaQE-uM89d4fSk2z5HmqGyd\"}]"
                 }
             }
         }

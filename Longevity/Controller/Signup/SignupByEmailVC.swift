@@ -15,7 +15,6 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var formEmail: UITextField!
     @IBOutlet weak var formPhone: UITextField!
     @IBOutlet weak var formPassword: UITextField!
-    @IBOutlet weak var formConfirmPassword: UITextField!
     @IBOutlet weak var submitButton: UIButton!
 
     override func viewDidLoad() {
@@ -25,13 +24,16 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         formEmail.delegate = self
         formPhone.delegate = self
         formPassword.delegate = self
-        formConfirmPassword.delegate = self
         self.removeBackButtonNavigation()
     }
 
     func customizeButton(button: UIButton){
         button.layer.cornerRadius = 10
     }
+
+//    func register(email) {
+//
+//    }
 
     // MARK: Actions
     @IBAction func handleSignup(_ sender: Any) {
@@ -44,28 +46,37 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
             }
         }
 
-        func onFailure() {
+        func onFailure(errorDescription: String) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                let alert = UIAlertController(title: "Error", message: "Unable to signup. Please check the values and try again", preferredStyle: UIAlertController.Style.alert)
-                alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-                return self.present(alert, animated: true, completion: nil)
+                self.showAlert(title: "Login Failed" , message: errorDescription)
             }
         }
 
-        if let name = formName.text, let email = formEmail.text, let phone = formPhone.text , let password = formPassword.text, let confirmPassword = formConfirmPassword.text{
-            func validate() {
-                if(password != confirmPassword) {
-                    let alert = UIAlertController(title: "Error", message: "Confirm password doesnot match with password", preferredStyle: UIAlertController.Style.alert)
-                    alert.addAction(UIAlertAction(title: "Ok", style: UIAlertAction.Style.destructive, handler: nil))
-                    return self.present(alert, animated: true, completion: nil)
+        if let name = formName.text,
+            let email = formEmail.text,
+            let phone = formPhone.text ,
+            let password = formPassword.text{
+            func validate() -> Bool {
+                if email.isEmpty || !(email.isValidEmail) {
+                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    return false
                 }
+                if phone.isEmpty || !(phone.isValidPhone) {
+                     showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number.")
+                    return false
+                }
+                if password.isEmpty {
+                     showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    return false
+                }
+                return true
             }
 
-            validate()
+            guard validate() else { return }
             self.showSpinner()
-            
-            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name)]
+
+            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]
             let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
             
             _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in
@@ -80,7 +91,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
                     onSuccess()
                 case .failure(let error):
                     print("An error occured while registering a user \(error)")
-                    onFailure()
+                    onFailure(errorDescription: error.errorDescription)
                 }
             }
         }

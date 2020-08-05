@@ -20,13 +20,13 @@ public var consentTask: ORKOrderedTask {
 
     let consentSectionTypes: [ORKConsentSectionType] = [
     .overview,
-    .dataGathering,
-    .privacy,
-    .dataUse,
-    .timeCommitment,
-    .studySurvey,
-    .studyTasks,
-    .withdrawing
+//    .dataGathering,
+//    .privacy,
+//    .dataUse,
+//    .timeCommitment,
+//    .studySurvey,
+//    .studyTasks,
+//    .withdrawing
     ]
 
     var consentSections: [ORKConsentSection] = consentSectionTypes.map { (consentSectionType) -> ORKConsentSection in
@@ -38,17 +38,18 @@ public var consentTask: ORKOrderedTask {
 
     consentDocument.sections = consentSections
 
+    // MARK: Visual Consent
     let visualConsentStep = ORKVisualConsentStep(identifier: "VisualConsentStep", document: consentDocument)
     steps += [visualConsentStep]
 
-//    let signature = consentDocument.signatures!.first! as! ORKConsentSignature
-    let signature = ORKConsentSignature(forPersonWithTitle: "Paticipant", dateFormatString: nil, identifier: "ParicipantSignature")
-    consentDocument.addSignature(signature)
-//    let signature = (consentDocument.signatures?.first)! as ORKConsentSignature
-    let consentReviewStep = ORKConsentReviewStep(identifier: "ConsentReviewStep", signature: signature, in: consentDocument)
-    consentReviewStep.text = "Review Consent !"
-    consentReviewStep.reasonForConsent = "Consent to Join the Study"
-    steps += [consentReviewStep]
+
+    // MARK: Review Step
+//    let signature = ORKConsentSignature(forPersonWithTitle: "Paticipant", dateFormatString: nil, identifier: "ParicipantSignature")
+//    consentDocument.addSignature(signature)
+//    let consentReviewStep = ORKConsentReviewStep(identifier: "ConsentReviewStep", signature: signature, in: consentDocument)
+//    consentReviewStep.text = "Review Consent !"
+//    consentReviewStep.reasonForConsent = "Consent to Join the Study"
+//    steps += [consentReviewStep]
 
     return ORKOrderedTask(identifier: "ConsentTask", steps: steps)
 }
