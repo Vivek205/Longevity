@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; };
+		C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -76,8 +78,6 @@
 		E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */; };
 		E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96A24B9D3D8009FE288 /* Notification.swift */; };
 		E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96C24BB5202009FE288 /* Keychain.swift */; };
-		E2D127DB249B216200467E43 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; };
-		E2D127DC249B216200467E43 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E2D127D5249B208100467E43 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E1249B272900467E43 /* ConsentTask.swift */; };
 		E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E3249B5BCF00467E43 /* SurveyTask.swift */; };
 		E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */; };
@@ -90,16 +90,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		E2D127D4249B208100467E43 /* PBXContainerItemProxy */ = {
+		C198757C24DAE7FA00477185 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */;
+			containerPortal = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B183A5951A8535D100C76870;
 			remoteInfo = ResearchKit;
 		};
-		E2D127D6249B208100467E43 /* PBXContainerItemProxy */ = {
+		C198757E24DAE7FA00477185 /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */;
+			containerPortal = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 86CC8E9A1AC09332001CCD89;
 			remoteInfo = ResearchKitTests;
@@ -107,13 +107,13 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXCopyFilesBuildPhase section */
-		E2D127DD249B216200467E43 /* Embed Frameworks */ = {
+		C198758224DAE80700477185 /* Embed Frameworks */ = {
 			isa = PBXCopyFilesBuildPhase;
 			buildActionMask = 2147483647;
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				E2D127DC249B216200467E43 /* ResearchKit.framework in Embed Frameworks */,
+				C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -123,6 +123,7 @@
 /* Begin PBXFileReference section */
 		279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C198757624DAE7F900477185 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-stable/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
@@ -194,7 +195,6 @@
 		E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileUnitSelectionCell.swift; sourceTree = "<group>"; };
 		E2CFD96A24B9D3D8009FE288 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
 		E2CFD96C24BB5202009FE288 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
-		E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = ../../Apple/ResearchKit/ResearchKit.xcodeproj; sourceTree = "<group>"; };
 		E2D127E1249B272900467E43 /* ConsentTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTask.swift; sourceTree = "<group>"; };
 		E2D127E3249B5BCF00467E43 /* SurveyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTask.swift; sourceTree = "<group>"; };
 		E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioOptionCell.swift; sourceTree = "<group>"; };
@@ -214,8 +214,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
-				E2D127DB249B216200467E43 /* ResearchKit.framework in Frameworks */,
 				908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */,
+				C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -238,6 +238,15 @@
 				B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		C198757724DAE7F900477185 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				C198757D24DAE7FA00477185 /* ResearchKit.framework */,
+				C198757F24DAE7FA00477185 /* ResearchKitTests.xctest */,
+			);
+			name = Products;
 			sourceTree = "<group>";
 		};
 		E216EFC524BEEE7A00B57A7F /* Signup */ = {
@@ -375,15 +384,6 @@
 			path = CustomViews;
 			sourceTree = "<group>";
 		};
-		E2D127CF249B208100467E43 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				E2D127D5249B208100467E43 /* ResearchKit.framework */,
-				E2D127D7249B208100467E43 /* ResearchKitTests.xctest */,
-			);
-			name = Products;
-			sourceTree = "<group>";
-		};
 		E2D127E0249B26F200467E43 /* ResearchKitTasks */ = {
 			isa = PBXGroup;
 			children = (
@@ -409,8 +409,8 @@
 		E2ECB8B2247FE2BA0020A27E = {
 			isa = PBXGroup;
 			children = (
+				C198757624DAE7F900477185 /* ResearchKit.xcodeproj */,
 				E2BCA5212485007B007204B9 /* Assets.xcassets */,
-				E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */,
 				E2ECB8BD247FE2BA0020A27E /* Longevity */,
 				E2ECB8BC247FE2BA0020A27E /* Products */,
 				04C2A7532EFF18097D0A9CCF /* Pods */,
@@ -510,9 +510,9 @@
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
-				E2D127DD249B216200467E43 /* Embed Frameworks */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
 				6336EF9342E5D99BD0891EE0 /* [CP] Embed Pods Frameworks */,
+				C198758224DAE80700477185 /* Embed Frameworks */,
 			);
 			buildRules = (
 			);
@@ -551,8 +551,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = E2D127CF249B208100467E43 /* Products */;
-					ProjectRef = E2D127CE249B208100467E43 /* ResearchKit.xcodeproj */;
+					ProductGroup = C198757724DAE7F900477185 /* Products */;
+					ProjectRef = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -563,18 +563,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		E2D127D5249B208100467E43 /* ResearchKit.framework */ = {
+		C198757D24DAE7FA00477185 /* ResearchKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ResearchKit.framework;
-			remoteRef = E2D127D4249B208100467E43 /* PBXContainerItemProxy */;
+			remoteRef = C198757C24DAE7FA00477185 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		E2D127D7249B208100467E43 /* ResearchKitTests.xctest */ = {
+		C198757F24DAE7FA00477185 /* ResearchKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ResearchKitTests.xctest;
-			remoteRef = E2D127D6249B208100467E43 /* PBXContainerItemProxy */;
+			remoteRef = C198757E24DAE7FA00477185 /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -894,17 +894,19 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vivek/Documents/Rejuve/Longevity/Longevity/Longevity-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
@@ -917,16 +919,18 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
+				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 4;
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "/Users/vivek/Documents/Rejuve/Longevity/Longevity/Longevity-Bridging-Header.h";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
