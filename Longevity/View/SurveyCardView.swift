@@ -16,6 +16,7 @@ struct SurveyCardData {
 }
 
 class SurveyCardView: CardView {
+    var surveyId: String?
     var avatarUrl: URL?
     var header: String?
     var content: String?
@@ -61,8 +62,9 @@ class SurveyCardView: CardView {
         createLayout()
     }
 
-    init(avatarUrl: URL?, header: String?, content: String?, extraContent: String?) {
+    init(surveyId:String?,avatarUrl: URL?, header: String?, content: String?, extraContent: String?) {
         super.init(frame: CGRect())
+        self.surveyId = surveyId
         self.avatarUrl = avatarUrl
         self.header = header
         self.content = content

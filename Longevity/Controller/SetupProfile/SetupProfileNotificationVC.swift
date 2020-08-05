@@ -18,7 +18,6 @@ class SetupProfileNotificationVC: UIViewController {
     func navigateToNextScreenIfAlreadyAuthorized() {
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
-        print("endpoint ARN" , defaults.value(forKey: keys.endpointArnForSNS))
         guard defaults.value(forKey: keys.endpointArnForSNS) == nil else { return }
         
         UNUserNotificationCenter.current().getNotificationSettings { settings in

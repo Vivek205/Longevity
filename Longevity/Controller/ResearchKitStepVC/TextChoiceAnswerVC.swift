@@ -49,8 +49,8 @@ class TextChoiceAnswerVC: ORKStepViewController {
             scrollView.isDirectionalLockEnabled = true
             self.view.addSubview(scrollView)
 
-
-            let questionView = RKCQuestionView(header: step.title ?? "", subHeader:"Wed.Jun.10 for {patient name}", question: step.question, extraInfo: step.text )
+            let questionView = RKCQuestionView(header: step.title ?? "", subHeader:"Wed.Jun.10 for {patient name}",
+                                               question: step.question, extraInfo: step.text )
             questionView.header = "Covid Questions"
             scrollView.addSubview(questionView)
 
@@ -93,6 +93,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
             continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true
             continueButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+            continueButton.isEnabled = false
             continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
             print("inside", step.answerFormat)
@@ -139,6 +140,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
         let selectedChoice = choiceViews.first{$0.tag == sender.tag}
         selectedChoice?.setSelected(true)
         sender.isSelected = true
+        continueButton.isEnabled = true
     }
 
 }

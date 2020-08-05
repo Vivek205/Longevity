@@ -43,7 +43,6 @@ func getProfile() {
             case .success(let data):
                 do {
                     let jsonData = try JSON(data: data)
-                    print("json ", jsonData)
                     let defaults = UserDefaults.standard
                     let keys = UserDefaultsKeys()
                     let userProfileData = jsonData["data"]
@@ -119,10 +118,9 @@ func updateProfile(){
 
 
 func getCurrentUser() {
-    print("started getCurrent user")
     func onSuccess(userSignedIn: Bool) {
         if userSignedIn {
-            print("success")
+            print("user signed in")
         }
     }
 
@@ -188,12 +186,9 @@ func getUserAttributes() {
     _ = Amplify.Auth.fetchUserAttributes() { result in
         switch result {
         case .success(let attributes):
-            print("User attributes - \(attributes)")
-            print("json user attributes", JSON(attributes))
             for attribute in attributes {
                 let name = attribute.key
                 let value = attribute.value
-                print("Raw key valye", name.rawValue)
                 if name.rawValue == CustomCognitoAttributes.longevityTNC {
                     let data: Data? = value.data(using: .utf8)!
                     let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
@@ -215,9 +210,8 @@ func acceptTNC(value: Bool) {
     let keys = UserDefaultsKeys()
     let tncValue = ["version" : 1, "isAccepted" : value] as [String: Any]
     let json = JSON(tncValue)
-    //    print("json", json.rawString([.castNilToNSNull : true]))
     let tncValueString = json.rawString([.castNilToNSNull : true])!
-    print("tncValueString", tncValueString)
+
     _ = Amplify.Auth.update(userAttribute: AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: tncValueString)) { result in
         do {
             defaults.set(1, forKey: keys.isTermsAccepted)

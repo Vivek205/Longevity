@@ -67,7 +67,7 @@ func retrieveARN(){
                 do {
                     let responseString = String(data: data, encoding: .utf8)
                     let jsonResponse = try JSON(data: data)
-                    print(jsonResponse["endpoint_arn"].type,jsonResponse["endpoint_arn"])
+                    print(jsonResponse["endpoint_arn"])
                     if let snsARN =  jsonResponse["endpoint_arn"].rawValue as? String {
                         let defaults = UserDefaults.standard
                         let keys = UserDefaultsKeys()

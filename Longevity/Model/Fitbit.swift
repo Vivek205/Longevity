@@ -124,7 +124,7 @@ class FitbitModel: AuthHandlerType {
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
-        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response,_   in
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200,
                 data != nil else { return }
@@ -150,7 +150,7 @@ class FitbitModel: AuthHandlerType {
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
                    let body = JSON(["access_token":accessToken, "user_id":userId])
-                   var bodyData:Data = Data();
+                   var bodyData:Data = Data()
                    do {
                        bodyData = try body.rawData()
                    } catch  {
@@ -174,8 +174,6 @@ class FitbitModel: AuthHandlerType {
           }
 
         _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
-
-
     }
 
     func saveToken(accessToken: String, refreshToken: String) {
@@ -196,7 +194,7 @@ class FitbitModel: AuthHandlerType {
                var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
                urlComponents?.queryItems = [
                    URLQueryItem(name: "grant_type", value: "refresh_token"),
-                   URLQueryItem(name: "refresh_token", value:refreshToken),
+                   URLQueryItem(name: "refresh_token", value:refreshToken)
                ]
 
         var urlRequest = URLRequest(url: (urlComponents?.url)!)
@@ -211,7 +209,6 @@ class FitbitModel: AuthHandlerType {
             do {
                 if let jsonData: [String:Any] =
                     try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-                    print(jsonData)
                     let accessToken = jsonData["access_token"] as! String
                     let refreshToken = jsonData["refresh_token"] as! String
                     let userId = jsonData["user_id"] as! String

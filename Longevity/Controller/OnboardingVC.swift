@@ -108,9 +108,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         let fitbitStatus = (devices[ExternalDevices.FITBIT] ?? [:]) as [String:Int]
         let healthkitStatus = (devices[ExternalDevices.HEALTHKIT] ?? [:]) as [String:Int]
         let providedPreExistingMedicalConditions = defaults.bool(forKey: keys.providedPreExistingMedicalConditions)
-        print("isTermsAccepted", isTermsAccepted)
-
-        print("endpoint ARN" , defaults.value(forKey: keys.endpointArnForSNS))
         
         if isTermsAccepted == true {
             let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
@@ -137,7 +134,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
     }
 
     func getCurrentUser() {
-        print("started getCurrent user")
         func onSuccess(userSignedIn: Bool, idToken: String) {
             if userSignedIn {
                 getProfile()
@@ -150,7 +146,7 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
 
         func onFailure(error: AuthError) {
             print(error)
-            showAlert(title: "Login Failed" , message: error.errorDescription)
+            self.showAlert(title: "Login Failed" , message: error.errorDescription)
         }
 
         _ = Amplify.Auth.fetchAuthSession { (result) in

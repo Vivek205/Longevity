@@ -74,7 +74,6 @@ func getHealthProfile(){
             case .success(let data):
                 do {
                     let jsonData = try JSON(data: data)
-                    print("json ", jsonData)
                     let defaults = UserDefaults.standard
                     let keys = UserDefaultsKeys()
                     let userProfileData = jsonData["data"]
@@ -106,7 +105,6 @@ func getHealthProfile(){
                     }
 
                     if let fitbitStatus = devices?[ExternalDevices.FITBIT]{
-                        print("devices", devices)
                         devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
 
                         if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {

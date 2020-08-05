@@ -17,17 +17,10 @@ class HomeVC: UIViewController {
         retrieveDataAndInitializeTheViews()
     }
 
-//    @IBAction func handleCovidCheckinPressed(_ sender: Any) {
-//        showCovidCheckinSurvey()
-//    }
-//
-//    @IBAction func handleBranchedTaskPressed(_ sender: Any) {
-//    }
-
     func retrieveDataAndInitializeTheViews() {
         self.showSpinner()
 
-        func completion(_ surveys:[SurveyResponse])->Void {
+        func completion(_ surveys:[SurveyResponse]) {
             DispatchQueue.main.async {
                 print(surveys)
                 self.surveysData = surveys
@@ -53,9 +46,13 @@ class HomeVC: UIViewController {
         scrollView.isDirectionalLockEnabled = true
         self.view.addSubview(scrollView)
 
+        let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
+            (navigationController?.navigationBar.frame.height ?? 0.0)
+        print(navBarHeight)
+
         scrollView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor).isActive = true
         scrollView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor).isActive = true
-        scrollView.topAnchor.constraint(equalTo: self.view.topAnchor).isActive = true
+        scrollView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navBarHeight).isActive = true
         scrollView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor).isActive = true
 
         let stackView = UIStackView()
@@ -69,14 +66,19 @@ class HomeVC: UIViewController {
 
         if  self.surveysData != nil {
             for survey in self.surveysData! {
-                let avatarURL = URL(string: survey.imageUrl)
-                let surveyCardView = SurveyCardView(avatarUrl: avatarURL, header: survey.name, content: survey.description, extraContent: "last submission date")
+                let defaultAvatar = "https://image.freepik.com/free-vector/survey-report-checklist-questionnaire-business-illustration_114835-117.jpg"
+                let avatarURL = URL(string: survey.imageUrl ?? defaultAvatar)
+                let surveyCardView = SurveyCardView(surveyId: survey.surveyId, avatarUrl: avatarURL,
+                                                    header: survey.name, content: survey.description,
+                                                    extraContent: "last submission date")
                 surveyCardView.translatesAutoresizingMaskIntoConstraints = false
 
-                stackView.addArrangedSubview(surveyCardView)
-//                FIXME: Unable to set the height of the surveyCardView
-//                surveyCardView.heightAnchor.constraint(equalToConstant: CGFloat(111)).isActive = true
+                let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleSurveyTapped(_:)))
+                surveyCardView.addGestureRecognizer(tapGesture)
 
+                stackView.addArrangedSubview(surveyCardView)
+                //                FIXME: Unable to set the height of the surveyCardView
+                surveyCardView.heightAnchor.constraint(equalToConstant: CGFloat(111)).isActive = true
             }
         }
 
@@ -88,30 +90,99 @@ class HomeVC: UIViewController {
         stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
     }
 
+    @objc func handleSurveyTapped(_ sender: UITapGestureRecognizer) {
+        let tappedSurvey = sender.view as! SurveyCardView
+        self.showSpinner()
+
+        func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
+            DispatchQueue.main.async {
+                if task != nil {
+                    let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
+                    taskViewController.delegate = self
+                    self.present(taskViewController, animated: true, completion: nil)
+                } else {
+                    self.showAlert(title: "Survey Not available",
+                                   message: "No questions are found for the survey. Please try after sometime")
+                }
+                self.removeSpinner()
+            }
+        }
+
+        func onCreateSurveyFailure(_ error: Error) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+
+        createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
+                     onFailure: onCreateSurveyFailure(_:))
+    }
 }
 
 extension HomeVC:ORKTaskViewControllerDelegate {
-    func taskViewController(_ taskViewController: ORKTaskViewController, stepViewControllerWillAppear stepViewController: ORKStepViewController) {
-        let taskViewAppearance = UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+        let taskViewAppearance =
+            UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
     }
 
-    func taskViewController(_ taskViewController: ORKTaskViewController, didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+
+        func parseResult() {
+            var answersToSubmit: [SubmitAnswerPayload] = [SubmitAnswerPayload]()
+            if let stepResults = taskViewController.result.results as? [ORKStepResult] {
+                for stepResult in stepResults {
+                    if stepResult.identifier == "IntroStep" || stepResult.identifier == "SummaryStep" {
+                        print("skipped ", stepResult.identifier)
+                        continue
+                    }
+                    let latestStepResult = stepResult.results?.last
+                    if latestStepResult is ORKChoiceQuestionResult {
+                        let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first as! NSNumber
+                        print("answervalue", answer.intValue, answer.stringValue)
+                        let answerPaylaod = SubmitAnswerPayload(categoryId: "categoryId", moduleId: "moduleId",
+                                                                answer: answer.stringValue, quesId: "quesId")
+                        answersToSubmit += [answerPaylaod]
+                    }
+                }
+                submitAnswers(surveyId: "surveyId", answers: answersToSubmit)
+            }
+        }
+
+        print("reason", reason.rawValue)
+        switch reason {
+        case .completed:
+            parseResult()
+            print("completed")
+        case .discarded:
+            print("discarded")
+        case .failed:
+            print("failed")
+        case .saved:
+            print("saved")
+        @unknown default:
+            print("unknown reason")
+        }
+        print("error", error)
         taskViewController.dismiss(animated: true) {
-            print("task view controller dismissed", taskViewController.result)
+            print("task view controller dismissed")
         }
 
     }
 
-    func taskViewController(_ taskViewController: ORKTaskViewController, viewControllerFor step: ORKStep) -> ORKStepViewController? {
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            viewControllerFor step: ORKStep) -> ORKStepViewController? {
         print("step", step)
         if step is ORKInstructionStep {
             // Default View Controller will be used
             return nil
-        }else {
+        } else {
             let storyboard = UIStoryboard(name: "CovidCheckin", bundle: nil)
             var stepVC:ORKStepViewController = ORKStepViewController()
-            stepVC = storyboard.instantiateViewController(withIdentifier: "TextChoiceAnswerVC") as! ORKStepViewController
+            stepVC = storyboard.instantiateViewController(withIdentifier: "TextChoiceAnswerVC")
+                as! ORKStepViewController
             stepVC.step = step
             return stepVC
         }
@@ -120,15 +191,6 @@ extension HomeVC:ORKTaskViewControllerDelegate {
 
     func showConsent() {
         let taskViewController = ORKTaskViewController(task: consentTask, taskRun: nil)
-        taskViewController.delegate = self
-        present(taskViewController, animated: true, completion: nil)
-    }
-
-    func showCovidCheckinSurvey() {
-        self.showSpinner()
-        let covidCheckinSurveyTask = createCovidCheckinSurveyTask()
-        self.removeSpinner()
-        let taskViewController = ORKTaskViewController(task: covidCheckinSurveyTask, taskRun: nil)
         taskViewController.delegate = self
         present(taskViewController, animated: true, completion: nil)
     }

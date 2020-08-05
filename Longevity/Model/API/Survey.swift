@@ -19,63 +19,70 @@ struct SurveyResponse: Decodable {
     let surveyId: String
     let name: String
     let description: String
-    let imageUrl: String
-    let lastSubmission: String
-    let lastSubmissionId: String
-    let response: [SurveyLastResponseData]
+    let imageUrl: String?
+    let lastSubmission: String?
+    let lastSubmissionId: String?
+    let response: [SurveyLastResponseData]?
 }
 
 func getSurveys(completion:@escaping (_ surveys:[SurveyResponse])->Void, onFailure:@escaping (_ error:Error)-> Void) {
-    let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/survey", headers: nil, queryParameters: nil, body: nil)
-    let response:[SurveyResponse] = [SurveyResponse]()
+    func onGettingCredentials(_ credentials: Credentials) {
+        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+        let request = RESTRequest(apiName: "surveyAPI", path: "/surveys", headers: headers, queryParameters: nil,
+                                  body: nil)
 
-    _ = Amplify.API.get(request: request, listener: { (result) in
-        switch result{
-        case .success(let data):
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let value = try decoder.decode([SurveyResponse].self, from: data)
-                completion(value)
-            } catch  {
+        _ = Amplify.API.get(request: request, listener: { (result) in
+            switch result{
+            case .success(let data):
+                do {
+                    let decoder = JSONDecoder()
+                    decoder.keyDecodingStrategy = .convertFromSnakeCase
+                    let value = try decoder.decode([SurveyResponse].self, from: data)
+                    completion(value)
+                } catch  {
+                    onFailure(error)
+                }
+            case .failure(let error):
                 onFailure(error)
             }
-        case .failure(let error):
-            onFailure(error)
-        }
-    })
+        })
+    }
+
+    func onFailureCredentials(_ error: Error?) {
+        print(error)
+    }
+
+    getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-
-struct QuestionResponse:Decodable {
+struct Question:Decodable {
     let categoryId: String
     let moduleId: String
     let quesId: String
-    let quesShortName: String
-    let heading: String
     let text: String
     let quesType: String
-    let options: [QuestionOption]
-    let validations: String
-    let dependents: String
-    let otherDetails: String
+//    FIXME: Replace with actual Options type
+//    let options: [QuestionOption]
+    let options: String
+//    let dependents: String?
+//    let otherDetails: String
     let isDynamic: Bool
     let nextQuestion: String?
     let validation: QuestionResponseValidation
-    let otherAttribute: QuestionResponseOtherAttribute?
+    let otherAttribute: OtherAttribute?
 }
 
 struct QuestionResponseValidation:Decodable {
     let regex: String
 }
 
-struct QuestionResponseOtherAttribute: Decodable {
-    let scale: QuestionResponseOtherAttributeScale
+struct OtherAttribute: Decodable {
+    let scale: Scale?
 }
 
-struct QuestionResponseOtherAttributeScale: Decodable {
-    let minimum: String
-    let maximum: String
+struct Scale: Decodable {
+    let min: String
+    let max: String
 }
 
 struct QuestionOption: Decodable {
@@ -84,53 +91,76 @@ struct QuestionOption: Decodable {
     let value: Int
 }
 
-struct Question: Decodable {
-
+enum ModuleViewType: String, Decodable {
+    case oneModulePerPage, oneQuestionPerPage
 }
 
+enum CategoryViewType: String, Decodable {
+    case moduleLevel, oneCategoryPerPage
+}
 
-func getQuestions() -> [QuestionResponse]?{
-    let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question", headers: nil, queryParameters: nil, body: nil)
-    var response:[QuestionResponse]? = nil
+struct Module: Decodable {
+//    let view: ModuleViewType
+    let view: String?
+}
 
-    let group = DispatchGroup()
+struct Category: Decodable {
+    let id: String
+//    let view: CategoryViewType
+    let view: String
+    let modules: Array<[String: Module]>
+}
 
-    group.enter()
-    DispatchQueue.global().async {
-        _ = Amplify.API.get(request: request, listener: { (result) in
-            switch result{
-            case .success(let data):
-                print(data)
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode([QuestionResponse].self, from: data)
-                    let jsonValue = JSON(data)
+struct DisplaySettings: Decodable {
+    let categories: Array<[String:Category]>
+}
 
+struct GetQuestionResponse: Decodable {
+    let surveyId: String
+    let name: String
+    let description: String
+    let displaySettings: DisplaySettings
+    let questions: Array<Question>
+}
 
-                    response = value
-                    group.leave()
-                } catch {
-                    print("json error", error)
-                    group.leave()
-                }
+func getQuestions(surveyId: String,
+                  completion: @escaping (_ question: GetQuestionResponse?) -> Void,
+                  onFailure: @escaping (_ error: Error) -> Void) {
+    var response:GetQuestionResponse?
+    func onGettingCredentials(_ credentials: Credentials) {
+        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+        let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)", headers: headers,
+                                  queryParameters: nil, body: nil)
+               _ = Amplify.API.get(request: request, listener: { (result) in
+                   switch result {
+                   case .success(let data):
+                       print(data)
+                       do {
+                           let decoder = JSONDecoder()
+                           decoder.keyDecodingStrategy = .convertFromSnakeCase
+                           let value = try decoder.decode(GetQuestionResponse.self, from: data)
+                           response = value
+                            completion(value)
+                       } catch {
+                           print("json error", error)
+                       }
 
-
-            case .failure(let apiError):
-                print(apiError)
-                group.leave()
-            }
-        })
+                   case .failure(let apiError):
+                       print(apiError)
+                   }
+               })
     }
 
-    group.wait()
+    func onFailureCredentials(_ error: Error?) {
+          print(error)
+      }
 
-    return response
-
+      getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
 func findNextQuestion(questionId: String, answerValue: Int) -> String {
-    let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question/123/nextQuestion", headers: nil, queryParameters: nil, body: nil)
+    let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question/123/nextQuestion", headers: nil,
+                              queryParameters: nil, body: nil)
     var nextQuestionIdentifier: String = ""
 
     let group = DispatchGroup()
@@ -138,13 +168,13 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
     group.enter()
     DispatchQueue.global().async {
         _ = Amplify.API.post(request: request, listener: { (result) in
-            switch result{
+            switch result {
             case .success(let data):
                 print(data)
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode(QuestionResponse.self, from: data)
+                    let value = try decoder.decode(Question.self, from: data)
                     nextQuestionIdentifier = value.quesId
                     print(value)
                     //                response = jsonData
@@ -162,9 +192,51 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
     }
 
     group.wait()
-
     return nextQuestionIdentifier
 }
 
+
+struct SubmitAnswerPayload: Codable {
+    let categoryId: String
+    let moduleId: String
+    let answer: String
+    let quesId: String
+}
+
+func submitAnswers(surveyId: String ,answers: [SubmitAnswerPayload]) {
+    do {
+        let encoder = JSONEncoder()
+        encoder.keyEncodingStrategy = .convertToSnakeCase
+        let data = try encoder.encode(answers)
+        print(String(data: data, encoding: .utf8)!)
+
+        let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/answer/submit", headers: nil,
+        queryParameters: nil, body: data)
+        _ = Amplify.API.post(request: request, listener: { (result) in
+            switch result {
+            case .success(let data):
+                print("success", data)
+            case .failure(_):
+                print("failure")
+            }
+        })
+    } catch  {
+        print(error)
+    }
+}
+
+
+func submitSurvey(surveyId: String) {
+    let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: nil,
+           queryParameters: nil, body: nil)
+    _ = Amplify.API.post(request: request, listener: { (result) in
+        switch result {
+        case .success(let data):
+            print("success", data)
+        case .failure(_):
+            print("failure")
+        }
+    })
+}
 
 

@@ -142,9 +142,9 @@ class SetupProfileBioDataVC: UIViewController {
         //        let taskViewController = ORKTaskViewController(task: consentTask, taskRun: nil)
         //        taskViewController.delegate = self
         //        present(taskViewController, animated: true, completion: nil)
-        let taskViewController = ORKTaskViewController(task: surveyTask, taskRun: nil)
-        taskViewController.delegate = self
-        present(taskViewController, animated: true, completion: nil)
+//        let taskViewController = ORKTaskViewController(task: surveyTask, taskRun: nil)
+//        taskViewController.delegate = self
+//        present(taskViewController, animated: true, completion: nil)
     }
 
     @IBAction func handleMetricTogglePress(_ sender: Any) {
