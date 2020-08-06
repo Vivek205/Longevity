@@ -21,8 +21,8 @@ class CheckboxButton: UIButton {
 
     func styleButton() {
         layer.masksToBounds = true
-        setImage(#imageLiteral(resourceName: "icon: Checkbox-unselected"), for: .normal)
-        setImage(#imageLiteral(resourceName: "icon: Checkbox-selected"), for: .selected)
+//        setImage(#imageLiteral(resourceName: "icon: Checkbox-unselected"), for: .normal)
+//        setImage(#imageLiteral(resourceName: "icon: Checkbox-selected"), for: .selected)
         layer.cornerRadius = frame.width / 2
         setTitleColor(UIColor.white, for: .selected)
     }
