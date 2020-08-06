@@ -11,8 +11,8 @@ import ResearchKit
 
 func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void, onFailure: @escaping (_ error: Error) -> Void) {
     print(surveyId)
-    func onGetQuestionCompletion(_ questions: GetQuestionResponse?) -> Void {
-        guard questions != nil else {
+    func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
+        guard surveyDetails != nil else {
             completion(nil)
             return
         }
@@ -20,11 +20,11 @@ func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTas
         var steps = [ORKStep]()
 
         let instructionStep = ORKInstructionStep(identifier: "IntroStep")
-           instructionStep.title = "Intro: \(surveyId) Survey"
-           instructionStep.text = "Who would cross the Bridge of Death must answer me these questions three, ere the other side they see."
-           steps += [instructionStep]
+        instructionStep.title = "Intro: \(surveyId) Survey"
+        instructionStep.text = "Who would cross the Bridge of Death must answer me these questions three, ere the other side they see."
+        steps += [instructionStep]
 
-        let categories = questions!.displaySettings.categories
+        let categories = surveyDetails!.displaySettings.categories
 
         for category in categories {
             print(type(of: category) ,category)
@@ -34,39 +34,44 @@ func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTas
                     print(module)
                     for (moduleName, moduleValue) in module {
                         print(moduleName, moduleValue)
-                        //                    TODO: filter the question belonging to this module, create a step for this module.
-                        let step = createSingleChoiceQuestionStep(
-                            identifier: "\(categoryName)-\(moduleName)",
-                            title: "\(categoryName)",
-                            question: "\(moduleName)",
-                            additionalText: nil,
-                            choices: [1,2,3].enumerated().map {
-                                (index,element) in ORKTextChoice(text: "Choice", value: NSNumber(value: index))
+                        if  let filteredQuestions = surveyDetails?.questions.filter { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
+                            for filteredQuestion in filteredQuestions {
+                                let step = createSingleChoiceQuestionStep(
+                                    identifier: filteredQuestion.quesId,
+                                    title: surveyDetails?.name ?? "Survey",
+                                    question: filteredQuestion.text,
+                                    additionalText: nil,
+                                    choices: filteredQuestion.options.map {
+                                        ORKTextChoice(text:$0.text,detailText:$0.description ,
+                                                      value:NSString(string:  $0.value), exclusive: false)
+                                    }
+                                )
+                                steps += [step]
                             }
-                        )
-                        steps += [step]
+                        }
+
                     }
                 }
             }
         }
 
         let summaryStep = ORKCompletionStep(identifier: "SummaryStep")
-           summaryStep.title = "SummaryRight. Off you go!"
-           summaryStep.text = "That was easy!"
-           steps += [summaryStep]
+        summaryStep.title = "SummaryRight. Off you go!"
+        summaryStep.text = "That was easy!"
+        steps += [summaryStep]
 
         guard steps.count > 2 else {
             completion(nil)
             return
         }
-         let task = BranchingOrderedTask(identifier: surveyId, steps: steps)
+        let task = BranchingOrderedTask(identifier: surveyId, steps: steps)
         completion(task)
     }
     func onGetQuestionFailure(_ error: Error) {
         onFailure(error)
     }
 
-    getQuestions(surveyId: surveyId, completion: onGetQuestionCompletion(_:), onFailure: onGetQuestionFailure(_:))
+    getSurveyDetails(surveyId: surveyId, completion: onGetQuestionCompletion(_:), onFailure: onGetQuestionFailure(_:))
 }
 
 public var surveyTask: ORKOrderedTask {

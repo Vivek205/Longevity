@@ -14,29 +14,29 @@ class RKCQuestionView: UIView {
     var question: String?
     var extraInfo: String?
 
-    private let headerLabel: UILabel = {
+    let headerLabel: UILabel = {
         let labelView = QuestionHeaderLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
         return labelView
     }()
 
-    private let subHeaderLabel: UILabel = {
+    let subHeaderLabel: UILabel = {
         let labelView = QuestionSubheaderLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
         return labelView
     }()
 
-    private let questionLabel: UILabel = {
+    let questionLabel: UILabel = {
         let labelView = QuestionQuestionLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
-        labelView.numberOfLines = 2
+        labelView.numberOfLines = 0
         return labelView
     }()
 
-    private let extraInfoLabel: UILabel = {
+    let extraInfoLabel: UILabel = {
         let labelView = QuestionExtraInfoLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
@@ -64,21 +64,17 @@ class RKCQuestionView: UIView {
     }
 
     func createLayout() {
-        print("self.header", self.header)
         backgroundColor = .white
         translatesAutoresizingMaskIntoConstraints = false
 
         let stackView = UIStackView()
         stackView.axis = .vertical
-        stackView.distribution = .fillEqually
+        stackView.distribution = .equalSpacing
         stackView.alignment = .fill
         stackView.spacing = 20.0
         stackView.translatesAutoresizingMaskIntoConstraints = false
 
         self.addSubview(stackView)
-
-
-
 
         if header != nil && subHeader != nil {
             let headerView = UIView()

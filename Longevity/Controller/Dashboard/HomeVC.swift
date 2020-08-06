@@ -11,6 +11,7 @@ import ResearchKit
 
 class HomeVC: UIViewController {
     var surveysData: [SurveyResponse]?
+    var surveyId: String?
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,7 +28,6 @@ class HomeVC: UIViewController {
                 self.presentViews()
                 self.removeSpinner()
             }
-
         }
 
         func onFailure(_ error:Error) {
@@ -113,7 +113,7 @@ class HomeVC: UIViewController {
                 self.removeSpinner()
             }
         }
-
+        self.surveyId = tappedSurvey.surveyId
         createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
                      onFailure: onCreateSurveyFailure(_:))
     }
@@ -138,16 +138,26 @@ extension HomeVC:ORKTaskViewControllerDelegate {
                         print("skipped ", stepResult.identifier)
                         continue
                     }
-                    let latestStepResult = stepResult.results?.last
-                    if latestStepResult is ORKChoiceQuestionResult {
-                        let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first as! NSNumber
-                        print("answervalue", answer.intValue, answer.stringValue)
-                        let answerPaylaod = SubmitAnswerPayload(categoryId: "categoryId", moduleId: "moduleId",
-                                                                answer: answer.stringValue, quesId: "quesId")
-                        answersToSubmit += [answerPaylaod]
+
+                    if currentSurveyDetails != nil {
+                        let currentQuestion =
+                            currentSurveyDetails!.questions.first { $0.quesId == stepResult.identifier }
+                        let latestStepResult = stepResult.results?.last
+                        if latestStepResult is ORKChoiceQuestionResult {
+                            let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first as! NSNumber
+                            print("answervalue", answer.intValue, answer.stringValue)
+                            let answerPaylaod = SubmitAnswerPayload(categoryId: currentQuestion!.categoryId,
+                                                                    moduleId: currentQuestion!.moduleId,
+                                                                    answer: answer.stringValue,
+                                                                    quesId: currentQuestion!.quesId)
+                            answersToSubmit += [answerPaylaod]
+                        }
                     }
                 }
-                submitAnswers(surveyId: "surveyId", answers: answersToSubmit)
+                if self.surveyId != nil {
+                    saveSurveyAnswers(surveyId: self.surveyId!, answers: answersToSubmit)
+                }
+
             }
         }
 

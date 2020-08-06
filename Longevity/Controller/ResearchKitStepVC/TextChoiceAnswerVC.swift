@@ -11,15 +11,6 @@ import ResearchKit
 
 class TextChoiceAnswerVC: ORKStepViewController {
 
-    let choiceViewTwo: UIView = {
-        let uiView = UIView()
-        uiView.backgroundColor = .orange
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.layer.borderColor = UIColor.black.cgColor
-        uiView.layer.borderWidth = 2
-        return uiView
-    }()
-
     let footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
@@ -48,10 +39,10 @@ class TextChoiceAnswerVC: ORKStepViewController {
             scrollView.translatesAutoresizingMaskIntoConstraints = false
             scrollView.isDirectionalLockEnabled = true
             self.view.addSubview(scrollView)
-
-            let questionView = RKCQuestionView(header: step.title ?? "", subHeader:"Wed.Jun.10 for {patient name}",
+            let questionSubheader = "Thu.Aug.6 for {patient name}"
+            let questionView = RKCQuestionView(header: step.title ?? "", subHeader: questionSubheader,
                                                question: step.question, extraInfo: step.text )
-            questionView.header = "Covid Questions"
+            questionView.header = currentSurveyDetails?.name
             scrollView.addSubview(questionView)
 
             let stackView = UIStackView()
@@ -71,7 +62,23 @@ class TextChoiceAnswerVC: ORKStepViewController {
             scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
             scrollView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
 
-            let questionViewHeight = step.text == nil || step.text == "" ? CGFloat(150) : CGFloat(250)
+            let questionHeaderHeight =
+                step.title?.height(withConstrainedWidth: self.view.bounds.size.width - 40,
+                                   font: questionView.headerLabel.font) ?? CGFloat(0)
+            let questionSubheaderHeight =
+                questionSubheader.height(withConstrainedWidth: self.view.bounds.size.width - 40,
+                                                                   font: questionView.subHeaderLabel.font)
+            let questionTextHeight =
+                step.question?.height(withConstrainedWidth: self.view.bounds.size.width - 40,
+                                      font: questionView.questionLabel.font) ?? CGFloat(0)
+            let questionExtraInfoHeight = step.text == nil || step.text == "" ? CGFloat(0) : step.text?.height(withConstrainedWidth: self.view.bounds.size.width - 40, font: questionView.extraInfoLabel.font)
+
+            var questionViewHeight:CGFloat = questionHeaderHeight
+            questionViewHeight += questionSubheaderHeight
+            questionViewHeight += questionTextHeight
+            questionViewHeight += questionExtraInfoHeight!
+            questionViewHeight += CGFloat(40)
+
             questionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20).isActive = true
             questionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
             questionView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20).isActive = true
@@ -101,10 +108,11 @@ class TextChoiceAnswerVC: ORKStepViewController {
                 for index in 0...answerFormat.textChoices.count-1 {
                     let choice = answerFormat.textChoices[index]
 
-                    var choiceView = RKCTextChoiceAnswerView(answer: choice.text, info: "Additional info aaldfjaj fadfjdfjf This method automatically adds the provided view as a subview of the stack view, if it is not already. If the view is already a subview, this operation does not alter the subview ")
+                    var choiceView = RKCTextChoiceAnswerView(answer: choice.text, info: choice.detailText)
 
                     choiceView.translatesAutoresizingMaskIntoConstraints = false
-                    choiceView.checkbox.addTarget(self, action: #selector(handleChoiceChange(sender:)), for: .touchUpInside)
+                    choiceView.checkbox.addTarget(self, action: #selector(handleChoiceChange(sender:)),
+                                                  for: .touchUpInside)
                     choiceView.tag = index
                     choiceView.checkbox.tag = index
                     if choiceViews.count <= index {
