@@ -37,4 +37,16 @@ extension UIColor {
     @nonobjc class var unselectedColor: UIColor {
         return UIColor(hexString: "#8E8E93")
     }
+    
+    @nonobjc class var sectionHeaderColor: UIColor {
+        return UIColor(hexString: "#4E4E4E")
+    }
+    
+    @nonobjc class var hexagonColor: UIColor {
+        return UIColor(hexString: "#FFFFFF")
+    }
+    
+    @nonobjc class var hexagonBorderColor: UIColor {
+        return UIColor(hexString: "#C8C8CC")
+    }
 }
