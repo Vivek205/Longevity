@@ -49,4 +49,24 @@ extension UIColor {
     @nonobjc class var hexagonBorderColor: UIColor {
         return UIColor(hexString: "#C8C8CC")
     }
+    
+    @nonobjc class var checkinNotCompleted: UIColor {
+        return UIColor(hexString: "#5AA7A7")
+    }
+    
+    @nonobjc class var checkinCompleted: UIColor {
+        return UIColor(hexString: "#4A4A4A")
+    }
+    
+    @nonobjc class var statusColor: UIColor {
+        return UIColor(hexString: "#9B9B9B")
+    }
+    
+    @nonobjc class var progressColor: UIColor {
+        return UIColor(hexString: "#5AA7A7")
+    }
+    
+    @nonobjc class var progressTrackColor: UIColor {
+        return UIColor(hexString: "#E5E5EA")
+    }
 }

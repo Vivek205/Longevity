@@ -60,16 +60,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 1 {
+        if indexPath.section == 0 {
+            guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+                preconditionFailure("Invalid device cell")
+            }
+            return checkinCell
+        }
+        else if indexPath.section == 1 {
             guard let devicesCell = tableView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
                 preconditionFailure("Invalid device cell")
             }
-            
             return devicesCell
+        } else {
+            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
+                preconditionFailure("Invalid task cell")
+            }
+            return cell
         }
-        let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
-        cell.backgroundColor = .blue
-        return cell
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -121,5 +128,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         ])
         
         return headerView
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: true)
     }
 }

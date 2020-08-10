@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
+		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; };
 		C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
@@ -31,7 +33,7 @@
 		C19875CB24DD5ECB00477185 /* UITableView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875CA24DD5ECB00477185 /* UITableView+Extension.swift */; };
 		C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */; };
 		C19875D024DD629E00477185 /* DashboardHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875CF24DD629E00477185 /* DashboardHeaderView.swift */; };
-		C19875D224DEB0D200477185 /* DashboardCollectionTileView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D124DEB0D200477185 /* DashboardCollectionTileView.swift */; };
+		C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D124DEB0D200477185 /* DashboardCollectionTileCell.swift */; };
 		C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */; };
 		C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */; };
 		C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D824E04DD000477185 /* DashboardCheckInCell.swift */; };
@@ -142,6 +144,8 @@
 /* Begin PBXFileReference section */
 		279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
+		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C198757624DAE7F900477185 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-stable/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -164,7 +168,7 @@
 		C19875CA24DD5ECB00477185 /* UITableView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UITableView+Extension.swift"; sourceTree = "<group>"; };
 		C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		C19875CF24DD629E00477185 /* DashboardHeaderView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardHeaderView.swift; sourceTree = "<group>"; };
-		C19875D124DEB0D200477185 /* DashboardCollectionTileView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCollectionTileView.swift; sourceTree = "<group>"; };
+		C19875D124DEB0D200477185 /* DashboardCollectionTileCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCollectionTileCell.swift; sourceTree = "<group>"; };
 		C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeader.swift; sourceTree = "<group>"; };
 		C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDevicesCell.swift; sourceTree = "<group>"; };
 		C19875D824E04DD000477185 /* DashboardCheckInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCheckInCell.swift; sourceTree = "<group>"; };
@@ -334,10 +338,12 @@
 			isa = PBXGroup;
 			children = (
 				C19875CF24DD629E00477185 /* DashboardHeaderView.swift */,
-				C19875D124DEB0D200477185 /* DashboardCollectionTileView.swift */,
+				C19875D124DEB0D200477185 /* DashboardCollectionTileCell.swift */,
 				C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */,
 				C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */,
 				C19875D824E04DD000477185 /* DashboardCheckInCell.swift */,
+				C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */,
+				C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -815,6 +821,7 @@
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
 				C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
+				C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
 				E290B60624BC75D500C51655 /* String.swift in Sources */,
@@ -832,13 +839,14 @@
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				C19875B324DC6D1600477185 /* UIColor+Extension.swift in Sources */,
+				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				C19875C924DC9F7A00477185 /* UIDevice+Extension.swift in Sources */,
-				C19875D224DEB0D200477185 /* DashboardCollectionTileView.swift in Sources */,
+				C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */,
 				C19875C724DC9E3000477185 /* CurvedView.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,

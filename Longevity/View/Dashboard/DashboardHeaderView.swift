@@ -58,7 +58,7 @@ class DashboardHeaderView: UIView {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: 30.0, left: 30.0, bottom: 30.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 65.0, left: 30.0, bottom: 15.0, right: 0.0)
         layout.scrollDirection = .horizontal
         
         self.pageControl.numberOfPages = 2
@@ -99,7 +99,7 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let tileCell = collectionView.getCell(with: DashboardCollectionTileView.self, at: indexPath) as? DashboardCollectionTileView else {
+        guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
             preconditionFailure("Invalid tile cell type")
         }
         tileCell.setupCell(index: indexPath.item, isEmpty: indexPath.item == 3)

@@ -51,8 +51,7 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.getCell(with: UICollectionViewCell.self, at: indexPath)
-        cell.backgroundColor = .blue
+        guard let cell = collectionView.getCell(with: DashboardDeviceCollectionCell.self, at: indexPath) as? DashboardDeviceCollectionCell else { preconditionFailure("Invalid device cell")}
         return cell
     }
     

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardCollectionTileView: UICollectionViewCell {
+class DashboardCollectionTileCell: UICollectionViewCell {
     
     lazy var hexagonView : UIView = {
         let hexagon = UIView()
@@ -21,6 +21,8 @@ class DashboardCollectionTileView: UICollectionViewCell {
         let title = UILabel()
         title.textAlignment = .center
         title.font = UIFont(name: "Montserrat-Medium", size: 14)
+        title.textAlignment = .center
+//        title.textColor = .tas
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -33,6 +35,7 @@ class DashboardCollectionTileView: UICollectionViewCell {
         super.init(frame: frame)
         
         self.addSubview(hexagonView)
+        self.hexagonView.addSubview(tileTitle)
         
         NSLayoutConstraint.activate([
             hexagonView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 2.5),
