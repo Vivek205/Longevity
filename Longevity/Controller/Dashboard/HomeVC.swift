@@ -12,7 +12,6 @@ import ResearchKit
 class HomeVC: UIViewController {
     var surveysData: [SurveyResponse]?
     var surveyId: String?
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         retrieveDataAndInitializeTheViews()
@@ -68,6 +67,18 @@ class HomeVC: UIViewController {
             for survey in self.surveysData! {
                 let defaultAvatar = "https://image.freepik.com/free-vector/survey-report-checklist-questionnaire-business-illustration_114835-117.jpg"
                 let avatarURL = URL(string: survey.imageUrl ?? defaultAvatar)
+
+                if let lastSubmissionTimestamp = survey.lastSubmission as? String {
+                    let currentDate = Date()
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                    if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionTimestamp) {
+                        let daysElapsed = Calendar.current.dateComponents([.day], from: lastSubmissionDate)
+                        print("Days elapsed", daysElapsed, lastSubmissionDate)
+                    }
+                }
+
                 let surveyCardView = SurveyCardView(surveyId: survey.surveyId, avatarUrl: avatarURL,
                                                     header: survey.name, content: survey.description,
                                                     extraContent: "last submission date")
@@ -99,6 +110,8 @@ class HomeVC: UIViewController {
                 if task != nil {
                     let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
                     taskViewController.delegate = self
+//                    taskViewController.isNavigationBarHidden = true
+                    print("nav bar hidden", taskViewController.isNavigationBarHidden)
                     self.present(taskViewController, animated: true, completion: nil)
                 } else {
                     self.showAlert(title: "Survey Not available",
@@ -188,11 +201,15 @@ extension HomeVC:ORKTaskViewControllerDelegate {
         if step is ORKInstructionStep {
             // Default View Controller will be used
             return nil
+        } else if step is ORKFormStep {
+            return nil
         } else {
-            let storyboard = UIStoryboard(name: "CovidCheckin", bundle: nil)
-            var stepVC:ORKStepViewController = ORKStepViewController()
-            stepVC = storyboard.instantiateViewController(withIdentifier: "TextChoiceAnswerVC")
-                as! ORKStepViewController
+//            let storyboard = UIStoryboard(name: "CovidCheckin", bundle: nil)
+//            var stepVC:ORKStepViewController = ORKStepViewController()
+//            stepVC = storyboard.instantiateViewController(withIdentifier: "TextChoiceAnswerVC")
+//                as! ORKStepViewController
+//
+            var stepVC = TextChoiceAnswerVC()
             stepVC.step = step
             return stepVC
         }

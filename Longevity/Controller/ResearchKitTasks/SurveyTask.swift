@@ -9,7 +9,8 @@
 import Foundation
 import ResearchKit
 
-func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void, onFailure: @escaping (_ error: Error) -> Void) {
+func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
+                  onFailure: @escaping (_ error: Error) -> Void) {
     print(surveyId)
     func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
         guard surveyDetails != nil else {
@@ -20,7 +21,7 @@ func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTas
         var steps = [ORKStep]()
 
         let instructionStep = ORKInstructionStep(identifier: "IntroStep")
-        instructionStep.title = "Intro: \(surveyId) Survey"
+        instructionStep.title = "Intro: \(surveyDetails!.name) Survey"
         instructionStep.text = "Who would cross the Bridge of Death must answer me these questions three, ere the other side they see."
         steps += [instructionStep]
 
@@ -30,26 +31,57 @@ func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTas
             print(type(of: category) ,category)
             for (categoryName, categoryValue) in category {
                 print(categoryName, categoryValue)
-                for module in categoryValue.modules {
-                    print(module)
-                    for (moduleName, moduleValue) in module {
-                        print(moduleName, moduleValue)
-                        if  let filteredQuestions = surveyDetails?.questions.filter { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
-                            for filteredQuestion in filteredQuestions {
-                                let step = createSingleChoiceQuestionStep(
-                                    identifier: filteredQuestion.quesId,
-                                    title: surveyDetails?.name ?? "Survey",
-                                    question: filteredQuestion.text,
-                                    additionalText: nil,
-                                    choices: filteredQuestion.options.map {
-                                        ORKTextChoice(text:$0.text,detailText:$0.description ,
-                                                      value:NSString(string:  $0.value), exclusive: false)
-                                    }
-                                )
-                                steps += [step]
+
+                if(categoryValue.view == SurveyCategoryViewTypes.oneCategoryPerPage) {
+                    print(SurveyCategoryViewTypes.oneCategoryPerPage)
+                    let step = ORKFormStep(identifier: "\(categoryValue.id)", title: categoryName, text: "description text")
+                    var items = [ORKFormItem]()
+
+                    for module in categoryValue.modules {
+                        for (moduleName, moduleValue) in module {
+                            if  let filteredQuestions = surveyDetails?.questions
+                                .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
+                                for filteredQuestion in filteredQuestions {
+                                    let answerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
+                                    let item = ORKFormItem(identifier: "\(filteredQuestion.quesId)",
+                                        text: "\(filteredQuestion.text)", answerFormat: answerFormat)
+                                    items += [item]
+                                }
                             }
                         }
+                    }
 
+
+                    let finalAnswerFormat = ORKTextAnswerFormat(maximumLength: 200)
+                    let finalitem = ORKFormItem(identifier:"\(categoryName)-finalItem", text: "Any other symptoms",
+                                                answerFormat: finalAnswerFormat )
+                    items += [finalitem]
+
+                    step.formItems = items
+                    steps += [step]
+                } else {
+                    for module in categoryValue.modules {
+                        print(module)
+                        for (moduleName, moduleValue) in module {
+                            print(moduleName, moduleValue)
+                            if  let filteredQuestions = surveyDetails?.questions.filter
+                                { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
+                                for filteredQuestion in filteredQuestions {
+                                    let step = createSingleChoiceQuestionStep(
+                                        identifier: filteredQuestion.quesId,
+                                        title: surveyDetails?.name ?? "Survey",
+                                        question: filteredQuestion.text,
+                                        additionalText: nil,
+                                        choices: filteredQuestion.options.map {
+                                            ORKTextChoice(text:$0.text,detailText:$0.description ,
+                                                          value:NSString(string:  $0.value), exclusive: false)
+                                        }
+                                    )
+                                    steps += [step]
+                                }
+                            }
+
+                        }
                     }
                 }
             }

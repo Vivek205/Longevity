@@ -29,6 +29,7 @@
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
+		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
 		E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F07D24C55DA600969CD8 /* Dashboard.storyboard */; };
 		E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08524C57C7A00969CD8 /* HomeVC.swift */; };
 		E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08724C597C000969CD8 /* CovidCheckinVC.swift */; };
@@ -50,6 +51,7 @@
 		E290B60624BC75D500C51655 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60524BC75D500C51655 /* String.swift */; };
 		E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60724BCA1EA00C51655 /* CheckboxButton.swift */; };
 		E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */; };
+		E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2939A4124E15D9500069026 /* UICollectionView+Extension.swift */; };
 		E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */; };
 		E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */; };
 		E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8F24923309008DAD25 /* awsconfiguration.json */; };
@@ -146,6 +148,7 @@
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		E274F08524C57C7A00969CD8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E274F08724C597C000969CD8 /* CovidCheckinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinVC.swift; sourceTree = "<group>"; };
@@ -167,6 +170,7 @@
 		E290B60524BC75D500C51655 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		E290B60724BCA1EA00C51655 /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
 		E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionVC.swift; sourceTree = "<group>"; };
+		E2939A4124E15D9500069026 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailVC.swift; sourceTree = "<group>"; };
 		E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2A25F8F24923309008DAD25 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
@@ -316,6 +320,7 @@
 			isa = PBXGroup;
 			children = (
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
+				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -346,6 +351,14 @@
 				E2A5705C24CB095000DC07AB /* Array.swift */,
 			);
 			path = Utils;
+			sourceTree = "<group>";
+		};
+		E2939A4024E15D9500069026 /* Utilities */ = {
+			isa = PBXGroup;
+			children = (
+				E2939A4124E15D9500069026 /* UICollectionView+Extension.swift */,
+			);
+			path = Utilities;
 			sourceTree = "<group>";
 		};
 		E2B0337324AB327D00929D39 /* Protocols */ = {
@@ -440,6 +453,7 @@
 				E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */,
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
 				E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */,
+				E2939A4024E15D9500069026 /* Utilities */,
 			);
 			path = Longevity;
 			sourceTree = "<group>";
@@ -693,6 +707,7 @@
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
+				E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */,
 				E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */,
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
@@ -743,6 +758,7 @@
 				E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */,
 				E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */,
 				E2A5705824CAC88E00DC07AB /* BranchingOrderedTask.swift in Sources */,
+				E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */,
 				E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */,
 				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,

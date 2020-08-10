@@ -116,6 +116,8 @@ struct SurveyDetails: Decodable {
     let description: String
     let displaySettings: DisplaySettings
     let questions: [Question]
+    let lastSubmission: String?
+    let lastSubmissionId: String?
 }
 
 var currentSurveyDetails: SurveyDetails?
@@ -202,6 +204,11 @@ struct SubmitAnswerPayload: Codable {
     let quesId: String
 }
 
+struct SurveyCategoryViewTypes {
+    static let oneCategoryPerPage = "ONE_CATEGORY_PER_PAGE"
+    static let moduleLevel = "MODULE_LEVEL"
+}
+
 func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload]) {
     func onGettingCredentials(_ credentials: Credentials){
         do {
@@ -235,16 +242,23 @@ func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload]) {
 }
 
 func submitSurvey(surveyId: String) {
-    let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: nil,
-                              queryParameters: nil, body: nil)
-    _ = Amplify.API.post(request: request, listener: { (result) in
-        switch result {
-        case .success(let data):
-            print("success", data)
-        case .failure(let error):
-            print("failure", error)
-        }
-    })
+    func onGettingCredentials(_ credentials: Credentials){
+        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+        let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: headers,
+                                  queryParameters: nil, body: nil)
+        _ = Amplify.API.post(request: request, listener: { (result) in
+            switch result {
+            case .success(let data):
+                print("success", data)
+            case .failure(let error):
+                print("failure", error)
+            }
+        })
+    }
+    func onFailureCredentials(_ error: Error?) {
+        print(error)
+    }
+    getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
 
