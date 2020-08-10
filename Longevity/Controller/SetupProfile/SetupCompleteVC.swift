@@ -10,7 +10,7 @@ import UIKit
 
 class SetupCompleteVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
@@ -18,7 +18,11 @@ class SetupCompleteVC: UIViewController {
         collectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
-
+    
+    @IBAction func onShowDashboard(_ sender: Any) {
+        let tabBarController = LNTabBarViewController()
+        NavigationUtility.presentOverCurrentContext(destination: tabBarController, style: .overCurrentContext, completion: nil)
+    }
 }
 
 extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
