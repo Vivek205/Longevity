@@ -22,11 +22,11 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         title.textAlignment = .center
         title.font = UIFont(name: "Montserrat-Medium", size: 14)
         title.textAlignment = .center
-//        title.textColor = .tas
+        title.numberOfLines = 0
+        title.lineBreakMode = .byWordWrapping
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
-    
     
     var borderColor: UIColor = .hexagonBorderColor
     var isEmptyCell: Bool = false
