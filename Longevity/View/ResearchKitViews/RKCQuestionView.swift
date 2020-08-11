@@ -49,66 +49,62 @@ class RKCQuestionView: UICollectionViewCell {
     }
 
 
-    func createLayout(header: String, subHeader: String, question:String?, extraInfo: String?) {
+    func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
         backgroundColor = .white
-        translatesAutoresizingMaskIntoConstraints = false
-
-        let stackView = UIStackView()
-        stackView.axis = .vertical
-        stackView.distribution = .equalSpacing
-        stackView.alignment = .fill
-        stackView.spacing = 20.0
-        stackView.translatesAutoresizingMaskIntoConstraints = false
-
-        self.addSubview(stackView)
 
         let headerView = UIView()
         headerView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(headerView)
+
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            headerView.topAnchor.constraint(equalTo: self.topAnchor),
+        ])
 
         headerLabel.text = header
         headerView.addSubview(headerLabel)
 
-        headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
-        headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-        headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor).isActive = true
-        let headerHeight = header.height(
-            withConstrainedWidth: headerView.bounds.width,
-            font: headerLabel.font)
-        headerLabel.heightAnchor.constraint(equalToConstant: headerHeight).isActive = true
+        NSLayoutConstraint.activate([
+            headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
+        ])
 
 
         subHeaderLabel.text = subHeader
         headerView.addSubview(subHeaderLabel)
 
-        subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor).isActive = true
-        subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor).isActive = true
-        subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor).isActive = true
-        let subheaderHeight = subHeader.height(
-            withConstrainedWidth: headerView.bounds.width,
-            font: subHeaderLabel.font)
-        subHeaderLabel.heightAnchor.constraint(equalToConstant: subheaderHeight).isActive = true
+        NSLayoutConstraint.activate([
+            subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
+            subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
+            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
+            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+        ])
 
-        stackView.addArrangedSubview(headerView)
+        questionLabel.text = question
+        self.addSubview(questionLabel)
 
-        if question != nil {
-            questionLabel.text = question
-            stackView.addArrangedSubview(questionLabel)
-            if let questionLabelHeight = question?.height(
-                withConstrainedWidth: stackView.bounds.width,
-                font: questionLabel.font) {
-                questionLabel.heightAnchor.constraint(equalToConstant: questionLabelHeight).isActive = true
-            }
+        NSLayoutConstraint.activate([
+            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
+        ])
 
-        }
+        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo
-            stackView.addArrangedSubview(extraInfoLabel)
+            self.addSubview(extraInfoLabel)
+            NSLayoutConstraint.activate([
+                extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
+                extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            ])
+        } else {
+            bottomAnchorQuestionLabel.isActive = true
         }
-
-        stackView.leftAnchor.constraint(equalTo: self.leftAnchor).isActive = true
-        stackView.rightAnchor.constraint(equalTo: self.rightAnchor).isActive = true
-        stackView.topAnchor.constraint(equalTo: self.topAnchor).isActive = true
-        stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor).isActive = true
 
     }
 }

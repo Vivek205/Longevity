@@ -7,8 +7,11 @@
 //
 
 import UIKit
+import ResearchKit
 
 class HomeViewController: BaseViewController {
+    var surveyId: String?
+    var surveyList: [SurveyResponse]?
     
     lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect.zero, style: .grouped)
@@ -30,7 +33,7 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.getSurveyList()
         self.view.addSubview(tableView)
         
         tableView.delegate = self
@@ -44,6 +47,26 @@ class HomeViewController: BaseViewController {
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
     }
+
+    func getSurveyList() {
+        self.showSpinner()
+
+        func completion(_ surveys:[SurveyResponse]) {
+            DispatchQueue.main.async {
+                self.surveyList = surveys
+                self.tableView.reloadData()
+                self.removeSpinner()
+            }
+        }
+
+        func onFailure(_ error:Error) {
+            DispatchQueue.main.async {
+                print(error)
+                self.removeSpinner()
+            }
+        }
+         getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+    }
 }
 
 extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
@@ -52,6 +75,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        if section == 0 {
+            if surveyList != nil {
+                return self.surveyList!.count
+            }
+            return 0
+        }
         if section == 1 {
             return 1
         }
@@ -64,6 +93,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
+            print("row", indexPath.row)
             return checkinCell
         }
         else if indexPath.section == 1 {
@@ -132,5 +162,136 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
+        let selectedCell = tableView.cellForRow(at: indexPath)
+        if selectedCell is DashboardCheckInCell{
+            self.showSurvey(selectedCell)
+        }
     }
 }
+
+extension HomeViewController {
+    func showSurvey(_ selectedSurveyCell: Any) {
+         self.showSpinner()
+
+        func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
+            DispatchQueue.main.async {
+                if task != nil {
+                    let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
+                    taskViewController.delegate = self
+                    print("nav bar hidden", taskViewController.isNavigationBarHidden)
+                    self.present(taskViewController, animated: true, completion: nil)
+                } else {
+                    self.showAlert(title: "Survey Not available",
+                                   message: "No questions are found for the survey. Please try after sometime")
+                }
+                self.removeSpinner()
+            }
+        }
+        func onCreateSurveyFailure(_ error: Error) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+        createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
+                     onFailure: onCreateSurveyFailure(_:))
+    }
+}
+
+extension HomeViewController: ORKTaskViewControllerDelegate {
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+        let taskViewAppearance =
+            UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
+        taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+    }
+
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+
+        func parseResult() {
+            var answersToSubmit: [SubmitAnswerPayload] = [SubmitAnswerPayload]()
+            if let stepResults = taskViewController.result.results as? [ORKStepResult] {
+                for stepResult in stepResults {
+                    if stepResult.identifier == "IntroStep" || stepResult.identifier == "SummaryStep" {
+                        print("skipped ", stepResult.identifier)
+                        continue
+                    }
+
+                    if currentSurveyDetails != nil {
+                        let currentQuestion =
+                            currentSurveyDetails!.questions.first { $0.quesId == stepResult.identifier }
+                        let latestStepResult = stepResult.results?.last
+                        if latestStepResult is ORKChoiceQuestionResult {
+                            let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first
+                                as! NSNumber
+                            print("answervalue", answer.intValue, answer.stringValue)
+                            let answerPaylaod = SubmitAnswerPayload(categoryId: currentQuestion!.categoryId,
+                                                                    moduleId: currentQuestion!.moduleId,
+                                                                    answer: answer.stringValue,
+                                                                    quesId: currentQuestion!.quesId)
+                            answersToSubmit += [answerPaylaod]
+                        }
+                    }
+                }
+                if self.surveyId != nil {
+                    saveSurveyAnswers(surveyId: self.surveyId!, answers: answersToSubmit)
+                }
+            }
+        }
+
+        print("reason", reason.rawValue)
+        switch reason {
+        case .completed:
+            parseResult()
+            print("completed")
+        case .discarded:
+            print("discarded")
+        case .failed:
+            print("failed")
+        case .saved:
+            print("saved")
+        @unknown default:
+            print("unknown reason")
+        }
+        print("error", error)
+        taskViewController.dismiss(animated: true) {
+            print("task view controller dismissed")
+        }
+
+    }
+
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            viewControllerFor step: ORKStep) -> ORKStepViewController? {
+        if step is ORKInstructionStep {
+            // Default View Controller will be used
+            return nil
+        } else if step is ORKFormStep {
+            return nil
+        } else {
+            var stepVC = TextChoiceAnswerVC()
+            stepVC.step = step
+            return stepVC
+        }
+
+    }
+
+    func showConsent() {
+        let taskViewController = ORKTaskViewController(task: consentTask, taskRun: nil)
+        taskViewController.delegate = self
+        present(taskViewController, animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: ORKTaskResultSource {
+    func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
+        switch stepIdentifier {
+        case "TextChoiceQuestionStep":
+            let result = ORKChoiceQuestionResult(identifier: "TextChoiceQuestionStep")
+            let stepResult = ORKStepResult(stepIdentifier: "TextChoiceQuestionStep", results: [result])
+            return stepResult
+        default:
+            return ORKStepResult()
+        }
+    }
+}
+

@@ -51,7 +51,6 @@ func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTas
                         }
                     }
 
-
                     let finalAnswerFormat = ORKTextAnswerFormat(maximumLength: 200)
                     let finalitem = ORKFormItem(identifier:"\(categoryName)-finalItem", text: "Any other symptoms",
                                                 answerFormat: finalAnswerFormat )

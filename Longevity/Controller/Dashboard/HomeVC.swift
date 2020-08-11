@@ -225,7 +225,7 @@ extension HomeVC:ORKTaskViewControllerDelegate {
 
 extension HomeVC: ORKTaskResultSource {
     func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
-        switch stepIdentifier {
+        switch stepIdentifier {     
         case "TextChoiceQuestionStep":
             let result = ORKChoiceQuestionResult(identifier: "TextChoiceQuestionStep")
             let stepResult = ORKStepResult(stepIdentifier: "TextChoiceQuestionStep", results: [result])

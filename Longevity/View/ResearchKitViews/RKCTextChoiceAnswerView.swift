@@ -29,23 +29,13 @@ class RKCTextChoiceAnswerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-        createLayout()
     }
 
     required init?(coder: NSCoder) {
         super.init(coder: coder)
-        createLayout()
     }
 
-    init(answer: String?, info: String?) {
-        self.answer = answer
-        self.info = info
-        super.init(frame: CGRect())
-        self.createLayout()
-    }
-
-    func createLayout() {
-//        applyShadow()
+    func createLayout(answer: String, info: String?) {
         self.addSubview(checkbox)
         checkbox.translatesAutoresizingMaskIntoConstraints = false
         checkbox.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true

@@ -10,12 +10,15 @@ import UIKit
 import ResearchKit
 
 class TextChoiceAnswerVC: ORKStepViewController {
+    var chosenCells: [TextChoiceAnswerViewCell]?
 
     lazy var questionAnswerCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
+        collection.backgroundColor = .clear
+        collection.alwaysBounceVertical = true
         return collection
     }()
 
@@ -67,7 +70,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true
             continueButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
             continueButton.isEnabled = false
-            //            continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
+            continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
             print("inside", step.answerFormat)
 
@@ -77,31 +80,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
 
             layout.sectionInset = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
             layout.scrollDirection = .vertical
-            layout.minimumInteritemSpacing = 10.0
-
-            //            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat{
-            //                for index in 0...answerFormat.textChoices.count-1 {
-            //                    let choice = answerFormat.textChoices[index]
-            //
-            //                    var choiceView = RKCTextChoiceAnswerView(answer: choice.text, info: choice.detailText)
-            //
-            //                    choiceView.translatesAutoresizingMaskIntoConstraints = false
-            //                    choiceView.checkbox.addTarget(self, action: #selector(handleChoiceChange(sender:)),
-            //                                                  for: .touchUpInside)
-            //                    choiceView.tag = index
-            //                    choiceView.checkbox.tag = index
-            //                    if choiceViews.count <= index {
-            //                        choiceViews.append(choiceView)
-            //                    }else{
-            //                        choiceViews[index] = choiceView
-            //                    }
-            //                    stackView.addArrangedSubview(choiceView)
-            //                }
-            //
-            //                print("choices", answerFormat.textChoices.map{$0.value})
-            //                print("choices", answerFormat.textChoices.map{$0.text})
-            //                print("choices", answerFormat.textChoices.map{$0.detailText})
-            //            }
+            layout.minimumInteritemSpacing = 20.0
         }
     }
 
@@ -120,7 +99,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
             choiceView.checkbox.isSelected = false
         }
 
-        let selectedChoice = choiceViews.first{$0.tag == sender.tag}
+        let selectedChoice = choiceViews.first {$0.tag == sender.tag}
         selectedChoice?.setSelected(true)
         sender.isSelected = true
         continueButton.isEnabled = true
@@ -132,42 +111,84 @@ extension TextChoiceAnswerVC: UICollectionViewDelegate,
 UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let step = self.step as? ORKQuestionStep {
-            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat{
-                return answerFormat.textChoices.count + 6
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                print(answerFormat.textChoices.count)
+                return answerFormat.textChoices.count + 1
             }
-            return 5
+            return 2
         }
-        return 5
+        return 2
     }
 
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let defaultCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-        defaultCell.backgroundColor = .blue
-
-        if indexPath.row == 0 {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0 {
             if let step = self.step as? ORKQuestionStep {
                 let questionSubheader = "Thu.Aug.6 for {patient name}"
-                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath) as! RKCQuestionView
+                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+                    as! RKCQuestionView
                 questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader,
-                                          question: step.question, extraInfo: step.text)
+                                          question: step.question!, extraInfo: step.text)
                 return questionCell
             }
-            return defaultCell
         }
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                let choice = answerFormat.textChoices[1]
+                let choice = answerFormat.textChoices[indexPath.item - 1]
                 let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
+                    as! TextChoiceAnswerViewCell
+                answerViewCell.delegate = self
+                answerViewCell.createLayout(text: choice.text, extraInfo: choice.description)
                 return answerViewCell
             }
         }
-        return defaultCell
+        return UICollectionViewCell()
     }
 
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.bounds.height
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var height = CGFloat(100.0)
         let width = self.view.bounds.width - CGFloat(40)
-        return CGSize(width: width, height: 200.0)
+        if indexPath.item == 0 {
+            if let step = self.step as? ORKQuestionStep {
+                let questionCell = RKCQuestionView()
+                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+
+                let questionSubheader = "Thu.Aug.6 for {patient name}"
+                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+                height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
+                if step.text != nil {
+                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
+                }
+                // INSETS
+                height += 30.0
+            }
+
+            return CGSize(width: width, height: height)
+        }
+        return CGSize(width: width, height: height)
+    }
+}
+
+extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
+    func checkboxButton(wasPressedOnCell cell: TextChoiceAnswerViewCell) {
+        if chosenCells != nil {
+            if let step = self.step as? ORKQuestionStep {
+                if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                    if answerFormat.style == .singleChoice {
+                        chosenCells?.forEach {$0.toggleChosenOption()}
+                        chosenCells = nil
+                    }
+                }
+            }
+        }   
+        print(cell)
+        continueButton.isEnabled = true
+        if chosenCells == nil {
+            chosenCells = [cell]
+        }else {
+            chosenCells! += [cell]
+        }
     }
 }
