@@ -68,7 +68,6 @@ class SurveyTaskUtility {
 //            )
 //            steps += [step]
 
-
             for category in categories {
 
                 for (categoryName, categoryValue) in category {
@@ -76,12 +75,13 @@ class SurveyTaskUtility {
                     if(categoryValue.view == SurveyCategoryViewTypes.oneCategoryPerPage) {
                         let step = ORKFormStep(identifier: "\(categoryValue.id)",
                             title:surveyDetails?.name ?? "Survey",
-                            text: categoryName)
+                            text: categoryValue.description)
                         var items = [ORKFormItem]()
 
                         for module in categoryValue.modules {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
+                                sectionItem.placeholder = moduleValue.iconName
                                 items += [sectionItem]
 
                                 if  let filteredQuestions = surveyDetails?.questions

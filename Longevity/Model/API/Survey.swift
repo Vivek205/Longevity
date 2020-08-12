@@ -98,12 +98,14 @@ enum CategoryViewType: String, Decodable {
 struct Module: Decodable {
     let view: String?
     let id: Int
+    let iconName: String?
 }
 
 struct Category: Decodable {
     let id: Int
     let view: String
     let modules: Array<[String: Module]>
+    let description: String?
 }
 
 struct DisplaySettings: Decodable {

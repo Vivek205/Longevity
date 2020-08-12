@@ -182,7 +182,8 @@ extension HomeViewController {
                     self.currentTask = task
                     taskViewController.delegate = self
                     taskViewController.navigationBar.backgroundColor = .white
-                    taskViewController.navigationBar.barTintColor = .orange
+                    taskViewController.navigationBar.barTintColor = .white
+                    taskViewController.view.backgroundColor = .white
                     self.present(taskViewController, animated: true, completion: nil)
                 } else {
                     self.showAlert(title: "Survey Not available",

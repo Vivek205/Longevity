@@ -17,14 +17,8 @@ class RKCFormItemView: UICollectionViewCell {
         label.textColor = .black
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
+        label.textColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         return label
-    }()
-
-    lazy var placeholderButton: CustomButtonFill = {
-        let button = CustomButtonFill()
-        button.setTitle("placeholder", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        return button
     }()
 
     override init(frame: CGRect) {
@@ -57,7 +51,7 @@ class RKCFormItemView: UICollectionViewCell {
         }
         answerView.translatesAutoresizingMaskIntoConstraints = false
 
-        self.backgroundColor = .white
+        self.backgroundColor = .clear
         self.addSubview(questionLabel)
         self.addSubview(answerView)
 

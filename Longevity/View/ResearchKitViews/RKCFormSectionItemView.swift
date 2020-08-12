@@ -10,10 +10,9 @@ import UIKit
 
 class RKCFormSectionItemView: UICollectionViewCell {
 
-    lazy var circleImage: UIImageView = {
+    lazy var iconImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.layer.cornerRadius = imageView.frame.width / 2
         return imageView
     }()
 
@@ -31,20 +30,21 @@ class RKCFormSectionItemView: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createLayout(heading:String) {
-        self.addSubview(circleImage)
-        circleImage.image = UIImage(named: "icon: checkbox-selected")
+    func createLayout(heading:String, iconName: String?) {
+        var defaultIconName = "icon : GI"
+        self.addSubview(iconImage)
+        iconImage.image = UIImage(named: iconName ?? defaultIconName )
         NSLayoutConstraint.activate([
-            circleImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            circleImage.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            circleImage.widthAnchor.constraint(equalToConstant: 48.0),
-            circleImage.heightAnchor.constraint(equalToConstant: 48.0)
+            iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
+            iconImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            iconImage.widthAnchor.constraint(equalToConstant: 48.0),
+            iconImage.heightAnchor.constraint(equalToConstant: 48.0)
         ])
 
         self.addSubview(headingLabel)
         headingLabel.text = heading
         NSLayoutConstraint.activate([
-            headingLabel.leadingAnchor.constraint(equalTo: circleImage.trailingAnchor, constant: 20),
+            headingLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 10),
             headingLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             headingLabel.topAnchor.constraint(equalTo: self.topAnchor),
             headingLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)

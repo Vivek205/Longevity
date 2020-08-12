@@ -12,7 +12,7 @@ import ResearchKit
 class FormStepVC: ORKStepViewController {
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.backgroundColor = .white
+        collection.backgroundColor = .clear
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
@@ -48,7 +48,7 @@ class FormStepVC: ORKStepViewController {
         NSLayoutConstraint.activate([
             formItemsCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             formItemsCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            formItemsCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 30),
+            formItemsCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
             formItemsCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
                                                              constant: -footerViewHeight)
         ])
@@ -87,7 +87,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return 0
         }
         if formStep.formItems != nil {
-            return formStep.formItems!.count
+            return formStep.formItems!.count + 1
         }
         return 0
     }
@@ -101,11 +101,23 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         guard formStep.formItems != nil else {
             return defaultCell
         }
-        let item = formStep.formItems![indexPath.item] as ORKFormItem
+
+        if indexPath.item == 0 {
+            print(formStep.text)
+                let questionSubheader = SurveyTaskUtility.surveyTagline
+                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+                    as! RKCQuestionView
+                questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
+                                          question: formStep.text ?? "", extraInfo: nil)
+                return questionCell
+
+        }
+
+        let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
 
         if item.identifier == "" {
             let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self, at: indexPath) as! RKCFormSectionItemView
-            sectionItemCell.createLayout(heading: item.text!)
+            sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
             return sectionItemCell
         }
 
@@ -116,8 +128,25 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = CGFloat(50)
+        var height = CGFloat(50)
         let width = self.view.bounds.width
+
+        if indexPath.item == 0 {
+            if let step = self.step as? ORKFormStep {
+                let questionCell = RKCQuestionView()
+                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+
+                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
+                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+                if step.text != nil {
+                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
+                }
+                // INSETS
+                height += 60.0
+            }
+            return CGSize(width: width, height: height)
+        }
+
         return CGSize(width: width - CGFloat(40), height: height)
     }
 }

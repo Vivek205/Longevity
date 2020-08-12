@@ -18,7 +18,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
         collection.delegate = self
         collection.dataSource = self
         collection.backgroundColor = .clear
-        collection.alwaysBounceVertical = true
+        collection.alwaysBounceVertical = true  
         return collection
     }()
 
