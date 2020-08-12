@@ -120,8 +120,6 @@ struct SurveyDetails: Decodable {
     let lastSubmissionId: String?
 }
 
-var currentSurveyDetails: SurveyDetails?
-
 func getSurveyDetails(surveyId: String,
                   completion: @escaping (_ surveyDetails: SurveyDetails?) -> Void,
                   onFailure: @escaping (_ error: Error) -> Void) {
@@ -140,9 +138,9 @@ func getSurveyDetails(surveyId: String,
                     let value = try decoder.decode(SurveyDetails.self, from: data)
                     response = value
                     completion(value)
-                    currentSurveyDetails = value
+                    SurveyTaskUtility.currentSurveyDetails = value
                 } catch {
-                    currentSurveyDetails = nil
+                    SurveyTaskUtility.currentSurveyDetails = nil
                     print("json error", error)
                 }
 

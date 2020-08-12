@@ -23,7 +23,7 @@ class DashboardTaskCell: UITableViewCell {
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
-    
+
     lazy var taskDescription: UILabel = {
         let taskdesc = UILabel()
         taskdesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
@@ -62,7 +62,6 @@ class DashboardTaskCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .clear
-        
         self.addSubview(bgView)
         bgView.addSubview(taskIcon)
         bgView.addSubview(taskTitle)
@@ -94,7 +93,6 @@ class DashboardTaskCell: UITableViewCell {
             progressBar.heightAnchor.constraint(equalToConstant: 4.0),
             taskDescription.bottomAnchor.constraint(lessThanOrEqualTo: progressBar.topAnchor, constant: 10.0)
         ])
-        
         self.setupCell()
     }
     
@@ -114,13 +112,13 @@ class DashboardTaskCell: UITableViewCell {
         super.layoutSubviews()
         
         bgView.layer.masksToBounds = true
-        
         bgView.layer.shadowColor = UIColor.black.cgColor
         bgView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
         bgView.layer.cornerRadius = 5.0
         bgView.layer.shadowRadius = 2.0
         bgView.layer.shadowOpacity = 0.25
         bgView.layer.masksToBounds = false
-        bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds, cornerRadius: bgView.layer.cornerRadius).cgPath
+        bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds,
+                                               cornerRadius: bgView.layer.cornerRadius).cgPath
     }
 }

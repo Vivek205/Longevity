@@ -15,19 +15,30 @@ protocol TextChoiceAnswerViewChangedDelegate {
 class TextChoiceAnswerViewCell: UICollectionViewCell {
     var isChosenOption = false
     var delegate: TextChoiceAnswerViewChangedDelegate?
+    var value:Int?
 
     lazy var cardView: CardView = {
         let cardView = CardView()
         cardView.backgroundColor = .white
         cardView.translatesAutoresizingMaskIntoConstraints = false
+        cardView.layer.cornerRadius = 5.0
         return cardView
     }()
 
-    let titleLabel: AnswerTitleLabel = {
+    lazy var titleLabel: AnswerTitleLabel = {
         let label = AnswerTitleLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
         return label
     }()
+
+    lazy var extraInfoLabel: AnswerDescriptionLabel = {
+        let label = AnswerDescriptionLabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        return label
+    }()
+
 
     let checkbox: CheckboxButton = {
         let checkbox = CheckboxButton()
@@ -60,16 +71,33 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor),
-            titleLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor)
+            titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10)
         ])
+
+        let titleLabelBottomAnchor =  titleLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10)
 
         NSLayoutConstraint.activate([
             checkbox.trailingAnchor.constraint(equalTo: cardView.trailingAnchor, constant: -20),
-            checkbox.centerYAnchor.constraint(equalTo: cardView.centerYAnchor)
+            checkbox.centerYAnchor.constraint(equalTo: cardView.centerYAnchor),
+            checkbox.widthAnchor.constraint(equalToConstant: 24)
         ])
 
         checkbox.addTarget(self, action: #selector(handleCheckboxTapped(_:)), for: .touchUpInside)
+
+
+        if extraInfo != nil {
+            self.addSubview(extraInfoLabel)
+            extraInfoLabel.text = extraInfo
+            NSLayoutConstraint.activate([
+                extraInfoLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
+                extraInfoLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
+                extraInfoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
+                extraInfoLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10)
+            ])
+
+        } else {
+            titleLabelBottomAnchor.isActive = true
+        }
 
 ////            let estimatedWidth = self.bounds.width - 40.0
 ////            let attributes = [NSAttributedString.Key.font: titleLabel.font.pointSize]

@@ -12,6 +12,7 @@ import ResearchKit
 class HomeViewController: BaseViewController {
     var surveyId: String?
     var surveyList: [SurveyResponse]?
+    var currentTask: ORKOrderedTask?
     
     lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect.zero, style: .grouped)
@@ -26,7 +27,7 @@ class HomeViewController: BaseViewController {
     init() {
         super.init(viewTab: .home)
     }
-    
+
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
@@ -177,8 +178,11 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if task != nil {
                     let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
+                    print(task?.steps)
+                    self.currentTask = task
                     taskViewController.delegate = self
-                    print("nav bar hidden", taskViewController.isNavigationBarHidden)
+                    taskViewController.navigationBar.backgroundColor = .white
+                    taskViewController.navigationBar.barTintColor = .orange
                     self.present(taskViewController, animated: true, completion: nil)
                 } else {
                     self.showAlert(title: "Survey Not available",
@@ -192,7 +196,8 @@ extension HomeViewController {
                 self.removeSpinner()
             }
         }
-        createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
+        let surveyTaskUtility = SurveyTaskUtility()
+        surveyTaskUtility.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
                      onFailure: onCreateSurveyFailure(_:))
     }
 }
@@ -207,42 +212,11 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+        let surveyTaskUtility = SurveyTaskUtility()
 
-        func parseResult() {
-            var answersToSubmit: [SubmitAnswerPayload] = [SubmitAnswerPayload]()
-            if let stepResults = taskViewController.result.results as? [ORKStepResult] {
-                for stepResult in stepResults {
-                    if stepResult.identifier == "IntroStep" || stepResult.identifier == "SummaryStep" {
-                        print("skipped ", stepResult.identifier)
-                        continue
-                    }
-
-                    if currentSurveyDetails != nil {
-                        let currentQuestion =
-                            currentSurveyDetails!.questions.first { $0.quesId == stepResult.identifier }
-                        let latestStepResult = stepResult.results?.last
-                        if latestStepResult is ORKChoiceQuestionResult {
-                            let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first
-                                as! NSNumber
-                            print("answervalue", answer.intValue, answer.stringValue)
-                            let answerPaylaod = SubmitAnswerPayload(categoryId: currentQuestion!.categoryId,
-                                                                    moduleId: currentQuestion!.moduleId,
-                                                                    answer: answer.stringValue,
-                                                                    quesId: currentQuestion!.quesId)
-                            answersToSubmit += [answerPaylaod]
-                        }
-                    }
-                }
-                if self.surveyId != nil {
-                    saveSurveyAnswers(surveyId: self.surveyId!, answers: answersToSubmit)
-                }
-            }
-        }
-
-        print("reason", reason.rawValue)
         switch reason {
         case .completed:
-            parseResult()
+            surveyTaskUtility.saveCurrentSurvey()
             print("completed")
         case .discarded:
             print("discarded")
@@ -253,7 +227,7 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
         @unknown default:
             print("unknown reason")
         }
-        print("error", error)
+
         taskViewController.dismiss(animated: true) {
             print("task view controller dismissed")
         }
@@ -266,9 +240,12 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
             // Default View Controller will be used
             return nil
         } else if step is ORKFormStep {
-            return nil
+            let formStepVC = FormStepVC()
+            formStepVC.step = step
+            return formStepVC
+//            return nil
         } else {
-            var stepVC = TextChoiceAnswerVC()
+            let stepVC = TextChoiceAnswerVC()
             stepVC.step = step
             return stepVC
         }

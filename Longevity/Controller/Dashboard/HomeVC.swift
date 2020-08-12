@@ -127,7 +127,8 @@ class HomeVC: UIViewController {
             }
         }
         self.surveyId = tappedSurvey.surveyId
-        createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
+        let surveyTaskUtility = SurveyTaskUtility()
+        surveyTaskUtility.createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
                      onFailure: onCreateSurveyFailure(_:))
     }
 }
@@ -152,9 +153,9 @@ extension HomeVC:ORKTaskViewControllerDelegate {
                         continue
                     }
 
-                    if currentSurveyDetails != nil {
+                    if SurveyTaskUtility.currentSurveyDetails != nil {
                         let currentQuestion =
-                            currentSurveyDetails!.questions.first { $0.quesId == stepResult.identifier }
+                            SurveyTaskUtility.currentSurveyDetails!.questions.first { $0.quesId == stepResult.identifier }
                         let latestStepResult = stepResult.results?.last
                         if latestStepResult is ORKChoiceQuestionResult {
                             let answer = (latestStepResult as! ORKChoiceQuestionResult).choiceAnswers?.first as! NSNumber
@@ -225,7 +226,7 @@ extension HomeVC:ORKTaskViewControllerDelegate {
 
 extension HomeVC: ORKTaskResultSource {
     func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
-        switch stepIdentifier {     
+        switch stepIdentifier {
         case "TextChoiceQuestionStep":
             let result = ORKChoiceQuestionResult(identifier: "TextChoiceQuestionStep")
             let stepResult = ORKStepResult(stepIdentifier: "TextChoiceQuestionStep", results: [result])

@@ -50,6 +50,7 @@ class RKCQuestionView: UICollectionViewCell {
 
 
     func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
+        self.addBottomRoundedEdge(desiredCurve: 0.5)
         backgroundColor = .white
 
         let headerView = UIView()
@@ -91,7 +92,7 @@ class RKCQuestionView: UICollectionViewCell {
             questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
         ])
 
-        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
 
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo
@@ -100,7 +101,7 @@ class RKCQuestionView: UICollectionViewCell {
                 extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                 extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
                 extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-                extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+                extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
             ])
         } else {
             bottomAnchorQuestionLabel.isActive = true

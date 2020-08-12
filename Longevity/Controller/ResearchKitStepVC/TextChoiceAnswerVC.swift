@@ -78,7 +78,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
                 return
             }
 
-            layout.sectionInset = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
+            layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
             layout.scrollDirection = .vertical
             layout.minimumInteritemSpacing = 20.0
         }
@@ -88,21 +88,22 @@ class TextChoiceAnswerVC: ORKStepViewController {
         self.goForward()
     }
 
-    @objc func handleChoiceChange(sender: CheckboxButton) {
-        let questionResult: ORKChoiceQuestionResult = ORKChoiceQuestionResult()
-        questionResult.identifier = self.step?.identifier ?? ""
-        questionResult.choiceAnswers = [NSNumber(value: sender.tag)]
-        addResult(questionResult)
+    //    func handleChoiceChange(sender: CheckboxButton) {
+    //        for choiceView in choiceViews {
+    //            choiceView.setSelected(false)
+    //            choiceView.checkbox.isSelected = false
+    //        }
+    //
+    //        let selectedChoice = choiceViews.first {$0.tag == sender.tag}
+    //        selectedChoice?.setSelected(true)
+    //        sender.isSelected = true
+    //        continueButton.isEnabled = true
+    //    }
 
-        for choiceView in choiceViews {
-            choiceView.setSelected(false)
-            choiceView.checkbox.isSelected = false
+    func addResult(value:String) {
+        if let questionId = self.step?.identifier as? String {
+            SurveyTaskUtility.currentSurveyResult[questionId] = value
         }
-
-        let selectedChoice = choiceViews.first {$0.tag == sender.tag}
-        selectedChoice?.setSelected(true)
-        sender.isSelected = true
-        continueButton.isEnabled = true
     }
 
 }
@@ -139,7 +140,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
                     as! TextChoiceAnswerViewCell
                 answerViewCell.delegate = self
-                answerViewCell.createLayout(text: choice.text, extraInfo: choice.description)
+                answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
+                answerViewCell.value = indexPath.item - 1
                 return answerViewCell
             }
         }
@@ -149,7 +151,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height = CGFloat(100.0)
-        let width = self.view.bounds.width - CGFloat(40)
+        let width = self.view.bounds.width
         if indexPath.item == 0 {
             if let step = self.step as? ORKQuestionStep {
                 let questionCell = RKCQuestionView()
@@ -162,13 +164,29 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                     height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
                 }
                 // INSETS
-                height += 30.0
+                height += 60.0
             }
-
             return CGSize(width: width, height: height)
         }
-        return CGSize(width: width, height: height)
+
+        if let step = self.step as? ORKQuestionStep {
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                let choice = answerFormat.textChoices[indexPath.item - 1]
+                let answerCell = TextChoiceAnswerViewCell()
+                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
+                if choice.detailText != nil {
+                    height += choice.detailText!
+                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
+                }
+
+                height += 50
+            }
+        }
+
+
+        return CGSize(width: width - CGFloat(40), height: height)
     }
+    
 }
 
 extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
@@ -182,13 +200,14 @@ extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
                     }
                 }
             }
-        }   
-        print(cell)
-        continueButton.isEnabled = true
+        }
+
         if chosenCells == nil {
             chosenCells = [cell]
         }else {
             chosenCells! += [cell]
         }
+        self.addResult(value: "\(cell.value!)")
+        continueButton.isEnabled = true
     }
 }
