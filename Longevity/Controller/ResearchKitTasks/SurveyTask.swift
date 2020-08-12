@@ -14,6 +14,22 @@ class SurveyTaskUtility {
     static var currentSurveyDetails: SurveyDetails?
     static var currentTask: ORKOrderedTask?
     static var currentSurveyResult: [String:String] = [String:String]() // [QuestionId:Answer]
+    static var surveyName: String? = {
+        return SurveyTaskUtility.currentSurveyDetails?.name
+    }()
+
+    static var surveyTagline: String? = {
+        let today = Date()
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "E.MMM.d"
+        let date = dateFormatter.string(from: today)
+
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        guard let userName = defaults.value(forKey: keys.name) as? String else { return nil }
+        
+        return "\(date) for \(userName)"
+    }()
 
     func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
                       onFailure: @escaping (_ error: Error) -> Void) {

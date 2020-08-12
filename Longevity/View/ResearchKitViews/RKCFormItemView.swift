@@ -44,6 +44,12 @@ class RKCFormItemView: UICollectionViewCell {
             let booleanAnswerView = RKCFormBooleanAnswerView()
             booleanAnswerView.createLayout(yesText: "yes", noText: "No")
             booleanAnswerView.delegate = self
+
+            if self.itemIdentifier != nil && SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!] != nil{
+                let currentResultSelectedSegmentIndex =
+                    Int(SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!]!)
+                booleanAnswerView.segmentedControl.selectedSegmentIndex = currentResultSelectedSegmentIndex!
+            }
             answerView = booleanAnswerView
         default:
             answerView = UIView()

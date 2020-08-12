@@ -98,17 +98,9 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         } else {
             titleLabelBottomAnchor.isActive = true
         }
-
-////            let estimatedWidth = self.bounds.width - 40.0
-////            let attributes = [NSAttributedString.Key.font: titleLabel.font.pointSize]
-////            let estimatedSize = CGSize(width: estimatedWidth, height: 1000.0)
-////            let estimatedFrame = NSString(string: self.text!).boundingRect(with: estimatedSize, options: .usesLineFragmentOrigin, attributes: attributes, context: nil)
-//
-////            let estimatedHeight = text.height(withConstrainedWidth: self.bounds.width, font: titleLabel.font)
-
     }
 
-    func toggleChosenOption() {
+    func toggleIsChosenOption() {
         isChosenOption = !isChosenOption
 
         checkbox.isSelected = isChosenOption
@@ -124,7 +116,7 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
     }
 
     @objc func handleCheckboxTapped(_ sender: Any) {
-        toggleChosenOption()
+        toggleIsChosenOption()
         delegate?.checkboxButton(wasPressedOnCell: self)
     }
 }

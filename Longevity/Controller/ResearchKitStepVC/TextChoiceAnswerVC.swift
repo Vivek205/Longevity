@@ -88,18 +88,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
         self.goForward()
     }
 
-    //    func handleChoiceChange(sender: CheckboxButton) {
-    //        for choiceView in choiceViews {
-    //            choiceView.setSelected(false)
-    //            choiceView.checkbox.isSelected = false
-    //        }
-    //
-    //        let selectedChoice = choiceViews.first {$0.tag == sender.tag}
-    //        selectedChoice?.setSelected(true)
-    //        sender.isSelected = true
-    //        continueButton.isEnabled = true
-    //    }
-
     func addResult(value:String) {
         if let questionId = self.step?.identifier as? String {
             SurveyTaskUtility.currentSurveyResult[questionId] = value
@@ -125,10 +113,10 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             if let step = self.step as? ORKQuestionStep {
-                let questionSubheader = "Thu.Aug.6 for {patient name}"
+                let questionSubheader = SurveyTaskUtility.surveyTagline
                 let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
                     as! RKCQuestionView
-                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader,
+                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
                                           question: step.question!, extraInfo: step.text)
                 return questionCell
             }
@@ -136,12 +124,24 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                let currentAnswerValue: String? = SurveyTaskUtility.currentSurveyResult[step.identifier]
+
                 let choice = answerFormat.textChoices[indexPath.item - 1]
                 let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
                     as! TextChoiceAnswerViewCell
                 answerViewCell.delegate = self
                 answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
                 answerViewCell.value = indexPath.item - 1
+                if Int(currentAnswerValue ?? "") == answerViewCell.value {
+                    answerViewCell.toggleIsChosenOption()
+                    continueButton.isEnabled = true
+                    if chosenCells == nil {
+                        chosenCells = [answerViewCell]
+                    }else {
+                        chosenCells! += [answerViewCell]
+                    }
+                }
+
                 return answerViewCell
             }
         }
@@ -157,7 +157,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-                let questionSubheader = "Thu.Aug.6 for {patient name}"
+                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
                 height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
                 if step.text != nil {
@@ -195,7 +195,7 @@ extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
             if let step = self.step as? ORKQuestionStep {
                 if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                     if answerFormat.style == .singleChoice {
-                        chosenCells?.forEach {$0.toggleChosenOption()}
+                        chosenCells?.forEach {$0.toggleIsChosenOption()}
                         chosenCells = nil
                     }
                 }
