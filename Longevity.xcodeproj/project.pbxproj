@@ -10,6 +10,11 @@
 		908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
+		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
+		C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */; };
+		C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4624E3039900C81580 /* UserInsight.swift */; };
+		C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4C24E318C500C81580 /* InsightGuageView.swift */; };
+		C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4E24E3220E00C81580 /* HexagonView.swift */; };
 		C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; };
 		C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
@@ -37,6 +42,9 @@
 		C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */; };
 		C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */; };
 		C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D824E04DD000477185 /* DashboardCheckInCell.swift */; };
+		C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataCell.swift */; };
+		C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */; };
+		C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -146,6 +154,11 @@
 		B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
+		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
+		C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseAuthAPI.swift; sourceTree = "<group>"; };
+		C14ABA4624E3039900C81580 /* UserInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsight.swift; sourceTree = "<group>"; };
+		C14ABA4C24E318C500C81580 /* InsightGuageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightGuageView.swift; sourceTree = "<group>"; };
+		C14ABA4E24E3220E00C81580 /* HexagonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonView.swift; sourceTree = "<group>"; };
 		C198757624DAE7F900477185 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-stable/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
@@ -172,6 +185,9 @@
 		C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeader.swift; sourceTree = "<group>"; };
 		C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDevicesCell.swift; sourceTree = "<group>"; };
 		C19875D824E04DD000477185 /* DashboardCheckInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCheckInCell.swift; sourceTree = "<group>"; };
+		C1B399F924E3457A00D3991E /* MyDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataCell.swift; sourceTree = "<group>"; };
+		C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopupViewController.swift; sourceTree = "<group>"; };
+		C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
@@ -306,7 +322,6 @@
 			children = (
 				C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */,
 				C19875CA24DD5ECB00477185 /* UITableView+Extension.swift */,
-				C19875C624DC9E3000477185 /* CurvedView.swift */,
 				C19875C024DC884300477185 /* NavigationUtility.swift */,
 				C19875B224DC6D1600477185 /* UIColor+Extension.swift */,
 				C19875C224DC8C0400477185 /* UIImage+Extension.swift */,
@@ -330,6 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				C19875BE24DC7AF200477185 /* BaseViewController.swift */,
+				C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */,
 			);
 			path = BaseViewController;
 			sourceTree = "<group>";
@@ -344,6 +360,7 @@
 				C19875D824E04DD000477185 /* DashboardCheckInCell.swift */,
 				C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */,
 				C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */,
+				C1B399F924E3457A00D3991E /* MyDataCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -476,9 +493,12 @@
 		E2C59DFE2498E34D00842105 /* CustomViews */ = {
 			isa = PBXGroup;
 			children = (
+				C19875C624DC9E3000477185 /* CurvedView.swift */,
+				C14ABA4C24E318C500C81580 /* InsightGuageView.swift */,
 				E2C59DFF2498E37600842105 /* CustomButtonFill.swift */,
 				E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */,
 				E290B60724BCA1EA00C51655 /* CheckboxButton.swift */,
+				C14ABA4E24E3220E00C81580 /* HexagonView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -501,6 +521,8 @@
 				E2CFD96A24B9D3D8009FE288 /* Notification.swift */,
 				E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */,
 				E25185EB24CF042000F3068C /* Survey.swift */,
+				C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */,
+				C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -597,6 +619,8 @@
 				E24DED0F24B30B1500A61892 /* UserDefaults.swift */,
 				E2CFD96C24BB5202009FE288 /* Keychain.swift */,
 				E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */,
+				C14ABA4624E3039900C81580 /* UserInsight.swift */,
+				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -793,6 +817,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
+				C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
@@ -815,6 +840,7 @@
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
+				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
 				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				C19875D024DD629E00477185 /* DashboardHeaderView.swift in Sources */,
@@ -832,6 +858,7 @@
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
+				C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
@@ -843,7 +870,9 @@
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
+				C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,
+				C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				C19875C924DC9F7A00477185 /* UIDevice+Extension.swift in Sources */,
 				C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */,
@@ -854,6 +883,7 @@
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
+				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
@@ -871,8 +901,10 @@
 				E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */,
 				C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */,
 				C19875BA24DC79EB00477185 /* ProfileViewController.swift in Sources */,
+				C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */,
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
+				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

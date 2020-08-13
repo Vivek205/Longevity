@@ -59,30 +59,25 @@ extension RejuveTab {
 class BaseViewController: UIViewController {
     var viewTab: RejuveTab?
     
+    let headerHeight = UIDevice.hasNotch ? 100.0 : 70.0
+    
     lazy var titleView: TitleView = {
         let title = TitleView(viewTab: self.viewTab ?? .home)
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
     
-
     init(viewTab: RejuveTab) {
         super.init(nibName: nil, bundle: nil)
-        
         self.viewTab = viewTab
-        
         self.setTabItems()
-        
         self.view.backgroundColor = .white
-        
         self.view.addSubview(titleView)
-        
-        let vTop = UIDevice.hasNotch ? 30.0 : 0.0
         
         NSLayoutConstraint.activate([titleView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      titleView.topAnchor.constraint(equalTo: self.view.topAnchor),
-                                     titleView.heightAnchor.constraint(equalToConstant: CGFloat(70 + vTop))
+                                     titleView.heightAnchor.constraint(equalToConstant: CGFloat(headerHeight))
         ])
     }
     

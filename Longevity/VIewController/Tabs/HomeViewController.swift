@@ -38,7 +38,7 @@ class HomeViewController: BaseViewController {
         tableView.tableFooterView = UIView()
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: CGFloat(self.headerHeight)),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -81,7 +81,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            let height = tableView.bounds.height * 0.50
+            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.50 : 0.60
+            let height = tableView.bounds.height * heightFactor
             return height
         } else {
             return 40.0
@@ -112,7 +113,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         if section == 0 {
             header = DashboardHeaderView()
-            
         } else {
             header = DashboardSectionHeader(section: section)
         }
