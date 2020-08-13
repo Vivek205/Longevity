@@ -10,6 +10,12 @@ import UIKit
 
 class MyDataViewController: BaseViewController {
     
+    var userInsights: [UserInsight]? {
+        didSet {
+            self.myDataCollectionView.reloadData()
+        }
+    }
+    
     lazy var myDataCollectionView: UICollectionView = {
         let mydataCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         mydataCollection.backgroundColor = .clear
@@ -40,8 +46,6 @@ class MyDataViewController: BaseViewController {
             myDataCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
-//        UserInsightsAPI.instance.get()
-        
         guard let layout = myDataCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
@@ -50,18 +54,21 @@ class MyDataViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 100.0, left: 10.0, bottom: 10.0, right: 10.0)
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
+        
+        self.userInsights = UserInsightsAPI.instance.get()
     }
 }
 
 extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 6
+        return self.userInsights?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: MyDataCell.self, at: indexPath) as? MyDataCell else {
             preconditionFailure("Invalid insight cell")
         }
+        cell.insightData = self.userInsights?[indexPath.item]
         return cell
     }
 }
