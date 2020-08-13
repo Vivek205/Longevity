@@ -29,7 +29,7 @@ class RKCFormItemView: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createLayout(identifier:String, question:String, answerFormat: ORKAnswerFormat) {
+    func createLayout(identifier:String, question:String, answerFormat: ORKAnswerFormat, lastResponseAnswer: String?) {
         self.itemIdentifier = identifier
         print("answer format ------- ", answerFormat)
         var answerView:UIView
@@ -39,10 +39,14 @@ class RKCFormItemView: UICollectionViewCell {
             booleanAnswerView.createLayout(yesText: "yes", noText: "No")
             booleanAnswerView.delegate = self
 
+            if lastResponseAnswer != nil {
+                booleanAnswerView.preSelectOption(index: Int(lastResponseAnswer!)!)
+            }
+
             if self.itemIdentifier != nil && SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!] != nil{
                 let currentResultSelectedSegmentIndex =
                     Int(SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!]!)
-                booleanAnswerView.segmentedControl.selectedSegmentIndex = currentResultSelectedSegmentIndex!
+                booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
             }
             answerView = booleanAnswerView
         default:

@@ -9,6 +9,8 @@
 import Foundation
 import ResearchKit
 
+
+
 class SurveyTaskUtility {
     static var surveyId:String?
     static var currentSurveyDetails: SurveyDetails?
@@ -18,6 +20,9 @@ class SurveyTaskUtility {
         return SurveyTaskUtility.currentSurveyDetails?.name
     }()
     static var iconNameForModuleName: [String: String?] = [String:String?]()
+    static var lastSubmission: String?
+    static var lastSubmissionId: String?
+    static var lastResponse: [SurveyLastResponseData]?
 
     static var surveyTagline: String? = {
         let today = Date()

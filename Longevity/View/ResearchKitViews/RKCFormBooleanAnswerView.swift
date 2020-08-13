@@ -67,4 +67,8 @@ class RKCFormBooleanAnswerView: UIView {
             segmentedControl.tintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 0.8979291524)
         }
     }
+
+    func preSelectOption(index: Int) {
+        self.segmentedControl.selectedSegmentIndex = index
+    }
 }

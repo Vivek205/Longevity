@@ -39,6 +39,27 @@ class FormStepVC: ORKStepViewController {
         presentViews()
     }
 
+    func prefillForm(questionId: String) -> String? {
+        let feelingTodayQuestionId = "036122cab53e4d70b1b6305328eeaf3w"
+        let feelingTodayAnswer = SurveyTaskUtility.currentSurveyResult[feelingTodayQuestionId]
+        let prefillSymptomsOption = "2"
+        if feelingTodayAnswer == prefillSymptomsOption {
+            let lastResponse = SurveyTaskUtility.lastResponse
+            if lastResponse != nil {
+
+                let lastResponsesForGivenQuestionId = lastResponse?.filter({ (response) -> Bool in
+                    return response.quesId == questionId
+                })
+                print(lastResponsesForGivenQuestionId)
+                if lastResponsesForGivenQuestionId != nil && !lastResponsesForGivenQuestionId!.isEmpty {
+                     return lastResponsesForGivenQuestionId![0].answer
+                }
+                return nil
+            }
+        }
+        return nil
+    }
+
     func presentViews() {
         self.view.addSubview(formItemsCollection)
         self.view.addSubview(footerView)
@@ -50,7 +71,7 @@ class FormStepVC: ORKStepViewController {
             formItemsCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             formItemsCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
             formItemsCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
-                                                             constant: -footerViewHeight)
+                                                        constant: -footerViewHeight)
         ])
 
         footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
@@ -104,12 +125,12 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         if indexPath.item == 0 {
             print(formStep.text)
-                let questionSubheader = SurveyTaskUtility.surveyTagline
-                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-                    as! RKCQuestionView
-                questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
-                                          question: formStep.text ?? "", extraInfo: nil)
-                return questionCell
+            let questionSubheader = SurveyTaskUtility.surveyTagline
+            let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+                as! RKCQuestionView
+            questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
+                                      question: formStep.text ?? "", extraInfo: nil)
+            return questionCell
 
         }
 
@@ -122,7 +143,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
 
         let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
-        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!)
+        let prefillAnswer = prefillForm(questionId: item.identifier)
+        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!, lastResponseAnswer: prefillAnswer)
         return itemCell
     }
 

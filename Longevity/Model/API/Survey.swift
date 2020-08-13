@@ -13,6 +13,7 @@ import SwiftyJSON
 struct SurveyLastResponseData: Decodable {
     let quesId: String
     let answer: String
+    let submissionId: String
 }
 
 struct SurveyResponse: Decodable {
@@ -39,6 +40,10 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode([SurveyResponse].self, from: data)
+                    // FIXME: Make me dynamic for multiple surveys
+                    if value[0].response != nil {
+                        SurveyTaskUtility.lastResponse = value[0].response
+                    }
                     completion(value)
                 } catch  {
                     onFailure(error)
