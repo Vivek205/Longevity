@@ -11,7 +11,13 @@ import Amplify
 import AWSPluginsCore
 import SwiftyJSON
 
+enum Logintype: String {
+    case personal = "PERSONAL"
+    case clinicaltrail = "CLINICAL_TRIAL"
+}
+
 class BaseAuthAPI {
+    
     func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
                         onFailure: @escaping (_ error: Error)-> Void) {
         var usersub = "", identityId = "", accessKey = "", idToken = ""
@@ -36,7 +42,6 @@ class BaseAuthAPI {
                     let tokens = try cognitoTokenProvider.getCognitoTokens().get()
                     credentials.idToken = tokens.idToken
                 }
-
                 completion(credentials)
             } catch {
                 print("Fetch auth session failed with error - \(error)")

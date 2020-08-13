@@ -12,9 +12,27 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     lazy var deviceIcon: UIImageView = {
         let icon = UIImageView()
+        icon.image = UIImage(named: "Icon-Apple-Health")
         icon.contentMode = .scaleAspectFit
         icon.translatesAutoresizingMaskIntoConstraints = false
         return icon
+    }()
+    
+    lazy var statusButton: UIButton = {
+        let statusbutton = UIButton()
+        statusbutton.setImage(UIImage(named: "icon: add"), for: .normal)
+        statusbutton.translatesAutoresizingMaskIntoConstraints = false
+        return statusbutton
+    }()
+    
+    lazy var deviceStatus: UILabel = {
+        let dStatus = UILabel()
+        dStatus.text = ""
+        dStatus.font = UIFont(name: "Montserrat-SemiBold", size: 10.0)
+        dStatus.textColor = .themeColor
+        dStatus.textAlignment = .center
+        dStatus.translatesAutoresizingMaskIntoConstraints = false
+        return dStatus
     }()
     
     lazy var deviceTitle: UILabel = {
@@ -35,7 +53,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         return title
     }()
     
-    var borderColor: UIColor = .hexagonBorderColor
+    var borderColor: UIColor = .borderColor
     var isEmptyCell: Bool = false
     
     override init(frame: CGRect) {
@@ -43,17 +61,35 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         
         self.backgroundColor = .white
         
+        self.addSubview(deviceIcon)
+        self.addSubview(statusButton)
+        self.addSubview(deviceStatus)
         self.addSubview(deviceTitle)
         self.addSubview(deviceTitle2)
         
         NSLayoutConstraint.activate([
+            deviceIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+            deviceIcon.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+            deviceIcon.heightAnchor.constraint(equalToConstant: 38.0),
+            deviceIcon.widthAnchor.constraint(equalToConstant: 38.0),
+            
+            statusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+            statusButton.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+            statusButton.heightAnchor.constraint(equalToConstant: 38.0),
+            statusButton.widthAnchor.constraint(equalToConstant: 38.0),
+            
+            deviceStatus.leadingAnchor.constraint(equalTo: statusButton.leadingAnchor),
+            deviceStatus.trailingAnchor.constraint(equalTo: statusButton.trailingAnchor),
+            deviceStatus.topAnchor.constraint(equalTo: statusButton.bottomAnchor),
+            deviceStatus.heightAnchor.constraint(equalToConstant: 12.0),
+            
             deviceTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
             deviceTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
             deviceTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
             deviceTitle2.leadingAnchor.constraint(equalTo: deviceTitle.leadingAnchor),
             deviceTitle2.trailingAnchor.constraint(equalTo: deviceTitle.trailingAnchor),
-            deviceTitle2.topAnchor.constraint(equalTo: deviceTitle.bottomAnchor, constant: 10.0),
-            deviceTitle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
+            deviceTitle2.topAnchor.constraint(equalTo: deviceTitle.bottomAnchor, constant: 5.0),
+            deviceTitle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8.0)
         ])
         
         self.deviceTitle.text = "Healthkit"
