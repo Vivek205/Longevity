@@ -10,6 +10,14 @@ import UIKit
 
 class DashboardHeaderView: UIView {
     
+    var userInsights: [UserInsight] = [
+        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
+                    details: UserInsightDetails(name: "COVID-19 Infection", riskLevel: .medium, trend: .uptrend, confidence: "", exposureHistory: [])),
+        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
+                    details: UserInsightDetails(name: "Social Distancing", riskLevel: .lowLevel, trend: .same, confidence: "", exposureHistory: [])),
+        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
+                    details: UserInsightDetails(name: "COVID-19 Exposure", riskLevel: .high, trend: .down, confidence: "", exposureHistory: []))]
+    
     lazy var bgImageView: UIImageView = {
         let bgImage = UIImageView()
         bgImage.image = UIImage(named: "home-bg")
@@ -36,6 +44,9 @@ class DashboardHeaderView: UIView {
         return pagecontrol
     }()
     
+    let topMargin = 10.0
+    let bottomMargin = 15.0
+    
     init() {
         super.init(frame: CGRect.zero)
         self.addSubview(bgImageView)
@@ -58,7 +69,7 @@ class DashboardHeaderView: UIView {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: 65.0, left: 30.0, bottom: 15.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: 15.0, right: 0.0)
         layout.scrollDirection = .horizontal
         
         self.pageControl.numberOfPages = 2
@@ -95,7 +106,7 @@ class DashboardHeaderView: UIView {
 
 extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return userInsights.count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -103,12 +114,15 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
             preconditionFailure("Invalid tile cell type")
         }
         tileCell.setupCell(index: indexPath.item, isEmpty: indexPath.item == 3)
+        if indexPath.item < 3 {
+            tileCell.insightData = self.userInsights[indexPath.item]
+        }
         return tileCell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = collectionView.bounds.height - 60.0
-        let cellwidth = (collectionView.bounds.width - 30.0) / 2
+        let height = collectionView.bounds.height - CGFloat(topMargin + bottomMargin)
+        let cellwidth = (collectionView.bounds.width - 50.0) / 2
         
         return CGSize(width: cellwidth, height: height)
     }

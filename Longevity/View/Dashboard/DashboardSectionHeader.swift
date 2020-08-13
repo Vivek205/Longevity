@@ -39,6 +39,7 @@ class DashboardSectionHeader: UIView {
     lazy var actionButton: UIButton = {
         let action = UIButton()
         action.setImage(UIImage(named: "icon-info"), for: .normal)
+        action.tintColor = UIColor(hexString: "#C2C2C2")
         action.addTarget(self, action: #selector(doAction), for: .touchUpInside)
         action.translatesAutoresizingMaskIntoConstraints = false
         return action
@@ -57,7 +58,7 @@ class DashboardSectionHeader: UIView {
             sectionTitle.topAnchor.constraint(equalTo: topAnchor, constant: 5.0),
             sectionTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
             actionButton.centerYAnchor.constraint(equalTo: sectionTitle.centerYAnchor),
-            actionButton.heightAnchor.constraint(equalToConstant: 25.0),
+            actionButton.heightAnchor.constraint(equalToConstant: 30.0),
             actionButton.widthAnchor.constraint(equalTo: actionButton.heightAnchor),
             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
             actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: sectionTitle.trailingAnchor, constant: 20.0)
@@ -71,6 +72,6 @@ class DashboardSectionHeader: UIView {
     }
     
     @objc func doAction() {
-        
+        NavigationUtility.presentOverCurrentContext(destination: BasePopupViewController(), style: .overCurrentContext, completion: nil)
     }
 }

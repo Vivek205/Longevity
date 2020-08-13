@@ -46,7 +46,7 @@ extension UIColor {
         return UIColor(hexString: "#FFFFFF")
     }
     
-    @nonobjc class var hexagonBorderColor: UIColor {
+    @nonobjc class var borderColor: UIColor {
         return UIColor(hexString: "#C8C8CC")
     }
     
