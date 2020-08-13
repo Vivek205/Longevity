@@ -17,6 +17,7 @@ class SurveyTaskUtility {
     static var surveyName: String? = {
         return SurveyTaskUtility.currentSurveyDetails?.name
     }()
+    static var iconNameForModuleName: [String: String?] = [String:String?]()
 
     static var surveyTagline: String? = {
         let today = Date()
@@ -81,6 +82,7 @@ class SurveyTaskUtility {
                         for module in categoryValue.modules {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
+                                SurveyTaskUtility.iconNameForModuleName[moduleName] = moduleValue.iconName
                                 sectionItem.placeholder = moduleValue.iconName
                                 items += [sectionItem]
 

@@ -128,7 +128,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height = CGFloat(50)
+        var height = CGFloat(38)
         let width = self.view.bounds.width
 
         if indexPath.item == 0 {
@@ -146,6 +146,19 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             }
             return CGSize(width: width, height: height)
         }
+
+        guard let formStep = self.step as? ORKFormStep else {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+        guard formStep.formItems != nil else {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+        let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
+
+        if item.identifier == "" {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+
 
         return CGSize(width: width - CGFloat(40), height: height)
     }

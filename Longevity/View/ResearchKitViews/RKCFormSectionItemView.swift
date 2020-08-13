@@ -31,9 +31,11 @@ class RKCFormSectionItemView: UICollectionViewCell {
     }
 
     func createLayout(heading:String, iconName: String?) {
-        var defaultIconName = "icon : GI"
+        let defaultIconName:String = "icon : GI"
+        let iconNameFromModule = SurveyTaskUtility.iconNameForModuleName[heading] ?? defaultIconName
+//
         self.addSubview(iconImage)
-        iconImage.image = UIImage(named: iconName ?? defaultIconName )
+        iconImage.image = UIImage(named: iconNameFromModule!)
         NSLayoutConstraint.activate([
             iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -44,7 +46,7 @@ class RKCFormSectionItemView: UICollectionViewCell {
         self.addSubview(headingLabel)
         headingLabel.text = heading
         NSLayoutConstraint.activate([
-            headingLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 10),
+            headingLabel.leadingAnchor.constraint(equalTo: iconImage.trailingAnchor, constant: 12),
             headingLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             headingLabel.topAnchor.constraint(equalTo: self.topAnchor),
             headingLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)

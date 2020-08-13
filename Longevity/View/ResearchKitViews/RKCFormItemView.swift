@@ -57,7 +57,7 @@ class RKCFormItemView: UICollectionViewCell {
 
         questionLabel.text = question
         NSLayoutConstraint.activate([
-            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 60),
             questionLabel.trailingAnchor.constraint(equalTo: answerView.leadingAnchor),
             questionLabel.topAnchor.constraint(equalTo: self.topAnchor),
             questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
