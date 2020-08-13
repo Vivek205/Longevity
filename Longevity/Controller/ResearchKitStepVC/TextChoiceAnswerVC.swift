@@ -10,14 +10,16 @@ import UIKit
 import ResearchKit
 
 class TextChoiceAnswerVC: ORKStepViewController {
+    var chosenCells: [TextChoiceAnswerViewCell]?
 
-    let choiceViewTwo: UIView = {
-        let uiView = UIView()
-        uiView.backgroundColor = .orange
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.layer.borderColor = UIColor.black.cgColor
-        uiView.layer.borderWidth = 2
-        return uiView
+    lazy var questionAnswerCollection: UICollectionView = {
+        let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collection.translatesAutoresizingMaskIntoConstraints = false
+        collection.delegate = self
+        collection.dataSource = self
+        collection.backgroundColor = .clear
+        collection.alwaysBounceVertical = true  
+        return collection
     }()
 
     let footerView:UIView = {
@@ -39,55 +41,29 @@ class TextChoiceAnswerVC: ORKStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presentViews()
+
+        questionAnswerCollection.register(RKCQuestionView.self, forCellWithReuseIdentifier: "question")
     }
 
     func presentViews() {
         if let step = self.step as? ORKQuestionStep{
-            // MARK: Views
-            let scrollView = UIScrollView()
-            scrollView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.isDirectionalLockEnabled = true
-            self.view.addSubview(scrollView)
-
-            let questionView = RKCQuestionView(header: step.title ?? "", subHeader:"Wed.Jun.10 for {patient name}",
-                                               question: step.question, extraInfo: step.text )
-            questionView.header = "Covid Questions"
-            scrollView.addSubview(questionView)
-
-            let stackView = UIStackView()
-            stackView.axis = .vertical
-            stackView.distribution = .fillEqually
-            stackView.alignment = .fill
-            stackView.spacing = 20.0
-            stackView.translatesAutoresizingMaskIntoConstraints = false
-            scrollView.addSubview(stackView)
-
+            self.view.addSubview(questionAnswerCollection)
             self.view.addSubview(footerView)
             footerView.addSubview(continueButton)
+            let footerViewHeight = CGFloat(130)
 
-            // MARK: Constraints
-            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor).isActive = true
-            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor).isActive = true
-            scrollView.topAnchor.constraint(equalTo: view.topAnchor).isActive = true
-            scrollView.bottomAnchor.constraint(equalTo: footerView.topAnchor).isActive = true
-
-            let questionViewHeight = step.text == nil || step.text == "" ? CGFloat(150) : CGFloat(250)
-            questionView.leadingAnchor.constraint(equalTo: scrollView.leadingAnchor, constant: 20).isActive = true
-            questionView.trailingAnchor.constraint(equalTo: scrollView.trailingAnchor, constant: -20).isActive = true
-            questionView.topAnchor.constraint(equalTo: scrollView.topAnchor, constant: 20).isActive = true
-            questionView.heightAnchor.constraint(equalToConstant: questionViewHeight).isActive = true
-            questionView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
-
-            stackView.leftAnchor.constraint(equalTo: scrollView.leftAnchor, constant: 20).isActive = true
-            stackView.rightAnchor.constraint(equalTo: scrollView.rightAnchor, constant: -20).isActive = true
-            stackView.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 20).isActive = true
-            stackView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor).isActive = true
-            stackView.widthAnchor.constraint(equalTo: self.view.widthAnchor, constant: -40).isActive = true
+            NSLayoutConstraint.activate([
+                questionAnswerCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+                questionAnswerCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+                questionAnswerCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
+                questionAnswerCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
+                                                                 constant: -footerViewHeight)
+            ])
 
             footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
             footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            footerView.heightAnchor.constraint(equalToConstant: 130).isActive = true
+            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
 
             continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15).isActive = true
             continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
@@ -97,28 +73,14 @@ class TextChoiceAnswerVC: ORKStepViewController {
             continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
             print("inside", step.answerFormat)
-            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat{
-                for index in 0...answerFormat.textChoices.count-1 {
-                    let choice = answerFormat.textChoices[index]
 
-                    var choiceView = RKCTextChoiceAnswerView(answer: choice.text, info: "Additional info aaldfjaj fadfjdfjf This method automatically adds the provided view as a subview of the stack view, if it is not already. If the view is already a subview, this operation does not alter the subview ")
-
-                    choiceView.translatesAutoresizingMaskIntoConstraints = false
-                    choiceView.checkbox.addTarget(self, action: #selector(handleChoiceChange(sender:)), for: .touchUpInside)
-                    choiceView.tag = index
-                    choiceView.checkbox.tag = index
-                    if choiceViews.count <= index {
-                        choiceViews.append(choiceView)
-                    }else{
-                        choiceViews[index] = choiceView
-                    }
-                    stackView.addArrangedSubview(choiceView)
-                }
-
-                print("choices", answerFormat.textChoices.map{$0.value})
-                print("choices", answerFormat.textChoices.map{$0.text})
-                print("choices", answerFormat.textChoices.map{$0.detailText})
+            guard let layout = questionAnswerCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
+                return
             }
+
+            layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
+            layout.scrollDirection = .vertical
+            layout.minimumInteritemSpacing = 20.0
         }
     }
 
@@ -126,21 +88,126 @@ class TextChoiceAnswerVC: ORKStepViewController {
         self.goForward()
     }
 
-    @objc func handleChoiceChange(sender: CheckboxButton) {
-        let questionResult: ORKChoiceQuestionResult = ORKChoiceQuestionResult()
-        questionResult.identifier = self.step?.identifier ?? ""
-        questionResult.choiceAnswers = [NSNumber(value: sender.tag)]
-        addResult(questionResult)
-
-        for choiceView in choiceViews {
-            choiceView.setSelected(false)
-            choiceView.checkbox.isSelected = false
+    func addResult(value:String) {
+        if let questionId = self.step?.identifier as? String {
+            SurveyTaskUtility.currentSurveyResult[questionId] = value
         }
-
-        let selectedChoice = choiceViews.first{$0.tag == sender.tag}
-        selectedChoice?.setSelected(true)
-        sender.isSelected = true
-        continueButton.isEnabled = true
     }
 
+}
+
+extension TextChoiceAnswerVC: UICollectionViewDelegate,
+UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if let step = self.step as? ORKQuestionStep {
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                print(answerFormat.textChoices.count)
+                return answerFormat.textChoices.count + 1
+            }
+            return 2
+        }
+        return 2
+    }
+
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        if indexPath.item == 0 {
+            if let step = self.step as? ORKQuestionStep {
+                let questionSubheader = SurveyTaskUtility.surveyTagline
+                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+                    as! RKCQuestionView
+                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
+                                          question: step.question!, extraInfo: step.text)
+                return questionCell
+            }
+        }
+
+        if let step = self.step as? ORKQuestionStep {
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                let currentAnswerValue: String? = SurveyTaskUtility.currentSurveyResult[step.identifier]
+
+                let choice = answerFormat.textChoices[indexPath.item - 1]
+                let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
+                    as! TextChoiceAnswerViewCell
+                answerViewCell.delegate = self
+                answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
+                answerViewCell.value = indexPath.item - 1
+                if Int(currentAnswerValue ?? "") == answerViewCell.value {
+                    answerViewCell.toggleIsChosenOption()
+                    continueButton.isEnabled = true
+                    if chosenCells == nil {
+                        chosenCells = [answerViewCell]
+                    }else {
+                        chosenCells! += [answerViewCell]
+                    }
+                }
+
+                return answerViewCell
+            }
+        }
+        return UICollectionViewCell()
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
+        var height = CGFloat(100.0)
+        let width = self.view.bounds.width
+        if indexPath.item == 0 {
+            if let step = self.step as? ORKQuestionStep {
+                let questionCell = RKCQuestionView()
+                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+
+                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
+                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+                height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
+                if step.text != nil {
+                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
+                }
+                // INSETS
+                height += 60.0
+            }
+            return CGSize(width: width, height: height)
+        }
+
+        if let step = self.step as? ORKQuestionStep {
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                let choice = answerFormat.textChoices[indexPath.item - 1]
+                let answerCell = TextChoiceAnswerViewCell()
+                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
+                if choice.detailText != nil {
+                    height += choice.detailText!
+                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
+                }
+
+                height += 50
+            }
+        }
+
+
+        return CGSize(width: width - CGFloat(40), height: height)
+    }
+    
+}
+
+extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
+    func checkboxButton(wasPressedOnCell cell: TextChoiceAnswerViewCell) {
+        if chosenCells != nil {
+            if let step = self.step as? ORKQuestionStep {
+                if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                    if answerFormat.style == .singleChoice {
+                        chosenCells?.forEach {$0.toggleIsChosenOption()}
+                        chosenCells = nil
+                    }
+                }
+            }
+        }
+
+        if chosenCells == nil {
+            chosenCells = [cell]
+        }else {
+            chosenCells! += [cell]
+        }
+        self.addResult(value: "\(cell.value!)")
+        continueButton.isEnabled = true
+    }
 }
