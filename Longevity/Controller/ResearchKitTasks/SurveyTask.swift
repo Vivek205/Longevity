@@ -10,7 +10,6 @@ import Foundation
 import ResearchKit
 
 
-
 class SurveyTaskUtility {
     static var surveyId:String?
     static var currentSurveyDetails: SurveyDetails?
@@ -39,7 +38,6 @@ class SurveyTaskUtility {
 
     func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
                       onFailure: @escaping (_ error: Error) -> Void) {
-        print(surveyId)
         SurveyTaskUtility.surveyId = surveyId
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else {
@@ -114,10 +112,8 @@ class SurveyTaskUtility {
                         steps += [step]
                     } else {
                         for module in categoryValue.modules {
-                            print(module)
                             for (moduleName, moduleValue) in module {
-                                print(moduleName, moduleValue)
-                                if  let filteredQuestions = surveyDetails?.questions.filter
+                                if let filteredQuestions = surveyDetails?.questions.filter
                                     { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
                                         let step = createSingleChoiceQuestionStep(
@@ -156,10 +152,53 @@ class SurveyTaskUtility {
             onFailure(error)
         }
 
-        getSurveyDetails(surveyId: surveyId, completion: onGetQuestionCompletion(_:), onFailure: onGetQuestionFailure(_:))
+        getSurveyDetails(surveyId: surveyId, completion: onGetQuestionCompletion(_:),
+                         onFailure: onGetQuestionFailure(_:))
     }
 
-    func saveCurrentSurvey(){
+    func completeSurvey(completion: @escaping ()-> Void, onFailure: @escaping (_ error: Error) -> Void) {
+
+        func getSurveysCompletion(_ surveys:[SurveyResponse]) {
+            completion()
+        }
+
+        func onGetSurveysFailure(_ error:Error) {
+            onFailure(error)
+        }
+
+        func onSubmitCompletion() {
+            print("survey submitted successfully")
+            getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
+
+        }
+        func onSubmitFailure(_ error: Error) {
+            print("submit survey error", error)
+            onFailure(error)
+        }
+        func onSaveCompletion() {
+            print("survey saved successfully")
+            submitSurvey(surveyId: SurveyTaskUtility.surveyId!,
+                         completion: onSubmitCompletion, onFailure: onSubmitFailure(_:))
+        }
+        func onSaveFailure(_ error: Error) {
+            print("save survey error", error)
+            onFailure(error)
+        }
+
+        self.saveCurrentSurvey(completion: onSaveCompletion, onFailure: onSaveFailure(_:))
+    }
+
+    func clearSurvey() {
+        SurveyTaskUtility.surveyId = nil
+        SurveyTaskUtility.currentSurveyDetails = nil
+        SurveyTaskUtility.currentTask = nil
+        SurveyTaskUtility.currentSurveyResult = [String:String]()
+        SurveyTaskUtility.surveyName = nil
+        SurveyTaskUtility.iconNameForModuleName = [String:String]()
+        print("survey data cleared successfully")
+    }
+
+    func saveCurrentSurvey(completion:@escaping ()->Void, onFailure:@escaping (_ error:Error)->Void) {
         let payload = SurveyTaskUtility.currentSurveyResult.map { (result) -> SubmitAnswerPayload  in
             let (questionId, answer) = result
             let questionDetails = SurveyTaskUtility.currentSurveyDetails?.questions.first {$0.quesId == questionId}
@@ -168,10 +207,9 @@ class SurveyTaskUtility {
                                                       moduleId: questionDetails!.moduleId,
                                                       answer: answer,
                                                       quesId: questionId)
-
-
         }
-        saveSurveyAnswers(surveyId: SurveyTaskUtility.surveyId!, answers: payload)
+        saveSurveyAnswers(surveyId: SurveyTaskUtility.surveyId!, answers: payload,
+                          completion: completion, onFailure: onFailure)
     }
 
     func createSingleChoiceQuestionStep(identifier: String,title:String,
@@ -188,58 +226,3 @@ class SurveyTaskUtility {
         return questionStep
     }
 }
-
-
-
-//public var surveyTask: ORKOrderedTask {
-//    var steps = [ORKStep]()
-//
-//    let instructionStep = ORKInstructionStep(identifier: "IntroStep")
-//    instructionStep.title = "The Questions Three"
-//    instructionStep.text = "Who would cross the Bridge of Death must answer me these questions three, ere the other side they see."
-//    steps += [instructionStep]
-//
-//    let nameAnswerFormat = ORKTextAnswerFormat(maximumLength: 20)
-//    nameAnswerFormat.multipleLines = false
-//    let nameQuestionStepTitle = "What is your name?"
-//    let nameQuestion = "Detailed question: what is your name"
-//    let nameQuestionStep = ORKQuestionStep(identifier: "QuestionStep", title: nameQuestionStepTitle, question: nameQuestion, answer: nameAnswerFormat)
-//    steps += [nameQuestionStep]
-//
-//    let questionStepTitle = "What is your question"
-//    let questionStepQuestion = "Detailed question 2: Here goes the detailed question"
-//    let textChoices = [
-//        ORKTextChoice(text: "Create a ResearchKit App", value: 0 as NSNumber),
-//        ORKTextChoice(text: "Seek the Holy Grail", value: 1 as NSNumber),
-//        ORKTextChoice(text: "Find a shrubbery", value: 2 as NSNumber )
-//    ]
-//    let questionAnswerFormat: ORKTextChoiceAnswerFormat = ORKAnswerFormat.choiceAnswerFormat(with: .singleChoice, textChoices: textChoices)
-//    let questionStep = ORKQuestionStep(identifier: "TextChoiceQuestionStep", title: questionStepTitle, question: questionStepQuestion, answer: questionAnswerFormat)
-//    steps += [questionStep]
-//
-//    let imageQuestionStepTitle = "Choose an image"
-//    let imageQuestionStepDetail =  "Detailed question 3: Here goes the detailed question"
-//    let imageTuples = [
-//        (#imageLiteral(resourceName: "Google logo"), "Google"),
-//        (#imageLiteral(resourceName: "user logo"), "Person"),
-//        (#imageLiteral(resourceName: "icon - medical"), "Doctor")
-//    ]
-//    let imageChoices: [ORKImageChoice] = imageTuples.map {
-//        return ORKImageChoice(normalImage: $0.0, selectedImage: nil, text: $0.1, value: $0.1 as NSString)
-//    }
-//    let imageAnswerFormat: ORKImageChoiceAnswerFormat =
-//        ORKAnswerFormat.choiceAnswerFormat(with: imageChoices, style: .singleChoice, vertical: true)
-//    let imageQuestionStep = ORKQuestionStep(identifier: "ImageChoiceQuestion", title: imageQuestionStepTitle, question: imageQuestionStepDetail, answer: imageAnswerFormat)
-//    steps += [imageQuestionStep]
-//
-//    let summaryStep = ORKCompletionStep(identifier: "SummaryStep")
-//    summaryStep.title = "Right. Off you go!"
-//    summaryStep.text = "That was easy!"
-//    steps += [summaryStep]
-//
-//    return ORKOrderedTask(identifier: "SurveyTask", steps: steps)
-//
-//}
-
-
-

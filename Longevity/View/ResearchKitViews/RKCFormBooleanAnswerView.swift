@@ -18,14 +18,17 @@ class RKCFormBooleanAnswerView: UIView {
 
     lazy var segmentedControl: UISegmentedControl = {
         let uiSegmentedControl = UISegmentedControl(items: ["No","Yes"])
-        uiSegmentedControl.selectedSegmentIndex = 0
         uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         uiSegmentedControl.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 0.12)
         uiSegmentedControl.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         if #available(iOS 13.0, *) {
             uiSegmentedControl.selectedSegmentTintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         } else {
-            // Fallback on earlier versions
+            if self.currentAnswer {
+                uiSegmentedControl.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+            } else {
+                uiSegmentedControl.tintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 0.8979291524)
+            }
         }
         uiSegmentedControl.layer.cornerRadius = 6.93
 
@@ -60,12 +63,6 @@ class RKCFormBooleanAnswerView: UIView {
     @objc func handleSegmentedControlChanged(_ sender: UISwitch) {
         self.currentAnswer = !self.currentAnswer
         delegate?.segmentedControl(wasChangedOnCell: self)
-
-        if self.currentAnswer {
-            segmentedControl.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-        } else {
-            segmentedControl.tintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 0.8979291524)
-        }
     }
 
     func preSelectOption(index: Int) {

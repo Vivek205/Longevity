@@ -17,7 +17,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
-        collection.backgroundColor = .clear
+        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.alwaysBounceVertical = true  
         return collection
     }()
@@ -72,13 +72,11 @@ class TextChoiceAnswerVC: ORKStepViewController {
             continueButton.isEnabled = false
             continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
-            print("inside", step.answerFormat)
-
             guard let layout = questionAnswerCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
                 return
             }
 
-            layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
+            layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
             layout.scrollDirection = .vertical
             layout.minimumInteritemSpacing = 20.0
         }
@@ -101,7 +99,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                print(answerFormat.textChoices.count)
                 return answerFormat.textChoices.count + 1
             }
             return 2

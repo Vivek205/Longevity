@@ -92,7 +92,8 @@ static NSMutableDictionary *colors() {
     dispatch_once(&onceToken, ^{
         colors = [@{
                     ORKSignatureColorKey: ORKRGB(0x000000),
-                    ORKBackgroundColorKey: [UIColor colorWithRed:239.0 / 255.0 green:239.0 / 255.0 blue:244.0 / 255.0 alpha:1.0],
+//                    ORKBackgroundColorKey: [UIColor colorWithRed:239.0 / 255.0 green:239.0 / 255.0 blue:244.0 / 255.0 alpha:1.0],
+                    ORKBackgroundColorKey: [UIColor whiteColor],
                     ORKConsentBackgroundColorKey: ORKRGB(0xffffff),
                     ORKToolBarTintColorKey: ORKRGB(0xffffff),
                     ORKLightTintColorKey: ORKRGB(0xeeeeee),

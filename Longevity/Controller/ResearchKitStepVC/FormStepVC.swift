@@ -12,7 +12,7 @@ import ResearchKit
 class FormStepVC: ORKStepViewController {
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.backgroundColor = .clear
+        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
@@ -50,7 +50,7 @@ class FormStepVC: ORKStepViewController {
                 let lastResponsesForGivenQuestionId = lastResponse?.filter({ (response) -> Bool in
                     return response.quesId == questionId
                 })
-                print(lastResponsesForGivenQuestionId)
+                
                 if lastResponsesForGivenQuestionId != nil && !lastResponsesForGivenQuestionId!.isEmpty {
                      return lastResponsesForGivenQuestionId![0].answer
                 }
@@ -90,7 +90,7 @@ class FormStepVC: ORKStepViewController {
             return
         }
 
-        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20.0
     }
@@ -137,14 +137,16 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
 
         if item.identifier == "" {
-            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self, at: indexPath) as! RKCFormSectionItemView
+            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
+                                                         at: indexPath) as! RKCFormSectionItemView
             sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
             return sectionItemCell
         }
 
         let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
         let prefillAnswer = prefillForm(questionId: item.identifier)
-        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!, lastResponseAnswer: prefillAnswer)
+        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!,
+                              lastResponseAnswer: prefillAnswer)
         return itemCell
     }
 

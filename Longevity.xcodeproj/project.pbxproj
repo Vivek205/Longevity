@@ -42,13 +42,13 @@
 		C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */; };
 		C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */; };
 		C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D824E04DD000477185 /* DashboardCheckInCell.swift */; };
+		C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataCell.swift */; };
+		C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */; };
+		C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */; };
 		E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DD24E29DA000896F2C /* FormStepVC.swift */; };
 		E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */; };
 		E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256E124E2ACB800896F2C /* RKCFormItemView.swift */; };
 		E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256E324E2BFC900896F2C /* RKCFormBooleanAnswerView.swift */; };
-		C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataCell.swift */; };
-		C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */; };
-		C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -64,6 +64,7 @@
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
+		E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24826E424E5326D0083EFAC /* CompletionStepVC.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
 		E25185EC24CF042000F3068C /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Survey.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
@@ -214,6 +215,7 @@
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E24826E424E5326D0083EFAC /* CompletionStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionStepVC.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
 		E25185EB24CF042000F3068C /* Survey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
@@ -455,6 +457,7 @@
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
 				E20256DD24E29DA000896F2C /* FormStepVC.swift */,
+				E24826E424E5326D0083EFAC /* CompletionStepVC.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -911,6 +914,7 @@
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
+				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,

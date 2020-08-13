@@ -31,7 +31,6 @@ class RKCFormItemView: UICollectionViewCell {
 
     func createLayout(identifier:String, question:String, answerFormat: ORKAnswerFormat, lastResponseAnswer: String?) {
         self.itemIdentifier = identifier
-        print("answer format ------- ", answerFormat)
         var answerView:UIView
         switch answerFormat.questionType {
         case .boolean:
@@ -41,11 +40,14 @@ class RKCFormItemView: UICollectionViewCell {
 
             if lastResponseAnswer != nil {
                 booleanAnswerView.preSelectOption(index: Int(lastResponseAnswer!)!)
+                if SurveyTaskUtility.currentSurveyResult[identifier] == nil {
+                    SurveyTaskUtility.currentSurveyResult[identifier] = lastResponseAnswer!
+                }
             }
 
             if self.itemIdentifier != nil && SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!] != nil{
                 let currentResultSelectedSegmentIndex =
-                    Int(SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!]!)
+                    Int(SurveyTaskUtility.currentSurveyResult[identifier]!)
                 booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
             }
             answerView = booleanAnswerView
