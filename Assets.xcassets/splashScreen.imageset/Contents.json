@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Background@1x.png",
+      "filename" : "Splash bg@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Background@2x.png",
+      "filename" : "Splash bg@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Background@3x.png",
+      "filename" : "Splash bg@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
