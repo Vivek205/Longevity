@@ -116,9 +116,9 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             hexagonView.topAnchor.constraint(equalTo: topAnchor, constant: vTop),
-            tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.70),
+            tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 20.0),
+            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
         ])
         
         if isEmpty {

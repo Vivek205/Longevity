@@ -10,6 +10,10 @@ import UIKit
 
 class DashboardDevicesCell: UITableViewCell {
     
+    var deviceIcons = ["Icon-Apple-Health", "icon:  fitbit logo", ""]
+    var devices = ["Healthkit", "Fitbit", "Add health device"]
+    var descriptions = ["Sync your health information", "Add your Fitbit device", ""]
+    
     lazy var devicesCollection: UICollectionView = {
         let devices = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         devices.backgroundColor = .clear
@@ -52,11 +56,14 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: DashboardDeviceCollectionCell.self, at: indexPath) as? DashboardDeviceCollectionCell else { preconditionFailure("Invalid device cell")}
+        
+        cell.setupCell(title: self.devices[indexPath.item], description: self.descriptions[indexPath.item], icon: deviceIcons[indexPath.item], isEmpty: indexPath.item == 2)
+        
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
-        return CGSize(width: 120.0, height: height - 20.0)
+        return CGSize(width: 130.0, height: height - 20.0)
     }
 }

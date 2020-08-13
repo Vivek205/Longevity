@@ -10,13 +10,11 @@ import UIKit
 
 class DashboardHeaderView: UIView {
     
-    var userInsights: [UserInsight] = [
-        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
-                    details: UserInsightDetails(name: "COVID-19 Infection", riskLevel: .medium, trend: .uptrend, confidence: "", exposureHistory: [])),
-        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
-                    details: UserInsightDetails(name: "Social Distancing", riskLevel: .lowLevel, trend: .same, confidence: "", exposureHistory: [])),
-        UserInsight(cardName: "COVID-19 Infection", cardType: "", description: "COVID-19 Infection",
-                    details: UserInsightDetails(name: "COVID-19 Exposure", riskLevel: .high, trend: .down, confidence: "", exposureHistory: []))]
+    var userInsights: [UserInsight]? {
+        didSet {
+            self.dashboardTilesCollection.reloadData()
+        }
+    }
     
     lazy var bgImageView: UIImageView = {
         let bgImage = UIImageView()
@@ -38,7 +36,7 @@ class DashboardHeaderView: UIView {
     
     lazy var pageControl: UIPageControl = {
         let pagecontrol = UIPageControl()
-        pagecontrol.tintColor = .white
+        pagecontrol.tintColor = .checkinCompleted
         pagecontrol.currentPageIndicatorTintColor = .themeColor
         pagecontrol.translatesAutoresizingMaskIntoConstraints = false
         return pagecontrol
@@ -69,10 +67,12 @@ class DashboardHeaderView: UIView {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: 15.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
         layout.scrollDirection = .horizontal
         
         self.pageControl.numberOfPages = 2
+        
+        self.userInsights = UserInsightsAPI.instance.get()
     }
     
     required init?(coder: NSCoder) {
@@ -106,7 +106,7 @@ class DashboardHeaderView: UIView {
 
 extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return userInsights.count + 1
+        return (userInsights?.count ?? 0) + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -115,7 +115,7 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
         }
         tileCell.setupCell(index: indexPath.item, isEmpty: indexPath.item == 3)
         if indexPath.item < 3 {
-            tileCell.insightData = self.userInsights[indexPath.item]
+            tileCell.insightData = self.userInsights?[indexPath.item]
         }
         return tileCell
     }
