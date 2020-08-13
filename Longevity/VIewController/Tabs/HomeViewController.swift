@@ -135,7 +135,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.getHeader(with: UITableViewHeaderFooterView.self) else {
+        guard let headerView = tableView.getHeader(with: UITableViewHeaderFooterView.self, index: section) else {
             preconditionFailure("Invalid header view")
         }
         headerView.backgroundColor = .lightGray

@@ -15,8 +15,8 @@ extension UITableView {
         return self.dequeueReusableCell(withIdentifier: cellTypeName, for: indexPath)
     }
     
-    func getHeader(with viewClass: AnyClass) -> UITableViewHeaderFooterView? {
-        let viewTypeName = NSStringFromClass(viewClass)
+    func getHeader(with viewClass: AnyClass, index: Int) -> UITableViewHeaderFooterView? {
+        let viewTypeName = "\(NSStringFromClass(viewClass))\(index)"
         self.register(viewClass, forHeaderFooterViewReuseIdentifier: viewTypeName)
         return self.dequeueReusableHeaderFooterView(withIdentifier: viewTypeName)
     }
