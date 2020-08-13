@@ -23,7 +23,7 @@ playground.xcworkspace
 ## User settings
 xcuserdata/
 
-#amplify
+## Amplify
 amplify/\#current-cloud-backend
 amplify/.config/local-*
 amplify/mock-data
@@ -41,3 +41,6 @@ amplifytools.xcconfig
 
 ## Certificates
 Certificates/
+
+## Database Backup
+db_backup/

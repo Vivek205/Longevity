@@ -36,28 +36,3 @@ func clearUserDefaults() {
     UserDefaults.standard.synchronize()
     print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
 }
-
-
-//func incrementNotificationCount() {
-//    let userDefaults = UserDefaults.standard
-//    let keys = UserDefaultsKeys()
-//
-//    if let currentNotificationCount = userDefaults.value(forKey: keys.notificationCount) as? Int {
-//        let updatedCount = currentNotificationCount + 1
-//        userDefaults.set(updatedCount, forKey: keys.notificationCount)
-//    } else {
-//        userDefaults.set(1, forKey: keys.notificationCount)
-//    }
-//}
-
-//func incrementFailureNotificationCount() {
-//    let userDefaults = UserDefaults.standard
-//    let keys = UserDefaultsKeys()
-//
-//    if let currentNotificationCount = userDefaults.value(forKey: keys.failureNotificationCount) as? Int {
-//        let updatedCount = currentNotificationCount + 1
-//        userDefaults.set(updatedCount, forKey: keys.failureNotificationCount)
-//    } else {
-//        userDefaults.set(1, forKey: keys.failureNotificationCount)
-//    }
-//}
