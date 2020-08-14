@@ -86,7 +86,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             ])
             deviceTitle.text = title
             deviceTitle.textColor = UIColor(hexString: "#5AA7A7")
-            self.backgroundColor = UIColor(hexString: "#C8C8CC")
+            self.backgroundColor = UIColor(hexString: "#F5F6FA")
             contentView.layer.borderColor = UIColor.themeColor.cgColor
         } else {
             self.addSubview(deviceIcon)
@@ -132,7 +132,6 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         
         contentView.layer.cornerRadius = 5.0
         contentView.layer.borderWidth = 1.0
-//        contentView.layer.borderColor = UIColor.clear.cgColor
         contentView.layer.masksToBounds = true
         
         layer.shadowColor = UIColor.black.cgColor
