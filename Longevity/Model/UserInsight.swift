@@ -36,6 +36,17 @@ extension RiskLevel {
                 return UIColor(red: 89/255.0, green: 187/255.0, blue: 110/255.0, alpha: 0.7)
         }
     }
+    
+    var riskIcon: UIImage? {
+        switch self {
+            case .high:
+                return UIImage(named: "high-risk")
+            case .medium:
+                return UIImage(named: "medium-risk")
+            case .lowLevel:
+                return UIImage(named: "low-risk")
+        }
+    }
 }
 
 enum TrendDirection: Int, Codable {

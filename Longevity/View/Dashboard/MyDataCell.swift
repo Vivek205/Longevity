@@ -14,6 +14,7 @@ class MyDataCell: UICollectionViewCell {
         didSet {
             self.tileTitle.text = insightData.details.name
             self.riskType.text = insightData.details.riskLevel.text
+            self.guageView.image = insightData.details.riskLevel.riskIcon
             self.trendDirection.text = insightData.details.trend.text
             self.trendDirection.textColor = insightData.details.trend.tintColor
             self.trendImage.image = insightData.details.trend.trendIcon
