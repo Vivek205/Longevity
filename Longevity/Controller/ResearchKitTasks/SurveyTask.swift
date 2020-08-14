@@ -54,24 +54,6 @@ class SurveyTaskUtility {
 
             let categories = surveyDetails!.displaySettings.categories
 
-//             // First Question Step
-//            let step = createSingleChoiceQuestionStep(
-//                identifier: "skip-first question",
-//                title: surveyDetails?.name ?? "Survey",
-//                question: "How are you feeling today",
-//                additionalText: nil,
-//                choices: [
-//                    ORKTextChoice(text:"I'm good, no symptoms",detailText:nil ,
-//                                  value:NSString(string:  "0"), exclusive: false),
-//                    ORKTextChoice(text:"I'm not feeling well",detailText:"Add your symptoms in the next step" ,
-//                    value:NSString(string:  "1"), exclusive: false),
-//                    ORKTextChoice(text:"I'm not feeling well, and I have similar symptoms from my last check-in",
-//                                  detailText:"Edit symptoms in the next step" ,
-//                    value:NSString(string:  "2"), exclusive: false)
-//                ]
-//            )
-//            steps += [step]
-
             for category in categories {
 
                 for (categoryName, categoryValue) in category {
