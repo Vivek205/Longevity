@@ -14,6 +14,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         didSet {
             self.tileTitle.text = insightData.details.name
             self.riskType.text = insightData.details.riskLevel.text
+            self.guageView.image = insightData.details.riskLevel.riskIcon
             self.trendDirection.text = insightData.details.trend.text
             self.trendDirection.textColor = insightData.details.trend.tintColor
             self.trendImage.image = insightData.details.trend.trendIcon
@@ -40,8 +41,9 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         return title
     }()
     
-    lazy var guageView: InsightGuageView = {
-        let guage = InsightGuageView()
+    lazy var guageView: UIImageView = {
+        let guage = UIImageView()
+        guage.contentMode = .scaleAspectFit
         guage.translatesAutoresizingMaskIntoConstraints = false
         return guage
     }()
@@ -154,9 +156,8 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             
             NSLayoutConstraint.activate([
                 guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 5.0),
-                guageView.heightAnchor.constraint(equalToConstant: 50.0),
-                guageView.widthAnchor.constraint(equalTo: guageView.heightAnchor),
-                guageView.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 5.0),
+                guageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25),
+                guageView.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 22.0),
                 riskType.topAnchor.constraint(equalTo: guageView.topAnchor),
                 riskType.leadingAnchor.constraint(equalTo: guageView.trailingAnchor),
                 riskType.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -20.0),
