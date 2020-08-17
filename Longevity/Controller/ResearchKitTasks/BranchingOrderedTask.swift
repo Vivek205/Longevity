@@ -22,16 +22,22 @@ class BranchingOrderedTask: ORKOrderedTask {
             return super.step(after: step, with: result)
         }
 
+        guard let currentStepIndex: Int? = Int(self.index(of: step!))
+            else { return super.step(after: step, with: result) }
+        var nextStep = self.steps[currentStepIndex! + 1]
+
+        if nextStep is ORKCompletionStep {
+            return super.step(after: step, with: result)
+        }
+
+
         if let firstTestResult = result.stepResult(forStepIdentifier: step?.identifier ?? "") {
 
+            // FIXME: Remove this condition once dynamic questions come into picture
             guard step?.identifier == "abc111" else {
                 return super.step(after: step, with: result)
             }
 
-            guard let currentStepIndex: Int? = Int(self.index(of: step!)) else { return super.step(after: step, with: result) }
-
-            // navigate to the very next step
-            var nextStep = self.steps[currentStepIndex! + 1]
 
             if let choiceQuestionResults = firstTestResult.results as? [ORKChoiceQuestionResult] {
 
@@ -39,26 +45,15 @@ class BranchingOrderedTask: ORKOrderedTask {
                     return nextStep
                 }
                 let latestResult = choiceQuestionResults.last
-
-                let latestAnswer = latestResult?.answer
-                print("latest Answer", latestAnswer)
-                let decoder = NSCoder()
                 let answerValue = latestResult?.choiceAnswers?.first as! NSNumber
-
-                    print(answerValue.intValue)
-
-                print("answerValue", latestResult?.choiceAnswers, type(of: latestResult?.choiceAnswers?.first))
-                let nextStepIdentifier = findNextQuestion(questionId: step?.identifier ?? "", answerValue: answerValue.intValue)
-
-                print("nextStepIdentifier", nextStepIdentifier)
-
-                    // navigate to appropriate step
-                    nextStep = self.steps.first { $0.identifier == nextStepIdentifier}!
-                    var nextStep = nextStep
-
+                let nextStepIdentifier = findNextQuestion(questionId: step?.identifier ?? "",
+                                                          answerValue: answerValue.intValue)
+                // navigate to appropriate step
+                nextStep = self.steps.first { $0.identifier == nextStepIdentifier}!
             }
             return nextStep
         }
+
         return super.step(after: step, with: result)
     }
 

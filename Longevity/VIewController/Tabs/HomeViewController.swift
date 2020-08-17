@@ -178,7 +178,6 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if task != nil {
                     let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-                    print(task?.steps)
                     self.currentTask = task
                     taskViewController.delegate = self
                     taskViewController.navigationBar.backgroundColor = .white
@@ -217,7 +216,7 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
 
         switch reason {
         case .completed:
-            surveyTaskUtility.saveCurrentSurvey()
+            surveyTaskUtility.clearSurvey()
             print("completed")
         case .discarded:
             print("discarded")
@@ -238,19 +237,23 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             viewControllerFor step: ORKStep) -> ORKStepViewController? {
         if step is ORKInstructionStep {
+            if step is ORKCompletionStep {
+                let stepVC = CompletionStepVC()
+                stepVC.step = step
+                return stepVC
+            }
             // Default View Controller will be used
             return nil
         } else if step is ORKFormStep {
             let formStepVC = FormStepVC()
             formStepVC.step = step
             return formStepVC
-//            return nil
-        } else {
+        } else if step is ORKQuestionStep {
             let stepVC = TextChoiceAnswerVC()
             stepVC.step = step
             return stepVC
         }
-
+        return nil
     }
 
     func showConsent() {

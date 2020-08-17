@@ -13,6 +13,7 @@ import SwiftyJSON
 struct SurveyLastResponseData: Decodable {
     let quesId: String
     let answer: String
+    let submissionId: String
 }
 
 struct SurveyResponse: Decodable {
@@ -39,6 +40,10 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode([SurveyResponse].self, from: data)
+                    // FIXME: Make me dynamic for multiple surveys
+                    if value[0].response != nil {
+                        SurveyTaskUtility.lastResponse = value[0].response
+                    }
                     completion(value)
                 } catch  {
                     onFailure(error)
@@ -133,7 +138,6 @@ func getSurveyDetails(surveyId: String,
         _ = Amplify.API.get(request: request, listener: { (result) in
             switch result {
             case .success(let data):
-                print(data)
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
@@ -171,14 +175,11 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
         _ = Amplify.API.post(request: request, listener: { (result) in
             switch result {
             case .success(let data):
-                print(data)
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode(Question.self, from: data)
                     nextQuestionIdentifier = value.quesId
-                    print(value)
-                    //                response = jsonData
                     group.leave()
                 } catch {
                     print("json error", error)
@@ -209,25 +210,25 @@ struct SurveyCategoryViewTypes {
     static let moduleLevel = "MODULE_LEVEL"
 }
 
-func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload]) {
-    func onGettingCredentials(_ credentials: Credentials){
+func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload],
+                       completion:@escaping ()->Void,
+                       onFailure: @escaping (_ error: Error) -> Void) {
+    func onGettingCredentials(_ credentials: Credentials) {
         do {
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
-            print(String(data: data, encoding: .utf8)!)
+
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)
             _ = Amplify.API.post(request: request, listener: { (result) in
                 switch result {
                 case .success(let data):
                     print("success", JSON(data))
-//                    TODO: Remove the logic of submit survey from here.
-//                    It has to be handled in the taskViewController didFinish delegate
-                    submitSurvey(surveyId: surveyId) // FIXME: Remove me
+                    completion()
                 case .failure(let error):
-                    print("failure", error)
+                    onFailure(error)
                 }
             })
         } catch  {
@@ -241,7 +242,8 @@ func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload]) {
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-func submitSurvey(surveyId: String) {
+func submitSurvey(surveyId: String, completion:@escaping ()->Void,
+onFailure: @escaping (_ error: Error) -> Void) {
     func onGettingCredentials(_ credentials: Credentials){
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: headers,
@@ -249,9 +251,9 @@ func submitSurvey(surveyId: String) {
         _ = Amplify.API.post(request: request, listener: { (result) in
             switch result {
             case .success(let data):
-                print("success", data)
+                completion()
             case .failure(let error):
-                print("failure", error)
+                onFailure(error)
             }
         })
     }

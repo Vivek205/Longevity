@@ -46,7 +46,6 @@ class ChangePasswordVC: UIViewController {
             if changeSuccess {
                 performSegue(withIdentifier: "UnwindChangePasswordToTOS", sender: self)
             }
-            print("done", changeSuccess)
         }
     }
 
