@@ -20,14 +20,14 @@ class FormStepVC: ORKStepViewController {
         return collection
     }()
 
-    let footerView:UIView = {
+    lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
         uiView.backgroundColor = .white
         return uiView
     }()
 
-    let continueButton: CustomButtonFill = {
+    lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.setTitle("Next", for: .normal)
@@ -74,15 +74,19 @@ class FormStepVC: ORKStepViewController {
                                                         constant: -footerViewHeight)
         ])
 
-        footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        footerView.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
+        NSLayoutConstraint.activate([
+            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
+        ])
 
-        continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15).isActive = true
-        continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
-        continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true
-        continueButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        NSLayoutConstraint.activate([
+            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
+            continueButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
