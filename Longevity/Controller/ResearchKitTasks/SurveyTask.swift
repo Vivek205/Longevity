@@ -74,7 +74,12 @@ class SurveyTaskUtility {
                                 if  let filteredQuestions = surveyDetails?.questions
                                     .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
                                     for filteredQuestion in filteredQuestions {
-                                        let answerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
+
+                                        var answerFormat: ORKAnswerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
+
+                                        if filteredQuestion.quesType == "TEXT" {
+                                            answerFormat = ORKTextAnswerFormat()
+                                        }
 
                                         let item = ORKFormItem(identifier: "\(filteredQuestion.quesId)",
                                             text: "\(filteredQuestion.text)", answerFormat: answerFormat)
@@ -104,8 +109,8 @@ class SurveyTaskUtility {
                                             question: filteredQuestion.text,
                                             additionalText: nil,
                                             choices: filteredQuestion.options.map {
-                                                ORKTextChoice(text:$0.text,detailText:$0.description ,
-                                                              value:NSString(string:  $0.value), exclusive: false)
+                                                ORKTextChoice(text:$0.text ?? "",detailText:$0.description ,
+                                                              value:NSString(string:  $0.value ?? ""), exclusive: false)
                                             }
                                         )
                                         steps += [step]

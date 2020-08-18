@@ -139,6 +139,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
 
         let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
+        let prefillAnswer = prefillForm(questionId: item.identifier)
 
         if item.identifier == "" {
             let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
@@ -147,11 +148,19 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return sectionItemCell
         }
 
-        let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
-        let prefillAnswer = prefillForm(questionId: item.identifier)
-        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!,
-                              lastResponseAnswer: prefillAnswer)
-        return itemCell
+        switch item.answerFormat?.questionType {
+        case .text:
+            let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self, at: indexPath) as! RKCFormTextAnswerView
+            itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
+            return itemCell
+        default:
+             let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
+                   itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!,
+                                         lastResponseAnswer: prefillAnswer)
+                   return itemCell
+        }
+
+
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -187,7 +196,18 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width - CGFloat(40), height: height)
         }
 
+        switch item.answerFormat?.questionType {
+               case .text:
+                    let answerCell = RKCFormTextAnswerView()
+                    let questionText = item.text ?? ""
+                    height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
+                    height += 100 // height for textView
+                    return CGSize(width: width, height: height)
+               default:
+                    return CGSize(width: width - CGFloat(40), height: height)
+               }
 
-        return CGSize(width: width - CGFloat(40), height: height)
+
+
     }
 }

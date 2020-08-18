@@ -68,11 +68,13 @@
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
 		E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24826E424E5326D0083EFAC /* CompletionStepVC.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
+		E2503AA324EBDDA70033A814 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2503AA224EBDDA70033A814 /* Date.swift */; };
 		E25185EC24CF042000F3068C /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Survey.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
+		E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */; };
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -225,11 +227,13 @@
 		E24826E424E5326D0083EFAC /* CompletionStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionStepVC.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
+		E2503AA224EBDDA70033A814 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
 		E25185EB24CF042000F3068C /* Survey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormTextAnswerView.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
@@ -490,6 +494,7 @@
 				E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */,
 				E20256E124E2ACB800896F2C /* RKCFormItemView.swift */,
 				E20256E324E2BFC900896F2C /* RKCFormBooleanAnswerView.swift */,
+				E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */,
 			);
 			path = ResearchKitViews;
 			sourceTree = "<group>";
@@ -508,6 +513,7 @@
 			children = (
 				E290B60524BC75D500C51655 /* String.swift */,
 				E2A5705C24CB095000DC07AB /* Array.swift */,
+				E2503AA224EBDDA70033A814 /* Date.swift */,
 			);
 			path = Utils;
 			sourceTree = "<group>";
@@ -907,6 +913,7 @@
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
 				E21BD6AA24BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift in Sources */,
+				E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */,
 				E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
@@ -962,6 +969,7 @@
 				C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */,
 				C19875BA24DC79EB00477185 /* ProfileViewController.swift in Sources */,
 				C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */,
+				E2503AA324EBDDA70033A814 /* Date.swift in Sources */,
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,

@@ -167,7 +167,7 @@ class SignupVC: UIViewController {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "SignupToProfileSetup", sender: self)
             }
-        }
+            }
 
         func onFailure(error: AuthError) {
             print("Sign in failed \(error)")
