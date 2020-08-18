@@ -94,7 +94,7 @@ class DashboardHeaderView: UIView {
         let layerGradient = CAGradientLayer()
         layerGradient.name = "gradLayer"
         layerGradient.frame = CGRect(x: 0, y: 0, width: bgImageView.bounds.width, height: bgImageView.bounds.height)
-        layerGradient.colors = [UIColor.white.withAlphaComponent(0.0).cgColor, UIColor.white.cgColor]
+        layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
         layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
         layerGradient.endPoint = CGPoint(x: 0, y: 1.0)
 

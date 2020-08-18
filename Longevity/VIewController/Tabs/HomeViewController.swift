@@ -55,7 +55,7 @@ class HomeViewController: BaseViewController {
         func completion(_ surveys:[SurveyResponse]) {
             DispatchQueue.main.async {
                 self.surveyList = surveys
-                self.tableView.reloadData()
+                self.tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .fade)
                 self.removeSpinner()
             }
         }
@@ -78,11 +78,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if section == 0 {
-             return self.surveyList?.count ?? 0
-//            if surveyList != nil {
-//                return self.surveyList!.count
-//            }
-//            return 0
+            
+            return self.surveyList?.count ?? 0
         }
         if section == 1 {
             return 1
@@ -96,7 +93,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-            print("row", indexPath.row)
+//            print("row", indexPath.row)
+            
+            checkinCell.surveyResponse = self.surveyList?[indexPath.row]
+            
             return checkinCell
         }
         else if indexPath.section == 1 {
