@@ -76,11 +76,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         if section == 0 {
-//            if surveyList != nil {
-//                return self.surveyList!.count
-//            }
-//            return 0
             
             return self.surveyList?.count ?? 0
         }
@@ -155,7 +152,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         header.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(header)
-        
+         
         NSLayoutConstraint.activate([
             header.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             header.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
@@ -280,4 +277,3 @@ extension HomeViewController: ORKTaskResultSource {
         }
     }
 }
-

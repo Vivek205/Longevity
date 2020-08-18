@@ -169,7 +169,7 @@ class FitbitModel: AuthHandlerType {
         }
 
         func onFailureCredentials(_ error: Error?) {
-              print("failed to fetch credentials \(error)")
+              print("publishData failed to fetch credentials \(error)")
           }
 
         _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))

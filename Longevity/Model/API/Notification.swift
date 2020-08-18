@@ -38,13 +38,13 @@ func registerARN(platform:String, arnEndpoint: String) {
                 let responseString = String(data: data, encoding: .utf8)
                 print("sucess \(responseString)")
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("registerARN failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-        print("failed to fetch credentials \(error)")
+        print("registerARN failed to fetch credentials \(error)")
     }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
@@ -77,13 +77,13 @@ func retrieveARN(){
                     print(error)
                 }
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("retrieveARN failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-          print("failed to fetch credentials \(error)")
+          print("retrieveARN failed to fetch credentials \(error)")
       }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))

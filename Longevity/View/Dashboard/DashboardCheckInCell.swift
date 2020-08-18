@@ -54,6 +54,19 @@ class DashboardCheckInCell: UITableViewCell {
     var surveyResponse: SurveyResponse! {
         didSet {
             self.checkInTitle.text = surveyResponse.name
+            self.checkInTitle2.text = surveyResponse.description
+
+            guard let lastSubmissionDateString = surveyResponse.lastSubmission else { return }
+
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+
+            let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString)
+            guard let localLastSubmissionDate = UTCStringToLocalDate(dateString: lastSubmissionDateString) else { return }
+
+            print(lastSubmissionDate)
+            print(localLastSubmissionDate)
         }
     }
     

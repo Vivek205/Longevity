@@ -159,6 +159,34 @@ class SignupVC: UIViewController {
         }
     }
 
+    @IBAction func handleSigninWithApple(_ sender: Any) {
+        self.showSpinner()
+        func onSuccess() {
+            getProfile()
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "SignupToProfileSetup", sender: self)
+            }
+            }
+
+        func onFailure(error: AuthError) {
+            print("Sign in failed \(error)")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.showAlert(title: "Signup Failed" , message: error.errorDescription)
+            }
+        }
+
+        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
+            switch result {
+            case .success(let session):
+                onSuccess()
+            case .failure(let error):
+                onFailure(error: error)
+            }
+        }
+    }
+
     func redirectToLoginPage() {
         self.performSegue(withIdentifier: "SignupToLogin", sender: self)
     }

@@ -87,9 +87,9 @@ struct Scale: Decodable {
 }
 
 struct QuestionOption: Decodable {
-    let text: String
+    let text: String?
     let description: String?
-    let value: String
+    let value: String?
 }
 
 enum ModuleViewType: String, Decodable {
@@ -196,7 +196,6 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
     group.wait()
     return nextQuestionIdentifier
 }
-
 
 struct SubmitAnswerPayload: Codable {
     let categoryId: Int
