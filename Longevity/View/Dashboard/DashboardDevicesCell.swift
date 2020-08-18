@@ -28,7 +28,7 @@ class DashboardDevicesCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.addSubview(devicesCollection)
-        
+        self.backgroundColor = UIColor(hexString: "#F5F6FA")
         NSLayoutConstraint.activate([
             devicesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             devicesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -40,7 +40,7 @@ class DashboardDevicesCell: UITableViewCell {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 20.0, bottom: 10.0, right: 20.0)
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 20.0)
         layout.scrollDirection = .horizontal
     }
     

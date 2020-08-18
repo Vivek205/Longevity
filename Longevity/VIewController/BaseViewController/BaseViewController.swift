@@ -71,7 +71,7 @@ class BaseViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
         self.viewTab = viewTab
         self.setTabItems()
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
         self.view.addSubview(titleView)
         
         NSLayoutConstraint.activate([titleView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),

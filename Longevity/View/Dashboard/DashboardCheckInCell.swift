@@ -51,6 +51,12 @@ extension CheckInStatus {
 
 class DashboardCheckInCell: UITableViewCell {
     
+    var surveyResponse: SurveyResponse! {
+        didSet {
+            self.checkInTitle.text = surveyResponse.name
+        }
+    }
+    
     lazy var checkInIcon: UIImageView = {
         let icon = UIImageView()
         icon.contentMode = .scaleAspectFit
