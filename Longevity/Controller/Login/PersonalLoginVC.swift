@@ -203,7 +203,7 @@ class PersonalLoginVC: UIViewController {
         }
         _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
             switch result {
-            case .success(let session):
+            case .success(_):
                 onSuccess()
             case .failure(let error):
                 onFailure(error: error)
@@ -212,10 +212,37 @@ class PersonalLoginVC: UIViewController {
 
     }
 
+    @IBAction func handleSigninWithApple(_ sender: Any) {
+        self.showSpinner()
+        func onSuccess() {
+            getProfile()
+            retrieveARN()
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
+                updateSetupProfileCompletionStatus(currentState: .onboarding)
+            }
+        }
+        func onFailure(error: AuthError) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.showAlert(title: "Login Failed" , message: error.errorDescription)
+            }
+        }
+            _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
+                switch result {
+                case .success(_):
+                    onSuccess()
+                case .failure(let error):
+                    onFailure(error: error)
+                }
+            }
+    }
 
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
+        
     }
 
 }

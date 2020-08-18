@@ -795,6 +795,9 @@
                                                 <state key="normal" title="Sign in with Apple" image="Apple logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithApple:" destination="DKT-YJ-RMe" eventType="touchUpInside" id="nOD-hi-g3N"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>

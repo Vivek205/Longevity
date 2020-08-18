@@ -51,13 +51,13 @@ func updateMedicalConditions(otherOption: String?) {
                 let keys = UserDefaultsKeys()
                 defaults.set(true, forKey: keys.providedPreExistingMedicalConditions)
                 case .failure(let apiError):
-                print("failed \(apiError)")
+                print("updateMedicalConditions failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-          print("failed to fetch credentials \(error)")
+          print("updateMedicalConditions failed to fetch credentials \(error)")
       }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
@@ -118,13 +118,13 @@ func getHealthProfile(){
                     print("json parse error", error)
                 }
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("getHealthProfile failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-          print("failed to fetch credentials \(error)")
+          print("getHealthProfile failed to fetch credentials \(error)")
       }
     
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
@@ -167,13 +167,13 @@ func updateHealthProfile(){
                     defaults.set(newDevices, forKey: keys.devices)
                 }
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("updateHealthProfile failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-          print("failed to fetch credentials \(error)")
+          print("updateHealthProfile failed to fetch credentials \(error)")
       }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))

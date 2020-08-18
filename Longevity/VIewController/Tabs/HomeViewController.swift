@@ -76,11 +76,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+
         if section == 0 {
-            if surveyList != nil {
-                return self.surveyList!.count
-            }
-            return 0
+             return self.surveyList?.count ?? 0
+//            if surveyList != nil {
+//                return self.surveyList!.count
+//            }
+//            return 0
         }
         if section == 1 {
             return 1

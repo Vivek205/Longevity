@@ -57,13 +57,13 @@ func getProfile() {
                     print("json parse error", error)
                 }
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("getProfile failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
-        print("failed to fetch credentials \(error)")
+        print("getProfile failed to fetch credentials \(error)")
     }
 
 
@@ -103,12 +103,12 @@ func updateProfile(){
                 print("sucess \(responseString)")
                 updateSetupProfileCompletionStatus(currentState: .biodata)
             case .failure(let apiError):
-                print("failed \(apiError)")
+                print("updateProfile failed \(apiError)")
             }
         })
     }
     func onFailureCredentials(_ error: Error?) {
-        print("failed to fetch credentials \(error)")
+        print("updateProfile failed to fetch credentials \(error)")
     }
     let credentials = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 
@@ -168,6 +168,7 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
             if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
                 let tokens = try cognitoTokenProvider.getCognitoTokens().get()
                 credentials.idToken = tokens.idToken
+                print(tokens.idToken)
             }
 
             completion(credentials)
