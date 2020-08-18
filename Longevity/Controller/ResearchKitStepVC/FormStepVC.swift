@@ -12,7 +12,7 @@ import ResearchKit
 class FormStepVC: ORKStepViewController {
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.backgroundColor = .clear
+        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
@@ -20,14 +20,14 @@ class FormStepVC: ORKStepViewController {
         return collection
     }()
 
-    let footerView:UIView = {
+    lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
         uiView.backgroundColor = .white
         return uiView
     }()
 
-    let continueButton: CustomButtonFill = {
+    lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.setTitle("Next", for: .normal)
@@ -37,6 +37,27 @@ class FormStepVC: ORKStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presentViews()
+    }
+
+    func prefillForm(questionId: String) -> String? {
+        let feelingTodayQuestionId = "036122cab53e4d70b1b6305328eeaf3w"
+        let feelingTodayAnswer = SurveyTaskUtility.currentSurveyResult[feelingTodayQuestionId]
+        let prefillSymptomsOption = "2"
+        if feelingTodayAnswer == prefillSymptomsOption {
+            let lastResponse = SurveyTaskUtility.lastResponse
+            if lastResponse != nil {
+
+                let lastResponsesForGivenQuestionId = lastResponse?.filter({ (response) -> Bool in
+                    return response.quesId == questionId
+                })
+                
+                if lastResponsesForGivenQuestionId != nil && !lastResponsesForGivenQuestionId!.isEmpty {
+                     return lastResponsesForGivenQuestionId![0].answer
+                }
+                return nil
+            }
+        }
+        return nil
     }
 
     func presentViews() {
@@ -50,18 +71,22 @@ class FormStepVC: ORKStepViewController {
             formItemsCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             formItemsCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
             formItemsCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
-                                                             constant: -footerViewHeight)
+                                                        constant: -footerViewHeight)
         ])
 
-        footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-        footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-        footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-        footerView.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
+        NSLayoutConstraint.activate([
+            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
+        ])
 
-        continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15).isActive = true
-        continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
-        continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true
-        continueButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
+        NSLayoutConstraint.activate([
+            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
+            continueButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
@@ -69,7 +94,7 @@ class FormStepVC: ORKStepViewController {
             return
         }
 
-        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20.0
     }
@@ -104,25 +129,28 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         if indexPath.item == 0 {
             print(formStep.text)
-                let questionSubheader = SurveyTaskUtility.surveyTagline
-                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-                    as! RKCQuestionView
-                questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
-                                          question: formStep.text ?? "", extraInfo: nil)
-                return questionCell
+            let questionSubheader = SurveyTaskUtility.surveyTagline
+            let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+                as! RKCQuestionView
+            questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
+                                      question: formStep.text ?? "", extraInfo: nil)
+            return questionCell
 
         }
 
         let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
 
         if item.identifier == "" {
-            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self, at: indexPath) as! RKCFormSectionItemView
+            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
+                                                         at: indexPath) as! RKCFormSectionItemView
             sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
             return sectionItemCell
         }
 
         let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
-        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!)
+        let prefillAnswer = prefillForm(questionId: item.identifier)
+        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!,
+                              lastResponseAnswer: prefillAnswer)
         return itemCell
     }
 

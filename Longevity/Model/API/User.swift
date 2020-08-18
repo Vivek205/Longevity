@@ -35,7 +35,6 @@ func getProfile() {
     getHealthProfile()
 
     func onGettingCredentials(_ credentials: Credentials) {
-        print("idtoken", credentials.idToken)
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
         _ = Amplify.API.get(request: request, listener: { (result) in

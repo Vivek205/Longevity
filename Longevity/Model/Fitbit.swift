@@ -131,7 +131,6 @@ class FitbitModel: AuthHandlerType {
             do {
                 if let jsonData: [String:Any] =
                     try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-                    print(jsonData)
                     let accessToken = jsonData["access_token"] as! String
                     let refreshToken = jsonData["refresh_token"] as! String
                     let userId = jsonData["user_id"] as! String
@@ -161,10 +160,10 @@ class FitbitModel: AuthHandlerType {
                        switch result{
                        case .success(let data):
                            let responseString = String(data: data, encoding: .utf8)
-                           print("sucess \(responseString)")
+                           print("publish data sucess")
 
                        case .failure(let apiError):
-                           print("failed \(apiError)")
+                           print(" publish data error \(apiError)")
                        }
                    })
         }

@@ -17,19 +17,19 @@ class TextChoiceAnswerVC: ORKStepViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
-        collection.backgroundColor = .clear
+        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.alwaysBounceVertical = true  
         return collection
     }()
 
-    let footerView:UIView = {
+    lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
         uiView.backgroundColor = .white
         return uiView
     }()
 
-    let continueButton: CustomButtonFill = {
+    lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.setTitle("Next", for: .normal)
@@ -46,42 +46,43 @@ class TextChoiceAnswerVC: ORKStepViewController {
     }
 
     func presentViews() {
-        if let step = self.step as? ORKQuestionStep{
-            self.view.addSubview(questionAnswerCollection)
-            self.view.addSubview(footerView)
-            footerView.addSubview(continueButton)
-            let footerViewHeight = CGFloat(130)
+        self.view.addSubview(questionAnswerCollection)
+        self.view.addSubview(footerView)
+        footerView.addSubview(continueButton)
+        let footerViewHeight = CGFloat(130)
 
-            NSLayoutConstraint.activate([
-                questionAnswerCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                questionAnswerCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                questionAnswerCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
-                questionAnswerCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
-                                                                 constant: -footerViewHeight)
-            ])
+        NSLayoutConstraint.activate([
+            questionAnswerCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            questionAnswerCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            questionAnswerCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
+            questionAnswerCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
+                                                             constant: -footerViewHeight)
+        ])
 
-            footerView.leftAnchor.constraint(equalTo: view.leftAnchor).isActive = true
-            footerView.rightAnchor.constraint(equalTo: view.rightAnchor).isActive = true
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
-            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight).isActive = true
+        NSLayoutConstraint.activate([
+            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
+        ])
 
-            continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15).isActive = true
-            continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15).isActive = true
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24).isActive = true
-            continueButton.heightAnchor.constraint(equalToConstant: 48).isActive = true
-            continueButton.isEnabled = false
-            continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
+        NSLayoutConstraint.activate([
+            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
+            continueButton.heightAnchor.constraint(equalToConstant: 48)
+        ])
 
-            print("inside", step.answerFormat)
+        continueButton.isEnabled = false
+        continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
-            guard let layout = questionAnswerCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
-                return
-            }
-
-            layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
-            layout.scrollDirection = .vertical
-            layout.minimumInteritemSpacing = 20.0
+        guard let layout = questionAnswerCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
         }
+
+        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.scrollDirection = .vertical
+        layout.minimumInteritemSpacing = 20.0
     }
 
     @objc func handleContinue(sender: UIButton) {
@@ -93,7 +94,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
             SurveyTaskUtility.currentSurveyResult[questionId] = value
         }
     }
-
 }
 
 extension TextChoiceAnswerVC: UICollectionViewDelegate,
@@ -101,7 +101,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                print(answerFormat.textChoices.count)
                 return answerFormat.textChoices.count + 1
             }
             return 2

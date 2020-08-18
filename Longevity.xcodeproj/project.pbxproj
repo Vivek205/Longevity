@@ -15,8 +15,6 @@
 		C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4624E3039900C81580 /* UserInsight.swift */; };
 		C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4C24E318C500C81580 /* InsightGuageView.swift */; };
 		C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4E24E3220E00C81580 /* HexagonView.swift */; };
-		C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; };
-		C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = C198757D24DAE7FA00477185 /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
 		C19875A924DAF11C00477185 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */; };
 		C19875AA24DAF11C00477185 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */; };
@@ -68,6 +66,7 @@
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
+		E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24826E424E5326D0083EFAC /* CompletionStepVC.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
 		E25185EC24CF042000F3068C /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Survey.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
@@ -75,6 +74,8 @@
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
+		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
+		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F07D24C55DA600969CD8 /* Dashboard.storyboard */; };
 		E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08524C57C7A00969CD8 /* HomeVC.swift */; };
 		E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08724C597C000969CD8 /* CovidCheckinVC.swift */; };
@@ -129,16 +130,16 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
-		C198757C24DAE7FA00477185 /* PBXContainerItemProxy */ = {
+		E26661F124EA64980049ED5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
+			containerPortal = E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = B183A5951A8535D100C76870;
 			remoteInfo = ResearchKit;
 		};
-		C198757E24DAE7FA00477185 /* PBXContainerItemProxy */ = {
+		E26661F324EA64980049ED5E /* PBXContainerItemProxy */ = {
 			isa = PBXContainerItemProxy;
-			containerPortal = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
+			containerPortal = E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */;
 			proxyType = 2;
 			remoteGlobalIDString = 86CC8E9A1AC09332001CCD89;
 			remoteInfo = ResearchKitTests;
@@ -152,7 +153,7 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
-				C198758124DAE80700477185 /* ResearchKit.framework in Embed Frameworks */,
+				E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -169,7 +170,6 @@
 		C14ABA4624E3039900C81580 /* UserInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsight.swift; sourceTree = "<group>"; };
 		C14ABA4C24E318C500C81580 /* InsightGuageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightGuageView.swift; sourceTree = "<group>"; };
 		C14ABA4E24E3220E00C81580 /* HexagonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonView.swift; sourceTree = "<group>"; };
-		C198757624DAE7F900477185 /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-stable/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -222,6 +222,7 @@
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E24826E424E5326D0083EFAC /* CompletionStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionStepVC.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
 		E25185EB24CF042000F3068C /* Survey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
@@ -230,6 +231,7 @@
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
+		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		E274F08524C57C7A00969CD8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E274F08724C597C000969CD8 /* CovidCheckinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinVC.swift; sourceTree = "<group>"; };
@@ -293,7 +295,7 @@
 			files = (
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */,
-				C198758024DAE80700477185 /* ResearchKit.framework in Frameworks */,
+				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -316,15 +318,6 @@
 				B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
-			sourceTree = "<group>";
-		};
-		C198757724DAE7F900477185 /* Products */ = {
-			isa = PBXGroup;
-			children = (
-				C198757D24DAE7FA00477185 /* ResearchKit.framework */,
-				C198757F24DAE7FA00477185 /* ResearchKitTests.xctest */,
-			);
-			name = Products;
 			sourceTree = "<group>";
 		};
 		C19875AE24DC6A0800477185 /* VIewController */ = {
@@ -460,6 +453,15 @@
 			path = Fonts;
 			sourceTree = "<group>";
 		};
+		E26661EC24EA64980049ED5E /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				E26661F224EA64980049ED5E /* ResearchKit.framework */,
+				E26661F424EA64980049ED5E /* ResearchKitTests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
 		E274F08424C57C5A00969CD8 /* Dashboard */ = {
 			isa = PBXGroup;
 			children = (
@@ -474,6 +476,7 @@
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
 				E20256DD24E29DA000896F2C /* FormStepVC.swift */,
+				E24826E424E5326D0083EFAC /* CompletionStepVC.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -574,7 +577,7 @@
 		E2ECB8B2247FE2BA0020A27E = {
 			isa = PBXGroup;
 			children = (
-				C198757624DAE7F900477185 /* ResearchKit.xcodeproj */,
+				E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */,
 				E2BCA5212485007B007204B9 /* Assets.xcassets */,
 				E2ECB8BD247FE2BA0020A27E /* Longevity */,
 				E2ECB8BC247FE2BA0020A27E /* Products */,
@@ -724,8 +727,8 @@
 			projectDirPath = "";
 			projectReferences = (
 				{
-					ProductGroup = C198757724DAE7F900477185 /* Products */;
-					ProjectRef = C198757624DAE7F900477185 /* ResearchKit.xcodeproj */;
+					ProductGroup = E26661EC24EA64980049ED5E /* Products */;
+					ProjectRef = E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */;
 				},
 			);
 			projectRoot = "";
@@ -736,18 +739,18 @@
 /* End PBXProject section */
 
 /* Begin PBXReferenceProxy section */
-		C198757D24DAE7FA00477185 /* ResearchKit.framework */ = {
+		E26661F224EA64980049ED5E /* ResearchKit.framework */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.framework;
 			path = ResearchKit.framework;
-			remoteRef = C198757C24DAE7FA00477185 /* PBXContainerItemProxy */;
+			remoteRef = E26661F124EA64980049ED5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
-		C198757F24DAE7FA00477185 /* ResearchKitTests.xctest */ = {
+		E26661F424EA64980049ED5E /* ResearchKitTests.xctest */ = {
 			isa = PBXReferenceProxy;
 			fileType = wrapper.cfbundle;
 			path = ResearchKitTests.xctest;
-			remoteRef = C198757E24DAE7FA00477185 /* PBXContainerItemProxy */;
+			remoteRef = E26661F324EA64980049ED5E /* PBXContainerItemProxy */;
 			sourceTree = BUILT_PRODUCTS_DIR;
 		};
 /* End PBXReferenceProxy section */
@@ -935,6 +938,7 @@
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
+				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
@@ -1108,7 +1112,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1133,7 +1137,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 4;
+				CURRENT_PROJECT_VERSION = 5;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
