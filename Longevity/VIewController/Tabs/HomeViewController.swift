@@ -152,7 +152,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         header.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(header)
-        
+         
         NSLayoutConstraint.activate([
             header.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             header.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
@@ -277,4 +277,3 @@ extension HomeViewController: ORKTaskResultSource {
         }
     }
 }
-

@@ -324,6 +324,9 @@
                                                 <state key="normal" title="Continue with Apple" image="Apple logo">
                                                     <color key="titleColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 </state>
+                                                <connections>
+                                                    <action selector="handleSigninWithApple:" destination="mT6-fh-4r1" eventType="touchUpInside" id="PLI-9C-MZc"/>
+                                                </connections>
                                             </button>
                                         </subviews>
                                         <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
@@ -1624,8 +1627,8 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jxn-dO-fRl"/>
-        <segue reference="U5g-zc-jaq"/>
+        <segue reference="Z1Q-xo-ocY"/>
+        <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>
