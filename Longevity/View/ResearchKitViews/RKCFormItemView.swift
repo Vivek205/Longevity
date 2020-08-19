@@ -10,7 +10,15 @@ import UIKit
 import ResearchKit
 
 class RKCFormItemView: UICollectionViewCell {
+
+
     var itemIdentifier: String?
+    lazy var booleanAnswerView: RKCFormBooleanAnswerView = {
+        let booleanView = RKCFormBooleanAnswerView()
+        booleanView.createLayout(yesText: "yes", noText: "No")
+        booleanView.delegate = self
+        return booleanView
+    }()
 
     lazy var questionLabel: UILabel = {
         let label = UILabel()
@@ -34,10 +42,6 @@ class RKCFormItemView: UICollectionViewCell {
         var answerView:UIView
         switch answerFormat.questionType {
         case .boolean:
-            let booleanAnswerView = RKCFormBooleanAnswerView()
-            booleanAnswerView.createLayout(yesText: "yes", noText: "No")
-            booleanAnswerView.delegate = self
-
             if lastResponseAnswer != nil {
                 booleanAnswerView.preSelectOption(index: Int(lastResponseAnswer!)!)
                 if SurveyTaskUtility.currentSurveyResult[identifier] == nil {
