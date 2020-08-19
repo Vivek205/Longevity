@@ -251,9 +251,19 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
             formStepVC.step = step
             return formStepVC
         } else if step is ORKQuestionStep {
-            let stepVC = TextChoiceAnswerVC()
-            stepVC.step = step
-            return stepVC
+            guard let questionStep = step as? ORKQuestionStep else {return nil}
+            print(questionStep.answerFormat)
+            if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
+                let stepVC = TextChoiceAnswerVC()
+                               stepVC.step = step
+                               return stepVC
+            }
+            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
+                let stepVC = ContinuousScaleAnswerVC()
+                stepVC.step = step
+                return stepVC
+//                return nil
+            }
         }
         return nil
     }
@@ -273,7 +283,7 @@ extension HomeViewController: ORKTaskResultSource {
             let stepResult = ORKStepResult(stepIdentifier: "TextChoiceQuestionStep", results: [result])
             return stepResult
         default:
-            return ORKStepResult()
+            return nil
         }
     }
 }

@@ -103,6 +103,14 @@ class SurveyTaskUtility {
                                 if let filteredQuestions = surveyDetails?.questions.filter
                                     { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
+
+                                        if filteredQuestion.quesType == "CONTINUOUS_SCALE" {
+                                            let answerFormat = ORKAnswerFormat.continuousScale(withMaximumValue: 150, minimumValue: 60, defaultValue: 98, maximumFractionDigits: 1, vertical: true, maximumValueDescription: "Max Value", minimumValueDescription: "Minimum Value")
+                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: surveyDetails?.name ?? "Survey", question: filteredQuestion.text, answer: answerFormat)
+                                            steps += [questionStep]
+                                            continue
+                                        }
+
                                         let step = createSingleChoiceQuestionStep(
                                             identifier: filteredQuestion.quesId,
                                             title: surveyDetails?.name ?? "Survey",
