@@ -10,6 +10,9 @@ import UIKit
 import ResearchKit
 
 class FormStepVC: ORKStepViewController {
+    var keyboardHeight: CGFloat?
+    var initialYOrigin: CGFloat = CGFloat(0)
+    
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
@@ -37,6 +40,13 @@ class FormStepVC: ORKStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         presentViews()
+        addKeyboardObservers()
+        print("did load", self.view.frame.origin.y )
+        self.initialYOrigin = self.view.frame.origin.y
+    }
+
+    deinit {
+        removeKeyboardObservers()
     }
 
     func prefillForm(questionId: String) -> String? {
@@ -52,7 +62,7 @@ class FormStepVC: ORKStepViewController {
                 })
                 
                 if lastResponsesForGivenQuestionId != nil && !lastResponsesForGivenQuestionId!.isEmpty {
-                     return lastResponsesForGivenQuestionId![0].answer
+                    return lastResponsesForGivenQuestionId![0].answer
                 }
                 return nil
             }
@@ -100,6 +110,7 @@ class FormStepVC: ORKStepViewController {
     }
 
     @objc func handleContinue(sender: UIButton) {
+        print(SurveyTaskUtility.currentSurveyResult["036122cab53e4d70b1b6305328eeaf4h"])
         self.goForward()
     }
 
@@ -132,13 +143,15 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let questionSubheader = SurveyTaskUtility.surveyTagline
             let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
                 as! RKCQuestionView
-            questionCell.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "",
+            questionCell.createLayout(header: formStep.title ?? "",
+                                      subHeader: questionSubheader ?? "",
                                       question: formStep.text ?? "", extraInfo: nil)
             return questionCell
 
         }
 
         let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
+        let prefillAnswer = prefillForm(questionId: item.identifier)
 
         if item.identifier == "" {
             let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
@@ -147,11 +160,22 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return sectionItemCell
         }
 
-        let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
-        let prefillAnswer = prefillForm(questionId: item.identifier)
-        itemCell.createLayout(identifier:item.identifier, question: item.text!, answerFormat: item.answerFormat!,
-                              lastResponseAnswer: prefillAnswer)
-        return itemCell
+        switch item.answerFormat?.questionType {
+        case .text:
+            let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
+                                                  at: indexPath) as! RKCFormTextAnswerView
+            itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
+            itemCell.delegate = self
+            return itemCell
+        default:
+            let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
+            itemCell.createLayout(identifier:item.identifier, question: item.text!,
+                                  answerFormat: item.answerFormat!,
+                                  lastResponseAnswer: prefillAnswer)
+            return itemCell
+        }
+
+
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
@@ -187,7 +211,76 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width - CGFloat(40), height: height)
         }
 
+        switch item.answerFormat?.questionType {
+        case .text:
+            let answerCell = RKCFormTextAnswerView()
+            let questionText = item.text ?? ""
+            height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
+            height += 100 // height for textView
+            return CGSize(width: width, height: height)
+        default:
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
 
-        return CGSize(width: width - CGFloat(40), height: height)
+
+
+    }
+}
+
+
+extension FormStepVC: RKCFormTextAnswerViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        animateTextView(showKeyboard: true)
+        return true
+    }
+    func textViewDidChange(_ textView: UITextView) {
+        animateTextView(showKeyboard: true)
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        animateTextView(showKeyboard: false)
+    }
+
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        if text == "\n" {
+            animateTextView(showKeyboard: false)
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+
+    func animateTextView(showKeyboard: Bool) {
+        print("Y position", self.view.frame.origin.y, "initial", self.initialYOrigin)
+        if self.view.frame.origin.y > CGFloat(0) {
+            self.initialYOrigin = self.view.frame.origin.y
+        }
+        let movementDistance = self.keyboardHeight ?? CGFloat(0)
+        let movementDuration = CGFloat(0.3)
+        let movement = showKeyboard ? -movementDistance : self.initialYOrigin
+        self.view.frame.origin.y = movement
+    }
+
+    func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+
+    func removeKeyboardObservers(){
+        NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    }
+
+    @objc func keyboardWillChange(notification: Notification) {
+        print("keyboard notification \(notification.name.rawValue)")
+        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
+            let keyboardRectangle = keyboardFrame.cgRectValue
+            self.keyboardHeight = keyboardRectangle.height
+            print("keyboard height", self.keyboardHeight)
+        }
     }
 }

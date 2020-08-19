@@ -17,7 +17,7 @@ class RKCFormBooleanAnswerView: UIView {
     var currentAnswer:Bool = false
 
     lazy var segmentedControl: UISegmentedControl = {
-        let uiSegmentedControl = UISegmentedControl(items: ["No","Yes"])
+        let uiSegmentedControl = UISegmentedControl(items: ["",""])
         uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
         uiSegmentedControl.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 0.12)
         uiSegmentedControl.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
@@ -43,13 +43,6 @@ class RKCFormBooleanAnswerView: UIView {
 
     override init(frame: CGRect) {
         super.init(frame: frame)
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-
-    func createLayout(yesText: String, noText: String) {
         self.addSubview(segmentedControl)
 
         NSLayoutConstraint.activate([
@@ -58,6 +51,17 @@ class RKCFormBooleanAnswerView: UIView {
         ])
 
         segmentedControl.addTarget(self, action: #selector(handleSegmentedControlChanged(_:)), for: .valueChanged)
+
+    }
+
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+
+    }
+
+    func createLayout(yesText: String, noText: String) {
+        self.segmentedControl.setTitle(yesText, forSegmentAt: 0)
+        self.segmentedControl.setTitle(noText, forSegmentAt: 1)
     }
 
     @objc func handleSegmentedControlChanged(_ sender: UISwitch) {

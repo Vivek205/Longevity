@@ -74,7 +74,12 @@ class SurveyTaskUtility {
                                 if  let filteredQuestions = surveyDetails?.questions
                                     .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
                                     for filteredQuestion in filteredQuestions {
-                                        let answerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
+
+                                        var answerFormat: ORKAnswerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
+
+                                        if filteredQuestion.quesType == "TEXT" {
+                                            answerFormat = ORKTextAnswerFormat()
+                                        }
 
                                         let item = ORKFormItem(identifier: "\(filteredQuestion.quesId)",
                                             text: "\(filteredQuestion.text)", answerFormat: answerFormat)
@@ -98,14 +103,22 @@ class SurveyTaskUtility {
                                 if let filteredQuestions = surveyDetails?.questions.filter
                                     { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
+
+                                        if filteredQuestion.quesType == "CONTINUOUS_SCALE" {
+                                            let answerFormat = ORKAnswerFormat.continuousScale(withMaximumValue: 150, minimumValue: 60, defaultValue: 98, maximumFractionDigits: 1, vertical: true, maximumValueDescription: "Max Value", minimumValueDescription: "Minimum Value")
+                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: surveyDetails?.name ?? "Survey", question: filteredQuestion.text, answer: answerFormat)
+                                            steps += [questionStep]
+                                            continue
+                                        }
+
                                         let step = createSingleChoiceQuestionStep(
                                             identifier: filteredQuestion.quesId,
                                             title: surveyDetails?.name ?? "Survey",
                                             question: filteredQuestion.text,
                                             additionalText: nil,
                                             choices: filteredQuestion.options.map {
-                                                ORKTextChoice(text:$0.text,detailText:$0.description ,
-                                                              value:NSString(string:  $0.value), exclusive: false)
+                                                ORKTextChoice(text:$0.text ?? "",detailText:$0.description ,
+                                                              value:NSString(string:  $0.value ?? ""), exclusive: false)
                                             }
                                         )
                                         steps += [step]
