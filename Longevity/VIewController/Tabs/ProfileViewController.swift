@@ -13,14 +13,93 @@ enum ProfileView: Int {
     case settings
 }
 
+enum SettingAccessory: Int {
+    case navigate = 0
+    case addcontrol
+    case switchcontrol
+    case none
+}
+
+enum SettingPosition {
+    case topmost
+    case center
+    case bottom
+}
+
+enum ProfileSetting: String {
+    case exportcheckin = "Export Check-in Data"
+    case updatebiometrics = "Update Biometrics"
+    case updatepreconditions = "Update Pre-conditions"
+    case resetcheckin = "Reset Check-in Data"
+    case applehealth = "Apple Health"
+    case fitbit = "Fitbit"
+    case addhealthdevice = "Add Health Device"
+    case notifications = "Notifications"
+    case editaccount = "Edit Account Details"
+    case usemetricsystem = "Use Metric System"
+    case faqs = "FAQ"
+    case termsofservice = "Terms of Service"
+    case contactsupport = "Contact Support"
+    case signout = "signout"
+    case appversion = "appversion"
+}
+
+extension ProfileSetting {
+    var settingAccessory: SettingAccessory {
+        switch self {
+            case .exportcheckin: return .navigate
+            case .updatebiometrics: return .navigate
+            case .updatepreconditions: return .navigate
+            case .resetcheckin: return .navigate
+            case .applehealth: return .navigate
+            case .fitbit: return .switchcontrol
+            case .addhealthdevice: return .addcontrol
+            case .notifications: return .switchcontrol
+            case .editaccount: return .navigate
+            case .usemetricsystem: return .switchcontrol
+            case .faqs: return .navigate
+            case .termsofservice: return .navigate
+            case .contactsupport: return .navigate
+            default: return .none
+        }
+    }
+    
+    var settingPosition: SettingPosition {
+        switch self {
+            case .exportcheckin: return .topmost
+            case .updatebiometrics: return .center
+            case .updatepreconditions: return .center
+        case .resetcheckin: return .bottom
+            case .applehealth: return .topmost
+            case .fitbit: return .center
+            case .addhealthdevice: return .bottom
+            case .notifications: return .topmost
+            case .editaccount: return .center
+            case .usemetricsystem: return .bottom
+            case .faqs: return .topmost
+            case .termsofservice: return .center
+            case .contactsupport: return .bottom
+            default: return .center
+        }
+    }
+}
+
 class ProfileViewController: BaseViewController {
-    var userActivities: [UserActivity]?
     
     var userActivities: [UserActivity]! {
         didSet {
-            self.profileTableView.reloadData()
+            DispatchQueue.main.async {
+                self.profileTableView.reloadData()
+            }
         }
     }
+    
+    var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions, .resetcheckin],
+                                        [.applehealth, .fitbit, .addhealthdevice],
+                                        [.notifications, .editaccount, .usemetricsystem],
+                                        [.faqs, .termsofservice, .contactsupport],
+                                        [.signout], [.appversion]]
+    var settingsSections: [String] = ["COVID DATA", "DEVICE CONNECTIONS", "ACCOUNT", "INFORMATION", "",""]
     
     lazy var profileTableView: UITableView = {
         let profileTable = UITableView(frame: CGRect.zero, style: .grouped)
@@ -35,7 +114,13 @@ class ProfileViewController: BaseViewController {
     var currentProfileView: ProfileView! {
         didSet {
             self.titleView.titleLabel.text = currentProfileView == ProfileView.activity ? "Profile Activity" : "Settings"
-            self.profileTableView.reloadData()
+            
+            if currentProfileView == ProfileView.activity {
+                self.getProfileData()
+            }
+            else {
+                self.profileTableView.reloadData()
+            }
         }
     }
     
@@ -59,17 +144,15 @@ class ProfileViewController: BaseViewController {
             profileTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         self.currentProfileView = .activity
-
         getProfileData()
     }
-
+    
     func getProfileData() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserActivities(completion: { (userActivites) in
             self.userActivities = userActivites
         }, onFailure:  { (error) in
             print(error)
-
         })
     }
 }
@@ -81,7 +164,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         if self.currentProfileView == .activity {
             return 1
         } else {
-            return 3
+            return self.settingsSections.count
         }
     }
     
@@ -89,7 +172,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         if self.currentProfileView == .activity {
             return self.userActivities?.count ?? 0
         } else {
-            return 4
+            return self.settings[section].count
         }
     }
     
@@ -98,24 +181,45 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             guard let activityCell = tableView.getCell(with: ProfileActivityCell.self, at: indexPath) as? ProfileActivityCell else {
                 preconditionFailure("Invalid activity cell")
             }
-          var activity:UserActivity?
-          if let userActivities = self.userActivities {
-              if userActivities.count > indexPath.row {
-                  activity = userActivities[indexPath.row]
-              }
-          }
-          activityCell.activity = activity
+            var activity:UserActivity?
+            if let userActivities = self.userActivities {
+                if userActivities.count > indexPath.row {
+                    activity = userActivities[indexPath.row]
+                }
+            }
+            activityCell.activity = activity
             return activityCell
         } else {
-            guard let activityCell = tableView.getCell(with: ProfileActivityCell.self, at: indexPath) as? ProfileActivityCell else {
-                preconditionFailure("Invalid activity cell")
+            if indexPath.section < (self.settingsSections.count - 2) {
+                guard let settingsCell = tableView.getCell(with: ProfileSettingsCell.self, at: indexPath) as? ProfileSettingsCell else {
+                    preconditionFailure("Invalid activity cell")
+                }
+                settingsCell.profileSetting = self.settings[indexPath.section][indexPath.row]
+                return settingsCell
+            } else if indexPath.section == (self.settingsSections.count - 2) {
+                guard let signoutCell = tableView.getCell(with: SignOutCell.self, at: indexPath) as? SignOutCell else {
+                    preconditionFailure("Invalid activity cell")
+                }
+                return signoutCell
+            } else {
+                guard let appversioncell = tableView.getCell(with: AppVersionCell.self, at: indexPath) as? AppVersionCell else {
+                    preconditionFailure("Invalid activity cell")
+                }
+                return appversioncell
             }
-            return activityCell
         }
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 80.0
+        if self.currentProfileView == .activity {
+            return 80.0
+        } else {
+            if indexPath.section < (self.settingsSections.count - 1) {
+                return 50.0
+            } else {
+                return 60.0
+            }
+        }
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
@@ -127,18 +231,66 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             headerView.delegate = self
             
             return headerView
+        } else {
+            guard let header = tableView.getHeader(with: UITableViewHeaderFooterView.self, index: section) else {
+                preconditionFailure("Invalid header view")
+            }
+            
+            header.backgroundColor = .clear
+            
+            let title = UILabel()
+            title.text = self.settingsSections[section]
+            title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+            title.textColor = UIColor(hexString: "#4E4E4E")
+            title.sizeToFit()
+            title.translatesAutoresizingMaskIntoConstraints = false
+            
+            header.addSubview(title)
+            
+            NSLayoutConstraint.activate([
+                title.centerYAnchor.constraint(equalTo: header.centerYAnchor),
+                title.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 10.0)
+            ])
+            
+            return header
         }
-        
-        return nil
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
         if section == 0 {
-            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.25 : 0.35
+            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.30 : 0.40
             let height = tableView.bounds.height * heightFactor
             return height
         } else {
             return 40.0
+        }
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        tableView.deselectRow(at: indexPath, animated: false)
+        if self.currentProfileView != .activity {
+            guard let cell = tableView.cellForRow(at: indexPath) as? ProfileSettingsCell else {
+                preconditionFailure("Invalid settings cell")
+            }
+            
+            switch cell.profileSetting {
+                case .exportcheckin:
+                    let exportCheckinViewController = ExportCheckinDataViewController()
+                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
+                case .updatebiometrics: return
+                case .updatepreconditions: return
+                case .resetcheckin: return
+                case .applehealth: return
+                case .fitbit: return
+                case .addhealthdevice: return
+                case .notifications: return
+                case .editaccount: return
+                case .usemetricsystem: return
+                case .faqs: return
+                case .termsofservice: return
+                case .contactsupport: return
+                default: return
+            }
         }
     }
 }

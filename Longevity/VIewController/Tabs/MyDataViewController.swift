@@ -55,7 +55,11 @@ class MyDataViewController: BaseViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         
-        self.userInsights = UserInsightsAPI.instance.get()
+        UserInsightsAPI.instance.get { [weak self] (insights) in
+            DispatchQueue.main.async {
+                self?.userInsights = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            }
+        }
     }
 }
 

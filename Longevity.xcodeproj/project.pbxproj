@@ -16,6 +16,9 @@
 		C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4C24E318C500C81580 /* InsightGuageView.swift */; };
 		C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4E24E3220E00C81580 /* HexagonView.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
+		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
+		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
+		C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
 		C19875A924DAF11C00477185 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */; };
 		C19875AA24DAF11C00477185 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */; };
@@ -177,6 +180,9 @@
 		C14ABA4C24E318C500C81580 /* InsightGuageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightGuageView.swift; sourceTree = "<group>"; };
 		C14ABA4E24E3220E00C81580 /* HexagonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonView.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
+		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
+		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
+		C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCheckinDataViewController.swift; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -332,9 +338,18 @@
 			name = Frameworks;
 			sourceTree = "<group>";
 		};
+		C193942D24EF037700BDB3BD /* ProfileSettings */ = {
+			isa = PBXGroup;
+			children = (
+				C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */,
+			);
+			path = ProfileSettings;
+			sourceTree = "<group>";
+		};
 		C19875AE24DC6A0800477185 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
+				C193942D24EF037700BDB3BD /* ProfileSettings */,
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
 				C19875B424DC784B00477185 /* Tabs */,
 				C19875AF24DC6B6B00477185 /* LNTabBarViewController.swift */,
@@ -398,6 +413,8 @@
 				C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */,
 				C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */,
 				C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */,
+				C193942624EEDD9000BDB3BD /* AppVersionCell.swift */,
+				C193942B24EEE3D700BDB3BD /* SignOutCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -923,6 +940,7 @@
 				C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
+				C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */,
 				E290B60624BC75D500C51655 /* String.swift in Sources */,
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
@@ -942,6 +960,7 @@
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				C19875B324DC6D1600477185 /* UIColor+Extension.swift in Sources */,
+				C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */,
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
@@ -962,6 +981,7 @@
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
 				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
+				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
