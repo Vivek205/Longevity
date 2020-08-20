@@ -15,6 +15,7 @@
 		C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4624E3039900C81580 /* UserInsight.swift */; };
 		C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4C24E318C500C81580 /* InsightGuageView.swift */; };
 		C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA4E24E3220E00C81580 /* HexagonView.swift */; };
+		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
 		C19875A924DAF11C00477185 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */; };
 		C19875AA24DAF11C00477185 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */; };
@@ -174,6 +175,7 @@
 		C14ABA4624E3039900C81580 /* UserInsight.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsight.swift; sourceTree = "<group>"; };
 		C14ABA4C24E318C500C81580 /* InsightGuageView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = InsightGuageView.swift; sourceTree = "<group>"; };
 		C14ABA4E24E3220E00C81580 /* HexagonView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HexagonView.swift; sourceTree = "<group>"; };
+		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -393,6 +395,7 @@
 				C1C8220324EB49F60074AF11 /* ProfileActivityCell.swift */,
 				C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */,
 				C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */,
+				C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */,
 			);
 			path = Profile;
 			sourceTree = "<group>";
@@ -972,6 +975,7 @@
 				E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */,
 				E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */,
 				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
+				C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */,
 				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
 				E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */,
 				C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */,

@@ -50,3 +50,17 @@ class BaseAuthAPI {
         }
     }
 }
+
+extension Decodable {
+    static func map(json: String) -> Self? {
+        do {
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            return try decoder.decode(Self.self, from: Data(json.utf8))
+        }
+        catch let error {
+            print(error.localizedDescription)
+            return nil
+        }
+    }
+}
