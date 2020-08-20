@@ -56,8 +56,30 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: DashboardDeviceCollectionCell.self, at: indexPath) as? DashboardDeviceCollectionCell else { preconditionFailure("Invalid device cell")}
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
+        var connectionStatus: DeviceConnectionStatus = .notConnected
+
+        if self.devices[indexPath.item] == "Fitbit" {
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
+                if let fitbitStatus = devices[ExternalDevices.FITBIT] {
+                    if fitbitStatus["connected"] == 1 {
+                        connectionStatus = .connected
+                    }
+                }
+            }
+        } else if self.devices[indexPath.item] == "Healthkit" {
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
+                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] {
+                    if healthkitStatus["connected"] == 1 {
+                        connectionStatus = .connected
+                    }
+                }
+            }
+        }
         
-        cell.setupCell(title: self.devices[indexPath.item], description: self.descriptions[indexPath.item], icon: deviceIcons[indexPath.item], isEmpty: indexPath.item == 2)
+        cell.setupCell(title: self.devices[indexPath.item], description: self.descriptions[indexPath.item], icon: deviceIcons[indexPath.item], isEmpty: indexPath.item == 2, status: connectionStatus)
         
         return cell
     }

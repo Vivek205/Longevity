@@ -13,6 +13,7 @@ class FormStepVC: ORKStepViewController {
     var keyboardHeight: CGFloat?
     var initialYOrigin: CGFloat = CGFloat(0)
     
+    
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
@@ -159,11 +160,22 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
             return sectionItemCell
         }
+        print("item.text", item.text)
+        print("formStep.formItems?.count", formStep.formItems?.count)
+        print("indexPath.item", indexPath.item)
+
+        if formStep.formItems?.count == indexPath.item && item.answerFormat?.questionType == .text {
+            let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
+                                                  at: indexPath) as! RKCFormTextAnswerView
+            itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
+            itemCell.delegate = self
+            return itemCell
+        }
 
         switch item.answerFormat?.questionType {
         case .text:
-            let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
-                                                  at: indexPath) as! RKCFormTextAnswerView
+            let itemCell = collectionView.getCell(with: RKCFormInlineTextAnswerView.self,
+                                                  at: indexPath) as! RKCFormInlineTextAnswerView
             itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
             itemCell.delegate = self
             return itemCell
@@ -174,7 +186,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                                   lastResponseAnswer: prefillAnswer)
             return itemCell
         }
-
 
     }
 
@@ -211,16 +222,16 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width - CGFloat(40), height: height)
         }
 
-        switch item.answerFormat?.questionType {
-        case .text:
+        if formStep.formItems?.count == indexPath.item && item.answerFormat?.questionType == .text {
             let answerCell = RKCFormTextAnswerView()
             let questionText = item.text ?? ""
             height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
             height += 100 // height for textView
             return CGSize(width: width, height: height)
-        default:
-            return CGSize(width: width - CGFloat(40), height: height)
         }
+
+        return CGSize(width: width - CGFloat(40), height: height)
+
 
 
 
@@ -228,7 +239,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 }
 
 
-extension FormStepVC: RKCFormTextAnswerViewDelegate {
+extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerViewDelegate {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         animateTextView(showKeyboard: true)
         return true
@@ -258,8 +269,7 @@ extension FormStepVC: RKCFormTextAnswerViewDelegate {
             self.initialYOrigin = self.view.frame.origin.y
         }
         let movementDistance = self.keyboardHeight ?? CGFloat(0)
-        let movementDuration = CGFloat(0.3)
-        let movement = showKeyboard ? -movementDistance : self.initialYOrigin
+        let movement = showKeyboard ? -(movementDistance) : self.initialYOrigin
         self.view.frame.origin.y = movement
     }
 
@@ -269,10 +279,11 @@ extension FormStepVC: RKCFormTextAnswerViewDelegate {
         NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
-    func removeKeyboardObservers(){
+    func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification,
+                                                  object: nil)
     }
 
     @objc func keyboardWillChange(notification: Notification) {

@@ -104,7 +104,7 @@ func getHealthProfile(){
                         defaults.set(MeasurementUnits.metric, forKey: keys.unit)
                     }
 
-                    if let fitbitStatus = devices?[ExternalDevices.FITBIT]{
+                    if let fitbitStatus = devices?[ExternalDevices.FITBIT] {
                         devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
 
                         if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
@@ -136,15 +136,29 @@ func updateHealthProfile(){
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
-        let body = JSON([
+        var bodyDict = [
             keys.weight: defaults.value(forKey: keys.weight),
             keys.height: defaults.value(forKey: keys.height),
             keys.gender: defaults.value(forKey: keys.gender),
             keys.birthday: defaults.value(forKey: keys.birthday),
             keys.unit: defaults.value(forKey: keys.unit)
-        ])
+        ]
 
-        var bodyData:Data = Data();
+        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+            var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
+            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+                print("fitbitstatus", fitbitStatus)
+                devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
+            }
+            if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
+                devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
+            }
+            bodyDict["devices"] = devicesStatus
+        }
+
+        let body = JSON(bodyDict)
+
+        var bodyData:Data = Data()
         do {
             bodyData = try body.rawData()
         } catch  {

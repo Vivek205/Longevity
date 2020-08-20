@@ -79,14 +79,16 @@ func updateProfile(){
         let headers = ["token":credentials.idToken,"login_type":LoginType.PERSONAL]
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
-        let body = JSON([
+        var bodyDict = [
             keys.name: defaults.value(forKey: keys.name),
             keys.weight: defaults.value(forKey: keys.weight),
             keys.height: defaults.value(forKey: keys.height),
             keys.gender: defaults.value(forKey: keys.gender),
             keys.birthday: defaults.value(forKey: keys.birthday),
             keys.unit: defaults.value(forKey: keys.unit)
-        ])
+        ]
+
+        let body = JSON(bodyDict)
 
         var bodyData:Data = Data();
         do {

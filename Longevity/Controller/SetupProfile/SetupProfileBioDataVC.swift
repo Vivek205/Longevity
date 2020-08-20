@@ -122,7 +122,7 @@ class SetupProfileBioDataVC: UIViewController {
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .blackTranslucent
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
-        
+
     }
 
     func actualValue(selectedOption: String) -> Double {
@@ -275,6 +275,18 @@ class SetupProfileBioDataVC: UIViewController {
             if !success {
                 return print("error in health kit", error)
             }
+            // MARK: Save healthkit status in userDefaults
+            let defaults = UserDefaults.standard
+            let keys = UserDefaultsKeys()
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+                let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+                let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+                defaults.set(enhancedDevices, forKey: keys.devices)
+            } else {
+                let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+                defaults.set(newDevices, forKey: keys.devices)
+            }
+
             self.readHealthData()
         }
     }
@@ -361,14 +373,7 @@ class SetupProfileBioDataVC: UIViewController {
             defaults.set(weightInKilograms, forKey: keys.weight)
         }
 
-//        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-//            let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-//            let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-//            defaults.set(enhancedDevices, forKey: keys.devices)
-//        } else {
-//            let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-//            defaults.set(newDevices, forKey: keys.devices)
-//        }
+
 
 
         // MARK: Reload the collection view
