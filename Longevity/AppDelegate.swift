@@ -28,7 +28,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try Amplify.configure()
             configureCognito()
             print("Amplify configured with auth plugin")
-            //            registerForPushNotifications()
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
@@ -71,82 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
         AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
-
-    //    func registerForPushNotifications() {
-    //        UNUserNotificationCenter.current() // 1
-    //            .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
-    //                [weak self] granted, error in
-    //                print("Permission granted: \(granted)")
-    //                guard granted else { return }
-    //                self?.getNotificationSettings()
-    //        }
-    //    }
-    //
-    //    func getNotificationSettings() {
-    //        UNUserNotificationCenter.current().getNotificationSettings { settings in
-    //            print("Notification settings: \(settings)")
-    //            guard settings.authorizationStatus == .authorized else { return }
-    //            DispatchQueue.main.async {
-    //                UIApplication.shared.registerForRemoteNotifications()
-    //            }
-    //        }
-    //    }
-//    func application(_ application: UIApplication, didReceiveRemoteNotification userInfo: [AnyHashable: Any], fetchCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
-//
-//           completionHandler(UIBackgroundFetchResult.newData)
-//
-//           fireLocalNotification(userinfo: ["description": "locally fired notification"])
-//
-//           print("background notification received")
-//
-//    }
-
-    func fireLocalNotification(userinfo: [AnyHashable: Any]) {
-
-           let content = UNMutableNotificationContent()
-
-           content.title = "Invitation"
-
-           content.subtitle = "This is a Local Notification."
-
-           content.body = userinfo.description
-
-           content.categoryIdentifier = "INVITATION"
-
-           content.sound = UNNotificationSound.default
-
-
-
-
-           //Notification Trigger - when the notification should be fired
-
-           let trigger = UNTimeIntervalNotificationTrigger(timeInterval: 2, repeats: false)
-
-
-
-
-           //Notification Request
-
-           let request = UNNotificationRequest(identifier: "Anniversary", content: content, trigger: trigger)
-
-
-
-
-           //Scheduling the Notification
-
-           let center = UNUserNotificationCenter.current()
-
-           center.add(request) { (error) in
-
-               if let error = error {
-
-                   print(error.localizedDescription)
-
-               }
-
-           }
-
-       }
 
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
         var token = ""

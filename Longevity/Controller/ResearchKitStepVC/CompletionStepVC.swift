@@ -10,25 +10,26 @@ import UIKit
 import ResearchKit
 
 class CompletionStepVC: ORKStepViewController {
-    let footerView:UIView = {
+    lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
         uiView.backgroundColor = .white
         return uiView
     }()
 
-    let continueButton: CustomButtonFill = {
+    lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
         buttonView.setTitle("Done", for: .normal)
         return buttonView
     }()
 
-    let resultTextView: UITextView = {
-        let textView = UITextView()
-        textView.translatesAutoresizingMaskIntoConstraints = false
-        textView.text = "The results of the survey will be displayed here"
-        return textView
+    lazy var infoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Thanks for participating in the survey. We will notify you once your results are ready"
+        label.numberOfLines = 0
+        return label
     }()
 
     override func viewDidLoad() {
@@ -55,25 +56,21 @@ class CompletionStepVC: ORKStepViewController {
 
     func presentViews() {
         self.view.addSubview(footerView)
-        self.view.addSubview(resultTextView)
+        self.view.addSubview(infoLabel)
         footerView.addSubview(continueButton)
         let footerViewHeight = CGFloat(130)
 
         NSLayoutConstraint.activate([
-            resultTextView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            resultTextView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            resultTextView.topAnchor.constraint(equalTo: view.topAnchor),
-            resultTextView.bottomAnchor.constraint(equalTo: footerView.topAnchor)
-        ])
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            infoLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            infoLabel.heightAnchor.constraint(equalToConstant: 100),
 
-        NSLayoutConstraint.activate([
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
-        ])
+            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight),
 
-        NSLayoutConstraint.activate([
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
@@ -81,7 +78,6 @@ class CompletionStepVC: ORKStepViewController {
         ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
-
     }
 
     @objc func handleContinue(sender: UIButton) {
