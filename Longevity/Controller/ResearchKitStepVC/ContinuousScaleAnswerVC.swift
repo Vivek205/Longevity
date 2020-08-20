@@ -10,6 +10,7 @@ import UIKit
 import ResearchKit
 
 class ContinuousScaleAnswerVC: ORKStepViewController {
+
     override var step: ORKStep? {
         didSet {
             if let step = self.step as? ORKQuestionStep {
@@ -18,6 +19,21 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
                                           subHeader: questionSubheader,
                                           question: step.question ?? "",
                                           extraInfo: step.text)
+
+                if let answerFormat = step.answerFormat as? ORKContinuousScaleAnswerFormat {
+                    print(answerFormat)
+                    slider.minimumValue = Float(answerFormat.minimum)
+                    slider.maximumValue = Float(answerFormat.maximum)
+                    slider.minimumValueImage = answerFormat.minimumValueDescription?.toImage()
+                    slider.maximumValueImage = answerFormat.maximumValueDescription?.toImage()
+
+                }
+
+                if let localSavedAnswer = SurveyTaskUtility.currentSurveyResult[step.identifier]  {
+                    slider.setValue((localSavedAnswer as NSString).floatValue, animated: true)
+                    sliderLabel.text = localSavedAnswer
+                    continueButton.isEnabled = true
+                }
             }
         }
     }
@@ -29,52 +45,63 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     }()
 
     lazy var footerView:UIView = {
-          let uiView = UIView()
-          uiView.translatesAutoresizingMaskIntoConstraints = false
-          uiView.backgroundColor = .white
-          return uiView
-      }()
+        let uiView = UIView()
+        uiView.translatesAutoresizingMaskIntoConstraints = false
+        uiView.backgroundColor = .white
+        return uiView
+    }()
 
-      lazy var continueButton: CustomButtonFill = {
-          let buttonView = CustomButtonFill()
-          buttonView.translatesAutoresizingMaskIntoConstraints = false
-          buttonView.setTitle("Next", for: .normal)
-          return buttonView
-      }()
+    lazy var continueButton: CustomButtonFill = {
+        let buttonView = CustomButtonFill()
+        buttonView.translatesAutoresizingMaskIntoConstraints = false
+        buttonView.setTitle("Next", for: .normal)
+        buttonView.addTarget(self, action: #selector(handleContinue(_:)), for: .touchUpInside)
+        buttonView.isEnabled = false
+        return buttonView
+    }()
 
     lazy var slider:UISlider = {
         let uiSlider = UISlider()
-//        uiSlider.vert
-        uiSlider.minimumValue = 0
-        uiSlider.maximumValue = 20
         uiSlider.isContinuous = true
         uiSlider.tintColor = .green
-//        uiSlider.
         uiSlider.translatesAutoresizingMaskIntoConstraints = false
+        uiSlider.setValue(98.0, animated: true)
+        uiSlider.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
         return uiSlider
+    }()
+
+    lazy var sliderLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "98"
+        return label
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        createLayout()
+    }
 
-//        let questionView = UIView()
-//        questionView.backgroundColor = .black
-//        questionView.translatesAutoresizingMaskIntoConstraints = false
+    func createLayout() {
         self.view.addSubview(questionView)
+        self.view.addSubview(sliderLabel)
         self.view.addSubview(slider)
         self.view.addSubview(footerView)
         footerView.addSubview(continueButton)
 
         NSLayoutConstraint.activate([
-            questionView.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            questionView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            questionView.topAnchor.constraint(equalTo: view.topAnchor, constant: 50),
-            questionView.heightAnchor.constraint(equalToConstant: 300),
+            questionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            questionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            questionView.topAnchor.constraint(equalTo: view.topAnchor),
+            questionView.heightAnchor.constraint(equalToConstant: 150),
+
+            sliderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            sliderLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor),
+            sliderLabel.heightAnchor.constraint(equalToConstant: 50),
 
             slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            slider.topAnchor.constraint(equalTo: questionView.bottomAnchor),
-
+            slider.topAnchor.constraint(equalTo: sliderLabel.bottomAnchor, constant: 30),
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -86,117 +113,18 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
             continueButton.heightAnchor.constraint(equalToConstant: 48)
         ])
-
-        continueButton.isEnabled = false
-        continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
-
     }
 
-    @objc func handleContinue(sender: UIButton) {
+    @objc func handleContinue(_ sender: UIButton) {
         self.goForward()
     }
 
-}
-
-
-class ContinuousScaleQuestionView: UIView {
-
-    let headerLabel: UILabel = {
-        let labelView = QuestionHeaderLabel()
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        labelView.textAlignment = .center
-        return labelView
-    }()
-
-    let subHeaderLabel: UILabel = {
-        let labelView = QuestionSubheaderLabel()
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        labelView.textAlignment = .center
-        return labelView
-    }()
-
-    let questionLabel: UILabel = {
-        let labelView = QuestionQuestionLabel()
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        labelView.textAlignment = .center
-        labelView.numberOfLines = 0
-        return labelView
-    }()
-
-    let extraInfoLabel: UILabel = {
-        let labelView = QuestionExtraInfoLabel()
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        labelView.textAlignment = .center
-        labelView.numberOfLines = 2
-        return labelView
-    }()
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    @objc func handleSliderValueChanged(_ sender: UISlider) {
+        print("value changed", sender.value)
+        guard let identifer = step?.identifier else { return }
+        SurveyTaskUtility.currentSurveyResult[identifer] =  String(format: "%.1f", sender.value)
+        sliderLabel.text = "\(Int(sender.value))"
+        continueButton.isEnabled = true
     }
 
-    required init?(coder: NSCoder) {
-        super.init(coder: coder)
-    }
-
-
-    func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
-        self.addBottomRoundedEdge(desiredCurve: 0.5)
-        backgroundColor = .white
-
-        let headerView = UIView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(headerView)
-
-        NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: self.topAnchor),
-        ])
-
-        headerLabel.text = header
-        headerView.addSubview(headerLabel)
-
-        NSLayoutConstraint.activate([
-            headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
-        ])
-
-
-        subHeaderLabel.text = subHeader
-        headerView.addSubview(subHeaderLabel)
-
-        NSLayoutConstraint.activate([
-            subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-            subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
-            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-        ])
-
-        questionLabel.text = question
-        self.addSubview(questionLabel)
-
-        NSLayoutConstraint.activate([
-            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
-        ])
-
-        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
-
-        if extraInfo != nil {
-            extraInfoLabel.text = extraInfo
-            self.addSubview(extraInfoLabel)
-            NSLayoutConstraint.activate([
-                extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-                extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
-            ])
-        } else {
-            bottomAnchorQuestionLabel.isActive = true
-        }
-
-    }
 }

@@ -105,7 +105,11 @@ class SurveyTaskUtility {
                                     for filteredQuestion in filteredQuestions {
 
                                         if filteredQuestion.quesType == "CONTINUOUS_SCALE" {
-                                            let answerFormat = ORKAnswerFormat.continuousScale(withMaximumValue: 150, minimumValue: 60, defaultValue: 98, maximumFractionDigits: 1, vertical: true, maximumValueDescription: "Max Value", minimumValueDescription: "Minimum Value")
+                                            let answerFormat = ORKAnswerFormat.continuousScale(
+                                                withMaximumValue: 150,minimumValue: 60, defaultValue: 98,
+                                                maximumFractionDigits: 1, vertical: true,
+                                                maximumValueDescription: (NSString(format:"120%@", "\u{00B0}") as String),
+                                                minimumValueDescription: (NSString(format:"80%@", "\u{00B0}") as String))
                                             let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: surveyDetails?.name ?? "Survey", question: filteredQuestion.text, answer: answerFormat)
                                             steps += [questionStep]
                                             continue

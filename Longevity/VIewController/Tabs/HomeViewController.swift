@@ -252,7 +252,6 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
             return formStepVC
         } else if step is ORKQuestionStep {
             guard let questionStep = step as? ORKQuestionStep else {return nil}
-            print(questionStep.answerFormat)
             if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
                 let stepVC = TextChoiceAnswerVC()
                                stepVC.step = step

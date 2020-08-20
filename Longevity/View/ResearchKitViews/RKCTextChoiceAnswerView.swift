@@ -39,7 +39,7 @@ class RKCTextChoiceAnswerView: UIView {
         self.addSubview(checkbox)
         checkbox.translatesAutoresizingMaskIntoConstraints = false
         checkbox.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
-        checkbox.rightAnchor.constraint(equalTo: self.rightAnchor, constant: -20).isActive = true
+        checkbox.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
         checkbox.widthAnchor.constraint(equalToConstant: 24).isActive = true
         checkbox.contentMode = .scaleAspectFill
 
@@ -48,8 +48,8 @@ class RKCTextChoiceAnswerView: UIView {
 
         stackView.topAnchor.constraint(equalTo: self.topAnchor, constant: 15).isActive = true
         stackView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -15).isActive = true
-        stackView.leftAnchor.constraint(equalTo: self.leftAnchor, constant: 20).isActive = true
-        stackView.rightAnchor.constraint(equalTo: checkbox.leftAnchor, constant: 0).isActive = true
+        stackView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20).isActive = true
+        stackView.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor, constant: 0).isActive = true
     }
 
     func createChoiceStackView() -> UIStackView {

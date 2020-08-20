@@ -14,6 +14,7 @@ enum ProfileView: Int {
 }
 
 class ProfileViewController: BaseViewController {
+    var userActivities: [UserActivity]?
     
     var userActivities: [UserActivity]! {
         didSet {
@@ -58,6 +59,18 @@ class ProfileViewController: BaseViewController {
             profileTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         self.currentProfileView = .activity
+
+        getProfileData()
+    }
+
+    func getProfileData() {
+        let userProfileAPI = UserProfileAPI()
+        userProfileAPI.getUserActivities(completion: { (userActivites) in
+            self.userActivities = userActivites
+        }, onFailure:  { (error) in
+            print(error)
+
+        })
     }
 }
 
@@ -74,7 +87,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.currentProfileView == .activity {
-            return 3
+            return self.userActivities?.count ?? 0
         } else {
             return 4
         }
@@ -85,6 +98,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             guard let activityCell = tableView.getCell(with: ProfileActivityCell.self, at: indexPath) as? ProfileActivityCell else {
                 preconditionFailure("Invalid activity cell")
             }
+          var activity:UserActivity?
+          if let userActivities = self.userActivities {
+              if userActivities.count > indexPath.row {
+                  activity = userActivities[indexPath.row]
+              }
+          }
+          activityCell.activity = activity
             return activityCell
         } else {
             guard let activityCell = tableView.getCell(with: ProfileActivityCell.self, at: indexPath) as? ProfileActivityCell else {

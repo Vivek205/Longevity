@@ -54,114 +54,74 @@ class RKCQuestionView: UICollectionViewCell {
         initalizeLabels()
     }
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.addBottomRoundedEdge(desiredCurve: 0.5)
+    }
+
 
     func initalizeLabels() {
-        self.addBottomRoundedEdge(desiredCurve: 0.5)
-                    backgroundColor = .white
+        backgroundColor = .white
 
-                    let headerView = UIView()
-                    headerView.translatesAutoresizingMaskIntoConstraints = false
-                    self.addSubview(headerView)
+        let headerView = UIView()
+        headerView.translatesAutoresizingMaskIntoConstraints = false
+        self.addSubview(headerView)
 
-                    NSLayoutConstraint.activate([
-                        headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                        headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                        headerView.topAnchor.constraint(equalTo: self.topAnchor),
-                    ])
+        NSLayoutConstraint.activate([
+            headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            headerView.topAnchor.constraint(equalTo: self.topAnchor),
+        ])
 
         //            headerLabel.text = header
-                    headerView.addSubview(headerLabel)
+        headerView.addSubview(headerLabel)
 
-                    NSLayoutConstraint.activate([
-                        headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-                        headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-                        headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
-                    ])
+        NSLayoutConstraint.activate([
+            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
+        ])
 
-                    headerView.addSubview(subHeaderLabel)
+        headerView.addSubview(subHeaderLabel)
 
-                    NSLayoutConstraint.activate([
-                        subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-                        subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-                        subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
-                        subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-                    ])
+        NSLayoutConstraint.activate([
+            subHeaderLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+            subHeaderLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
+            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+        ])
 
-                    self.addSubview(questionLabel)
+        self.addSubview(questionLabel)
 
-                    NSLayoutConstraint.activate([
-                        questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                        questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                        questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
-                    ])
+        NSLayoutConstraint.activate([
+            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
+        ])
 
-                    let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
+        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
 
-                        self.addSubview(extraInfoLabel)
-                        NSLayoutConstraint.activate([
-                            extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                            extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                            extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-                            extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
-                        ])
+        self.addSubview(extraInfoLabel)
+        NSLayoutConstraint.activate([
+            extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
+            extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
+        ])
     }
 
 
     func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
-//        self.addBottomRoundedEdge(desiredCurve: 0.5)
-//        backgroundColor = .white
-//
-//        let headerView = UIView()
-//        headerView.translatesAutoresizingMaskIntoConstraints = false
-//        self.addSubview(headerView)
-//
-//        NSLayoutConstraint.activate([
-//            headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            headerView.topAnchor.constraint(equalTo: self.topAnchor),
-//        ])
 
         headerLabel.text = header
-//        headerView.addSubview(headerLabel)
-//
-//        NSLayoutConstraint.activate([
-//            headerLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-//            headerLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-//            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
-//        ])
-
 
         subHeaderLabel.text = subHeader
-//        headerView.addSubview(subHeaderLabel)
-//
-//        NSLayoutConstraint.activate([
-//            subHeaderLabel.leftAnchor.constraint(equalTo: headerView.leftAnchor),
-//            subHeaderLabel.rightAnchor.constraint(equalTo: headerView.rightAnchor),
-//            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
-//            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-//        ])
 
         questionLabel.text = question
-//        self.addSubview(questionLabel)
-//
-//        NSLayoutConstraint.activate([
-//            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
-//        ])
-
-//        let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
 
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo
             extraInfoLabel.isHidden = false
-//            self.addSubview(extraInfoLabel)
-//            NSLayoutConstraint.activate([
-//                extraInfoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//                extraInfoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//                extraInfoLabel.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-//                extraInfoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
-//            ])
         } else {
             extraInfoLabel.isHidden = true
         }

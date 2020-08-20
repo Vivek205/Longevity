@@ -41,7 +41,7 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode([SurveyResponse].self, from: data)
                     // FIXME: Make me dynamic for multiple surveys
-                    if value[0].response != nil {
+                    if !value.isEmpty && value[0].response != nil {
                         SurveyTaskUtility.lastResponse = value[0].response
                     }
                     completion(value)

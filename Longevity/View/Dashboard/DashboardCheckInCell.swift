@@ -62,11 +62,10 @@ class DashboardCheckInCell: UITableViewCell {
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 
-            let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString)
-            guard let localLastSubmissionDate = UTCStringToLocalDate(dateString: lastSubmissionDateString) else { return }
-
-            print(lastSubmissionDate)
-            print(localLastSubmissionDate)
+            if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString) {
+                let timeAgo = lastSubmissionDate.timeAgoDisplay()
+                self.lastUpdated.text = "last updated: \(timeAgo)"
+            }
         }
     }
     

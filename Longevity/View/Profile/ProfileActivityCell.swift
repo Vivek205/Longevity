@@ -8,11 +8,25 @@
 
 import UIKit
 
+// ActivityType:ImageName
+fileprivate var activityImageName:[String:String] = ["HEALTH_PROFILE_CREATED":"checkinnotdone"]
+
+fileprivate var defaultActivityImageName = "checkindone"
+
 class ProfileActivityCell: UITableViewCell {
-    
+    var activity: UserActivity? {
+        didSet {
+            activityCard.activity = activity
+            if let activityType = activity?.activityType {
+//                activityImage.image = UIImage(named: activityImageName[activityType] ?? defaultActivityImageName)
+                activityImage.image = activityType.activityIcon
+            }
+        }
+    }
+  
     lazy var activityImage: UIImageView = {
         let activityimage = UIImageView()
-        activityimage.image = UIImage(named: "checkinnotdone")
+        activityimage.image = UIImage(named: defaultActivityImageName)
         activityimage.contentMode = .scaleAspectFill
         activityimage.translatesAutoresizingMaskIntoConstraints = false
         return activityimage
@@ -33,7 +47,6 @@ class ProfileActivityCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         self.backgroundColor = .clear
         
         self.addSubview(activityVerticalLine)
