@@ -12,13 +12,15 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     var insightData: UserInsight! {
         didSet {
-            self.tileTitle.text = insightData.details.name
-            self.riskType.text = insightData.details.riskLevel.text
-            self.guageView.image = insightData.details.riskLevel.riskIcon
-            self.trendDirection.text = insightData.details.trend.text
-            self.trendDirection.textColor = insightData.details.trend.tintColor
-            self.trendImage.image = insightData.details.trend.trendIcon
-            self.trendImage.isHidden = insightData.details.trend == .same
+            if let details = insightData?.details {
+                self.tileTitle.text = insightData?.text
+                self.riskType.text = details.riskLevel?.text
+                self.guageView.image = details.riskLevel?.riskIcon
+                self.trendDirection.text = details.trend?.text
+                self.trendDirection.textColor = details.sentiment?.tintColor
+                self.trendImage.image = details.trend?.trendIcon
+                self.trendImage.isHidden = details.trend == .same
+            }
         }
     }
     

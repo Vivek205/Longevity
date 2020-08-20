@@ -21,6 +21,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             self.segmentedControl.removeTarget(self, action: #selector(profileViewSelected), for: .allEvents)
             self.segmentedControl.selectedSegmentIndex = currentView.rawValue
             self.segmentedControl.addTarget(self, action: #selector(profileViewSelected), for: .valueChanged)
+            self.headerTitle.isHidden = currentView == .activity
         }
     }
     
@@ -95,6 +96,16 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         return segment
     }()
     
+    lazy var headerTitle: UILabel = {
+        let title = UILabel()
+        title.text = "COVID DATA"
+        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.textColor = UIColor(hexString: "#4E4E4E")
+        title.sizeToFit()
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
@@ -102,10 +113,11 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         addSubview(cameraButton)
         addSubview(profileDetailsStackview)
         addSubview(segmentedControl)
+        addSubview(headerTitle)
         
         NSLayoutConstraint.activate([
             profileAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
-            profileAvatar.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.40),
+            profileAvatar.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.35),
             profileAvatar.widthAnchor.constraint(equalTo: profileAvatar.heightAnchor),
             
             cameraButton.heightAnchor.constraint(equalToConstant: 30.0),
@@ -119,10 +131,13 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             profileDetailsStackview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15.0),
             
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
-            segmentedControl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30.0),
             segmentedControl.widthAnchor.constraint(equalToConstant: 230.0),
-            segmentedControl.topAnchor.constraint(equalTo: profileAvatar.bottomAnchor, constant: 10.0)
+            segmentedControl.topAnchor.constraint(equalTo: profileAvatar.bottomAnchor, constant: 20.0),
+            
+            headerTitle.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20.0),
+            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+            headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
     }
     
