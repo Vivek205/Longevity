@@ -18,7 +18,8 @@ class ProfileActivityCell: UITableViewCell {
         didSet {
             activityCard.activity = activity
             if let activityType = activity?.activityType {
-                activityImage.image = UIImage(named: activityImageName[activityType] ?? defaultActivityImageName)
+//                activityImage.image = UIImage(named: activityImageName[activityType] ?? defaultActivityImageName)
+                activityImage.image = activityType.activityIcon
             }
         }
     }

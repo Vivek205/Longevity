@@ -9,11 +9,36 @@
 import Foundation
 import Amplify
 
+enum UserActivityType: String, Codable {
+  case ACCOUNTCREATED = "ACCOUNT_CREATED"
+  case FITBITSYNCED = "FITBIT_SYNCED"
+  case PROFILEUPDATED = "USER_PROFILE_UPDATED"
+  case HEALTHPROFILECREATED = "HEALTH_PROFILE_CREATED"
+  case HEALTHPROFILEUPDATED = "HEALTH_PROFILE_UPDATED"
+  case COVIDSYMPTOMSUPDATED = "COVID_SYMPTOMS_UPDATED"
+  case SURVEYSAVED = "SURVEY_SAVED"
+  case SURVEYSUBMITTED = "SURVEY_SUBMITTED"
+}
+extension UserActivityType {
+  var activityIcon: UIImage? {
+    switch self {
+      case .ACCOUNTCREATED: return UIImage(named: "")
+      case .FITBITSYNCED: return UIImage(named: "")
+      case .PROFILEUPDATED: return UIImage(named: "")
+      case .HEALTHPROFILECREATED: return UIImage(named: "")
+      case .HEALTHPROFILEUPDATED: return UIImage(named: "")
+      case .COVIDSYMPTOMSUPDATED: return UIImage(named: "")
+      case .SURVEYSAVED: return UIImage(named: "")
+      case .SURVEYSUBMITTED: return UIImage(named: "")
+    }
+  }
+}
+
 
 struct UserActivity: Decodable {
     let title: String
     let username: String
-    let activityType: String
+    let activityType: UserActivityType
     let description: String
     let loggedAt: String
 }
