@@ -8,12 +8,14 @@
 
 import Foundation
 
-func UTCStringToLocalDate(dateString:String, dateFormat:String = "yyyy-MM-dd HH:mm:ss") -> Date? {
+func UTCStringToLocalDateString(dateString:String, dateFormat:String = "yyyy-MM-dd HH:mm:ss",
+                          outputDateFormat:String = "yyyy-MM-dd HH:mm:ss") -> String {
     let dateFormatter = DateFormatter()
-    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+    dateFormatter.dateFormat = dateFormat
     dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+    let utcDate = dateFormatter.date(from: dateString)
 
-    let date = dateFormatter.date(from: dateString)
     dateFormatter.timeZone = TimeZone.current
-    return dateFormatter.date(from: dateString)
+    dateFormatter.dateFormat = outputDateFormat
+    return dateFormatter.string(from: utcDate ?? Date())
 }

@@ -9,6 +9,16 @@
 import UIKit
 
 class ActivityCard : UIView {
+    var activity:UserActivity? {
+        didSet {
+            activityTitle.text = activity?.title
+            activitySubTitle.text = activity?.description
+            let dateString = UTCStringToLocalDateString(dateString: activity?.loggedAt ?? "",
+                                                        dateFormat: "yyyy-MM-dd HH:mm:ss",
+                                                        outputDateFormat: "MMM dd '|' h:mm a")
+            activityDate.text = dateString
+        }
+    }
     
     lazy var activityTitle: UILabel = {
         let activitytitle = UILabel()

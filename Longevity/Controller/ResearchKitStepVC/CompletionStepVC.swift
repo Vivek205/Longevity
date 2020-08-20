@@ -67,15 +67,15 @@ class CompletionStepVC: ORKStepViewController {
         ])
 
         NSLayoutConstraint.activate([
-            footerView.leftAnchor.constraint(equalTo: view.leftAnchor),
-            footerView.rightAnchor.constraint(equalTo: view.rightAnchor),
+            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
         ])
 
         NSLayoutConstraint.activate([
-            continueButton.leftAnchor.constraint(equalTo: footerView.leftAnchor, constant: 15),
-            continueButton.rightAnchor.constraint(equalTo: footerView.rightAnchor, constant: -15),
+            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
             continueButton.heightAnchor.constraint(equalToConstant: 48)
         ])

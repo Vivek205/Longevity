@@ -35,3 +35,22 @@ extension String {
         return ceil(boundingBox.width)
     }
 }
+
+
+//MARK: Convert Text to image
+extension String {
+    func toImage(color:UIColor = .white, fontSize:CGFloat = 20) -> UIImage {
+        let attributes = [
+            NSAttributedString.Key.foregroundColor: color,
+            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
+        ]
+        let textSize = self.size(withAttributes: attributes)
+
+        UIGraphicsBeginImageContextWithOptions(textSize, true, 0)
+        self.draw(at: CGPoint.zero, withAttributes: attributes)
+        let image = UIGraphicsGetImageFromCurrentImageContext()
+        UIGraphicsEndImageContext()
+
+        return  image ?? UIImage()
+    }
+}
