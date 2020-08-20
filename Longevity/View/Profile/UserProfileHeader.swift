@@ -8,23 +8,33 @@
 
 import UIKit
 
-class UserProfileHeader: UIView {
+protocol UserProfileHeaderDelegate {
+    func selected(profileView: ProfileView)
+}
+
+class UserProfileHeader: UITableViewHeaderFooterView {
+    
+    var delegate: UserProfileHeaderDelegate?
     
     var currentView: ProfileView! {
         didSet {
+            self.segmentedControl.removeTarget(self, action: #selector(profileViewSelected), for: .allEvents)
             self.segmentedControl.selectedSegmentIndex = currentView.rawValue
+            self.segmentedControl.addTarget(self, action: #selector(profileViewSelected), for: .valueChanged)
         }
     }
     
     lazy var profileAvatar: UIImageView = {
         let avatar = UIImageView()
-        avatar.contentMode = .scaleAspectFill
+        avatar.image = UIImage(named: "userAvatar")
+        avatar.contentMode = .scaleAspectFit
         avatar.translatesAutoresizingMaskIntoConstraints = false
         return avatar
     }()
     
     lazy var cameraButton: UIButton = {
         let camera = UIButton()
+        camera.setImage(UIImage(named: "avatarCamera"), for: .normal)
         camera.translatesAutoresizingMaskIntoConstraints = false
         return camera
     }()
@@ -63,7 +73,7 @@ class UserProfileHeader: UIView {
         stackview.addArrangedSubview(self.userAccountType)
         stackview.alignment = .fill
         stackview.distribution = .equalSpacing
-        stackview.spacing = 5.0
+        stackview.spacing = 4.0
         stackview.axis = .vertical
         stackview.translatesAutoresizingMaskIntoConstraints = false
         return stackview
@@ -85,8 +95,8 @@ class UserProfileHeader: UIView {
         return segment
     }()
     
-    override init(frame: CGRect) {
-        super.init(frame: frame)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
         
         addSubview(profileAvatar)
         addSubview(cameraButton)
@@ -94,8 +104,8 @@ class UserProfileHeader: UIView {
         addSubview(segmentedControl)
         
         NSLayoutConstraint.activate([
-            profileAvatar.leadingAnchor.constraint(equalTo: leadingAnchor),
-            profileAvatar.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.60),
+            profileAvatar.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+            profileAvatar.heightAnchor.constraint(equalTo: heightAnchor, multiplier: 0.40),
             profileAvatar.widthAnchor.constraint(equalTo: profileAvatar.heightAnchor),
             
             cameraButton.heightAnchor.constraint(equalToConstant: 30.0),
@@ -103,12 +113,13 @@ class UserProfileHeader: UIView {
             cameraButton.trailingAnchor.constraint(equalTo: profileAvatar.trailingAnchor),
             cameraButton.bottomAnchor.constraint(equalTo: profileAvatar.bottomAnchor),
             
+            profileDetailsStackview.topAnchor.constraint(equalTo: profileAvatar.topAnchor, constant: 10.0),
             profileDetailsStackview.leadingAnchor.constraint(equalTo: profileAvatar.trailingAnchor, constant: 10.0),
             profileDetailsStackview.bottomAnchor.constraint(equalTo: profileAvatar.bottomAnchor),
-            profileDetailsStackview.trailingAnchor.constraint(equalTo: trailingAnchor),
+            profileDetailsStackview.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 15.0),
             
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
-            segmentedControl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0),
+            segmentedControl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30.0),
             segmentedControl.widthAnchor.constraint(equalToConstant: 230.0),
             segmentedControl.topAnchor.constraint(equalTo: profileAvatar.bottomAnchor, constant: 10.0)
@@ -117,5 +128,10 @@ class UserProfileHeader: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func profileViewSelected() {
+        self.currentView = ProfileView(rawValue: self.segmentedControl.selectedSegmentIndex)
+        self.delegate?.selected(profileView: self.currentView)
     }
 }
