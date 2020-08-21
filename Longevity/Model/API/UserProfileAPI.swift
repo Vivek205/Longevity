@@ -34,7 +34,6 @@ extension UserActivityType {
   }
 }
 
-
 struct UserActivity: Decodable {
     let title: String
     let username: String
