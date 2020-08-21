@@ -22,14 +22,14 @@ enum UserActivityType: String, Codable {
 extension UserActivityType {
   var activityIcon: UIImage? {
     switch self {
-      case .ACCOUNTCREATED: return UIImage(named: "")
-      case .FITBITSYNCED: return UIImage(named: "")
-      case .PROFILEUPDATED: return UIImage(named: "")
-      case .HEALTHPROFILECREATED: return UIImage(named: "")
-      case .HEALTHPROFILEUPDATED: return UIImage(named: "")
-      case .COVIDSYMPTOMSUPDATED: return UIImage(named: "")
-      case .SURVEYSAVED: return UIImage(named: "")
-      case .SURVEYSUBMITTED: return UIImage(named: "")
+      case .ACCOUNTCREATED: return UIImage(named: "checkinnotdone")
+      case .FITBITSYNCED: return UIImage(named: "checkinnotdone")
+      case .PROFILEUPDATED: return UIImage(named: "checkinnotdone")
+      case .HEALTHPROFILECREATED: return UIImage(named: "checkinnotdone")
+      case .HEALTHPROFILEUPDATED: return UIImage(named: "checkinnotdone")
+      case .COVIDSYMPTOMSUPDATED: return UIImage(named: "checkinnotdone")
+      case .SURVEYSAVED: return UIImage(named: "checkinnotdone")
+      case .SURVEYSUBMITTED: return UIImage(named: "checkinnotdone")
     }
   }
 }

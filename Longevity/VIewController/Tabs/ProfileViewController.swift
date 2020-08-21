@@ -16,7 +16,9 @@ enum ProfileView: Int {
 class ProfileViewController: BaseViewController {
     var userActivities: [UserActivity]! {
         didSet {
-            self.profileTableView.reloadData()
+            DispatchQueue.main.async {
+                self.profileTableView.reloadData()
+            }
         }
     }
     
