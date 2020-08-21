@@ -51,27 +51,23 @@ class ResetPasswordVC: UIViewController {
         let confirmationCode = formConfirmationCode.text!
         let username = formUsername.text!
         print("self username", username)
-        let group = DispatchGroup()
-        group.enter()
 
-        DispatchQueue.global().async {
+        func onSuccess() {
+            DispatchQueue.main.async {
+                self.performSegue(withIdentifier: "UnwindResetPasswordToTOS", sender: self)
+            }
+        }
+
             _ = Amplify.Auth.confirmResetPassword(
                 for: username,
                 with: newPassword,
                 confirmationCode: confirmationCode) {(result) in
                     switch result {
                     case .success:
-                        resetSuccess = true
-                        group.leave()
+                        onSuccess()
                     case .failure(let error):
-                        group.leave()
+                        print("confirm reset password", error)
                     }
             }
-        }
-        group.wait()
-        if resetSuccess {
-            performSegue(withIdentifier: "UnwindResetPasswordToTOS", sender: self)
-        }
-
     }
 }

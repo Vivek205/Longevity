@@ -17,9 +17,9 @@ extension DeviceConnectionStatus {
     var statusButtonImage:String {
         switch self {
         case .connected:
-            return "icon: add"
-        case .notConnected:
             return "icon: check mark"
+        case .notConnected:
+            return "icon: add"
         }
     }
 }
