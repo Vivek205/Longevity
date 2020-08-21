@@ -8,10 +8,10 @@
 
 import UIKit
 
-enum RiskLevel: Int, Codable {
-    case high = 0
-    case lowLevel
-    case medium
+enum RiskLevel: String, Codable {
+    case high = "HIGH"
+    case lowLevel = "LOW"
+    case medium = "MEDIUM"
 }
 
 extension RiskLevel {
@@ -49,10 +49,10 @@ extension RiskLevel {
     }
 }
 
-enum TrendDirection: Int, Codable {
-    case uptrend = 0
-    case down
-    case same
+enum TrendDirection: String, Codable {
+    case uptrend = "UP"
+    case down = "DOWN"
+    case same = "SAME"
 }
 
 extension TrendDirection {
@@ -64,17 +64,6 @@ extension TrendDirection {
                 return "TRENDING DOWN"
             case .same:
                 return "NO TREND CHANGE"
-        }
-    }
-    
-    var tintColor: UIColor {
-        switch self {
-            case .uptrend:
-                return UIColor(hexString: "#E67381")
-            case .down:
-                return UIColor(hexString: "#9B9B9B")
-            case .same:
-                return UIColor(hexString: "#9B9B9B")
         }
     }
     
@@ -90,19 +79,45 @@ extension TrendDirection {
     }
 }
 
+enum Sentiment: String, Codable {
+    case positive = "POSITIVE"
+    case negative = "NEGATIVE"
+}
+
+extension Sentiment {
+    var tintColor: UIColor {
+        switch self {
+            case .positive:
+                return UIColor(hexString: "#E67381")
+            case .negative:
+                return UIColor(hexString: "#9B9B9B")
+        }
+    }
+}
+
+enum CardType: String, Codable {
+    case logs = "COVID_LOGS"
+    case exposure = "COVID_EXPOSURE"
+    case risk = "COVID_RISK"
+    case distancing = "SOCIAL_DISTANCING"
+}
+
 struct UserInsight: Codable {
-    let cardName: String
-    let cardType: String
+    let name: CardType
+    let text: String
+    let defaultOrder: Int
+//    let cardType: String
     let description: String
-    let details: UserInsightDetails
+    let details: UserInsightDetails?
 }
 
 struct UserInsightDetails: Codable {
-    let name: String
-    let riskLevel: RiskLevel
-    let trend: TrendDirection
-    let confidence: String
-    let exposureHistory: [Exposure]
+//    let name: String
+    let riskLevel: RiskLevel?
+    let trend: TrendDirection?
+    var sentiment: Sentiment?
+    let confidence: String?
+    let history: [Exposure]?
 }
 
 struct Exposure: Codable {

@@ -72,7 +72,11 @@ class DashboardHeaderView: UIView {
         
         self.pageControl.numberOfPages = 2
         
-        self.userInsights = UserInsightsAPI.instance.get()
+        UserInsightsAPI.instance.get { [weak self] (insights) in
+            DispatchQueue.main.async {
+                self?.userInsights = insights.filter({ $0.name != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            }
+        }
     }
     
     required init?(coder: NSCoder) {
