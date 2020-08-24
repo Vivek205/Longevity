@@ -58,14 +58,14 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         } else if previousBuild != currentBuild {
             //application updated
-            _ = Amplify.Auth.signOut() { (result) in
-                switch result {
-                case .success:
-                    print("Successfully signed out")
-                case .failure(let error):
-                    print("Sign out failed with error \(error)")
-                }
-            }
+//            _ = Amplify.Auth.signOut() { (result) in
+//                switch result {
+//                case .success:
+//                    print("Successfully signed out")
+//                case .failure(let error):
+//                    print("Sign out failed with error \(error)")
+//                }
+//            }
         }
         UserDefaults.standard.set(currentBuild, forKey: "build")
     }
