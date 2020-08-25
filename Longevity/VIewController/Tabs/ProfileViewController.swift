@@ -47,39 +47,39 @@ enum ProfileSetting: String {
 extension ProfileSetting {
     var settingAccessory: SettingAccessory {
         switch self {
-            case .exportcheckin: return .navigate
-            case .updatebiometrics: return .navigate
-            case .updatepreconditions: return .navigate
-            case .resetcheckin: return .navigate
-            case .applehealth: return .navigate
-            case .fitbit: return .switchcontrol
-            case .addhealthdevice: return .addcontrol
-            case .notifications: return .switchcontrol
-            case .editaccount: return .navigate
-            case .usemetricsystem: return .switchcontrol
-            case .faqs: return .navigate
-            case .termsofservice: return .navigate
-            case .contactsupport: return .navigate
-            default: return .none
+        case .exportcheckin: return .navigate
+        case .updatebiometrics: return .navigate
+        case .updatepreconditions: return .navigate
+        case .resetcheckin: return .navigate
+        case .applehealth: return .navigate
+        case .fitbit: return .switchcontrol
+        case .addhealthdevice: return .addcontrol
+        case .notifications: return .switchcontrol
+        case .editaccount: return .navigate
+        case .usemetricsystem: return .switchcontrol
+        case .faqs: return .navigate
+        case .termsofservice: return .navigate
+        case .contactsupport: return .navigate
+        default: return .none
         }
     }
     
     var settingPosition: SettingPosition {
         switch self {
-            case .exportcheckin: return .topmost
-            case .updatebiometrics: return .center
-            case .updatepreconditions: return .center
+        case .exportcheckin: return .topmost
+        case .updatebiometrics: return .center
+        case .updatepreconditions: return .center
         case .resetcheckin: return .bottom
-            case .applehealth: return .topmost
-            case .fitbit: return .center
-            case .addhealthdevice: return .bottom
-            case .notifications: return .topmost
-            case .editaccount: return .center
-            case .usemetricsystem: return .bottom
-            case .faqs: return .topmost
-            case .termsofservice: return .center
-            case .contactsupport: return .bottom
-            default: return .center
+        case .applehealth: return .topmost
+        case .fitbit: return .center
+        case .addhealthdevice: return .bottom
+        case .notifications: return .topmost
+        case .editaccount: return .center
+        case .usemetricsystem: return .bottom
+        case .faqs: return .topmost
+        case .termsofservice: return .center
+        case .contactsupport: return .bottom
+        default: return .center
         }
     }
 }
@@ -200,11 +200,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let signoutCell = tableView.getCell(with: SignOutCell.self, at: indexPath) as? SignOutCell else {
                     preconditionFailure("Invalid activity cell")
                 }
+                signoutCell.selectionStyle = .none
                 return signoutCell
             } else {
                 guard let appversioncell = tableView.getCell(with: AppVersionCell.self, at: indexPath) as? AppVersionCell else {
                     preconditionFailure("Invalid activity cell")
                 }
+                appversioncell.selectionStyle = .none
                 return appversioncell
             }
         }
@@ -269,27 +271,29 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
         if self.currentProfileView != .activity {
-            guard let cell = tableView.cellForRow(at: indexPath) as? ProfileSettingsCell else {
-                preconditionFailure("Invalid settings cell")
-            }
-            
-            switch cell.profileSetting {
-                case .exportcheckin:
-                    let exportCheckinViewController = ExportCheckinDataViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
-                case .updatebiometrics: return
-                case .updatepreconditions: return
-                case .resetcheckin: return
-                case .applehealth: return
-                case .fitbit: return
-                case .addhealthdevice: return
-                case .notifications: return
-                case .editaccount: return
-                case .usemetricsystem: return
-                case .faqs: return
-                case .termsofservice: return
-                case .contactsupport: return
-                default: return
+            if tableView.cellForRow(at: indexPath) is ProfileSettingsCell {
+                guard let cell = tableView.cellForRow(at: indexPath) as? ProfileSettingsCell else {
+                    preconditionFailure("Invalid settings cell")
+                }
+                
+                switch cell.profileSetting {
+                    case .exportcheckin:
+                        let exportCheckinViewController = ExportCheckinDataViewController()
+                        NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
+                    case .updatebiometrics: return
+                    case .updatepreconditions: return
+                    case .resetcheckin: return
+                    case .applehealth: return
+                    case .fitbit: return
+                    case .addhealthdevice: return
+                    case .notifications: return
+                    case .editaccount: return
+                    case .usemetricsystem: return
+                    case .faqs: return
+                    case .termsofservice: return
+                    case .contactsupport: return
+                    default: return
+                }
             }
         }
     }

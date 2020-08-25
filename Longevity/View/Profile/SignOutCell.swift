@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Amplify
 
 class SignOutCell: UITableViewCell {
     
@@ -22,7 +23,8 @@ class SignOutCell: UITableViewCell {
         signoutButton.layer.borderWidth = 2
         signoutButton.layer.borderColor = UIColor.themeColor.cgColor
         signoutButton.layer.cornerRadius = 10.0
-        
+        signoutButton.addTarget(self, action: #selector(doSignout), for: .touchUpInside)
+        signoutButton.translatesAutoresizingMaskIntoConstraints = false
         self.addSubview(signoutButton)
         
         NSLayoutConstraint.activate([
@@ -34,5 +36,26 @@ class SignOutCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    @objc func doSignout() {
+        func onSuccess(isSignedOut: Bool) {
+            clearUserDefaults()
+//            DispatchQueue.main.async {
+//                if isSignedOut{
+//                    self.performSegue(withIdentifier: "unwindTempToOnboarding", sender: self)
+//                }
+//            }
+        }
+
+        _ = Amplify.Auth.signOut() { (result) in
+            switch result {
+            case .success:
+                print("Successfully signed out")
+                onSuccess(isSignedOut: true)
+            case .failure(let error):
+                print("Sign out failed with error \(error)")
+            }
+        }
     }
 }
