@@ -7,6 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		//908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
+		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
 		427B677326887887D18F5F3E /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
@@ -19,6 +22,7 @@
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
 		C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */; };
+		C193943124EF0DC500BDB3BD /* UIFont+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193943024EF0DC500BDB3BD /* UIFont+Extension.swift */; };
 		C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */; };
 		C19875A924DAF11C00477185 /* Montserrat-Regular.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */; };
 		C19875AA24DAF11C00477185 /* Montserrat-Bold.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */; };
@@ -170,9 +174,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+
+		//279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		//B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
+
 		1664C0E860583F1BCF850A11 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		A4506C3A7E371983216298A6 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -184,6 +195,7 @@
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
 		C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExportCheckinDataViewController.swift; sourceTree = "<group>"; };
+		C193943024EF0DC500BDB3BD /* UIFont+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIFont+Extension.swift"; sourceTree = "<group>"; };
 		C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Italic.ttf"; sourceTree = "<group>"; };
 		C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Regular.ttf"; sourceTree = "<group>"; };
 		C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-Bold.ttf"; sourceTree = "<group>"; };
@@ -360,6 +372,7 @@
 		C19875B124DC6CFD00477185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C12F09AA24F4943800623CC3 /* HealthStore.swift */,
 				C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */,
 				C19875CA24DD5ECB00477185 /* UITableView+Extension.swift */,
 				C19875C024DC884300477185 /* NavigationUtility.swift */,
@@ -367,6 +380,7 @@
 				C19875C224DC8C0400477185 /* UIImage+Extension.swift */,
 				C19875C824DC9F7A00477185 /* UIDevice+Extension.swift */,
 				C1C8220724EB54A50074AF11 /* UIView+Extension.swift */,
+				C193943024EF0DC500BDB3BD /* UIFont+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -605,6 +619,7 @@
 				C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */,
 				C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */,
 				E258E66524EE247100676056 /* UserProfileAPI.swift */,
+				C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -922,8 +937,10 @@
 				C19875BC24DC7AA200477185 /* ShareAppViewController.swift in Sources */,
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */,
+				C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
 				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
+				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
 				E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */,
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
@@ -964,6 +981,7 @@
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
+				C193943124EF0DC500BDB3BD /* UIFont+Extension.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,

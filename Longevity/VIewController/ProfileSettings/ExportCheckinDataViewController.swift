@@ -43,16 +43,16 @@ class ExportCheckinDataViewController: UIViewController {
     }()
     
     lazy var infoLabel: UILabel = {
-           let info = UILabel()
-           info.text = "Your data will be formatted as a PDF and sent to your email address here:\n\ngreg.kuebler@singularitynet.io"
+        let info = UILabel()
+        info.text = "Your data will be formatted as a PDF and sent to your email address here:\n\ngreg.kuebler@singularitynet.io"
         info.numberOfLines = 0
         info.lineBreakMode = .byWordWrapping
-           info.font = UIFont(name: "Montserrat-Regular", size: 16.0)
-           info.textColor = UIColor(hexString: "#4E4E4E")
-           info.translatesAutoresizingMaskIntoConstraints = false
+        info.font = UIFont(name: "Montserrat-Regular", size: 16.0)
+        info.textColor = UIColor(hexString: "#4E4E4E")
+        info.translatesAutoresizingMaskIntoConstraints = false
         info.sizeToFit()
-           return info
-       }()
+        return info
+    }()
     
     lazy var exportButton: UIButton = {
         let export = UIButton()
@@ -68,7 +68,6 @@ class ExportCheckinDataViewController: UIViewController {
         super.viewDidLoad()
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.5)
         
-//        self.view.addSubview(blurBackGround)
         self.view.addSubview(containerView)
         self.containerView.addSubview(closeButton)
         self.containerView.addSubview(titleLabel)
@@ -76,10 +75,6 @@ class ExportCheckinDataViewController: UIViewController {
         self.containerView.addSubview(exportButton)
         
         NSLayoutConstraint.activate([
-//            blurBackGround.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-//            blurBackGround.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-//            blurBackGround.topAnchor.constraint(equalTo: self.view.topAnchor),
-//            blurBackGround.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             
             containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
             containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0),
