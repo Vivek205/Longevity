@@ -19,6 +19,11 @@ let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS_SAN
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window : UIWindow?
+    
+    override init() {
+        super.init()
+        UIFont.overrideInitialize()
+    }
 
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {

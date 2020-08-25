@@ -18,7 +18,7 @@ class ProfileSettingsCell: UITableViewCell {
             
             if profileSetting.settingAccessory == .addcontrol {
                 self.settingsActionImage.isHidden = false
-                self.settingsActionImage.image = UIImage(named: "icon: add")
+                self.settingsActionImage.image = UIImage(named: "addButton")
             } else if profileSetting.settingAccessory == .navigate {
                 self.settingsActionImage.isHidden = false
                 self.settingsActionImage.image = UIImage(named: "icon: arrow")
