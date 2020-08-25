@@ -167,11 +167,6 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
     let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question/123/nextQuestion", headers: nil,
                               queryParameters: nil, body: nil)
     var nextQuestionIdentifier: String = ""
-
-    let group = DispatchGroup()
-
-    group.enter()
-    DispatchQueue.global().async {
         _ = Amplify.API.post(request: request, listener: { (result) in
             switch result {
             case .success(let data):
@@ -180,20 +175,14 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode(Question.self, from: data)
                     nextQuestionIdentifier = value.quesId
-                    group.leave()
                 } catch {
                     print("json error", error)
-                    group.leave()
                 }
 
             case .failure(let apiError):
                 print(apiError)
-                group.leave()
             }
         })
-    }
-
-    group.wait()
     return nextQuestionIdentifier
 }
 

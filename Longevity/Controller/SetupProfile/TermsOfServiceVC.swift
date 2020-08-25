@@ -23,35 +23,10 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         super.viewDidLoad()
         navigationController?.delegate = self
         self.navigationItem.setHidesBackButton(true, animated: true)
-        getUserSession()
         getUserAttributes()
         initalizeTableView()
         self.removeBackButtonNavigation()
     }
-
-//    override func viewDidAppear(_ animated: Bool){
-//        super.viewDidAppear(animated)
-//    }
-
-//    func checkIfAlreadyAccepted() {
-////        print("rootView COntroller", self.rootViewController)
-//        let rootViewController = UIApplication.shared.keyWindow?.rootViewController
-//
-//        print("rootViewController", rootViewController)
-//
-//        let defaults = UserDefaults.standard
-//        let keys = UserDefaultsKeys()
-//        let isAlreadyAccepted = defaults.value(forKey: keys.isTermsAccepted) as! Int
-//        print("isAlreadyAccepted", isAlreadyAccepted)
-//        if isAlreadyAccepted == 1 {
-//            print("inside alredduy accepted if")
-//            DispatchQueue.main.async() {
-//                self.performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
-//            }
-//        }
-//    }
-
-
 
     func initalizeTableView(){
         tableViewDataSource.append(termsOfServiceContent.title)
@@ -77,8 +52,6 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
     }
 
-
-    
 
     @IBAction func unwindToTermsOfService(_ sender: UIStoryboardSegue){
         print("unwound to terms of service")
@@ -106,22 +79,11 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
 
     }
 
-    // MARK: User Session
-    func getUserSession(){
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                print("user signed in")
-            case .failure(let error):
-                print("Fetch session failed with error \(error)")
-            }
-        }
-    }
-
     func getUserAttributes(){
         func onSuccess(isEmailVerified: Bool) {
             DispatchQueue.main.async {
                 // TODO: handle Email already Verified
+                print("email verified", isEmailVerified)
             }
         }
 

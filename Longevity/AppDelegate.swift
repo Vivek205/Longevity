@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
-
+        logoutUserIfAppIsUpdated()
         SentrySDK.start(options: [
             "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
             "enableAutoSessionTracking": true
@@ -46,6 +46,33 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         UNUserNotificationCenter.current().delegate = self
         return true
+    }
+
+    func logoutUserIfAppIsUpdated() {
+        let previousBuild = UserDefaults.standard.string(forKey: "build")
+        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        if previousBuild == nil {
+            //fresh install
+            _ = Amplify.Auth.signOut() { (result) in
+                switch result {
+                case .success:
+                    print("Successfully signed out")
+                case .failure(let error):
+                    print("Sign out failed with error \(error)")
+                }
+            }
+        } else if previousBuild != currentBuild {
+            //application updated
+//            _ = Amplify.Auth.signOut() { (result) in
+//                switch result {
+//                case .success:
+//                    print("Successfully signed out")
+//                case .failure(let error):
+//                    print("Sign out failed with error \(error)")
+//                }
+//            }
+        }
+        UserDefaults.standard.set(currentBuild, forKey: "build")
     }
 
     // MARK: UISceneSession Lifecycle

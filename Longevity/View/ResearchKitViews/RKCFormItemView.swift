@@ -10,8 +10,6 @@ import UIKit
 import ResearchKit
 
 class RKCFormItemView: UICollectionViewCell {
-
-
     var itemIdentifier: String?
     lazy var booleanAnswerView: RKCFormBooleanAnswerView = {
         let booleanView = RKCFormBooleanAnswerView()

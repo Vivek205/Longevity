@@ -9,6 +9,7 @@
 import UIKit
 
 class MyDataViewController: BaseViewController {
+    var isCellExpanded: [Int:Bool] = [Int:Bool]()
     
     var userInsights: [UserInsight]? {
         didSet {
@@ -74,5 +75,27 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         cell.insightData = self.userInsights?[indexPath.item]
         return cell
+    }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MyDataCell else {
+            return
+        }
+        isCellExpanded[indexPath.item] = !(isCellExpanded[indexPath.item] ?? false)
+        collectionView.reloadItems(at: [indexPath])
+    }
+
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = CGFloat(self.view.bounds.width) - 20.0
+        var height = CGFloat(50)
+        guard let cell = collectionView.cellForItem(at: indexPath) as? MyDataCell else {
+            return CGSize(width: width, height: height)
+        }
+
+        if isCellExpanded[indexPath.item] == true {
+                height = 100
+        }
+
+        return CGSize(width: width, height: height)
     }
 }

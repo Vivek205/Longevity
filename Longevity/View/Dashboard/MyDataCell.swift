@@ -9,6 +9,7 @@
 import UIKit
 
 class MyDataCell: UICollectionViewCell {
+    var isExpanded: Bool = false
     
     var insightData: UserInsight! {
         didSet {
@@ -99,10 +100,12 @@ class MyDataCell: UICollectionViewCell {
             self.expandCollapseImage.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
             self.expandCollapseImage.widthAnchor.constraint(equalToConstant: 24.0),
             self.expandCollapseImage.heightAnchor.constraint(equalTo: self.expandCollapseImage.widthAnchor),
+
             self.tileTitle.leadingAnchor.constraint(equalTo: self.expandCollapseImage.trailingAnchor, constant: 10.0),
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
             self.tileTitle.widthAnchor.constraint(lessThanOrEqualToConstant: 110.0),
             self.tileTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),
+
             self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor, constant: 10.0),
             self.guageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 50.0),

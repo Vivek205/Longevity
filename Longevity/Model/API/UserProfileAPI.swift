@@ -22,18 +22,17 @@ enum UserActivityType: String, Codable {
 extension UserActivityType {
   var activityIcon: UIImage? {
     switch self {
-      case .ACCOUNTCREATED: return UIImage(named: "")
-      case .FITBITSYNCED: return UIImage(named: "")
-      case .PROFILEUPDATED: return UIImage(named: "")
-      case .HEALTHPROFILECREATED: return UIImage(named: "")
-      case .HEALTHPROFILEUPDATED: return UIImage(named: "")
-      case .COVIDSYMPTOMSUPDATED: return UIImage(named: "")
-      case .SURVEYSAVED: return UIImage(named: "")
-      case .SURVEYSUBMITTED: return UIImage(named: "")
+      case .ACCOUNTCREATED: return UIImage(named: "checkinnotdone")
+      case .FITBITSYNCED: return UIImage(named: "checkinnotdone")
+      case .PROFILEUPDATED: return UIImage(named: "checkinnotdone")
+      case .HEALTHPROFILECREATED: return UIImage(named: "checkinnotdone")
+      case .HEALTHPROFILEUPDATED: return UIImage(named: "checkinnotdone")
+      case .COVIDSYMPTOMSUPDATED: return UIImage(named: "checkinnotdone")
+      case .SURVEYSAVED: return UIImage(named: "checkinnotdone")
+      case .SURVEYSUBMITTED: return UIImage(named: "checkinnotdone")
     }
   }
 }
-
 
 struct UserActivity: Decodable {
     let title: String
@@ -48,7 +47,7 @@ class UserProfileAPI: BaseAuthAPI {
     onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-            let queryParams = ["offset":"0", "limit":"10"]
+            let queryParams = ["offset":"0", "limit":"100"]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/activities", headers: headers,
                                       queryParameters: queryParams, body: nil)
             Amplify.API.get(request: request) { (result) in

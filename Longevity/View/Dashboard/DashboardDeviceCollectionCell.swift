@@ -8,6 +8,22 @@
 
 import UIKit
 
+enum DeviceConnectionStatus: Int {
+    case connected
+    case notConnected
+}
+
+extension DeviceConnectionStatus {
+    var statusButtonImage:String {
+        switch self {
+        case .connected:
+            return "icon: check mark"
+        case .notConnected:
+            return "icon: add"
+        }
+    }
+}
+
 class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     lazy var deviceIcon: UIImageView = {
@@ -68,7 +84,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, description: String, icon: String, isEmpty: Bool) {
+    func setupCell(title: String, description: String, icon: String, isEmpty: Bool, status: DeviceConnectionStatus) {
         
         if isEmpty {
             self.addSubview(statusButton)
@@ -123,6 +139,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             self.deviceTitle.text = title
             self.deviceTitle2.text = description
             self.deviceIcon.image = UIImage(named: icon)
+            self.statusButton.image = UIImage(named: status.statusButtonImage)
             contentView.layer.borderColor = UIColor.clear.cgColor
         }
     }

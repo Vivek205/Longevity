@@ -7,9 +7,10 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		//908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
+		427B677326887887D18F5F3E /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -84,6 +85,7 @@
 		E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */; };
 		E258E66224ED0B3500676056 /* ContinuousScaleAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */; };
 		E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66524EE247100676056 /* UserProfileAPI.swift */; };
+		E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */; };
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -172,10 +174,16 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
-		B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+
+		//279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		//B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
+
+		1664C0E860583F1BCF850A11 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		A4506C3A7E371983216298A6 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -220,7 +228,6 @@
 		C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
-		CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
 		E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormSectionItemView.swift; sourceTree = "<group>"; };
 		E20256E124E2ACB800896F2C /* RKCFormItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormItemView.swift; sourceTree = "<group>"; };
@@ -252,6 +259,7 @@
 		E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormTextAnswerView.swift; sourceTree = "<group>"; };
 		E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousScaleAnswerVC.swift; sourceTree = "<group>"; };
 		E258E66524EE247100676056 /* UserProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAPI.swift; sourceTree = "<group>"; };
+		E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormInlineTextAnswerView.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
@@ -316,8 +324,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
-				908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
+				427B677326887887D18F5F3E /* Pods_Longevity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -327,8 +335,8 @@
 		04C2A7532EFF18097D0A9CCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */,
-				279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */,
+				1664C0E860583F1BCF850A11 /* Pods-Longevity.debug.xcconfig */,
+				A4506C3A7E371983216298A6 /* Pods-Longevity.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -337,7 +345,7 @@
 			isa = PBXGroup;
 			children = (
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */,
+				B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -528,6 +536,7 @@
 				E20256E124E2ACB800896F2C /* RKCFormItemView.swift */,
 				E20256E324E2BFC900896F2C /* RKCFormBooleanAnswerView.swift */,
 				E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */,
+				E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */,
 			);
 			path = ResearchKitViews;
 			sourceTree = "<group>";
@@ -722,14 +731,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
 			buildPhases = (
-				DD82D770E2D3BEAED4CF6F6A /* [CP] Check Pods Manifest.lock */,
+				CCCF1A0D629ADFBC89BE5FCD /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
-				6336EF9342E5D99BD0891EE0 /* [CP] Embed Pods Frameworks */,
 				C198758224DAE80700477185 /* Embed Frameworks */,
+				74D725B815EA8EFCA764E4B0 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -823,7 +832,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6336EF9342E5D99BD0891EE0 /* [CP] Embed Pods Frameworks */ = {
+		74D725B815EA8EFCA764E4B0 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -840,7 +849,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		DD82D770E2D3BEAED4CF6F6A /* [CP] Check Pods Manifest.lock */ = {
+		CCCF1A0D629ADFBC89BE5FCD /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -920,6 +929,7 @@
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
+				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
@@ -1158,13 +1168,13 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = CD2885305D58E430B9EB3C5E /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = 1664C0E860583F1BCF850A11 /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1183,13 +1193,13 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = A4506C3A7E371983216298A6 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 6;
+				CURRENT_PROJECT_VERSION = 8;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

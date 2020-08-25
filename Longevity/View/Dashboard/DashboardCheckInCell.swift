@@ -10,41 +10,41 @@ import UIKit
 
 enum CheckInStatus: Int {
     case notstarted
-    case nottoday
-    case completedtoday
+    case completed
 }
 
 extension CheckInStatus {
-    var status: String {
+    func status(lastSubmissionDateString: String?) -> String {
         switch self {
-            case .notstarted:
-                return "Get started today"
-            case .nottoday:
-                return "Last tracked 3 days ago"
-            case .completedtoday:
-                return "4 days logged"
+        case .notstarted:
+            return "Get started today"
+        case .completed:
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString ?? "") {
+                let timeAgo = lastSubmissionDate.timeAgoDisplay()
+                return "last updated: \(timeAgo)"
+            }
+            return ""
         }
     }
     
     var statusIcon: UIImage? {
         switch self {
-            case .notstarted:
-                return UIImage(named: "checkinnotdone")
-            case .nottoday:
-                return UIImage(named: "checkinnotdone")
-            case .completedtoday:
-                return UIImage(named: "checkindone")
+        case .notstarted:
+            return UIImage(named: "checkinnotdone")
+        case .completed:
+            return UIImage(named: "checkindone")
         }
     }
     
     var titleColor: UIColor {
         switch self {
-            case .notstarted:
-                return .checkinNotCompleted
-            case .nottoday:
-                return .checkinNotCompleted
-            case .completedtoday:
-                return .checkinCompleted
+        case .notstarted:
+            return .checkinNotCompleted
+        case .completed:
+            return .checkinCompleted
         }
     }
 }
@@ -53,19 +53,12 @@ class DashboardCheckInCell: UITableViewCell {
     
     var surveyResponse: SurveyResponse! {
         didSet {
-            self.checkInTitle.text = surveyResponse.name
-            self.checkInTitle2.text = surveyResponse.description
-
-            guard let lastSubmissionDateString = surveyResponse.lastSubmission else { return }
-
-            let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-
-            if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString) {
-                let timeAgo = lastSubmissionDate.timeAgoDisplay()
-                self.lastUpdated.text = "last updated: \(timeAgo)"
+            var status:CheckInStatus = .notstarted
+            if surveyResponse.lastSubmission != nil {
+                status = .completed
             }
+            self.setupCell(title: surveyResponse.name, status: status ,
+                           lastSubmissionDateString: surveyResponse.lastSubmission)
         }
     }
     
@@ -140,28 +133,26 @@ class DashboardCheckInCell: UITableViewCell {
             verticleStack.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
         ])
         
-        self.setupCell(title: "COVID Check-in", status: .notstarted)
+        self.setupCell(title: "COVID Check-in", status: .notstarted, lastSubmissionDateString: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, status: CheckInStatus) {
+    func setupCell(title: String, status: CheckInStatus, lastSubmissionDateString: String?) {
         self.checkInIcon.image = status.statusIcon
         self.checkInTitle.text = title
         self.checkInTitle.textColor = status.titleColor
         self.checkInTitle2.text = "How are you feeling today?"
         self.checkInTitle2.textColor = .checkinCompleted
-        self.lastUpdated.text = status.status
+        self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString)
         self.lastUpdated.textColor = .statusColor
     }
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         bgView.layer.masksToBounds = true
-        
         bgView.layer.shadowColor = UIColor.black.cgColor
         bgView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
         bgView.layer.cornerRadius = 5.0

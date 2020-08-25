@@ -8,9 +8,6 @@
 
 import UIKit
 
-// ActivityType:ImageName
-fileprivate var activityImageName:[String:String] = ["HEALTH_PROFILE_CREATED":"checkinnotdone"]
-
 fileprivate var defaultActivityImageName = "checkindone"
 
 class ProfileActivityCell: UITableViewCell {
@@ -19,7 +16,7 @@ class ProfileActivityCell: UITableViewCell {
             activityCard.activity = activity
             if let activityType = activity?.activityType {
 //                activityImage.image = UIImage(named: activityImageName[activityType] ?? defaultActivityImageName)
-                activityImage.image = activityType.activityIcon
+                activityImage.image = activityType.activityIcon ?? UIImage(named: defaultActivityImageName)
             }
         }
     }

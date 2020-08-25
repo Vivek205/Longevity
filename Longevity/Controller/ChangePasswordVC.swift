@@ -26,26 +26,23 @@ class ChangePasswordVC: UIViewController {
         var changeSuccess = false
 
         if let oldPassword = formOldPassword.text, let newPassword = formNewPassword.text {
-            let group = DispatchGroup()
-            group.enter()
 
-            DispatchQueue.global().async {
+            func onSuccess() {
+                DispatchQueue.main.async {
+                    self.updateUIOnPasswordChange(success: changeSuccess)
+                    self.performSegue(withIdentifier: "UnwindChangePasswordToTOS", sender: self)
+                }
+            }
+
                 _ = Amplify.Auth.update(oldPassword: oldPassword, to: newPassword) { result in
                     switch result {
                     case .success:
                         changeSuccess = true
-                        group.leave()
+                       onSuccess()
                     case .failure(let error):
-                        group.leave()
+                        print("handleChangePassword",error)
                     }
                 }
-            }
-
-            group.wait()
-            updateUIOnPasswordChange(success: changeSuccess)
-            if changeSuccess {
-                performSegue(withIdentifier: "UnwindChangePasswordToTOS", sender: self)
-            }
         }
     }
 
