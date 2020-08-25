@@ -36,11 +36,11 @@ class LoggerViewController: BaseViewController{
         self.view.addSubview(logDataCollection)
 
         NSLayoutConstraint.activate([
-                   logDataCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-                   logDataCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                   logDataCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50),
-                   logDataCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
-               ])
+            logDataCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            logDataCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            logDataCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 50),
+            logDataCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+        ])
 
 
         guard let layout = logDataCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -80,7 +80,22 @@ extension LoggerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         return cell
     }
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: self.view.bounds.width - 40, height: 50)
+        let width = self.view.bounds.width - 40
+        var height = CGFloat(50)
+
+        guard let data = loggerData as? [LogItem] else{
+            return CGSize(width: width, height: height)
+        }
+        guard let itemData = data[indexPath.item] as? LogItem else{
+            return CGSize(width: width, height: height)
+        }
+
+        height = CGFloat(0)
+        height += itemData.info.height(withConstrainedWidth: width, font: UIFont.systemFont(ofSize: 20))
+        height += 20
+        return CGSize(width: width, height: height)
+        //.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
+
     }
 }
 
@@ -97,6 +112,7 @@ class LogItemCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
 
@@ -105,6 +121,7 @@ class LogItemCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.lineBreakMode = .byWordWrapping
+        label.font = UIFont.systemFont(ofSize: 20)
         return label
     }()
 

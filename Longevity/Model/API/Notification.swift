@@ -36,15 +36,16 @@ func registerARN(platform:String, arnEndpoint: String) {
             switch result{
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
-                print("sucess \(responseString)")
+                Logger.log("register ARN sucess \(responseString)")
             case .failure(let apiError):
-                print("registerARN failed \(apiError)")
+                Logger.log("registerARN failed \(apiError)")
             }
         })
     }
 
     func onFailureCredentials(_ error: Error?) {
         print("registerARN failed to fetch credentials \(error)")
+        Logger.log("register ARN failed")
     }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
@@ -72,12 +73,13 @@ func retrieveARN(){
                         let defaults = UserDefaults.standard
                         let keys = UserDefaultsKeys()
                         defaults.set(snsARN, forKey: keys.endpointArnForSNS)
+                         Logger.log("retrieveARN success")
                     }
                 } catch  {
-                    print(error)
+                   Logger.log("retrieveARN failed \(error)")
                 }
             case .failure(let apiError):
-                print("retrieveARN failed \(apiError)")
+                Logger.log("retrieveARN failed \(apiError)")
             }
         })
     }

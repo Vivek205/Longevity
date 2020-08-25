@@ -151,7 +151,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             completionHandler(.failed)
             return
         }
-        Logger.log("did receive background notification")
+        Logger.log("did receive background notification \(apsData)")
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler(.newData)
