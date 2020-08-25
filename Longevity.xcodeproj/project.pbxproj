@@ -7,10 +7,9 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		//908981E95C770A75665303A9 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */; };
+		427B677326887887D18F5F3E /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
-		427B677326887887D18F5F3E /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -71,6 +70,8 @@
 		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
 		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
 		E23634EC24F3A6A700B93490 /* HealthKitUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */; };
+		E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634F124F4E8BB00B93490 /* LoggerViewController.swift */; };
+		E23634F724F4EACB00B93490 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634F624F4EACB00B93490 /* Logger.swift */; };
 		E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A332487B7A40068030E /* TermsOfServiceVC.swift */; };
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
@@ -175,16 +176,11 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-
-		//279AE85597740AE8C5066868 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
-		//B6AF48F6A845469AA0022FD7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
-		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
-
 		1664C0E860583F1BCF850A11 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		A4506C3A7E371983216298A6 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		B71C97E0D5D9AF74E1976841 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-
+		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
+		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -245,6 +241,8 @@
 		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
 		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
 		E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitUtil.swift; sourceTree = "<group>"; };
+		E23634F124F4E8BB00B93490 /* LoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerViewController.swift; sourceTree = "<group>"; };
+		E23634F624F4EACB00B93490 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
 		E2386A332487B7A40068030E /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
@@ -394,6 +392,7 @@
 				C19875B724DC79DD00477185 /* MyDataViewController.swift */,
 				C19875B924DC79EB00477185 /* ProfileViewController.swift */,
 				C19875BB24DC7AA200477185 /* ShareAppViewController.swift */,
+				E23634F124F4E8BB00B93490 /* LoggerViewController.swift */,
 			);
 			path = Tabs;
 			sourceTree = "<group>";
@@ -723,6 +722,7 @@
 				C14ABA4624E3039900C81580 /* UserInsight.swift */,
 				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
 				E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */,
+				E23634F624F4EACB00B93490 /* Logger.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -934,6 +934,7 @@
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
 				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
+				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
@@ -972,6 +973,7 @@
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
 				C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */,
+				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,

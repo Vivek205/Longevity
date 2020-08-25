@@ -160,10 +160,10 @@ class FitbitModel: AuthHandlerType {
                        switch result{
                        case .success(let data):
                            let responseString = String(data: data, encoding: .utf8)
-                           print("publish data sucess")
-
+                           Logger.log("Fitbit data published")
                        case .failure(let apiError):
                            print(" publish data error \(apiError)")
+                           Logger.log("Fitbit publish failure \(apiError)")
                        }
                    })
         }
@@ -183,6 +183,7 @@ class FitbitModel: AuthHandlerType {
 
         KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
         KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+        Logger.log("fitbit token saved in keychain")
     }
 
     func refreshTheToken() {
@@ -211,6 +212,7 @@ class FitbitModel: AuthHandlerType {
                     let accessToken = jsonData["access_token"] as! String
                     let refreshToken = jsonData["refresh_token"] as! String
                     let userId = jsonData["user_id"] as! String
+                    Logger.log("fitbit token refreshed")
                     self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
                     self.publishData(accessToken: accessToken, userId: userId)
                 }

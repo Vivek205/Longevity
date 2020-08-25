@@ -33,11 +33,6 @@ extension MeasurementUnits {
     }
 }
 
-//struct MeasurementUnits {
-//    static let metric = "metric"
-//    static let imperial = "imperial"
-//}
-
 struct UserDefaultsKeys {
     let name = "name"
     let weight = "weight"
@@ -53,6 +48,7 @@ struct UserDefaultsKeys {
     let setupProfileCompletionStatus = "setupProfileCompletionStatus"
     let deviceTokenForSNS = "deviceTokenForSNS"
     let endpointArnForSNS = "endpointArnForSNS"
+    let logger = "logger"
 }
 
 func clearUserDefaults() {

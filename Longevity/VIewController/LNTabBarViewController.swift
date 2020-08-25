@@ -32,8 +32,10 @@ class LNTabBarViewController: UITabBarController {
         let myDataViewController = MyDataViewController()
         let profileViewController = ProfileViewController()
         let shareAppViewController = ShareAppViewController()
+        let loggerViewController = LoggerViewController()
         
-        self.viewControllers = [homeViewController, myDataViewController, profileViewController, shareAppViewController]
+        self.viewControllers = [homeViewController, myDataViewController,
+                                profileViewController, shareAppViewController, loggerViewController]
         
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
         tabBar.insertSubview(bgImageView, at: 0)
