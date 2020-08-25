@@ -14,8 +14,9 @@ extension UIImage {
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         color.setFill()
         UIColor.lightGray.setStroke()
-        let path = UIBezierPath(roundedRect: CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: rect.height)) , byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 20.0, height: 20.0))
+        let path = UIBezierPath(roundedRect: CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: rect.height)) , byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 25.0, height: 25.0))
         path.fill()
+        path.lineWidth = 0.5
         path.stroke()
         let image: UIImage = UIGraphicsGetImageFromCurrentImageContext()!
         UIGraphicsEndImageContext()
