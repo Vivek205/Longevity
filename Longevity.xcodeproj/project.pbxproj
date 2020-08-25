@@ -66,6 +66,7 @@
 		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
 		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
 		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
+		E23634EC24F3A6A700B93490 /* HealthKitUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */; };
 		E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A332487B7A40068030E /* TermsOfServiceVC.swift */; };
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
@@ -231,6 +232,7 @@
 		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
 		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
 		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
+		E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitUtil.swift; sourceTree = "<group>"; };
 		E2386A332487B7A40068030E /* TermsOfServiceVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceVC.swift; sourceTree = "<group>"; };
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
@@ -705,6 +707,7 @@
 				E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */,
 				C14ABA4624E3039900C81580 /* UserInsight.swift */,
 				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
+				E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -986,6 +989,7 @@
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */,
+				E23634EC24F3A6A700B93490 /* HealthKitUtil.swift in Sources */,
 				E2C59E022498F50500842105 /* SetupProfileBioDataVC.swift in Sources */,
 				C19875B824DC79DD00477185 /* MyDataViewController.swift in Sources */,
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,

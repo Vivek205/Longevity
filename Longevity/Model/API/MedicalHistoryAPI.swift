@@ -101,7 +101,7 @@ func getHealthProfile(){
                     if !(unit.isEmpty) && unit != "null" {
                         defaults.set(unit, forKey: keys.unit)
                     }else {
-                        defaults.set(MeasurementUnits.metric, forKey: keys.unit)
+                        defaults.set(MeasurementUnits.metric.rawValue, forKey: keys.unit)
                     }
 
                     if let fitbitStatus = devices?[ExternalDevices.FITBIT] {

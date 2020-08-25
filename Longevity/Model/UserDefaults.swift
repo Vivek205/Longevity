@@ -8,10 +8,35 @@
 
 import Foundation
 
-struct MeasurementUnits {
-    static let metric = "metric"
-    static let imperial = "imperial"
+enum MeasurementUnits: String {
+    case metric = "metric"
+    case imperial = "imperial"
 }
+
+extension MeasurementUnits {
+    var weight:String {
+        switch self {
+        case .metric:
+            return "kg"
+        case .imperial:
+            return "lbs"
+        }
+    }
+
+    var height: String {
+        switch self {
+        case .metric:
+            return "cm"
+        case .imperial:
+            return "ft"
+        }
+    }
+}
+
+//struct MeasurementUnits {
+//    static let metric = "metric"
+//    static let imperial = "imperial"
+//}
 
 struct UserDefaultsKeys {
     let name = "name"
