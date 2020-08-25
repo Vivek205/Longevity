@@ -50,8 +50,7 @@ class CompletionStepVC: ORKStepViewController {
             }
         }
         self.showSpinner()
-        let surveyTaskUtility = SurveyTaskUtility()
-        surveyTaskUtility.completeSurvey(completion: completion, onFailure: onFailure(_:))
+        SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
 
     func presentViews() {

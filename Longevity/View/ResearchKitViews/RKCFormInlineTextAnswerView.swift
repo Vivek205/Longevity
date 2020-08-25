@@ -32,21 +32,21 @@ class RKCFormInlineTextAnswerView: UICollectionViewCell {
     }()
 
     lazy var questionLabel: UILabel = {
-           let label = UILabel()
-           label.textColor = .black
-           label.translatesAutoresizingMaskIntoConstraints = false
-           label.numberOfLines = 0
-           label.textColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-           return label
-       }()
+        let label = UILabel()
+        label.textColor = .black
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.numberOfLines = 0
+        label.textColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        return label
+    }()
 
     override init(frame: CGRect) {
-           super.init(frame: frame)
-       }
+        super.init(frame: frame)
+    }
 
-       required init?(coder: NSCoder) {
-           fatalError("init(coder:) has not been implemented")
-       }
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
 
     func createLayout(identifier:String, question:String, lastResponseAnswer: String?) {
         self.itemIdentifier = identifier
@@ -55,7 +55,8 @@ class RKCFormInlineTextAnswerView: UICollectionViewCell {
         questionLabel.text = question
 
         textView.text = lastResponseAnswer ?? ""
-        if let localSavedAnswer = SurveyTaskUtility.currentSurveyResult[identifier] {
+
+        if let localSavedAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) {
             textView.text = localSavedAnswer
         }
 
@@ -76,29 +77,28 @@ class RKCFormInlineTextAnswerView: UICollectionViewCell {
 
 extension RKCFormInlineTextAnswerView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
-           delegate?.textViewDidChange(textView)
-           guard let identifier = self.itemIdentifier else { return }
-           print(textView.text)
-           SurveyTaskUtility.currentSurveyResult[identifier] = textView.text
-       }
-       func textViewDidChangeSelection(_ textView: UITextView) {
-           print("changed selection")
-       }
+        delegate?.textViewDidChange(textView)
+        guard let identifier = self.itemIdentifier else { return }
+        SurveyTaskUtility.shared.saveCurrentSurveyAnswerLocally(questionIdentifier: identifier, answer: textView.text)
+    }
+    func textViewDidChangeSelection(_ textView: UITextView) {
+        print("changed selection")
+    }
+    
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
+        delegate?.textViewShouldBeginEditing(textView)
+        return true
+    }
 
-       func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-           delegate?.textViewShouldBeginEditing(textView)
-           return true
-       }
 
+    func textViewDidEndEditing(_ textView: UITextView) {
+        delegate?.textViewDidEndEditing(textView)
+    }
 
-       func textViewDidEndEditing(_ textView: UITextView) {
-           delegate?.textViewDidEndEditing(textView)
-       }
-
-       func textView(_ textView: UITextView,
-                     shouldChangeTextIn range: NSRange,
-                     replacementText text: String) -> Bool {
-           delegate?.textView(textView, shouldChangeTextIn: range, replacementText: text)
-           return true
-       }
+    func textView(_ textView: UITextView,
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
+        delegate?.textView(textView, shouldChangeTextIn: range, replacementText: text)
+        return true
+    }
 }

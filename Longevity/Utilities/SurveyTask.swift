@@ -9,21 +9,37 @@
 import Foundation
 import ResearchKit
 
+fileprivate let defaultModuleIconName:String = "icon : GI"
 
-class SurveyTaskUtility {
-    static var surveyId:String?
-    static var currentSurveyDetails: SurveyDetails?
-    static var currentTask: ORKOrderedTask?
-    static var currentSurveyResult: [String:String] = [String:String]() // [QuestionId:Answer]
-    static var surveyName: String? = {
-        return SurveyTaskUtility.currentSurveyDetails?.name
-    }()
-    static var iconNameForModuleName: [String: String?] = [String:String?]()
-    static var lastSubmission: String?
-    static var lastSubmissionId: String?
-    static var lastResponse: [SurveyLastResponseData]?
+final class SurveyTaskUtility {
+    private init() {}
+    static let shared = SurveyTaskUtility()
+    private var surveyList:[SurveyListItem]?
+    var currentSurveyId: String? {
+        didSet {
+            guard let surveyId = self.currentSurveyId else { return }
+            self.surveyName = self.surveyDetails[surveyId]??.name
+        }
+    }
+    private var surveyDetails: [String:SurveyDetails?] = [String:SurveyDetails?]()
+    //    private var currentSurveyDetails: SurveyDetails? {
+    //        didSet {
+    //            print("crrentSurveyDetails", currentSurveyDetails)
+    //            self.currentSurveyId = currentSurveyDetails?.surveyId
+    //            print("currentsurveyID", self.currentSurveyId)
+    //        }
+    //    }
+    private var currentTask: ORKOrderedTask?
+    private var surveyName: String?
+    private var iconNameForModuleName: [String: String?] = [String:String?]()
+    private var lastSubmission: String?
+    private var lastSubmissionId: String?
+    private var lastResponse: [SurveyLastResponseData]?
 
-    static var surveyTagline: String? = {
+    private var localSavedAnswers:[String:[String:String]] = [String:[String:String]]() // [SurveyId:[QuestionId:Answer]]
+    private var serverSubmittedAnswers:[String:[SurveyLastResponseData]] = [String:[SurveyLastResponseData]]()
+
+    var surveyTagline: String? {
         let today = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E.MMM.d"
@@ -32,13 +48,13 @@ class SurveyTaskUtility {
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         guard let userName = defaults.value(forKey: keys.name) as? String else { return nil }
-        
         return "\(date) for \(userName)"
-    }()
+    }
+
 
     func createSurvey(surveyId: String, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
                       onFailure: @escaping (_ error: Error) -> Void) {
-        SurveyTaskUtility.surveyId = surveyId
+
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else {
                 completion(nil)
@@ -67,7 +83,8 @@ class SurveyTaskUtility {
                         for module in categoryValue.modules {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
-                                SurveyTaskUtility.iconNameForModuleName[moduleName] = moduleValue.iconName
+                                SurveyTaskUtility.shared.setIconName(for: moduleName, iconName: moduleValue.iconName)
+                                //                                SurveyTaskUtility.iconNameForModuleName[moduleName] = moduleValue.iconName
                                 sectionItem.placeholder = moduleValue.iconName
                                 items += [sectionItem]
 
@@ -89,12 +106,6 @@ class SurveyTaskUtility {
                                 }
                             }
                         }
-
-    //                    let finalAnswerFormat = ORKTextAnswerFormat(maximumLength: 200)
-    //                    let finalitem = ORKFormItem(identifier:"\(categoryName)-finalItem", text: "Any other symptoms",
-    //                                                answerFormat: finalAnswerFormat )
-    //                    items += [finalitem]
-
                         step.formItems = items
                         steps += [step]
                     } else {
@@ -156,15 +167,12 @@ class SurveyTaskUtility {
     }
 
     func completeSurvey(completion: @escaping ()-> Void, onFailure: @escaping (_ error: Error) -> Void) {
-
-        func getSurveysCompletion(_ surveys:[SurveyResponse]) {
+        func getSurveysCompletion(_ surveys:[SurveyListItem]) {
             completion()
         }
-
         func onGetSurveysFailure(_ error:Error) {
             onFailure(error)
         }
-
         func onSubmitCompletion() {
             print("survey submitted successfully")
             getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
@@ -176,39 +184,105 @@ class SurveyTaskUtility {
         }
         func onSaveCompletion() {
             print("survey saved successfully")
-            submitSurvey(surveyId: SurveyTaskUtility.surveyId!,
+            submitSurvey(surveyId: SurveyTaskUtility.shared.currentSurveyId,
                          completion: onSubmitCompletion, onFailure: onSubmitFailure(_:))
         }
         func onSaveFailure(_ error: Error) {
             print("save survey error", error)
             onFailure(error)
         }
-
         self.saveCurrentSurvey(completion: onSaveCompletion, onFailure: onSaveFailure(_:))
     }
 
     func clearSurvey() {
-        SurveyTaskUtility.surveyId = nil
-        SurveyTaskUtility.currentSurveyDetails = nil
-        SurveyTaskUtility.currentTask = nil
-        SurveyTaskUtility.currentSurveyResult = [String:String]()
-        SurveyTaskUtility.surveyName = nil
-        SurveyTaskUtility.iconNameForModuleName = [String:String]()
+        self.currentSurveyId = nil
+        self.currentTask = nil
+        self.localSavedAnswers = [String:[String:String]]()
+        self.iconNameForModuleName = [String:String]()
         print("survey data cleared successfully")
     }
 
     func saveCurrentSurvey(completion:@escaping ()->Void, onFailure:@escaping (_ error:Error)->Void) {
-        let payload = SurveyTaskUtility.currentSurveyResult.map { (result) -> SubmitAnswerPayload  in
+        guard let currentSurveyId = self.currentSurveyId else {return}
+        guard let localSavedAnswers = self.localSavedAnswers[currentSurveyId] else {return}
+        let payload = localSavedAnswers.map { (result) -> SubmitAnswerPayload  in
             let (questionId, answer) = result
-            let questionDetails = SurveyTaskUtility.currentSurveyDetails?.questions.first {$0.quesId == questionId}
+            let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyDetails()?.questions.first {$0.quesId == questionId}
 
             return SubmitAnswerPayload(categoryId: questionDetails!.categoryId,
-                                                      moduleId: questionDetails!.moduleId,
-                                                      answer: answer,
-                                                      quesId: questionId)
+                                       moduleId: questionDetails!.moduleId,
+                                       answer: answer,
+                                       quesId: questionId)
         }
-        saveSurveyAnswers(surveyId: SurveyTaskUtility.surveyId!, answers: payload,
+        saveSurveyAnswers(surveyId: SurveyTaskUtility.shared.currentSurveyId, answers: payload,
                           completion: completion, onFailure: onFailure)
+    }
+
+    func getCurrentSurveyLocalAnswer(questionIdentifier:String) -> String? {
+        guard let currentSurveyId = self.currentSurveyId else {return nil}
+        return self.localSavedAnswers[currentSurveyId]?[questionIdentifier]
+    }
+
+    func setCurrentSurveyLocalAnswer(questionIdentifier:String, answer:String) {
+        guard let currentSurveyId = self.currentSurveyId else {
+            print("current survey id not found", self.currentSurveyId)
+            return
+        }
+        print("current survey id", currentSurveyId)
+        if self.localSavedAnswers[currentSurveyId] == nil {
+            return self.localSavedAnswers[currentSurveyId] = [questionIdentifier: answer]
+        }
+        self.localSavedAnswers[currentSurveyId]![questionIdentifier] = answer
+    }
+
+    func getCurrentSurveyServerAnswer(questionIdentifier:String) -> String? {
+        guard let currentSurveyId = self.currentSurveyId else {return nil}
+        guard let currentSurveyServerAnswers = self.serverSubmittedAnswers[currentSurveyId] else {return nil}
+        let serverAnswer = currentSurveyServerAnswers.first {$0.quesId == questionIdentifier}
+        return serverAnswer?.answer
+    }
+
+    func getCurrentSurveyAnswerConsolidated(questionIdentifier:String) -> String? {
+        guard let currentSurveyId = self.currentSurveyId else {return nil}
+        if let localAnswer = self.localSavedAnswers[currentSurveyId]?[questionIdentifier] {
+            return localAnswer
+        }
+        guard let currentSurveyServerAnswers = self.serverSubmittedAnswers[currentSurveyId] else {return nil}
+        let serverAnswer = currentSurveyServerAnswers.first {$0.quesId == questionIdentifier}
+        return serverAnswer?.answer
+    }
+
+    func saveCurrentSurveyAnswerLocally(questionIdentifier: String, answer: String) {
+        guard let currentSurveyId = self.currentSurveyId else {return}
+        self.localSavedAnswers[currentSurveyId]?[questionIdentifier] = answer
+    }
+
+    func getIconName(for moduleName: String) -> String {
+        guard let iconName = self.iconNameForModuleName[moduleName] as? String else {return defaultModuleIconName}
+        return iconName
+    }
+
+    func setIconName(for moduleName: String, iconName: String?) {
+        self.iconNameForModuleName[moduleName] = iconName
+    }
+
+    func setSurveyList(list:[SurveyListItem]) {
+        self.surveyList = list
+    }
+
+    func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {
+        guard (answers) != nil else {return}
+        self.serverSubmittedAnswers[surveyId] = answers
+    }
+
+    func getCurrentSurveyDetails() -> SurveyDetails? {
+        guard let currentSurveyId = self.currentSurveyId else {return nil}
+        guard let currentSurveyDetails = self.surveyDetails[currentSurveyId] else {return nil}
+        return currentSurveyDetails
+    }
+
+    func setSurveyDetails(for surveyId: String, details:SurveyDetails?) {
+        self.surveyDetails[surveyId] = details
     }
 
     func createSingleChoiceQuestionStep(identifier: String,title:String,
@@ -217,9 +291,11 @@ class SurveyTaskUtility {
         let questionStepTitle = title
         let questionStepQuestion = question
         let textChoices = choices
-        let questionAnswerFormat: ORKTextChoiceAnswerFormat = ORKAnswerFormat.choiceAnswerFormat(with: .singleChoice, textChoices: textChoices)
-
-        let questionStep = ORKQuestionStep(identifier: identifier, title: questionStepTitle, question: questionStepQuestion, answer: questionAnswerFormat)
+        let questionAnswerFormat: ORKTextChoiceAnswerFormat =
+            ORKAnswerFormat.choiceAnswerFormat(with: .singleChoice,
+                                               textChoices: textChoices)
+        let questionStep = ORKQuestionStep(identifier: identifier, title: questionStepTitle,
+                                           question: questionStepQuestion, answer: questionAnswerFormat)
 
         questionStep.text = additionalText
         return questionStep

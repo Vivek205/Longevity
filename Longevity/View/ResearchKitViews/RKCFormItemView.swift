@@ -11,6 +11,7 @@ import ResearchKit
 
 class RKCFormItemView: UICollectionViewCell {
     var itemIdentifier: String?
+
     lazy var booleanAnswerView: RKCFormBooleanAnswerView = {
         let booleanView = RKCFormBooleanAnswerView()
         booleanView.createLayout(yesText: "yes", noText: "No")
@@ -40,17 +41,15 @@ class RKCFormItemView: UICollectionViewCell {
         var answerView:UIView
         switch answerFormat.questionType {
         case .boolean:
-            if lastResponseAnswer != nil {
-                booleanAnswerView.preSelectOption(index: Int(lastResponseAnswer!)!)
-                if SurveyTaskUtility.currentSurveyResult[identifier] == nil {
-                    SurveyTaskUtility.currentSurveyResult[identifier] = lastResponseAnswer!
+            if let serverAnswerToPreselect = lastResponseAnswer {
+                if let localAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) {
+                    let currentResultSelectedSegmentIndex = Int(localAnswer)
+                    booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
+                } else {
+                    SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: serverAnswerToPreselect)
+                    let currentResultSelectedSegmentIndex = Int(serverAnswerToPreselect)
+                    booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
                 }
-            }
-
-            if self.itemIdentifier != nil && SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!] != nil{
-                let currentResultSelectedSegmentIndex =
-                    Int(SurveyTaskUtility.currentSurveyResult[identifier]!)
-                booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
             }
             answerView = booleanAnswerView
         default:
@@ -83,8 +82,9 @@ class RKCFormItemView: UICollectionViewCell {
 
 extension RKCFormItemView: RKCFormBooleanAnswerViewDelegate {
     func segmentedControl(wasChangedOnCell cell: RKCFormBooleanAnswerView) {
-        if self.itemIdentifier != nil {
-            SurveyTaskUtility.currentSurveyResult[self.itemIdentifier!] = "\(cell.segmentedControl.selectedSegmentIndex)"
+        if let identifier = self.itemIdentifier{
+            SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier,
+                                                          answer: "\(cell.segmentedControl.selectedSegmentIndex)")
         }
     }
 }

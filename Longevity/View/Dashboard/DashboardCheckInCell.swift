@@ -51,7 +51,7 @@ extension CheckInStatus {
 
 class DashboardCheckInCell: UITableViewCell {
     
-    var surveyResponse: SurveyResponse! {
+    var surveyResponse: SurveyListItem! {
         didSet {
             var status:CheckInStatus = .notstarted
             if surveyResponse.lastSubmission != nil {

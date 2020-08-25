@@ -13,7 +13,6 @@ class FormStepVC: ORKStepViewController {
     var keyboardHeight: CGFloat?
     var initialYOrigin: CGFloat = CGFloat(0)
     
-    
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
@@ -52,21 +51,16 @@ class FormStepVC: ORKStepViewController {
 
     func prefillForm(questionId: String) -> String? {
         let feelingTodayQuestionId = "036122cab53e4d70b1b6305328eeaf3w"
-        let feelingTodayAnswer = SurveyTaskUtility.currentSurveyResult[feelingTodayQuestionId]
+        guard let feelingTodayAnswer =
+            SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: feelingTodayQuestionId) else {return nil}
         let prefillSymptomsOption = "2"
         if feelingTodayAnswer == prefillSymptomsOption {
-            let lastResponse = SurveyTaskUtility.lastResponse
-            if lastResponse != nil {
+            guard let lastResponse =
+                SurveyTaskUtility.shared.getCurrentSurveyServerAnswer(questionIdentifier: questionId)else {return nil}
+            return lastResponse
 
-                let lastResponsesForGivenQuestionId = lastResponse?.filter({ (response) -> Bool in
-                    return response.quesId == questionId
-                })
-                
-                if lastResponsesForGivenQuestionId != nil && !lastResponsesForGivenQuestionId!.isEmpty {
-                    return lastResponsesForGivenQuestionId![0].answer
-                }
-                return nil
-            }
+            return nil
+
         }
         return nil
     }
@@ -111,7 +105,6 @@ class FormStepVC: ORKStepViewController {
     }
 
     @objc func handleContinue(sender: UIButton) {
-        print(SurveyTaskUtility.currentSurveyResult["036122cab53e4d70b1b6305328eeaf4h"])
         self.goForward()
     }
 
@@ -141,7 +134,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         if indexPath.item == 0 {
             print(formStep.text)
-            let questionSubheader = SurveyTaskUtility.surveyTagline
+            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
             let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
                 as! RKCQuestionView
             questionCell.createLayout(header: formStep.title ?? "",
@@ -199,7 +192,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
+                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
                 height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 if step.text != nil {
                     height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)

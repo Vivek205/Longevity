@@ -16,7 +16,7 @@ struct SurveyLastResponseData: Decodable {
     let submissionId: String
 }
 
-struct SurveyResponse: Decodable {
+struct SurveyListItem: Decodable {
     let surveyId: String
     let name: String
     let description: String
@@ -26,7 +26,7 @@ struct SurveyResponse: Decodable {
     let response: [SurveyLastResponseData]?
 }
 
-func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
+func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
                 onFailure:@escaping (_ error:Error)-> Void) {
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
@@ -39,10 +39,14 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode([SurveyResponse].self, from: data)
+                    let value = try decoder.decode([SurveyListItem].self, from: data)
                     // FIXME: Make me dynamic for multiple surveys
-                    if !value.isEmpty && value[0].response != nil {
-                        SurveyTaskUtility.lastResponse = value[0].response
+                    SurveyTaskUtility.shared.setSurveyList(list: value)
+
+                    if !value.isEmpty {
+                        value.forEach {
+                            SurveyTaskUtility.shared.setServerSubmittedAnswers(for:$0.surveyId, answers: $0.response)
+                        }
                     }
                     completion(value)
                 } catch  {
@@ -143,10 +147,12 @@ func getSurveyDetails(surveyId: String,
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode(SurveyDetails.self, from: data)
                     response = value
+                    SurveyTaskUtility.shared.currentSurveyId = surveyId
+                    SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: value)
                     completion(value)
-                    SurveyTaskUtility.currentSurveyDetails = value
                 } catch {
-                    SurveyTaskUtility.currentSurveyDetails = nil
+                    SurveyTaskUtility.shared.currentSurveyId = nil
+                    SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: nil)
                     print("json error", error)
                 }
 
@@ -198,9 +204,13 @@ struct SurveyCategoryViewTypes {
     static let moduleLevel = "MODULE_LEVEL"
 }
 
-func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload],
+func saveSurveyAnswers(surveyId: String? ,answers: [SubmitAnswerPayload],
                        completion:@escaping () -> Void,
                        onFailure: @escaping (_ error: Error) -> Void) {
+    enum SaveSurveyError: Error {
+        case surveyIdNotFound
+    }
+    guard surveyId != nil else { return onFailure(SaveSurveyError.surveyIdNotFound)}
     func onGettingCredentials(_ credentials: Credentials) {
         do {
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
@@ -230,8 +240,13 @@ func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload],
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-func submitSurvey(surveyId: String, completion:@escaping () -> Void,
+func submitSurvey(surveyId: String?, completion:@escaping () -> Void,
                   onFailure: @escaping (_ error: Error) -> Void) {
+    enum SubmitSurveyError: Error {
+        case surveyIdIsEmpty
+    }
+    guard let surveyId = surveyId else { return onFailure(SubmitSurveyError.surveyIdIsEmpty) }
+
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: headers,

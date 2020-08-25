@@ -79,6 +79,7 @@ extension LoggerViewController: UICollectionViewDelegate, UICollectionViewDataSo
         cell.createLayout(time: cellData.time, info: cellData.info)
         return cell
     }
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = self.view.bounds.width - 40
         var height = CGFloat(50)

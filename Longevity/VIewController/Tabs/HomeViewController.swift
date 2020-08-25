@@ -11,7 +11,7 @@ import ResearchKit
 
 class HomeViewController: BaseViewController {
     var surveyId: String?
-    var surveyList: [SurveyResponse]?
+    var surveyList: [SurveyListItem]?
     var currentTask: ORKOrderedTask?
     
     lazy var tableView: UITableView = {
@@ -52,7 +52,7 @@ class HomeViewController: BaseViewController {
     func getSurveyList() {
         self.showSpinner()
 
-        func completion(_ surveys:[SurveyResponse]) {
+        func completion(_ surveys:[SurveyListItem]) {
             DispatchQueue.main.async {
                 self.surveyList = surveys
                 self.tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .fade)
@@ -198,8 +198,7 @@ extension HomeViewController {
                 self.removeSpinner()
             }
         }
-        let surveyTaskUtility = SurveyTaskUtility()
-        surveyTaskUtility.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
+        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
                      onFailure: onCreateSurveyFailure(_:))
     }
 }
@@ -214,11 +213,11 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
-        let surveyTaskUtility = SurveyTaskUtility()
+        
 
         switch reason {
         case .completed:
-            surveyTaskUtility.clearSurvey()
+            SurveyTaskUtility.shared.clearSurvey()
             print("completed")
         case .discarded:
             print("discarded")
