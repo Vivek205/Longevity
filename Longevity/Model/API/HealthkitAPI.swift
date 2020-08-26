@@ -7,51 +7,56 @@
 //
 
 import Foundation
-import SwiftyJSON
 import Amplify
 
+struct Healthdata: Codable {
+    let dataType: String
+    let data: String
+    let recordDate: String
+}
+
 class HealthkitAPI: BaseAuthAPI {
-    func synchronizeHealthkit (completion: @escaping (_ userActivities:[UserActivity])-> Void,
-    onFailure: @escaping (_ error: Error)-> Void) {
+    func synchronizeHealthkit (healthData: String,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-//            let queryParams = ["offset":"0", "limit":"10"]
-
-            let body = JSON(["data": ["heartbeat": [], "sleep": []]])
-
+            
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd"
+            let date: String = dateformatter.string(from: Date())
+            let healthdata = Healthdata(dataType: "HEART_RATE", data: healthData, recordDate: date)
+            
             var bodyData:Data = Data()
             do {
-                bodyData = try body.rawData()
-
-            } catch  {
-                print("body data error",error)
+                let encoder = JSONEncoder()
+                encoder.keyEncodingStrategy = .convertToSnakeCase
+                bodyData = try encoder.encode([healthdata])
+                
+            } catch let error {
+                print("body data error",error.localizedDescription)
             }
             
-            let request = RESTRequest(apiName: "healthkitAPI", path: "/health/application/HEALTHKIT/synchronize", headers: headers,
-                                      queryParameters: nil, body: bodyData)
+            let request = RESTRequest(apiName: "healthkitAPI", path: "/health/application/HEALTHKIT/synchronize", headers: headers, queryParameters: nil, body: bodyData)
             Amplify.API.post(request: request) { (result) in
-                            switch result {
-                            case .success(let data):
-                                do {
-                                    let decoder = JSONDecoder()
-                                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                                    let value = try decoder.decode([UserActivity].self, from: data)
-                                    completion(value)
-                                }
-                                catch {
-                                    print("JSON error", error)
-                                    onFailure(error)
-                                }
-                            case .failure(let error):
-                                print(error.localizedDescription)
-                                onFailure(error)
-                                break
-                            }
-                        }
-            
+                switch result {
+                case .success(let data):
+                    do {
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let value = try decoder.decode(String.self, from: data)
+                        print(value)
+                    }
+                    catch let error {
+                        print("JSON error: ", error.localizedDescription)
+                        onFailure(error)
+                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    onFailure(error)
+                    break
+                }
+            }
         }) { (error) in
             onFailure(error)
         }
     }
 }
-

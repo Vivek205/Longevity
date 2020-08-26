@@ -44,8 +44,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             "enableAutoSessionTracking": true
             //                "debug": true // Enabled debug when first installing is always helpful
         ])
+        
+        if HKHealthStore.isHealthDataAvailable() {
+            if let devices = UserDefaults.standard.object(forKey: UserDefaultsKeys().devices) as? [String:[String:Int]] {
+                HealthStore.shared.getHealthStore()
+                HealthStore.shared.retrieveHeartRate { (rate) in
+                    
+                }
+            }
+        }
+        
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         UNUserNotificationCenter.current().delegate = self
+        
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//
+        /// To remove support for dark mode
+        if #available(iOS 13.0, *) {
+            self.window?.overrideUserInterfaceStyle = .light
+        }
+        
         return true
     }
 
@@ -66,6 +85,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //application updated
         }
         UserDefaults.standard.set(currentBuild, forKey: "build")
+    }
+    
+    func setRootViewController() {
+//        self.window?.rootViewController =
     }
 
     // MARK: UISceneSession Lifecycle

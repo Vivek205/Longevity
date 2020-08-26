@@ -432,6 +432,9 @@ up your health profile.</string>
                     <connections>
                         <outlet property="collectionView" destination="Rnv-cI-MYv" id="LNS-4s-9gl"/>
                         <outlet property="continueButton" destination="HOc-Gh-tin" id="CRH-Hi-ahw"/>
+                        <outlet property="footerView" destination="Bdi-8o-yPG" id="fEb-l2-Ys3"/>
+                        <outlet property="viewNavigationItem" destination="aNr-TS-z63" id="0ZN-lB-dXU"/>
+                        <outlet property="viewProgressBar" destination="4a2-ig-Zen" id="EhQ-9B-BXG"/>
                         <segue destination="AXW-C6-PXE" kind="show" identifier="SetupProfileBioDataToNotification" id="g0d-OV-Nok"/>
                     </connections>
                 </viewController>
@@ -1056,6 +1059,9 @@ up your health profile.</string>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="ZD6-xG-uNs" id="P3t-lX-JT5"/>
+                        <outlet property="footerView" destination="HEU-Lb-Zsz" id="JBo-Oi-yaQ"/>
+                        <outlet property="viewNavigationItem" destination="aO2-5T-Q66" id="2O4-BV-RXX"/>
+                        <outlet property="viewProgressBar" destination="2Ij-2O-nq8" id="CA2-C0-9Fj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zLk-Fd-pvo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1378,6 +1384,7 @@ You are ready to begin your first “health” survey quetions that will help de
                     <connections>
                         <outlet property="footer" destination="YF2-08-RFx" id="Unm-Qw-cly"/>
                         <outlet property="tableView" destination="Mdv-a0-snH" id="PhL-p7-jbb"/>
+                        <outlet property="viewNavigationItem" destination="xL7-d0-VmB" id="oq6-rD-ufw"/>
                         <segue destination="9q7-ow-baX" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="vcb-Ui-ASK"/>
                         <segue destination="Zin-rP-KGp" kind="show" identifier="TOSToProfileSetup" id="ExJ-ON-yDI"/>
                     </connections>

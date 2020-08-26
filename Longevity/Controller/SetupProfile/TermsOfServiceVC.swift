@@ -16,8 +16,11 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     // MARK: Outlets
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var footer: UIView!
-
+    @IBOutlet weak var viewNavigationItem: UINavigationItem!
+    
     var tableViewDataSource: [String] = []
+    
+    var isFromSettings: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -26,6 +29,22 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         getUserAttributes()
         initalizeTableView()
         self.removeBackButtonNavigation()
+        
+        if self.isFromSettings {
+            let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
+            leftbutton.tintColor = .themeColor
+            self.viewNavigationItem.leftBarButtonItem = leftbutton
+            self.viewNavigationItem.rightBarButtonItems = nil
+            let titleLabel = UILabel()
+            titleLabel.text = "Terms of Service"
+            titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
+            titleLabel.textColor = UIColor(hexString: "#4E4E4E")
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.viewNavigationItem.titleView = titleLabel
+            
+            self.footer.isHidden = true
+        }
     }
 
     func initalizeTableView(){
@@ -99,6 +118,10 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
                 print("Fetching user attributes failed with error \(error)")
             }
         }
+    }
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 
