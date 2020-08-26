@@ -8,9 +8,29 @@
 
 import Foundation
 
-struct MeasurementUnits {
-    static let metric = "metric"
-    static let imperial = "imperial"
+enum MeasurementUnits: String {
+    case metric = "metric"
+    case imperial = "imperial"
+}
+
+extension MeasurementUnits {
+    var weight:String {
+        switch self {
+        case .metric:
+            return "kg"
+        case .imperial:
+            return "lbs"
+        }
+    }
+
+    var height: String {
+        switch self {
+        case .metric:
+            return "cm"
+        case .imperial:
+            return "ft"
+        }
+    }
 }
 
 struct UserDefaultsKeys {
@@ -30,6 +50,7 @@ struct UserDefaultsKeys {
     let endpointArnForSNS = "endpointArnForSNS"
     let email = "email"
     let mobile = "mobile"
+    let logger = "logger"
 }
 
 func clearUserDefaults() {

@@ -91,7 +91,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
 
     func addResult(value:String) {
         if let questionId = self.step?.identifier as? String {
-            SurveyTaskUtility.currentSurveyResult[questionId] = value
+            SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: questionId, answer: value)
         }
     }
 }
@@ -112,7 +112,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.item == 0 {
             if let step = self.step as? ORKQuestionStep {
-                let questionSubheader = SurveyTaskUtility.surveyTagline
+                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
                 let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
                     as! RKCQuestionView
                 questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
@@ -123,7 +123,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                let currentAnswerValue: String? = SurveyTaskUtility.currentSurveyResult[step.identifier]
+                let currentAnswerValue: String? =
+                    SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: step.identifier)
 
                 let choice = answerFormat.textChoices[indexPath.item - 1]
                 let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
@@ -156,7 +157,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
+                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
                 height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
                 if step.text != nil {

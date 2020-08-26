@@ -31,11 +31,9 @@ class RKCFormSectionItemView: UICollectionViewCell {
     }
 
     func createLayout(heading:String, iconName: String?) {
-        let defaultIconName:String = "icon : GI"
-        let iconNameFromModule = SurveyTaskUtility.iconNameForModuleName[heading] ?? defaultIconName
-//
+        let iconNameFromModule = SurveyTaskUtility.shared.getIconName(for: heading)
         self.addSubview(iconImage)
-        iconImage.image = UIImage(named: iconNameFromModule!)
+        iconImage.image = UIImage(named: iconNameFromModule)
         NSLayoutConstraint.activate([
             iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),

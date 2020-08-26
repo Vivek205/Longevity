@@ -16,7 +16,7 @@ struct SurveyLastResponseData: Decodable {
     let submissionId: String
 }
 
-struct SurveyResponse: Decodable {
+struct SurveyListItem: Decodable {
     let surveyId: String
     let name: String
     let description: String
@@ -26,8 +26,8 @@ struct SurveyResponse: Decodable {
     let response: [SurveyLastResponseData]?
 }
 
-func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
-                onFailure:@escaping (_ error:Error)-> Void) {
+func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
+                onFailure:@escaping (_ error:Error) -> Void) {
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/surveys", headers: headers, queryParameters: nil,
@@ -39,10 +39,12 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyResponse]) -> Void,
                 do {
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode([SurveyResponse].self, from: data)
-                    // FIXME: Make me dynamic for multiple surveys
-                    if !value.isEmpty && value[0].response != nil {
-                        SurveyTaskUtility.lastResponse = value[0].response
+                    let value = try decoder.decode([SurveyListItem].self, from: data)
+                    SurveyTaskUtility.shared.setSurveyList(list: value)
+                    if !value.isEmpty {
+                        value.forEach {
+                            SurveyTaskUtility.shared.setServerSubmittedAnswers(for:$0.surveyId, answers: $0.response)
+                        }
                     }
                     completion(value)
                 } catch  {
@@ -128,8 +130,8 @@ struct SurveyDetails: Decodable {
 }
 
 func getSurveyDetails(surveyId: String,
-                  completion: @escaping (_ surveyDetails: SurveyDetails?) -> Void,
-                  onFailure: @escaping (_ error: Error) -> Void) {
+                      completion: @escaping (_ surveyDetails: SurveyDetails?) -> Void,
+                      onFailure: @escaping (_ error: Error) -> Void) {
     var response:SurveyDetails?
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
@@ -143,15 +145,17 @@ func getSurveyDetails(surveyId: String,
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode(SurveyDetails.self, from: data)
                     response = value
+                    SurveyTaskUtility.shared.currentSurveyId = surveyId
+                    SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: value)
                     completion(value)
-                    SurveyTaskUtility.currentSurveyDetails = value
                 } catch {
-                    SurveyTaskUtility.currentSurveyDetails = nil
+                    SurveyTaskUtility.shared.currentSurveyId = nil
+                    SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: nil)
                     print("json error", error)
                 }
 
             case .failure(let apiError):
-                print(apiError)
+                print("getSurveyDetails error",apiError)
             }
         })
     }
@@ -167,22 +171,22 @@ func findNextQuestion(questionId: String, answerValue: Int) -> String {
     let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question/123/nextQuestion", headers: nil,
                               queryParameters: nil, body: nil)
     var nextQuestionIdentifier: String = ""
-        _ = Amplify.API.post(request: request, listener: { (result) in
-            switch result {
-            case .success(let data):
-                do {
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode(Question.self, from: data)
-                    nextQuestionIdentifier = value.quesId
-                } catch {
-                    print("json error", error)
-                }
-
-            case .failure(let apiError):
-                print(apiError)
+    _ = Amplify.API.post(request: request, listener: { (result) in
+        switch result {
+        case .success(let data):
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let value = try decoder.decode(Question.self, from: data)
+                nextQuestionIdentifier = value.quesId
+            } catch {
+                print("json error", error)
             }
-        })
+
+        case .failure(let apiError):
+            print("findNextQuestion",apiError)
+        }
+    })
     return nextQuestionIdentifier
 }
 
@@ -198,15 +202,20 @@ struct SurveyCategoryViewTypes {
     static let moduleLevel = "MODULE_LEVEL"
 }
 
-func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload],
-                       completion:@escaping ()->Void,
+func saveSurveyAnswers(surveyId: String? ,answers: [SubmitAnswerPayload],
+                       completion:@escaping () -> Void,
                        onFailure: @escaping (_ error: Error) -> Void) {
+    enum SaveSurveyError: Error {
+        case surveyIdNotFound
+    }
+    guard let surveyId = surveyId else { return onFailure(SaveSurveyError.surveyIdNotFound)}
     func onGettingCredentials(_ credentials: Credentials) {
         do {
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
+            print(String(data:data, encoding: .utf8)!)
 
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)
@@ -230,9 +239,14 @@ func saveSurveyAnswers(surveyId: String ,answers: [SubmitAnswerPayload],
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-func submitSurvey(surveyId: String, completion:@escaping ()->Void,
-onFailure: @escaping (_ error: Error) -> Void) {
-    func onGettingCredentials(_ credentials: Credentials){
+func submitSurvey(surveyId: String?, completion:@escaping () -> Void,
+                  onFailure: @escaping (_ error: Error) -> Void) {
+    enum SubmitSurveyError: Error {
+        case surveyIdIsEmpty
+    }
+    guard let surveyId = surveyId else { return onFailure(SubmitSurveyError.surveyIdIsEmpty) }
+
+    func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: headers,
                                   queryParameters: nil, body: nil)

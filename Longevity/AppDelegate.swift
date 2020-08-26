@@ -34,6 +34,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try Amplify.configure()
             configureCognito()
             print("Amplify configured with auth plugin")
+            Logger.log("App Launched")
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
@@ -82,14 +83,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         } else if previousBuild != currentBuild {
             //application updated
-//            _ = Amplify.Auth.signOut() { (result) in
-//                switch result {
-//                case .success:
-//                    print("Successfully signed out")
-//                case .failure(let error):
-//                    print("Sign out failed with error \(error)")
-//                }
-//            }
         }
         UserDefaults.standard.set(currentBuild, forKey: "build")
     }
@@ -138,7 +131,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         defaults.set(token, forKey: keys.deviceTokenForSNS)
-
+        Logger.log("device token created")
         // Check if ARN is created already
         guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
             return
@@ -156,6 +149,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
                 if let endpointArnForSNS = createEndpointResponse.endpointArn {
                     print("endpointArn: \(endpointArnForSNS)")
+                    Logger.log("ARN endpoint created")
                     defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
                     registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
                 }
@@ -165,8 +159,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
-        print("failure notification -------------------------", error)
-        print(error.localizedDescription)
+        Logger.log("failed to register notification \(error.localizedDescription)")
     }
 
     func application(
@@ -176,18 +169,23 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         @escaping (UIBackgroundFetchResult) -> Void
     ) {
 
-        print("didReceiveRemoteNotification ====================== ===========================")
         guard let apsData = userInfo["aps"] as? [String: AnyObject] else {
+            Logger.log("did receive wrong background notification")
             completionHandler(.failed)
             return
         }
+        Logger.log("did receive background notification \(apsData)")
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
+        completionHandler(.newData)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-        print("user notification")
+        Logger.log("received foreground notification")
+        let fitbitModel = FitbitModel()
+        fitbitModel.refreshTheToken()
+        completionHandler(.sound)
     }
 }

@@ -14,7 +14,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     override var step: ORKStep? {
         didSet {
             if let step = self.step as? ORKQuestionStep {
-                let questionSubheader = SurveyTaskUtility.surveyTagline ?? ""
+                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
                 questionView.createLayout(header: step.title ?? "",
                                           subHeader: questionSubheader,
                                           question: step.question ?? "",
@@ -29,7 +29,8 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
 
                 }
 
-                if let localSavedAnswer = SurveyTaskUtility.currentSurveyResult[step.identifier]  {
+                if let localSavedAnswer =
+                    SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: step.identifier)  {
                     slider.setValue((localSavedAnswer as NSString).floatValue, animated: true)
                     sliderLabel.text = localSavedAnswer
                     continueButton.isEnabled = true
@@ -122,7 +123,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     @objc func handleSliderValueChanged(_ sender: UISlider) {
         print("value changed", sender.value)
         guard let identifer = step?.identifier else { return }
-        SurveyTaskUtility.currentSurveyResult[identifer] =  String(format: "%.1f", sender.value)
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.1f", sender.value))
         sliderLabel.text = "\(Int(sender.value))"
         continueButton.isEnabled = true
     }

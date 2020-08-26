@@ -50,8 +50,9 @@ extension CheckInStatus {
 }
 
 class DashboardCheckInCell: UITableViewCell {
+    var surveyId: String?
     
-    var surveyResponse: SurveyResponse! {
+    var surveyResponse: SurveyListItem! {
         didSet {
             var status:CheckInStatus = .notstarted
             if surveyResponse.lastSubmission != nil {
@@ -59,6 +60,7 @@ class DashboardCheckInCell: UITableViewCell {
             }
             self.setupCell(title: surveyResponse.name, status: status ,
                            lastSubmissionDateString: surveyResponse.lastSubmission)
+            self.surveyId = surveyResponse.surveyId
         }
     }
     

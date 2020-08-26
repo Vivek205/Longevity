@@ -65,7 +65,7 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         questionLabel.text = question
         answerTextView.text = lastResponseAnswer ?? ""
 
-        if let localSavedAnswer = SurveyTaskUtility.currentSurveyResult[identifier]{
+        if let localSavedAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier){
             answerTextView.text = localSavedAnswer
         }
         
@@ -92,8 +92,7 @@ extension RKCFormTextAnswerView: UITextViewDelegate {
     func textViewDidChange(_ textView: UITextView) {
         delegate?.textViewDidChange(textView)
         guard let identifier = self.itemIdentifier else { return }
-        print(textView.text)
-        SurveyTaskUtility.currentSurveyResult[identifier] = textView.text
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: textView.text)
     }
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("changed selection")

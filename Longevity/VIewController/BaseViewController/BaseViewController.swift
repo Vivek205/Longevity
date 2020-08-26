@@ -13,6 +13,7 @@ enum RejuveTab: Int, CaseIterable {
     case myData
     case profile
     case shareApp
+    case logger
 }
 
 extension RejuveTab {
@@ -26,6 +27,8 @@ extension RejuveTab {
             return "Profile"
         case .shareApp:
             return "Share App"
+        case .logger:
+            return "Local Logs"
         }
     }
     
@@ -39,6 +42,8 @@ extension RejuveTab {
             return "Profile Activity"
         case .shareApp:
             return "Share App"
+        case .logger:
+            return "Logs"
         }
     }
     
@@ -51,6 +56,8 @@ extension RejuveTab {
         case .profile:
             return UIImage(named: "tab-profile")
         case .shareApp:
+            return UIImage(named: "tab-share")
+        case .logger:
             return UIImage(named: "tab-share")
         }
     }

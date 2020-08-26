@@ -10,8 +10,9 @@ import UIKit
 import ResearchKit
 
 class HomeVC: UIViewController {
-    var surveysData: [SurveyResponse]?
+    var surveysData: [SurveyListItem]?
     var surveyId: String?
+
     override func viewDidLoad() {
         super.viewDidLoad()
         retrieveDataAndInitializeTheViews()
@@ -20,7 +21,7 @@ class HomeVC: UIViewController {
     func retrieveDataAndInitializeTheViews() {
         self.showSpinner()
 
-        func completion(_ surveys:[SurveyResponse]) {
+        func completion(_ surveys:[SurveyListItem]) {
             DispatchQueue.main.async {
                 self.surveysData = surveys
                 self.removeSpinner()
@@ -124,8 +125,7 @@ class HomeVC: UIViewController {
 //            }
 //        }
 //        self.surveyId = tappedSurvey.surveyId
-//        let surveyTaskUtility = SurveyTaskUtility()
-//        surveyTaskUtility.createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
+//        SurveyTaskUtility.shared.createSurvey(surveyId: tappedSurvey.surveyId!, completion: onCreateSurveyCompletion(_:),
 //                     onFailure: onCreateSurveyFailure(_:))
 //    }
 }
