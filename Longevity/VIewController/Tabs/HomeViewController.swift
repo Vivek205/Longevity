@@ -93,8 +93,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-//            print("row", indexPath.row)
-            
             checkinCell.surveyResponse = self.surveyList?[indexPath.row]
             
             return checkinCell

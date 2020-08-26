@@ -28,6 +28,7 @@ struct UserDefaultsKeys {
     let setupProfileCompletionStatus = "setupProfileCompletionStatus"
     let deviceTokenForSNS = "deviceTokenForSNS"
     let endpointArnForSNS = "endpointArnForSNS"
+    let email = "email"
 }
 
 func clearUserDefaults() {

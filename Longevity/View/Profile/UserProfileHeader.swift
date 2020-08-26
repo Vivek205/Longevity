@@ -139,6 +139,11 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
+        
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        self.userName.text = defaults.string(forKey: keys.name)
+        self.userEmail.text = defaults.string(forKey: keys.email)
     }
     
     required init?(coder: NSCoder) {

@@ -134,6 +134,7 @@ class DashboardCheckInCell: UITableViewCell {
         ])
         
         self.setupCell(title: "COVID Check-in", status: .notstarted, lastSubmissionDateString: nil)
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

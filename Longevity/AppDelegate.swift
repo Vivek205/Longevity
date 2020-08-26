@@ -43,6 +43,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             "enableAutoSessionTracking": true
             //                "debug": true // Enabled debug when first installing is always helpful
         ])
+        
+        if HKHealthStore.isHealthDataAvailable() {
+            if let devices = UserDefaults.standard.object(forKey: UserDefaultsKeys().devices) as? [String:[String:Int]] {
+                HealthStore.shared.getHealthStore()
+                HealthStore.shared.retrieveHeartRate { (rate) in
+                    
+                }
+            }
+        }
+        
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         UNUserNotificationCenter.current().delegate = self
         return true

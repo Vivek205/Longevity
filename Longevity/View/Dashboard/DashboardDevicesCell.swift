@@ -42,6 +42,8 @@ class DashboardDevicesCell: UITableViewCell {
         
         layout.sectionInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 20.0)
         layout.scrollDirection = .horizontal
+        
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

@@ -71,8 +71,8 @@ extension ProfileSetting {
         case .updatepreconditions: return .center
         case .resetcheckin: return .bottom
         case .applehealth: return .topmost
-        case .fitbit: return .center
-        case .addhealthdevice: return .bottom
+        case .fitbit: return .bottom
+//        case .addhealthdevice: return .bottom
         case .notifications: return .topmost
         case .editaccount: return .center
         case .usemetricsystem: return .bottom
@@ -95,7 +95,7 @@ class ProfileViewController: BaseViewController {
     }
     
     var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions, .resetcheckin],
-                                        [.applehealth, .fitbit, .addhealthdevice],
+                                        [.applehealth, .fitbit],
                                         [.notifications, .editaccount, .usemetricsystem],
                                         [.faqs, .termsofservice, .contactsupport],
                                         [.signout], [.appversion]]
@@ -280,9 +280,21 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     case .exportcheckin:
                         let exportCheckinViewController = ExportCheckinDataViewController()
                         NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
-                    case .updatebiometrics: return
-                    case .updatepreconditions: return
-                    case .resetcheckin: return
+                    case .updatebiometrics:
+                        let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+                        guard let biometricsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfileBioDataVC") as? SetupProfileBioDataVC else { return }
+                        biometricsViewController.isFromSettings = true
+                        let navigationController = UINavigationController(rootViewController: biometricsViewController)
+                        NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                    case .updatepreconditions:
+                        let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+                        guard let preconditionsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC") as? SetupProfilePreConditionVC else { return }
+                        preconditionsViewController.isFromSettings = true
+                        let navigationController = UINavigationController(rootViewController: preconditionsViewController)
+                        NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                    case .resetcheckin:
+                        let resetCheckinViewController = ResetCheckInDataViewController()
+                        NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
                     case .applehealth: return
                     case .fitbit: return
                     case .addhealthdevice: return
