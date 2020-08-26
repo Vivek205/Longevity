@@ -11,7 +11,7 @@ import ResearchKit
 
 class HomeViewController: BaseViewController {
     var surveyId: String?
-    var surveyList: [SurveyListItem]?
+//    var surveyList: [SurveyListItem]?
     var currentTask: ORKOrderedTask?
     
     lazy var tableView: UITableView = {
@@ -54,8 +54,7 @@ class HomeViewController: BaseViewController {
 
         func completion(_ surveys:[SurveyListItem]) {
             DispatchQueue.main.async {
-                self.surveyList = surveys
-                self.tableView.reloadSections(IndexSet(arrayLiteral: 0), with: .fade)
+                self.tableView.reloadSections(IndexSet(arrayLiteral: 0,2), with: .fade)
                 self.removeSpinner()
             }
         }
@@ -78,14 +77,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
 
         if section == 0 {
-            
-            return self.surveyList?.count ?? 0
+            let count = SurveyTaskUtility.shared.repetitiveSurveyList.count
+            return count
         }
         if section == 1 {
             return 1
         }
-        
-        return 1
+        let count =  SurveyTaskUtility.shared.oneTimeSurveyList.count
+        return count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -94,7 +93,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 preconditionFailure("Invalid device cell")
             }
             
-            checkinCell.surveyResponse = self.surveyList?[indexPath.row]
+            checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList[indexPath.row]
             
             return checkinCell
         }
@@ -104,10 +103,15 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return devicesCell
         } else {
-            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
-                preconditionFailure("Invalid task cell")
+//            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
+//                preconditionFailure("Invalid task cell")
+//            }
+//            return cell
+            guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+                preconditionFailure("Invalid device cell")
             }
-            return cell
+            checkinCell.surveyResponse = SurveyTaskUtility.shared.oneTimeSurveyList[indexPath.row]
+            return checkinCell
         }
     }
     

@@ -29,32 +29,20 @@ class BranchingOrderedTask: ORKOrderedTask {
         if nextStep is ORKCompletionStep {
             return super.step(after: step, with: result)
         }
-
-
-        if let firstTestResult = result.stepResult(forStepIdentifier: step?.identifier ?? "") {
-
-            // FIXME: Remove this condition once dynamic questions come into picture
-            guard step?.identifier == "abc111" else {
-                return super.step(after: step, with: result)
+        guard let identifier = step?.identifier else {return nextStep}
+        let isDynamicQuestion = SurveyTaskUtility.shared.findIsQuestionDynamic(questionId: identifier)
+        guard isDynamicQuestion else {
+            return super.step(after: step, with: result)
+        }
+        guard let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) else {return nextStep}
+        if let nextStepIdentifier = findNextQuestion(questionId: identifier,
+                                                     answerValue: answer) {
+            if let nextDynamicStep =  self.steps.first { $0.identifier == nextStepIdentifier} {
+                nextStep = nextDynamicStep
             }
-
-
-            if let choiceQuestionResults = firstTestResult.results as? [ORKChoiceQuestionResult] {
-
-                if choiceQuestionResults.isEmpty {
-                    return nextStep
-                }
-                let latestResult = choiceQuestionResults.last
-                let answerValue = latestResult?.choiceAnswers?.first as! NSNumber
-                let nextStepIdentifier = findNextQuestion(questionId: step?.identifier ?? "",
-                                                          answerValue: answerValue.intValue)
-                // navigate to appropriate step
-                nextStep = self.steps.first { $0.identifier == nextStepIdentifier}!
-            }
-            return nextStep
         }
 
-        return super.step(after: step, with: result)
+        return nextStep
     }
 
 

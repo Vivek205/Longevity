@@ -13,6 +13,8 @@ import Security
 struct KeychainKeys {
     static let FitbitAccessToken = "FitbitAccessToken"
     static let FitbitRefreshToken = "FitbitRefreshToken"
+    static let idToken = "idToken"
+    static let idTokenExp = "idTokenExp"
 }
 
 class KeyChain {

@@ -15,6 +15,8 @@ final class SurveyTaskUtility {
     private init() {}
     static let shared = SurveyTaskUtility()
     private var surveyList:[SurveyListItem]?
+    var repetitiveSurveyList:[SurveyListItem] = [SurveyListItem]()
+    var oneTimeSurveyList:[SurveyListItem] = [SurveyListItem]()
     var currentSurveyId: String? {
         didSet {
             guard let surveyId = self.currentSurveyId else { return }
@@ -255,7 +257,17 @@ final class SurveyTaskUtility {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
-        self.surveyList = list
+        self.repetitiveSurveyList = [SurveyListItem]()
+        self.oneTimeSurveyList = [SurveyListItem]()
+
+        list.forEach { (survey) in
+            if survey.isRepetitive == true {
+                self.repetitiveSurveyList.append(survey)
+            } else {
+                self.oneTimeSurveyList.append(survey)
+            }
+        }
+
     }
 
     func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {
@@ -271,6 +283,14 @@ final class SurveyTaskUtility {
 
     func setSurveyDetails(for surveyId: String, details:SurveyDetails?) {
         self.surveyDetails[surveyId] = details
+    }
+
+    func findIsQuestionDynamic(questionId: String) -> Bool {
+        guard let surveyDetails = self.getCurrentSurveyDetails() else { return false}
+        guard let question = surveyDetails.questions.first(where: { (question) -> Bool in
+            question.quesId == questionId
+        }) else { return false }
+        return question.action == QuestionAction.dynamic
     }
 
     func createSingleChoiceQuestionStep(identifier: String,title:String,
