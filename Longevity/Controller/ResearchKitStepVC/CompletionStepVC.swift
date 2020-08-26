@@ -40,16 +40,11 @@ class CompletionStepVC: ORKStepViewController {
 
     func completeSurvey() {
         func completion() {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-            }
+            print("survey completed")
         }
         func onFailure(_ error: Error) {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-            }
+            print("failed to complete the survey")
         }
-        self.showSpinner()
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
 

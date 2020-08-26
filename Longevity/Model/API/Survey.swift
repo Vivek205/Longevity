@@ -27,7 +27,7 @@ struct SurveyListItem: Decodable {
 }
 
 func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
-                onFailure:@escaping (_ error:Error)-> Void) {
+                onFailure:@escaping (_ error:Error) -> Void) {
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/surveys", headers: headers, queryParameters: nil,
@@ -40,9 +40,7 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
                     let decoder = JSONDecoder()
                     decoder.keyDecodingStrategy = .convertFromSnakeCase
                     let value = try decoder.decode([SurveyListItem].self, from: data)
-                    // FIXME: Make me dynamic for multiple surveys
                     SurveyTaskUtility.shared.setSurveyList(list: value)
-
                     if !value.isEmpty {
                         value.forEach {
                             SurveyTaskUtility.shared.setServerSubmittedAnswers(for:$0.surveyId, answers: $0.response)
@@ -210,13 +208,14 @@ func saveSurveyAnswers(surveyId: String? ,answers: [SubmitAnswerPayload],
     enum SaveSurveyError: Error {
         case surveyIdNotFound
     }
-    guard surveyId != nil else { return onFailure(SaveSurveyError.surveyIdNotFound)}
+    guard let surveyId = surveyId else { return onFailure(SaveSurveyError.surveyIdNotFound)}
     func onGettingCredentials(_ credentials: Credentials) {
         do {
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
+            print(String(data:data, encoding: .utf8)!)
 
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)

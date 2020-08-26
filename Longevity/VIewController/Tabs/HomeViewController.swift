@@ -93,7 +93,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-//            print("row", indexPath.row)
             
             checkinCell.surveyResponse = self.surveyList?[indexPath.row]
             
@@ -166,14 +165,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCell = tableView.cellForRow(at: indexPath)
-        if selectedCell is DashboardCheckInCell{
-            self.showSurvey(selectedCell)
+        if let dashboardCheckInCell = selectedCell as? DashboardCheckInCell {
+             self.showSurvey(dashboardCheckInCell)
         }
     }
 }
 
 extension HomeViewController {
-    func showSurvey(_ selectedSurveyCell: Any) {
+    func showSurvey(_ selectedSurveyCell: DashboardCheckInCell) {
          self.showSpinner()
 
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
@@ -198,7 +197,7 @@ extension HomeViewController {
                 self.removeSpinner()
             }
         }
-        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: onCreateSurveyCompletion(_:),
+        SurveyTaskUtility.shared.createSurvey(surveyId: selectedSurveyCell.surveyId, completion: onCreateSurveyCompletion(_:),
                      onFailure: onCreateSurveyFailure(_:))
     }
 }
@@ -214,10 +213,8 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
         
-
         switch reason {
         case .completed:
-            SurveyTaskUtility.shared.clearSurvey()
             print("completed")
         case .discarded:
             print("discarded")
@@ -260,7 +257,6 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
                 let stepVC = ContinuousScaleAnswerVC()
                 stepVC.step = step
                 return stepVC
-//                return nil
             }
         }
         return nil
