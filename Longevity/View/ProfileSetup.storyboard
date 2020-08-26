@@ -1384,6 +1384,7 @@ You are ready to begin your first “health” survey quetions that will help de
                     <connections>
                         <outlet property="footer" destination="YF2-08-RFx" id="Unm-Qw-cly"/>
                         <outlet property="tableView" destination="Mdv-a0-snH" id="PhL-p7-jbb"/>
+                        <outlet property="viewNavigationItem" destination="xL7-d0-VmB" id="oq6-rD-ufw"/>
                         <segue destination="9q7-ow-baX" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="vcb-Ui-ASK"/>
                         <segue destination="Zin-rP-KGp" kind="show" identifier="TOSToProfileSetup" id="ExJ-ON-yDI"/>
                     </connections>

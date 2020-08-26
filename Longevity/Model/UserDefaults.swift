@@ -29,6 +29,7 @@ struct UserDefaultsKeys {
     let deviceTokenForSNS = "deviceTokenForSNS"
     let endpointArnForSNS = "endpointArnForSNS"
     let email = "email"
+    let mobile = "mobile"
 }
 
 func clearUserDefaults() {
