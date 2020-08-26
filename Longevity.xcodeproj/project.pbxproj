@@ -13,6 +13,7 @@
 		C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */; };
 		C12F09B924F6F97B00623CC3 /* BasePopUpModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */; };
 		C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */; };
+		C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -184,6 +185,7 @@
 		C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCheckInDataViewController.swift; sourceTree = "<group>"; };
 		C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopUpModalViewController.swift; sourceTree = "<group>"; };
 		C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -664,6 +666,7 @@
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
 				E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */,
 				E2939A4024E15D9500069026 /* Utilities */,
+				C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */,
 			);
 			path = Longevity;
 			sourceTree = "<group>";
@@ -946,6 +949,7 @@
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
 				E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */,
+				C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */,
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,

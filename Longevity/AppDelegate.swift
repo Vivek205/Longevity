@@ -55,6 +55,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
         UNUserNotificationCenter.current().delegate = self
+        
+//        window = UIWindow(frame: UIScreen.main.bounds)
+//        window?.makeKeyAndVisible()
+//
+        /// To remove support for dark mode
+        if #available(iOS 13.0, *) {
+            self.window?.overrideUserInterfaceStyle = .light
+        }
+        
         return true
     }
 
@@ -83,6 +92,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 //            }
         }
         UserDefaults.standard.set(currentBuild, forKey: "build")
+    }
+    
+    func setRootViewController() {
+//        self.window?.rootViewController =
     }
 
     // MARK: UISceneSession Lifecycle
