@@ -7,9 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
+		C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */; };
+		C12F09B924F6F97B00623CC3 /* BasePopUpModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */; };
+		C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */; };
+		C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */; };
+		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -176,6 +180,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
+C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCheckInDataViewController.swift; sourceTree = "<group>"; };
+		C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopUpModalViewController.swift; sourceTree = "<group>"; };
+		C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		718E061F905C01115E0C6E2E /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
@@ -354,6 +362,9 @@
 			isa = PBXGroup;
 			children = (
 				C193942E24EF039E00BDB3BD /* ExportCheckinDataViewController.swift */,
+				C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */,
+				C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */,
+				C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */,
 			);
 			path = ProfileSettings;
 			sourceTree = "<group>";
@@ -662,6 +673,7 @@
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
 				E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */,
 				E2939A4024E15D9500069026 /* Utilities */,
+				C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */,
 			);
 			path = Longevity;
 			sourceTree = "<group>";
@@ -947,10 +959,12 @@
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
 				E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */,
+				C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */,
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
+				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
 				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				C19875D024DD629E00477185 /* DashboardHeaderView.swift in Sources */,
@@ -976,6 +990,7 @@
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
+				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
 				C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
@@ -1030,6 +1045,7 @@
 				C19875BA24DC79EB00477185 /* ProfileViewController.swift in Sources */,
 				C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */,
 				E2503AA324EBDDA70033A814 /* Date.swift in Sources */,
+				C12F09B924F6F97B00623CC3 /* BasePopUpModalViewController.swift in Sources */,
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
@@ -1182,13 +1198,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 9;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
@@ -1212,7 +1228,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

@@ -94,6 +94,7 @@ class DashboardTaskCell: UITableViewCell {
             taskDescription.bottomAnchor.constraint(lessThanOrEqualTo: progressBar.topAnchor, constant: 10.0)
         ])
         self.setupCell()
+        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {

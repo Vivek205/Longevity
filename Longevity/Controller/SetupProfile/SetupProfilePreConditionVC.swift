@@ -10,7 +10,10 @@ import UIKit
 
 class SetupProfilePreConditionVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
-
+    @IBOutlet weak var viewProgressBar: UIView!
+    @IBOutlet weak var viewNavigationItem: UINavigationItem!
+    @IBOutlet weak var footerView: UIView!
+    
     // MARK: Collection View Data
     private var conditionCount:Int = 0
     var numberOfTotalItems:Int = 0
@@ -19,11 +22,21 @@ class SetupProfilePreConditionVC: UIViewController {
     var otherOptionText: String?
     var keyboardHeight: CGFloat?
 
+    var isFromSettings: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         initializeCollectionViewData()
         addKeyboardObservers()
         self.removeBackButtonNavigation()
+        
+        if self.isFromSettings {
+            self.viewProgressBar.isHidden = true
+            let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
+            leftbutton.tintColor = .themeColor
+            self.viewNavigationItem.leftBarButtonItem = leftbutton
+            self.footerView.isHidden = true
+        }
     }
 
     deinit {
@@ -115,6 +128,10 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
                 self.keyboardHeight = keyboardRectangle.height
                 print("keyboard height", self.keyboardHeight)
            }
+    }
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

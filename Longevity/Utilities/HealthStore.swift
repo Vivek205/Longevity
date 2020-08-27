@@ -431,13 +431,6 @@ final class HealthStore {
         var interval = DateComponents()
         interval.minute = 1
         
-        //predicate
-//        let calendar = NSCalendar.current
-//        let now = Date()
-//        let components = calendar.dateComponents([.year,.month,.day], from: now as Date)
-//        guard let startDate:Date = calendar.date(from: components) else { return }
-        
-        
         let calendar = Calendar.current
         let anchorDate = calendar.startOfDay(for: Date())
         
@@ -453,16 +446,24 @@ final class HealthStore {
                 return
             }
             
-            if let resultArray = results, resultArray.isEmpty {
+            if let resultArray = results, !resultArray.isEmpty {
                 
+                var heartrate: String = "["
+                let healthKit = HealthkitAPI()
                 for result in resultArray {
                     guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { return }
-                    print("{ StartDate: \(result.startDate) , EndDate: \(result.endDate), HeartRate: \(beatsPerMinute) bpm }")
-//                    completion(beatsPerMinute)
+                    heartrate += "{ DateTime: \(result.startDate), HeartRate: \(beatsPerMinute) bpm },"
+                }
+                heartrate.removeLast()
+                heartrate += "]"
+                healthKit.synchronizeHealthkit(healthData: heartrate, completion: {
+                    
+                }) { (error) in
+                    print(error.localizedDescription)
                 }
                 
-                guard let beatsPerMinute: Double = (resultArray[0] as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { return }
-                completion(beatsPerMinute)
+//                guard let beatsPerMinute: Double = (resultArray[0] as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { return }
+//                completion(beatsPerMinute)
             }
         }
         healthStore?.execute(query)
@@ -527,7 +528,7 @@ final class HealthStore {
                 return
             }
             
-            if let resultArray = results, resultArray.isEmpty {
+            if let resultArray = results, !resultArray.isEmpty {
                 guard let beatsPerMinute: Double = (resultArray[0] as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { return }
                 completion(beatsPerMinute)
             }

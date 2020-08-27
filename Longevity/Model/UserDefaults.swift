@@ -48,6 +48,8 @@ struct UserDefaultsKeys {
     let setupProfileCompletionStatus = "setupProfileCompletionStatus"
     let deviceTokenForSNS = "deviceTokenForSNS"
     let endpointArnForSNS = "endpointArnForSNS"
+    let email = "email"
+    let mobile = "mobile"
     let logger = "logger"
 }
 

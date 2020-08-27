@@ -16,6 +16,10 @@ class SetupProfileBioDataVC: UIViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var continueButton: CustomButtonFill!
+    @IBOutlet weak var viewProgressBar: UIView!
+    @IBOutlet weak var viewNavigationItem: UINavigationItem!
+    @IBOutlet weak var footerView: UIView!
+    
     let healthKitUtil: HealthKitUtil = HealthKitUtil()
 
 
@@ -26,6 +30,8 @@ class SetupProfileBioDataVC: UIViewController {
     var selectedPickerValue:String = ""
     var selectedAgePickerValue:Date = Date()
 
+    var isFromSettings: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
@@ -35,6 +41,14 @@ class SetupProfileBioDataVC: UIViewController {
         createPickersAndToolbar()
         self.readHealthData()
         checkIfHealthKitSyncedAlready()
+        
+        if self.isFromSettings {
+            self.viewProgressBar.isHidden = true
+            let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
+            leftbutton.tintColor = .themeColor
+            self.viewNavigationItem.leftBarButtonItem = leftbutton
+            self.footerView.isHidden = true
+        }
     }
 
     func checkIfHealthKitSyncedAlready() {
@@ -246,10 +260,12 @@ class SetupProfileBioDataVC: UIViewController {
             self.continueButton.isEnabled = true
             self.collectionView.reloadData()
         }
-
+    }
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
     }
 }
-
 
 extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     private struct PickerLabel {

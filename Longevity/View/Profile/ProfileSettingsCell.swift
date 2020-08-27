@@ -38,6 +38,8 @@ class ProfileSettingsCell: UITableViewCell {
                 self.settingBGView.layer.cornerRadius = 0.0
                 self.settingBGView.layer.masksToBounds = false
             }
+            
+            settingStatus.isHidden = profileSetting != .applehealth
         }
     }
     
@@ -56,36 +58,41 @@ class ProfileSettingsCell: UITableViewCell {
         return settingname
     }()
     
+    lazy var settingStatus: UILabel = {
+        let settingstatus = UILabel()
+        settingstatus.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        settingstatus.textColor = .themeColor
+        settingstatus.text = "Not Connected"
+        settingstatus.translatesAutoresizingMaskIntoConstraints = false
+        return settingstatus
+    }()
+    
     lazy var settingsActionImage: UIImageView = {
         let actionImage = UIImageView()
         actionImage.contentMode = .scaleAspectFit
+        actionImage.isUserInteractionEnabled = false
         actionImage.translatesAutoresizingMaskIntoConstraints = false
         return actionImage
     }()
     
     lazy var settingsSwitch: UISwitch = {
         let settingsswitch = UISwitch()
-        settingsswitch.tintColor = .themeColor
+        settingsswitch.onTintColor = .themeColor
         settingsswitch.translatesAutoresizingMaskIntoConstraints = false
         return settingsswitch
-    }()
-    
-    lazy var bottomBorder: UIView = {
-        let border = UIView()
-        border.backgroundColor = UIColor(hexString: "#CECECE")
-        border.translatesAutoresizingMaskIntoConstraints = false
-        return border
     }()
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .clear
+        self.selectionStyle = .none
         
         self.addSubview(settingBGView)
         settingBGView.addSubview(settingName)
         settingBGView.addSubview(settingsActionImage)
         settingBGView.addSubview(settingsSwitch)
+        settingBGView.addSubview(settingStatus)
         
         NSLayoutConstraint.activate([
             settingBGView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
@@ -101,7 +108,9 @@ class ProfileSettingsCell: UITableViewCell {
             settingsActionImage.leadingAnchor.constraint(greaterThanOrEqualTo: settingName.trailingAnchor, constant: 10.0),
             settingsSwitch.trailingAnchor.constraint(equalTo: settingBGView.trailingAnchor, constant: -10.0),
             settingsSwitch.centerYAnchor.constraint(equalTo: settingBGView.centerYAnchor),
-            settingsSwitch.leadingAnchor.constraint(greaterThanOrEqualTo: settingName.trailingAnchor, constant: 10.0)
+            settingsSwitch.leadingAnchor.constraint(greaterThanOrEqualTo: settingName.trailingAnchor, constant: 10.0),
+            settingStatus.trailingAnchor.constraint(equalTo: settingsActionImage.leadingAnchor, constant: -10.0),
+            settingStatus.centerYAnchor.constraint(equalTo: settingBGView.centerYAnchor)
         ])
     }
     

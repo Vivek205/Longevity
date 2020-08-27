@@ -46,13 +46,16 @@ func getProfile() {
                     let keys = UserDefaultsKeys()
                     let userProfileData = jsonData["data"]
                     let name = userProfileData[keys.name].rawString()!
-
+                    let email = userProfileData[keys.email].rawString()!
                     var devicesStatus: [String:[String:Int]] = [:]
 
                     if !(name.isEmpty) && name != "null"{
                         defaults.set(name, forKey: keys.name)
                     }
-
+                    
+                    if !email.isEmpty && email != "null" {
+                        defaults.set(email, forKey: keys.email)
+                    }
                 } catch {
                     print("json parse error", error)
                 }
