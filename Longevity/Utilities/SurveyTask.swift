@@ -25,7 +25,7 @@ final class SurveyTaskUtility {
     }
     private var surveyDetails: [String:SurveyDetails?] = [String:SurveyDetails?]()
     private var currentTask: ORKOrderedTask?
-    private var surveyName: String?
+    var surveyName: String?
     private var iconNameForModuleName: [String: String?] = [String:String?]()
     private var lastSubmission: String?
     private var lastSubmissionId: String?
@@ -111,14 +111,17 @@ final class SurveyTaskUtility {
                                                 maximumFractionDigits: 1, vertical: true,
                                                 maximumValueDescription: (NSString(format:"120%@", "\u{00B0}") as String),
                                                 minimumValueDescription: (NSString(format:"80%@", "\u{00B0}") as String))
-                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: surveyDetails?.name ?? "Survey", question: filteredQuestion.text, answer: answerFormat)
+                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId,
+                                                                               title: "\(moduleValue.id)",
+                                                                               question: filteredQuestion.text,
+                                                                               answer: answerFormat)
                                             steps += [questionStep]
                                             continue
                                         }
 
                                         let step = createSingleChoiceQuestionStep(
                                             identifier: filteredQuestion.quesId,
-                                            title: surveyDetails?.name ?? "Survey",
+                                            title: "\(moduleValue.id)",
                                             question: filteredQuestion.text,
                                             additionalText: nil,
                                             choices: filteredQuestion.options.map {
@@ -254,6 +257,11 @@ final class SurveyTaskUtility {
 
     func setIconName(for moduleName: String, iconName: String?) {
         self.iconNameForModuleName[moduleName] = iconName
+    }
+
+    func getCurrentSurveyName() -> String? {
+        guard let currentSurveyDetails = self.getCurrentSurveyDetails() else {return nil}
+        return currentSurveyDetails.name
     }
 
     func setSurveyList(list:[SurveyListItem]) {

@@ -33,7 +33,7 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/surveys", headers: headers, queryParameters: nil,
                                   body: nil)
-
+        
         _ = Amplify.API.get(request: request, listener: { (result) in
             switch result{
             case .success(let data):
@@ -56,7 +56,7 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
             }
         })
     }
-
+    
     func onFailureCredentials(_ error: Error?) {
         print(error)
     }
@@ -75,7 +75,7 @@ struct Question:Decodable {
     let text: String
     let quesType: String
     let options: [QuestionOption]
-//    let isDynamic: Bool? // FIXME: Make it non optional
+    //    let isDynamic: Bool? // FIXME: Make it non optional
     let nextQuestion: String?
     let validation: QuestionResponseValidation?
     let otherAttribute: OtherAttribute?
@@ -160,64 +160,81 @@ func getSurveyDetails(surveyId: String,
                     SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: nil)
                     print("json error", error)
                 }
-
+                
             case .failure(let apiError):
                 print("getSurveyDetails error",apiError)
             }
         })
     }
-
+    
     func onFailureCredentials(_ error: Error?) {
         print(error)
     }
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-func findNextQuestion(questionId: String, answerValue: String) -> String? {
+struct FindNextQuestionPayload: Encodable {
+    let moduleId: Int
+    let questionId: String
+    let answerValue: String
+}
+
+func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -> String? {
     print("entry", Date().description)
-    guard let currentSurveyId = SurveyTaskUtility.shared.currentSurveyId else {return nil}
+    guard let currentSurveyId = SurveyTaskUtility.shared.currentSurveyId,
+        let moduleId = moduleId else {return nil}
     var nextQuestionIdentifier: String?
-
+    let payload = FindNextQuestionPayload(moduleId: moduleId, questionId: questionId, answerValue: answerValue)
+    let encoder = JSONEncoder()
+    encoder.keyEncodingStrategy = .convertToSnakeCase
     let semaphore = DispatchSemaphore(value: 0)
-
-    getCredentials(completion: { (credentials) in
-        let path =  "/survey/\(currentSurveyId)/question/next"
-        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-        let request = RESTRequest(apiName: "surveyAPI", path:path, headers: headers,
-                                  queryParameters: nil, body: nil)
-
-        _ = Amplify.API.post(request: request, listener: { (result) in
-            switch result {
-            case .success(let data):
-                do {
-                    let dataString = String(data:data, encoding: .utf8)
-                    if dataString == "null" {
+    
+    do {
+        let data = try encoder.encode(payload)
+        
+        getCredentials(completion: { (credentials) in
+            let path =  "/survey/\(currentSurveyId)/question/next"
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let request = RESTRequest(apiName: "surveyAPI", path:path, headers: headers,
+                                      queryParameters: nil, body: data)
+            
+            _ = Amplify.API.post(request: request, listener: { (result) in
+                switch result {
+                case .success(let data):
+                    do {
+                        let dataString = String(data:data, encoding: .utf8)
+                        if dataString == "null" {
+                            semaphore.signal()
+                            return
+                        }
+                        print("dataString", dataString)
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let value = try decoder.decode(Question.self, from: data)
+                        nextQuestionIdentifier = value.quesId
+                        print("next question API", value)
                         semaphore.signal()
-                        return
+                    } catch {
+                        print("json error", error)
+                        semaphore.signal()
                     }
-                    print("dataString", dataString)
-                    let decoder = JSONDecoder()
-                    decoder.keyDecodingStrategy = .convertFromSnakeCase
-                    let value = try decoder.decode(Question.self, from: data)
-                    nextQuestionIdentifier = value.quesId
-                    print("next question API", value)
-                    semaphore.signal()
-                } catch {
-                    print("json error", error)
+                    
+                case .failure(let apiError):
+                    print("findNextQuestion",apiError)
                     semaphore.signal()
                 }
-
-            case .failure(let apiError):
-                print("findNextQuestion",apiError)
-                semaphore.signal()
-            }
-        })
-    }) { (error) in
-        print("credentials error", error)
-        semaphore.signal()
+            })
+        }) { (error) in
+            print("credentials error", error)
+            semaphore.signal()
+        }
+    } catch {
+        return nil
     }
-
-//    _ = semaphore.wait(timeout: .now() + 0.240)
+    
+    
+    
+    //    _ = semaphore.wait(timeout: .now() + 0.240)
     _ = semaphore.wait(timeout: .distantFuture)
     print("exit", Date().description)
     return nextQuestionIdentifier
@@ -249,7 +266,7 @@ func saveSurveyAnswers(surveyId: String? ,answers: [SubmitAnswerPayload],
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
             print(String(data:data, encoding: .utf8)!)
-
+            
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)
             _ = Amplify.API.post(request: request, listener: { (result) in
@@ -268,7 +285,7 @@ func saveSurveyAnswers(surveyId: String? ,answers: [SubmitAnswerPayload],
     func onFailureCredentials(_ error: Error?) {
         print(error)
     }
-
+    
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
@@ -278,7 +295,7 @@ func submitSurvey(surveyId: String?, completion:@escaping () -> Void,
         case surveyIdIsEmpty
     }
     guard let surveyId = surveyId else { return onFailure(SubmitSurveyError.surveyIdIsEmpty) }
-
+    
     func onGettingCredentials(_ credentials: Credentials) {
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/submit", headers: headers,

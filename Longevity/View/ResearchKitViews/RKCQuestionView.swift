@@ -113,7 +113,7 @@ class RKCQuestionView: UICollectionViewCell {
 
     func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
 
-        headerLabel.text = header
+        headerLabel.text = SurveyTaskUtility.shared.getCurrentSurveyName()
 
         subHeaderLabel.text = subHeader
 

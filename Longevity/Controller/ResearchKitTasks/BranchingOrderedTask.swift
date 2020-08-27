@@ -34,8 +34,11 @@ class BranchingOrderedTask: ORKOrderedTask {
         guard isDynamicQuestion else {
             return super.step(after: step, with: result)
         }
-        guard let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) else {return nextStep}
-        if let nextStepIdentifier = findNextQuestion(questionId: identifier,
+        guard
+            let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier),
+            let moduleId = step?.title
+            else {return nextStep}
+        if let nextStepIdentifier = findNextQuestion(moduleId: Int(moduleId), questionId: identifier,
                                                      answerValue: answer) {
             if let nextDynamicStep =  self.steps.first { $0.identifier == nextStepIdentifier} {
                 nextStep = nextDynamicStep
