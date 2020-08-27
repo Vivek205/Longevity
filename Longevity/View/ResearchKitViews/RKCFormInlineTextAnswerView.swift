@@ -22,12 +22,22 @@ class RKCFormInlineTextAnswerView: UICollectionViewCell {
     var delegate: RKCFormInlineTextAnswerViewDelegate?
     var itemIdentifier: String?
 
+    lazy var keyboardToolbar:UIToolbar = {
+           let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
+           let doneBarButton = UIBarButtonItem(title: "done", style: .plain, target: self,
+                                               action: #selector(handleKeyboardDoneBarButtonTapped(_:)))
+           toolbar.items = [doneBarButton]
+           toolbar.sizeToFit()
+           return toolbar
+       }()
+
     lazy var textView: UITextView = {
         let textView = UITextView()
         textView.delegate = self
         var idenitifier: String?
         textView.layer.cornerRadius = 6.93
         textView.translatesAutoresizingMaskIntoConstraints = false
+        textView.inputAccessoryView = self.keyboardToolbar
         return textView
     }()
 
@@ -71,6 +81,10 @@ class RKCFormInlineTextAnswerView: UICollectionViewCell {
             textView.heightAnchor.constraint(equalToConstant: 32),
             textView.widthAnchor.constraint(equalToConstant: 113)
         ])
+    }
+
+    @objc func handleKeyboardDoneBarButtonTapped(_ sender: Any) {
+        self.textView.resignFirstResponder()
     }
 }
 

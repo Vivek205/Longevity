@@ -105,6 +105,9 @@
 		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
 		E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */; };
+		E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */; };
+		E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */; };
+		E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */; };
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2524D7CE3A001F093F /* SurveyCardView.swift */; };
 		E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2A24D7D7AF001F093F /* CardView.swift */; };
@@ -281,6 +284,9 @@
 		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
 		E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnswerVC.swift; sourceTree = "<group>"; };
+		E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogViewController.swift; sourceTree = "<group>"; };
+		E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogHeader.swift; sourceTree = "<group>"; };
+		E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogCell.swift; sourceTree = "<group>"; };
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E288BB2524D7CE3A001F093F /* SurveyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCardView.swift; sourceTree = "<group>"; };
 		E288BB2A24D7D7AF001F093F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -378,6 +384,7 @@
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
 				C19875B424DC784B00477185 /* Tabs */,
 				C19875AF24DC6B6B00477185 /* LNTabBarViewController.swift */,
+				E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -557,6 +564,15 @@
 			path = ResearchKitViews;
 			sourceTree = "<group>";
 		};
+		E27E295124F7A0FB00244CF7 /* CheckinLog */ = {
+			isa = PBXGroup;
+			children = (
+				E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */,
+				E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */,
+			);
+			path = CheckinLog;
+			sourceTree = "<group>";
+		};
 		E28653C324A3958F00403729 /* Login */ = {
 			isa = PBXGroup;
 			children = (
@@ -684,6 +700,7 @@
 		E2ECB8D2247FE3760020A27E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				E27E295124F7A0FB00244CF7 /* CheckinLog */,
 				C1C821FF24EB49CC0074AF11 /* Profile */,
 				C19875CE24DD628000477185 /* Dashboard */,
 				E288BB2A24D7D7AF001F093F /* CardView.swift */,
@@ -945,10 +962,12 @@
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
 				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
+				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
@@ -965,6 +984,7 @@
 				C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */,
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
+				E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,

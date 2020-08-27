@@ -133,7 +133,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
 
         if indexPath.item == 0 {
-            print(formStep.text)
+
             let questionSubheader = SurveyTaskUtility.shared.surveyTagline
             let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
                 as! RKCQuestionView
@@ -153,9 +153,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
             return sectionItemCell
         }
-        print("item.text", item.text)
-        print("formStep.formItems?.count", formStep.formItems?.count)
-        print("indexPath.item", indexPath.item)
 
         if formStep.formItems?.count == indexPath.item && item.answerFormat?.questionType == .text {
             let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
@@ -248,11 +245,11 @@ extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerView
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
-        if text == "\n" {
-            animateTextView(showKeyboard: false)
-            textView.resignFirstResponder()
-            return false
-        }
+//        if text == "\n" {
+//            animateTextView(showKeyboard: false)
+//            textView.resignFirstResponder()
+//            return false
+//        }
         return true
     }
 
