@@ -117,9 +117,7 @@ func updateProfile(){
     }
     let credentials = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 
-
 }
-
 
 func getCurrentUser() {
     func onSuccess(userSignedIn: Bool) {
@@ -152,6 +150,24 @@ struct Credentials {
 
 func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
                     onFailure: @escaping (_ error: Error)-> Void) {
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+//    if let idTokenExpData = KeyChain.load(name: KeychainKeys.idTokenExp) {
+//        if let idTokenExp = String(data: idTokenExpData, encoding: .utf8) {
+//                   if let expDate = dateFormatter.date(from: idTokenExp) {
+//                    let currentDate = Date()
+//                    if currentDate < expDate {
+//                        if let idTokenData = KeyChain.load(name: KeychainKeys.idToken) {
+//                            if let idToken = String(data: idTokenData, encoding: .utf8) {
+//                                return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
+//                            }
+//                        }
+//                    }
+//                   }
+//        }
+//
+//    }
+
     var usersub = "", identityId = "", accessKey = "", idToken = ""
     var credentials = Credentials()
     _ = Amplify.Auth.fetchAuthSession { result in
@@ -165,7 +181,9 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
 
             // Get aws credentials
             if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
+
                 let awsCredentials = try awsCredentialsProvider.getAWSCredentials().get()
+//                print("expiry", awsCredentials.expiration)
                 credentials.accessKey = awsCredentials.accessKey
             }
 
@@ -173,6 +191,19 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
             if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
                 let tokens = try cognitoTokenProvider.getCognitoTokens().get()
                 credentials.idToken = tokens.idToken
+
+                // FIXME: Temp solution
+                let secondsOffset50Mins = Double(50 * 60)
+                let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
+                let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
+
+                guard let idTokenData = tokens.idToken.data(using: .utf8),
+                let idTokenExpData = dateString50MinFuture.data(using: .utf8) else {
+                    return completion(credentials)
+                }
+
+                KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
+                KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
                 print(tokens.idToken)
             }
 

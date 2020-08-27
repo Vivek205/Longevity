@@ -24,6 +24,7 @@ struct SurveyListItem: Decodable {
     let lastSubmission: String?
     let lastSubmissionId: String?
     let response: [SurveyLastResponseData]?
+    let isRepetitive: Bool?
 }
 
 func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
@@ -62,6 +63,11 @@ func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
+enum QuestionAction:String, Codable {
+    case staticQuestion = "STATIC"
+    case dynamic = "DYNAMIC"
+}
+
 struct Question:Decodable {
     let categoryId: Int
     let moduleId: Int
@@ -69,10 +75,11 @@ struct Question:Decodable {
     let text: String
     let quesType: String
     let options: [QuestionOption]
-    let isDynamic: Bool? // FIXME: Make it non optional
+    //    let isDynamic: Bool? // FIXME: Make it non optional
     let nextQuestion: String?
     let validation: QuestionResponseValidation?
     let otherAttribute: OtherAttribute?
+    let action: QuestionAction
 }
 
 struct QuestionResponseValidation:Decodable {
@@ -163,30 +170,76 @@ func getSurveyDetails(surveyId: String,
     func onFailureCredentials(_ error: Error?) {
         print(error)
     }
-
     getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
 }
 
-func findNextQuestion(questionId: String, answerValue: Int) -> String {
-    let request = RESTRequest(apiName: "mockQuestionsAPI", path: "/question/123/nextQuestion", headers: nil,
-                              queryParameters: nil, body: nil)
-    var nextQuestionIdentifier: String = ""
-    _ = Amplify.API.post(request: request, listener: { (result) in
-        switch result {
-        case .success(let data):
-            do {
-                let decoder = JSONDecoder()
-                decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let value = try decoder.decode(Question.self, from: data)
-                nextQuestionIdentifier = value.quesId
-            } catch {
-                print("json error", error)
-            }
+struct FindNextQuestionPayload: Codable {
+    let moduleId: Int
+    let quesId: String
+    let answer: String
+}
 
-        case .failure(let apiError):
-            print("findNextQuestion",apiError)
+struct NextQuestion: Decodable {
+    let quesId: String
+}
+
+func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -> String? {
+    print("entry", Date().description)
+    guard let currentSurveyId = SurveyTaskUtility.shared.currentSurveyId,
+        let moduleId = moduleId else {return nil}
+    var nextQuestionIdentifier: String?
+    let payload = FindNextQuestionPayload(moduleId: moduleId, quesId: questionId, answer: answerValue)
+    let encoder = JSONEncoder()
+    encoder.keyEncodingStrategy = .convertToSnakeCase
+     let semaphore = DispatchSemaphore(value: 0)
+    do {
+        let data = try encoder.encode(payload)
+
+        getCredentials(completion: { (credentials) in
+            let path =  "/survey/\(currentSurveyId)/question/next"
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let request = RESTRequest(apiName: "surveyAPI", path:path, headers: headers,
+                                      queryParameters: nil, body: data)
+
+            _ = Amplify.API.post(request: request, listener: { (result) in
+                switch result {
+                case .success(let data):
+                    do {
+                        let dataString = String(data:data, encoding: .utf8)
+                        if dataString == "null" {
+                            semaphore.signal()
+                            return
+                        }
+                        print("dataString", dataString)
+                        let decoder = JSONDecoder()
+                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let value = try decoder.decode(NextQuestion.self, from: data)
+                        nextQuestionIdentifier = value.quesId
+                        print("next question API", value)
+                        semaphore.signal()
+                    } catch {
+                        print("json error", error)
+                        semaphore.signal()
+                    }
+
+                case .failure(let apiError):
+                    print("findNextQuestion",apiError)
+                    semaphore.signal()
+                }
+            })
+        }) { (error) in
+            print("credentials error", error)
+            semaphore.signal()
         }
-    })
+    } catch {
+        return nil
+    }
+
+
+
+    //    _ = semaphore.wait(timeout: .now() + 0.240)
+    _ = semaphore.wait(timeout: .distantFuture)
+    print("exit", Date().description)
     return nextQuestionIdentifier
 }
 

@@ -285,7 +285,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     guard let biometricsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfileBioDataVC") as? SetupProfileBioDataVC else { return }
                     biometricsViewController.isFromSettings = true
                     let navigationController = UINavigationController(rootViewController: biometricsViewController)
-                    NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 case .updatepreconditions:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let preconditionsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC") as? SetupProfilePreConditionVC else { return }

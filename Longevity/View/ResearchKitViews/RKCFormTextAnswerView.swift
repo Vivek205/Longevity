@@ -31,15 +31,15 @@ class RKCFormTextAnswerView: UICollectionViewCell {
     }()
 
     lazy var keyboardToolbar:UIToolbar = {
-        let toolbar = UIToolbar()
+        let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
         let doneBarButton = UIBarButtonItem(title: "done", style: .plain, target: self,
                                             action: #selector(handleKeyboardDoneBarButtonTapped(_:)))
         toolbar.items = [doneBarButton]
+        toolbar.sizeToFit()
         return toolbar
     }()
     
     lazy var answerTextView: UITextView = {
-
         let textView = UITextView()
         textView.delegate = self
         var idenitifier: String?

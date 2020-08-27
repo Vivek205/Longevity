@@ -36,7 +36,7 @@ class UserInsightsAPI: BaseAuthAPI {
                         completion(value)
                     }
                     catch {
-                        print("JSON error", error)
+                        print("JSON erro    r", error)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)

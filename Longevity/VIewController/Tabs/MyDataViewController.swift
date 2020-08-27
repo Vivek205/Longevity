@@ -81,8 +81,12 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.cellForItem(at: indexPath) as? MyDataCell else {
             return
         }
-        isCellExpanded[indexPath.item] = !(isCellExpanded[indexPath.item] ?? false)
-        collectionView.reloadItems(at: [indexPath])
+        let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+        NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+
+        //       TODO: Uncomment Expand Cells on selection
+        //        isCellExpanded[indexPath.item] = !(isCellExpanded[indexPath.item] ?? false)
+        //        collectionView.reloadItems(at: [indexPath])
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
@@ -93,7 +97,7 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
 
         if isCellExpanded[indexPath.item] == true {
-                height = 100
+            height = 100
         }
 
         return CGSize(width: width, height: height)
