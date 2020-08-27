@@ -8,8 +8,7 @@
 
 import UIKit
 
-class MyDataCell: UICollectionViewCell {
-    var isExpanded: Bool = false
+class MyDataInsightCell: UICollectionViewCell {
     
     var insightData: UserInsight! {
         didSet {
@@ -21,6 +20,12 @@ class MyDataCell: UICollectionViewCell {
                 self.trendDirection.textColor = details.sentiment?.tintColor
                 self.trendImage.image = details.trend?.trendIcon
                 self.trendImage.isHidden = details.trend == .same
+                
+                if insightData?.isExpanded ?? false {
+                    
+                } else {
+                    
+                }
             }
         }
     }
@@ -98,28 +103,28 @@ class MyDataCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             self.expandCollapseImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
             self.expandCollapseImage.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-            self.expandCollapseImage.widthAnchor.constraint(equalToConstant: 24.0),
+            self.expandCollapseImage.widthAnchor.constraint(equalToConstant: 20.0),
             self.expandCollapseImage.heightAnchor.constraint(equalTo: self.expandCollapseImage.widthAnchor),
 
             self.tileTitle.leadingAnchor.constraint(equalTo: self.expandCollapseImage.trailingAnchor, constant: 10.0),
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
-            self.tileTitle.widthAnchor.constraint(lessThanOrEqualToConstant: 110.0),
-            self.tileTitle.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),
+            self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
 
-            self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor, constant: 10.0),
-            self.guageView.centerYAnchor.constraint(equalTo: self.centerYAnchor),
-            self.guageView.widthAnchor.constraint(equalToConstant: 50.0),
+            self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor),
+            self.guageView.centerYAnchor.constraint(equalTo: self.tileTitle.centerYAnchor),
+            self.guageView.widthAnchor.constraint(equalToConstant: 48.0),
             self.guageView.heightAnchor.constraint(equalTo: self.guageView.widthAnchor),
+            
             self.riskType.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor),
             self.riskType.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
-            self.riskType.bottomAnchor.constraint( equalTo: self.bottomAnchor, constant: -10.0),
+            self.riskType.widthAnchor.constraint(equalToConstant: 80.0),
+            
             self.trendImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
             self.trendImage.heightAnchor.constraint(equalToConstant: 30.0),
             self.trendImage.widthAnchor.constraint(equalTo: self.trendImage.heightAnchor),
             self.trendDirection.topAnchor.constraint(equalTo: self.trendImage.bottomAnchor),
             self.trendDirection.leadingAnchor.constraint(equalTo: self.riskType.trailingAnchor, constant: 10.0),
             self.trendDirection.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
-            self.trendDirection.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),
             self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor)
         ])
     }
