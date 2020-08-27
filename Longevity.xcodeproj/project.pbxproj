@@ -7,13 +7,13 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
 		C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */; };
 		C12F09B924F6F97B00623CC3 /* BasePopUpModalViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */; };
 		C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */; };
 		C12F09BD24F71CA500623CC3 /* AppLaunchManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */; };
-		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -104,6 +104,7 @@
 		E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09324C9982500969CD8 /* RKCQuestionView.swift */; };
 		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
+		E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */; };
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2524D7CE3A001F093F /* SurveyCardView.swift */; };
 		E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2A24D7D7AF001F093F /* CardView.swift */; };
@@ -180,14 +181,14 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCheckInDataViewController.swift; sourceTree = "<group>"; };
-		C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopUpModalViewController.swift; sourceTree = "<group>"; };
-		C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
-		C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		718E061F905C01115E0C6E2E /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
+		C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCheckInDataViewController.swift; sourceTree = "<group>"; };
+		C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopUpModalViewController.swift; sourceTree = "<group>"; };
+		C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = EditAccountViewController.swift; sourceTree = "<group>"; };
+		C12F09BC24F71CA500623CC3 /* AppLaunchManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppLaunchManager.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -279,6 +280,7 @@ C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBX
 		E274F09324C9982500969CD8 /* RKCQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCQuestionView.swift; sourceTree = "<group>"; };
 		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
+		E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnswerVC.swift; sourceTree = "<group>"; };
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E288BB2524D7CE3A001F093F /* SurveyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCardView.swift; sourceTree = "<group>"; };
 		E288BB2A24D7D7AF001F093F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -531,6 +533,7 @@ C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBX
 			isa = PBXGroup;
 			children = (
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
+				E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
 				E20256DD24E29DA000896F2C /* FormStepVC.swift */,
 				E24826E424E5326D0083EFAC /* CompletionStepVC.swift */,
@@ -1013,6 +1016,7 @@ C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBX
 				C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */,
 				C19875C724DC9E3000477185 /* CurvedView.swift in Sources */,
 				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
+				E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,

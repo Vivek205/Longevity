@@ -11,7 +11,7 @@ import ResearchKit
 
 class HomeViewController: BaseViewController {
     var surveyId: String?
-//    var surveyList: [SurveyListItem]?
+    //    var surveyList: [SurveyListItem]?
     var currentTask: ORKOrderedTask?
     
     lazy var tableView: UITableView = {
@@ -65,7 +65,7 @@ class HomeViewController: BaseViewController {
                 self.removeSpinner()
             }
         }
-         getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 }
 
@@ -103,10 +103,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return devicesCell
         } else {
-//            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
-//                preconditionFailure("Invalid task cell")
-//            }
-//            return cell
+            //            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
+            //                preconditionFailure("Invalid task cell")
+            //            }
+            //            return cell
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
@@ -155,7 +155,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         
         header.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(header)
-         
+
         NSLayoutConstraint.activate([
             header.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             header.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
@@ -170,14 +170,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         tableView.deselectRow(at: indexPath, animated: true)
         let selectedCell = tableView.cellForRow(at: indexPath)
         if let dashboardCheckInCell = selectedCell as? DashboardCheckInCell {
-             self.showSurvey(dashboardCheckInCell)
+            self.showSurvey(dashboardCheckInCell)
         }
     }
 }
 
 extension HomeViewController {
     func showSurvey(_ selectedSurveyCell: DashboardCheckInCell) {
-         self.showSpinner()
+        self.showSpinner()
 
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
             DispatchQueue.main.async {
@@ -202,7 +202,7 @@ extension HomeViewController {
             }
         }
         SurveyTaskUtility.shared.createSurvey(surveyId: selectedSurveyCell.surveyId, completion: onCreateSurveyCompletion(_:),
-                     onFailure: onCreateSurveyFailure(_:))
+                                              onFailure: onCreateSurveyFailure(_:))
     }
 }
 
@@ -254,11 +254,17 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
             guard let questionStep = step as? ORKQuestionStep else {return nil}
             if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
                 let stepVC = TextChoiceAnswerVC()
-                               stepVC.step = step
-                               return stepVC
+                stepVC.step = step
+                return stepVC
             }
             if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
                 let stepVC = ContinuousScaleAnswerVC()
+                stepVC.step = step
+                return stepVC
+            }
+
+            if questionStep.answerFormat is ORKTextAnswerFormat {
+                let stepVC = TextAnswerVC()
                 stepVC.step = step
                 return stepVC
             }

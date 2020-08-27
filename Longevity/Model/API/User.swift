@@ -152,21 +152,21 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
                     onFailure: @escaping (_ error: Error)-> Void) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-    if let idTokenExpData = KeyChain.load(name: KeychainKeys.idTokenExp) {
-        if let idTokenExp = String(data: idTokenExpData, encoding: .utf8) {
-                   if let expDate = dateFormatter.date(from: idTokenExp) {
-                    let currentDate = Date()
-                    if currentDate < expDate {
-                        if let idTokenData = KeyChain.load(name: KeychainKeys.idToken) {
-                            if let idToken = String(data: idTokenData, encoding: .utf8) {
-                                return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
-                            }
-                        }
-                    }
-                   }
-        }
-
-    }
+//    if let idTokenExpData = KeyChain.load(name: KeychainKeys.idTokenExp) {
+//        if let idTokenExp = String(data: idTokenExpData, encoding: .utf8) {
+//                   if let expDate = dateFormatter.date(from: idTokenExp) {
+//                    let currentDate = Date()
+//                    if currentDate < expDate {
+//                        if let idTokenData = KeyChain.load(name: KeychainKeys.idToken) {
+//                            if let idToken = String(data: idTokenData, encoding: .utf8) {
+//                                return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
+//                            }
+//                        }
+//                    }
+//                   }
+//        }
+//
+//    }
 
     var usersub = "", identityId = "", accessKey = "", idToken = ""
     var credentials = Credentials()

@@ -119,6 +119,13 @@ final class SurveyTaskUtility {
                                             continue
                                         }
 
+                                        if filteredQuestion.quesType == "TEXT" {
+                                            let answerFormat = ORKAnswerFormat.textAnswerFormat()
+                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
+                                            steps += [questionStep]
+                                            continue
+                                        }
+
                                         let step = createSingleChoiceQuestionStep(
                                             identifier: filteredQuestion.quesId,
                                             title: "\(moduleValue.id)",
