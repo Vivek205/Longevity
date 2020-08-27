@@ -19,6 +19,7 @@
 		C12F09CB24F837DD00623CC3 /* AppleHealthTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CA24F837DD00623CC3 /* AppleHealthTopCell.swift */; };
 		C12F09CD24F8380100623CC3 /* AppleHealthStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CC24F8380100623CC3 /* AppleHealthStatusCell.swift */; };
 		C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */; };
+		C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -202,6 +203,7 @@
 		C12F09CA24F837DD00623CC3 /* AppleHealthTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthTopCell.swift; sourceTree = "<group>"; };
 		C12F09CC24F8380100623CC3 /* AppleHealthStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthStatusCell.swift; sourceTree = "<group>"; };
 		C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataLogCell.swift; sourceTree = "<group>"; };
+		C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightDetailView.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -460,6 +462,7 @@
 				C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */,
 				C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */,
 				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
+				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1039,6 +1042,7 @@
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
+				C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
 				C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,

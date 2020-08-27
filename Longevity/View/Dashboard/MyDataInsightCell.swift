@@ -20,11 +20,13 @@ class MyDataInsightCell: UICollectionViewCell {
                 self.trendDirection.textColor = details.sentiment?.tintColor
                 self.trendImage.image = details.trend?.trendIcon
                 self.trendImage.isHidden = details.trend == .same
+                self.detailsView.isHidden = !(insightData?.isExpanded ?? false)
+                self.detailsView.insightData = insightData
                 
                 if insightData?.isExpanded ?? false {
-                    
+                    expandCollapseImage.image = UIImage(named: "rightArrow")?.rotate(radians: .pi / 2)
                 } else {
-                    
+                    expandCollapseImage.image = UIImage(named: "rightArrow")
                 }
             }
         }
@@ -88,6 +90,12 @@ class MyDataInsightCell: UICollectionViewCell {
         return trend
     }()
     
+    lazy var detailsView: MyDataInsightDetailView = {
+        let detailsview = MyDataInsightDetailView()
+        detailsview.translatesAutoresizingMaskIntoConstraints = false
+        return detailsview
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -99,6 +107,7 @@ class MyDataInsightCell: UICollectionViewCell {
         self.addSubview(riskType)
         self.addSubview(trendImage)
         self.addSubview(trendDirection)
+        self.addSubview(detailsView)
         
         NSLayoutConstraint.activate([
             self.expandCollapseImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
@@ -125,7 +134,12 @@ class MyDataInsightCell: UICollectionViewCell {
             self.trendDirection.topAnchor.constraint(equalTo: self.trendImage.bottomAnchor),
             self.trendDirection.leadingAnchor.constraint(equalTo: self.riskType.trailingAnchor, constant: 10.0),
             self.trendDirection.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
-            self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor)
+            self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor),
+            
+            self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 80.0),
+            self.detailsView.leadingAnchor.constraint(equalTo: self.tileTitle.leadingAnchor),
+            self.detailsView.trailingAnchor.constraint(equalTo: self.trendDirection.trailingAnchor),
+            self.detailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0)
         ])
     }
     

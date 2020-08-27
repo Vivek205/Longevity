@@ -107,7 +107,7 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
         
         if insightData.name != .logs && (insightData.isExpanded ?? false) {
-            height = 180.0
+            height = 430.0
         }
         
         return CGSize(width: width, height: height)
