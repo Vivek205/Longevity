@@ -295,7 +295,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 case .resetcheckin:
                     let resetCheckinViewController = ResetCheckInDataViewController()
                     NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
-                case .applehealth: return
+                case .applehealth:
+                    let appleHealthViewController = AppleHealthConnectionViewController()
+                    let navigationController = UINavigationController(rootViewController: appleHealthViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 case .fitbit: return
                 case .addhealthdevice: return
                 case .notifications: return
