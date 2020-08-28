@@ -105,5 +105,7 @@ class BasePopUpModalViewController: UIViewController {
         self.containerView.layer.cornerRadius = 10.0
         self.containerView.layer.masksToBounds = true
     }
+
+    
 }
 
