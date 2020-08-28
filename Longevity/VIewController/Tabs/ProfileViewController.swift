@@ -194,6 +194,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 guard let settingsCell = tableView.getCell(with: ProfileSettingsCell.self, at: indexPath) as? ProfileSettingsCell else {
                     preconditionFailure("Invalid activity cell")
                 }
+                settingsCell.delegate = self
                 settingsCell.profileSetting = self.settings[indexPath.section][indexPath.row]
                 return settingsCell
             } else if indexPath.section == (self.settingsSections.count - 2) {
@@ -301,7 +302,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 case .fitbit: return
                 case .addhealthdevice: return
-                case .notifications: return
+                case .notifications:
+                    openSettings()
+                    return
                 case .editaccount:
                     let editAccountViewController = EditAccountViewController()
                     let navigationController = UINavigationController(rootViewController: editAccountViewController)
@@ -309,11 +312,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 case .usemetricsystem: return
                 case .faqs: return
                 case .termsofservice:
-                let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-                guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
-                tosViewController.isFromSettings = true
-                let navigationController = UINavigationController(rootViewController: tosViewController)
-                NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                    let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
+                    tosViewController.isFromSettings = true
+                    let navigationController = UINavigationController(rootViewController: tosViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController )
                     
                 case .contactsupport: return
                 default: return
@@ -326,5 +329,46 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
 extension ProfileViewController: UserProfileHeaderDelegate {
     func selected(profileView: ProfileView) {
         self.currentProfileView = profileView
+    }
+
+    func openSettings() {
+        if let appSettings = NSURL(string: UIApplication.openSettingsURLString) {
+            UIApplication.shared.open(appSettings as URL, options: [:], completionHandler: nil)
+        }
+    }
+}
+
+
+extension ProfileViewController: ProfileSettingsCellDelegate {
+    func switchToggled(onCell cell: ProfileSettingsCell) {
+        print("switch toggled on cell", cell)
+        if cell.profileSetting == .notifications {
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                if settings.authorizationStatus == .authorized {
+                    DispatchQueue.main.async {
+                        self.openSettings()
+                    }
+                    return
+                }
+                self.registerForPushNotifications()
+            }
+        }
+    }
+
+    func registerForPushNotifications() {
+        UNUserNotificationCenter.current() // 1
+            .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
+                [weak self] granted, error in
+                print("Permission granted: \(granted)")
+                guard granted else {
+                    DispatchQueue.main.async {
+                        self?.openSettings()
+                    }
+                    return
+                }
+                DispatchQueue.main.async {
+                    UIApplication.shared.registerForRemoteNotifications()
+                }
+        }
     }
 }

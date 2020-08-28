@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol ProfileSettingsCellDelegate {
+    func switchToggled(onCell cell:ProfileSettingsCell)
+}
+
 class ProfileSettingsCell: UITableViewCell {
+
+    var delegate:ProfileSettingsCellDelegate?
     
     var isDeviceConnected: Bool {
         let defaults = UserDefaults.standard
@@ -31,6 +37,9 @@ class ProfileSettingsCell: UITableViewCell {
                 self.settingsActionImage.isHidden = false
                 self.settingsActionImage.image = UIImage(named: "icon: arrow")
             } else if profileSetting.settingAccessory == .switchcontrol {
+                if profileSetting == .notifications {
+                    notificationSettingSwitchPreselect()
+                }
                 self.settingsSwitch.isHidden = false
             }
             
@@ -90,6 +99,7 @@ class ProfileSettingsCell: UITableViewCell {
         let settingsswitch = UISwitch()
         settingsswitch.onTintColor = .themeColor
         settingsswitch.translatesAutoresizingMaskIntoConstraints = false
+        settingsswitch.addTarget(self, action: #selector(handleSwitchToggle(_:)), for: .valueChanged)
         return settingsswitch
     }()
     
@@ -137,5 +147,19 @@ class ProfileSettingsCell: UITableViewCell {
         self.settingBGView.layer.shadowOpacity = 0.25
         self.settingBGView.layer.masksToBounds = false
         self.settingBGView.layer.shadowPath = UIBezierPath(roundedRect: self.settingBGView.bounds, cornerRadius: self.settingBGView.layer.cornerRadius).cgPath
+    }
+
+    @objc func handleSwitchToggle(_ sender: UISwitch){
+        delegate?.switchToggled(onCell: self)
+    }
+
+    func notificationSettingSwitchPreselect(){
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus == .authorized {
+                DispatchQueue.main.async {
+                    self.settingsSwitch.isOn = true
+                }
+            }
+        }
     }
 }
