@@ -146,7 +146,10 @@ class EditAccountViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
+        let rightButton = UIBarButtonItem(title:"Done", style: .plain, target: self, action: #selector(doneUpdate))
+        rightButton.tintColor = .themeColor
         self.navigationItem.leftBarButtonItem = leftbutton
+        self.navigationItem.rightBarButtonItem = rightButton
         
         self.fullName.delegate = self
         self.mobilePhone.delegate = self
@@ -160,6 +163,10 @@ class EditAccountViewController: UIViewController {
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
+
+    @objc func doneUpdate() {
+           self.dismiss(animated: true, completion: nil)
+       }
 }
 
 extension EditAccountViewController: UITextFieldDelegate {

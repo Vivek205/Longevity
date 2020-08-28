@@ -117,7 +117,7 @@ struct UserInsightDetails: Codable {
     let trend: TrendDirection?
     var sentiment: Sentiment?
     let confidence: String?
-    let history: [Exposure]?
+//    let history: [Exposure]?
 }
 
 struct Exposure: Codable {

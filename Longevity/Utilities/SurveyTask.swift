@@ -278,7 +278,7 @@ final class SurveyTaskUtility {
         list.forEach { (survey) in
             if survey.isRepetitive == true {
                 self.repetitiveSurveyList.append(survey)
-            } else {
+            } else if survey.lastSubmission == nil{
                 self.oneTimeSurveyList.append(survey)
             }
         }
