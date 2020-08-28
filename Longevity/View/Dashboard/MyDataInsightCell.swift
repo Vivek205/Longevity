@@ -16,10 +16,11 @@ class MyDataInsightCell: UICollectionViewCell {
                 self.tileTitle.text = insightData?.text
                 self.riskType.text = details.riskLevel?.text
                 self.guageView.image = details.riskLevel?.riskIcon
-                self.trendDirection.text = details.trend?.text
+                self.trendDirection.text = details.trending?.text
                 self.trendDirection.textColor = details.sentiment?.tintColor
-                self.trendImage.image = details.trend?.trendIcon
-                self.trendImage.isHidden = details.trend == .same
+                self.trendImage.image = details.trending?.trendIcon
+                self.trendImage.tintColor = details.sentiment?.tintColor
+                self.trendImage.isHidden = details.trending == .same
                 self.detailsView.isHidden = !(insightData?.isExpanded ?? false)
                 self.detailsView.insightData = insightData
                 
@@ -73,7 +74,6 @@ class MyDataInsightCell: UICollectionViewCell {
     lazy var trendImage: UIImageView = {
         let trendimage = UIImageView()
         trendimage.image = UIImage(named: "trending_up")
-        trendimage.tintColor = .red
         trendimage.contentMode = .scaleAspectFit
         trendimage.translatesAutoresizingMaskIntoConstraints = false
         return trendimage

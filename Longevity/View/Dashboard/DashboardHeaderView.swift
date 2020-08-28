@@ -110,6 +110,9 @@ class DashboardHeaderView: UIView {
 
 extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if userInsights == nil || (userInsights?.isEmpty ?? false) {
+            return 0
+        }
         return (userInsights?.count ?? 0) + 1
     }
     

@@ -88,9 +88,9 @@ extension Sentiment {
     var tintColor: UIColor {
         switch self {
             case .positive:
-                return UIColor(hexString: "#E67381")
+                return UIColor(hexString: "#59BB6E")
             case .negative:
-                return UIColor(hexString: "#9B9B9B")
+                return UIColor(hexString: "#E67381")
         }
     }
 }
@@ -104,55 +104,87 @@ enum CardType: String, Codable {
 
 struct UserInsight: Codable {
     let name: CardType
-    let text: String
+    let text, userInsightDescription: String
     let defaultOrder: Int
-    let description: String
-    let details: UserInsightDetails?
+    let details: Details
     var isExpanded: Bool?
+    
+    enum CodingKeys: String, CodingKey {
+        case text, name
+        case userInsightDescription = "description"
+        case defaultOrder = "default_order"
+        case details
+    }
 }
 
-struct UserInsightDetails: Codable {
-//    let name: String
+// MARK: - Details
+struct Details: Codable {
+    let lastLogged: String?
+    let history: [History]?
     let riskLevel: RiskLevel?
-    let trend: TrendDirection?
-    var sentiment: Sentiment?
-    let confidence: String?
-//    let history: [Exposure]?
+    let trending: TrendDirection?
+    let sentiment: Sentiment?
+    let confidence: Confidence?
+    let histogram: Histogram?
+    let submissions: [Submission]?
+
+    enum CodingKeys: String, CodingKey {
+        case lastLogged = "last_logged"
+        case history
+        case riskLevel = "risk_level"
+        case trending, sentiment, confidence, histogram, submissions
+    }
 }
 
-struct Exposure: Codable {
-    let recordDate: String
-    let covidRisk: CovidRisk
+// MARK: - Confidence
+struct Confidence: Codable {
+    let value, confidenceDescription: String
+
+    enum CodingKeys: String, CodingKey {
+        case value
+        case confidenceDescription = "description"
+    }
 }
 
-struct CovidRisk: Codable {
-    let noCovidRisk: Double
-    let mediumCovidRisk: Double
-    let lowCovidRisk: Double
-    let highCovidRisk: Double
+// MARK: - Histogram
+struct Histogram: Codable {
+    let histogramDescription: String
+
+    enum CodingKeys: String, CodingKey {
+        case histogramDescription = "description"
+    }
 }
 
-let insights = """
-{
-  "card_name": "COVID-19 Exposure",
-  "card_type": "COVID",
-  "description": "",
-  "details": {
-    "name": "covid_risk",
-    "risk_level": "HIGH/LOW/MEDIUM",
-    "trend": "UP/DOWN/SAME",
-    "confidence": "",
-    "exposure_history": [
-      {
-        "record_date": "12-07-2020",
-        "covid_risk": {
-          "no_covid_risk": 0.0028869937004576017,
-          "medium_covid_risk": 0.2227494552917446,
-          "low_covid_risk": 0.7687638067446652,
-          "high_covid_risk": 0.0055997442631326895
-        }
-      }
-    ]
-  }
+// MARK: - History
+struct History: Codable {
+    let recordDate, submissionID: String
+    let symptoms: [String]
+    let insights, goals: [Goal]
+
+    enum CodingKeys: String, CodingKey {
+        case recordDate = "record_date"
+        case submissionID = "submission_id"
+        case symptoms, insights, goals
+    }
 }
-"""
+
+// MARK: - Goal
+struct Goal: Codable {
+    let text, goalDescription: String
+
+    enum CodingKeys: String, CodingKey {
+        case text
+        case goalDescription = "description"
+    }
+}
+
+// MARK: - Submission
+struct Submission: Codable {
+    let recordDate, submissionID, value: String
+
+    enum CodingKeys: String, CodingKey {
+        case recordDate = "record_date"
+        case submissionID = "submission_id"
+        case value
+    }
+}
