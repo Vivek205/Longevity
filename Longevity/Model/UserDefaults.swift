@@ -39,6 +39,7 @@ struct UserDefaultsKeys {
     let height = "height"
     let gender = "gender"
     let birthday = "birthday"
+    let phone = "phone"
     let unit = "unit"
     let isTermsAccepted = "isTermsAccepted"
     let devices = "devices"
@@ -49,7 +50,6 @@ struct UserDefaultsKeys {
     let deviceTokenForSNS = "deviceTokenForSNS"
     let endpointArnForSNS = "endpointArnForSNS"
     let email = "email"
-    let mobile = "mobile"
     let logger = "logger"
 }
 

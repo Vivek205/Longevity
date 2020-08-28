@@ -310,7 +310,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let navigationController = UINavigationController(rootViewController: editAccountViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                 case .usemetricsystem: return
-                case .faqs: return
+                case .faqs:
+                    let faqViewController = FAQViewController()
+                    NavigationUtility.presentOverCurrentContext(destination: faqViewController,
+                                                                style: .overCurrentContext,
+                                                                transitionStyle: .crossDissolve,
+                                                                completion: nil)
+                    return
                 case .termsofservice:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
@@ -342,33 +348,63 @@ extension ProfileViewController: UserProfileHeaderDelegate {
 extension ProfileViewController: ProfileSettingsCellDelegate {
     func switchToggled(onCell cell: ProfileSettingsCell) {
         print("switch toggled on cell", cell)
-        if cell.profileSetting == .notifications {
-            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                if settings.authorizationStatus == .authorized {
-                    DispatchQueue.main.async {
-                        self.openSettings()
-                    }
-                    return
+        switch cell.profileSetting {
+        case .notifications:
+            handleNotificationSwitch()
+            return
+        case .fitbit:
+            handleFitbitSwitch()
+            return
+        default:
+            return
+        }
+
+    }
+
+    func handleFitbitSwitch() {
+        let keys = UserDefaultsKeys()
+        if var devices = UserDefaults.standard.dictionary(forKey: keys.devices) {
+            if var fitbitStatus = devices[ExternalDevices.FITBIT] as? [String:Int] {
+                if fitbitStatus["connected"] == 1 {
+                    fitbitStatus["connected"] = 0
+                }else {
+                    fitbitStatus["connected"] = 1
                 }
-                self.registerForPushNotifications()
+                devices[ExternalDevices.FITBIT] = fitbitStatus
+                UserDefaults.standard.set(devices, forKey: keys.devices)
+                updateHealthProfile()
             }
         }
     }
 
-    func registerForPushNotifications() {
-        UNUserNotificationCenter.current() // 1
-            .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
-                [weak self] granted, error in
-                print("Permission granted: \(granted)")
-                guard granted else {
-                    DispatchQueue.main.async {
-                        self?.openSettings()
+
+
+    func handleNotificationSwitch() {
+        func registerForPushNotifications() {
+            UNUserNotificationCenter.current() // 1
+                .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
+                    [weak self] granted, error in
+                    print("Permission granted: \(granted)")
+                    guard granted else {
+                        DispatchQueue.main.async {
+                            self?.openSettings()
+                        }
+                        return
                     }
-                    return
-                }
+                    DispatchQueue.main.async {
+                        UIApplication.shared.registerForRemoteNotifications()
+                    }
+            }
+        }
+
+        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+            if settings.authorizationStatus == .authorized {
                 DispatchQueue.main.async {
-                    UIApplication.shared.registerForRemoteNotifications()
+                    self.openSettings()
                 }
+                return
+            }
+            registerForPushNotifications()
         }
     }
 }

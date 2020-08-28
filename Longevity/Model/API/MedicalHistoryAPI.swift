@@ -179,6 +179,7 @@ func updateHealthProfile() {
         var bodyData:Data = Data()
         do {
             bodyData = try body.rawData()
+            print(String(data: bodyData, encoding: .utf8))
         } catch  {
             print(error)
         }

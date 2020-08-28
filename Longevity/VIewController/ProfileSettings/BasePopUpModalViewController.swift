@@ -58,6 +58,7 @@ class BasePopUpModalViewController: UIViewController {
         export.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
         export.backgroundColor = .themeColor
         export.translatesAutoresizingMaskIntoConstraints = false
+        export.addTarget(self, action: #selector(primaryButtonPressed(_:)), for: .touchUpInside)
         return export
     }()
     
@@ -106,6 +107,8 @@ class BasePopUpModalViewController: UIViewController {
         self.containerView.layer.masksToBounds = true
     }
 
-    
+    @objc func primaryButtonPressed(_ sender: UIButton) {
+
+    }
 }
 

@@ -39,6 +39,10 @@ class ProfileSettingsCell: UITableViewCell {
             } else if profileSetting.settingAccessory == .switchcontrol {
                 if profileSetting == .notifications {
                     notificationSettingSwitchPreselect()
+                }else if profileSetting == .fitbit {
+                    fitbitSwitchPreselect()
+                } else if profileSetting == .usemetricsystem {
+                    metricSystemPreselect()
                 }
                 self.settingsSwitch.isHidden = false
             }
@@ -153,12 +157,36 @@ class ProfileSettingsCell: UITableViewCell {
         delegate?.switchToggled(onCell: self)
     }
 
-    func notificationSettingSwitchPreselect(){
+    func notificationSettingSwitchPreselect() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             if settings.authorizationStatus == .authorized {
                 DispatchQueue.main.async {
                     self.settingsSwitch.isOn = true
                 }
+            }
+        }
+    }
+
+    func fitbitSwitchPreselect() {
+        let keys = UserDefaultsKeys()
+        if let devices = UserDefaults.standard.dictionary(forKey: keys.devices) {
+            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String:Int] {
+                if fitbitStatus["connected"] == 1 {
+                    self.settingsSwitch.isOn = true
+                }else {
+                    self.settingsSwitch.isOn = false
+                }
+            }
+        }
+    }
+
+    func metricSystemPreselect() {
+        let keys = UserDefaultsKeys()
+        if let metric = UserDefaults.standard.string(forKey: keys.unit) {
+            if metric == MeasurementUnits.metric.rawValue {
+                self.settingsSwitch.isOn = true
+            } else {
+                self.settingsSwitch.isOn = false
             }
         }
     }

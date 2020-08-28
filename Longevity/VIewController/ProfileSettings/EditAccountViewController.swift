@@ -102,7 +102,7 @@ class EditAccountViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
-    
+
         self.view.addSubview(fullName)
         self.view.addSubview(nameLabel)
         self.view.addSubview(emailText)
@@ -157,7 +157,7 @@ class EditAccountViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         self.fullName.text = userDefaults.string(forKey: UserDefaultsKeys().name)
         self.emailText.text = userDefaults.string(forKey: UserDefaultsKeys().email)
-        self.mobilePhone.text = userDefaults.string(forKey: UserDefaultsKeys().mobile)
+        self.mobilePhone.text = userDefaults.string(forKey: UserDefaultsKeys().phone)
     }
     
     @objc func closeView() {
@@ -165,8 +165,16 @@ class EditAccountViewController: UIViewController {
     }
 
     @objc func doneUpdate() {
-           self.dismiss(animated: true, completion: nil)
-       }
+        let keys = UserDefaultsKeys()
+        if let name = fullName.text {
+            UserDefaults.standard.set(name, forKey: keys.name)
+        }
+        if let phone = mobilePhone.text {
+            UserDefaults.standard.set(phone, forKey: keys.phone)
+        }
+        updateProfile()
+        self.dismiss(animated: true, completion: nil)
+    }
 }
 
 extension EditAccountViewController: UITextFieldDelegate {
@@ -184,7 +192,7 @@ extension EditAccountViewController: UITextFieldDelegate {
                 userDefaults.set(textField.text, forKey: UserDefaultsKeys().name)
             }
         } else if textField.tag == 2 {
-            userDefaults.set(textField.text, forKey: UserDefaultsKeys().mobile)
+            userDefaults.set(textField.text, forKey: UserDefaultsKeys().phone)
         }
     }
 }
