@@ -186,6 +186,10 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 if userActivities.count > indexPath.row {
                     activity = userActivities[indexPath.row]
                 }
+                
+                if indexPath.row == userActivities.count - 1 {
+                    activity?.isLast = true
+                }
             }
             activityCell.activity = activity
             return activityCell
