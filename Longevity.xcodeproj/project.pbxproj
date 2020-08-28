@@ -21,6 +21,7 @@
 		C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */; };
 		C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */; };
 		C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */; };
+		C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -207,6 +208,7 @@
 		C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataLogCell.swift; sourceTree = "<group>"; };
 		C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightDetailView.swift; sourceTree = "<group>"; };
 		C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogDetailsViewController.swift; sourceTree = "<group>"; };
+		C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -439,6 +441,7 @@
 				C19875C824DC9F7A00477185 /* UIDevice+Extension.swift */,
 				C1C8220724EB54A50074AF11 /* UIView+Extension.swift */,
 				C193943024EF0DC500BDB3BD /* UIFont+Extension.swift */,
+				C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -997,6 +1000,7 @@
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
 				E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */,
 				C1C8220624EB4EAB0074AF11 /* ActivityCard.swift in Sources */,
+				C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */,
 				E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */,
 				C19875B624DC79B000477185 /* HomeViewController.swift in Sources */,
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,

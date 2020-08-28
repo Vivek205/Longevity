@@ -15,9 +15,10 @@ class ProfileActivityCell: UITableViewCell {
         didSet {
             activityCard.activity = activity
             if let activityType = activity?.activityType {
-//                activityImage.image = UIImage(named: activityImageName[activityType] ?? defaultActivityImageName)
                 activityImage.image = activityType.activityIcon ?? UIImage(named: defaultActivityImageName)
             }
+            
+            self.activityVerticalLine.isHidden = activity?.isLast ?? false
         }
     }
   
@@ -45,6 +46,7 @@ class ProfileActivityCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         self.backgroundColor = .clear
+        self.selectionStyle = .none
         
         self.addSubview(activityVerticalLine)
         self.addSubview(activityImage)
