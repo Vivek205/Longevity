@@ -10,6 +10,14 @@ import UIKit
 
 class ProfileSettingsCell: UITableViewCell {
     
+    var isDeviceConnected: Bool {
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        let devices = (defaults.dictionary(forKey: keys.devices) ?? [:]) as [String:[String:Int]]
+        let healthkitStatus = (devices[ExternalDevices.HEALTHKIT] ?? [:]) as [String:Int]
+        return healthkitStatus["connected"] == 1
+    }
+    
     var profileSetting: ProfileSetting! {
         didSet {
             self.settingName.text = profileSetting.rawValue
@@ -40,6 +48,9 @@ class ProfileSettingsCell: UITableViewCell {
             }
             
             settingStatus.isHidden = profileSetting != .applehealth
+            if !settingStatus.isHidden {
+                settingStatus.text = isDeviceConnected ? "Connected" : "Not Connected"
+            }
         }
     }
     
