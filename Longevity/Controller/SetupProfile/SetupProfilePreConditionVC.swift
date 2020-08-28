@@ -19,7 +19,6 @@ class SetupProfilePreConditionVC: UIViewController {
     var numberOfTotalItems:Int = 0
     var titleRowIndex:Int = 0
     var textAreaRowIndex:Int = 0
-    var otherOptionText: String?
     var keyboardHeight: CGFloat?
 
     var isFromSettings: Bool = false
@@ -71,9 +70,7 @@ class SetupProfilePreConditionVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateMedicalConditions(otherOption: otherOptionText)
-        let selectedOptions = preExistingMedicalConditionData.filter{$0.selected}
-        print("selected options", selectedOptions, otherOptionText)
+        updateMedicalConditions()
         updateSetupProfileCompletionStatus(currentState: .preExistingConditions)
     }
 
@@ -96,11 +93,11 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
         animateTextView(showKeyboard: true)
     }
     func textViewDidChange(_ textView: UITextView) {
-        otherOptionText = textView.text
+        preExistingMedicalCondtionOtherText = textView.text
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        otherOptionText = textView.text
+        preExistingMedicalCondtionOtherText = textView.text
         animateTextView(showKeyboard: false)
     }
 
@@ -138,6 +135,7 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
     }
 
     @objc func doneUpdate() {
+        updateMedicalConditions()
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -163,6 +161,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
             cell.otherOptionTextView.delegate = self
+            cell.otherOptionTextView.text = preExistingMedicalCondtionOtherText
             return cell
         }
 

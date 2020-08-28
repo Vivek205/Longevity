@@ -68,17 +68,22 @@ enum QuestionAction:String, Codable {
     case dynamic = "DYNAMIC"
 }
 
+enum QuestionTypes:String, Decodable {
+    case text = "TEXT"
+    case singleSelect = "SINGLE_SELECT"
+    case continuousScale = "CONTINUOUS_SCALE"
+}
+
 struct Question:Decodable {
     let categoryId: Int
     let moduleId: Int
     let quesId: String
     let text: String
-    let quesType: String
+    let quesType: QuestionTypes
     let options: [QuestionOption]
-    //    let isDynamic: Bool? // FIXME: Make it non optional
     let nextQuestion: String?
     let validation: QuestionResponseValidation?
-    let otherAttribute: OtherAttribute?
+    let otherDetails: QuestionOtherDetails?
     let action: QuestionAction
 }
 
@@ -86,8 +91,31 @@ struct QuestionResponseValidation:Decodable {
     let regex: String?
 }
 
-struct OtherAttribute: Decodable {
+struct QuestionOtherDetails: Decodable {
     let scale: Scale?
+    let TEXT: QuestionOtherDetailsText?
+}
+
+enum QuestionOtherDetailsTextType:String,Decodable {
+    case numeric = "NUMERIC"
+    case alphanumeric = "ALPHANUMERIC"
+}
+
+extension QuestionOtherDetailsTextType {
+    var keyboardType: UIKeyboardType {
+        switch self {
+        case .numeric:
+            return .numberPad
+        case .alphanumeric:
+            return .alphabet
+        default:
+            return .alphabet
+        }
+    }
+}
+
+struct QuestionOtherDetailsText:Decodable {
+    let type: QuestionOtherDetailsTextType
 }
 
 struct Scale: Decodable {

@@ -10,11 +10,12 @@ import Foundation
 import SwiftyJSON
 import Amplify
 
-func updateMedicalConditions(otherOption: String?) {
+func updateMedicalConditions() {
     func onGettingCredentials(_ credentials: Credentials){
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
 
-        let touchedConditions = preExistingMedicalConditionData.filter{$0.selected}
+        let selectedConditions = preExistingMedicalConditionData.filter{$0.selected}
+        let otherOption = preExistingMedicalCondtionOtherText
 
         struct UpdatedConditionsPayload {
             let condition: String
@@ -22,7 +23,7 @@ func updateMedicalConditions(otherOption: String?) {
             let status: Int
         }
 
-        var updatedConditions =  touchedConditions.map { (item) -> [String:Any] in
+        var updatedConditions =  selectedConditions.map { (item) -> [String:Any] in
             let value = ["condition": item.name, "type":"PREDEFINDED"] as [String : Any]
             return value
         }
@@ -36,6 +37,7 @@ func updateMedicalConditions(otherOption: String?) {
         var bodyData:Data = Data()
         do {
             bodyData = try body.rawData()
+            print(String(data: bodyData, encoding: .utf8))
 
         } catch  {
             print("body data error",error)
@@ -83,6 +85,7 @@ func getHealthProfile(){
                     let birthday = userProfileData[keys.birthday].rawString()!
                     let unit = userProfileData[keys.unit].rawString()!
                     let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
+                    let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
 
                     var devicesStatus: [String:[String:Int]] = [:]
 
@@ -103,6 +106,21 @@ func getHealthProfile(){
                     }else {
                         defaults.set(MeasurementUnits.metric.rawValue, forKey: keys.unit)
                     }
+                    if preExistingConditions != nil && !preExistingConditions!.isEmpty {
+                        preExistingConditions?.forEach({ (condition) in
+                            if condition["type"] == "PREDEFINDED" {
+                                if let index = preExistingMedicalConditionData.firstIndex(where: { (item) -> Bool in
+                                    return item.name == condition["condition"]
+                                }) {
+                                    preExistingMedicalConditionData[index].selected = true
+                                }
+                            } else if condition["type"] == "OTHER" {
+                                preExistingMedicalCondtionOtherText = condition["condition"]
+                            }
+
+                        })
+                    }
+
 
                     if let fitbitStatus = devices?[ExternalDevices.FITBIT] {
                         devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
@@ -131,7 +149,7 @@ func getHealthProfile(){
     getUserAttributes()
 }
 
-func updateHealthProfile(){
+func updateHealthProfile() {
     func onGettingCredentials(_ credentials: Credentials){
         let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
         let defaults = UserDefaults.standard

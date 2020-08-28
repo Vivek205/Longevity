@@ -20,7 +20,7 @@ class SetupProfileBioDataVC: UIViewController {
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
     
-    let healthKitUtil: HealthKitUtil = HealthKitUtil()
+    let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
 
 
     var toolBar = UIToolbar()
@@ -270,6 +270,7 @@ class SetupProfileBioDataVC: UIViewController {
     }
 
     @objc func doneUpdate() {
+        updateHealthProfile()
         self.dismiss(animated: true, completion: nil)
     }
 }
