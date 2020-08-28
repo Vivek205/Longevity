@@ -10,6 +10,25 @@ import UIKit
 
 class CheckinLogCell: UICollectionViewCell {
 
+    var history: History! {
+        didSet {
+           let symptomsCount = history.symptoms.count
+            if symptomsCount > 0 {
+                self.symptomsCircle.backgroundColor = UIColor(hexString: "#E1D46A")
+            } else {
+                self.symptomsCircle.backgroundColor = UIColor(hexString: "#6C8CBF")
+            }
+            self.noofSymptoms.text = "\(symptomsCount)"
+            
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd"
+            if let date = dateformatter.date(from: history.recordDate) {
+                dateformatter.dateFormat = "EEE | MMM dd, yyyy"
+                self.logDate.text = dateformatter.string(from: date)
+            }
+        }
+    }
+    
     lazy var symptomsCircle: UIView = {
         let symptomsView = UIView()
         symptomsView.backgroundColor = UIColor(hexString: "#E1D46A")
@@ -39,7 +58,6 @@ class CheckinLogCell: UICollectionViewCell {
     
     lazy var logDate: UILabel = {
         let date = UILabel()
-        date.text = "Fri | Jul 4, 2020"
         date.font = UIFont(name: "Montserrat-Medium", size: 20.0)
         date.textColor = UIColor.black.withAlphaComponent(0.87)
         date.translatesAutoresizingMaskIntoConstraints = false
@@ -106,6 +124,7 @@ class CheckinLogCell: UICollectionViewCell {
     
     @objc func onViewDetails() {
         let detailsViewController = CheckInLogDetailsViewController()
+        detailsViewController.history = self.history
         NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .coverVertical)
     }
 }

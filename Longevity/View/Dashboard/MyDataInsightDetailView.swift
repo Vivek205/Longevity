@@ -12,18 +12,18 @@ class MyDataInsightDetailView: UIView {
     var insightData: UserInsight! {
         didSet {
             if let details = insightData?.details {
-             
-                
-                
+                self.insightDescription.text = insightData.userInsightDescription
+                self.confidenceValue.text = details.confidence?.value
+                self.confidenceDescription.text = details.confidence?.confidenceDescription
+                self.histogramDescription.text = details.histogram?.histogramDescription
             }
             
-            histogramDescription.text = "Your \(insightData.text) risk over the time of your check-ins."
+//            histogramDescription.text = "Your \(insightData.text) risk over the time of your check-ins."
         }
     }
     
     lazy var insightDescription: UILabel = {
         let insightdesc = UILabel()
-        insightdesc.text = "Exposure risk is how likely you have been in contact COVID-19 infected people."
         insightdesc.numberOfLines = 0
         insightdesc.lineBreakMode = .byWordWrapping
         insightdesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
@@ -59,7 +59,6 @@ class MyDataInsightDetailView: UIView {
     
     lazy var confidenceDescription: UILabel = {
         let confidenceDesc = UILabel()
-        confidenceDesc.text = "How well the AI can assess your current risk situation.  More check-ins and health data improves the accuracy."
         confidenceDesc.numberOfLines = 0
         confidenceDesc.lineBreakMode = .byWordWrapping
         confidenceDesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
