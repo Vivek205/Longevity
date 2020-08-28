@@ -18,6 +18,9 @@
 		C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09C824F80F8700623CC3 /* HowItWorksCell.swift */; };
 		C12F09CB24F837DD00623CC3 /* AppleHealthTopCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CA24F837DD00623CC3 /* AppleHealthTopCell.swift */; };
 		C12F09CD24F8380100623CC3 /* AppleHealthStatusCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CC24F8380100623CC3 /* AppleHealthStatusCell.swift */; };
+		C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */; };
+		C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */; };
+		C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -55,7 +58,7 @@
 		C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */; };
 		C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */; };
 		C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D824E04DD000477185 /* DashboardCheckInCell.swift */; };
-		C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataCell.swift */; };
+		C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */; };
 		C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */; };
 		C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */; };
 		C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220324EB49F60074AF11 /* ProfileActivityCell.swift */; };
@@ -200,6 +203,9 @@
 		C12F09C824F80F8700623CC3 /* HowItWorksCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HowItWorksCell.swift; sourceTree = "<group>"; };
 		C12F09CA24F837DD00623CC3 /* AppleHealthTopCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthTopCell.swift; sourceTree = "<group>"; };
 		C12F09CC24F8380100623CC3 /* AppleHealthStatusCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthStatusCell.swift; sourceTree = "<group>"; };
+		C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataLogCell.swift; sourceTree = "<group>"; };
+		C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightDetailView.swift; sourceTree = "<group>"; };
+		C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogDetailsViewController.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -237,7 +243,7 @@
 		C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeader.swift; sourceTree = "<group>"; };
 		C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDevicesCell.swift; sourceTree = "<group>"; };
 		C19875D824E04DD000477185 /* DashboardCheckInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCheckInCell.swift; sourceTree = "<group>"; };
-		C1B399F924E3457A00D3991E /* MyDataCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataCell.swift; sourceTree = "<group>"; };
+		C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightCell.swift; sourceTree = "<group>"; };
 		C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopupViewController.swift; sourceTree = "<group>"; };
 		C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
 		C1C8220324EB49F60074AF11 /* ProfileActivityCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileActivityCell.swift; sourceTree = "<group>"; };
@@ -384,6 +390,15 @@
 			path = AppleHealth;
 			sourceTree = "<group>";
 		};
+		C12F09D324F87D1E00623CC3 /* CheckInLog */ = {
+			isa = PBXGroup;
+			children = (
+				E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */,
+				C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */,
+			);
+			path = CheckInLog;
+			sourceTree = "<group>";
+		};
 		C193942D24EF037700BDB3BD /* ProfileSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -399,11 +414,11 @@
 		C19875AE24DC6A0800477185 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
+				C12F09D324F87D1E00623CC3 /* CheckInLog */,
 				C193942D24EF037700BDB3BD /* ProfileSettings */,
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
 				C19875B424DC784B00477185 /* Tabs */,
 				C19875AF24DC6B6B00477185 /* LNTabBarViewController.swift */,
-				E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -456,7 +471,9 @@
 				C19875D824E04DD000477185 /* DashboardCheckInCell.swift */,
 				C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */,
 				C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */,
-				C1B399F924E3457A00D3991E /* MyDataCell.swift */,
+				C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */,
+				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
+				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1031,11 +1048,12 @@
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
-				C1B399FA24E3457A00D3991E /* MyDataCell.swift in Sources */,
+				C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */,
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
+				C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
 				C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
@@ -1050,6 +1068,7 @@
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */,
 				C12F09CB24F837DD00623CC3 /* AppleHealthTopCell.swift in Sources */,
+				C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,
 				C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
@@ -1066,6 +1085,7 @@
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
 				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
+				C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */,
 				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,

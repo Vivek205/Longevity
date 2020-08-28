@@ -106,9 +106,9 @@ struct UserInsight: Codable {
     let name: CardType
     let text: String
     let defaultOrder: Int
-//    let cardType: String
     let description: String
     let details: UserInsightDetails?
+    var isExpanded: Bool?
 }
 
 struct UserInsightDetails: Codable {
@@ -117,7 +117,7 @@ struct UserInsightDetails: Codable {
     let trend: TrendDirection?
     var sentiment: Sentiment?
     let confidence: String?
-    let history: [Exposure]?
+//    let history: [Exposure]?
 }
 
 struct Exposure: Codable {

@@ -70,36 +70,46 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.getCell(with: MyDataCell.self, at: indexPath) as? MyDataCell else {
-            preconditionFailure("Invalid insight cell")
+        guard let insightData = self.userInsights?[indexPath.item] else {
+            return collectionView.getCell(with: UICollectionViewCell.self, at: indexPath)
         }
-        cell.insightData = self.userInsights?[indexPath.item]
-        return cell
+        
+        if insightData.name != .logs {
+            guard let cell = collectionView.getCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
+                preconditionFailure("Invalid insight cell")
+            }
+            cell.insightData = insightData
+            return cell
+        } else {
+            guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
+                preconditionFailure("Invalid insight cell")
+            }
+            cell.logData = insightData
+            return cell
+        }
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let cell = collectionView.cellForItem(at: indexPath) as? MyDataCell else {
-            return
+        guard let insightData = self.userInsights?[indexPath.item] else { return }
+        
+        if insightData.name != .logs {
+            self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
+        } else {
+            let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
         }
-        let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-        NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-
-        //       TODO: Uncomment Expand Cells on selection
-        //        isCellExpanded[indexPath.item] = !(isCellExpanded[indexPath.item] ?? false)
-        //        collectionView.reloadItems(at: [indexPath])
     }
-
+    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat(self.view.bounds.width) - 20.0
-        var height = CGFloat(50)
-        guard let cell = collectionView.cellForItem(at: indexPath) as? MyDataCell else {
-            return CGSize(width: width, height: height)
+        let width = CGFloat(collectionView.bounds.width) - 20.0
+        var height: CGFloat = 80.0
+        
+        guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
+        
+        if insightData.name != .logs && (insightData.isExpanded ?? false) {
+            height = 430.0
         }
-
-        if isCellExpanded[indexPath.item] == true {
-            height = 100
-        }
-
+        
         return CGSize(width: width, height: height)
     }
 }
