@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "icon : Gender@1x.png",
+      "filename" : "activity : Health profile@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "icon : Gender@2x.png",
+      "filename" : "activity : Health profile@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "icon : Gender@3x.png",
+      "filename" : "activity : Health profile@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
