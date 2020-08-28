@@ -37,6 +37,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         let camera = UIButton()
         camera.setImage(UIImage(named: "avatarCamera"), for: .normal)
         camera.translatesAutoresizingMaskIntoConstraints = false
+        camera.addTarget(self, action: #selector(openCameraActionSheet), for: .touchUpInside)
         return camera
     }()
     
@@ -106,6 +107,14 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         return title
     }()
     
+    lazy var pickerController: UIImagePickerController = {
+        let picker = UIImagePickerController()
+        picker.delegate = self
+        picker.allowsEditing = true
+        picker.mediaTypes = ["public.image"]
+        return picker
+    }()
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
@@ -150,8 +159,70 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        self.profileAvatar.layer.cornerRadius = self.profileAvatar.bounds.height / 2
+        self.profileAvatar.clipsToBounds = true
+    }
+    
     @objc func profileViewSelected() {
         self.currentView = ProfileView(rawValue: self.segmentedControl.selectedSegmentIndex)
         self.delegate?.selected(profileView: self.currentView)
+    }
+    
+    @objc func openCameraActionSheet() {
+        let cameraActionSheet: UIAlertController = UIAlertController(title: nil, message: nil, preferredStyle: .actionSheet)
+        let cancelActionButton = UIAlertAction(title: "Cancel", style: .cancel) { _ in
+            
+        }
+        cameraActionSheet.addAction(cancelActionButton)
+
+        let cameraActionButton = UIAlertAction(title: "Take a selfie", style: .default)
+            { _ in
+                self.pickerController.sourceType = .camera
+                NavigationUtility.presentOverCurrentContext(destination: self.pickerController, style: .fullScreen)
+        }
+        cameraActionSheet.addAction(cameraActionButton)
+
+        let albumActionButton = UIAlertAction(title: "Camera roll", style: .default)
+            { _ in
+                self.pickerController.sourceType = .savedPhotosAlbum
+                NavigationUtility.presentOverCurrentContext(destination: self.pickerController)
+        }
+        cameraActionSheet.addAction(albumActionButton)
+        
+        let photoActionButton = UIAlertAction(title: "Photo library", style: .default)
+            { _ in
+                self.pickerController.sourceType = .photoLibrary
+                NavigationUtility.presentOverCurrentContext(destination: self.pickerController)
+        }
+        cameraActionSheet.addAction(photoActionButton)
+        NavigationUtility.presentOverCurrentContext(destination: cameraActionSheet, style: .custom, completion: nil)
+    }
+    
+    private func pickerController(_ controller: UIImagePickerController, didSelect image: UIImage?) {
+        controller.dismiss(animated: true, completion: nil)
+        
+        self.profileAvatar.image = image
+        
+        guard let imageData = image?.jpegData(compressionQuality: 0.05) else { return }
+        print(imageData.base64EncodedString())
+        
+        //TODO: Integrate the API to save and also retrieve the profile pic
+    }
+}
+
+extension UserProfileHeader: UIImagePickerControllerDelegate, UINavigationControllerDelegate {
+    public func imagePickerControllerDidCancel(_ picker: UIImagePickerController) {
+        self.pickerController(picker, didSelect: nil)
+    }
+
+    public func imagePickerController(_ picker: UIImagePickerController,
+                                      didFinishPickingMediaWithInfo info: [UIImagePickerController.InfoKey: Any]) {
+        guard let image = info[.editedImage] as? UIImage else {
+            return self.pickerController(picker, didSelect: nil)
+        }
+        self.pickerController(picker, didSelect: image)
     }
 }
