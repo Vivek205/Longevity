@@ -153,6 +153,7 @@
 		E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E3249B5BCF00467E43 /* SurveyTask.swift */; };
 		E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */; };
 		E2E14BF924AF0BFC007C0470 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E14BF824AF0BFC007C0470 /* User.swift */; };
+		E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8F93D24F94E7F003827CC /* FAQViewController.swift */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
 		E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */; };
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
@@ -341,6 +342,7 @@
 		E2D127E3249B5BCF00467E43 /* SurveyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTask.swift; sourceTree = "<group>"; };
 		E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioOptionCell.swift; sourceTree = "<group>"; };
 		E2E14BF824AF0BFC007C0470 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		E2E8F93D24F94E7F003827CC /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
@@ -409,6 +411,7 @@
 				C12F09B824F6F97B00623CC3 /* BasePopUpModalViewController.swift */,
 				C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */,
 				C12F09C224F800EA00623CC3 /* AppleHealthConnectionViewController.swift */,
+				E2E8F93D24F94E7F003827CC /* FAQViewController.swift */,
 			);
 			path = ProfileSettings;
 			sourceTree = "<group>";
@@ -1050,6 +1053,7 @@
 				E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
+				E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
 				C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */,

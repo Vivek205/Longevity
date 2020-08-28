@@ -84,7 +84,7 @@ final class SurveyTaskUtility {
 
                                         var answerFormat: ORKAnswerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
 
-                                        if filteredQuestion.quesType == "TEXT" {
+                                        if filteredQuestion.quesType == .text {
                                             answerFormat = ORKTextAnswerFormat()
                                         }
 
@@ -105,7 +105,7 @@ final class SurveyTaskUtility {
                                     { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
 
-                                        if filteredQuestion.quesType == "CONTINUOUS_SCALE" {
+                                        if filteredQuestion.quesType == .continuousScale {
                                             let answerFormat = ORKAnswerFormat.continuousScale(
                                                 withMaximumValue: 150,minimumValue: 60, defaultValue: 98,
                                                 maximumFractionDigits: 1, vertical: true,
@@ -119,7 +119,7 @@ final class SurveyTaskUtility {
                                             continue
                                         }
 
-                                        if filteredQuestion.quesType == "TEXT" {
+                                        if filteredQuestion.quesType == .text {
                                             let answerFormat = ORKAnswerFormat.textAnswerFormat()
                                             let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
                                             steps += [questionStep]
@@ -278,7 +278,7 @@ final class SurveyTaskUtility {
         list.forEach { (survey) in
             if survey.isRepetitive == true {
                 self.repetitiveSurveyList.append(survey)
-            } else {
+            } else if survey.lastSubmission == nil{
                 self.oneTimeSurveyList.append(survey)
             }
         }
@@ -300,6 +300,14 @@ final class SurveyTaskUtility {
         self.surveyDetails[surveyId] = details
     }
 
+    func getCurrentSurveyQuestionDetails(questionId: String) -> Question? {
+        guard let surveyDetails = self.getCurrentSurveyDetails() else { return nil}
+        guard let question = surveyDetails.questions.first(where: { (question) -> Bool in
+            question.quesId == questionId
+        }) else { return nil }
+        return question
+    }
+
     func findIsQuestionDynamic(questionId: String) -> Bool {
         guard let surveyDetails = self.getCurrentSurveyDetails() else { return false}
         guard let question = surveyDetails.questions.first(where: { (question) -> Bool in
@@ -311,6 +319,9 @@ final class SurveyTaskUtility {
     func createSingleChoiceQuestionStep(identifier: String,title:String,
                                         question: String,additionalText:String?,
                                         choices:[ORKTextChoice]) -> ORKQuestionStep {
+        if choices.isEmpty {
+            print("empty choice")
+        }
         let questionStepTitle = title
         let questionStepQuestion = question
         let textChoices = choices

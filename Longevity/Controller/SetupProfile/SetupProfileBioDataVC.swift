@@ -20,7 +20,7 @@ class SetupProfileBioDataVC: UIViewController {
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
     
-    let healthKitUtil: HealthKitUtil = HealthKitUtil()
+    let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
 
 
     var toolBar = UIToolbar()
@@ -46,7 +46,10 @@ class SetupProfileBioDataVC: UIViewController {
             self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
+            let rightButton = UIBarButtonItem(title:"Done", style: .plain, target: self, action: #selector(doneUpdate))
+              rightButton.tintColor = .themeColor
             self.viewNavigationItem.leftBarButtonItem = leftbutton
+            self.viewNavigationItem.rightBarButtonItem = rightButton
             self.footerView.isHidden = true
         }
     }
@@ -263,6 +266,11 @@ class SetupProfileBioDataVC: UIViewController {
     }
     
     @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func doneUpdate() {
+        updateHealthProfile()
         self.dismiss(animated: true, completion: nil)
     }
 }

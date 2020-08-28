@@ -36,4 +36,28 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -45.0)
         ])
     }
+
+    override func primaryButtonPressed(_ sender: UIButton) {
+        let userInsightsAPI = UserInsightsAPI()
+
+        self.showSpinner()
+
+        userInsightsAPI.exportUserApplicationData(completion: {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.showAlert(title: "Success",
+                               message: "Your data has been exported successfully. You will receive an email shortly.")
+            }
+
+        }) { (error) in
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.showAlert(title: "Failure", message: "Unable to export your data. Please try later.")
+            }
+        }
+    }
+
+    override func handleUIAlertAction(_ action: UIAlertAction) {
+        self.closeView()
+    }
 }

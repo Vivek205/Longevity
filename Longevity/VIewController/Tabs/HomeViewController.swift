@@ -49,6 +49,11 @@ class HomeViewController: BaseViewController {
         ])
     }
 
+//    override func viewDidAppear(_ animated: Bool) {
+//        super.viewDidAppear(animated)
+//        getSurveyList()
+//    }
+
     func getSurveyList() {
         self.showSpinner()
 
@@ -103,10 +108,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return devicesCell
         } else {
-            //            guard let cell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
-            //                preconditionFailure("Invalid task cell")
-            //            }
-            //            return cell
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
@@ -188,7 +189,7 @@ extension HomeViewController {
                     taskViewController.navigationBar.backgroundColor = .white
                     taskViewController.navigationBar.barTintColor = .white
                     taskViewController.view.backgroundColor = .white
-                    self.present(taskViewController, animated: true, completion: nil)
+                    NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                 } else {
                     self.showAlert(title: "Survey Not available",
                                    message: "No questions are found for the survey. Please try after sometime")
@@ -220,6 +221,7 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
         switch reason {
         case .completed:
             print("completed")
+            self.getSurveyList()
         case .discarded:
             print("discarded")
         case .failed:

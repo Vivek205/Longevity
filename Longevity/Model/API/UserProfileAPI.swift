@@ -22,14 +22,14 @@ enum UserActivityType: String, Codable {
 extension UserActivityType {
     var activityIcon: UIImage? {
         switch self {
-        case .ACCOUNTCREATED: return UIImage(named: "checkinnotdone")
-        case .FITBITSYNCED: return UIImage(named: "checkinnotdone")
-        case .PROFILEUPDATED: return UIImage(named: "checkinnotdone")
-        case .HEALTHPROFILECREATED: return UIImage(named: "checkinnotdone")
-        case .HEALTHPROFILEUPDATED: return UIImage(named: "checkinnotdone")
-        case .COVIDSYMPTOMSUPDATED: return UIImage(named: "checkinnotdone")
-        case .SURVEYSAVED: return UIImage(named: "checkinnotdone")
-        case .SURVEYSUBMITTED: return UIImage(named: "checkinnotdone")
+        case .ACCOUNTCREATED: return UIImage(named: "activity : Account born")
+        case .FITBITSYNCED: return UIImage(named: "activity : Fitbit Sync")
+        case .PROFILEUPDATED: return UIImage(named: "activity : Health profile")
+        case .HEALTHPROFILECREATED: return UIImage(named: "activity : Health profile")
+        case .HEALTHPROFILEUPDATED: return UIImage(named: "activity : Health profile")
+        case .COVIDSYMPTOMSUPDATED: return UIImage(named: "activity : covid checkin")
+        case .SURVEYSAVED: return UIImage(named: "activity : mvp covid survey")
+        case .SURVEYSUBMITTED: return UIImage(named: "activity : mvp covid survey")
         }
     }
 }
@@ -69,8 +69,7 @@ class UserProfileAPI: BaseAuthAPI {
                     onFailure(error)
                     break
                 }
-            }
-            
+            }           
         }) { (error) in
             onFailure(error)
         }
@@ -112,14 +111,6 @@ class UserProfileAPI: BaseAuthAPI {
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             
             let bodyData = Data(base64Encoded: profilePic)
-//            do {
-//                let encoder = JSONEncoder()
-//                encoder.keyEncodingStrategy = .convertToSnakeCase
-//                bodyData = try encoder.encode([healthdata])
-//
-//            } catch let error {
-//                print("body data error",error.localizedDescription)
-//            }
             
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers, queryParameters: nil, body: bodyData)
             Amplify.API.post(request: request) { (result) in

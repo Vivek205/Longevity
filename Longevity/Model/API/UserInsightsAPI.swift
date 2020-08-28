@@ -38,4 +38,23 @@ class UserInsightsAPI: BaseAuthAPI {
             print(error.localizedDescription)
         }
     }
+
+    func exportUserApplicationData(completion: @escaping() -> Void, onFailure: @escaping(_ error:Error) -> Void) {
+        self.getCredentials(completion: { (credentials) in
+            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/application/data/export",
+                                      headers: headers, queryParameters: nil, body: nil)
+            Amplify.API.get(request: request) { (result) in
+                switch result {
+                case .success(_):
+                    completion()
+                case .failure(let error):
+                    onFailure(error)
+                }
+            }
+
+        }) { (error) in
+            print("exportUserApplicationData error", error)
+        }
+    }
 }

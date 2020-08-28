@@ -56,6 +56,7 @@ class CheckInLogDetailsViewController: UIViewController {
         export.layer.borderWidth = 2
         export.layer.borderColor = UIColor.themeColor.cgColor
         export.layer.cornerRadius = 10.0
+        export.addTarget(self, action: #selector(handleExportData), for: .touchUpInside)
         return export
     }()
     
@@ -110,6 +111,22 @@ class CheckInLogDetailsViewController: UIViewController {
     
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func handleExportData() {
+        let userInsightAPI = UserInsightsAPI()
+        self.showSpinner()
+        userInsightAPI.exportUserApplicationData(completion: {
+            DispatchQueue.main.async {
+                self.showAlert(title: "Success", message: "Your data has been sent to your email.")
+                self.removeSpinner()
+            }
+        }) { (error) in
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.showAlert(title: "Failure", message: "Unable to export your data. Please try again later.")
+            }
+        }
     }
     
     override func viewDidLayoutSubviews() {

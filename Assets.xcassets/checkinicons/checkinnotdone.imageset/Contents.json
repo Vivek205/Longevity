@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "Checkin - illustration asset@1x.png",
+      "filename" : "checkinnotdone@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "Checkin - illustration asset@2x.png",
+      "filename" : "checkinnotdone@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "Checkin - illustration asset@3x.png",
+      "filename" : "checkinnotdone@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

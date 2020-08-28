@@ -61,7 +61,8 @@ extension HKBiologicalSex {
 }
 
 
-class HealthKitUtil {   
+final class HealthKitUtil {
+    static let shared = HealthKitUtil()
     var isHealthkitSynced:Bool {
         if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
             if let healthKitStatus = devices[ExternalDevices.HEALTHKIT] {

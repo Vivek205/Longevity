@@ -63,6 +63,7 @@ class TextAnswerVC: ORKStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.setKeyboardTypeOfTextView()
         self.presentViews()
     }
 
@@ -122,6 +123,22 @@ class TextAnswerVC: ORKStepViewController {
         continueButton.isEnabled = false
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
     }
+
+    func setKeyboardTypeOfTextView(){
+        guard let identifier = step?.identifier else {return}
+        guard let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: identifier)
+            else {return}
+        switch questionDetails.quesType {
+        case .text:
+            guard let otherDetails = questionDetails.otherDetails else {return}
+            self.answerTextView.keyboardType = otherDetails.TEXT?.type.keyboardType ?? .alphabet
+            return
+        default:
+            return
+        }
+
+    }
+
 
     @objc func handleContinue(sender: UIButton) {
         self.goForward()

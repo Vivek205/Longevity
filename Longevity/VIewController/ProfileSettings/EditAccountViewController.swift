@@ -102,7 +102,7 @@ class EditAccountViewController: UIViewController {
         super.viewDidLoad()
         
         self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
-    
+
         self.view.addSubview(fullName)
         self.view.addSubview(nameLabel)
         self.view.addSubview(emailText)
@@ -146,7 +146,10 @@ class EditAccountViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
+        let rightButton = UIBarButtonItem(title:"Done", style: .plain, target: self, action: #selector(doneUpdate))
+        rightButton.tintColor = .themeColor
         self.navigationItem.leftBarButtonItem = leftbutton
+        self.navigationItem.rightBarButtonItem = rightButton
         
         self.fullName.delegate = self
         self.mobilePhone.delegate = self
@@ -154,10 +157,22 @@ class EditAccountViewController: UIViewController {
         let userDefaults = UserDefaults.standard
         self.fullName.text = userDefaults.string(forKey: UserDefaultsKeys().name)
         self.emailText.text = userDefaults.string(forKey: UserDefaultsKeys().email)
-        self.mobilePhone.text = userDefaults.string(forKey: UserDefaultsKeys().mobile)
+        self.mobilePhone.text = userDefaults.string(forKey: UserDefaultsKeys().phone)
     }
     
     @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+
+    @objc func doneUpdate() {
+        let keys = UserDefaultsKeys()
+        if let name = fullName.text {
+            UserDefaults.standard.set(name, forKey: keys.name)
+        }
+        if let phone = mobilePhone.text {
+            UserDefaults.standard.set(phone, forKey: keys.phone)
+        }
+        updateProfile()
         self.dismiss(animated: true, completion: nil)
     }
 }
@@ -177,7 +192,7 @@ extension EditAccountViewController: UITextFieldDelegate {
                 userDefaults.set(textField.text, forKey: UserDefaultsKeys().name)
             }
         } else if textField.tag == 2 {
-            userDefaults.set(textField.text, forKey: UserDefaultsKeys().mobile)
+            userDefaults.set(textField.text, forKey: UserDefaultsKeys().phone)
         }
     }
 }

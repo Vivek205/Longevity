@@ -47,6 +47,7 @@ func getProfile() {
                     let userProfileData = jsonData["data"]
                     let name = userProfileData[keys.name].rawString()!
                     let email = userProfileData[keys.email].rawString()!
+                    let phone = userProfileData[keys.phone].rawString()!
                     var devicesStatus: [String:[String:Int]] = [:]
 
                     if !(name.isEmpty) && name != "null"{
@@ -55,6 +56,10 @@ func getProfile() {
                     
                     if !email.isEmpty && email != "null" {
                         defaults.set(email, forKey: keys.email)
+                    }
+
+                    if !phone.isEmpty && phone != "null" {
+                        defaults.set(phone, forKey: keys.phone)
                     }
                 } catch {
                     print("json parse error", error)
@@ -88,15 +93,17 @@ func updateProfile(){
             keys.height: defaults.value(forKey: keys.height),
             keys.gender: defaults.value(forKey: keys.gender),
             keys.birthday: defaults.value(forKey: keys.birthday),
-            keys.unit: defaults.value(forKey: keys.unit)
+            keys.unit: defaults.value(forKey: keys.unit),
+            keys.phone: defaults.value(forKey: keys.phone)
         ]
 
         let body = JSON(bodyDict)
+        print(body.rawValue)
 
-        var bodyData:Data = Data();
+        var bodyData:Data = Data()
         do {
             bodyData = try body.rawData()
-        } catch  {
+        } catch {
             print(error)
         }
 
