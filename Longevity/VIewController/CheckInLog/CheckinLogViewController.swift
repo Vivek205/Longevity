@@ -9,6 +9,12 @@
 import UIKit
 
 class CheckinLogViewController: BaseViewController {
+    
+    var history: [History]! {
+        didSet {
+            self.logsCollectionView.reloadData()
+        }
+    }
 
     lazy var logsCollectionView: UICollectionView = {
         let logsCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -72,7 +78,7 @@ class CheckinLogViewController: BaseViewController {
 
 extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 5
+        return self.history?.count ?? 0
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -90,6 +96,7 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let cell = collectionView.getCell(with: CheckinLogCell.self, at: indexPath) as? CheckinLogCell else {
             preconditionFailure("Invalid log cell type")
         }
+        cell.history = self.history?[indexPath.item]
         return cell
     }
     

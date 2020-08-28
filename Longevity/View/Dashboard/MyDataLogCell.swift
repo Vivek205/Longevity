@@ -14,7 +14,7 @@ class MyDataLogCell: UICollectionViewCell {
         didSet {
             if let details = logData?.details {
                 self.cellTitle.text = logData?.text
-//                self.logDuration.text = details.riskLevel?.text
+                self.logDuration.text = "\(details.history?.count ?? 0) Days"
             }
         }
     }
@@ -33,7 +33,6 @@ class MyDataLogCell: UICollectionViewCell {
     lazy var logDuration: UILabel = {
         let risk = UILabel()
         risk.textAlignment = .center
-        risk.text = "14 Days"
         risk.font = UIFont(name: "Montserrat-SemiBold", size: 18)
         risk.textColor = .themeColor
         risk.numberOfLines = 2
@@ -63,7 +62,6 @@ class MyDataLogCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             cellTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.5),
             cellTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
-//            cellTitle.widthAnchor.constraint(equalToConstant: 10.0),
             navigateActionImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.5),
             navigateActionImage.widthAnchor.constraint(equalToConstant: 25.0),
             navigateActionImage.heightAnchor.constraint(equalTo: navigateActionImage.widthAnchor),
