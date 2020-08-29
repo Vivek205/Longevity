@@ -22,6 +22,7 @@
 		C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */; };
 		C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */; };
 		C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */; };
+		C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C12F09DC24F9E7FE00623CC3 /* Charts.framework */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -209,6 +210,7 @@
 		C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightDetailView.swift; sourceTree = "<group>"; };
 		C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogDetailsViewController.swift; sourceTree = "<group>"; };
 		C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
+		C12F09DC24F9E7FE00623CC3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -357,6 +359,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
 				760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */,
@@ -378,6 +381,7 @@
 		AC560302038330523AE32D20 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
 				718E061F905C01115E0C6E2E /* Pods_Longevity.framework */,
 			);

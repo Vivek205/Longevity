@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import Charts
 
 class MyDataInsightDetailView: UIView {
     var insightData: UserInsight! {
@@ -16,9 +17,8 @@ class MyDataInsightDetailView: UIView {
                 self.confidenceValue.text = details.confidence?.value
                 self.confidenceDescription.text = details.confidence?.confidenceDescription
                 self.histogramDescription.text = details.histogram?.histogramDescription
+                self.createHistogramData()
             }
-            
-//            histogramDescription.text = "Your \(insightData.text) risk over the time of your check-ins."
         }
     }
     
@@ -103,8 +103,20 @@ class MyDataInsightDetailView: UIView {
         return histogramDesc
     }()
     
-    lazy var histogramView: UIView = {
-        let histogramView = UIView()
+    lazy var histogramView: LineChartView = {
+        let histogramView = LineChartView()
+        histogramView.rightAxis.enabled = false
+        let leftAxis = histogramView.leftAxis
+        leftAxis.calculate(min: -1.0, max: 1.0)
+        leftAxis.axisMinimum = -1.0
+        leftAxis.axisMaximum = 1.0
+        leftAxis.setLabelCount(3, force: true)
+        
+        let xAxis = histogramView.xAxis
+        xAxis.labelPosition = .bottom
+        xAxis.drawGridLinesEnabled = false
+        xAxis.avoidFirstLastClippingEnabled = true
+        histogramView.isUserInteractionEnabled = false
         histogramView.translatesAutoresizingMaskIntoConstraints = false
         return histogramView
     }()
@@ -160,5 +172,41 @@ class MyDataInsightDetailView: UIView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    fileprivate func createHistogramData() {
+        if let submissions = insightData?.details.submissions, !submissions.isEmpty {
+            let chartDataEntry = submissions.map { ChartDataEntry(x: Double(parseDate(recordDate: $0.recordDate)), y: Double($0.value) ?? 0.0) }.sorted { $0.x < $1.x }
+            
+            var label = "Month"
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "yyyy-MM-dd"
+            if let date = dateformatter.date(from: submissions[0].recordDate) {
+                dateformatter.dateFormat = "MMM"
+                label = dateformatter.string(from: date)
+            }
+            
+            let line = LineChartDataSet(entries: chartDataEntry, label: label)
+            line.drawCircleHoleEnabled = false
+            line.drawValuesEnabled = false
+            line.lineWidth = 2.0
+            line.setColor(UIColor(hexString: "#6C8CBF"))
+            line.circleRadius = 5
+            line.setCircleColor(UIColor(hexString: "#6C8CBF"))
+            let data = LineChartData()
+            data.addDataSet(line)
+            self.histogramView.data = data
+            self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: true)
+        }
+    }
+    
+    fileprivate func parseDate(recordDate: String) -> Int {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd"
+        if let date = dateformatter.date(from: recordDate) {
+            let calendar = Calendar.current
+            return calendar.dateComponents([.day], from: date).day ?? 0
+        }
+        return 0
     }
 }

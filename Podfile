@@ -19,5 +19,5 @@ target 'Longevity' do
   pod 'Sentry', :git => 'https://github.com/getsentry/sentry-cocoa.git', :tag => '5.1.5'
 #  MARK: JSON
   pod 'SwiftyJSON', '~> 4.0'
-
+  pod 'Charts'
 end
