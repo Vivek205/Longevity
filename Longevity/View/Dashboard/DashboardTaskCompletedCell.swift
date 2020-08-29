@@ -23,6 +23,7 @@ class DashboardTaskCompletedCell: UITableViewCell {
         label.font = UIFont(name: "Montserrat-Light", size: 16)
         label.text = "All completed"
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
 
@@ -33,6 +34,7 @@ class DashboardTaskCompletedCell: UITableViewCell {
         label.text = "Check back for later for new tasks"
         label.textColor = UIColor.infoColor
         label.numberOfLines = 0
+        label.textAlignment = .center
         return label
     }()
 
@@ -50,9 +52,11 @@ class DashboardTaskCompletedCell: UITableViewCell {
 
             titleLabel.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             titleLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: CGFloat(5)),
+            titleLabel.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -40),
 
             info.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            info.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: CGFloat(5))
+            info.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: CGFloat(5)),
+            info.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -40),
         ])
     }
 
