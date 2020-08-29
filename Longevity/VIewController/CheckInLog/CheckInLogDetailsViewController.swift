@@ -74,7 +74,7 @@ class CheckInLogDetailsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         self.view.addSubview(containerView)
         self.containerView.addSubview(bezelView)
         self.containerView.addSubview(logDate)
@@ -135,6 +135,18 @@ class CheckInLogDetailsViewController: UIViewController {
         self.containerView.layer.cornerRadius = 20.0
         self.containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.containerView.layer.masksToBounds = true
+        
+        UIView.animate(withDuration: 1.0) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIView.animate(withDuration: 0.5) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        }
     }
 }
 

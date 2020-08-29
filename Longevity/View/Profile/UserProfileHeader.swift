@@ -153,6 +153,17 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         let keys = UserDefaultsKeys()
         self.userName.text = defaults.string(forKey: keys.name)
         self.userEmail.text = defaults.string(forKey: keys.email)
+        
+        let userProfileAPI = UserProfileAPI()
+        userProfileAPI.getUserAvatar(completion: { [weak self] (profileURL) in
+            DispatchQueue.main.async {
+                if let profileurl = profileURL {
+                    self?.profileAvatar.cacheImage(urlString: profileurl)
+                }
+            }
+        }) { (error) in
+            
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -207,9 +218,14 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         self.profileAvatar.image = image
         
         guard let imageData = image?.jpegData(compressionQuality: 0.05) else { return }
-        print(imageData.base64EncodedString())
-        
+       
         //TODO: Integrate the API to save and also retrieve the profile pic
+        let userProfileAPI = UserProfileAPI()
+        userProfileAPI.saveUserAvatar(profilePic: imageData.base64EncodedString(), completion: {
+            print("Avatar is saved")
+        }) { (error) in
+            print(error.localizedDescription)
+        }
     }
 }
 
