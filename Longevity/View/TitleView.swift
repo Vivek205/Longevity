@@ -41,7 +41,7 @@ class TitleView: UIView {
         super.init(frame: CGRect.zero)
         self.viewTab = viewTab
         
-        let vTop: CGFloat = UIDevice.hasNotch ? 50.0 : 20.0
+        let vTop: CGFloat = UIDevice.hasNotch ? 60.0 : 20.0
         
         self.addSubview(bgImageView)
         NSLayoutConstraint.activate([
@@ -57,7 +57,7 @@ class TitleView: UIView {
                 titleImageView.heightAnchor.constraint(equalToConstant: 34.0),
                 titleImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                 titleImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                titleImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
+//                titleImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
                 titleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
             ])
         } else {
@@ -66,7 +66,7 @@ class TitleView: UIView {
             NSLayoutConstraint.activate([
                 titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                 titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
+//                titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
                 titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
             ])
         }

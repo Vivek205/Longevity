@@ -85,10 +85,9 @@ class UserProfileAPI: BaseAuthAPI {
                 switch result {
                 case .success(let data):
                     do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode(String.self, from: data)
-                        completion(value)
+                        let profileURL = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? String
+                        print(profileURL)
+                        completion(profileURL)
                     }
                     catch {
                         print("JSON error", error)

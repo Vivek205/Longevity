@@ -18,7 +18,7 @@ class HomeViewController: BaseViewController {
         let table = UITableView(frame: CGRect.zero, style: .grouped)
         table.showsVerticalScrollIndicator = false
         table.alwaysBounceVertical = false
-        table.backgroundColor = .clear
+        table.backgroundColor = UIColor(hexString: "#F5F6FA")
         table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
@@ -37,12 +37,13 @@ class HomeViewController: BaseViewController {
         self.getSurveyList()
         self.view.addSubview(tableView)
         
+        tableView.tableHeaderView = nil
         tableView.delegate = self
         tableView.dataSource = self
         tableView.tableFooterView = UIView()
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: CGFloat(self.headerHeight)),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -UIApplication.shared.statusBarFrame.height * 2),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -59,7 +60,7 @@ class HomeViewController: BaseViewController {
 
         func completion(_ surveys:[SurveyListItem]) {
             DispatchQueue.main.async {
-                self.tableView.reloadSections(IndexSet(arrayLiteral: 0,2), with: .fade)
+                self.tableView.reloadData()
                 self.removeSpinner()
             }
         }
@@ -141,22 +142,19 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.getHeader(with: UITableViewHeaderFooterView.self, index: section) else {
+        guard let headerView = tableView.getHeader(with: HomeViewHeader.self, index: section) else {
             preconditionFailure("Invalid header view")
         }
-        headerView.backgroundColor = .lightGray
         
-        var header: UIView = UIView()
-        
+        var header = UIView()
         if section == 0 {
             header = DashboardHeaderView()
         } else {
             header = DashboardSectionHeader(section: section)
         }
-        
         header.translatesAutoresizingMaskIntoConstraints = false
         headerView.addSubview(header)
-
+        
         NSLayoutConstraint.activate([
             header.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
             header.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
@@ -291,5 +289,28 @@ extension HomeViewController: ORKTaskResultSource {
         default:
             return nil
         }
+    }
+}
+
+class HomeViewHeader: UITableViewHeaderFooterView {
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
+        let view = UIView()
+        view.backgroundColor = UIColor(hexString: "#F5F6FA")
+        view.translatesAutoresizingMaskIntoConstraints = false
+        
+        self.addSubview(view)
+        
+        NSLayoutConstraint.activate([
+            view.leadingAnchor.constraint(equalTo: leadingAnchor),
+            view.trailingAnchor.constraint(equalTo: trailingAnchor),
+            view.topAnchor.constraint(equalTo: topAnchor),
+            view.bottomAnchor.constraint(equalTo: bottomAnchor)
+        ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
     }
 }

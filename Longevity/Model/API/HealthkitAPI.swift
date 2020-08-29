@@ -35,7 +35,7 @@ class HealthkitAPI: BaseAuthAPI {
                 print("body data error",error.localizedDescription)
             }
             
-            let request = RESTRequest(apiName: "healthkitAPI", path: "/health/application/HEALTHKIT/synchronize", headers: headers, queryParameters: nil, body: bodyData)
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/application/HEALTHKIT/synchronize", headers: headers, queryParameters: nil, body: bodyData)
             Amplify.API.post(request: request) { (result) in
                 switch result {
                 case .success(let data):

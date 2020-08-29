@@ -23,6 +23,7 @@
 		C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */; };
 		C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */; };
 		C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C12F09DC24F9E7FE00623CC3 /* Charts.framework */; };
+		C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -156,9 +157,8 @@
 		E2E14BF924AF0BFC007C0470 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E14BF824AF0BFC007C0470 /* User.swift */; };
 		E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8F93D24F94E7F003827CC /* FAQViewController.swift */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
-		E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */; };
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
-		E2ECB8C6247FE2BA0020A27E /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C4247FE2BA0020A27E /* Main.storyboard */; };
+		E2ECB8C6247FE2BA0020A27E /* UserLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C4247FE2BA0020A27E /* UserLogin.storyboard */; };
 		E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */; };
 /* End PBXBuildFile section */
 
@@ -211,6 +211,7 @@
 		C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogDetailsViewController.swift; sourceTree = "<group>"; };
 		C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		C12F09DC24F9E7FE00623CC3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthAPI.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -347,9 +348,8 @@
 		E2E8F93D24F94E7F003827CC /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
-		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserLogin.storyboard; sourceTree = "<group>"; };
 		E2ECB8CA247FE2BE0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2ECB8CC247FE2BE0020A27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -698,6 +698,7 @@
 				C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */,
 				E258E66524EE247100676056 /* UserProfileAPI.swift */,
 				C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */,
+				C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -735,7 +736,6 @@
 				E2ECB8D2247FE3760020A27E /* View */,
 				E2ECB8D3247FE3950020A27E /* Controller */,
 				E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */,
-				E2ECB8C0247FE2BA0020A27E /* SceneDelegate.swift */,
 				E2ECB8CC247FE2BE0020A27E /* Info.plist */,
 				E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */,
 				E2939A4024E15D9500069026 /* Utilities */,
@@ -755,7 +755,7 @@
 				E274F09224C997E600969CD8 /* ResearchKitViews */,
 				E2C59DFE2498E34D00842105 /* CustomViews */,
 				E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */,
-				E2ECB8C4247FE2BA0020A27E /* Main.storyboard */,
+				E2ECB8C4247FE2BA0020A27E /* UserLogin.storyboard */,
 				E2C59DF92498A2DE00842105 /* ProfileSetup.storyboard */,
 				E274F07D24C55DA600969CD8 /* Dashboard.storyboard */,
 				E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */,
@@ -906,7 +906,7 @@
 				E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */,
 				C19875AB24DAF11C00477185 /* Montserrat-SemiBold.ttf in Resources */,
 				E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */,
-				E2ECB8C6247FE2BA0020A27E /* Main.storyboard in Resources */,
+				E2ECB8C6247FE2BA0020A27E /* UserLogin.storyboard in Resources */,
 				E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1089,7 +1089,6 @@
 				C1C8220A24EB570C0074AF11 /* UserProfileHeader.swift in Sources */,
 				C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */,
 				C19875C724DC9E3000477185 /* CurvedView.swift in Sources */,
-				E2ECB8C1247FE2BA0020A27E /* SceneDelegate.swift in Sources */,
 				E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */,
 				E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */,
 				E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */,
@@ -1100,6 +1099,7 @@
 				C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */,
 				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
+				C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */,
@@ -1135,12 +1135,12 @@
 /* End PBXSourcesBuildPhase section */
 
 /* Begin PBXVariantGroup section */
-		E2ECB8C4247FE2BA0020A27E /* Main.storyboard */ = {
+		E2ECB8C4247FE2BA0020A27E /* UserLogin.storyboard */ = {
 			isa = PBXVariantGroup;
 			children = (
 				E2ECB8C5247FE2BA0020A27E /* Base */,
 			);
-			name = Main.storyboard;
+			name = UserLogin.storyboard;
 			sourceTree = "<group>";
 		};
 		E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */ = {
