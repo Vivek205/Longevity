@@ -11,6 +11,7 @@ import UIKit
 enum DeviceConnectionStatus: Int {
     case connected
     case notConnected
+    case notrequired
 }
 
 extension DeviceConnectionStatus {
@@ -20,11 +21,16 @@ extension DeviceConnectionStatus {
             return "icon: check mark"
         case .notConnected:
             return "icon: add"
+        default:
+            return ""
         }
     }
 }
 
 class DashboardDeviceCollectionCell: UICollectionViewCell {
+    
+    var connectionStatus: DeviceConnectionStatus = .notConnected
+    var device: HealthDevices = .newdevice
     
     lazy var deviceIcon: UIImageView = {
         let icon = UIImageView()
@@ -37,6 +43,10 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     lazy var statusButton: UIImageView = {
         let statusbutton = UIImageView()
         statusbutton.image = UIImage(named: "icon: add")
+        
+        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addDevice))
+        gestureRecognizer.numberOfTapsRequired = 1
+        statusbutton.addGestureRecognizer(gestureRecognizer)
         statusbutton.translatesAutoresizingMaskIntoConstraints = false
         return statusbutton
     }()
@@ -84,9 +94,30 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, description: String, icon: String, isEmpty: Bool, status: DeviceConnectionStatus) {
+    func setupCell(device: HealthDevices) {
+        self.device = device
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+
+        if device == .fitbit {
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
+                if let fitbitStatus = devices[ExternalDevices.FITBIT] {
+                    if fitbitStatus["connected"] == 1 {
+                        connectionStatus = .connected
+                    }
+                }
+            }
+        } else if device == .applehealth {
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
+                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] {
+                    if healthkitStatus["connected"] == 1 {
+                        connectionStatus = .connected
+                    }
+                }
+            }
+        }
         
-        if isEmpty {
+        if device == .newdevice {
             self.addSubview(statusButton)
             self.addSubview(deviceTitle)
             
@@ -100,10 +131,11 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 deviceTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
                 deviceTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
             ])
-            deviceTitle.text = title
-            deviceTitle.textColor = UIColor(hexString: "#5AA7A7")
+            deviceTitle.text = device.deviceName
+            deviceTitle.textColor = .themeColor
             self.backgroundColor = UIColor(hexString: "#F5F6FA")
             contentView.layer.borderColor = UIColor.themeColor.cgColor
+            connectionStatus = .notrequired
         } else {
             self.addSubview(deviceIcon)
             self.addSubview(statusButton)
@@ -136,10 +168,10 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 deviceTitle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8.0)
             ])
             
-            self.deviceTitle.text = title
-            self.deviceTitle2.text = description
-            self.deviceIcon.image = UIImage(named: icon)
-            self.statusButton.image = UIImage(named: status.statusButtonImage)
+            self.deviceTitle.text = device.deviceName
+            self.deviceTitle2.text = device.descriptions
+            self.deviceIcon.image = device.icon
+            self.statusButton.image = UIImage(named: connectionStatus.statusButtonImage)
             contentView.layer.borderColor = UIColor.clear.cgColor
         }
     }
@@ -158,5 +190,15 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         layer.shadowOpacity = 0.25
         layer.masksToBounds = false
         layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+    }
+    
+    @objc func addDevice() {
+        if connectionStatus == .notConnected {
+            if self.device == .applehealth {
+                
+            } else if self.device == .fitbit {
+                
+            }
+        }
     }
 }
