@@ -81,12 +81,15 @@ class UserProfileAPI: BaseAuthAPI {
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers,
                                       queryParameters: nil, body: nil)
+            
+            Amplify.API.get(request: request) { (result) in
+                
+            }
             Amplify.API.get(request: request) { (result) in
                 switch result {
                 case .success(let data):
                     do {
-                        let profileURL = try JSONSerialization.jsonObject(with: data, options: .allowFragments) as? String
-                        print(profileURL)
+                        let profileURL = String(data: data, encoding: .utf8)
                         completion(profileURL)
                     }
                     catch {
@@ -109,7 +112,11 @@ class UserProfileAPI: BaseAuthAPI {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             
-            let bodyData = Data(base64Encoded: profilePic)
+            let parameters: [String: String] = [
+                "image": profilePic
+            ]
+            
+            guard let bodyData:Data = profilePic.data(using: .utf8, allowLossyConversion: false) else { return }
             
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers, queryParameters: nil, body: bodyData)
             Amplify.API.post(request: request) { (result) in
