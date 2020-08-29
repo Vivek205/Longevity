@@ -32,6 +32,9 @@ PODS:
   - AWSSNS (2.13.4):
     - AWSCore (= 2.13.4)
   - CGRPCZlib (1.0.0-alpha.12)
+  - Charts (3.5.0):
+    - Charts/Core (= 3.5.0)
+  - Charts/Core (3.5.0)
   - CNIOAtomics (2.15.0)
   - CNIOBoringSSL (2.7.1)
   - CNIOBoringSSLShims (2.7.1):
@@ -102,6 +105,7 @@ DEPENDENCIES:
   - AWSCognito
   - AWSPinpoint
   - AWSSNS
+  - Charts
   - gRPC-Swift (= 1.0.0-alpha.12)
   - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.1.5`)
   - SwiftLint (~> 0.39)
@@ -122,6 +126,7 @@ SPEC REPOS:
     - AWSPluginsCore
     - AWSSNS
     - CGRPCZlib
+    - Charts
     - CNIOAtomics
     - CNIOBoringSSL
     - CNIOBoringSSLShims
@@ -170,6 +175,7 @@ SPEC CHECKSUMS:
   AWSPluginsCore: bf9e284d77603892740526377af767498697b729
   AWSSNS: 07725d5ab55c0fac5de373477f848ad8677e4602
   CGRPCZlib: a53e43fb0567e720e753dd172911b96baa3910d7
+  Charts: 40a08591df1f8ad5c223ddedfb1a06da92f24f7c
   CNIOAtomics: ba49b1c86f281e1ecfd84c9205fbc27a81826847
   CNIOBoringSSL: e4766830ab6d7c7fcd3618331f05fcb11638314d
   CNIOBoringSSLShims: c3f3c6f05b7ce9b576521328a5b1b566d8f4665b
@@ -195,6 +201,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: be34c0bb8d583942d6951d110d3246bb6282ca8c
+PODFILE CHECKSUM: 78510c5c27881620e75d7f9e1f529a7973e4cdc1
 
 COCOAPODS: 1.9.3

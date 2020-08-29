@@ -35,7 +35,6 @@ class OnboardingVC: UIViewController, UIScrollViewDelegate {
         self.removeBackButtonNavigation()
         getCurrentUser()
 
-
         if let token = UserDefaults.standard.value(forKey: "deviceTokenForSNS") {
             print("device token ====   \(token)")
         }

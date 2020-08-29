@@ -20,8 +20,8 @@ class SetupCompleteVC: UIViewController {
     }
     
     @IBAction func onShowDashboard(_ sender: Any) {
-        let tabBarController = LNTabBarViewController()
-        NavigationUtility.presentOverCurrentContext(destination: tabBarController, style: .overCurrentContext, completion: nil)
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.setRootViewController()
     }
 }
 

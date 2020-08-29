@@ -10,6 +10,8 @@ import UIKit
 
 class DashboardHeaderView: UIView {
     
+    let vTop = UIDevice.hasNotch ? 100.0 : 60.0
+    
     var userInsights: [UserInsight]? {
         didSet {
             self.dashboardTilesCollection.reloadData()
@@ -57,7 +59,7 @@ class DashboardHeaderView: UIView {
             bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor),
+            dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
             dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             pageControl.centerXAnchor.constraint(equalTo: self.centerXAnchor),
             pageControl.bottomAnchor.constraint(equalTo: self.bottomAnchor)

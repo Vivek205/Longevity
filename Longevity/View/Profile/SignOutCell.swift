@@ -41,13 +41,29 @@ class SignOutCell: UITableViewCell {
     @objc func doSignout() {
         func onSuccess(isSignedOut: Bool) {
             clearUserDefaults()
-//            DispatchQueue.main.async {
-//                if isSignedOut{
-//                    self.performSegue(withIdentifier: "unwindTempToOnboarding", sender: self)
-//                }
-//            }
+            DispatchQueue.main.async {
+                
+                if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                    while let presentedViewController = topController.presentedViewController {
+                        topController = presentedViewController
+                    }
+                    
+                    topController.removeSpinner()
+                }
+                
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.setRootViewController()
+            }
         }
-
+        
+        if var topController = UIApplication.shared.keyWindow?.rootViewController {
+            while let presentedViewController = topController.presentedViewController {
+                topController = presentedViewController
+            }
+            
+            topController.showSpinner()
+        }
+        
         _ = Amplify.Auth.signOut() { (result) in
             switch result {
             case .success:

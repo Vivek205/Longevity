@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="cPA-DM-ls0">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.2" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dKi-Ug-slJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -22,7 +22,7 @@
         <!--Onboarding-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="OnboardingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnboardingVC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="OnboardingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -219,7 +219,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1302.8985507246377" y="105.80357142857143"/>
+            <point key="canvasLocation" x="190" y="87"/>
         </scene>
         <!--Signup-->
         <scene sceneID="L8n-HE-6fi">
@@ -1435,26 +1435,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hEi-B4-UJe" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="3175" y="106"/>
-        </scene>
-        <!--Navigation Controller-->
-        <scene sceneID="OES-hR-Xhr">
-            <objects>
-                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="cPA-DM-ls0" sceneMemberID="viewController">
-                    <toolbarItems/>
-                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="Vpw-QA-XBe">
-                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
-                        <autoresizingMask key="autoresizingMask"/>
-                        <color key="barTintColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                    </navigationBar>
-                    <nil name="viewControllers"/>
-                    <connections>
-                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="Taf-pE-Qgd"/>
-                    </connections>
-                </navigationController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="oFM-zm-2tb" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="137.68115942028987" y="105.80357142857143"/>
+            <point key="canvasLocation" x="4084.057971014493" y="105.80357142857143"/>
         </scene>
         <!--Confirm EmailVC-->
         <scene sceneID="Wjb-Tu-Gce">
@@ -1549,7 +1530,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
                 <placeholder placeholderIdentifier="IBFirstResponder" id="8H1-zs-CKr" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="Mvb-1h-NjO" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="5359" y="106"/>
+            <point key="canvasLocation" x="6268.115942028986" y="105.80357142857143"/>
         </scene>
         <!--Reset Password-->
         <scene sceneID="tMU-qX-czS">
@@ -1625,9 +1606,27 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
             </objects>
             <point key="canvasLocation" x="4812" y="1031"/>
         </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Np4-Sv-tQJ">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="dKi-Ug-slJ" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="O9J-e0-7rd">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="BYZ-38-t0r" kind="relationship" relationship="rootViewController" id="chZ-e2-Hn2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="R7U-2o-5M1" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-696" y="106"/>
+        </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="jxn-dO-fRl"/>
+        <segue reference="Z1Q-xo-ocY"/>
         <segue reference="U5g-zc-jaq"/>
     </inferredMetricsTieBreakers>
     <resources>

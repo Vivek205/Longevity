@@ -66,7 +66,7 @@ extension RejuveTab {
 class BaseViewController: UIViewController {
     var viewTab: RejuveTab?
     
-    let headerHeight = UIDevice.hasNotch ? 100.0 : 70.0
+    let headerHeight = UIDevice.hasNotch ? 100.0 : 80.0
     
     lazy var titleView: TitleView = {
         let title = TitleView(viewTab: self.viewTab ?? .home)
