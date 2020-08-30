@@ -105,6 +105,8 @@
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
+		E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */; };
+		E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */; };
 		E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F07D24C55DA600969CD8 /* Dashboard.storyboard */; };
 		E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08524C57C7A00969CD8 /* HomeVC.swift */; };
 		E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08724C597C000969CD8 /* CovidCheckinVC.swift */; };
@@ -294,6 +296,8 @@
 		E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormInlineTextAnswerView.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
+		E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
+		E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCompletedCell.swift; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		E274F08524C57C7A00969CD8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E274F08724C597C000969CD8 /* CovidCheckinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinVC.swift; sourceTree = "<group>"; };
@@ -416,6 +420,7 @@
 				C12F09BA24F704C900623CC3 /* EditAccountViewController.swift */,
 				C12F09C224F800EA00623CC3 /* AppleHealthConnectionViewController.swift */,
 				E2E8F93D24F94E7F003827CC /* FAQViewController.swift */,
+				E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */,
 			);
 			path = ProfileSettings;
 			sourceTree = "<group>";
@@ -480,6 +485,7 @@
 				C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */,
 				C19875D824E04DD000477185 /* DashboardCheckInCell.swift */,
 				C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */,
+				E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */,
 				C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */,
 				C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */,
 				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
@@ -1017,6 +1023,7 @@
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
+				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
 				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
@@ -1111,6 +1118,7 @@
 				C12F09C324F800EA00623CC3 /* AppleHealthConnectionViewController.swift in Sources */,
 				C19875C524DC926D00477185 /* TitleView.swift in Sources */,
 				E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */,
+				E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */,
 				E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */,
 				C19875CB24DD5ECB00477185 /* UITableView+Extension.swift in Sources */,
 				E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */,
