@@ -93,6 +93,6 @@ class BaseViewController: UIViewController {
     }
     
     fileprivate func setTabItems() {
-        self.tabBarItem = UITabBarItem(title: self.viewTab?.tabTitle, image: self.viewTab?.tabIcon, tag: 0)
+        self.tabBarItem = UITabBarItem(title: self.viewTab?.tabTitle, image: self.viewTab?.tabIcon, tag: self.viewTab?.rawValue ?? 0)
     }
 }
