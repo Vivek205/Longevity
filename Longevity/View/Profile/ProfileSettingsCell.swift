@@ -9,20 +9,12 @@
 import UIKit
 
 protocol ProfileSettingsCellDelegate {
-    func switchToggled(onCell cell:ProfileSettingsCell)
+    func switchToggled(onCell cell:ProfileSettingsCell, isOn: Bool)
 }
 
 class ProfileSettingsCell: UITableViewCell {
-
-    var delegate:ProfileSettingsCellDelegate?
     
-    var isDeviceConnected: Bool {
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-        let devices = (defaults.dictionary(forKey: keys.devices) ?? [:]) as [String:[String:Int]]
-        let healthkitStatus = (devices[ExternalDevices.HEALTHKIT] ?? [:]) as [String:Int]
-        return healthkitStatus["connected"] == 1
-    }
+    var delegate:ProfileSettingsCellDelegate?
     
     var profileSetting: ProfileSetting! {
         didSet {
@@ -62,7 +54,16 @@ class ProfileSettingsCell: UITableViewCell {
             
             settingStatus.isHidden = profileSetting != .applehealth
             if !settingStatus.isHidden {
-                settingStatus.text = isDeviceConnected ? "Connected" : "Not Connected"
+                AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
+                    let profile = AppSyncManager.instance.healthProfile.value
+                    var deviceConnected = false
+                    if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+                        deviceConnected = true
+                    } else {
+                        deviceConnected = false
+                    }
+                    self?.settingStatus.text = deviceConnected ? "Connected" : "Not Connected"
+                }
             }
         }
     }
@@ -152,11 +153,11 @@ class ProfileSettingsCell: UITableViewCell {
         self.settingBGView.layer.masksToBounds = false
         self.settingBGView.layer.shadowPath = UIBezierPath(roundedRect: self.settingBGView.bounds, cornerRadius: self.settingBGView.layer.cornerRadius).cgPath
     }
-
+    
     @objc func handleSwitchToggle(_ sender: UISwitch){
-        delegate?.switchToggled(onCell: self)
+        delegate?.switchToggled(onCell: self, isOn: sender.isOn)
     }
-
+    
     func notificationSettingSwitchPreselect() {
         UNUserNotificationCenter.current().getNotificationSettings { (settings) in
             if settings.authorizationStatus == .authorized {
@@ -166,20 +167,18 @@ class ProfileSettingsCell: UITableViewCell {
             }
         }
     }
-
+    
     func fitbitSwitchPreselect() {
-        let keys = UserDefaultsKeys()
-        if let devices = UserDefaults.standard.dictionary(forKey: keys.devices) {
-            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String:Int] {
-                if fitbitStatus["connected"] == 1 {
-                    self.settingsSwitch.isOn = true
-                }else {
-                    self.settingsSwitch.isOn = false
-                }
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
+            let profile = AppSyncManager.instance.healthProfile.value
+            if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
+                self?.settingsSwitch.isOn = true
+            } else {
+                self?.settingsSwitch.isOn = false
             }
         }
     }
-
+    
     func metricSystemPreselect() {
         let keys = UserDefaultsKeys()
         if let metric = UserDefaults.standard.string(forKey: keys.unit) {

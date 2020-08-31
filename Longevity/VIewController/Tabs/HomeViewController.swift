@@ -50,11 +50,6 @@ class HomeViewController: BaseViewController {
         ])
     }
 
-//    override func viewDidAppear(_ animated: Bool) {
-//        super.viewDidAppear(animated)
-//        getSurveyList()
-//    }
-
     func getSurveyList() {
         self.showSpinner()
 

@@ -24,6 +24,10 @@
 		C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */; };
 		C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C12F09DC24F9E7FE00623CC3 /* Charts.framework */; };
 		C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */; };
+		C12F09E824FD4BF300623CC3 /* AppSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E724FD4BF300623CC3 /* AppSyncManager.swift */; };
+		C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E924FD4C6200623CC3 /* DynamicValue.swift */; };
+		C12F09EC24FD4CE600623CC3 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09EB24FD4CE600623CC3 /* UserProfile.swift */; };
+		C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -212,6 +216,10 @@
 		C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIImageView+Extension.swift"; sourceTree = "<group>"; };
 		C12F09DC24F9E7FE00623CC3 /* Charts.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; path = Charts.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAuthAPI.swift; sourceTree = "<group>"; };
+		C12F09E724FD4BF300623CC3 /* AppSyncManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppSyncManager.swift; sourceTree = "<group>"; };
+		C12F09E924FD4C6200623CC3 /* DynamicValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicValue.swift; sourceTree = "<group>"; };
+		C12F09EB24FD4CE600623CC3 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
+		C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthConnectCell.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -394,6 +402,7 @@
 				C12F09C824F80F8700623CC3 /* HowItWorksCell.swift */,
 				C12F09CA24F837DD00623CC3 /* AppleHealthTopCell.swift */,
 				C12F09CC24F8380100623CC3 /* AppleHealthStatusCell.swift */,
+				C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */,
 			);
 			path = AppleHealth;
 			sourceTree = "<group>";
@@ -802,6 +811,9 @@
 				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
 				E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */,
 				E23634F624F4EACB00B93490 /* Logger.swift */,
+				C12F09E724FD4BF300623CC3 /* AppSyncManager.swift */,
+				C12F09E924FD4C6200623CC3 /* DynamicValue.swift */,
+				C12F09EB24FD4CE600623CC3 /* UserProfile.swift */,
 			);
 			path = Model;
 			sourceTree = "<group>";
@@ -1014,6 +1026,7 @@
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
 				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
+				C12F09EC24FD4CE600623CC3 /* UserProfile.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
@@ -1060,6 +1073,7 @@
 				E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
+				C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */,
 				C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */,
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
@@ -1076,6 +1090,7 @@
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
+				C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */,
 				C193943124EF0DC500BDB3BD /* UIFont+Extension.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */,
@@ -1101,6 +1116,7 @@
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,
+				C12F09E824FD4BF300623CC3 /* AppSyncManager.swift in Sources */,
 				E2BCA57024865303007204B9 /* PersonalLoginVC.swift in Sources */,
 				C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */,
 				E23634EC24F3A6A700B93490 /* HealthKitUtil.swift in Sources */,
@@ -1276,7 +1292,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1301,7 +1317,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 9;
+				CURRENT_PROJECT_VERSION = 10;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

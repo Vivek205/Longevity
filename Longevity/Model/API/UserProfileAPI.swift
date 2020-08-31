@@ -8,6 +8,7 @@
 
 import Foundation
 import Amplify
+import SwiftyJSON
 
 enum UserActivityType: String, Codable {
     case ACCOUNTCREATED = "ACCOUNT_CREATED"
@@ -44,6 +45,105 @@ struct UserActivity: Decodable {
 }
 
 class UserProfileAPI: BaseAuthAPI {
+    
+    func getProfile(completion: @escaping ((UserProfile?)-> Void)) {
+        self.getCredentials(completion: { (credentials) in
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
+            _ = Amplify.API.get(request: request, listener: { (result) in
+                switch result {
+                case .success(let data):
+                    do {
+                        let jsonData = try JSON(data: data)
+                        let userProfileData = jsonData["data"]
+                        let keys = UserDefaultsKeys()
+                        let name = userProfileData[keys.name].rawString() ?? ""
+                        let email = userProfileData[keys.email].rawString() ?? ""
+                        let phone = userProfileData[keys.phone].rawString() ?? ""
+                        
+                        let userProfile = UserProfile(name: name, email: email, phone: phone)
+                        
+                        completion(userProfile)
+                    } catch {
+                        print("json parse error", error)
+                    }
+                case .failure(let apiError):
+                    print("getProfile failed \(apiError.localizedDescription)")
+                    completion(nil)
+                }
+            })
+        }) { (error) in
+            print("getProfile failed \(error.localizedDescription)")
+            completion(nil)
+        }
+    }
+    
+    func getHealthProfile(completion: @escaping ((UserHealthProfile?)-> Void)) {
+        self.getCredentials(completion: { (credentials) in
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
+            _ = Amplify.API.get(request: request, listener: { (result) in
+                switch result {
+                case .success(let data):
+                    do {
+                        let jsonData = try JSON(data: data)
+                        
+                        let defaults = UserDefaults.standard
+                        let keys = UserDefaultsKeys()
+                        let userProfileData = jsonData["data"]
+                        let weight = userProfileData[keys.weight].rawString() ?? ""
+                        let height = userProfileData[keys.height].rawString() ?? ""
+                        let gender = userProfileData[keys.gender].rawString() ?? ""
+                        let birthday = userProfileData[keys.birthday].rawString() ?? ""
+                        let unit = userProfileData[keys.unit].rawString() ?? ""
+                        let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
+                        let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
+                        let mesureUnit = MeasurementUnits(rawValue: unit) ?? .metric
+                        let healthProfile = UserHealthProfile(weight: weight, height: height, gender: gender, birthday: birthday, unit: mesureUnit, devices: devices, preconditions: preExistingConditions)
+                        completion(healthProfile)
+                    } catch {
+                        print("json parse error", error)
+                    }
+                case .failure(let apiError):
+                    print("getHealthProfile failed \(apiError)")
+                }
+            })
+        }) { (error) in
+            print("getProfile failed \(error.localizedDescription)")
+            completion(nil)
+        }
+    }
+    
+    func getUserAttributes(completion: @escaping ((Bool)-> Void)) {
+        let keys = UserDefaultsKeys()
+        _ = Amplify.Auth.fetchUserAttributes() { result in
+            switch result {
+            case .success(let attributes):
+                for attribute in attributes {
+                    let name = attribute.key
+                    let value = attribute.value
+                    if name.rawValue == CustomCognitoAttributes.longevityTNC {
+                        guard let data = value.data(using: .utf8) as? Data else {
+                            completion(false)
+                            return
+                        }
+                        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                            completion(false)
+                            return
+                        }
+
+                        if json["isAccepted"] as! NSNumber == 1 {
+                            completion(true)
+                        }
+                    }
+                }
+            case .failure(let error):
+                print("Fetching user attributes failed with error \(error)")
+                completion(false)
+            }
+        }
+    }
+    
     func getUserActivities(completion: @escaping (_ userActivities:[UserActivity])-> Void,
                            onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
@@ -76,7 +176,7 @@ class UserProfileAPI: BaseAuthAPI {
     }
     
     func getUserAvatar(completion: @escaping (_ userActivities:String?)-> Void,
-                        onFailure: @escaping (_ error: Error)-> Void) {
+                       onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers,
@@ -141,5 +241,115 @@ class UserProfileAPI: BaseAuthAPI {
         }) { (error) in
             onFailure(error)
         }
+    }
+    
+    func saveUserHealthProfile(healthProfile: UserHealthProfile,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
+        self.getCredentials(completion: { (credentials) in
+            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+            let keys = UserDefaultsKeys()
+            var bodyDict = [
+                keys.weight: healthProfile.weight,
+                keys.height: healthProfile.height,
+                keys.gender: healthProfile.gender,
+                keys.birthday: healthProfile.birthday,
+                keys.unit: healthProfile.unit.rawValue,
+                "devices": healthProfile.devices
+                ] as [String : Any]
+
+            let body = JSON(bodyDict)
+
+            var bodyData:Data = Data()
+            do {
+                bodyData = try body.rawData()
+                print(String(data: bodyData, encoding: .utf8))
+            } catch  {
+                print(error)
+            }
+            
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/profile", headers: headers, body: bodyData)
+            Amplify.API.post(request: request) { (result) in
+                switch result {
+                case .success(let data):
+                    let responseString = String(data: data, encoding: .utf8)
+                    print("sucess \(responseString)")
+//                    updateSetupProfileCompletionStatus(currentState: .biodata)
+//                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+//                        defaults.set(enhancedDevices, forKey: keys.devices)
+//                    } else {
+//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        defaults.set(newDevices, forKey: keys.devices)
+//                    }
+                case .failure(let error):
+                    print(error.localizedDescription)
+                    onFailure(error)
+                    break
+                }
+            }
+        }) { (error) in
+            onFailure(error)
+        }
+        
+        func onGettingCredentials(_ credentials: Credentials){
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let defaults = UserDefaults.standard
+            let keys = UserDefaultsKeys()
+            var bodyDict = [
+                keys.weight: defaults.value(forKey: keys.weight),
+                keys.height: defaults.value(forKey: keys.height),
+                keys.gender: defaults.value(forKey: keys.gender),
+                keys.birthday: defaults.value(forKey: keys.birthday),
+                keys.unit: defaults.value(forKey: keys.unit)
+            ]
+
+            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+                var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
+                if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+                    print("fitbitstatus", fitbitStatus)
+                    devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
+                }
+                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
+                    devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
+                }
+                bodyDict["devices"] = devicesStatus
+            }
+
+            let body = JSON(bodyDict)
+
+            var bodyData:Data = Data()
+            do {
+                bodyData = try body.rawData()
+                print(String(data: bodyData, encoding: .utf8))
+            } catch  {
+                print(error)
+            }
+
+            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers, body: bodyData)
+            _ = Amplify.API.post(request: request, listener: { (result) in
+                switch result{
+                case .success(let data):
+                    let responseString = String(data: data, encoding: .utf8)
+                    print("sucess \(responseString)")
+                    updateSetupProfileCompletionStatus(currentState: .biodata)
+                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+                        defaults.set(enhancedDevices, forKey: keys.devices)
+                    } else {
+                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+                        defaults.set(newDevices, forKey: keys.devices)
+                    }
+                case .failure(let apiError):
+                    print("updateHealthProfile failed \(apiError)")
+                }
+            })
+        }
+
+        func onFailureCredentials(_ error: Error?) {
+              print("updateHealthProfile failed to fetch credentials \(error)")
+          }
+
+        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     }
 }

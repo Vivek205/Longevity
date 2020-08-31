@@ -77,9 +77,6 @@ func getProfile() {
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     getUserAttributes()
-
-
-
 }
 
 func updateProfile(){

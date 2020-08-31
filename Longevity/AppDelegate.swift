@@ -38,7 +38,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
-        logoutUserIfAppIsUpdated()
+        
         SentrySDK.start(options: [
             "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
             "enableAutoSessionTracking": true
@@ -66,26 +66,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         self.setRootViewController()
         window?.makeKeyAndVisible()
+        checkIfAppUpdated()
         return true
-    }
-
-    func logoutUserIfAppIsUpdated() {
-        let previousBuild = UserDefaults.standard.string(forKey: "build")
-        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-        if previousBuild == nil {
-            //fresh install
-            _ = Amplify.Auth.signOut() { (result) in
-                switch result {
-                case .success:
-                    print("Successfully signed out")
-                case .failure(let error):
-                    print("Sign out failed with error \(error)")
-                }
-            }
-        } else if previousBuild != currentBuild {
-            //application updated
-        }
-        UserDefaults.standard.set(currentBuild, forKey: "build")
     }
     
     func setRootViewController() {
@@ -94,9 +76,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 tabbarViewController.modalPresentationStyle = .fullScreen
             self.window?.rootViewController = tabbarViewController
         } else {
-            let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-            let onBoardingViewController = storyboard.instantiateInitialViewController()
-            self.window?.rootViewController = onBoardingViewController
+            gotoLogin()
         }
     }
 
@@ -178,5 +158,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler(.sound)
+    }
+    
+    fileprivate func gotoLogin() {
+        let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+        let onBoardingViewController = storyboard.instantiateInitialViewController()
+        self.window?.rootViewController = onBoardingViewController
+    }
+    
+    fileprivate func checkIfAppUpdated() {
+        let previousBuild = UserDefaults.standard.string(forKey: "build")
+        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        if previousBuild == nil {
+            //fresh install
+            _ = Amplify.Auth.signOut() { [weak self] (result) in
+                switch result {
+                case .success:
+                    print("Successfully signed out")
+                    DispatchQueue.main.async {
+                        self?.gotoLogin()
+                    }
+                case .failure(let error):
+                    print("Sign out failed with error \(error)")
+                }
+            }
+        }
+        UserDefaults.standard.set(currentBuild, forKey: "build")
     }
 }
