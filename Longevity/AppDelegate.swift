@@ -182,7 +182,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-        print(notification.request.content.userInfo)
+        Logger.log("received foreground notification - will present")
         if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
             if let alert = apsData["alert"] as? [String: Any] {
                 if let alertBody = alert["body"] as? String {
@@ -195,15 +195,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-
-        Logger.log("received foreground notification - will present")
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler(.alert)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
-        print("foreground nofitification",response.notification.request.content.userInfo)
+        Logger.log("received foreground notification - did receive")
         if let apsData = response.notification.request.content.userInfo["aps"] as? [String: Any] {
             if let alert = apsData["alert"] as? [String: Any] {
                 if let alertBody = alert["body"] as? String {
@@ -216,8 +214,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-
-        Logger.log("received foreground notification - did receive")
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler()
