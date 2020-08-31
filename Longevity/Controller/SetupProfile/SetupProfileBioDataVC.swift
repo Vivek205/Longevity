@@ -224,6 +224,9 @@ class SetupProfileBioDataVC: UIViewController {
     
     func readHealthData() {
         if healthKitUtil.isHealthkitSynced {
+            if healthKitUtil.selectedUnit == MeasurementUnits.metric {
+
+            }
             healthKitUtil.readCharacteristicData()
             if let currentAge = healthKitUtil.userCharacteristicData?.currentAge {
                 setupProfileOptionList[4]?.isSynced = true
@@ -450,7 +453,10 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
 
-            if healthKitUtil.selectedUnit == MeasurementUnits.imperial {
+            if healthKitUtil.selectedUnit == MeasurementUnits.metric {
+                cell.unitSwitch.isOn = true
+                cell.unitSwitch.setOn(true, animated: true)
+            }else {
                 cell.unitSwitch.isOn = false
                 cell.unitSwitch.setOn(false, animated: true)
             }

@@ -62,6 +62,12 @@ extension HKBiologicalSex {
 
 
 final class HealthKitUtil {
+    private init() {
+        self.readCharacteristicData()
+        getHeightData(completion: nil)
+        getWeightData(completion: nil)
+        _ = self.selectedUnit
+    }
     static let shared = HealthKitUtil()
     var isHealthkitSynced:Bool {
         if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
@@ -90,10 +96,25 @@ final class HealthKitUtil {
     }
 
     func toggleSelectedUnit() {
+
         if selectedUnit == MeasurementUnits.metric {
-            return setSelectedUnit(unit: MeasurementUnits.imperial)
+            setSelectedUnit(unit: MeasurementUnits.imperial)
+            if let heightSample = self.latestHeightSample {
+                _ = getHeightString(from: heightSample)
+            }
+            if let weightSample = self.latestWeightSample {
+                _ = getWeightString(from: weightSample)
+            }
+            return
         }
-        return setSelectedUnit(unit: MeasurementUnits.metric)
+        setSelectedUnit(unit: MeasurementUnits.metric)
+        if let heightSample = self.latestHeightSample {
+            _ = getHeightString(from: heightSample)
+        }
+        if let weightSample = self.latestWeightSample {
+            _ = getWeightString(from: weightSample)
+        }
+        return
     }
 
     var userCharacteristicData: HealthkitCharacteristicUserData?
@@ -194,33 +215,47 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
             heightString = "\(String(format: "%.2f", heightInCentimeters)) \(self.selectedUnit.height)"
+            defaults.set(String(format: "%2f",heightInCentimeters), forKey: keys.height)
         } else {
             let heightInFeet = heightSample.quantity.doubleValue(for: HKUnit.foot())
             heightString = "\(String(format: "%.2f", heightInFeet)) \(self.selectedUnit.height)"
+             defaults.set(String(format: "%2f",heightInFeet), forKey: keys.height)
         }
         return heightString
     }
 
-    func getHeightData(completion: @escaping(_ height: HKQuantitySample?,_ error: Error?) -> Void) {
+    func getHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
         enum HeightError:Error {
             case heightNotFound
         }
         if self.latestHeightSample != nil {
-            return completion(self.latestHeightSample, nil)
+            if completion != nil {
+                completion!(self.latestHeightSample, nil)
+            }
+            return
         }
 
         if let heightSampleType = HKSampleType.quantityType(forIdentifier: .height) {
             getMostRecentSample(for: heightSampleType) { (sample, error) in
                 if error != nil {
-                    return completion(nil, error)
+                    if completion != nil {
+                        completion!(nil, error)
+                    }
+                    return
                 }
                 if let heightSample = sample {
                     self.latestHeightSample = heightSample
-                    return completion(heightSample, nil)
+                    if completion != nil {
+                        completion!(heightSample, nil)
+                    }
+                    return
                 }
             }
         } else {
-            completion(nil, HeightError.heightNotFound)
+            if completion != nil {
+                completion!(nil, HeightError.heightNotFound)
+            }
+
         }
     }
 
@@ -230,31 +265,43 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
             weightString = "\(String(format: "%.2f", weightInKilograms)) \(self.selectedUnit.weight)"
+            defaults.set(String(format: "%2f",weightInKilograms), forKey: keys.weight)
         } else {
             let weightInPounds = weightSample.quantity.doubleValue(for: HKUnit.pound())
             weightString = "\(String(format: "%.2f", weightInPounds)) \(self.selectedUnit.weight)"
+            defaults.set(String(format: "%2f",weightInPounds), forKey: keys.weight)
         }
         return weightString
     }
 
-    func getWeightData(completion: @escaping(_ weight: HKQuantitySample?,_ error: Error?) -> Void) {
+    func getWeightData(completion: ((_ weight: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
         enum WeightError:Error {
             case weightNotFound
         }
         if self.latestWeightSample != nil {
-            return completion(self.latestWeightSample, nil)
+            if completion != nil {
+                completion!(self.latestWeightSample, nil)
+            }
+            return
         }
         if let weightSampleType = HKSampleType.quantityType(forIdentifier: .bodyMass) {
             getMostRecentSample(for: weightSampleType){ (sample, error) in
                 if error != nil {
-                    completion(nil , error)
+                    if completion != nil {
+                        completion!(nil , error)
+                    }
+                    return
                 }
                 if let weightSample = sample {
                     self.latestWeightSample = weightSample
-                    completion(weightSample, nil)
+                    if completion != nil {
+                         completion!(weightSample, nil)
+                    }
                 }
             }
         }
-        completion(nil, WeightError.weightNotFound)
+        if completion != nil {
+            completion!(nil, WeightError.weightNotFound)
+        }
     }
 }

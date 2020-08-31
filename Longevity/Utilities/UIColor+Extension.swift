@@ -69,4 +69,8 @@ extension UIColor {
     @nonobjc class var progressTrackColor: UIColor {
         return UIColor(hexString: "#E5E5EA")
     }
+
+    @nonobjc class var infoColor: UIColor {
+        return UIColor(hexString: "#666666")
+    }
 }

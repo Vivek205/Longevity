@@ -84,8 +84,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if section == 1 {
             return 1
         }
-        let count =  SurveyTaskUtility.shared.oneTimeSurveyList.count
-        return count
+        return SurveyTaskUtility.shared.oneTimeSurveyList.isEmpty ? 1 : SurveyTaskUtility.shared.oneTimeSurveyList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -104,9 +103,17 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             return devicesCell
         } else {
+            if SurveyTaskUtility.shared.oneTimeSurveyList.isEmpty {
+                guard let completionCell = tableView.getCell(with: DashboardTaskCompletedCell.self, at: indexPath) as? DashboardTaskCompletedCell else {
+                    preconditionFailure("Invalid completion cell")
+                }
+                return completionCell
+            }
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
+
+
             checkinCell.surveyResponse = SurveyTaskUtility.shared.oneTimeSurveyList[indexPath.row]
             return checkinCell
         }

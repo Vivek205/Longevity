@@ -311,7 +311,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let editAccountViewController = EditAccountViewController()
                     let navigationController = UINavigationController(rootViewController: editAccountViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
-                case .usemetricsystem: return
+                case .usemetricsystem:
+                    return
                 case .faqs:
                     let faqViewController = FAQViewController()
                     NavigationUtility.presentOverCurrentContext(destination: faqViewController,
@@ -326,7 +327,13 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let navigationController = UINavigationController(rootViewController: tosViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                     
-                case .contactsupport: return
+                case .contactsupport:
+                    let contactSupportViewController = ContactSupportViewController()
+                    NavigationUtility.presentOverCurrentContext(destination: contactSupportViewController,
+                                                                style: .overCurrentContext,
+                                                                transitionStyle: .crossDissolve,
+                                                                completion: nil)
+                    return
                 default: return
                 }
             }
@@ -357,10 +364,16 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         case .fitbit:
             handleFitbitSwitch(isOn: isOn)
             return
+        case .usemetricsystem:
+            handleMetricSystemSwitch()
         default:
             return
         }
+    }
 
+    func handleMetricSystemSwitch() {
+        HealthKitUtil.shared.toggleSelectedUnit()
+        updateHealthProfile()
     }
 
     func handleFitbitSwitch(isOn: Bool) {

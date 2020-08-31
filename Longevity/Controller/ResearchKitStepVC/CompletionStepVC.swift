@@ -10,6 +10,14 @@ import UIKit
 import ResearchKit
 
 class CompletionStepVC: ORKStepViewController {
+    lazy var completedMessage: DashboardTaskCompletedCell = {
+        let view = DashboardTaskCompletedCell()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        view.titleLabel.text = "All questions are completed"
+        view.info.text = "Great, you have answered all the questions! Enjoy your day. We will analyze the response and notify you once the report is ready"
+        return view
+    }()
+
     lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
@@ -50,15 +58,15 @@ class CompletionStepVC: ORKStepViewController {
 
     func presentViews() {
         self.view.addSubview(footerView)
-        self.view.addSubview(infoLabel)
+        self.view.addSubview(completedMessage)
         footerView.addSubview(continueButton)
         let footerViewHeight = CGFloat(130)
 
         NSLayoutConstraint.activate([
-            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            infoLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            infoLabel.heightAnchor.constraint(equalToConstant: 100),
+            completedMessage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            completedMessage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            completedMessage.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
+            completedMessage.heightAnchor.constraint(equalToConstant: 200),
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),

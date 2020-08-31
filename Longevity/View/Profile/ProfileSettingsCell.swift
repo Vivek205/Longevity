@@ -31,7 +31,7 @@ class ProfileSettingsCell: UITableViewCell {
             } else if profileSetting.settingAccessory == .switchcontrol {
                 if profileSetting == .notifications {
                     notificationSettingSwitchPreselect()
-                }else if profileSetting == .fitbit {
+                } else if profileSetting == .fitbit {
                     fitbitSwitchPreselect()
                 } else if profileSetting == .usemetricsystem {
                     metricSystemPreselect()
@@ -180,13 +180,10 @@ class ProfileSettingsCell: UITableViewCell {
     }
     
     func metricSystemPreselect() {
-        let keys = UserDefaultsKeys()
-        if let metric = UserDefaults.standard.string(forKey: keys.unit) {
-            if metric == MeasurementUnits.metric.rawValue {
-                self.settingsSwitch.isOn = true
-            } else {
-                self.settingsSwitch.isOn = false
-            }
+        if HealthKitUtil.shared.selectedUnit == MeasurementUnits.metric {
+            self.settingsSwitch.isOn = true
+        } else {
+            self.settingsSwitch.isOn = false
         }
     }
 }
