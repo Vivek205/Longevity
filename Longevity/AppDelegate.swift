@@ -91,7 +91,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func setRootViewController() {
         if UserAuthAPI.shared.checkUserSignedIn() {
             let tabbarViewController = LNTabBarViewController()
-                tabbarViewController.modalPresentationStyle = .fullScreen
+            tabbarViewController.modalPresentationStyle = .fullScreen
             self.window?.rootViewController = tabbarViewController
         } else {
             let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
@@ -159,24 +159,67 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         fetchCompletionHandler completionHandler:
         @escaping (UIBackgroundFetchResult) -> Void
     ) {
-
+        print("user info", userInfo)
         guard let apsData = userInfo["aps"] as? [String: AnyObject] else {
             Logger.log("did receive wrong background notification")
             completionHandler(.failed)
             return
         }
         Logger.log("did receive background notification \(apsData)")
-        let fitbitModel = FitbitModel()
-        fitbitModel.refreshTheToken()
-        completionHandler(.newData)
+        if let alert = userInfo["alert"] as? [String: Any] {
+            if let alertBody = alert["body"] as? String {
+                if alertBody == "Synchronize fitbit data." {
+                    let fitbitModel = FitbitModel()
+                    fitbitModel.refreshTheToken()
+                    completionHandler(.newData)
+                    return
+                }
+            }
+        }
+        completionHandler(.noData)
     }
 
     func userNotificationCenter(_ center: UNUserNotificationCenter,
                                 willPresent notification: UNNotification,
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-        Logger.log("received foreground notification")
+        print(notification.request.content.userInfo)
+        if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
+            if let alert = apsData["alert"] as? [String: Any] {
+                if let alertBody = alert["body"] as? String {
+                    if alertBody == "Synchronize fitbit data." {
+                        let fitbitModel = FitbitModel()
+                        fitbitModel.refreshTheToken()
+                        completionHandler(.alert)
+                        return
+                    }
+                }
+            }
+        }
+
+        Logger.log("received foreground notification - will present")
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
-        completionHandler(.sound)
+        completionHandler(.alert)
+    }
+
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+        print("foreground nofitification",response.notification.request.content.userInfo)
+        if let apsData = response.notification.request.content.userInfo["aps"] as? [String: Any] {
+            if let alert = apsData["alert"] as? [String: Any] {
+                if let alertBody = alert["body"] as? String {
+                    if alertBody == "Synchronize fitbit data." {
+                        let fitbitModel = FitbitModel()
+                        fitbitModel.refreshTheToken()
+                        completionHandler()
+                        return
+                    }
+                }
+            }
+        }
+
+        Logger.log("received foreground notification - did receive")
+        let fitbitModel = FitbitModel()
+        fitbitModel.refreshTheToken()
+        completionHandler()
     }
 }
