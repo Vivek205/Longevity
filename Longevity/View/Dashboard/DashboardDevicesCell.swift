@@ -8,11 +8,48 @@
 
 import UIKit
 
-class DashboardDevicesCell: UITableViewCell {
+enum HealthDevices: Int, CaseIterable {
+    case applehealth = 0
+    case fitbit = 1
+    case newdevice = 2
+}
+
+extension HealthDevices {
+    var icon : UIImage? {
+        switch self {
+        case .applehealth:
+            return UIImage(named: "Icon-Apple-Health")
+        case .fitbit:
+            return UIImage(named: "icon:  fitbit logo")
+        default:
+            return nil
+        }
+    }
     
-    var deviceIcons = ["Icon-Apple-Health", "icon:  fitbit logo", ""]
-    var devices = ["Healthkit", "Fitbit", "Add health device"]
-    var descriptions = ["Sync your health information", "Add your Fitbit device", ""]
+    var deviceName: String {
+        switch self {
+        case .applehealth:
+            return "Healthkit"
+        case .fitbit:
+            return "Fitbit"
+        default:
+            return "Add health device"
+        }
+    }
+    
+    var descriptions: String {
+        switch self {
+        case .applehealth:
+            return "Sync your health information"
+        case .fitbit:
+            return "Add your Fitbit device"
+        default:
+            return ""
+        }
+    }
+}
+
+class DashboardDevicesCell: UITableViewCell {
     
     lazy var devicesCollection: UICollectionView = {
         let devices = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -53,35 +90,13 @@ class DashboardDevicesCell: UITableViewCell {
 
 extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 3
+        return HealthDevices.allCases.count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: DashboardDeviceCollectionCell.self, at: indexPath) as? DashboardDeviceCollectionCell else { preconditionFailure("Invalid device cell")}
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-
-        var connectionStatus: DeviceConnectionStatus = .notConnected
-
-        if self.devices[indexPath.item] == "Fitbit" {
-            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
-                if let fitbitStatus = devices[ExternalDevices.FITBIT] {
-                    if fitbitStatus["connected"] == 1 {
-                        connectionStatus = .connected
-                    }
-                }
-            }
-        } else if self.devices[indexPath.item] == "Healthkit" {
-            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
-                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] {
-                    if healthkitStatus["connected"] == 1 {
-                        connectionStatus = .connected
-                    }
-                }
-            }
-        }
         
-        cell.setupCell(title: self.devices[indexPath.item], description: self.descriptions[indexPath.item], icon: deviceIcons[indexPath.item], isEmpty: indexPath.item == 2, status: connectionStatus)
+        cell.setupCell(device: HealthDevices(rawValue: indexPath.item)!)
         
         return cell
     }

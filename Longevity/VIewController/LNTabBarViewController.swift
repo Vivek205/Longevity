@@ -11,6 +11,8 @@ import Amplify
 
 class LNTabBarViewController: UITabBarController {
     
+    var currentTabIndex: Int = 0
+    
     init() {
         super.init(nibName: nil, bundle: nil)
     }
@@ -39,6 +41,8 @@ class LNTabBarViewController: UITabBarController {
         self.tabBar.tintColor = .themeColor
         self.tabBar.unselectedItemTintColor = .unselectedColor
         
+        self.delegate = self
+        
         let homeViewController = HomeViewController()
         let myDataViewController = MyDataViewController()
         let profileViewController = ProfileViewController()
@@ -50,6 +54,8 @@ class LNTabBarViewController: UITabBarController {
         
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
         tabBar.insertSubview(bgImageView, at: 0)
+        
+        
         
         getCurrentUser()
     }
@@ -94,4 +100,30 @@ class LNTabBarViewController: UITabBarController {
             }
         }
 
+}
+
+extension LNTabBarViewController: UITabBarControllerDelegate {
+    
+    func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
+        if viewController is ShareAppViewController {
+            tabBarController.selectedViewController = self.viewControllers?[self.currentTabIndex]
+            self.showShareApp()
+        }
+    }
+    
+    override func tabBar(_ tabBar: UITabBar, didSelect item: UITabBarItem) {
+        if item.tag != RejuveTab.shareApp.rawValue {
+            self.currentTabIndex = item.tag
+        }
+    }
+    
+    func showShareApp() {
+        var sharemessage = [Any]()
+        sharemessage.append("Hey, I found this interesting app ")
+        let activityVC = UIActivityViewController(activityItems: sharemessage, applicationActivities: nil)
+        activityVC.title = "Share Rejuve"
+//        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]
+        activityVC.popoverPresentationController?.sourceView = self.selectedViewController?.view
+        self.selectedViewController?.present(activityVC, animated: true, completion: nil)
+    }
 }
