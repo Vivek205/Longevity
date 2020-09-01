@@ -456,7 +456,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             if healthKitUtil.selectedUnit == MeasurementUnits.metric {
                 cell.unitSwitch.isOn = true
                 cell.unitSwitch.setOn(true, animated: true)
-            }else {
+            } else {
                 cell.unitSwitch.isOn = false
                 cell.unitSwitch.setOn(false, animated: true)
             }

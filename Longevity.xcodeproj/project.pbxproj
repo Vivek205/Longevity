@@ -77,7 +77,6 @@
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
 		E21BD6AA24BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */; };
 		E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */; };
-		E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */; };
 		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
 		E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */; };
 		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
@@ -269,7 +268,6 @@
 		E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalHistoryAPI.swift; sourceTree = "<group>"; };
 		E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionOptionCell.swift; sourceTree = "<group>"; };
 		E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreExistingCondition.swift; sourceTree = "<group>"; };
-		E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TOSTitleTableViewCell.swift; sourceTree = "<group>"; };
 		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
 		E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDisclaimerVC.swift; sourceTree = "<group>"; };
 		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
@@ -524,7 +522,6 @@
 			isa = PBXGroup;
 			children = (
 				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
-				E22C1A3E24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift */,
 				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
 				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
 				E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */,
@@ -1036,7 +1033,6 @@
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
 				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
-				E22C1A3F24A46C2B00EC5B29 /* TOSTitleTableViewCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
 				C19875BC24DC7AA200477185 /* ShareAppViewController.swift in Sources */,

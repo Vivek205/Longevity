@@ -9,27 +9,135 @@
 import UIKit
 import Amplify
 import Sentry
+import WebKit
 
-let termsOfServiceContent = TermsOfServiceContent()
+fileprivate let termsOfServiceContent = TermsOfServiceContent()
+fileprivate let tosWebViewURL = "https://rejuve-public.s3-us-west-2.amazonaws.com/Beta-TOS.html"
 
 class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     // MARK: Outlets
-    @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var footer: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
-    
-    var tableViewDataSource: [String] = []
-    
+    @IBOutlet weak var continueButton: CustomButtonFill!
+
+    lazy var titleLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "Terms of Service & Data Privacy"
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        label.textColor = UIColor(hexString: "#4E4E4E")
+        label.numberOfLines = 2
+        label.textAlignment = .center
+        return label
+    }()
+
+    lazy var acceptCard: CardView = {
+        let card = CardView()
+        card.translatesAutoresizingMaskIntoConstraints = false
+        card.backgroundColor = .white
+        card.layer.cornerRadius = 4.0
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleAcceptCheckboxTap(_:)))
+        card.addGestureRecognizer(tapGesture)
+
+        return card
+    }()
+
+    lazy var acceptLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.text = "I agree to the Terms of Service Agreement."
+        label.font = UIFont(name: "Montserrat-Medium", size: 18)
+        label.textColor = .black
+        label.numberOfLines = 2
+        return label
+    }()
+
+    lazy var acceptCheckbox: CheckboxButton = {
+        let button = CheckboxButton()
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
+    }()
+
+    lazy var contentContainer: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.backgroundColor = .white
+        container.layer.cornerRadius = 10
+        return container
+    }()
+
+    lazy var webView: WKWebView = {
+        let view = WKWebView()
+        view.translatesAutoresizingMaskIntoConstraints = false
+        return view
+    }()
+
+    lazy var shieldImage: UIImageView = {
+        let image = UIImageView()
+        image.translatesAutoresizingMaskIntoConstraints = false
+        image.image = UIImage(named: "temsAndConditionsShield")
+        return image
+    }()
+
     var isFromSettings: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
         navigationController?.delegate = self
         self.navigationItem.setHidesBackButton(true, animated: true)
-        getUserAttributes()
-        initalizeTableView()
         self.removeBackButtonNavigation()
-        
+        self.view.backgroundColor = .appBackgroundColor
+
+        self.view.addSubview(titleLabel)
+
+        self.view.addSubview(contentContainer)
+        contentContainer.addSubview(webView)
+        self.view.addSubview(shieldImage)
+
+        self.view.addSubview(acceptCard)
+        acceptCard.addSubview(acceptLabel)
+        acceptCard.addSubview(acceptCheckbox)
+
+        webView.load(URLRequest(url: URL(string: tosWebViewURL)!))
+
+        NSLayoutConstraint.activate([
+            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
+            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
+            titleLabel.topAnchor.constraint(equalTo: view.topAnchor),
+            titleLabel.heightAnchor.constraint(equalToConstant: 64.0),
+
+            shieldImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
+            shieldImage.centerYAnchor.constraint(equalTo: contentContainer.topAnchor),
+            shieldImage.widthAnchor.constraint(equalToConstant: 55.0),
+            shieldImage.heightAnchor.constraint(equalToConstant: 64.0),
+
+            contentContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
+            contentContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
+            contentContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 36.5),
+            contentContainer.bottomAnchor.constraint(equalTo: acceptCard.topAnchor, constant: -36.0),
+
+            webView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 10.0),
+            webView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -10.0),
+            webView.topAnchor.constraint(equalTo: contentContainer.topAnchor, constant: 35),
+            webView.bottomAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: -10.0),
+
+            acceptCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
+            acceptCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
+            acceptCard.bottomAnchor.constraint(equalTo: footer.topAnchor, constant: -12.0),
+            acceptCard.heightAnchor.constraint(equalToConstant: 74.0),
+
+            acceptCheckbox.centerYAnchor.constraint(equalTo: acceptCard.centerYAnchor),
+            acceptCheckbox.trailingAnchor.constraint(equalTo: acceptCard.trailingAnchor, constant: -12.0),
+            acceptCheckbox.widthAnchor.constraint(equalToConstant: 24.0),
+            acceptCheckbox.heightAnchor.constraint(equalToConstant: 24.0),
+
+            acceptLabel.leadingAnchor.constraint(equalTo: acceptCard.leadingAnchor, constant: 15.0),
+            acceptLabel.trailingAnchor.constraint(equalTo: acceptCheckbox.leadingAnchor, constant: 14.0),
+            acceptLabel.topAnchor.constraint(equalTo: acceptCard.topAnchor, constant: 15.0),
+            acceptLabel.bottomAnchor.constraint(equalTo: acceptCard.bottomAnchor, constant: -15.0)
+        ])
+
         if self.isFromSettings {
             let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
@@ -40,17 +148,14 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
             titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
             titleLabel.textColor = UIColor(hexString: "#4E4E4E")
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            self.viewNavigationItem.titleView = titleLabel
-            
-            self.footer.isHidden = true
-        }
-    }
 
-    func initalizeTableView(){
-        tableViewDataSource.append(termsOfServiceContent.title)
-        tableViewDataSource.append(termsOfServiceContent.detailedTerms)
-        tableView.dataSource = self
+            self.viewNavigationItem.titleView = titleLabel
+
+            self.footer.isHidden = true
+
+
+            acceptCard.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+        }
     }
 
     func customizeFooter(footer: UIView){
@@ -62,6 +167,11 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         footer.layer.masksToBounds = false
         footer.clipsToBounds = false
         footer.backgroundColor = UIColor.black
+    }
+
+    @objc func handleAcceptCheckboxTap(_ sender: CardView) {
+        acceptCheckbox.isSelected = !acceptCheckbox.isSelected
+        continueButton.isEnabled = acceptCheckbox.isSelected
     }
     
     // MARK: Actions
@@ -75,67 +185,9 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     @IBAction func unwindToTermsOfService(_ sender: UIStoryboardSegue){
         print("unwound to terms of service")
     }
-
-
-    @IBAction func sendEmailVerification(){
-        func onSuccess(isEmailSent: Bool) {
-            DispatchQueue.main.async {
-                if isEmailSent {
-                    self.performSegue(withIdentifier: "TOSToConfirmEmail", sender: self)
-                }
-            }
-        }
-
-        _ = Amplify.Auth.resendConfirmationCode(for: .email) { result in
-            switch result {
-            case .success(let deliveryDetails):
-                print("Resend code send to - \(deliveryDetails)")
-                onSuccess(isEmailSent: true)
-            case .failure(let error):
-                print("Resend code failed with error \(error)")
-            }
-        }
-
-    }
-
-    func getUserAttributes(){
-        func onSuccess(isEmailVerified: Bool) {
-            DispatchQueue.main.async {
-                // TODO: handle Email already Verified
-                print("email verified", isEmailVerified)
-            }
-        }
-
-        _ = Amplify.Auth.fetchUserAttributes() { result in
-            switch result {
-            case .success(let attributes):
-                for attribute in attributes {
-                    if attribute.key == .unknown("email_verified"){
-                        onSuccess(isEmailVerified: attribute.value == "true")
-                    }
-                }
-            case .failure(let error):
-                print("Fetching user attributes failed with error \(error)")
-            }
-        }
-    }
     
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
-    }
-}
-
-extension TermsOfServiceVC:UITableViewDataSource {
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return tableViewDataSource.count
-    }
-
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if  let tosTitleTableViewCell = tableView.dequeueReusableCell(withIdentifier: "TOSTitleTableViewCell") as? TOSTitleTableViewCell {
-            tosTitleTableViewCell.titleLabel.text = tableViewDataSource[indexPath.row]
-            return tosTitleTableViewCell
-        }
-        return UITableViewCell()
     }
 }
 

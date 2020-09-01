@@ -73,8 +73,8 @@ class OnboardingVC: UIViewController {
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
 
     override func viewDidLoad() {
-
         super.viewDidLoad()
+
         self.view.addSubview(carouselCollection)
         self.view.addSubview(pageControl)
         self.view.addSubview(getStartedButton)
@@ -105,9 +105,9 @@ class OnboardingVC: UIViewController {
             loginButtonLocal.bottomAnchor.constraint(equalTo: view.bottomAnchor,
                                                      constant: -CGFloat(loginButtonBottomMargin)),
             loginButtonLocal.heightAnchor.constraint(equalToConstant: 30)
-            ])
+        ])
 
-//        self.carouselCollection.contentInset.top = -UIApplication.shared.statusBarFrame.height
+        //        self.carouselCollection.contentInset.top = -UIApplication.shared.statusBarFrame.height
 
         guard let layout = carouselCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
@@ -125,18 +125,22 @@ class OnboardingVC: UIViewController {
         if let token = UserDefaults.standard.value(forKey: "deviceTokenForSNS") {
             print("device token ====   \(token)")
         }
+
+
     }
     override func viewWillAppear(_ animated: Bool) {
-           hideNavigationBar()
-       }
+        hideNavigationBar()
+    }
 
-       override func viewDidAppear(_ animated: Bool) {
-           hideNavigationBar()
-       }
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        hideNavigationBar()
 
-       override func viewWillDisappear(_ animated: Bool) {
-           showNavigationBar()
-       }
+    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        showNavigationBar()
+    }
 
     @objc func handleGetStarted(_ sender: UIButton?) {
         let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
@@ -146,6 +150,8 @@ class OnboardingVC: UIViewController {
     }
 
     @objc func handleLogin(_ sender: UIButton) {
+
+
         let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
         let loginVC = storyboard.instantiateViewController(withIdentifier: "PersonalLoginVC")
         self.navigationController?.modalPresentationStyle = .fullScreen
@@ -174,7 +180,7 @@ class OnboardingVC: UIViewController {
             if userSignedIn {
                 getProfile()
                 DispatchQueue.main.async {
-//                    self.navigateToTheNextScreen()
+                    //                    self.navigateToTheNextScreen()
                     retrieveARN()
                 }
             }
@@ -196,14 +202,6 @@ class OnboardingVC: UIViewController {
         }
 
     }
-
-//    // MARK: ScrolView delegate method
-//    func scrollViewDidEndDecelerating(_ scrollView: UIScrollView) {
-//        let pageNumber = Int( scrollView.contentOffset.x / scrollView.frame.size.width)
-//        pageControl.currentPage = pageNumber
-//        pageHeading.text = onboardingContent.pageHeadings[pageNumber]
-//        pageDescription.text = onboardingContent.pageDescriptions[pageNumber]
-//    }
 
     // MARK: Actions
     @IBAction func unwindToOnboarding(_ sender: UIStoryboardSegue){ 
@@ -267,7 +265,7 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
 
-   @objc func handleUIAlertAction(_ action: UIAlertAction) {
+    @objc func handleUIAlertAction(_ action: UIAlertAction) {
 
     }
 }

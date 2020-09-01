@@ -77,4 +77,8 @@ extension UIColor {
     @nonobjc class var pageIndicatorTintColor: UIColor {
         return UIColor(hexString: "#D7D7D7")
     }
+
+    @nonobjc class var appBackgroundColor: UIColor {
+        return UIColor(hexString: "#F5F6FA")
+    }
 }
