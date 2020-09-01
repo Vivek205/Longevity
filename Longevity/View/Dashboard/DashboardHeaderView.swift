@@ -14,7 +14,9 @@ class DashboardHeaderView: UIView {
     
     var userInsights: [UserInsight]? {
         didSet {
-            self.dashboardTilesCollection.reloadData()
+            DispatchQueue.main.async {
+                self.dashboardTilesCollection.reloadData()
+            }
         }
     }
     
@@ -73,11 +75,9 @@ class DashboardHeaderView: UIView {
         layout.scrollDirection = .horizontal
         
         self.pageControl.numberOfPages = 2
-        
-        UserInsightsAPI.instance.get { [weak self] (insights) in
-            DispatchQueue.main.async {
-                self?.userInsights = insights.filter({ $0.name != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            }
+  
+        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
+            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
         }
     }
     
@@ -119,14 +119,20 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
-            preconditionFailure("Invalid tile cell type")
-        }
-        tileCell.setupCell(index: indexPath.item, isEmpty: indexPath.item == 3)
+        
         if indexPath.item < 3 {
+            guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
+                preconditionFailure("Invalid tile cell type")
+            }
             tileCell.insightData = self.userInsights?[indexPath.item]
+            tileCell.setupCell(index: indexPath.item, isEmpty: indexPath.item == 3)
+            return tileCell
+        } else {
+            guard let tileCell = collectionView.getCell(with: DashboardCollectionEmptyCell.self, at: indexPath) as? DashboardCollectionEmptyCell else {
+                preconditionFailure("Invalid tile cell type")
+            }
+            return tileCell
         }
-        return tileCell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

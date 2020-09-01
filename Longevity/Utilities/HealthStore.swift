@@ -51,7 +51,6 @@ final class HealthStore {
         HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
         HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
         HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-//        HKObjectType.quantityType(forIdentifier: .appleStandTime)!,
         HKObjectType.quantityType(forIdentifier: .height)!,
         HKObjectType.quantityType(forIdentifier: .bodyMass)!,
         HKObjectType.quantityType(forIdentifier: .bodyMassIndex)!

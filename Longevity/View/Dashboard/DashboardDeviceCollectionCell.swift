@@ -167,7 +167,6 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             ])
             
             self.deviceTitle.text = device.deviceName
-//            self.deviceTitle2.text = device.descriptions
             self.deviceIcon.image = device.icon
             self.addDeviceButton.setImage(UIImage(named: DeviceConnectionStatus.notConnected.statusButtonImage), for: .normal)
             contentView.layer.borderColor = UIColor.clear.cgColor

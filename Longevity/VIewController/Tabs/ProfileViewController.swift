@@ -377,8 +377,30 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
     }
 
     func handleFitbitSwitch(isOn: Bool) {
-        let profile = AppSyncManager.instance.healthProfile.value
         let connected = isOn ? 1 : 0
+        let fitbitModel = FitbitModel()
+        if isOn {
+            if let context = UIApplication.shared.keyWindow {
+                fitbitModel.contextProvider = AuthContextProvider(context)
+            }
+            fitbitModel.auth { authCode, error in
+                if error != nil {
+                    print("Auth flow finished with error \(String(describing: error))")
+                    self.updateHealthProfileFitBit(connected: 0)
+                } else {
+                    print("Your auth code is \(String(describing: authCode))")
+                    fitbitModel.token(authCode: authCode!)
+                    self.updateHealthProfileFitBit(connected: connected)
+                }
+            }
+        }
+        else {
+            self.updateHealthProfileFitBit(connected: connected)
+        }
+    }
+    
+    fileprivate func updateHealthProfileFitBit(connected: Int) {
+        let profile = AppSyncManager.instance.healthProfile.value
         if let device = profile?.devices?[ExternalDevices.FITBIT] {
             AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.FITBIT]?["connected"] = connected
         } else {

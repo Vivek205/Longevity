@@ -12,15 +12,24 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     var insightData: UserInsight! {
         didSet {
+            self.tileTitle.text = insightData?.text
+            self.trendDirection.isHidden = false
+            self.trendImage.isHidden = false
             if let details = insightData?.details {
-                self.tileTitle.text = insightData?.text
                 self.riskType.text = details.riskLevel?.text
+                self.riskType.font = details.riskLevel?.textFont
                 self.guageView.image = details.riskLevel?.riskIcon
                 self.trendDirection.text = details.trending?.text
                 self.trendDirection.textColor = details.sentiment?.tintColor
                 self.trendImage.image = details.trending?.trendIcon
                 self.trendImage.tintColor = details.sentiment?.tintColor
                 self.trendImage.isHidden = details.trending == .same
+            } else {
+                self.riskType.text = RiskLevel.none.text
+                self.riskType.font = RiskLevel.none.textFont
+                self.guageView.image =  RiskLevel.none.riskIcon
+                self.trendDirection.isHidden = true
+                self.trendImage.isHidden = true
             }
         }
     }
@@ -147,6 +156,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
                 infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
             ])
         } else {
+            self.tileTitle.textColor = .checkinCompleted
             self.hexagonView.backgroundColor = .hexagonColor
             self.hexagonView.borderColor = .borderColor
             self.hexagonView.isEmptyCell = false

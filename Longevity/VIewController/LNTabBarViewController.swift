@@ -69,6 +69,7 @@ class LNTabBarViewController: UITabBarController {
                 }
             }
         }
+        retrieveARN()
     }
         
         func getCurrentUser() {
@@ -130,7 +131,10 @@ extension LNTabBarViewController: UITabBarControllerDelegate {
     
     func showShareApp() {
         var sharemessage = [Any]()
-        sharemessage.append("Hey, I found this interesting app ")
+        sharemessage.append("Hey, I found this interesting app for COVID19 self-checks")
+        if let applink = AppSyncManager.instance.appShareLink.value, !applink.isEmpty {
+            sharemessage.append(applink)
+        }
         let activityVC = UIActivityViewController(activityItems: sharemessage, applicationActivities: nil)
         activityVC.title = "Share Rejuve"
 //        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]

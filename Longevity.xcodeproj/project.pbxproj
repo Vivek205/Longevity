@@ -28,6 +28,7 @@
 		C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E924FD4C6200623CC3 /* DynamicValue.swift */; };
 		C12F09EC24FD4CE600623CC3 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09EB24FD4CE600623CC3 /* UserProfile.swift */; };
 		C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */; };
+		C12F09F124FE56E200623CC3 /* DashboardCollectionEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -222,6 +223,7 @@
 		C12F09E924FD4C6200623CC3 /* DynamicValue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DynamicValue.swift; sourceTree = "<group>"; };
 		C12F09EB24FD4CE600623CC3 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthConnectCell.swift; sourceTree = "<group>"; };
+		C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCollectionEmptyCell.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -499,6 +501,7 @@
 				C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */,
 				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
 				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
+				C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1117,6 +1120,7 @@
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
 				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
+				C12F09F124FE56E200623CC3 /* DashboardCollectionEmptyCell.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */,
 				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,

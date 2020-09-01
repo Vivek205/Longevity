@@ -175,6 +175,23 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
+    func getAppLink(completion: @escaping((String?) -> Void)) {
+        guard let appurl = URL(string: "https://rejuve-public.s3-us-west-2.amazonaws.com/app-location") else { return }
+        URLSession.shared.dataTask(with: appurl) { (data, response, error) in
+            if error != nil {
+                print(error?.localizedDescription)
+                completion(nil)
+            } else {
+                guard let data = data else {
+                    completion(nil)
+                    return
+                }
+                let urlString = String(data: data, encoding: .utf8)
+                completion(urlString)
+            }
+        }
+    }
+    
     func getUserAvatar(completion: @escaping (_ userActivities:String?)-> Void,
                        onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
@@ -291,65 +308,65 @@ class UserProfileAPI: BaseAuthAPI {
             onFailure(error)
         }
         
-        func onGettingCredentials(_ credentials: Credentials){
-            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-            let defaults = UserDefaults.standard
-            let keys = UserDefaultsKeys()
-            var bodyDict = [
-                keys.weight: defaults.value(forKey: keys.weight),
-                keys.height: defaults.value(forKey: keys.height),
-                keys.gender: defaults.value(forKey: keys.gender),
-                keys.birthday: defaults.value(forKey: keys.birthday),
-                keys.unit: defaults.value(forKey: keys.unit)
-            ]
-
-            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
-                if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
-                    print("fitbitstatus", fitbitStatus)
-                    devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
-                }
-                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
-                    devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
-                }
-                bodyDict["devices"] = devicesStatus
-            }
-
-            let body = JSON(bodyDict)
-
-            var bodyData:Data = Data()
-            do {
-                bodyData = try body.rawData()
-                print(String(data: bodyData, encoding: .utf8))
-            } catch  {
-                print(error)
-            }
-
-            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers, body: bodyData)
-            _ = Amplify.API.post(request: request, listener: { (result) in
-                switch result{
-                case .success(let data):
-                    let responseString = String(data: data, encoding: .utf8)
-                    print("sucess \(responseString)")
-                    updateSetupProfileCompletionStatus(currentState: .biodata)
-                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-                        defaults.set(enhancedDevices, forKey: keys.devices)
-                    } else {
-                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                        defaults.set(newDevices, forKey: keys.devices)
-                    }
-                case .failure(let apiError):
-                    print("updateHealthProfile failed \(apiError)")
-                }
-            })
-        }
-
-        func onFailureCredentials(_ error: Error?) {
-              print("updateHealthProfile failed to fetch credentials \(error)")
-          }
-
-        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
+//        func onGettingCredentials(_ credentials: Credentials){
+//            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+//            let defaults = UserDefaults.standard
+//            let keys = UserDefaultsKeys()
+//            var bodyDict = [
+//                keys.weight: defaults.value(forKey: keys.weight),
+//                keys.height: defaults.value(forKey: keys.height),
+//                keys.gender: defaults.value(forKey: keys.gender),
+//                keys.birthday: defaults.value(forKey: keys.birthday),
+//                keys.unit: defaults.value(forKey: keys.unit)
+//            ]
+//
+//            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//                var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
+//                if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+//                    print("fitbitstatus", fitbitStatus)
+//                    devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
+//                }
+//                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
+//                    devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
+//                }
+//                bodyDict["devices"] = devicesStatus
+//            }
+//
+//            let body = JSON(bodyDict)
+//
+//            var bodyData:Data = Data()
+//            do {
+//                bodyData = try body.rawData()
+//                print(String(data: bodyData, encoding: .utf8))
+//            } catch  {
+//                print(error)
+//            }
+//
+//            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers, body: bodyData)
+//            _ = Amplify.API.post(request: request, listener: { (result) in
+//                switch result{
+//                case .success(let data):
+//                    let responseString = String(data: data, encoding: .utf8)
+//                    print("sucess \(responseString)")
+//                    updateSetupProfileCompletionStatus(currentState: .biodata)
+//                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+//                        defaults.set(enhancedDevices, forKey: keys.devices)
+//                    } else {
+//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        defaults.set(newDevices, forKey: keys.devices)
+//                    }
+//                case .failure(let apiError):
+//                    print("updateHealthProfile failed \(apiError)")
+//                }
+//            })
+//        }
+//
+//        func onFailureCredentials(_ error: Error?) {
+//              print("updateHealthProfile failed to fetch credentials \(error)")
+//          }
+//
+//        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     }
 }
