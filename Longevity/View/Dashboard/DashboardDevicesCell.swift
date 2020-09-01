@@ -29,7 +29,7 @@ extension HealthDevices {
     var deviceName: String {
         switch self {
         case .applehealth:
-            return "Healthkit"
+            return "Apple Health"
         case .fitbit:
             return "Fitbit"
         default:
@@ -42,7 +42,7 @@ extension HealthDevices {
         case .applehealth:
             return "Sync your health information"
         case .fitbit:
-            return "Add your Fitbit device"
+            return "Add your Fitbit product"
         default:
             return ""
         }

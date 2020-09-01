@@ -13,7 +13,9 @@ class MyDataViewController: BaseViewController {
     
     var userInsights: [UserInsight]? {
         didSet {
-            self.myDataCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.myDataCollectionView.reloadData()
+            }
         }
     }
     
@@ -56,10 +58,8 @@ class MyDataViewController: BaseViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         
-        UserInsightsAPI.instance.get { [weak self] (insights) in
-            DispatchQueue.main.async {
-                self?.userInsights = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            }
+        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
+            self?.userInsights = AppSyncManager.instance.userInsights.value
         }
     }
 }
@@ -96,7 +96,7 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
             self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
         } else {
             
-            if let history = self.userInsights?[indexPath.item].details.history {
+            if let history = self.userInsights?[indexPath.item].details?.history {
                 let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
                 checkinLogViewController.history = history
                 NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)

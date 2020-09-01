@@ -12,10 +12,8 @@ class MyDataLogCell: UICollectionViewCell {
     
     var logData: UserInsight! {
         didSet {
-            if let details = logData?.details {
-                self.cellTitle.text = logData?.text
-                self.logDuration.text = "\(details.history?.count ?? 0) Days"
-            }
+            self.cellTitle.text = logData?.text
+            self.logDuration.text = "\(logData?.details?.history?.count ?? 0) Days"
         }
     }
     

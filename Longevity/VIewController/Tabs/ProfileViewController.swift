@@ -158,9 +158,7 @@ class ProfileViewController: BaseViewController {
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
-    
     func numberOfSections(in tableView: UITableView) -> Int {
-        
         if self.currentProfileView == .activity {
             return 1
         } else {
@@ -357,14 +355,14 @@ extension ProfileViewController: UserProfileHeaderDelegate {
 
 
 extension ProfileViewController: ProfileSettingsCellDelegate {
-    func switchToggled(onCell cell: ProfileSettingsCell) {
+    func switchToggled(onCell cell: ProfileSettingsCell, isOn: Bool) {
         print("switch toggled on cell", cell)
         switch cell.profileSetting {
         case .notifications:
             handleNotificationSwitch()
             return
         case .fitbit:
-            handleFitbitSwitch()
+            handleFitbitSwitch(isOn: isOn)
             return
         case .usemetricsystem:
             handleMetricSystemSwitch()
@@ -378,24 +376,45 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         updateHealthProfile()
     }
 
-    func handleFitbitSwitch() {
-        let keys = UserDefaultsKeys()
-        if var devices = UserDefaults.standard.dictionary(forKey: keys.devices) {
-            if var fitbitStatus = devices[ExternalDevices.FITBIT] as? [String:Int] {
-                if fitbitStatus["connected"] == 1 {
-                    fitbitStatus["connected"] = 0
-                }else {
-                    fitbitStatus["connected"] = 1
+    func handleFitbitSwitch(isOn: Bool) {
+        let connected = isOn ? 1 : 0
+        let fitbitModel = FitbitModel()
+        if isOn {
+            if let context = UIApplication.shared.keyWindow {
+                fitbitModel.contextProvider = AuthContextProvider(context)
+            }
+            fitbitModel.auth { authCode, error in
+                if error != nil {
+                    print("Auth flow finished with error \(String(describing: error))")
+                    self.updateHealthProfileFitBit(connected: 0)
+                } else {
+                    print("Your auth code is \(String(describing: authCode))")
+                    fitbitModel.token(authCode: authCode!)
+                    self.updateHealthProfileFitBit(connected: connected)
                 }
-                devices[ExternalDevices.FITBIT] = fitbitStatus
-                UserDefaults.standard.set(devices, forKey: keys.devices)
-                updateHealthProfile()
             }
         }
+        else {
+            self.updateHealthProfileFitBit(connected: connected)
+        }
     }
-
-
-
+    
+    fileprivate func updateHealthProfileFitBit(connected: Int) {
+        let profile = AppSyncManager.instance.healthProfile.value
+        if let device = profile?.devices?[ExternalDevices.FITBIT] {
+            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.FITBIT]?["connected"] = connected
+        } else {
+            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.FITBIT: ["connected" : connected]]) { (current, _) in current }
+        }
+        
+        let userProfile = UserProfileAPI()
+        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
+            print("Completed")
+        }) { (error) in
+            print("Failed to save health profile:" + error.localizedDescription)
+        }
+    }
+    
     func handleNotificationSwitch() {
         func registerForPushNotifications() {
             UNUserNotificationCenter.current() // 1

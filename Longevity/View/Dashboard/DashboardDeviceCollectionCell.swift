@@ -22,15 +22,39 @@ extension DeviceConnectionStatus {
         case .notConnected:
             return "icon: add"
         default:
-            return ""
+            return "icon: add"
         }
     }
 }
 
 class DashboardDeviceCollectionCell: UICollectionViewCell {
     
-    var connectionStatus: DeviceConnectionStatus = .notConnected
     var device: HealthDevices = .newdevice
+    
+    var connectionStatus: DeviceConnectionStatus! {
+        didSet {
+            DispatchQueue.main.async {
+                if self.connectionStatus == .connected {
+                    self.addDeviceButton.isHidden = true
+                    
+                    let title1 = "Connected"
+                    let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#4A4A4A")]
+                    let attributedText = NSMutableAttributedString(string: title1, attributes: attributes)
+                    
+                    let title2 = "\nView Settings"
+                    let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor.themeColor]
+                    let attributedText2 = NSMutableAttributedString(string: title2, attributes: attributes2)
+                    attributedText.append(attributedText2)
+                    self.deviceTitle2.attributedText = attributedText
+                } else {
+                    self.addDeviceButton.isHidden = false
+                    self.addDeviceButton.setImage(UIImage(named: self.connectionStatus.statusButtonImage), for: .normal)
+                    self.deviceTitle2.text = self.device.descriptions
+                    self.deviceTitle2.textColor = .themeColor
+                }
+            }
+        }
+    }
     
     lazy var deviceIcon: UIImageView = {
         let icon = UIImageView()
@@ -40,13 +64,11 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         return icon
     }()
     
-    lazy var statusButton: UIImageView = {
-        let statusbutton = UIImageView()
-        statusbutton.image = UIImage(named: "icon: add")
-        
-        let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(addDevice))
-        gestureRecognizer.numberOfTapsRequired = 1
-        statusbutton.addGestureRecognizer(gestureRecognizer)
+    lazy var addDeviceButton: UIButton = {
+        let statusbutton = UIButton()
+        statusbutton.setImage(UIImage(named: "icon: add"), for: .normal)
+        statusbutton.imageView?.contentMode = .scaleAspectFit
+        statusbutton.addTarget(self, action: #selector(addDevice), for: .touchUpInside)
         statusbutton.translatesAutoresizingMaskIntoConstraints = false
         return statusbutton
     }()
@@ -96,37 +118,17 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     func setupCell(device: HealthDevices) {
         self.device = device
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
 
-        if device == .fitbit {
-            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
-                if let fitbitStatus = devices[ExternalDevices.FITBIT] {
-                    if fitbitStatus["connected"] == 1 {
-                        connectionStatus = .connected
-                    }
-                }
-            }
-        } else if device == .applehealth {
-            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]]  {
-                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] {
-                    if healthkitStatus["connected"] == 1 {
-                        connectionStatus = .connected
-                    }
-                }
-            }
-        }
-        
         if device == .newdevice {
-            self.addSubview(statusButton)
+            self.addSubview(addDeviceButton)
             self.addSubview(deviceTitle)
             
             NSLayoutConstraint.activate([
-                statusButton.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
-                statusButton.heightAnchor.constraint(equalToConstant: 38.0),
-                statusButton.widthAnchor.constraint(equalTo: statusButton.heightAnchor),
-                statusButton.centerXAnchor.constraint(equalTo: centerXAnchor),
-                deviceTitle.topAnchor.constraint(equalTo: statusButton.bottomAnchor, constant: 10.0),
+                addDeviceButton.topAnchor.constraint(equalTo: topAnchor, constant: 20.0),
+                addDeviceButton.heightAnchor.constraint(equalToConstant: 38.0),
+                addDeviceButton.widthAnchor.constraint(equalTo: addDeviceButton.heightAnchor),
+                addDeviceButton.centerXAnchor.constraint(equalTo: centerXAnchor),
+                deviceTitle.topAnchor.constraint(equalTo: addDeviceButton.bottomAnchor, constant: 10.0),
                 deviceTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 5.0),
                 deviceTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -5.0),
                 deviceTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
@@ -137,42 +139,54 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             contentView.layer.borderColor = UIColor.themeColor.cgColor
             connectionStatus = .notrequired
         } else {
-            self.addSubview(deviceIcon)
-            self.addSubview(statusButton)
+            
+            let horizontalStack = UIStackView(arrangedSubviews: [self.deviceIcon, self.addDeviceButton])
+            horizontalStack.axis = .horizontal
+            horizontalStack.alignment = .center
+            horizontalStack.distribution = .equalSpacing
+            horizontalStack.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.addSubview(horizontalStack)
             self.addSubview(deviceStatus)
             self.addSubview(deviceTitle)
             self.addSubview(deviceTitle2)
             
             NSLayoutConstraint.activate([
-                deviceIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-                deviceIcon.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-                deviceIcon.heightAnchor.constraint(equalToConstant: 38.0),
-                deviceIcon.widthAnchor.constraint(equalToConstant: 38.0),
+                horizontalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+                horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+                horizontalStack.heightAnchor.constraint(equalToConstant: 40.0),
+                horizontalStack.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
                 
-                statusButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
-                statusButton.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-                statusButton.heightAnchor.constraint(equalToConstant: 38.0),
-                statusButton.widthAnchor.constraint(equalToConstant: 38.0),
-                
-                deviceStatus.leadingAnchor.constraint(equalTo: statusButton.leadingAnchor),
-                deviceStatus.trailingAnchor.constraint(equalTo: statusButton.trailingAnchor),
-                deviceStatus.topAnchor.constraint(equalTo: statusButton.bottomAnchor),
-                deviceStatus.heightAnchor.constraint(equalToConstant: 12.0),
-                
+                deviceTitle.topAnchor.constraint(equalTo: horizontalStack.bottomAnchor),
                 deviceTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
                 deviceTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-                deviceTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
-                deviceTitle2.leadingAnchor.constraint(equalTo: deviceTitle.leadingAnchor),
-                deviceTitle2.trailingAnchor.constraint(equalTo: deviceTitle.trailingAnchor),
+                deviceTitle2.leadingAnchor.constraint(equalTo: leadingAnchor),
+                deviceTitle2.trailingAnchor.constraint(equalTo: trailingAnchor),
                 deviceTitle2.topAnchor.constraint(equalTo: deviceTitle.bottomAnchor, constant: 5.0),
                 deviceTitle2.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -8.0)
             ])
             
             self.deviceTitle.text = device.deviceName
-            self.deviceTitle2.text = device.descriptions
             self.deviceIcon.image = device.icon
-            self.statusButton.image = UIImage(named: connectionStatus.statusButtonImage)
+            self.addDeviceButton.setImage(UIImage(named: DeviceConnectionStatus.notConnected.statusButtonImage), for: .normal)
             contentView.layer.borderColor = UIColor.clear.cgColor
+        }
+        
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
+            let profile = AppSyncManager.instance.healthProfile.value
+            if self?.device == .fitbit {
+                if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
+                    self?.connectionStatus = .connected
+                } else {
+                    self?.connectionStatus = .notConnected
+                }
+            } else if self?.device == .applehealth {
+                if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+                    self?.connectionStatus = .connected
+                } else {
+                    self?.connectionStatus = .notConnected
+                }
+            }
         }
     }
     
@@ -194,10 +208,20 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     @objc func addDevice() {
         if connectionStatus == .notConnected {
-            if self.device == .applehealth {
-                
-            } else if self.device == .fitbit {
-                
+            let healthDevice = self.device == .applehealth ? ExternalDevices.HEALTHKIT : ExternalDevices.FITBIT
+            
+            let profile = AppSyncManager.instance.healthProfile.value
+            if let device = profile?.devices?[healthDevice] {
+                AppSyncManager.instance.healthProfile.value?.devices?[healthDevice]?["connected"] = 1
+            } else {
+                AppSyncManager.instance.healthProfile.value?.devices?.merge([healthDevice: ["connected" : 1]]) { (current, _) in current }
+            }
+            
+            let userProfile = UserProfileAPI()
+            userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
+                print("Completed")
+            }) { (error) in
+                print("Failed to save health profile:" + error.localizedDescription)
             }
         }
     }
