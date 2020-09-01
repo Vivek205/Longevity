@@ -12,6 +12,7 @@ enum RiskLevel: String, Codable {
     case high = "HIGH"
     case lowLevel = "LOW"
     case medium = "MEDIUM"
+    case none = "More data needed"
 }
 
 extension RiskLevel {
@@ -23,6 +24,17 @@ extension RiskLevel {
                 return "Medium Risk"
             case .lowLevel:
                 return "Low Risk"
+        default:
+                return "More data needed"
+        }
+    }
+    
+    var textFont: UIFont? {
+        switch self {
+        case .none:
+            return UIFont(name: "Montserrat-Regular", size: 12.0)
+        default:
+            return UIFont(name: "Montserrat-SemiBold", size: 18.0)
         }
     }
     
@@ -34,6 +46,8 @@ extension RiskLevel {
                 return UIColor(hexString: "#F7C26B")
             case .lowLevel:
                 return UIColor(red: 89/255.0, green: 187/255.0, blue: 110/255.0, alpha: 0.7)
+        default:
+            return UIColor(hexString: "#9B9B9B")
         }
     }
     
@@ -45,6 +59,8 @@ extension RiskLevel {
                 return UIImage(named: "medium-risk")
             case .lowLevel:
                 return UIImage(named: "low-risk")
+        default:
+            return UIImage(named: "risk-null")
         }
     }
 }
@@ -106,7 +122,7 @@ struct UserInsight: Codable {
     let name: CardType
     let text, userInsightDescription: String
     let defaultOrder: Int
-    let details: Details
+    var details: Details?
     var isExpanded: Bool?
     
     enum CodingKeys: String, CodingKey {
@@ -121,7 +137,7 @@ struct UserInsight: Codable {
 struct Details: Codable {
     let lastLogged: String?
     let history: [History]?
-    let riskLevel: RiskLevel?
+    var riskLevel: RiskLevel?
     let trending: TrendDirection?
     let sentiment: Sentiment?
     let confidence: Confidence?

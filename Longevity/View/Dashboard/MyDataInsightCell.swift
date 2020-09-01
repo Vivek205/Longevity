@@ -12,9 +12,14 @@ class MyDataInsightCell: UICollectionViewCell {
     
     var insightData: UserInsight! {
         didSet {
+            self.tileTitle.text = insightData?.text
+            self.trendDirection.isHidden = false
+            self.trendImage.isHidden = false
+            self.tileTitle.text = insightData?.text
+            
             if let details = insightData?.details {
-                self.tileTitle.text = insightData?.text
                 self.riskType.text = details.riskLevel?.text
+                self.riskType.font = details.riskLevel?.textFont
                 self.guageView.image = details.riskLevel?.riskIcon
                 self.trendDirection.text = details.trending?.text
                 self.trendDirection.textColor = details.sentiment?.tintColor
@@ -29,6 +34,12 @@ class MyDataInsightCell: UICollectionViewCell {
                 } else {
                     expandCollapseImage.image = UIImage(named: "rightArrow")
                 }
+            } else {
+                self.riskType.text = RiskLevel.none.text
+                self.riskType.font = RiskLevel.none.textFont
+                self.guageView.image =  RiskLevel.none.riskIcon
+                self.trendDirection.isHidden = true
+                self.trendImage.isHidden = true
             }
         }
     }
@@ -114,11 +125,11 @@ class MyDataInsightCell: UICollectionViewCell {
             self.expandCollapseImage.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
             self.expandCollapseImage.widthAnchor.constraint(equalToConstant: 20.0),
             self.expandCollapseImage.heightAnchor.constraint(equalTo: self.expandCollapseImage.widthAnchor),
-
+            
             self.tileTitle.leadingAnchor.constraint(equalTo: self.expandCollapseImage.trailingAnchor, constant: 10.0),
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
             self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
-
+            
             self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor),
             self.guageView.centerYAnchor.constraint(equalTo: self.tileTitle.centerYAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 48.0),

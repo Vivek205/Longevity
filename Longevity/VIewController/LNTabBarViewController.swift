@@ -55,16 +55,29 @@ class LNTabBarViewController: UITabBarController {
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
         tabBar.insertSubview(bgImageView, at: 0)
         
+        //getCurrentUser()
+        AppSyncManager.instance.syncUserProfile()
         
-        
-        getCurrentUser()
+        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) { [weak self] in
+            DispatchQueue.main.async {
+                if !(AppSyncManager.instance.isTermsAccepted.value ?? false) {
+                    let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
+                    tosViewController.isFromSettings = true
+                    let navigationController = UINavigationController(rootViewController: tosViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                }
+            }
+        }
+        retrieveARN()
     }
         
         func getCurrentUser() {
-            getProfile()
-                self.navigateToTheNextScreen()
-                retrieveARN()
-        }
+            AppSyncManager.instance.syncUserProfile()
+            //getProfile()
+//            self.navigateToTheNextScreen()
+            retrieveARN()
+    }
         
         func navigateToTheNextScreen(){
             let defaults = UserDefaults.standard
@@ -99,7 +112,6 @@ class LNTabBarViewController: UITabBarController {
                 performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
             }
         }
-
 }
 
 extension LNTabBarViewController: UITabBarControllerDelegate {
@@ -119,7 +131,10 @@ extension LNTabBarViewController: UITabBarControllerDelegate {
     
     func showShareApp() {
         var sharemessage = [Any]()
-        sharemessage.append("Hey, I found this interesting app ")
+        sharemessage.append("Hey, I found this interesting app for COVID19 self-checks")
+        if let applink = AppSyncManager.instance.appShareLink.value, !applink.isEmpty {
+            sharemessage.append(applink)
+        }
         let activityVC = UIActivityViewController(activityItems: sharemessage, applicationActivities: nil)
         activityVC.title = "Share Rejuve"
 //        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]

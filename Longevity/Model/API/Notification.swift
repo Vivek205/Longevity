@@ -89,6 +89,4 @@ func retrieveARN(){
       }
 
     _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
-
-
 }

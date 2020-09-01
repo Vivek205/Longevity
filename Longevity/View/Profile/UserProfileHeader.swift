@@ -149,10 +149,10 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
         
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-        self.userName.text = defaults.string(forKey: keys.name)
-        self.userEmail.text = defaults.string(forKey: keys.email)
+        AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
+            self?.userName.text = AppSyncManager.instance.userProfile.value?.name
+            self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email
+        }
         
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserAvatar(completion: { [weak self] (profileURL) in

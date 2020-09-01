@@ -8,7 +8,7 @@
 
 import Foundation
 
-enum MeasurementUnits: String {
+enum MeasurementUnits: String, Codable {
     case metric = "metric"
     case imperial = "imperial"
 }

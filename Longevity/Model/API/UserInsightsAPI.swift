@@ -14,7 +14,7 @@ class UserInsightsAPI: BaseAuthAPI {
     
     static var instance = UserInsightsAPI()
     
-    func get(completion: @escaping([UserInsight]) -> Void) {
+    func get(completion: @escaping([UserInsight]?) -> Void) {
        self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let request = RESTRequest(apiName: "insightsAPI", path: "/user/insight/cards", headers: headers, queryParameters: nil, body: nil)
@@ -28,14 +28,17 @@ class UserInsightsAPI: BaseAuthAPI {
                     }
                     catch {
                         print("JSON error", error.localizedDescription)
+                        completion(nil)
                     }
                 case .failure(let error):
                     print(error.localizedDescription)
+                    completion(nil)
                     break
                 }
             }
         }) { (error) in
             print(error.localizedDescription)
+            completion(nil)
         }
     }
 

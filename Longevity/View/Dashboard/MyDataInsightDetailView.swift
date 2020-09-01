@@ -174,8 +174,30 @@ class MyDataInsightDetailView: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        //Removing all existing layers
+        if let layers = trendHistogram.layer.sublayers {
+            for layer in layers {
+                if let name = layer.name, name.contains("gradLayer") {
+                    layer.removeFromSuperlayer()
+                }
+            }
+        }
+
+        let layerGradient = CAGradientLayer()
+        layerGradient.name = "gradLayer"
+        layerGradient.frame = CGRect(x: 0, y: 0, width: trendHistogram.bounds.width, height: trendHistogram.bounds.height)
+        layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
+        layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
+        layerGradient.endPoint = CGPoint(x: 0, y: 1.0)
+
+        trendHistogram.layer.insertSublayer(layerGradient, at: 0)
+    }
+    
     fileprivate func createHistogramData() {
-        if let submissions = insightData?.details.submissions, !submissions.isEmpty {
+        if let submissions = insightData?.details?.submissions, !submissions.isEmpty {
             let chartDataEntry = submissions.map { ChartDataEntry(x: Double(parseDate(recordDate: $0.recordDate)), y: Double($0.value) ?? 0.0) }.sorted { $0.x < $1.x }
             
             var label = "Month"
