@@ -15,10 +15,10 @@ extension UICollectionView {
         return self.dequeueReusableCell(withReuseIdentifier: cellTypeName, for: indexPath)
     }
     
-    func getSupplementaryView(with viewClass: AnyClass, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView
+    func getSupplementaryView(with viewClass: AnyClass, viewForSupplementaryElementOfKind kind: String,
+                              at indexPath: IndexPath) -> UICollectionReusableView
     {
         let reusableViewName = NSStringFromClass(viewClass)
-        
         self.register(viewClass, forSupplementaryViewOfKind: kind, withReuseIdentifier: reusableViewName)
         return self.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: reusableViewName, for: indexPath)
     }

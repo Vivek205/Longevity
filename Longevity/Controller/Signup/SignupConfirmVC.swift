@@ -42,4 +42,12 @@ class SignupConfirmVC: UIViewController {
             }
         }
     }
+
+    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
+        if segue.identifier == "UnwindSignupConfirmToLogin" {
+            if let loginVC = segue.destination as? PersonalLoginVC {
+                loginVC.hideBackButton = true
+            }
+        }
+    }
 }

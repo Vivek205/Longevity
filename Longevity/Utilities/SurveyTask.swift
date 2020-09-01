@@ -56,7 +56,7 @@ final class SurveyTaskUtility {
             var steps = [ORKStep]()
             let instructionStep = ORKInstructionStep(identifier: "IntroStep")
             instructionStep.title = "Intro: \(surveyDetails!.name) Survey"
-            instructionStep.text = "Who would cross the Bridge of Death must answer me these questions three, ere the other side they see."
+            instructionStep.text = surveyDetails?.description
             steps += [instructionStep]
 
             let categories = surveyDetails!.displaySettings.categories

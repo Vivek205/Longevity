@@ -32,7 +32,7 @@ class FAQViewController: BasePopUpModalViewController {
             webview.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor)
         ])
 
-        webview.load(URLRequest(url: URL(string: "https://www.google.com")!))
+        webview.load(URLRequest(url: URL(string: "https://www.apple.com")!))
     }
 
 

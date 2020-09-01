@@ -24,7 +24,7 @@ class SignupByEmailVC: UIViewController, UITextFieldDelegate {
         formEmail.delegate = self
         formPhone.delegate = self
         formPassword.delegate = self
-        self.removeBackButtonNavigation()
+//        self.removeBackButtonNavigation()
     }
 
     func customizeButton(button: UIButton){

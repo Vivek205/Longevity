@@ -116,6 +116,7 @@
 		E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09324C9982500969CD8 /* RKCQuestionView.swift */; };
 		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
+		E27C4F6124FE07F60070A2D3 /* CarouselCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */; };
 		E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */; };
 		E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */; };
 		E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */; };
@@ -307,6 +308,7 @@
 		E274F09324C9982500969CD8 /* RKCQuestionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCQuestionView.swift; sourceTree = "<group>"; };
 		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
+		E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionCell.swift; sourceTree = "<group>"; };
 		E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnswerVC.swift; sourceTree = "<group>"; };
 		E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogViewController.swift; sourceTree = "<group>"; };
 		E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogHeader.swift; sourceTree = "<group>"; };
@@ -617,6 +619,15 @@
 			path = ResearchKitViews;
 			sourceTree = "<group>";
 		};
+		E27C4F6524FE08000070A2D3 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
+				E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
 		E27E295124F7A0FB00244CF7 /* CheckinLog */ = {
 			isa = PBXGroup;
 			children = (
@@ -781,7 +792,7 @@
 				E216EFC524BEEE7A00B57A7F /* Signup */,
 				E28653C324A3958F00403729 /* Login */,
 				E22C1A4724A48A6300EC5B29 /* SetupProfile */,
-				E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */,
+				E27C4F6524FE08000070A2D3 /* Onboarding */,
 				E2386A372488F4DE0068030E /* ResetPasswordVC.swift */,
 				E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */,
 				E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */,
@@ -1019,6 +1030,7 @@
 				E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
+				E27C4F6124FE07F60070A2D3 /* CarouselCollectionCell.swift in Sources */,
 				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,

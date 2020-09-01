@@ -10,6 +10,11 @@ import UIKit
 import Amplify
 
 class PersonalLoginVC: UIViewController {
+    var hideBackButton:Bool? {
+        didSet {
+            self.removeBackButtonNavigation()
+        }
+    }
     var username = ""
     
     // MARK: Outlets
@@ -29,7 +34,7 @@ class PersonalLoginVC: UIViewController {
         customizeButtons()
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
-        self.removeBackButtonNavigation()
+//        self.removeBackButtonNavigation()
     }
 
     func customizeButtons(){

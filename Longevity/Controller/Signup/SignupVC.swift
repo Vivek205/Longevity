@@ -187,7 +187,7 @@ class SignupVC: UIViewController {
         }
     }
 
-    func redirectToLoginPage() {
+   @IBAction func redirectToLoginPage() {
         self.performSegue(withIdentifier: "SignupToLogin", sender: self)
     }
 

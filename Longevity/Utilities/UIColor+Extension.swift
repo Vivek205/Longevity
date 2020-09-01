@@ -73,4 +73,8 @@ extension UIColor {
     @nonobjc class var infoColor: UIColor {
         return UIColor(hexString: "#666666")
     }
+
+    @nonobjc class var pageIndicatorTintColor: UIColor {
+        return UIColor(hexString: "#D7D7D7")
+    }
 }

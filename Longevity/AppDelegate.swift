@@ -161,12 +161,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     ) {
         print("user info", userInfo)
         guard let apsData = userInfo["aps"] as? [String: AnyObject] else {
+            
             Logger.log("did receive wrong background notification")
             completionHandler(.failed)
             return
         }
         Logger.log("did receive background notification \(apsData)")
-        if let alert = userInfo["alert"] as? [String: Any] {
+        if let type = apsData["type"] as? String {
+            if let notificationType = NotificationType(rawValue: type) {
+                switch notificationType {
+                case .fitbitSync:
+                    let fitbitModel = FitbitModel()
+                    fitbitModel.refreshTheToken()
+                    completionHandler(.newData)
+                    return
+                case .surveyReportsReady:
+                    // TODO: redirect to mydata page
+                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+                        tabBarController.selectedIndex = 1
+                    }
+                    completionHandler(.newData)
+                    return
+                default:
+                    completionHandler(.noData)
+                    return
+                }
+            }
+
+        }
+        if let alert = apsData["alert"] as? [String: Any] {
+
             if let alertBody = alert["body"] as? String {
                 if alertBody == "Synchronize fitbit data." {
                     let fitbitModel = FitbitModel()
@@ -184,6 +208,26 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                 withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
         Logger.log("received foreground notification - will present")
         if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
+            if let type =  apsData["type"] as? String {
+                if let notificationType = NotificationType(rawValue: type) {
+                    switch notificationType {
+                    case .fitbitSync:
+                        let fitbitModel = FitbitModel()
+                        fitbitModel.refreshTheToken()
+                        completionHandler(.alert)
+                        return
+                    case .surveyReportsReady:
+                        // TODO: redirect to mydata page
+                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+                            tabBarController.selectedIndex = 1
+                        }
+                        return
+                    default:
+                        return
+                    }
+                }
+
+            }
             if let alert = apsData["alert"] as? [String: Any] {
                 if let alertBody = alert["body"] as? String {
                     if alertBody == "Synchronize fitbit data." {
@@ -195,6 +239,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
+
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler(.alert)
@@ -203,19 +248,36 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
         Logger.log("received foreground notification - did receive")
         if let apsData = response.notification.request.content.userInfo["aps"] as? [String: Any] {
-            if let alert = apsData["alert"] as? [String: Any] {
-                if let alertBody = alert["body"] as? String {
-                    if alertBody == "Synchronize fitbit data." {
+            if let type = apsData["type"] as? String {
+                if let notificationType = NotificationType(rawValue: type) {
+                    switch notificationType {
+                    case .fitbitSync:
                         let fitbitModel = FitbitModel()
                         fitbitModel.refreshTheToken()
                         completionHandler()
                         return
+                    case .surveyReportsReady:
+                        // TODO: redirect to mydata page
+                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+                            tabBarController.selectedIndex = 1
+                        }
+                        completionHandler()
+                        return
+                    default:
+                        completionHandler()
+                        return
                     }
                 }
+
             }
         }
         let fitbitModel = FitbitModel()
         fitbitModel.refreshTheToken()
         completionHandler()
     }
+}
+
+enum NotificationType: String {
+    case fitbitSync = "FITBIT_SYNC"
+    case surveyReportsReady = "SURVEY_REPORTS_READY"
 }
