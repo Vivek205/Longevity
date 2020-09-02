@@ -26,16 +26,26 @@ extension UIImageView {
         
         URLSession.shared.dataTask(with: urlstring) {
             data, response, error in
-            if data != nil {
-                DispatchQueue.main.async {
-                    guard let imageToCache = UIImage(data: data!) else {
-                        self.image = UIImage(named: "avatar")
-                        return
+            
+            guard let response = response as? HTTPURLResponse else { return }
+            
+            if response.statusCode == 200 {
+                if data != nil {
+                    DispatchQueue.main.async {
+                        guard let imageToCache = UIImage(data: data!) else {
+                            self.image = UIImage(named: "userAvatar")
+                            return
+                        }
+                        imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
+                        self.image = imageToCache
                     }
-                    imageCache.setObject(imageToCache, forKey: urlString as AnyObject)
-                    self.image = imageToCache
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self.image = UIImage(named: "userAvatar")
                 }
             }
+            
             }.resume()
     }
 }

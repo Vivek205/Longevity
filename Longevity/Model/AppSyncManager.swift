@@ -60,6 +60,22 @@ class AppSyncManager  {
         }
     }
     
+    func updateHealthProfile(deviceName: String, connected: Int) {
+        let profile = self.healthProfile.value
+        if let device = profile?.devices?[deviceName] {
+            self.healthProfile.value?.devices?[deviceName]?["connected"] = connected
+        } else {
+            self.healthProfile.value?.devices?.merge([deviceName: ["connected" : connected]]) { (current, _) in current }
+        }
+        
+        let userProfile = UserProfileAPI()
+        userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!, completion: {
+            print("Completed")
+        }) { (error) in
+            print("Failed to save health profile:" + error.localizedDescription)
+        }
+    }
+    
     fileprivate func getAppLink() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getAppLink { [weak self] (appURL) in

@@ -76,6 +76,14 @@ final class HealthStore {
         }
     }
     
+    func getHealthKitAuthorization(completion: @escaping ((Bool) -> Void)) {
+        healthStore = HKHealthStore()
+        healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) {
+            (success, error) in
+            completion(success)
+        }
+    }
+    
     func getChallengeCurrentValue(type: HealthType, completion: @escaping (_ currentValue: Double, _ currentValueText: String) -> Void) {
         switch type {
         case .steps:
