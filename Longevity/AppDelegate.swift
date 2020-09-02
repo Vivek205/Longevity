@@ -265,6 +265,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     fileprivate func checkIfAppUpdated() {
         let previousBuild = UserDefaults.standard.string(forKey: "build")
         let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        UserDefaults.standard.set(currentBuild, forKey: "build")
         if previousBuild == nil {
             //fresh install
             _ = Amplify.Auth.signOut() { [weak self] (result) in
@@ -279,7 +280,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 }
             }
         }
-        UserDefaults.standard.set(currentBuild, forKey: "build")
     }
 }
 

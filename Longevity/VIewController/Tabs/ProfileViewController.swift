@@ -386,32 +386,16 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
             fitbitModel.auth { authCode, error in
                 if error != nil {
                     print("Auth flow finished with error \(String(describing: error))")
-                    self.updateHealthProfileFitBit(connected: 0)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
                 } else {
                     print("Your auth code is \(String(describing: authCode))")
                     fitbitModel.token(authCode: authCode!)
-                    self.updateHealthProfileFitBit(connected: connected)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: connected)
                 }
             }
         }
         else {
-            self.updateHealthProfileFitBit(connected: connected)
-        }
-    }
-    
-    fileprivate func updateHealthProfileFitBit(connected: Int) {
-        let profile = AppSyncManager.instance.healthProfile.value
-        if let device = profile?.devices?[ExternalDevices.FITBIT] {
-            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.FITBIT]?["connected"] = connected
-        } else {
-            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.FITBIT: ["connected" : connected]]) { (current, _) in current }
-        }
-        
-        let userProfile = UserProfileAPI()
-        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
-            print("Completed")
-        }) { (error) in
-            print("Failed to save health profile:" + error.localizedDescription)
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: connected)
         }
     }
     
