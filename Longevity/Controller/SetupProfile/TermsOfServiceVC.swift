@@ -151,7 +151,9 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
 
             self.viewNavigationItem.titleView = titleLabel
             self.footer.isHidden = true
-            acceptCard.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
+            self.acceptCard.isHidden = true
+            self.acceptLabel.isHidden = true
+            self.acceptCheckbox.isHidden = true
         }
     }
 
