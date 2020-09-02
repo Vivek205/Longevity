@@ -10,7 +10,7 @@ import Foundation
 
 class AppSyncManager  {
     static let instance = AppSyncManager()
-    
+
     var userProfile: DynamicValue<UserProfile>
     var healthProfile: DynamicValue<UserHealthProfile>
     var isTermsAccepted: DynamicValue<Bool>

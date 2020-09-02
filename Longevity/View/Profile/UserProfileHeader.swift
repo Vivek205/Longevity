@@ -150,8 +150,10 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         ])
         
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
-            self?.userName.text = AppSyncManager.instance.userProfile.value?.name
-            self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email
+            DispatchQueue.main.async {
+                self?.userName.text = AppSyncManager.instance.userProfile.value?.name
+                self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email
+            }
         }
         
         let userProfileAPI = UserProfileAPI()

@@ -150,10 +150,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
             titleLabel.translatesAutoresizingMaskIntoConstraints = false
 
             self.viewNavigationItem.titleView = titleLabel
-
             self.footer.isHidden = true
-
-
             acceptCard.bottomAnchor.constraint(equalTo: view.bottomAnchor).isActive = true
         }
     }
