@@ -41,8 +41,6 @@ class SetupProfileDevicesVC: UIViewController {
         updateSetupProfileCompletionStatus(currentState: .connectDevices)
         performSegue(withIdentifier: "SetupProfileDevicesToPreExistingConditions", sender: self)
     }
-
-    
 }
 
 extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
@@ -56,18 +54,25 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
             fitbitModel.auth { authCode, error in
                 if error != nil {
                     print("Auth flow finished with error \(String(describing: error))")
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
                 } else {
                     print("Your auth code is \(String(describing: authCode))")
                     self.fitbitModel.token(authCode: authCode!)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 1)
                     DispatchQueue.main.async {
                         setupProfileConnectDeviceOptionList[2]?.isConnected = true
                         self.collectionView.reloadData()
                     }
                 }
             }
-
         default:
-            print(cell.titleLabel.text)
+            HealthStore.shared.getHealthKitAuthorization { (authorized) in
+                if authorized {
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
+                } else {
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 0)
+                }
+            }
         }
     }
 }

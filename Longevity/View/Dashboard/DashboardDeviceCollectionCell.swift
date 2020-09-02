@@ -208,6 +208,31 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     @objc func addDevice() {
         if connectionStatus == .notConnected {
+            if self.device == .applehealth {
+                HealthStore.shared.getHealthKitAuthorization { (authorized) in
+                    if authorized {
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
+                    } else {
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 0)
+                    }
+                }
+            } else if self.device == .fitbit {
+                let fitbitModel = FitbitModel()
+                if let context = UIApplication.shared.keyWindow {
+                    fitbitModel.contextProvider = AuthContextProvider(context)
+                }
+                fitbitModel.auth { authCode, error in
+                    if error != nil {
+                        print("Auth flow finished with error \(String(describing: error))")
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
+                    } else {
+                        print("Your auth code is \(String(describing: authCode))")
+                        fitbitModel.token(authCode: authCode!)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 1)
+                    }
+                }
+            }
+            
             let healthDevice = self.device == .applehealth ? ExternalDevices.HEALTHKIT : ExternalDevices.FITBIT
             
             let profile = AppSyncManager.instance.healthProfile.value

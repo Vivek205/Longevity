@@ -55,14 +55,16 @@ class ProfileSettingsCell: UITableViewCell {
             settingStatus.isHidden = profileSetting != .applehealth
             if !settingStatus.isHidden {
                 AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
-                    let profile = AppSyncManager.instance.healthProfile.value
-                    var deviceConnected = false
-                    if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
-                        deviceConnected = true
-                    } else {
-                        deviceConnected = false
+                    DispatchQueue.main.async {
+                        let profile = AppSyncManager.instance.healthProfile.value
+                        var deviceConnected = false
+                        if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+                            deviceConnected = true
+                        } else {
+                            deviceConnected = false
+                        }
+                        self?.settingStatus.text = deviceConnected ? "Connected" : "Not Connected"
                     }
-                    self?.settingStatus.text = deviceConnected ? "Connected" : "Not Connected"
                 }
             }
         }
@@ -170,11 +172,13 @@ class ProfileSettingsCell: UITableViewCell {
     
     func fitbitSwitchPreselect() {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
-            let profile = AppSyncManager.instance.healthProfile.value
-            if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
-                self?.settingsSwitch.isOn = true
-            } else {
-                self?.settingsSwitch.isOn = false
+            DispatchQueue.main.async {
+                let profile = AppSyncManager.instance.healthProfile.value
+                if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
+                    self?.settingsSwitch.isOn = true
+                } else {
+                    self?.settingsSwitch.isOn = false
+                }
             }
         }
     }
