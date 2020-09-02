@@ -103,79 +103,80 @@ class SetupProfileBioDataVC: UIViewController {
         self.readHealthData()
         return 
 
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-
-        func formatMass(measurement: Measurement<UnitMass>) -> String {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.maximumFractionDigits = 2
-            let measurementFormatter = MeasurementFormatter()
-            measurementFormatter.unitOptions = .providedUnit
-            measurementFormatter.numberFormatter = numberFormatter
-            let formattedMassString = measurementFormatter.string(from: measurement) // Culprit
-            return formattedMassString
-        }
-
-        func formatLength(measurement: Measurement<UnitLength>) -> String {
-            let numberFormatter = NumberFormatter()
-            numberFormatter.maximumFractionDigits = 2
-            let measurementFormatter = MeasurementFormatter()
-            measurementFormatter.unitOptions = .providedUnit
-            measurementFormatter.numberFormatter = numberFormatter
-            let formattedMassString = measurementFormatter.string(from: measurement) // Culprit
-            return formattedMassString
-        }
-
-        if healthKitUtil.selectedUnit == MeasurementUnits.metric {
-            healthKitUtil.selectedUnit = MeasurementUnits.imperial
-            // WEIGHT
-            if setupProfileOptionList[6]?.buttonText != "ENTER" && setupProfileOptionList[6]?.buttonText != "Enter" {
-                let btnText = setupProfileOptionList[6]!.buttonText
-                let weight = actualValue(selectedOption: btnText)
-                let weightInKilograms = Measurement(value: weight, unit: UnitMass.kilograms)
-                let weightInPounds = weightInKilograms.converted(to: .pounds)
-                let weightString = formatMass(measurement: weightInPounds)
-                setupProfileOptionList[6]?.buttonText = weightString
-                defaults.set(actualValue(selectedOption: weightString), forKey: keys.weight)
-                print(weightString)
-            }
-            // HEIGHT
-            if setupProfileOptionList[5]?.buttonText != "ENTER" && setupProfileOptionList[5]?.buttonText != "Enter" {
-                let btnText = setupProfileOptionList[5]!.buttonText
-                let height = actualValue(selectedOption: btnText)
-                let heightInCentimeters = Measurement(value: height, unit: UnitLength.centimeters)
-                let heightInFeet = heightInCentimeters.converted(to: .feet)
-                let heightString = formatLength(measurement: heightInFeet)
-                setupProfileOptionList[5]?.buttonText = heightString
-                defaults.set(actualValue(selectedOption: heightString), forKey: keys.height)
-                print(heightString)
-            }
-        } else {
-            healthKitUtil.selectedUnit = MeasurementUnits.metric
-            // WEIGHT
-            if setupProfileOptionList[6]?.buttonText != "ENTER" && setupProfileOptionList[6]?.buttonText != "Enter" {
-                let btnText = setupProfileOptionList[6]!.buttonText
-                let weight = actualValue(selectedOption: btnText)
-                let weightInPounds = Measurement(value: weight, unit: UnitMass.pounds)
-                let weightInKilograms = weightInPounds.converted(to: .kilograms)
-                let weightString = formatMass(measurement: weightInKilograms)
-                setupProfileOptionList[6]?.buttonText = weightString
-                defaults.set(actualValue(selectedOption: weightString), forKey: keys.weight)
-                print(weightString)
-            }
-            // HEIGHT
-            if setupProfileOptionList[5]?.buttonText != "ENTER" && setupProfileOptionList[5]?.buttonText != "Enter" {
-                let btnText = setupProfileOptionList[5]!.buttonText
-                let height = actualValue(selectedOption: btnText)
-                let heightInFeet = Measurement(value: height, unit: UnitLength.feet)
-                let heightInCentimeters = heightInFeet.converted(to: .centimeters)
-                let heightString = formatLength(measurement: heightInCentimeters)
-                setupProfileOptionList[5]?.buttonText = heightString
-                defaults.set(actualValue(selectedOption: heightString), forKey: keys.height)
-                print(heightString)
-            }
-        }
-        self.collectionView.reloadData()
+//        let defaults = UserDefaults.standard
+//        let keys = UserDefaultsKeys()
+//
+//        func formatMass(measurement: Measurement<UnitMass>) -> String {
+//            let numberFormatter = NumberFormatter()
+//            numberFormatter.maximumFractionDigits = 2
+//            let measurementFormatter = MeasurementFormatter()
+//            measurementFormatter.unitOptions = .providedUnit
+//            measurementFormatter.numberFormatter = numberFormatter
+//            let formattedMassString = measurementFormatter.string(from: measurement) // Culprit
+//            return formattedMassString
+//        }
+//
+//        func formatLength(measurement: Measurement<UnitLength>) -> String {
+//            let numberFormatter = NumberFormatter()
+//            numberFormatter.maximumFractionDigits = 2
+//            let measurementFormatter = MeasurementFormatter()
+//            measurementFormatter.unitOptions = .providedUnit
+//            measurementFormatter.numberFormatter = numberFormatter
+//            let formattedMassString = measurementFormatter.string(from: measurement) // Culprit
+//            return formattedMassString
+//        }
+//
+//        if healthKitUtil.selectedUnit == MeasurementUnits.metric {
+//            healthKitUtil.selectedUnit = MeasurementUnits.imperial
+//            // WEIGHT
+//            if setupProfileOptionList[6]?.buttonText != "ENTER" && setupProfileOptionList[6]?.buttonText != "Enter" {
+//                let btnText = setupProfileOptionList[6]!.buttonText
+//                let weight = actualValue(selectedOption: btnText)
+//                let weightInKilograms = Measurement(value: weight, unit: UnitMass.kilograms)
+//                let weightInPounds = weightInKilograms.converted(to: .pounds)
+//                let weightString = formatMass(measurement: weightInPounds)
+//                setupProfileOptionList[6]?.buttonText = weightString
+//
+//                defaults.set(actualValue(selectedOption: weightString), forKey: keys.weight)
+//                print(weightString)
+//            }
+//            // HEIGHT
+//            if setupProfileOptionList[5]?.buttonText != "ENTER" && setupProfileOptionList[5]?.buttonText != "Enter" {
+//                let btnText = setupProfileOptionList[5]!.buttonText
+//                let height = actualValue(selectedOption: btnText)
+//                let heightInCentimeters = Measurement(value: height, unit: UnitLength.centimeters)
+//                let heightInFeet = heightInCentimeters.converted(to: .feet)
+//                let heightString = formatLength(measurement: heightInFeet)
+//                setupProfileOptionList[5]?.buttonText = heightString
+//                defaults.set(actualValue(selectedOption: heightString), forKey: keys.height)
+//                print(heightString)
+//            }
+//        } else {
+//            healthKitUtil.selectedUnit = MeasurementUnits.metric
+//            // WEIGHT
+//            if setupProfileOptionList[6]?.buttonText != "ENTER" && setupProfileOptionList[6]?.buttonText != "Enter" {
+//                let btnText = setupProfileOptionList[6]!.buttonText
+//                let weight = actualValue(selectedOption: btnText)
+//                let weightInPounds = Measurement(value: weight, unit: UnitMass.pounds)
+//                let weightInKilograms = weightInPounds.converted(to: .kilograms)
+//                let weightString = formatMass(measurement: weightInKilograms)
+//                setupProfileOptionList[6]?.buttonText = weightString
+//                defaults.set(actualValue(selectedOption: weightString), forKey: keys.weight)
+//                print(weightString)
+//            }
+//            // HEIGHT
+//            if setupProfileOptionList[5]?.buttonText != "ENTER" && setupProfileOptionList[5]?.buttonText != "Enter" {
+//                let btnText = setupProfileOptionList[5]!.buttonText
+//                let height = actualValue(selectedOption: btnText)
+//                let heightInFeet = Measurement(value: height, unit: UnitLength.feet)
+//                let heightInCentimeters = heightInFeet.converted(to: .centimeters)
+//                let heightString = formatLength(measurement: heightInCentimeters)
+//                setupProfileOptionList[5]?.buttonText = heightString
+//                defaults.set(actualValue(selectedOption: heightString), forKey: keys.height)
+//                print(heightString)
+//            }
+//        }
+//        self.collectionView.reloadData()
     }
     
 
@@ -303,9 +304,6 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     }
 
     func updateUserDefaultsOnPickerDone(selectedRow: Int = 0) {
-        //        let selectedValue =  pickerData[selectedRow]
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
 
         switch picker.accessibilityLabel {
         case PickerLabel.agePicker:
@@ -319,20 +317,20 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
 
             setupProfileOptionList[4]?.buttonText = "\(currentAge) years"
             setupProfileOptionList[4]?.isSynced = true
-            defaults.set(selectedDate, forKey: keys.birthday)
+            AppSyncManager.instance.healthProfile.value?.birthday = selectedDate
         case PickerLabel.genderPicker:
             setupProfileOptionList[3]?.buttonText = "\(selectedPickerValue)"
             setupProfileOptionList[3]?.isSynced = true
-            defaults.set(selectedPickerValue, forKey:keys.gender)
+            AppSyncManager.instance.healthProfile.value?.gender = selectedPickerValue
         case PickerLabel.heightPicker:
             setupProfileOptionList[5]?.buttonText = "\(selectedPickerValue)"
             setupProfileOptionList[5]?.isSynced = true
-            defaults.set(actualValue(selectedOption: selectedPickerValue), forKey:keys.height)
+            AppSyncManager.instance.healthProfile.value?.height = selectedPickerValue
 
         case PickerLabel.weightPicker:
             setupProfileOptionList[6]?.buttonText = "\(selectedPickerValue)"
             setupProfileOptionList[6]?.isSynced = true
-            defaults.set(actualValue(selectedOption: selectedPickerValue), forKey:keys.weight)
+            AppSyncManager.instance.healthProfile.value?.weight = selectedPickerValue
 
         default:
             print(picker.accessibilityLabel)

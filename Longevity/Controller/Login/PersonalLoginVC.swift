@@ -140,7 +140,6 @@ class PersonalLoginVC: UIViewController {
                         DispatchQueue.main.async {
                             self?.removeSpinner()
                             self?.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-                            updateSetupProfileCompletionStatus(currentState: .onboarding)
                         }
                         return
                     }
@@ -175,12 +174,10 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            getProfile()
             retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 
@@ -205,12 +202,10 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            getProfile()
             retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
 
@@ -234,12 +229,10 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithApple(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            getProfile()
             retrieveARN()
             DispatchQueue.main.async {
                 self.removeSpinner()
                 self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-                updateSetupProfileCompletionStatus(currentState: .onboarding)
             }
         }
         func onFailure(error: AuthError) {

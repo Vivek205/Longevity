@@ -42,7 +42,6 @@ class SetupProfileDisclaimerVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateSetupProfileCompletionStatus(currentState: .disclaimer)
         performSegue(withIdentifier: "SetupProfileDisclaimerToBioData", sender: self)
     }
 

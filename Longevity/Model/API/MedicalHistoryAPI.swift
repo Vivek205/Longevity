@@ -23,13 +23,15 @@ func updateMedicalConditions() {
             let status: Int
         }
 
-        var updatedConditions =  selectedConditions.map { (item) -> [String:Any] in
-            let value = ["condition": item.name, "type":"PREDEFINDED"] as [String : Any]
+        var updatedConditions =  selectedConditions.map { (item) -> [String:String] in
+            let value = ["condition": item.name, "type":"PREDEFINDED"] as [String : String]
             return value
         }
         if otherOption != nil {
             updatedConditions.append(["condition": otherOption!, "type": "OTHER"])
         }
+
+        AppSyncManager.instance.healthProfile.value?.preconditions = updatedConditions
 
         let jsonToSend = ["pre_existing_conditions":updatedConditions]
         let body = JSON(jsonToSend)
@@ -49,9 +51,6 @@ func updateMedicalConditions() {
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 print("sucess \(responseString)")
-                let defaults = UserDefaults.standard
-                let keys = UserDefaultsKeys()
-                defaults.set(true, forKey: keys.providedPreExistingMedicalConditions)
                 case .failure(let apiError):
                 print("updateMedicalConditions failed \(apiError)")
             }
@@ -67,87 +66,70 @@ func updateMedicalConditions() {
 }
 
 
-func getHealthProfile(){
-    func onGettingCredentials(_ credentials: Credentials){
-        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
-        _ = Amplify.API.get(request: request, listener: { (result) in
-            switch result {
-            case .success(let data):
-                do {
-                    let jsonData = try JSON(data: data)
-                    let defaults = UserDefaults.standard
-                    let keys = UserDefaultsKeys()
-                    let userProfileData = jsonData["data"]
-                    let weight = userProfileData[keys.weight].rawString()!
-                    let height = userProfileData[keys.height].rawString()!
-                    let gender = userProfileData[keys.gender].rawString()!
-                    let birthday = userProfileData[keys.birthday].rawString()!
-                    let unit = userProfileData[keys.unit].rawString()!
-                    let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
-                    let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
-
-                    var devicesStatus: [String:[String:Int]] = [:]
-
-                    if !(weight.isEmpty) && weight != "null"{
-                        defaults.set(weight, forKey: keys.weight)
-                    }
-                    if !(height.isEmpty) && height  != "null" {
-                        defaults.set(height, forKey: keys.height)
-                    }
-                    if !(gender.isEmpty) && gender != "null" {
-                        defaults.set(gender, forKey: keys.gender)
-                    }
-                    if !(birthday.isEmpty) && birthday != "null"{
-                        defaults.set(birthday, forKey: keys.birthday)
-                    }
-                    if !(unit.isEmpty) && unit != "null" {
-                        defaults.set(unit, forKey: keys.unit)
-                    }else {
-                        defaults.set(MeasurementUnits.metric.rawValue, forKey: keys.unit)
-                    }
-                    if preExistingConditions != nil && !preExistingConditions!.isEmpty {
-                        preExistingConditions?.forEach({ (condition) in
-                            if condition["type"] == "PREDEFINDED" {
-                                if let index = preExistingMedicalConditionData.firstIndex(where: { (item) -> Bool in
-                                    return item.name == condition["condition"]
-                                }) {
-                                    preExistingMedicalConditionData[index].selected = true
-                                }
-                            } else if condition["type"] == "OTHER" {
-                                preExistingMedicalCondtionOtherText = condition["condition"]
-                            }
-
-                        })
-                    }
-
-
-                    if let fitbitStatus = devices?[ExternalDevices.FITBIT] {
-                        devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
-
-                        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                            let enhancedDevices = devices.merging(devicesStatus) {(_, newValues) in newValues }
-                            defaults.set(enhancedDevices, forKey: keys.devices)
-                        }else {
-                            defaults.set(devicesStatus, forKey: keys.devices)
-                        }
-                    }
-                } catch {
-                    print("json parse error", error)
-                }
-            case .failure(let apiError):
-                print("getHealthProfile failed \(apiError)")
-            }
-        })
-    }
-
-    func onFailureCredentials(_ error: Error?) {
-          print("getHealthProfile failed to fetch credentials \(error)")
-      }
-    
-    _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
-    getUserAttributes()
-}
+//func getHealthProfile(){
+//    func onGettingCredentials(_ credentials: Credentials){
+//        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+//        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
+//        _ = Amplify.API.get(request: request, listener: { (result) in
+//            switch result {
+//            case .success(let data):
+//                do {
+//                    let jsonData = try JSON(data: data)
+//                    let defaults = UserDefaults.standard
+//                    let keys = UserDefaultsKeys()
+//                    let userProfileData = jsonData["data"]
+//                    let weight = userProfileData[keys.weight].rawString()!
+//                    let height = userProfileData[keys.height].rawString()!
+//                    let gender = userProfileData[keys.gender].rawString()!
+//                    let birthday = userProfileData[keys.birthday].rawString()!
+//                    let unit = userProfileData[keys.unit].rawString()!
+//                    let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
+//                    let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
+//
+//                    var devicesStatus: [String:[String:Int]] = [:]
+//
+//                    if preExistingConditions != nil && !preExistingConditions!.isEmpty {
+//                        preExistingConditions?.forEach({ (condition) in
+//                            if condition["type"] == "PREDEFINDED" {
+//                                if let index = preExistingMedicalConditionData.firstIndex(where: { (item) -> Bool in
+//                                    return item.name == condition["condition"]
+//                                }) {
+//                                    preExistingMedicalConditionData[index].selected = true
+//                                }
+//                            } else if condition["type"] == "OTHER" {
+//                                preExistingMedicalCondtionOtherText = condition["condition"]
+//                            }
+//
+//                        })
+//                    }
+//
+//
+//                    if let fitbitStatus = devices?[ExternalDevices.FITBIT] {
+//                        devicesStatus[ExternalDevices.FITBIT] = ["connected": fitbitStatus["connected"]!]
+//
+//                        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//                            let enhancedDevices = devices.merging(devicesStatus) {(_, newValues) in newValues }
+//                            defaults.set(enhancedDevices, forKey: keys.devices)
+//                        }else {
+//                            defaults.set(devicesStatus, forKey: keys.devices)
+//                        }
+//                    }
+//                } catch {
+//                    print("json parse error", error)
+//                }
+//            case .failure(let apiError):
+//                print("getHealthProfile failed \(apiError)")
+//            }
+//        })
+//    }
+//
+//    func onFailureCredentials(_ error: Error?) {
+//          print("getHealthProfile failed to fetch credentials \(error)")
+//      }
+//
+//    _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
+//    getUserAttributes()
+//}
 
 func updateHealthProfile() {
     func onGettingCredentials(_ credentials: Credentials){
@@ -162,17 +144,18 @@ func updateHealthProfile() {
             keys.unit: defaults.value(forKey: keys.unit)
         ]
 
-        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-            var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
-            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
-                print("fitbitstatus", fitbitStatus)
-                devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
-            }
-            if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
-                devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
-            }
-            bodyDict["devices"] = devicesStatus
-        }
+        bodyDict["devices"] = AppSyncManager.instance.healthProfile.value?.devices
+//        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//            var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
+//            if let fitbitStatus = devices[ExternalDevices.FITBIT] {
+//                print("fitbitstatus", fitbitStatus)
+//                devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
+//            }
+//            if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] {
+//                devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
+//            }
+//            bodyDict["devices"] = devicesStatus
+//        }
 
         let body = JSON(bodyDict)
 
@@ -190,15 +173,15 @@ func updateHealthProfile() {
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 print("sucess \(responseString)")
-                updateSetupProfileCompletionStatus(currentState: .biodata)
-                if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                    let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-                    defaults.set(enhancedDevices, forKey: keys.devices)
-                } else {
-                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                    defaults.set(newDevices, forKey: keys.devices)
-                }
+                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
+//                if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
+//                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                    let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
+//                    defaults.set(enhancedDevices, forKey: keys.devices)
+//                } else {
+//                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                    defaults.set(newDevices, forKey: keys.devices)
+//                }
             case .failure(let apiError):
                 print("updateHealthProfile failed \(apiError)")
             }

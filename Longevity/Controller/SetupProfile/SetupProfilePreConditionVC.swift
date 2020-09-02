@@ -71,7 +71,6 @@ class SetupProfilePreConditionVC: UIViewController {
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
         updateMedicalConditions()
-        updateSetupProfileCompletionStatus(currentState: .preExistingConditions)
     }
 
 }

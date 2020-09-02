@@ -289,6 +289,7 @@ class UserProfileAPI: BaseAuthAPI {
                 case .success(let data):
                     let responseString = String(data: data, encoding: .utf8)
                     print("sucess \(responseString)")
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
 //                    updateSetupProfileCompletionStatus(currentState: .biodata)
 //                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
 //                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]

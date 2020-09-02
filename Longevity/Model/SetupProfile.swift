@@ -53,20 +53,20 @@ var setupProfileConnectDeviceOptionList:[Int: SetupProfileConnectDeviceOption] =
     //    5: SetupProfileConnectDeviceOption(image: #imageLiteral(resourceName: "icon:iOximeter"), title: "iOximeter", description: "Smart heart monitor that you use on your finger")
 ]
 
+//
+//func updateSetupProfileCompletionStatus(currentState:SetupProfileCompletionStatus) {
+//    let defaults = UserDefaults.standard
+//    let keys = UserDefaultsKeys()
+//    defaults.set(currentState.rawValue, forKey: keys.setupProfileCompletionStatus)
+//}
 
-func updateSetupProfileCompletionStatus(currentState:SetupProfileCompletionStatus) {
-    let defaults = UserDefaults.standard
-    let keys = UserDefaultsKeys()
-    defaults.set(currentState.rawValue, forKey: keys.setupProfileCompletionStatus)
-}
-
-func getCurrentProfileCompletionStatus() -> SetupProfileCompletionStatus {
-    let defaults = UserDefaults.standard
-    let keys = UserDefaultsKeys()
-    if let rawValue = defaults.value(forKey: keys.setupProfileCompletionStatus) as? String{
-        let currentStatus = SetupProfileCompletionStatus(rawValue: rawValue) ?? .onboarding
-        return currentStatus
-    }
-    // Default Value
-    return .onboarding
-}
+//func getCurrentProfileCompletionStatus() -> SetupProfileCompletionStatus {
+//    let defaults = UserDefaults.standard
+//    let keys = UserDefaultsKeys()
+//    if let rawValue = defaults.value(forKey: keys.setupProfileCompletionStatus) as? String{
+//        let currentStatus = SetupProfileCompletionStatus(rawValue: rawValue) ?? .onboarding
+//        return currentStatus
+//    }
+//    // Default Value
+//    return .onboarding
+//}

@@ -12,6 +12,7 @@ import HealthKit
 fileprivate let healthKitStore: HKHealthStore = HKHealthStore()
 fileprivate let defaults = UserDefaults.standard
 fileprivate let keys = UserDefaultsKeys()
+fileprivate let appSyncManager = AppSyncManager.instance
 
 struct HealthkitCharacteristicUserData {
     var birthDate: DateComponents?
@@ -70,24 +71,25 @@ final class HealthKitUtil {
     }
     static let shared = HealthKitUtil()
     var isHealthkitSynced:Bool {
-        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-            if let healthKitStatus = devices[ExternalDevices.HEALTHKIT] {
-                return healthKitStatus["connected"] == 1
+        if let devices = AppSyncManager.instance.healthProfile.value?.devices {
+            if let healtKitdevice = devices[ExternalDevices.HEALTHKIT] {
+                return healtKitdevice["connected"] == 1
             }
         }
         return false
     }
     var selectedUnit: MeasurementUnits {
         get {
-            if let measurementUnitRawValue = defaults.string(forKey: keys.unit) as? String {
-                let unit = MeasurementUnits(rawValue: measurementUnitRawValue)
-                return unit ?? MeasurementUnits.metric
+            if let unit = appSyncManager.healthProfile.value?.unit {
+                return unit
             }
+
             return MeasurementUnits.metric
         }
         set(unit) {
-            print("new unit value", unit)
-            defaults.set(unit.rawValue, forKey: keys.unit)
+
+            appSyncManager.healthProfile.value?.unit = unit
+
         }
     }
 
@@ -215,11 +217,11 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
             heightString = "\(String(format: "%.2f", heightInCentimeters)) \(self.selectedUnit.height)"
-            defaults.set(String(format: "%2f",heightInCentimeters), forKey: keys.height)
+            appSyncManager.healthProfile.value?.height = String(format: "%2f",heightInCentimeters)
         } else {
             let heightInFeet = heightSample.quantity.doubleValue(for: HKUnit.foot())
             heightString = "\(String(format: "%.2f", heightInFeet)) \(self.selectedUnit.height)"
-             defaults.set(String(format: "%2f",heightInFeet), forKey: keys.height)
+            appSyncManager.healthProfile.value?.height = String(format: "%2f",heightInFeet)
         }
         return heightString
     }
@@ -265,11 +267,11 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
             weightString = "\(String(format: "%.2f", weightInKilograms)) \(self.selectedUnit.weight)"
-            defaults.set(String(format: "%2f",weightInKilograms), forKey: keys.weight)
+            appSyncManager.healthProfile.value?.weight = String(format: "%2f",weightInKilograms)
         } else {
             let weightInPounds = weightSample.quantity.doubleValue(for: HKUnit.pound())
             weightString = "\(String(format: "%.2f", weightInPounds)) \(self.selectedUnit.weight)"
-            defaults.set(String(format: "%2f",weightInPounds), forKey: keys.weight)
+            appSyncManager.healthProfile.value?.weight = String(format: "%2f",weightInPounds)
         }
         return weightString
     }

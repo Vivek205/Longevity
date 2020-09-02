@@ -46,7 +46,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         ])
         
         if HKHealthStore.isHealthDataAvailable() {
-            if let devices = UserDefaults.standard.object(forKey: UserDefaultsKeys().devices) as? [String:[String:Int]] {
+            if let devices = AppSyncManager.instance.healthProfile.value?.devices {
                 HealthStore.shared.getHealthStore()
                 HealthStore.shared.retrieveHeartRate { (rate) in
                     

@@ -23,22 +23,22 @@ class SetupProfileDevicesVC: UIViewController {
     }
 
     func checkIfDevicesAreConnectedAlready() {
-        // TODO: check from user defaults  FITBIT
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-
-        if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-            if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
-                print("fitbitstatus", fitbitStatus)
-                setupProfileConnectDeviceOptionList[2]?.isConnected = fitbitStatus["connected"] == 1
-                collectionView.reloadData()
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self) {
+            [weak self] in
+            if let devices = AppSyncManager.instance.healthProfile.value?.devices {
+                if let fitbit = devices[ExternalDevices.FITBIT] {
+                    DispatchQueue.main.async {
+                        setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
+                        self?.collectionView.reloadData()
+                    }
+                }
             }
         }
+
     }
 
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateSetupProfileCompletionStatus(currentState: .connectDevices)
         performSegue(withIdentifier: "SetupProfileDevicesToPreExistingConditions", sender: self)
     }
 }

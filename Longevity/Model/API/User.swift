@@ -31,71 +31,22 @@ struct LoginType {
 
 let longevityTNCVersion = 1
 
-func getProfile() {
-    getHealthProfile()
-
-    func onGettingCredentials(_ credentials: Credentials) {
-        let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
-        _ = Amplify.API.get(request: request, listener: { (result) in
-            switch result {
-            case .success(let data):
-                do {
-                    let jsonData = try JSON(data: data)
-                    let defaults = UserDefaults.standard
-                    let keys = UserDefaultsKeys()
-                    let userProfileData = jsonData["data"]
-                    let name = userProfileData[keys.name].rawString()!
-                    let email = userProfileData[keys.email].rawString()!
-                    let phone = userProfileData[keys.phone].rawString()!
-                    var devicesStatus: [String:[String:Int]] = [:]
-
-                    if !(name.isEmpty) && name != "null"{
-                        defaults.set(name, forKey: keys.name)
-                    }
-                    
-                    if !email.isEmpty && email != "null" {
-                        defaults.set(email, forKey: keys.email)
-                    }
-
-                    if !phone.isEmpty && phone != "null" {
-                        defaults.set(phone, forKey: keys.phone)
-                    }
-                } catch {
-                    print("json parse error", error)
-                }
-            case .failure(let apiError):
-                print("getProfile failed \(apiError)")
-            }
-        })
-    }
-
-    func onFailureCredentials(_ error: Error?) {
-        print("getProfile failed to fetch credentials \(error)")
-    }
-
-
-    _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
-    getUserAttributes()
-}
 
 func updateProfile(){
     func onGettingCredentials(_ credentials: Credentials){
         let headers = ["token":credentials.idToken,"login_type":LoginType.PERSONAL]
-        let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
-        var bodyDict = [
-            keys.weight: defaults.value(forKey: keys.weight),
-            keys.height: defaults.value(forKey: keys.height),
-            keys.gender: defaults.value(forKey: keys.gender),
-            keys.birthday: defaults.value(forKey: keys.birthday),
-            keys.unit: defaults.value(forKey: keys.unit),
-        ]
+        var bodyDict:[String:String] = [String:String]()
 
         let appSyncManager = AppSyncManager.instance
 
         bodyDict[keys.name] = appSyncManager.userProfile.value?.name
         bodyDict[keys.phone] = appSyncManager.userProfile.value?.phone
+        bodyDict[keys.weight] = appSyncManager.healthProfile.value?.weight
+        bodyDict[keys.height] = appSyncManager.healthProfile.value?.height
+        bodyDict[keys.gender] = appSyncManager.healthProfile.value?.gender
+        bodyDict[keys.birthday] = appSyncManager.healthProfile.value?.birthday
+        bodyDict[keys.unit] = appSyncManager.healthProfile.value?.unit.rawValue
 
         let body = JSON(bodyDict)
         print(body.rawValue)
@@ -113,7 +64,6 @@ func updateProfile(){
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 print("sucess \(responseString)")
-                updateSetupProfileCompletionStatus(currentState: .biodata)
             case .failure(let apiError):
                 print("updateProfile failed \(apiError)")
             }
@@ -224,8 +174,6 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
 
 
 func getUserAttributes() {
-    let defaults = UserDefaults.standard
-    let keys = UserDefaultsKeys()
     _ = Amplify.Auth.fetchUserAttributes() { result in
         switch result {
         case .success(let attributes):
@@ -237,7 +185,7 @@ func getUserAttributes() {
                     let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
 
                     if json!["isAccepted"] as! NSNumber == 1 {
-                        defaults.set(1, forKey: keys.isTermsAccepted)
+                        AppSyncManager.instance.isTermsAccepted.value = true
                     }
                 }
             }
@@ -249,26 +197,22 @@ func getUserAttributes() {
 
 
 func acceptTNC(value: Bool) {
-    let defaults = UserDefaults.standard
-    let keys = UserDefaultsKeys()
     let tncValue = ["version" : 1, "isAccepted" : value] as [String: Any]
     let json = JSON(tncValue)
     let tncValueString = json.rawString([.castNilToNSNull : true])!
 
     _ = Amplify.Auth.update(userAttribute: AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: tncValueString)) { result in
         do {
-            defaults.set(1, forKey: keys.isTermsAccepted)
             let updateResult = try result.get()
             switch updateResult.nextStep {
             case .confirmAttributeWithCode(let deliveryDetails, let info):
                 print("Confirm the attribute with details send to - \(deliveryDetails) \(info)")
             case .done:
                 print("Update completed")
-                updateSetupProfileCompletionStatus(currentState: .acceptTerms)
+                AppSyncManager.instance.isTermsAccepted.value = true
             }
         } catch {
             print("Update attribute failed with error \(error)")
         }
     }
 }
-

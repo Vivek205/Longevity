@@ -40,7 +40,6 @@ class SetupProfileNotificationVC: UIViewController {
         
         if let snsArnCreatedAlready = defaults.value(forKey: keys.endpointArnForSNS) as? String{
             guard (snsArnCreatedAlready.isEmpty) else {
-                updateSetupProfileCompletionStatus(currentState: .notifications)
                 return self.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
             }
             self.registerForPushNotifications()
@@ -50,7 +49,6 @@ class SetupProfileNotificationVC: UIViewController {
     }
     
     @IBAction func handleMayBeLater(_ sender: Any) {
-        updateSetupProfileCompletionStatus(currentState: .notifications)
         self.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
     }
     

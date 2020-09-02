@@ -80,14 +80,20 @@ class LNTabBarViewController: UITabBarController {
     }
         
         func navigateToTheNextScreen(){
-            let defaults = UserDefaults.standard
-            let keys = UserDefaultsKeys()
+            let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
+            let devices = AppSyncManager.instance.healthProfile.value?.devices
+            var healthKitConnected = false
+            var fitbitConnected = false
+            if let profile = AppSyncManager.instance.healthProfile.value {
+                if let healthKitDevice = profile.devices?[ExternalDevices.HEALTHKIT], healthKitDevice["connected"] == 1 {
+                    healthKitConnected = true
+                }
+                if let fitbitDevice = profile.devices?[ExternalDevices.FITBIT], fitbitDevice["connected"] == 1 {
+                    fitbitConnected = true
+                }
+            }
 
-            let isTermsAccepted = defaults.bool(forKey: keys.isTermsAccepted)
-            let devices = (defaults.dictionary(forKey: keys.devices) ?? [:]) as [String:[String:Int]]
-            let fitbitStatus = (devices[ExternalDevices.FITBIT] ?? [:]) as [String:Int]
-            let healthkitStatus = (devices[ExternalDevices.HEALTHKIT] ?? [:]) as [String:Int]
-            let providedPreExistingMedicalConditions = defaults.bool(forKey: keys.providedPreExistingMedicalConditions)
+            let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
             
             if isTermsAccepted == true {
                 let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
@@ -95,9 +101,9 @@ class LNTabBarViewController: UITabBarController {
 
                 if providedPreExistingMedicalConditions == true {
                     homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
-                }else if fitbitStatus["connected"] == 1 {
+                }else if fitbitConnected {
                     homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
-                }else if healthkitStatus["connected"] == 1 {
+                }else if healthKitConnected {
                     homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
                 } else {
                     homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")

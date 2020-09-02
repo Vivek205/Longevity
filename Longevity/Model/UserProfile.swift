@@ -15,11 +15,11 @@ struct UserProfile: Codable {
 }
 
 struct UserHealthProfile: Codable {
-    let weight: String
-    let height: String
-    let gender: String
-    let birthday: String
-    let unit: MeasurementUnits
+    var weight: String
+    var height: String
+    var gender: String
+    var birthday: String
+    var unit: MeasurementUnits
     var devices: [String: [String: Int]]?
-    let preconditions: [[String:String]]?
+    var preconditions: [[String:String]]?
 }

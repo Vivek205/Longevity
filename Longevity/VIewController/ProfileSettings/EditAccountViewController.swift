@@ -188,18 +188,4 @@ extension EditAccountViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
     }
-    
-//    func textFieldDidEndEditing(_ textField: UITextField) {
-//        let userDefaults = UserDefaults.standard
-//        if textField.tag == 1 {
-//            if textField.text?.isEmpty ?? false {
-//                showAlert(title: "Error", message: "Full name cannot be empty")
-//                textField.text = userDefaults.string(forKey: UserDefaultsKeys().name)
-//            } else {
-//                userDefaults.set(textField.text, forKey: UserDefaultsKeys().name)
-//            }
-//        } else if textField.tag == 2 {
-//            userDefaults.set(textField.text, forKey: UserDefaultsKeys().phone)
-//        }
-//    }
 }
