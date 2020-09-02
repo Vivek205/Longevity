@@ -9,9 +9,9 @@
 import Foundation
 
 struct UserProfile: Codable {
-    let name: String
+    var name: String // shall I make this var?
     let email: String
-    let phone: String
+    var phone: String
 }
 
 struct UserHealthProfile: Codable {

@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let appSyncManager:AppSyncManager = AppSyncManager.instance
+
 class EditAccountViewController: UIViewController {
     
     lazy var nameLabel: UILabel = {
@@ -153,11 +155,17 @@ class EditAccountViewController: UIViewController {
         
         self.fullName.delegate = self
         self.mobilePhone.delegate = self
-        
-        let userDefaults = UserDefaults.standard
-        self.fullName.text = userDefaults.string(forKey: UserDefaultsKeys().name)
-        self.emailText.text = userDefaults.string(forKey: UserDefaultsKeys().email)
-        self.mobilePhone.text = userDefaults.string(forKey: UserDefaultsKeys().phone)
+
+        appSyncManager.userProfile.addAndNotify(observer: self) {
+            guard let userProfile = appSyncManager.userProfile.value else {return}
+            DispatchQueue.main.async {
+                [weak self] in
+                self?.fullName.text = userProfile.name
+                self?.emailText.text = userProfile.email
+                self?.mobilePhone.text = userProfile.phone
+            }
+
+        }
     }
     
     @objc func closeView() {
@@ -165,12 +173,11 @@ class EditAccountViewController: UIViewController {
     }
 
     @objc func doneUpdate() {
-        let keys = UserDefaultsKeys()
         if let name = fullName.text {
-            UserDefaults.standard.set(name, forKey: keys.name)
+            appSyncManager.userProfile.value?.name = name
         }
         if let phone = mobilePhone.text {
-            UserDefaults.standard.set(phone, forKey: keys.phone)
+            appSyncManager.userProfile.value?.phone = phone
         }
         updateProfile()
         self.dismiss(animated: true, completion: nil)
@@ -182,17 +189,17 @@ extension EditAccountViewController: UITextFieldDelegate {
         textField.resignFirstResponder()
     }
     
-    func textFieldDidEndEditing(_ textField: UITextField) {
-        let userDefaults = UserDefaults.standard
-        if textField.tag == 1 {
-            if textField.text?.isEmpty ?? false {
-                showAlert(title: "Error", message: "Full name cannot be empty")
-                textField.text = userDefaults.string(forKey: UserDefaultsKeys().name)
-            } else {
-                userDefaults.set(textField.text, forKey: UserDefaultsKeys().name)
-            }
-        } else if textField.tag == 2 {
-            userDefaults.set(textField.text, forKey: UserDefaultsKeys().phone)
-        }
-    }
+//    func textFieldDidEndEditing(_ textField: UITextField) {
+//        let userDefaults = UserDefaults.standard
+//        if textField.tag == 1 {
+//            if textField.text?.isEmpty ?? false {
+//                showAlert(title: "Error", message: "Full name cannot be empty")
+//                textField.text = userDefaults.string(forKey: UserDefaultsKeys().name)
+//            } else {
+//                userDefaults.set(textField.text, forKey: UserDefaultsKeys().name)
+//            }
+//        } else if textField.tag == 2 {
+//            userDefaults.set(textField.text, forKey: UserDefaultsKeys().phone)
+//        }
+//    }
 }

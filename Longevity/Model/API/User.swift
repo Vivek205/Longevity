@@ -85,14 +85,17 @@ func updateProfile(){
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         var bodyDict = [
-            keys.name: defaults.value(forKey: keys.name),
             keys.weight: defaults.value(forKey: keys.weight),
             keys.height: defaults.value(forKey: keys.height),
             keys.gender: defaults.value(forKey: keys.gender),
             keys.birthday: defaults.value(forKey: keys.birthday),
             keys.unit: defaults.value(forKey: keys.unit),
-            keys.phone: defaults.value(forKey: keys.phone)
         ]
+
+        let appSyncManager = AppSyncManager.instance
+
+        bodyDict[keys.name] = appSyncManager.userProfile.value?.name
+        bodyDict[keys.phone] = appSyncManager.userProfile.value?.phone
 
         let body = JSON(bodyDict)
         print(body.rawValue)

@@ -52,7 +52,6 @@ class AppleHealthConnectionViewController: UIViewController {
         
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
-            let keys = UserDefaultsKeys()
             if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
                 self?.isDeviceConnected = true
             } else {

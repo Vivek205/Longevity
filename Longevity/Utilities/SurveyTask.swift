@@ -11,8 +11,10 @@ import ResearchKit
 
 fileprivate let defaultModuleIconName:String = "icon : GI"
 
-final class SurveyTaskUtility {
-    private init() {}
+fileprivate let appSyncmanager:AppSyncManager = AppSyncManager.instance
+
+final class SurveyTaskUtility: NSObject {
+    private override init() {}
     static let shared = SurveyTaskUtility()
     private var surveyList:[SurveyListItem]?
     var repetitiveSurveyList:[SurveyListItem] = [SurveyListItem]()
@@ -39,9 +41,7 @@ final class SurveyTaskUtility {
         dateFormatter.dateFormat = "E.MMM.d"
         let date = dateFormatter.string(from: today)
 
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-        guard let userName = defaults.value(forKey: keys.name) as? String else { return nil }
+        guard let userName = appSyncmanager.userProfile.value?.email else { return nil }
         return "\(date) for \(userName)"
     }
 
