@@ -63,7 +63,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if #available(iOS 13.0, *) {
             self.window?.overrideUserInterfaceStyle = .light
         }
-        
+
         presentLoaderAnimationViewController()
 //        self.setRootViewController()
         window?.makeKeyAndVisible()
@@ -157,12 +157,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let type = apsData["type"] as? String {
             if let notificationType = NotificationType(rawValue: type) {
                 switch notificationType {
-                case .fitbitSync:
+                case .syncFitbit:
                     let fitbitModel = FitbitModel()
                     fitbitModel.refreshTheToken()
                     completionHandler(.newData)
                     return
-                case .surveyReportsReady:
+                case .covidReportProcessed:
                     // TODO: redirect to mydata page
                     if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
                         tabBarController.selectedIndex = 1
@@ -198,16 +198,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let type =  apsData["type"] as? String {
                 if let notificationType = NotificationType(rawValue: type) {
                     switch notificationType {
-                    case .fitbitSync:
+                    case .syncFitbit:
                         let fitbitModel = FitbitModel()
                         fitbitModel.refreshTheToken()
                         completionHandler(.alert)
                         return
-                    case .surveyReportsReady:
+                    case .covidReportProcessed:
                         // TODO: redirect to mydata page
                         if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
                             tabBarController.selectedIndex = 1
                         }
+                        completionHandler(.alert    )
                         return
                     default:
                         return
@@ -238,12 +239,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let type = apsData["type"] as? String {
                 if let notificationType = NotificationType(rawValue: type) {
                     switch notificationType {
-                    case .fitbitSync:
+                    case .syncFitbit:
                         let fitbitModel = FitbitModel()
                         fitbitModel.refreshTheToken()
                         completionHandler()
                         return
-                    case .surveyReportsReady:
+                    case .covidReportProcessed:
                         // TODO: redirect to mydata page
                         if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
                             tabBarController.selectedIndex = 1
@@ -291,6 +292,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 }
 
 enum NotificationType: String {
-    case fitbitSync = "FITBIT_SYNC"
-    case surveyReportsReady = "SURVEY_REPORTS_READY"
+    case syncFitbit = "SYNC_FITBIT"
+    case covidReportProcessed = "COVID_REPORT_PROCESSED"
 }

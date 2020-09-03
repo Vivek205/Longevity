@@ -261,12 +261,13 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
             semaphore.signal()
         }
     } catch {
+        semaphore.signal()
         return nil
     }
 
 
 
-    //    _ = semaphore.wait(timeout: .now() + 0.240)
+//        _ = semaphore.wait(timeout: .now() + 0.240)
     _ = semaphore.wait(timeout: .distantFuture)
     print("exit", Date().description)
     return nextQuestionIdentifier
