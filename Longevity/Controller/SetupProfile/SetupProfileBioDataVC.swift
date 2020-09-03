@@ -123,7 +123,7 @@ class SetupProfileBioDataVC: UIViewController {
         }
 
         self.collectionView.reloadData()
-        return 
+        return
     }
 
     func authorizeHealthKitInApp() {
@@ -134,7 +134,6 @@ class SetupProfileBioDataVC: UIViewController {
                     print("Healthdata not authorized")
                     return
                 }
-                let healthKitUserData =  self.healthKitUtil.readCharacteristicData()
                 DispatchQueue.main.async {
                     self.readHealthData()
                 }
