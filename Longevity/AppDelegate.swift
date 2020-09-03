@@ -64,9 +64,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.window?.overrideUserInterfaceStyle = .light
         }
         
-        self.setRootViewController()
+//        self.setRootViewController()
         window?.makeKeyAndVisible()
-        checkIfAppUpdated()
+//        checkIfAppUpdated()
         return true
     }
     

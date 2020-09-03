@@ -343,6 +343,14 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     }
 
     func showHeightPicker() {
+//        if let selectedUnit = AppSyncManager.instance.healthProfile.value?.unit {
+//            switch selectedUnit {
+//            case .metric:
+//                pickerData = Array(healthKitUtil.minimumHeightCm...healthKitUtil.maximumHeightCm).map { "\($0) \(healthKitUtil.selectedUnit.height)"}
+//            case .imperial:
+//
+//            }
+//        }
         let minHeight = 20
         let maxHeight = 200
         pickerData = Array(minHeight...maxHeight).map { "\($0) \(healthKitUtil.selectedUnit.height)"}

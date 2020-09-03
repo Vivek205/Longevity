@@ -87,10 +87,11 @@ final class HealthKitUtil {
             AppSyncManager.instance.healthProfile.value?.unit = unit
         }
     }
+    let minimumHeightCm = 100
+    let maximumHeightCm = 260
 
     func setSelectedUnit(unit:MeasurementUnits) {
         self.selectedUnit = unit
-
     }
 
     func toggleSelectedUnit() {
@@ -226,6 +227,23 @@ final class HealthKitUtil {
         let heightInCenti = Measurement(value: (height as NSString).doubleValue, unit: UnitLength.centimeters)
         let heightInFeet = heightInCenti.converted(to: .feet)
         return String(format: "%.2f", heightInFeet.value)
+    }
+
+    func getHeightPickerOptions() -> [String]? {
+        var pickerData: [String] = [String]()
+        switch selectedUnit {
+        case .metric:
+            print("metric heights")
+             pickerData = Array(minimumHeightCm...maximumHeightCm).map { "\($0) \(selectedUnit.height)"}
+        case .imperial:
+            let minCenti = Measurement(value: Double(minimumHeightCm), unit: UnitLength.centimeters)
+            let minFeet = minCenti.converted(to: .feet)
+            let maxCenti = Measurement(value: Double(maximumHeightCm), unit: UnitLength.centimeters)
+            let maxFeet = maxCenti.converted(to: .feet)
+//            pickerData = Array(minFeet.value...maxFeet.value){"\(String(format:"%.2f", $0)) \(selectedUnit.height)"}
+            print("imperial heights")
+        }
+        return nil
     }
 
     func readHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
