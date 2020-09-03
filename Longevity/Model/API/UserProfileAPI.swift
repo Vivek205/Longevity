@@ -289,16 +289,6 @@ class UserProfileAPI: BaseAuthAPI {
                 case .success(let data):
                     let responseString = String(data: data, encoding: .utf8)
                     print("sucess \(responseString)")
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
-//                    updateSetupProfileCompletionStatus(currentState: .biodata)
-//                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-//                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-//                        defaults.set(enhancedDevices, forKey: keys.devices)
-//                    } else {
-//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-//                        defaults.set(newDevices, forKey: keys.devices)
-//                    }
                 case .failure(let error):
                     print(error.localizedDescription)
                     onFailure(error)
@@ -323,12 +313,12 @@ class UserProfileAPI: BaseAuthAPI {
 //
 //            if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
 //                var devicesStatus:[String:[String:Int]] = [String:[String:Int]]()
-//                if let fitbitStatus = devices[ExternalDevices.FITBIT] as? [String: Int] {
+//                if let fitbitStatus = devices[ExternalDevices.fitbit] as? [String: Int] {
 //                    print("fitbitstatus", fitbitStatus)
-//                    devicesStatus[ExternalDevices.FITBIT] = fitbitStatus
+//                    devicesStatus[ExternalDevices.fitbit] = fitbitStatus
 //                }
-//                if let healthkitStatus = devices[ExternalDevices.HEALTHKIT] as? [String: Int] {
-//                    devicesStatus[ExternalDevices.HEALTHKIT] = healthkitStatus
+//                if let healthkitStatus = devices[ExternalDevices.healthkit] as? [String: Int] {
+//                    devicesStatus[ExternalDevices.healthkit] = healthkitStatus
 //                }
 //                bodyDict["devices"] = devicesStatus
 //            }
@@ -351,11 +341,11 @@ class UserProfileAPI: BaseAuthAPI {
 //                    print("sucess \(responseString)")
 //                    updateSetupProfileCompletionStatus(currentState: .biodata)
 //                    if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        let newDevices = [ExternalDevices.healthkit:["connected":1]]
 //                        let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
 //                        defaults.set(enhancedDevices, forKey: keys.devices)
 //                    } else {
-//                        let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
+//                        let newDevices = [ExternalDevices.healthkit:["connected":1]]
 //                        defaults.set(newDevices, forKey: keys.devices)
 //                    }
 //                case .failure(let apiError):

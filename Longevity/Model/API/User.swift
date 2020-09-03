@@ -20,8 +20,9 @@ struct CustomCognitoAttributesDefaults {
 }
 
 struct ExternalDevices {
-    static let FITBIT = "FITBIT"
-    static let HEALTHKIT = "HEALTHKIT"
+    static let fitbit = "FITBIT"
+    static let healthkit = "HEALTHKIT"
+    static let healthkitBio = "HEALTHKIT_BIO"
 }
 
 struct LoginType {

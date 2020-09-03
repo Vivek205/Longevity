@@ -52,7 +52,7 @@ class AppleHealthConnectionViewController: UIViewController {
         
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
-            if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+            if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
                 self?.isDeviceConnected = true
             } else {
                 self?.isDeviceConnected = false
@@ -106,10 +106,10 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
     @objc func connectDevice() {
         var connected = self.isDeviceConnected ? 0 : 1
         let profile = AppSyncManager.instance.healthProfile.value
-        if let device = profile?.devices?[ExternalDevices.HEALTHKIT] {
-            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.HEALTHKIT]?["connected"] = connected
+        if let device = profile?.devices?[ExternalDevices.healthkit] {
+            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] = connected
         } else {
-            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.HEALTHKIT: ["connected" : connected]]) { (current, _) in current }
+            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.healthkit: ["connected" : connected]]) { (current, _) in current }
         }
         
         let userProfile = UserProfileAPI()

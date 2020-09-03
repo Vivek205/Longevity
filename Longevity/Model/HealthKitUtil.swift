@@ -12,7 +12,6 @@ import HealthKit
 fileprivate let healthKitStore: HKHealthStore = HKHealthStore()
 fileprivate let defaults = UserDefaults.standard
 fileprivate let keys = UserDefaultsKeys()
-fileprivate let appSyncManager = AppSyncManager.instance
 
 struct HealthkitCharacteristicUserData {
     var birthDate: DateComponents?
@@ -65,57 +64,51 @@ extension HKBiologicalSex {
 final class HealthKitUtil {
     private init() {
         self.readCharacteristicData()
-        getHeightData(completion: nil)
-        getWeightData(completion: nil)
+        readHeightData(completion: nil)
+        readWeightData(completion: nil)
         _ = self.selectedUnit
     }
     static let shared = HealthKitUtil()
     var isHealthkitSynced:Bool {
-        if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-            if let healtKitdevice = devices[ExternalDevices.HEALTHKIT] {
-                return healtKitdevice["connected"] == 1
-            }
+        if let healthkitConnected = UserDefaults.standard.value(forKey: UserDefaultsKeys().healthkitBioConnected) as? Bool {
+            return healthkitConnected
         }
         return false
     }
     var selectedUnit: MeasurementUnits {
         get {
-            if let unit = appSyncManager.healthProfile.value?.unit {
+            if let unit = AppSyncManager.instance.healthProfile.value?.unit {
                 return unit
             }
 
             return MeasurementUnits.metric
         }
         set(unit) {
-
-            appSyncManager.healthProfile.value?.unit = unit
-
+            AppSyncManager.instance.healthProfile.value?.unit = unit
         }
     }
 
     func setSelectedUnit(unit:MeasurementUnits) {
         self.selectedUnit = unit
+
     }
 
     func toggleSelectedUnit() {
 
         if selectedUnit == MeasurementUnits.metric {
             setSelectedUnit(unit: MeasurementUnits.imperial)
-            if let heightSample = self.latestHeightSample {
-                _ = getHeightString(from: heightSample)
-            }
-            if let weightSample = self.latestWeightSample {
-                _ = getWeightString(from: weightSample)
-            }
-            return
+        } else {
+            setSelectedUnit(unit: MeasurementUnits.metric)
         }
-        setSelectedUnit(unit: MeasurementUnits.metric)
-        if let heightSample = self.latestHeightSample {
-            _ = getHeightString(from: heightSample)
-        }
-        if let weightSample = self.latestWeightSample {
-            _ = getWeightString(from: weightSample)
-        }
+
+//        guard self.isHealthkitSynced else {return}
+//
+//        if let heightSample = self.latestHeightSample {
+//            _ = getHeightString(from: heightSample)
+//        }
+//        if let weightSample = self.latestWeightSample {
+//            _ = getWeightString(from: weightSample)
+//        }
         return
     }
 
@@ -137,22 +130,15 @@ final class HealthKitUtil {
         let healthKitTypesToWrite: Set<HKSampleType> = []
         let healthKitTypesToRead:Set<HKObjectType> = [dateOfBirth, biologicalSex,bloodType, bodyMass, height]
 
-
+        
         healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite,
                                             read: healthKitTypesToRead)
         { (success, error) in
             if !success {
                 print("error in health kit", error)
+
             } else {
-                //                 MARK: Save healthkit status in userDefaults
-                if let devices = defaults.object(forKey: keys.devices) as? [String:[String:Int]] {
-                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                    let enhancedDevices = devices.merging(newDevices) {(_, newValues) in newValues }
-                    defaults.set(enhancedDevices, forKey: keys.devices)
-                } else {
-                    let newDevices = [ExternalDevices.HEALTHKIT:["connected":1]]
-                    defaults.set(newDevices, forKey: keys.devices)
-                }
+                UserDefaults.standard.set(true, forKey: UserDefaultsKeys().healthkitBioConnected)
             }
             completion(success, error)
         }
@@ -208,6 +194,13 @@ final class HealthKitUtil {
             print(error)
         }
         self.userCharacteristicData = HealthkitCharacteristicUserData(birthDate: birthDate, biologicalSex: biologicalSex,bloodType: bloodType)
+        if let birthDateString = self.userCharacteristicData?.birthDateString {
+            AppSyncManager.instance.healthProfile.value?.birthday = birthDateString
+        }
+        if let gender = self.userCharacteristicData?.biologicalSex?.string {
+            AppSyncManager.instance.healthProfile.value?.gender = gender
+        }
+
         return self.userCharacteristicData
     }
 
@@ -217,16 +210,25 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
             heightString = "\(String(format: "%.2f", heightInCentimeters)) \(self.selectedUnit.height)"
-            appSyncManager.healthProfile.value?.height = String(format: "%2f",heightInCentimeters)
+            AppSyncManager.instance.healthProfile.value?.height = String(format: "%.2f",heightInCentimeters)
         } else {
             let heightInFeet = heightSample.quantity.doubleValue(for: HKUnit.foot())
             heightString = "\(String(format: "%.2f", heightInFeet)) \(self.selectedUnit.height)"
-            appSyncManager.healthProfile.value?.height = String(format: "%2f",heightInFeet)
+            // NOTE: Always store metric value in Appsync manager
+            let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
+            AppSyncManager.instance.healthProfile.value?.height = String(format: "%.2f",heightInCentimeters)
         }
         return heightString
     }
 
-    func getHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
+    func getHeightStringInImperial() -> String? {
+        guard let height = AppSyncManager.instance.healthProfile.value?.height else { return nil}
+        let heightInCenti = Measurement(value: (height as NSString).doubleValue, unit: UnitLength.centimeters)
+        let heightInFeet = heightInCenti.converted(to: .feet)
+        return String(format: "%.2f", heightInFeet.value)
+    }
+
+    func readHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
         enum HeightError:Error {
             case heightNotFound
         }
@@ -267,19 +269,30 @@ final class HealthKitUtil {
         if self.selectedUnit == MeasurementUnits.metric {
             let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
             weightString = "\(String(format: "%.2f", weightInKilograms)) \(self.selectedUnit.weight)"
-            appSyncManager.healthProfile.value?.weight = String(format: "%2f",weightInKilograms)
+            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.2f",weightInKilograms)
         } else {
             let weightInPounds = weightSample.quantity.doubleValue(for: HKUnit.pound())
             weightString = "\(String(format: "%.2f", weightInPounds)) \(self.selectedUnit.weight)"
-            appSyncManager.healthProfile.value?.weight = String(format: "%2f",weightInPounds)
+            // NOTE: Always store metric value in Appsync manager
+            let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
+            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.2f",weightInKilograms)
         }
         return weightString
     }
 
-    func getWeightData(completion: ((_ weight: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
+    func getWeightStringInImperial() -> String? {
+        guard let weight = AppSyncManager.instance.healthProfile.value?.weight else { return nil}
+        let weightInKilo = Measurement(value: (weight as NSString).doubleValue, unit: UnitMass.kilograms)
+        let weightInPounds = weightInKilo.converted(to: .pounds)
+        return String(format: "%.2f", weightInPounds.value)
+    }
+
+
+    func readWeightData(completion: ((_ weight: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
         enum WeightError:Error {
             case weightNotFound
         }
+
         if self.latestWeightSample != nil {
             if completion != nil {
                 completion!(self.latestWeightSample, nil)

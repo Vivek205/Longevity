@@ -66,7 +66,6 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
         uiSlider.isContinuous = true
         uiSlider.tintColor = .green
         uiSlider.translatesAutoresizingMaskIntoConstraints = false
-        uiSlider.setValue(98.0, animated: true)
         uiSlider.addTarget(self, action: #selector(handleSliderValueChanged(_:)), for: .valueChanged)
         return uiSlider
     }()
@@ -74,7 +73,6 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     lazy var sliderLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "98"
         return label
     }()
 
@@ -123,8 +121,8 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     @objc func handleSliderValueChanged(_ sender: UISlider) {
         print("value changed", sender.value)
         guard let identifer = step?.identifier else { return }
-        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.1f", sender.value))
-        sliderLabel.text = "\(Int(sender.value))"
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.2f", sender.value))
+        sliderLabel.text = String(format: "%.2f", sender.value)
         continueButton.isEnabled = true
     }
 

@@ -22,7 +22,6 @@ class SetupProfileBioDataVC: UIViewController {
     
     let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
 
-
     var toolBar = UIToolbar()
     var picker  = UIPickerView()
     var agePicker = UIDatePicker()
@@ -39,7 +38,7 @@ class SetupProfileBioDataVC: UIViewController {
         collectionView.dataSource = self
         continueButton.isEnabled = false
         createPickersAndToolbar()
-        self.readHealthData()
+
         checkIfHealthKitSyncedAlready()
         
         if self.isFromSettings {
@@ -56,6 +55,7 @@ class SetupProfileBioDataVC: UIViewController {
 
     func checkIfHealthKitSyncedAlready() {
         if healthKitUtil.isHealthkitSynced {
+            self.readHealthData()
             continueButton.isEnabled = true
         }
     }
@@ -100,7 +100,29 @@ class SetupProfileBioDataVC: UIViewController {
 
     @IBAction func handleMetricTogglePress(_ sender: Any) {
         healthKitUtil.toggleSelectedUnit()
-        self.readHealthData()
+        guard healthKitUtil.isHealthkitSynced else {return}
+        
+        switch healthKitUtil.selectedUnit {
+        case .metric:
+            if let height = AppSyncManager.instance.healthProfile.value?.height {
+                setupProfileOptionList[5]?.buttonText = "\(height) \(healthKitUtil.selectedUnit.height)"
+            }
+            if let weight = AppSyncManager.instance.healthProfile.value?.weight {
+                setupProfileOptionList[6]?.buttonText = "\(weight) \(healthKitUtil.selectedUnit.weight)"
+            }
+            break
+        case .imperial:
+            if let height = healthKitUtil.getHeightStringInImperial() {
+                setupProfileOptionList[5]?.buttonText = "\(height) \(healthKitUtil.selectedUnit.height)"
+            }
+            if let weight = healthKitUtil.getWeightStringInImperial() {
+                setupProfileOptionList[6]?.buttonText = "\(weight) \(healthKitUtil.selectedUnit.weight)"
+            }
+
+            break
+        }
+
+        self.collectionView.reloadData()
         return 
 
 //        let defaults = UserDefaults.standard
@@ -178,35 +200,6 @@ class SetupProfileBioDataVC: UIViewController {
 //        }
 //        self.collectionView.reloadData()
     }
-    
-
-    func getMostRecentSample(for sampleType: HKSampleType,
-                             completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
-        //1. Use HKQuery to load the most recent samples.
-        let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
-                                                              end: Date(),
-                                                              options: .strictEndDate)
-        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate,
-                                              ascending: false)
-        let limit = 1
-        let sampleQuery = HKSampleQuery(sampleType: sampleType,
-                                        predicate: mostRecentPredicate,
-                                        limit: limit,
-                                        sortDescriptors: [sortDescriptor])
-        { (query, samples, error) in
-            //2. Always dispatch to the main thread when complete.
-            DispatchQueue.main.async {
-                guard let samples = samples,
-                    let mostRecentSample = samples.first as? HKQuantitySample else {
-                        completion(nil, error)
-                        return
-                }
-                completion(mostRecentSample, nil)
-            }
-        }
-
-        HKHealthStore().execute(sampleQuery)
-    }
 
     func authorizeHealthKitInApp() {
         healthKitUtil.authorize
@@ -224,21 +217,18 @@ class SetupProfileBioDataVC: UIViewController {
     }
     
     func readHealthData() {
-        if healthKitUtil.isHealthkitSynced {
-            if healthKitUtil.selectedUnit == MeasurementUnits.metric {
-
-            }
-            healthKitUtil.readCharacteristicData()
-            if let currentAge = healthKitUtil.userCharacteristicData?.currentAge {
+        if let characteristicData = healthKitUtil.readCharacteristicData() {
+            if let currentAge = characteristicData.currentAge {
                 setupProfileOptionList[4]?.isSynced = true
                 setupProfileOptionList[4]?.buttonText = "\(currentAge) years"
             }
-            if let biologicalSex = healthKitUtil.userCharacteristicData?.biologicalSex {
+            if let biologicalSex = characteristicData.biologicalSex {
                 setupProfileOptionList[3]?.isSynced = true
                 setupProfileOptionList[3]?.buttonText = biologicalSex.string
             }
+        }
 
-            healthKitUtil.getHeightData {
+            healthKitUtil.readHeightData {
                 (height, error) in
                 guard let heightSample = height as? HKQuantitySample else {return}
                 let heightString = self.healthKitUtil.getHeightString(from: heightSample)
@@ -250,7 +240,7 @@ class SetupProfileBioDataVC: UIViewController {
                 }
             }
 
-            healthKitUtil.getWeightData {
+            healthKitUtil.readWeightData {
                 (weight, error) in
                 if error != nil {
                     return
@@ -266,7 +256,6 @@ class SetupProfileBioDataVC: UIViewController {
             }
             self.continueButton.isEnabled = true
             self.collectionView.reloadData()
-        }
     }
     
     @objc func closeView() {
@@ -450,7 +439,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
-
             if healthKitUtil.selectedUnit == MeasurementUnits.metric {
                 cell.unitSwitch.isOn = true
                 cell.unitSwitch.setOn(true, animated: true)

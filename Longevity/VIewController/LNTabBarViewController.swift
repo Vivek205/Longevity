@@ -85,10 +85,10 @@ class LNTabBarViewController: UITabBarController {
             var healthKitConnected = false
             var fitbitConnected = false
             if let profile = AppSyncManager.instance.healthProfile.value {
-                if let healthKitDevice = profile.devices?[ExternalDevices.HEALTHKIT], healthKitDevice["connected"] == 1 {
+                if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
                     healthKitConnected = true
                 }
-                if let fitbitDevice = profile.devices?[ExternalDevices.FITBIT], fitbitDevice["connected"] == 1 {
+                if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
                     fitbitConnected = true
                 }
             }

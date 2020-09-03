@@ -260,9 +260,17 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
                 return stepVC
             }
             if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
-                let stepVC = ContinuousScaleAnswerVC()
-                stepVC.step = step
-                return stepVC
+                let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
+                switch questionDetails?.quesType {
+                case .temperatureScale:
+                    let stepVC = TemperatureScaleAnswerVC()
+                    stepVC.step = step
+                    return stepVC
+                default:
+                    let stepVC = ContinuousScaleAnswerVC()
+                    stepVC.step = step
+                    return stepVC
+                }
             }
 
             if questionStep.answerFormat is ORKTextAnswerFormat {

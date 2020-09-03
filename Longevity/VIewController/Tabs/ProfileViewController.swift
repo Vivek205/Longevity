@@ -386,16 +386,16 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
             fitbitModel.auth { authCode, error in
                 if error != nil {
                     print("Auth flow finished with error \(String(describing: error))")
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                 } else {
                     print("Your auth code is \(String(describing: authCode))")
                     fitbitModel.token(authCode: authCode!)
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: connected)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
                 }
             }
         }
         else {
-            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: connected)
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
         }
     }
     

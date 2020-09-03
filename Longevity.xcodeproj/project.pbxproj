@@ -121,6 +121,7 @@
 		E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09524C9B75000969CD8 /* RKCLabels.swift */; };
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
 		E27C4F6124FE07F60070A2D3 /* CarouselCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */; };
+		E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */; };
 		E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */; };
 		E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */; };
 		E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */; };
@@ -317,6 +318,7 @@
 		E274F09524C9B75000969CD8 /* RKCLabels.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCLabels.swift; sourceTree = "<group>"; };
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
 		E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionCell.swift; sourceTree = "<group>"; };
+		E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureScaleAnswerVC.swift; sourceTree = "<group>"; };
 		E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnswerVC.swift; sourceTree = "<group>"; };
 		E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogViewController.swift; sourceTree = "<group>"; };
 		E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogHeader.swift; sourceTree = "<group>"; };
@@ -609,6 +611,7 @@
 				E20256DD24E29DA000896F2C /* FormStepVC.swift */,
 				E24826E424E5326D0083EFAC /* CompletionStepVC.swift */,
 				E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */,
+				E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -1058,6 +1061,7 @@
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
 				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
 				C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */,
+				E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */,
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
 				E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */,
@@ -1316,7 +1320,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1341,7 +1345,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 10;
+				CURRENT_PROJECT_VERSION = 11;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

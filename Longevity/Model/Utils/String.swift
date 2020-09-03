@@ -39,9 +39,10 @@ extension String {
 
 //MARK: Convert Text to image
 extension String {
-    func toImage(color:UIColor = .white, fontSize:CGFloat = 20) -> UIImage {
+    func toImage(color:UIColor = .black, backgroundColor:UIColor = .appBackgroundColor, fontSize:CGFloat = 20) -> UIImage {
         let attributes = [
             NSAttributedString.Key.foregroundColor: color,
+            NSAttributedString.Key.backgroundColor: backgroundColor,
             NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
         ]
         let textSize = self.size(withAttributes: attributes)

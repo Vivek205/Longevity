@@ -58,7 +58,7 @@ class ProfileSettingsCell: UITableViewCell {
                     DispatchQueue.main.async {
                         let profile = AppSyncManager.instance.healthProfile.value
                         var deviceConnected = false
-                        if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+                        if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
                             deviceConnected = true
                         } else {
                             deviceConnected = false
@@ -174,7 +174,7 @@ class ProfileSettingsCell: UITableViewCell {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 let profile = AppSyncManager.instance.healthProfile.value
-                if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
+                if let device = profile?.devices?[ExternalDevices.fitbit], device["connected"] == 1 {
                     self?.settingsSwitch.isOn = true
                 } else {
                     self?.settingsSwitch.isOn = false
@@ -184,10 +184,22 @@ class ProfileSettingsCell: UITableViewCell {
     }
     
     func metricSystemPreselect() {
-        if HealthKitUtil.shared.selectedUnit == MeasurementUnits.metric {
-            self.settingsSwitch.isOn = true
-        } else {
-            self.settingsSwitch.isOn = false
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self) {
+            [weak self] in
+            if let unit = AppSyncManager.instance.healthProfile.value?.unit {
+                switch unit {
+                case .metric:
+                    DispatchQueue.main.async {
+                        self?.settingsSwitch.isOn = true
+                    }
+                    break
+                case .imperial:
+                    DispatchQueue.main.async {
+                        self?.settingsSwitch.isOn = false
+                    }
+                    break
+                }
+            }
         }
     }
 }

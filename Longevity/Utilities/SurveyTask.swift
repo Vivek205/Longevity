@@ -105,12 +105,13 @@ final class SurveyTaskUtility: NSObject {
                                     { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
 
-                                        if filteredQuestion.quesType == .continuousScale {
+                                        if filteredQuestion.quesType == .continuousScale ||
+                                            filteredQuestion.quesType == .temperatureScale {
                                             let answerFormat = ORKAnswerFormat.continuousScale(
                                                 withMaximumValue: 150,minimumValue: 60, defaultValue: 98,
                                                 maximumFractionDigits: 1, vertical: true,
-                                                maximumValueDescription: (NSString(format:"120%@", "\u{00B0}") as String),
-                                                minimumValueDescription: (NSString(format:"80%@", "\u{00B0}") as String))
+                                                maximumValueDescription: "",
+                                                minimumValueDescription: "")
                                             let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId,
                                                                                title: "\(moduleValue.id)",
                                                                                question: filteredQuestion.text,

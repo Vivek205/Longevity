@@ -72,6 +72,7 @@ enum QuestionTypes:String, Decodable {
     case text = "TEXT"
     case singleSelect = "SINGLE_SELECT"
     case continuousScale = "CONTINUOUS_SCALE"
+    case temperatureScale = "TEMPERATURE_SCALE"
 }
 
 struct Question:Decodable {

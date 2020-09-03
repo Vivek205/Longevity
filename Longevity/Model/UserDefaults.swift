@@ -9,8 +9,8 @@
 import Foundation
 
 enum MeasurementUnits: String, Codable {
-    case metric = "metric"
-    case imperial = "imperial"
+    case metric
+    case imperial
 }
 
 extension MeasurementUnits {
@@ -51,6 +51,7 @@ struct UserDefaultsKeys {
     let endpointArnForSNS = "endpointArnForSNS"
     let email = "email"
     let logger = "logger"
+    let healthkitBioConnected = "healthkitBioConnected"
 }
 
 func clearUserDefaults() {

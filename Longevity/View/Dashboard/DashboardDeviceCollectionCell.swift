@@ -175,13 +175,13 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
             if self?.device == .fitbit {
-                if let device = profile?.devices?[ExternalDevices.FITBIT], device["connected"] == 1 {
+                if let device = profile?.devices?[ExternalDevices.fitbit], device["connected"] == 1 {
                     self?.connectionStatus = .connected
                 } else {
                     self?.connectionStatus = .notConnected
                 }
             } else if self?.device == .applehealth {
-                if let device = profile?.devices?[ExternalDevices.HEALTHKIT], device["connected"] == 1 {
+                if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
                     self?.connectionStatus = .connected
                 } else {
                     self?.connectionStatus = .notConnected
@@ -211,9 +211,9 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             if self.device == .applehealth {
                 HealthStore.shared.getHealthKitAuthorization { (authorized) in
                     if authorized {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
                     } else {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 0)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
                     }
                 }
             } else if self.device == .fitbit {
@@ -224,16 +224,16 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 fitbitModel.auth { authCode, error in
                     if error != nil {
                         print("Auth flow finished with error \(String(describing: error))")
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                     } else {
                         print("Your auth code is \(String(describing: authCode))")
                         fitbitModel.token(authCode: authCode!)
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 1)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                     }
                 }
             }
             
-            let healthDevice = self.device == .applehealth ? ExternalDevices.HEALTHKIT : ExternalDevices.FITBIT
+            let healthDevice = self.device == .applehealth ? ExternalDevices.healthkit : ExternalDevices.fitbit
             
             let profile = AppSyncManager.instance.healthProfile.value
             if let device = profile?.devices?[healthDevice] {

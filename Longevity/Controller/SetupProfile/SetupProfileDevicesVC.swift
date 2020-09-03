@@ -26,7 +26,7 @@ class SetupProfileDevicesVC: UIViewController {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) {
             [weak self] in
             if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-                if let fitbit = devices[ExternalDevices.FITBIT] {
+                if let fitbit = devices[ExternalDevices.fitbit] {
                     DispatchQueue.main.async {
                         setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
                         self?.collectionView.reloadData()
@@ -54,11 +54,11 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
             fitbitModel.auth { authCode, error in
                 if error != nil {
                     print("Auth flow finished with error \(String(describing: error))")
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 0)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                 } else {
                     print("Your auth code is \(String(describing: authCode))")
                     self.fitbitModel.token(authCode: authCode!)
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.FITBIT, connected: 1)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                     DispatchQueue.main.async {
                         setupProfileConnectDeviceOptionList[2]?.isConnected = true
                         self.collectionView.reloadData()
@@ -68,9 +68,9 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
         default:
             HealthStore.shared.getHealthKitAuthorization { (authorized) in
                 if authorized {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 1)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
                 } else {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.HEALTHKIT, connected: 0)
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
                 }
             }
         }
