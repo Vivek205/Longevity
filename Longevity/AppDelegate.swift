@@ -64,10 +64,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.window?.overrideUserInterfaceStyle = .light
         }
         
+        presentLoaderAnimationViewController()
 //        self.setRootViewController()
         window?.makeKeyAndVisible()
 //        checkIfAppUpdated()
         return true
+    }
+
+    func presentLoaderAnimationViewController() {
+        let loaderVC = LoaderAnimationViewController()
+        loaderVC.modalPresentationStyle = .fullScreen
+        self.window?.rootViewController = loaderVC
     }
     
     func setRootViewController() {

@@ -122,6 +122,7 @@
 		E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */; };
 		E27C4F6124FE07F60070A2D3 /* CarouselCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */; };
 		E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */; };
+		E27C4F6D2500CBC50070A2D3 /* LoaderAnimationViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27C4F6C2500CBC50070A2D3 /* LoaderAnimationViewController.swift */; };
 		E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */; };
 		E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */; };
 		E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */; };
@@ -319,6 +320,7 @@
 		E274F09724C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCTextChoiceAnswerView.swift; sourceTree = "<group>"; };
 		E27C4F6024FE07F60070A2D3 /* CarouselCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CarouselCollectionCell.swift; sourceTree = "<group>"; };
 		E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TemperatureScaleAnswerVC.swift; sourceTree = "<group>"; };
+		E27C4F6C2500CBC50070A2D3 /* LoaderAnimationViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoaderAnimationViewController.swift; sourceTree = "<group>"; };
 		E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextAnswerVC.swift; sourceTree = "<group>"; };
 		E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogViewController.swift; sourceTree = "<group>"; };
 		E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogHeader.swift; sourceTree = "<group>"; };
@@ -446,6 +448,7 @@
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
 				C19875B424DC784B00477185 /* Tabs */,
 				C19875AF24DC6B6B00477185 /* LNTabBarViewController.swift */,
+				E27C4F6C2500CBC50070A2D3 /* LoaderAnimationViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -1083,6 +1086,7 @@
 				C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
+				E27C4F6D2500CBC50070A2D3 /* LoaderAnimationViewController.swift in Sources */,
 				C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */,
 				E290B60624BC75D500C51655 /* String.swift in Sources */,
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
