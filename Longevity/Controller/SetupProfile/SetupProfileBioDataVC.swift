@@ -351,11 +351,12 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
 //
 //            }
 //        }
-        let minHeight = 20
-        let maxHeight = 200
-        pickerData = Array(minHeight...maxHeight).map { "\($0) \(healthKitUtil.selectedUnit.height)"}
-        picker.selectRow(100, inComponent: 0, animated: true)
-        selectedPickerValue = pickerData[0]
+        pickerData = healthKitUtil.getHeightPickerOptions()
+//        let minHeight = 20
+//        let maxHeight = 200
+//        pickerData = Array(minHeight...maxHeight).map { "\($0) \(healthKitUtil.selectedUnit.height)"}
+        picker.selectRow(30, inComponent: 0, animated: true)
+        selectedPickerValue = pickerData[30]
         picker.accessibilityLabel = PickerLabel.heightPicker
         picker.reloadAllComponents()
         showPicker()

@@ -229,21 +229,21 @@ final class HealthKitUtil {
         return String(format: "%.2f", heightInFeet.value)
     }
 
-    func getHeightPickerOptions() -> [String]? {
+    func getHeightPickerOptions() -> [String] {
         var pickerData: [String] = [String]()
         switch selectedUnit {
         case .metric:
-            print("metric heights")
              pickerData = Array(minimumHeightCm...maximumHeightCm).map { "\($0) \(selectedUnit.height)"}
+            print("metric heights", pickerData)
         case .imperial:
-            let minCenti = Measurement(value: Double(minimumHeightCm), unit: UnitLength.centimeters)
-            let minFeet = minCenti.converted(to: .feet)
-            let maxCenti = Measurement(value: Double(maximumHeightCm), unit: UnitLength.centimeters)
-            let maxFeet = maxCenti.converted(to: .feet)
-//            pickerData = Array(minFeet.value...maxFeet.value){"\(String(format:"%.2f", $0)) \(selectedUnit.height)"}
-            print("imperial heights")
+            pickerData = Array(minimumHeightCm...maximumHeightCm).map({[weak self] (value) -> String in
+                let heightInCenti = Measurement(value: Double(value), unit: UnitLength.centimeters)
+                let heightInFeet = heightInCenti.converted(to: .feet)
+                return "\(String(format: "%.2f", heightInFeet.value)) \(self?.selectedUnit.height ?? "")"
+            })
+            print("imperial heights", pickerData)
         }
-        return nil
+        return pickerData
     }
 
     func readHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {

@@ -7,37 +7,46 @@
 //
 
 import UIKit
+import Amplify
 
 class LoaderAnimationViewController: UIViewController {
-
-
+    
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.showSpinner()
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        if UserAuthAPI.shared.checkUserSignedIn() {
-            self.removeSpinner()
-            let tabbarViewController = LNTabBarViewController()
-            tabbarViewController.modalPresentationStyle = .fullScreen
-            appDelegate.window?.rootViewController = tabbarViewController
-        } else {
-            self.removeSpinner()
-           let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-            let onBoardingViewController = storyboard.instantiateInitialViewController()
-            appDelegate.window?.rootViewController = onBoardingViewController
-            //            gotoLogin()
+        
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            switch result {
+            case .success(let session):
+                if session.isSignedIn {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                        let tabbarViewController = LNTabBarViewController()
+                        tabbarViewController.modalPresentationStyle = .fullScreen
+                        appDelegate.window?.rootViewController = tabbarViewController
+                    }
+                }else {
+                    DispatchQueue.main.async {
+                        self.removeSpinner()
+                        let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+                        let onBoardingViewController = storyboard.instantiateInitialViewController()
+                        appDelegate.window?.rootViewController = onBoardingViewController
+                    }
+                }
+                
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+                    let onBoardingViewController = storyboard.instantiateInitialViewController()
+                    appDelegate.window?.rootViewController = onBoardingViewController
+                }
+                
+            }
         }
     }
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
