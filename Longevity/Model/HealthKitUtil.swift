@@ -89,6 +89,8 @@ final class HealthKitUtil {
     }
     let minimumHeightCm = 100
     let maximumHeightCm = 260
+    let minimumWeightKg = 28
+    let maximumWeightKg = 200
 
     func setSelectedUnit(unit:MeasurementUnits) {
         self.selectedUnit = unit
@@ -229,6 +231,12 @@ final class HealthKitUtil {
         return String(format: "%.2f", heightInFeet.value)
     }
 
+    func getCentimeter(fromFeet value:String) -> String {
+        let feet = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.feet)
+        let centi = feet.converted(to: .centimeters)
+        return String(format: "%.2f", centi.value)
+    }
+
     func getHeightPickerOptions() -> [String] {
         var pickerData: [String] = [String]()
         switch selectedUnit {
@@ -304,6 +312,29 @@ final class HealthKitUtil {
         let weightInPounds = weightInKilo.converted(to: .pounds)
         return String(format: "%.2f", weightInPounds.value)
     }
+
+    func getKilo(fromPounds value:String) -> String {
+        let pounds = Measurement(value: (value as NSString).doubleValue, unit: UnitMass.pounds)
+        let kilo = pounds.converted(to: .kilograms)
+         return String(format: "%.2f", kilo.value)
+    }
+
+    func getWeightPickerOptions() -> [String] {
+           var pickerData: [String] = [String]()
+           switch selectedUnit {
+           case .metric:
+                pickerData = Array(minimumWeightKg...maximumWeightKg).map { "\($0) \(selectedUnit.weight)"}
+               print("metric weights", pickerData)
+           case .imperial:
+               pickerData = Array(minimumWeightKg...maximumWeightKg).map({[weak self] (value) -> String in
+                let weightInKg = Measurement(value: Double(value), unit: UnitMass.kilograms)
+                let weightInPounds = weightInKg.converted(to: .pounds)
+                   return "\(String(format: "%.2f", weightInPounds.value)) \(self?.selectedUnit.weight ?? "")"
+               })
+               print("imperial heights", pickerData)
+           }
+           return pickerData
+       }
 
 
     func readWeightData(completion: ((_ weight: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {
