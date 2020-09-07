@@ -142,6 +142,8 @@
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
 		E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */; };
 		E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337B24AB33FE00929D39 /* Fitbit.swift */; };
+		E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */; };
+		E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
 		E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */; };
 		E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */; };
@@ -340,6 +342,8 @@
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
 		E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerType.swift; sourceTree = "<group>"; };
 		E2B0337B24AB33FE00929D39 /* Fitbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fitbit.swift; sourceTree = "<group>"; };
+		E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionsPopupViewController.swift; sourceTree = "<group>"; };
+		E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionPopupCell.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileNotificationVC.swift; sourceTree = "<group>"; };
 		E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesVC.swift; sourceTree = "<group>"; };
@@ -443,6 +447,7 @@
 		C19875AE24DC6A0800477185 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
+				E2B4679C2505F73E00D8C733 /* Dashboard */,
 				C12F09D324F87D1E00623CC3 /* CheckInLog */,
 				C193942D24EF037700BDB3BD /* ProfileSettings */,
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
@@ -507,6 +512,7 @@
 				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
 				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
 				C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */,
+				E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -685,6 +691,14 @@
 				E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E2B4679C2505F73E00D8C733 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		E2BCA52724853826007204B9 /* AWS */ = {
@@ -1045,6 +1059,7 @@
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */,
 				E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
@@ -1055,6 +1070,7 @@
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
 				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
+				E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
 				C19875BC24DC7AA200477185 /* ShareAppViewController.swift in Sources */,
