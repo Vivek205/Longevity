@@ -144,6 +144,7 @@
 		E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337B24AB33FE00929D39 /* Fitbit.swift */; };
 		E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */; };
 		E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */; };
+		E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
 		E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */; };
 		E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */; };
@@ -344,6 +345,7 @@
 		E2B0337B24AB33FE00929D39 /* Fitbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fitbit.swift; sourceTree = "<group>"; };
 		E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionsPopupViewController.swift; sourceTree = "<group>"; };
 		E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionPopupCell.swift; sourceTree = "<group>"; };
+		E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTasksInfoPopupViewController.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileNotificationVC.swift; sourceTree = "<group>"; };
 		E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesVC.swift; sourceTree = "<group>"; };
@@ -697,6 +699,7 @@
 			isa = PBXGroup;
 			children = (
 				E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */,
+				E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1088,6 +1091,7 @@
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */,
+				E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,

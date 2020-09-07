@@ -76,7 +76,7 @@ class DashboardSectionHeader: UIView {
         case .devices:
             NavigationUtility.presentOverCurrentContext(destination: DeviceConnectionsPopupViewController(), style: .overCurrentContext, completion: nil)
         case .tasks:
-            NavigationUtility.presentOverCurrentContext(destination: BasePopupViewController(), style: .overCurrentContext, completion: nil)
+            NavigationUtility.presentOverCurrentContext(destination: MyTasksInfoPopupViewController(), style: .overCurrentContext, completion: nil)
         }
 
     }
