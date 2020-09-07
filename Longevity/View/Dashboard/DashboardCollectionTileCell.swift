@@ -71,7 +71,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         risk.translatesAutoresizingMaskIntoConstraints = false
         return risk
     }()
-    
+
     lazy var trendDirection: UILabel = {
         let trend = UILabel()
         trend.textAlignment = .center
@@ -108,6 +108,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         info.setImage(UIImage(named: "icon-info"), for: .normal)
         info.tintColor = .white
         info.translatesAutoresizingMaskIntoConstraints = false
+
         return info
     }()
     

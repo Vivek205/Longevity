@@ -46,6 +46,8 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         info.setImage(UIImage(named: "icon-info"), for: .normal)
         info.tintColor = .white
         info.translatesAutoresizingMaskIntoConstraints = false
+        info.isUserInteractionEnabled = true
+
         return info
     }()
     
@@ -80,9 +82,18 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
         ])
+
+        infoButton.addTarget(self, action: #selector(handleEmptyButtonInfoIconTap), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    @objc func handleEmptyButtonInfoIconTap() {
+        NavigationUtility.presentOverCurrentContext(
+            destination: DeviceConnectionsPopupViewController(),
+            style: .overCurrentContext,
+            completion: nil)
     }
 }
