@@ -40,7 +40,7 @@ class DashboardHeaderView: UIView {
     }()
     
     let topMargin = 10.0
-    let bottomMargin = 15.0
+    let bottomMargin = 10.0
     
     init() {
         super.init(frame: CGRect.zero)
