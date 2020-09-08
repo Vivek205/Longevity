@@ -41,10 +41,8 @@ final class SurveyTaskUtility: NSObject {
         let today = Date()
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "E.MMM.d"
-        let date = dateFormatter.string(from: today)
-
-        guard let userName = appSyncmanager.userProfile.value?.email else { return nil }
-        return "\(date) for \(userName)"
+        let dateString = dateFormatter.string(from: today)
+        return dateString
     }
 
     func createSurvey(surveyId: String?, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
