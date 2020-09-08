@@ -96,11 +96,14 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
             self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
         } else {
             
-            if let history = self.userInsights?[indexPath.item].details?.history {
-                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-                checkinLogViewController.history = history
-                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-            }
+//            if let history = self.userInsights?[indexPath.item].details?.history {
+//                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+//                checkinLogViewController.history = history
+//                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+//            }
+            
+            let checkInResultViewController = CheckInResultViewController()
+            NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
         }
     }
     
