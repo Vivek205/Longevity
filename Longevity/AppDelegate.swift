@@ -243,9 +243,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         return
                     case .surveyReportsReady:
                         // TODO: redirect to mydata page
-                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-                            tabBarController.selectedIndex = 1
-                        }
+//                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+//                            tabBarController.selectedIndex = 1
+//                        }
+                        
+                        let checkInResultViewController = CheckInResultViewController()
+                        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
                         completionHandler()
                         return
                     default:
