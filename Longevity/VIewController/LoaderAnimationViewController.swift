@@ -48,17 +48,11 @@ class LoaderAnimationViewController: UIViewController {
         return imageView
     }()
 
-//    lazy var loaderView:UIView = {
-//        let loader = UIView()
-//        loader.translatesAutoresizingMaskIntoConstraints = false
-//        return loader
-//    }()
 
     lazy var spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .whiteLarge)
         spinner.translatesAutoresizingMaskIntoConstraints = false
         spinner.startAnimating()
-//        spinner.center = spinnerView?.center as! CGPoint
         return spinner
     }()
 
@@ -119,7 +113,6 @@ class LoaderAnimationViewController: UIViewController {
                         appDelegate.window?.rootViewController = onBoardingViewController
                     }
                 }
-
 
             case .failure(let error):
                 print(error.localizedDescription)
