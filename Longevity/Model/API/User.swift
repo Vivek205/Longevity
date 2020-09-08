@@ -162,7 +162,7 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
 
                 KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
                 KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
-                print(tokens.idToken)
+//                print(tokens.idToken)
             }
 
             completion(credentials)

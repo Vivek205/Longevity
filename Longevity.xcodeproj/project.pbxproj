@@ -151,6 +151,10 @@
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
 		E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */; };
 		E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337B24AB33FE00929D39 /* Fitbit.swift */; };
+		E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */; };
+		E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */; };
+		E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */; };
+		E2B467A725061F2F00D8C733 /* LongevityComingSoonPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A625061F2F00D8C733 /* LongevityComingSoonPopupViewController.swift */; };
 		E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B9893B248E27EC00453E0E /* UserAccount.swift */; };
 		E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */; };
 		E2BC505B24A5F5CF009E9818 /* SetupProfileDevicesVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */; };
@@ -358,6 +362,10 @@
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
 		E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerType.swift; sourceTree = "<group>"; };
 		E2B0337B24AB33FE00929D39 /* Fitbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fitbit.swift; sourceTree = "<group>"; };
+		E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionsPopupViewController.swift; sourceTree = "<group>"; };
+		E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionPopupCell.swift; sourceTree = "<group>"; };
+		E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTasksInfoPopupViewController.swift; sourceTree = "<group>"; };
+		E2B467A625061F2F00D8C733 /* LongevityComingSoonPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LongevityComingSoonPopupViewController.swift; sourceTree = "<group>"; };
 		E2B9893B248E27EC00453E0E /* UserAccount.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserAccount.swift; sourceTree = "<group>"; };
 		E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileNotificationVC.swift; sourceTree = "<group>"; };
 		E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDevicesVC.swift; sourceTree = "<group>"; };
@@ -485,6 +493,7 @@
 			isa = PBXGroup;
 			children = (
 				C14DBBFE250557E1004D5180 /* CheckinResult */,
+				E2B4679C2505F73E00D8C733 /* Dashboard */,
 				C12F09D324F87D1E00623CC3 /* CheckInLog */,
 				C193942D24EF037700BDB3BD /* ProfileSettings */,
 				C19875BD24DC7ADA00477185 /* BaseViewController */,
@@ -549,6 +558,7 @@
 				C12F09CE24F84D7D00623CC3 /* MyDataLogCell.swift */,
 				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
 				C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */,
+				E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -650,6 +660,7 @@
 		E274F08F24C9667000969CD8 /* ResearchKitStepVC */ = {
 			isa = PBXGroup;
 			children = (
+				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
 				E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
@@ -727,6 +738,16 @@
 				E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */,
 			);
 			path = Protocols;
+			sourceTree = "<group>";
+		};
+		E2B4679C2505F73E00D8C733 /* Dashboard */ = {
+			isa = PBXGroup;
+			children = (
+				E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */,
+				E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */,
+				E2B467A625061F2F00D8C733 /* LongevityComingSoonPopupViewController.swift */,
+			);
+			path = Dashboard;
 			sourceTree = "<group>";
 		};
 		E2BCA52724853826007204B9 /* AWS */ = {
@@ -843,7 +864,6 @@
 			isa = PBXGroup;
 			children = (
 				E274F08F24C9667000969CD8 /* ResearchKitStepVC */,
-				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E2D127E0249B26F200467E43 /* ResearchKitTasks */,
 				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
@@ -1088,6 +1108,7 @@
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */,
 				E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
@@ -1098,6 +1119,7 @@
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
 				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
+				E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				C14DBC0E25080131004D5180 /* CheckInInsightsHeader.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
@@ -1118,6 +1140,7 @@
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
 				E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */,
+				E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
@@ -1127,6 +1150,7 @@
 				E258E66224ED0B3500676056 /* ContinuousScaleAnswerVC.swift in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
 				C12F09CD24F8380100623CC3 /* AppleHealthStatusCell.swift in Sources */,
+				E2B467A725061F2F00D8C733 /* LongevityComingSoonPopupViewController.swift in Sources */,
 				C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */,
@@ -1376,7 +1400,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1401,7 +1425,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 12;
+				CURRENT_PROJECT_VERSION = 14;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

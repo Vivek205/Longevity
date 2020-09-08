@@ -35,15 +35,8 @@ class DashboardHeaderView: UIView {
         dashboardTiles.dataSource = self
         dashboardTiles.showsHorizontalScrollIndicator = false
         dashboardTiles.translatesAutoresizingMaskIntoConstraints = false
+        dashboardTiles.allowsSelection = false
         return dashboardTiles
-    }()
-    
-    lazy var pageControl: UIPageControl = {
-        let pagecontrol = UIPageControl()
-        pagecontrol.tintColor = .checkinCompleted
-        pagecontrol.currentPageIndicatorTintColor = .themeColor
-        pagecontrol.translatesAutoresizingMaskIntoConstraints = false
-        return pagecontrol
     }()
     
     let topMargin = 10.0
@@ -53,7 +46,6 @@ class DashboardHeaderView: UIView {
         super.init(frame: CGRect.zero)
         self.addSubview(bgImageView)
         self.addSubview(dashboardTilesCollection)
-        self.addSubview(pageControl)
         NSLayoutConstraint.activate([
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -63,8 +55,6 @@ class DashboardHeaderView: UIView {
             dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
             dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            pageControl.centerXAnchor.constraint(equalTo: self.centerXAnchor),
-            pageControl.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
         
         guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -73,8 +63,6 @@ class DashboardHeaderView: UIView {
         
         layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
         layout.scrollDirection = .horizontal
-        
-        self.pageControl.numberOfPages = 2
   
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
             self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })

@@ -13,34 +13,48 @@ class BranchingOrderedTask: ORKOrderedTask {
     public var visibilityPredicates = [String:[NSPredicate]]()
 
     override func step(after step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
+        print("after \(self.steps.count)")
+        super.step(after: step, with: result)
+        guard let currentStep = step else {
+            if steps.isEmpty {
+                return nil
+            }
+            if let lastTraversedQuestionId = SurveyTaskUtility.shared.resumeTaskWithLastQuestion() {
+                return self.steps.first(where: { $0.identifier == lastTraversedQuestionId })
+            }
 
-        guard step != nil else {
-            return self.steps[0]
+            return steps[0]
         }
 
-        if step is ORKInstructionStep || step is ORKCompletionStep {
-            return super.step(after: step, with: result)
+        if step is ORKInstructionStep {
+            return steps[1]
+        }
+        if step is ORKCompletionStep {
+            return step
         }
 
-        guard let currentStepIndex: Int? = Int(self.index(of: step!))
-            else { return super.step(after: step, with: result) }
-        var nextStep = self.steps[currentStepIndex! + 1]
+        guard let currentStepIndex = Int(self.index(of: currentStep)) as? Int else { return nil }
+        var nextStep = self.steps[currentStepIndex + 1]
 
         if nextStep is ORKCompletionStep {
-            return super.step(after: step, with: result)
+            return nextStep
         }
         guard let identifier = step?.identifier else {return nextStep}
         let isDynamicQuestion = SurveyTaskUtility.shared.findIsQuestionDynamic(questionId: identifier)
         guard isDynamicQuestion else {
-            return super.step(after: step, with: result)
+
+            return nextStep
         }
-        guard
-            let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier),
-            let moduleId = step?.title
-            else {return nextStep}
-        if let nextStepIdentifier = findNextQuestion(moduleId: Int(moduleId), questionId: identifier,
-                                                     answerValue: answer) {
-            if let nextDynamicStep =  self.steps.first { $0.identifier == nextStepIdentifier} {
+
+        let moduleId = step?.title
+        let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier)
+        guard answer != nil, moduleId != nil else {
+
+            return nextStep
+        }
+        if let nextStepIdentifier = findNextQuestion(moduleId: Int(moduleId ?? ""), questionId: identifier,
+                                                     answerValue: answer!) {
+            if let nextDynamicStep = self.steps.first(where: { $0.identifier == nextStepIdentifier }) {
                 nextStep = nextDynamicStep
             }
         }
@@ -48,48 +62,21 @@ class BranchingOrderedTask: ORKOrderedTask {
         return nextStep
     }
 
-
-
-    func setVisibleStep(_ identifier: String, when predicates: [NSPredicate]) {
-        visibilityPredicates[identifier] = predicates
-    }
-
-    private func visibleStep(after stepIdentifier: String, with result: ORKTaskResult, in steps: [ORKStep]) -> ORKStep? {
-        var shouldFindNextVisibleStep = false
-        for thisStep in steps {
-            if thisStep.identifier == stepIdentifier {
-                shouldFindNextVisibleStep = true
-            } else {
-                continue
-            }
-            if shouldFindNextVisibleStep && isVisibleStep(thisStep.identifier, with: result){
-                return self.step(withIdentifier: thisStep.identifier)
-            }
+    override func step(before step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
+        super.step(before: step, with: result)
+        guard let currentStep = step, let currentStepIndex: Int = Int(self.index(of: currentStep)) else {
+            if steps.isEmpty { return nil }
+            return steps[0]
         }
 
-        // Branching Ordered Task is invalid. Your first and last steps should always be visible
-        // Recommend that your task always ends in an ORKCompletionStep. Your task could start
-        // with an ORKInstructionStep
-        return nil
-    }
+        if currentStep is ORKInstructionStep {
+               return step
+           }
 
-    private func isVisibleStep(_ stepIdentifer: String, with result: ORKTaskResult) -> Bool {
-        // Logic is very similar to ORKStepNavigationRule.identifierForDestinationStepWithTaskResult(...)
-        let allTaskResults = NSArray(objects: result)
-        guard let predicates = visibilityPredicates[stepIdentifer] else {
-            // if a step has no predicates then it is always visible
-            return true
+        guard let locallyTraversedPrevStepIdentifier = SurveyTaskUtility.shared.findPrevQuestion(currentQuestionId: currentStep.identifier) else {
+            return self.steps[currentStepIndex - 1]
         }
-        // step is visible if all predicates evaluate to true
-        var allPredicatesMatched = true
-        for predicate in predicates {
-            if predicate.evaluate(with: allTaskResults) == false {
-                allPredicatesMatched = false
-                break
-            }
-        }
-        return allPredicatesMatched
+        return self.steps.first(where: { $0.identifier == locallyTraversedPrevStepIdentifier })
+
     }
-
-
 }

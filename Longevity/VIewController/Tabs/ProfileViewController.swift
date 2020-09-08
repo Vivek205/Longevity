@@ -329,10 +329,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     
                 case .contactsupport:
                     let contactSupportViewController = ContactSupportViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: contactSupportViewController,
-                                                                style: .overCurrentContext,
-                                                                transitionStyle: .crossDissolve,
-                                                                completion: nil)
+                    let navigationController = UINavigationController(rootViewController: contactSupportViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                     return
                 default: return
                 }
