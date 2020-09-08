@@ -34,6 +34,8 @@ final class SurveyTaskUtility: NSObject {
     private var lastResponse: [SurveyLastResponseData]?
     private var localSavedAnswers:[String:[String:String]] = [String:[String:String]]()//[SurveyId:[QuestionId:Answer]]
     private var serverSubmittedAnswers:[String:[SurveyLastResponseData]] = [String:[SurveyLastResponseData]]()
+    private var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
+//    private var currentQuestion: String?
 
     var surveyTagline: String? {
         let today = Date()
@@ -221,15 +223,14 @@ final class SurveyTaskUtility: NSObject {
 
     func getCurrentSurveyLocalAnswer(questionIdentifier:String) -> String? {
         guard let currentSurveyId = self.currentSurveyId else {return nil}
-        return self.localSavedAnswers[currentSurveyId]?[questionIdentifier]
+        let localAnswer = self.localSavedAnswers[currentSurveyId]?[questionIdentifier]
+        return localAnswer
     }
 
     func setCurrentSurveyLocalAnswer(questionIdentifier:String, answer:String) {
         guard let currentSurveyId = self.currentSurveyId else {
-            print("current survey id not found", self.currentSurveyId)
             return
         }
-        print("current survey id", currentSurveyId)
         if self.localSavedAnswers[currentSurveyId] == nil {
             return self.localSavedAnswers[currentSurveyId] = [questionIdentifier: answer]
         }
@@ -279,7 +280,7 @@ final class SurveyTaskUtility: NSObject {
         list.forEach { (survey) in
             if survey.isRepetitive == true {
                 self.repetitiveSurveyList.append(survey)
-            } else if survey.lastSubmission == nil{
+            } else if survey.lastSubmission == nil {
                 self.oneTimeSurveyList.append(survey)
             }
         }
@@ -314,7 +315,13 @@ final class SurveyTaskUtility: NSObject {
         guard let question = surveyDetails.questions.first(where: { (question) -> Bool in
             question.quesId == questionId
         }) else { return false }
-        return question.action == QuestionAction.dynamic
+        switch question.action {
+        case .dynamic:
+            return true
+        default:
+            return false
+        }
+//        return question.action == QuestionAction.dynamic
     }
 
     func createSingleChoiceQuestionStep(identifier: String,title:String,
@@ -334,5 +341,47 @@ final class SurveyTaskUtility: NSObject {
 
         questionStep.text = additionalText
         return questionStep
+    }
+
+    func addTraversedQuestion(questionId: String?) {
+        guard let currentSurveyId = self.currentSurveyId,
+            let questionId = questionId
+            else { return }
+
+        guard let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId] else {
+            self.traversedQuestions[currentSurveyId] = [questionId]
+            return
+        }
+
+        if !currentSurveyTraversedQuestions.contains(questionId) {
+            self.traversedQuestions[currentSurveyId]?.append(questionId)
+        } else {
+            guard let currentQuestionIndex = currentSurveyTraversedQuestions.firstIndex(of: questionId),
+                currentQuestionIndex+1 < self.traversedQuestions.count
+                else {return}
+            let slicedArray = Array(currentSurveyTraversedQuestions.prefix(upTo:(currentQuestionIndex+1)))
+            print("slicedArray", slicedArray)
+            self.traversedQuestions[currentSurveyId] = slicedArray
+        }
+        print("traversedQuestions", traversedQuestions)
+    }
+    
+    func findPrevQuestion(currentQuestionId: String) -> String?{
+        guard let currentSurveyId = self.currentSurveyId,
+        let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
+        else {return nil}
+        if let currentQuestionIndex = currentSurveyTraversedQuestions.firstIndex(of: currentQuestionId),
+            currentQuestionIndex != 0
+             {
+            return currentSurveyTraversedQuestions[currentQuestionIndex - 1]
+        }
+        return currentSurveyTraversedQuestions.last
+    }
+
+    func resumeTaskWithLastQuestion() -> String? {
+        guard let currentSurveyId = self.currentSurveyId,
+        let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
+        else {return nil}
+        return currentSurveyTraversedQuestions.last
     }
 }

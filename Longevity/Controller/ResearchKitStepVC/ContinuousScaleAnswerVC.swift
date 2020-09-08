@@ -119,7 +119,6 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     }
 
     @objc func handleSliderValueChanged(_ sender: UISlider) {
-        print("value changed", sender.value)
         guard let identifer = step?.identifier else { return }
         SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.2f", sender.value))
         sliderLabel.text = String(format: "%.2f", sender.value)

@@ -213,14 +213,17 @@ struct NextQuestion: Decodable {
 }
 
 func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -> String? {
-    print("entry", Date().description)
+    let dateFormatter = DateFormatter()
+    dateFormatter.dateFormat = "dd.MM.yy - HH:mm:ss.SSS"
+    print("entry", dateFormatter.string(from: Date()))
+
     guard let currentSurveyId = SurveyTaskUtility.shared.currentSurveyId,
         let moduleId = moduleId else {return nil}
     var nextQuestionIdentifier: String?
     let payload = FindNextQuestionPayload(moduleId: moduleId, quesId: questionId, answer: answerValue)
     let encoder = JSONEncoder()
     encoder.keyEncodingStrategy = .convertToSnakeCase
-     let semaphore = DispatchSemaphore(value: 0)
+    let semaphore = DispatchSemaphore(value: 0)
     do {
         let data = try encoder.encode(payload)
 
@@ -239,7 +242,7 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
                             semaphore.signal()
                             return
                         }
-                        print("dataString", dataString)
+//                        print("dataString", dataString)
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
                         let value = try decoder.decode(NextQuestion.self, from: data)
@@ -267,9 +270,9 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
 
 
 
-//        _ = semaphore.wait(timeout: .now() + 0.240)
+    //        _ = semaphore.wait(timeout: .now() + 0.240)
     _ = semaphore.wait(timeout: .distantFuture)
-    print("exit", Date().description)
+    print("exit", dateFormatter.string(from: Date()))
     return nextQuestionIdentifier
 }
 

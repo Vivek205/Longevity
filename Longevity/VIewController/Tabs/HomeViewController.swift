@@ -213,6 +213,12 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
         let taskViewAppearance =
             UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        if let step = stepViewController.step {
+            if step is ORKInstructionStep || step is ORKCompletionStep {
+                return
+            }
+            SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
+        }
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
@@ -282,24 +288,11 @@ extension HomeViewController: ORKTaskViewControllerDelegate {
         return nil
     }
 
-    func showConsent() {
-        let taskViewController = ORKTaskViewController(task: consentTask, taskRun: nil)
-        taskViewController.delegate = self
-        present(taskViewController, animated: true, completion: nil)
+    func taskViewControllerShouldConfirmCancel(_ taskViewController: ORKTaskViewController?) -> Bool {
+        return false
     }
-}
 
-extension HomeViewController: ORKTaskResultSource {
-    func stepResult(forStepIdentifier stepIdentifier: String) -> ORKStepResult? {
-        switch stepIdentifier {
-        case "TextChoiceQuestionStep":
-            let result = ORKChoiceQuestionResult(identifier: "TextChoiceQuestionStep")
-            let stepResult = ORKStepResult(stepIdentifier: "TextChoiceQuestionStep", results: [result])
-            return stepResult
-        default:
-            return nil
-        }
-    }
+
 }
 
 class HomeViewHeader: UITableViewHeaderFooterView {

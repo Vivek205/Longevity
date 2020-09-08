@@ -618,6 +618,7 @@
 		E274F08F24C9667000969CD8 /* ResearchKitStepVC */ = {
 			isa = PBXGroup;
 			children = (
+				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
 				E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
@@ -820,7 +821,6 @@
 			isa = PBXGroup;
 			children = (
 				E274F08F24C9667000969CD8 /* ResearchKitStepVC */,
-				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E2D127E0249B26F200467E43 /* ResearchKitTasks */,
 				E2386A352488C23C0068030E /* ChangePasswordVC.swift */,
 				E23A2CC52480C92C0051EE7A /* GradientView.swift */,
