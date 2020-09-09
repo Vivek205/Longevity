@@ -34,7 +34,7 @@ class BasePopUpModalViewController: UIViewController {
     
     lazy var titleLabel: UILabel = {
         let title = UILabel()
-        title.text = "Check-in Data"
+        title.text = ""
         title.font = UIFont(name: "Montserrat-Medium", size: 24.0)
         title.textAlignment = .center
         title.sizeToFit()
@@ -75,7 +75,7 @@ class BasePopUpModalViewController: UIViewController {
             
             containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
             containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0),
-            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
+//            containerView.heightAnchor.constraint(equalTo: containerView.widthAnchor),
             containerView.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             
             closeButton.widthAnchor.constraint(equalToConstant: 25),
@@ -85,7 +85,7 @@ class BasePopUpModalViewController: UIViewController {
             
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20.0),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20.0),
-            titleLabel.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 5.0),
+            titleLabel.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
             
             infoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 18.0),
             infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -18.0),

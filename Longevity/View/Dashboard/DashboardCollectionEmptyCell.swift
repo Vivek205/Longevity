@@ -89,7 +89,7 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
     
     @objc func doOpenInfo() {
         NavigationUtility.presentOverCurrentContext(
-        destination: DeviceConnectionsPopupViewController(),
+        destination: LongevityComingSoonPopupViewController(),
         style: .overCurrentContext,
         completion: nil)
     }
