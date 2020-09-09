@@ -33,7 +33,7 @@ func registerARN(platform:String, arnEndpoint: String) {
         let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/register" , headers: headers, body: bodyData)
 
         _ = Amplify.API.post(request: request, listener: { (result) in
-            switch result{
+            switch result {
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 Logger.log("register ARN sucess \(responseString)")
@@ -52,7 +52,6 @@ func registerARN(platform:String, arnEndpoint: String) {
 
 
 }
-
 
 func retrieveARN(){
     let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
