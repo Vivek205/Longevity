@@ -61,14 +61,22 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         NSLayoutConstraint.activate([
             emailNotification.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 24.0),
             emailNotification.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 18.0),
-            emailNotification.centerYAnchor.constraint(equalTo: self.notificationSwitch.centerYAnchor),
-            notificationSwitch.leadingAnchor.constraint(greaterThanOrEqualTo: emailNotification.trailingAnchor, constant: 11.0),
-            notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -50.0),
+            self.notificationSwitch.centerYAnchor.constraint(equalTo: emailNotification.centerYAnchor),
+            notificationSwitch.leadingAnchor.constraint(equalTo: emailNotification.trailingAnchor, constant: 11.0),
+            notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
             primaryButton.topAnchor.constraint(equalTo: emailNotification.bottomAnchor, constant: 24.0),
             primaryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             primaryButton.widthAnchor.constraint(equalToConstant: view.bounds.width - 120),
             primaryButton.heightAnchor.constraint(equalToConstant: 48),
             primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
+    }
+    
+    @objc func doOk() {
+        if self.notificationSwitch.isOn {
+            //TODO: Make API call
+        } else {
+            self.closeView()
+        }
     }
 }
