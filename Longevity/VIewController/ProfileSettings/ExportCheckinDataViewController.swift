@@ -15,7 +15,7 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
 
         self.containerView.addSubview(self.actionButton)
 
-        self.infoLabel.sizeToFit()
+        self.titleLabel.text = "Check-in Data"
         
         NSLayoutConstraint.activate([
             actionButton.topAnchor.constraint(greaterThanOrEqualTo: infoLabel.bottomAnchor, constant: 20.0),
