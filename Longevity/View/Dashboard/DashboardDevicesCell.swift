@@ -49,7 +49,12 @@ extension HealthDevices {
     }
 }
 
+protocol DashboardDevicesCellDelegate {
+    func showError(forDeviceCollectionCell cell:DashboardDeviceCollectionCell)
+}
+
 class DashboardDevicesCell: UITableViewCell {
+    var delegate:DashboardDevicesCellDelegate?
     
     lazy var devicesCollection: UICollectionView = {
         let devices = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -95,7 +100,7 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: DashboardDeviceCollectionCell.self, at: indexPath) as? DashboardDeviceCollectionCell else { preconditionFailure("Invalid device cell")}
-        
+        cell.delegate = self
         cell.setupCell(device: HealthDevices(rawValue: indexPath.item)!)
         
         return cell
@@ -104,5 +109,11 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
         return CGSize(width: 130.0, height: height - 20.0)
+    }
+}
+
+extension DashboardDevicesCell: DashboardDeviceCollectionCellDelegate {
+    func showNotificationError(forCell cell: DashboardDeviceCollectionCell) {
+        delegate?.showError(forDeviceCollectionCell: cell)
     }
 }

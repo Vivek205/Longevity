@@ -33,7 +33,7 @@ class SetupProfileDisclaimerVC: UIViewController {
             NSMutableAttributedString(
                 string: "If you are experiencing an acute medical condition, you need to consult your doctor immediatly.",attributes: detailsAttributes)
 
-        var disclaimerContent: NSMutableAttributedString = NSMutableAttributedString();
+        var disclaimerContent: NSMutableAttributedString = NSMutableAttributedString()
         disclaimerContent.append(heading)
         disclaimerContent.append(details)
 

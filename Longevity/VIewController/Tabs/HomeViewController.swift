@@ -101,6 +101,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let devicesCell = tableView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
                 preconditionFailure("Invalid device cell")
             }
+            devicesCell.delegate = self
             return devicesCell
         } else {
             if SurveyTaskUtility.shared.oneTimeSurveyList.isEmpty {
@@ -184,7 +185,7 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if task != nil {
                     let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-                    self.currentTask = task
+//                    self.currentTask = task
                     taskViewController.delegate = self
                     taskViewController.navigationBar.backgroundColor = .white
                     taskViewController.navigationBar.barTintColor = .white
@@ -315,5 +316,13 @@ class HomeViewHeader: UITableViewHeaderFooterView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+}
+
+extension HomeViewController:DashboardDevicesCellDelegate {
+    func showError(forDeviceCollectionCell cell: DashboardDeviceCollectionCell) {
+        DispatchQueue.main.async {
+            self.showAlert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
+        }
     }
 }

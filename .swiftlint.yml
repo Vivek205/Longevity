@@ -3,6 +3,8 @@ disabled_rules: # rule identifiers to exclude from running
   - comma
   - control_statement
   - trailing_whitespace
+  - vertical_whitespace
+  - opening_brace
 opt_in_rules: # some rules are only opt-in
   - empty_count
   # Find all the available rules by running:
@@ -54,3 +56,4 @@ identifier_name:
     - max
     - GlobalAPIKey
 reporter: "xcode" # reporter type (xcode, json, csv, checkstyle, junit, html, emoji, sonarqube, markdown)
+trailing_semicolon: error

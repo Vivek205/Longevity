@@ -5,8 +5,9 @@
 //  Created by vivek on 14/07/20.
 //  Copyright © 2020 vivek. All rights reserved.
 //
-
+//
 import UIKit
+import ResearchKit
 
 class SetupCompleteVC: UIViewController {
     @IBOutlet weak var collectionView: UICollectionView!
@@ -18,11 +19,40 @@ class SetupCompleteVC: UIViewController {
         collectionView.dataSource = self
         // Do any additional setup after loading the view.
     }
+
+    func navigateForward() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+               appDelegate.setRootViewController()
+    }
     
     @IBAction func onShowDashboard(_ sender: Any) {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.setRootViewController()
     }
+
+    @IBAction func handleBeginSurvey(_ sender: Any) {
+        self.showSpinner()
+        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: { [weak self] (task) in
+            guard let task = task else {
+                self?.removeSpinner()
+                self?.navigateForward()
+                return }
+            DispatchQueue.main.async {
+                let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
+                taskViewController.delegate = self
+                taskViewController.navigationBar.backgroundColor = .white
+                taskViewController.navigationBar.barTintColor = .white
+                taskViewController.view.backgroundColor = .white
+                self?.removeSpinner()
+                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+            }
+        }) { (error) in
+            self.removeSpinner()
+            self.navigateForward()
+        }
+    }
+
+
 }
 
 extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -45,5 +75,95 @@ extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource,
         let width = view.frame.size.width
          return CGSize(width: width - 40, height: height - 100)
     }
+
+}
+
+extension SetupCompleteVC: ORKTaskViewControllerDelegate {
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+        let taskViewAppearance =
+            UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
+        taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        if let step = stepViewController.step {
+            if step is ORKInstructionStep || step is ORKCompletionStep {
+                return
+            }
+            SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
+        }
+    }
+
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+
+        switch reason {
+        case .completed:
+            print("completed")
+//            self.getSurveyList()
+        case .discarded:
+            print("discarded")
+        case .failed:
+            print("failed")
+        case .saved:
+            print("saved")
+        @unknown default:
+            print("unknown reason")
+        }
+
+        taskViewController.dismiss(animated: true) {
+            [weak self] in
+            self?.navigateForward()
+            print("task view controller dismissed")
+        }
+
+    }
+
+    func taskViewController(_ taskViewController: ORKTaskViewController,
+                            viewControllerFor step: ORKStep) -> ORKStepViewController? {
+        if step is ORKInstructionStep {
+            if step is ORKCompletionStep {
+                let stepVC = CompletionStepVC()
+                stepVC.step = step
+                return stepVC
+            }
+            // Default View Controller will be used
+            return nil
+        } else if step is ORKFormStep {
+            let formStepVC = FormStepVC()
+            formStepVC.step = step
+            return formStepVC
+        } else if step is ORKQuestionStep {
+            guard let questionStep = step as? ORKQuestionStep else {return nil}
+            if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
+                let stepVC = TextChoiceAnswerVC()
+                stepVC.step = step
+                return stepVC
+            }
+            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
+                let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
+                switch questionDetails?.quesType {
+                case .temperatureScale:
+                    let stepVC = TemperatureScaleAnswerVC()
+                    stepVC.step = step
+                    return stepVC
+                default:
+                    let stepVC = ContinuousScaleAnswerVC()
+                    stepVC.step = step
+                    return stepVC
+                }
+            }
+
+            if questionStep.answerFormat is ORKTextAnswerFormat {
+                let stepVC = TextAnswerVC()
+                stepVC.step = step
+                return stepVC
+            }
+        }
+        return nil
+    }
+
+    func taskViewControllerShouldConfirmCancel(_ taskViewController: ORKTaskViewController?) -> Bool {
+        return false
+    }
+
 
 }

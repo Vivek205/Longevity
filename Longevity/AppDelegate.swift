@@ -128,6 +128,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     Logger.log("ARN endpoint created")
                     defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
                     registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
+                    AppSyncManager.instance.updateUserNotification(enabled: true)
                 }
             }
             return nil
@@ -206,7 +207,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
                             tabBarController.selectedIndex = 1
                         }
-                        completionHandler(.alert    )
+                        completionHandler(.alert)
                         return
                     default:
                         return

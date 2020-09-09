@@ -45,35 +45,49 @@ class SetupProfileDevicesVC: UIViewController {
 
 extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
     func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
-        switch cell.titleLabel.text {
-        case "Fitbit":
-            print("connected fitbit data")
-            if let context = UIApplication.shared.keyWindow {
-                fitbitModel.contextProvider = AuthContextProvider(context)
-            }
-            fitbitModel.auth { authCode, error in
-                if error != nil {
-                    print("Auth flow finished with error \(String(describing: error))")
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
-                } else {
-                    print("Your auth code is \(String(describing: authCode))")
-                    self.fitbitModel.token(authCode: authCode!)
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
-                    DispatchQueue.main.async {
-                        setupProfileConnectDeviceOptionList[2]?.isConnected = true
-                        self.collectionView.reloadData()
+
+        UNUserNotificationCenter.current().getNotificationSettings {
+            (settings) in
+            if settings.authorizationStatus == .authorized {
+                DispatchQueue.main.async {
+                    switch cell.titleLabel.text {
+                    case "Fitbit":
+                        print("connected fitbit data")
+                        if let context = UIApplication.shared.keyWindow {
+                            self.fitbitModel.contextProvider = AuthContextProvider(context)
+                        }
+                        self.fitbitModel.auth { authCode, error in
+                            if error != nil {
+                                print("Auth flow finished with error \(String(describing: error))")
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                            } else {
+                                print("Your auth code is \(String(describing: authCode))")
+                                self.fitbitModel.token(authCode: authCode!)
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
+                                DispatchQueue.main.async {
+                                    setupProfileConnectDeviceOptionList[2]?.isConnected = true
+                                    self.collectionView.reloadData()
+                                }
+                            }
+                        }
+                    default:
+                        HealthStore.shared.getHealthKitAuthorization { (authorized) in
+                            if authorized {
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
+                            } else {
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
+                            }
+                        }
                     }
                 }
-            }
-        default:
-            HealthStore.shared.getHealthKitAuthorization { (authorized) in
-                if authorized {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
-                } else {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
+            } else {
+                DispatchQueue.main.async {
+                    self.showAlert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
                 }
             }
         }
+
+
     }
 }
 

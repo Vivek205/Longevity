@@ -104,19 +104,40 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
     }
     
     @objc func connectDevice() {
+
+
         var connected = self.isDeviceConnected ? 0 : 1
-        let profile = AppSyncManager.instance.healthProfile.value
-        if let device = profile?.devices?[ExternalDevices.healthkit] {
-            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] = connected
+
+        if connected == 0 { // To be disconnected
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
         } else {
-            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.healthkit: ["connected" : connected]]) { (current, _) in current }
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                if settings.authorizationStatus == .authorized {
+                    DispatchQueue.main.async {
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
+                    }
+                    return
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(title: "Enable Notification",
+                        message: "Please enable device notification to connect the external devices")
+                    }
+                }
+            }
         }
-        
-        let userProfile = UserProfileAPI()
-        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
-            print("Completed")
-        }) { (error) in
-            print("Failed to save health profile:" + error.localizedDescription)
-        }
+
+//        let profile = AppSyncManager.instance.healthProfile.value
+//        if let device = profile?.devices?[ExternalDevices.healthkit] {
+//            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] = connected
+//        } else {
+//            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.healthkit: ["connected" : connected]]) { (current, _) in current }
+//        }
+//
+//        let userProfile = UserProfileAPI()
+//        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
+//            print("Completed")
+//        }) { (error) in
+//            print("Failed to save health profile:" + error.localizedDescription)
+//        }
     }
 }

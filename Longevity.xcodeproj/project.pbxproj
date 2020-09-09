@@ -171,7 +171,7 @@
 		E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */; };
 		E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2C86D5A24A5D359005CE57E /* SetupProfile.swift */; };
 		E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */; };
-		E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96A24B9D3D8009FE288 /* Notification.swift */; };
+		E2CFD96B24B9D3D8009FE288 /* NotificationAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96A24B9D3D8009FE288 /* NotificationAPI.swift */; };
 		E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2CFD96C24BB5202009FE288 /* Keychain.swift */; };
 		E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E1249B272900467E43 /* ConsentTask.swift */; };
 		E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D127E3249B5BCF00467E43 /* SurveyTask.swift */; };
@@ -383,7 +383,7 @@
 		E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomButtonOutlined.swift; sourceTree = "<group>"; };
 		E2C86D5A24A5D359005CE57E /* SetupProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfile.swift; sourceTree = "<group>"; };
 		E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileUnitSelectionCell.swift; sourceTree = "<group>"; };
-		E2CFD96A24B9D3D8009FE288 /* Notification.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Notification.swift; sourceTree = "<group>"; };
+		E2CFD96A24B9D3D8009FE288 /* NotificationAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationAPI.swift; sourceTree = "<group>"; };
 		E2CFD96C24BB5202009FE288 /* Keychain.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keychain.swift; sourceTree = "<group>"; };
 		E2D127E1249B272900467E43 /* ConsentTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConsentTask.swift; sourceTree = "<group>"; };
 		E2D127E3249B5BCF00467E43 /* SurveyTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyTask.swift; sourceTree = "<group>"; };
@@ -786,7 +786,7 @@
 			isa = PBXGroup;
 			children = (
 				E2E14BF824AF0BFC007C0470 /* User.swift */,
-				E2CFD96A24B9D3D8009FE288 /* Notification.swift */,
+				E2CFD96A24B9D3D8009FE288 /* NotificationAPI.swift */,
 				E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */,
 				E25185EB24CF042000F3068C /* Survey.swift */,
 				C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */,
@@ -1229,7 +1229,7 @@
 				C14DBC03250557FE004D5180 /* CheckInResultViewController.swift in Sources */,
 				E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */,
 				E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */,
-				E2CFD96B24B9D3D8009FE288 /* Notification.swift in Sources */,
+				E2CFD96B24B9D3D8009FE288 /* NotificationAPI.swift in Sources */,
 				C19875CB24DD5ECB00477185 /* UITableView+Extension.swift in Sources */,
 				E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */,
 				E2A5705824CAC88E00DC07AB /* BranchingOrderedTask.swift in Sources */,
@@ -1402,13 +1402,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 14;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = H6A3R6WG95;
+				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
@@ -1432,7 +1432,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

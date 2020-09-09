@@ -27,7 +27,12 @@ extension DeviceConnectionStatus {
     }
 }
 
+protocol DashboardDeviceCollectionCellDelegate {
+    func showNotificationError(forCell cell: DashboardDeviceCollectionCell)
+}
+
 class DashboardDeviceCollectionCell: UICollectionViewCell {
+    var delegate:DashboardDeviceCollectionCellDelegate?
     
     var device: HealthDevices = .newdevice
     
@@ -208,46 +213,64 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     @objc func addDevice() {
         if connectionStatus == .notConnected {
-            if self.device == .applehealth {
-                HealthStore.shared.getHealthKitAuthorization { (authorized) in
-                    if authorized {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
-                    } else {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
+
+            UNUserNotificationCenter.current().getNotificationSettings {
+                (settings) in
+                if settings.authorizationStatus == .authorized {
+                    DispatchQueue.main.async {
+
+                        if self.device == .applehealth {
+                            HealthStore.shared.getHealthKitAuthorization { (authorized) in
+                                if authorized {
+                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
+                                } else {
+                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
+                                }
+                            }
+                        } else if self.device == .fitbit {
+                            let fitbitModel = FitbitModel()
+                            if let context = UIApplication.shared.keyWindow {
+                                fitbitModel.contextProvider = AuthContextProvider(context)
+                            }
+                            fitbitModel.auth { authCode, error in
+                                if error != nil {
+                                    print("Auth flow finished with error \(String(describing: error))")
+                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                                } else {
+                                    print("Your auth code is \(String(describing: authCode))")
+                                    fitbitModel.token(authCode: authCode!)
+                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
+                                }
+                            }
+                        }
+
+                        let healthDevice = self.device == .applehealth ? ExternalDevices.healthkit : ExternalDevices.fitbit
+
+                        let profile = AppSyncManager.instance.healthProfile.value
+                        if let device = profile?.devices?[healthDevice] {
+                            AppSyncManager.instance.healthProfile.value?.devices?[healthDevice]?["connected"] = 1
+                        } else {
+                            AppSyncManager.instance.healthProfile.value?.devices?.merge([healthDevice: ["connected" : 1]]) { (current, _) in current }
+                        }
+
+                        let userProfile = UserProfileAPI()
+                        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
+                            print("Completed")
+                        }) { (error) in
+                            print("Failed to save health profile:" + error.localizedDescription)
+                        }
+
                     }
-                }
-            } else if self.device == .fitbit {
-                let fitbitModel = FitbitModel()
-                if let context = UIApplication.shared.keyWindow {
-                    fitbitModel.contextProvider = AuthContextProvider(context)
-                }
-                fitbitModel.auth { authCode, error in
-                    if error != nil {
-                        print("Auth flow finished with error \(String(describing: error))")
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
-                    } else {
-                        print("Your auth code is \(String(describing: authCode))")
-                        fitbitModel.token(authCode: authCode!)
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
-                    }
+                    return
+                } else {
+                    self.delegate?.showNotificationError(forCell: self)
                 }
             }
-            
-            let healthDevice = self.device == .applehealth ? ExternalDevices.healthkit : ExternalDevices.fitbit
-            
-            let profile = AppSyncManager.instance.healthProfile.value
-            if let device = profile?.devices?[healthDevice] {
-                AppSyncManager.instance.healthProfile.value?.devices?[healthDevice]?["connected"] = 1
-            } else {
-                AppSyncManager.instance.healthProfile.value?.devices?.merge([healthDevice: ["connected" : 1]]) { (current, _) in current }
-            }
-            
-            let userProfile = UserProfileAPI()
-            userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
-                print("Completed")
-            }) { (error) in
-                print("Failed to save health profile:" + error.localizedDescription)
-            }
+
+
+
+
+
         }
     }
 }

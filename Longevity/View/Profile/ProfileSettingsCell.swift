@@ -9,7 +9,7 @@
 import UIKit
 
 protocol ProfileSettingsCellDelegate {
-    func switchToggled(onCell cell:ProfileSettingsCell, isOn: Bool)
+    func switchToggled(onCell cell:ProfileSettingsCell,newState isOn: Bool)
 }
 
 class ProfileSettingsCell: UITableViewCell {
@@ -157,29 +157,56 @@ class ProfileSettingsCell: UITableViewCell {
     }
     
     @objc func handleSwitchToggle(_ sender: UISwitch){
-        delegate?.switchToggled(onCell: self, isOn: sender.isOn)
+        delegate?.switchToggled(onCell: self, newState: sender.isOn)
     }
     
     func notificationSettingSwitchPreselect() {
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.authorizationStatus == .authorized {
+        AppSyncManager.instance.userNotification.addAndNotify(observer: self) {
+            [weak self] in
+            guard let notification = AppSyncManager.instance.userNotification.value else {return}
+            if notification.enabled == true {
                 DispatchQueue.main.async {
-                    self.settingsSwitch.isOn = true
+                    self?.settingsSwitch.isOn = true
+                }
+            }else {
+                DispatchQueue.main.async {
+                   self?.settingsSwitch.isOn = false
                 }
             }
         }
+//        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+//            if settings.authorizationStatus == .authorized {
+//                DispatchQueue.main.async {
+//                    self.settingsSwitch.isOn = true
+//                }
+//            }
+//        }
     }
     
     func fitbitSwitchPreselect() {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
-            DispatchQueue.main.async {
-                let profile = AppSyncManager.instance.healthProfile.value
-                if let device = profile?.devices?[ExternalDevices.fitbit], device["connected"] == 1 {
-                    self?.settingsSwitch.isOn = true
-                } else {
-                    self?.settingsSwitch.isOn = false
-                }
-            }
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                       if settings.authorizationStatus == .authorized {
+                          DispatchQueue.main.async {
+                               let profile = AppSyncManager.instance.healthProfile.value
+                               if let device = profile?.devices?[ExternalDevices.fitbit], device["connected"] == 1 {
+                                   self?.settingsSwitch.isOn = true
+                               } else {
+                                   self?.settingsSwitch.isOn = false
+                               }
+                           }
+                           return
+                       } else {
+                        DispatchQueue.main.async {
+                            self?.settingsSwitch.isOn = false
+                        }
+//                           self.showAlert(title: "Enable Notification",
+//                                          message: "Please enable notification to connect the fitbit device")
+                       }
+                   }
+
+
+
         }
     }
     

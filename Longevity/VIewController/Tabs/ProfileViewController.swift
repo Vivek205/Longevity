@@ -305,7 +305,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 case .fitbit: return
                 case .addhealthdevice: return
                 case .notifications:
-                    openSettings()
+//                    openSettings()
                     return
                 case .editaccount:
                     let editAccountViewController = EditAccountViewController()
@@ -353,14 +353,14 @@ extension ProfileViewController: UserProfileHeaderDelegate {
 
 
 extension ProfileViewController: ProfileSettingsCellDelegate {
-    func switchToggled(onCell cell: ProfileSettingsCell, isOn: Bool) {
+    func switchToggled(onCell cell: ProfileSettingsCell,newState isOn: Bool) {
         print("switch toggled on cell", cell)
         switch cell.profileSetting {
         case .notifications:
-            handleNotificationSwitch()
+            handleNotificationSwitch(newState: isOn)
             return
         case .fitbit:
-            handleFitbitSwitch(isOn: isOn)
+            handleFitbitSwitch(newState: isOn)
             return
         case .usemetricsystem:
             handleMetricSystemSwitch()
@@ -374,10 +374,27 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         updateHealthProfile()
     }
 
-    func handleFitbitSwitch(isOn: Bool) {
+    func handleFitbitSwitch(newState isOn: Bool) {
         let connected = isOn ? 1 : 0
         let fitbitModel = FitbitModel()
+
         if isOn {
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                if settings.authorizationStatus == .authorized {
+                    DispatchQueue.main.async {
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
+                    }
+                    return
+                } else {
+                    DispatchQueue.main.async {
+                        self.showAlert(title: "Enable Notification",
+                        message: "Please enable notification to connect the fitbit device")
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                    }
+                }
+            }
+        }
+        else {
             if let context = UIApplication.shared.keyWindow {
                 fitbitModel.contextProvider = AuthContextProvider(context)
             }
@@ -392,17 +409,14 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                 }
             }
         }
-        else {
-            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
-        }
     }
     
-    func handleNotificationSwitch() {
+    func handleNotificationSwitch(newState isOn: Bool) {
         func registerForPushNotifications() {
             UNUserNotificationCenter.current() // 1
                 .requestAuthorization(options: [.alert, .sound, .badge]) { // 2
                     [weak self] granted, error in
-                    print("Permission granted: \(granted)")
+                    print("Permission granted: \(granted), error: \(error)")
                     guard granted else {
                         DispatchQueue.main.async {
                             self?.openSettings()
@@ -415,14 +429,19 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
             }
         }
 
-        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-            if settings.authorizationStatus == .authorized {
-                DispatchQueue.main.async {
-                    self.openSettings()
+        if isOn {
+            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+                if settings.authorizationStatus == .authorized {
+                    AppSyncManager.instance.updateUserNotification(enabled: true)
+                    return
                 }
-                return
+                registerForPushNotifications()
             }
-            registerForPushNotifications()
+        }else {
+            AppSyncManager.instance.updateUserNotification(enabled: false)
         }
+
+
+
     }
 }
