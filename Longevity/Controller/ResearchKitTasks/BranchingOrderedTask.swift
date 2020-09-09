@@ -27,11 +27,12 @@ class BranchingOrderedTask: ORKOrderedTask {
         }
 
         if step is ORKInstructionStep {
+            if step is ORKCompletionStep {
+                return nil
+            }
             return steps[1]
         }
-        if step is ORKCompletionStep {
-            return step
-        }
+
 
         guard let currentStepIndex = Int(self.index(of: currentStep)) as? Int else { return nil }
         var nextStep = self.steps[currentStepIndex + 1]

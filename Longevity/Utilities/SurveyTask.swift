@@ -196,10 +196,12 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func clearSurvey() {
-        self.currentSurveyId = nil
+        guard let currentSurveyId = self.currentSurveyId else {return}
         self.currentTask = nil
-        self.localSavedAnswers = [String:[String:String]]()
+        self.localSavedAnswers[currentSurveyId] = [String:String]()
         self.iconNameForModuleName = [String:String]()
+        self.traversedQuestions[currentSurveyId] = [String]()
+        self.currentSurveyId = nil
         print("survey data cleared successfully")
     }
 
