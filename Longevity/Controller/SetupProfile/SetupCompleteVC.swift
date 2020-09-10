@@ -32,7 +32,7 @@ class SetupCompleteVC: UIViewController {
 
     @IBAction func handleBeginSurvey(_ sender: Any) {
         self.showSpinner()
-        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_001", completion: { [weak self] (task) in
+        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_01", completion: { [weak self] (task) in
             guard let task = task else {
                 self?.removeSpinner()
                 self?.navigateForward()

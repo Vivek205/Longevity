@@ -50,7 +50,7 @@ class FormStepVC: ORKStepViewController {
     }
 
     func prefillForm(questionId: String) -> String? {
-        let feelingTodayQuestionId = "036122cab53e4d70b1b6305328eeaf3w"
+        let feelingTodayQuestionId = "8020"
         guard let feelingTodayAnswer =
             SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: feelingTodayQuestionId) else {return nil}
         let prefillSymptomsOption = "2"
