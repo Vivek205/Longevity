@@ -22,7 +22,7 @@ extension DeviceConnectionStatus {
         case .notConnected:
             return "icon: add"
         default:
-            return "icon: add"
+            return "addButton"
         }
     }
 }
@@ -139,9 +139,12 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 deviceTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
             ])
             deviceTitle.text = device.deviceName
-            deviceTitle.textColor = .themeColor
+            addDeviceButton.setImage(UIImage(named: DeviceConnectionStatus.notrequired.statusButtonImage), for: .normal)
+            addDeviceButton.tintColor = UIColor.lightGray
+            
+            deviceTitle.textColor = UIColor.lightGray//.themeColor
             self.backgroundColor = UIColor(hexString: "#F5F6FA")
-            contentView.layer.borderColor = UIColor.themeColor.cgColor
+            contentView.layer.borderColor = UIColor.lightGray.cgColor //.themeColor.cgColor
             connectionStatus = .notrequired
         } else {
             
