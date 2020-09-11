@@ -33,6 +33,11 @@ class CustomButtonFill: UIButton {
         styleButton()
     }
 
+//    override func layoutSubviews() {
+//        super.layoutSubviews()
+//        styleButton()
+//    }
+
     func styleButton() {
         layer.cornerRadius = CGFloat(10)
         layer.masksToBounds = true

@@ -89,6 +89,7 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
 
 extension SetupProfilePreConditionVC: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
+        
         animateTextView(showKeyboard: true)
     }
     func textViewDidChange(_ textView: UITextView) {
@@ -172,7 +173,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         cell.conditionName.text = optionData.name
         cell.conditionDescription.text = optionData.description
         cell.optionId = optionData.id
-        cell.checkBoxButton.isHighlighted = optionData.selected
+//        cell.checkBoxButton.isHighlighted = optionData.selected
         cell.checkBoxButton.isSelected = optionData.selected
         cell.contentContainerView.layer.cornerRadius = 4
         cell.layer.shadowColor = UIColor.lightGray.cgColor

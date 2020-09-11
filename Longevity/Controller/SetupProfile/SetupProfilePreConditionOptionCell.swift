@@ -16,7 +16,7 @@ class SetupProfilePreConditionOptionCell: UICollectionViewCell {
 //    @IBOutlet weak var contentContainerView: SetupProfilePreConditionOptionCell!
     @IBOutlet weak var contentContainerView: UIView!
     
-    @IBOutlet weak var checkBoxButton: UIButton!
+    @IBOutlet weak var checkBoxButton: CheckboxButton!
     
     @IBOutlet weak var conditionName: UILabel!
     @IBOutlet weak var conditionDescription: UILabel!
