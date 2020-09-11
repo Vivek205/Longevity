@@ -128,6 +128,7 @@ class AppSyncManager  {
     
     func syncUserProfile() {
         self.fetchUserProfile()
+        self.getAppLink()
         self.fetchUserHealthProfile()
         self.checkTermsAccepted()
         self.fetchUserNotification()
