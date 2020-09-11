@@ -98,6 +98,7 @@ extension TrendDirection {
 enum Sentiment: String, Codable {
     case positive = "POSITIVE"
     case negative = "NEGATIVE"
+    case neutral = "NEUTRAL"
 }
 
 extension Sentiment {
@@ -107,6 +108,8 @@ extension Sentiment {
                 return UIColor(hexString: "#59BB6E")
             case .negative:
                 return UIColor(hexString: "#E67381")
+            case .neutral:
+                return UIColor(hexString: "#59BB6E")
         }
     }
 }
