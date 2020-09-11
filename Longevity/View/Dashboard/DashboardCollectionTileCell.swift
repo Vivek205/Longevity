@@ -18,6 +18,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             if let details = insightData?.details {
                 self.riskType.text = details.riskLevel?.text
                 self.riskType.font = details.riskLevel?.textFont
+                self.riskType.textColor = .themeColor
                 self.guageView.image = details.riskLevel?.riskIcon
                 self.trendDirection.text = details.trending?.text
                 self.trendDirection.textColor = details.sentiment?.tintColor
@@ -27,6 +28,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             } else {
                 self.riskType.text = RiskLevel.none.text
                 self.riskType.font = RiskLevel.none.textFont
+                self.riskType.textColor = UIColor(hexString: "#9B9B9B")
                 self.guageView.image =  RiskLevel.none.riskIcon
                 self.trendDirection.isHidden = true
                 self.trendImage.isHidden = true
