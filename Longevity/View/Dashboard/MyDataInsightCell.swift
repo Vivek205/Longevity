@@ -20,6 +20,7 @@ class MyDataInsightCell: UICollectionViewCell {
             if let details = insightData?.details {
                 self.riskType.text = details.riskLevel?.text
                 self.riskType.font = details.riskLevel?.textFont
+                self.riskType.textColor = .themeColor
                 self.guageView.image = details.riskLevel?.riskIcon
                 self.trendDirection.text = details.trending?.text
                 self.trendDirection.textColor = details.sentiment?.tintColor
@@ -37,6 +38,7 @@ class MyDataInsightCell: UICollectionViewCell {
             } else {
                 self.riskType.text = RiskLevel.none.text
                 self.riskType.font = RiskLevel.none.textFont
+                self.riskType.textColor = UIColor(hexString: "#9B9B9B")
                 self.guageView.image =  RiskLevel.none.riskIcon
                 self.trendDirection.isHidden = true
                 self.trendImage.isHidden = true
@@ -75,7 +77,7 @@ class MyDataInsightCell: UICollectionViewCell {
         risk.textAlignment = .center
         risk.text = "Medium Risk"
         risk.font = UIFont(name: "Montserrat-SemiBold", size: 18)
-        risk.textColor = .themeColor
+        risk.textColor = UIColor(hexString: "#9B9B9B")
         risk.numberOfLines = 2
         risk.lineBreakMode = .byWordWrapping
         risk.translatesAutoresizingMaskIntoConstraints = false
