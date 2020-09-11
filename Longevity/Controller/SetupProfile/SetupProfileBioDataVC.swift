@@ -389,8 +389,10 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let isSynced = option?.isSynced
         if(isSynced == true) {
             cell.button.layer.borderColor = UIColor.clear.cgColor
+            cell.button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18)
         }else {
             cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+            cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
         }
         cell.delegate = self
 

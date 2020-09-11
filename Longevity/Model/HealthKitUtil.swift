@@ -47,11 +47,11 @@ extension HKBiologicalSex {
     var string:String {
         switch self {
         case .male:
-            return "male"
+            return "Male"
         case .female:
-            return "female"
+            return "Female"
         case .other:
-            return "other"
+            return "Other"
         case .notSet:
             return "notset"
         default:

@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "temp logo shield@1x.png",
+      "filename" : "icon: Height@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "temp logo shield@2x.png",
+      "filename" : "icon: Height@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "temp logo shield@3x.png",
+      "filename" : "icon: Height@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

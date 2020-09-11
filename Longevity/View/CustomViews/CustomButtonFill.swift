@@ -36,9 +36,8 @@ class CustomButtonFill: UIButton {
     func styleButton() {
         layer.cornerRadius = CGFloat(10)
         layer.masksToBounds = true
-        //        layer.backgroundColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         setBackgroundColor( #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
-        setBackgroundColor( UIColor.gray, for: .disabled)
+        setBackgroundColor( UIColor(hexString: "#D6D6D6"), for: .disabled)
         setTitleColor(UIColor.white, for: .normal)
         titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24)
     }

@@ -20,7 +20,7 @@ struct UserNotification: Codable {
     let platform: NotificationDevicePlatforms?
     let endpointArn: String?
     let lastSent: String?
-    var enabled: Bool?
+    var isEnabled: Bool?
 }
 
 class NotificationAPI:BaseAuthAPI {
@@ -52,7 +52,10 @@ class NotificationAPI:BaseAuthAPI {
             print("err", error)
         }
     }
-
+    struct UpdateNotificationResponse:Codable {
+        let status:String?
+        let message: UserNotification?
+    }
     func updateNotification(completion: @escaping ((UserNotification?)-> Void),
                             failure: @escaping ()-> Void){
         guard let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString else {return}
@@ -65,7 +68,7 @@ class NotificationAPI:BaseAuthAPI {
                 encoder.keyEncodingStrategy = .convertToSnakeCase
                 let data = try encoder.encode(userNotification)
 
-                let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification", headers: headers, body: data)
+                let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/status", headers: headers, body: data)
 
                 _ = Amplify.API.post(request: request, listener: { (result) in
                     switch result{
@@ -74,8 +77,8 @@ class NotificationAPI:BaseAuthAPI {
                         do {
                             let decoder = JSONDecoder()
                             decoder.keyDecodingStrategy = .convertFromSnakeCase
-                            let value = try decoder.decode(UserNotification.self, from: data)
-                            completion(value)
+                            let value = try decoder.decode(UpdateNotificationResponse.self, from: data)
+                            completion(value.message)
                         } catch {
                             print("json error", error)
                             failure()

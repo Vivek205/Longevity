@@ -164,7 +164,7 @@ class ProfileSettingsCell: UITableViewCell {
         AppSyncManager.instance.userNotification.addAndNotify(observer: self) {
             [weak self] in
             guard let notification = AppSyncManager.instance.userNotification.value else {return}
-            if notification.enabled == true {
+            if notification.isEnabled == true {
                 DispatchQueue.main.async {
                     self?.settingsSwitch.isOn = true
                 }

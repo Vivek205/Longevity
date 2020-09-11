@@ -46,7 +46,7 @@
                                             <constraint firstAttribute="width" constant="200" id="OsN-21-vsX"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV" userLabel="Info">
@@ -337,6 +337,7 @@ up your health profile.</string>
                                                         <constraint firstAttribute="width" constant="51" id="NQZ-F7-zHJ"/>
                                                         <constraint firstAttribute="height" constant="30" id="e0A-h3-6lv"/>
                                                     </constraints>
+                                                    <color key="onTintColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
                                                     <connections>
                                                         <action selector="handleMetricTogglePress:" destination="YhE-Gr-gSC" eventType="valueChanged" id="R0r-ta-8vT"/>
                                                     </connections>

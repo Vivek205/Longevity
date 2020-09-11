@@ -93,6 +93,8 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.continueButton.isEnabled = false
+        self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
         navigationController?.delegate = self
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.removeBackButtonNavigation()

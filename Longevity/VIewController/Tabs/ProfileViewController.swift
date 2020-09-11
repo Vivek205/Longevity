@@ -305,7 +305,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 case .fitbit: return
                 case .addhealthdevice: return
                 case .notifications:
-//                    openSettings()
+                    //                    openSettings()
                     return
                 case .editaccount:
                     let editAccountViewController = EditAccountViewController()
@@ -378,36 +378,37 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         let connected = isOn ? 1 : 0
         let fitbitModel = FitbitModel()
 
-        if isOn {
+        if isOn  {
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {
                     DispatchQueue.main.async {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
+                        if let context = UIApplication.shared.keyWindow {
+                            fitbitModel.contextProvider = AuthContextProvider(context)
+                        }
+                        fitbitModel.auth { authCode, error in
+                            if error != nil {
+                                print("Auth flow finished with error \(String(describing: error))")
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                            } else {
+
+                                fitbitModel.token(authCode: authCode!)
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
+                            }
+                        }
                     }
+
                     return
                 } else {
                     DispatchQueue.main.async {
                         self.showAlert(title: "Enable Notification",
-                        message: "Please enable notification to connect the fitbit device")
+                                       message: "Please enable notification to connect the fitbit device")
                         AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                     }
                 }
             }
-        }
-        else {
-            if let context = UIApplication.shared.keyWindow {
-                fitbitModel.contextProvider = AuthContextProvider(context)
-            }
-            fitbitModel.auth { authCode, error in
-                if error != nil {
-                    print("Auth flow finished with error \(String(describing: error))")
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
-                } else {
-                    print("Your auth code is \(String(describing: authCode))")
-                    fitbitModel.token(authCode: authCode!)
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
-                }
-            }
+
+        } else {
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
         }
     }
     

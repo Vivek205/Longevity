@@ -23,7 +23,7 @@ class AppSyncManager  {
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preconditions: nil))
         self.isTermsAccepted = DynamicValue(true)
         self.appShareLink = DynamicValue("")
-        self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, enabled: nil))
+        self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         
         let insights = [UserInsight(name: .exposure, text: "COVID-19 Exposure", userInsightDescription: "COVID-19 Exposure", defaultOrder: 0, details: nil, isExpanded: false),
                         UserInsight(name: .risk, text: "COVID-19 Infection", userInsightDescription: "COVID-19 Infection", defaultOrder: 1, details: nil, isExpanded: false),
@@ -73,11 +73,16 @@ class AppSyncManager  {
     
     func updateHealthProfile(deviceName: String, connected: Int) {
         let profile = self.healthProfile.value
-        if let device = profile?.devices?[deviceName] {
-            self.healthProfile.value?.devices?[deviceName]?["connected"] = connected
+        if let devices = profile?.devices {
+            if let device = profile?.devices?[deviceName] {
+                self.healthProfile.value?.devices?[deviceName]?["connected"] = connected
+            } else {
+                self.healthProfile.value?.devices?.merge([deviceName: ["connected" : connected]]) { (current, _) in current }
+            }
         } else {
-            self.healthProfile.value?.devices?.merge([deviceName: ["connected" : connected]]) { (current, _) in current }
+            self.healthProfile.value?.devices = [deviceName:["connected": connected]]
         }
+
         
         let userProfile = UserProfileAPI()
         userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!, completion: {
@@ -88,14 +93,14 @@ class AppSyncManager  {
     }
 
     func updateUserNotification(enabled: Bool) {
-        let localValue = self.userNotification.value?.enabled
-        self.userNotification.value?.enabled = enabled
+        let localValue = self.userNotification.value?.isEnabled
+        self.userNotification.value?.isEnabled = enabled
 
         let notificationAPI = NotificationAPI()
         notificationAPI.updateNotification(completion: { (notification) in
             self.userNotification.value = notification
         }) {
-            self.userNotification.value?.enabled = localValue
+            self.userNotification.value?.isEnabled = localValue
         }
     }
 

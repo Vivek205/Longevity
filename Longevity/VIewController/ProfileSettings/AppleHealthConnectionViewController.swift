@@ -114,7 +114,7 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {
                     DispatchQueue.main.async {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: connected)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
                     }
                     return
                 } else {

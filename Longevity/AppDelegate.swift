@@ -35,6 +35,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             configureCognito()
             print("Amplify configured with auth plugin")
             Logger.log("App Launched")
+            print("arn value", UserDefaults.standard.value(forKey: UserDefaultsKeys().endpointArnForSNS))
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
@@ -107,7 +108,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         defaults.set(token, forKey: keys.deviceTokenForSNS)
-        Logger.log("device token created")
+        Logger.log("device token created \(token)")
         // Check if ARN is created already
         guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
             return
@@ -117,6 +118,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let request = AWSSNSCreatePlatformEndpointInput()
         request?.token = token
         request?.platformApplicationArn = SNSPlatformApplicationARN
+
+
 
         awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
             if task.error != nil {
@@ -196,22 +199,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
             if let type =  apsData["type"] as? String {
                 if let notificationType = NotificationType(rawValue: type) {
-                    switch notificationType {
-                    case .syncFitbit:
-                        let fitbitModel = FitbitModel()
-                        fitbitModel.refreshTheToken()
-                        completionHandler(.alert)
-                        return
-                    case .covidReportProcessed:
-                        // TODO: redirect to mydata page
-                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-                            tabBarController.selectedIndex = 1
-                        }
-                        completionHandler(.alert)
-                        return
-                    default:
-                        return
-                    }
+                    completionHandler(.alert)
+//                    switch notificationType {
+//                    case .syncFitbit:
+//                        let fitbitModel = FitbitModel()
+//                        fitbitModel.refreshTheToken()
+//                        completionHandler(.alert)
+//                        return
+//                    case .covidReportProcessed:
+//                          let checkInResultViewController = CheckInResultViewController()
+//                                              NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
+//                        completionHandler(.alert)
+//                        return
+//                    default:
+//                        return
+//                    }
                 }
 
             }
@@ -244,11 +246,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         completionHandler()
                         return
                     case .covidReportProcessed:
-                        // TODO: redirect to mydata page
-//                        if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-//                            tabBarController.selectedIndex = 1
-//                        }
-                        
                         let checkInResultViewController = CheckInResultViewController()
                         NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
                         completionHandler()
