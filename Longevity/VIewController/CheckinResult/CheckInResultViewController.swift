@@ -79,6 +79,7 @@ class CheckInResultViewController: UIViewController {
             self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
             self?.checkinResult = AppSyncManager.instance.userInsights.value?.filter({ $0.name == .logs })[0].details?.history?[0]
         }
+        AppSyncManager.instance.syncUserInsights()
     }
     
     @objc func closeView() {

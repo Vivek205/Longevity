@@ -83,14 +83,14 @@ class MyDataInsightDetailView: UIView {
         return histogram
     }()
     
-    lazy var histogramDay: UILabel = {
-        let histogramDay = UILabel()
-        histogramDay.text = "Today"
-        histogramDay.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
-        histogramDay.textColor = .themeColor
-        histogramDay.translatesAutoresizingMaskIntoConstraints = false
-        return histogramDay
-    }()
+//    lazy var histogramDay: UILabel = {
+//        let histogramDay = UILabel()
+//        histogramDay.text = "Today"
+//        histogramDay.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
+//        histogramDay.textColor = .themeColor
+//        histogramDay.translatesAutoresizingMaskIntoConstraints = false
+//        return histogramDay
+//    }()
     
     lazy var histogramDescription: UILabel = {
         let histogramDesc = UILabel()
@@ -131,7 +131,7 @@ class MyDataInsightDetailView: UIView {
         self.addSubview(confidenceDescription)
         self.addSubview(divider2)
         self.addSubview(trendHistogram)
-        self.addSubview(histogramDay)
+//        self.addSubview(histogramDay)
         self.addSubview(histogramView)
         self.addSubview(histogramDescription)
         
@@ -157,9 +157,9 @@ class MyDataInsightDetailView: UIView {
             divider2.trailingAnchor.constraint(equalTo: trailingAnchor),
             trendHistogram.leadingAnchor.constraint(equalTo: leadingAnchor),
             trendHistogram.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 8.0),
-            histogramDay.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            histogramDay.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 8.0),
-            histogramDay.leadingAnchor.constraint(greaterThanOrEqualTo: trendHistogram.trailingAnchor, constant: 10.0),
+//            histogramDay.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+//            histogramDay.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 8.0),
+//            histogramDay.leadingAnchor.constraint(greaterThanOrEqualTo: trendHistogram.trailingAnchor, constant: 10.0),
             histogramView.topAnchor.constraint(equalTo: trendHistogram.bottomAnchor, constant: 8.0),
             histogramView.leadingAnchor.constraint(equalTo: leadingAnchor),
             histogramView.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -178,7 +178,7 @@ class MyDataInsightDetailView: UIView {
         super.layoutSubviews()
         
         //Removing all existing layers
-        if let layers = trendHistogram.layer.sublayers {
+        if let layers = histogramView.layer.sublayers {
             for layer in layers {
                 if let name = layer.name, name.contains("gradLayer") {
                     layer.removeFromSuperlayer()
@@ -188,7 +188,7 @@ class MyDataInsightDetailView: UIView {
 
         let layerGradient = CAGradientLayer()
         layerGradient.name = "gradLayer"
-        layerGradient.frame = CGRect(x: 0, y: 0, width: trendHistogram.bounds.width, height: trendHistogram.bounds.height)
+        layerGradient.frame = CGRect(x: 0, y: 0, width: histogramView.bounds.width, height: histogramView.bounds.height)
         layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
         layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
         layerGradient.endPoint = CGPoint(x: 0, y: 1.0)

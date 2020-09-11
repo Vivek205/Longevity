@@ -24,9 +24,13 @@ extension HeaderType {
     }
 }
 
-class DashboardSectionHeader: UIView {
+class DashboardSectionHeader: UITableViewHeaderFooterView {
     
-    var headerType: HeaderType = .devices
+    var headerType: HeaderType! {
+        didSet {
+            self.sectionTitle.text = headerType.title
+        }
+    }
 
     lazy var sectionTitle: UILabel = {
         let title = UILabel()
@@ -44,27 +48,23 @@ class DashboardSectionHeader: UIView {
         action.translatesAutoresizingMaskIntoConstraints = false
         return action
     }()
-    
-    init(section: Int) {
-        super.init(frame: CGRect.zero)
-        
-        self.headerType = HeaderType(rawValue: section) ?? .devices
-        
-        self.addSubview(sectionTitle)
-        self.addSubview(actionButton)
        
-        NSLayoutConstraint.activate([
-            sectionTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
-            sectionTitle.topAnchor.constraint(equalTo: topAnchor, constant: 5.0),
-            sectionTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
-            actionButton.centerYAnchor.constraint(equalTo: sectionTitle.centerYAnchor),
-            actionButton.heightAnchor.constraint(equalToConstant: 30.0),
-            actionButton.widthAnchor.constraint(equalTo: actionButton.heightAnchor),
-            actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
-            actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: sectionTitle.trailingAnchor, constant: 20.0)
-        ])
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+         
+         self.addSubview(sectionTitle)
+         self.addSubview(actionButton)
         
-        self.sectionTitle.text = self.headerType.title
+         NSLayoutConstraint.activate([
+             sectionTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+             sectionTitle.topAnchor.constraint(equalTo: topAnchor, constant: 5.0),
+             sectionTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
+             actionButton.centerYAnchor.constraint(equalTo: sectionTitle.centerYAnchor),
+             actionButton.heightAnchor.constraint(equalToConstant: 30.0),
+             actionButton.widthAnchor.constraint(equalTo: actionButton.heightAnchor),
+             actionButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20.0),
+             actionButton.leadingAnchor.constraint(greaterThanOrEqualTo: sectionTitle.trailingAnchor, constant: 20.0)
+         ])
     }
     
     required init?(coder: NSCoder) {
@@ -77,6 +77,8 @@ class DashboardSectionHeader: UIView {
             NavigationUtility.presentOverCurrentContext(destination: DeviceConnectionsPopupViewController(), style: .overCurrentContext, completion: nil)
         case .tasks:
             NavigationUtility.presentOverCurrentContext(destination: MyTasksInfoPopupViewController(), style: .overCurrentContext, completion: nil)
+        default:
+            return
         }
 
     }
