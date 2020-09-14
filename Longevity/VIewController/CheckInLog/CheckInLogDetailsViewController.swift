@@ -168,118 +168,23 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.section == 0 {
-            let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
-            cell.backgroundColor = .white
-            
-            let symptomLabel = UILabel()
-            symptomLabel.text = history.symptoms[indexPath.row]
-            symptomLabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
-            symptomLabel.textColor = UIColor(hexString: "#4E4E4E")
-            symptomLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            let checkImage = UIImageView()
-            checkImage.image = UIImage(named: "icon: checkbox-selected")
-            checkImage.contentMode = .scaleAspectFit
-            checkImage.translatesAutoresizingMaskIntoConstraints = false
-            
-            cell.addSubview(symptomLabel)
-            cell.addSubview(checkImage)
-            NSLayoutConstraint.activate([
-                symptomLabel.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 14.0),
-                symptomLabel.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-                checkImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -14.0),
-                checkImage.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-                checkImage.widthAnchor.constraint(equalToConstant: 24.0),
-                checkImage.heightAnchor.constraint(equalTo: checkImage.widthAnchor)
-            ])
+            guard let cell = tableView.getCell(with: CheckinLogSymptomsCell.self, at: indexPath) as? CheckinLogSymptomsCell else {
+                preconditionFailure("Invalid cell type")
+            }
+            cell.symptom = history.symptoms[indexPath.row]
             return cell
         }
         else if indexPath.section == 1 {
-            let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
-            let insightsLabel = UILabel()
-            insightsLabel.numberOfLines = 0
-            insightsLabel.lineBreakMode = .byWordWrapping
-            insightsLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            let insightTitle = history.insights[indexPath.row].text
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
-            let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
-            
-            let insightDesc = "\n\n\(history.insights[indexPath.row].goalDescription)"
-            
-            let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
-            let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
-            
-            attributedinsightTitle.append(attributedDescText)
-            insightsLabel.attributedText = attributedinsightTitle
-            cell.addSubview(insightsLabel)
-            
-            NSLayoutConstraint.activate([
-                insightsLabel.topAnchor.constraint(equalTo: cell.topAnchor, constant: 14.0),
-                insightsLabel.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 14.0),
-                insightsLabel.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -14.0),
-                insightsLabel.bottomAnchor.constraint(lessThanOrEqualTo: cell.bottomAnchor, constant: -14.0)
-            ])
+            guard let cell = tableView.getCell(with: CheckinLogInsightCell.self, at: indexPath) as? CheckinLogInsightCell else {
+                preconditionFailure("Invalid cell type")
+            }
+            cell.insight = history.insights[indexPath.row]
             return cell
         } else {
-        let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
-            
-            let divider = UIView()
-            divider.translatesAutoresizingMaskIntoConstraints = false
-            divider.backgroundColor = UIColor(hexString: "#CECECE")
-            
-            let goalsView = UIView()
-            goalsView.backgroundColor = .themeColor
-            goalsView.translatesAutoresizingMaskIntoConstraints = false
-            goalsView.layer.cornerRadius = 12.0
-            goalsView.layer.masksToBounds = true
-
-            let rowIndex = UILabel()
-            rowIndex.font = UIFont(name: "Montserrat-SemiBold", size: 14.0)
-            rowIndex.textColor = .white
-            rowIndex.text = "\(indexPath.row + 1)"
-            rowIndex.textAlignment = .center
-            rowIndex.translatesAutoresizingMaskIntoConstraints = false
-        
-            let goalsLabel = UILabel()
-            goalsLabel.numberOfLines = 0
-            goalsLabel.lineBreakMode = .byWordWrapping
-            goalsLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            let goalTitle = history.goals[indexPath.row].text
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 17.0),.foregroundColor: UIColor.black]
-            let attributedInfoText = NSMutableAttributedString(string: goalTitle, attributes: attributes)
-            
-            let goalDesc = "\n\(history.goals[indexPath.row].goalDescription)"
-            
-            let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#9B9B9B")]
-            let attributedDescText = NSMutableAttributedString(string: goalDesc, attributes: descAttributes)
-            
-            attributedInfoText.append(attributedDescText)
-            goalsLabel.attributedText = attributedInfoText
-            
-            cell.addSubview(divider)
-            cell.addSubview(goalsView)
-            goalsView.addSubview(rowIndex)
-            cell.addSubview(goalsLabel)
-            
-            NSLayoutConstraint.activate([
-                divider.leadingAnchor.constraint(equalTo: cell.leadingAnchor),
-                divider.trailingAnchor.constraint(equalTo: cell.trailingAnchor),
-                divider.heightAnchor.constraint(equalToConstant: 1.0),
-                divider.topAnchor.constraint(equalTo: cell.topAnchor),
-                goalsView.topAnchor.constraint(equalTo: cell.topAnchor, constant: 14.0),
-                goalsView.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 14.0),
-                goalsView.heightAnchor.constraint(equalToConstant: 24.0),
-                goalsView.widthAnchor.constraint(equalTo: goalsView.heightAnchor),
-                rowIndex.centerXAnchor.constraint(equalTo: goalsView.centerXAnchor),
-                rowIndex.centerYAnchor.constraint(equalTo: goalsView.centerYAnchor),
-                goalsLabel.topAnchor.constraint(equalTo: goalsView.topAnchor),
-                goalsLabel.leadingAnchor.constraint(equalTo: goalsView.trailingAnchor, constant: 14.0),
-                goalsLabel.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -14.0),
-                goalsLabel.bottomAnchor.constraint(lessThanOrEqualTo: cell.bottomAnchor, constant: -14.0)
-            ])
-            
+            guard let cell = tableView.getCell(with: CheckinLogGoal.self, at: indexPath) as? CheckinLogGoal else {
+                preconditionFailure("Invalid cell type")
+            }
+            cell.setup(goal: history.goals[indexPath.row], index: indexPath.row)
             return cell
         }
     }
