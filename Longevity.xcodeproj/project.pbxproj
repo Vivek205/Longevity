@@ -45,6 +45,9 @@
 		C14DBC1025080152004D5180 /* CheckInNextGoals.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC0F25080152004D5180 /* CheckInNextGoals.swift */; };
 		C14DBC122508179C004D5180 /* CheckInInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC112508179C004D5180 /* CheckInInsightCell.swift */; };
 		C14DBC1425081987004D5180 /* CheckInGoalCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC1325081987004D5180 /* CheckInGoalCell.swift */; };
+		C14DBC2425101197004D5180 /* CheckinLogSymptomsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */; };
+		C14DBC29251013DF004D5180 /* CheckinLogInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */; };
+		C14DBC2B25101833004D5180 /* CheckinLogGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -256,6 +259,9 @@
 		C14DBC0F25080152004D5180 /* CheckInNextGoals.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInNextGoals.swift; sourceTree = "<group>"; };
 		C14DBC112508179C004D5180 /* CheckInInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInInsightCell.swift; sourceTree = "<group>"; };
 		C14DBC1325081987004D5180 /* CheckInGoalCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInGoalCell.swift; sourceTree = "<group>"; };
+		C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogSymptomsCell.swift; sourceTree = "<group>"; };
+		C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogInsightCell.swift; sourceTree = "<group>"; };
+		C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogGoal.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -704,6 +710,9 @@
 			children = (
 				E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */,
 				E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */,
+				C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */,
+				C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */,
+				C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */,
 			);
 			path = CheckinLog;
 			sourceTree = "<group>";
@@ -1104,13 +1113,16 @@
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
 				E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */,
+				C14DBC2425101197004D5180 /* CheckinLogSymptomsCell.swift in Sources */,
 				C1C8220624EB4EAB0074AF11 /* ActivityCard.swift in Sources */,
 				C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */,
+				C14DBC2B25101833004D5180 /* CheckinLogGoal.swift in Sources */,
 				E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */,
 				C19875B624DC79B000477185 /* HomeViewController.swift in Sources */,
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,
+				C14DBC29251013DF004D5180 /* CheckinLogInsightCell.swift in Sources */,
 				E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */,
 				E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */,
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
@@ -1406,13 +1418,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 15;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

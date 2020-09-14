@@ -343,7 +343,7 @@ up your health profile.</string>
                                                     </connections>
                                                 </switch>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Metric" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-e8-aR4">
-                                                    <rect key="frame" x="250" y="34" width="60" height="22"/>
+                                                    <rect key="frame" x="250" y="34.5" width="60" height="21"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="60" id="aXz-O9-cR3"/>
                                                     </constraints>
@@ -685,50 +685,41 @@ up your health profile.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hke-Zl-aPo">
-                                                    <rect key="frame" x="274" y="59.5" width="100" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="100" id="BCN-7d-sKm"/>
-                                                        <constraint firstAttribute="height" constant="40" id="jkc-1W-c4t"/>
-                                                    </constraints>
-                                                    <state key="normal" title="Button" image="icon: add"/>
+                                                    <rect key="frame" x="310" y="63.5" width="59" height="32"/>
+                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="0.0" maxY="5"/>
+                                                    <state key="normal" title="Button"/>
                                                     <connections>
                                                         <action selector="handleConnectDevice:" destination="fDR-Fe-bHv" eventType="touchUpInside" id="wv8-e4-P1T"/>
                                                     </connections>
                                                 </button>
-                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillEqually" alignment="top" translatesAutoresizingMaskIntoConstraints="NO" id="apd-rW-3GS">
-                                                    <rect key="frame" x="73" y="0.0" width="186" height="154"/>
+                                                <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="apd-rW-3GS">
+                                                    <rect key="frame" x="68" y="5" width="81.5" height="149"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJ1-rg-BsJ">
-                                                            <rect key="frame" x="0.0" y="0.0" width="186" height="77"/>
+                                                            <rect key="frame" x="0.0" y="0.0" width="44.5" height="85"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="20"/>
                                                             <nil key="textColor"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
-                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-lY-ERK">
-                                                            <rect key="frame" x="0.0" y="77" width="186" height="77"/>
+                                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="WBG-lY-ERK">
+                                                            <rect key="frame" x="0.0" y="86" width="81.5" height="63"/>
                                                             <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                                                             <color key="textColor" red="0.29019607843137252" green="0.29019607843137252" blue="0.29019607843137252" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
                                                             <nil key="highlightedColor"/>
                                                         </label>
                                                     </subviews>
-                                                    <constraints>
-                                                        <constraint firstAttribute="trailing" secondItem="kJ1-rg-BsJ" secondAttribute="trailing" id="MyN-pG-qky"/>
-                                                        <constraint firstAttribute="trailing" secondItem="WBG-lY-ERK" secondAttribute="trailing" id="ioX-H7-FWw"/>
-                                                        <constraint firstItem="WBG-lY-ERK" firstAttribute="leading" secondItem="apd-rW-3GS" secondAttribute="leading" id="kaY-Dk-Nkp"/>
-                                                        <constraint firstItem="kJ1-rg-BsJ" firstAttribute="leading" secondItem="apd-rW-3GS" secondAttribute="leading" id="xm8-lm-O1G"/>
-                                                    </constraints>
                                                 </stackView>
                                             </subviews>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="7DS-tx-W4B"/>
-                                                <constraint firstItem="apd-rW-3GS" firstAttribute="leading" secondItem="H8R-Cv-SP1" secondAttribute="trailing" constant="15" id="SfJ-2S-iOB"/>
-                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" id="XAn-82-kWv"/>
+                                                <constraint firstItem="apd-rW-3GS" firstAttribute="leading" secondItem="H8R-Cv-SP1" secondAttribute="trailing" constant="10" id="SfJ-2S-iOB"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" constant="5" id="XAn-82-kWv"/>
                                                 <constraint firstAttribute="bottom" secondItem="apd-rW-3GS" secondAttribute="bottom" constant="5" id="bZr-71-hha"/>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="leading" secondItem="sTf-mj-jrF" secondAttribute="leading" constant="10" id="onT-vk-Hbh"/>
-                                                <constraint firstItem="Hke-Zl-aPo" firstAttribute="leading" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="15" id="q5M-dx-EBj"/>
+                                                <constraint firstItem="Hke-Zl-aPo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="10" id="q5M-dx-EBj"/>
                                                 <constraint firstItem="Hke-Zl-aPo" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="t97-Rx-gUz"/>
-                                                <constraint firstItem="apd-rW-3GS" firstAttribute="top" secondItem="sTf-mj-jrF" secondAttribute="top" id="vzx-qF-WIg"/>
+                                                <constraint firstItem="apd-rW-3GS" firstAttribute="top" secondItem="sTf-mj-jrF" secondAttribute="top" constant="5" id="vzx-qF-WIg"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="374" height="159"/>
@@ -1348,7 +1339,6 @@ up your health profile.</string>
         <image name="PersonalSetupOne" width="261" height="224"/>
         <image name="SetupComplete" width="224" height="224"/>
         <image name="dataPrivacyLogo" width="31" height="36"/>
-        <image name="icon: add" width="40" height="40"/>
         <image name="setupProfileDevices" width="244" height="224"/>
         <image name="setupProfileNotification" width="234" height="224"/>
     </resources>

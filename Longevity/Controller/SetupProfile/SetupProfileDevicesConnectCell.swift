@@ -27,6 +27,4 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     @IBAction func handleConnectDevice(_ sender: UIButton) {
         delegate?.connectBtn(wasPressedOnCell: self)
     }
-
-
 }

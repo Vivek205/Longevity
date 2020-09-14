@@ -57,7 +57,7 @@ class MyDataViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 100.0, left: 10.0, bottom: 10.0, right: 10.0)
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
-        
+        layout.invalidateLayout()
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
             self?.userInsights = AppSyncManager.instance.userInsights.value
         }
