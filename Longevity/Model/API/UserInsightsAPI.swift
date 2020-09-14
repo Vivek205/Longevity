@@ -21,13 +21,15 @@ class UserInsightsAPI: BaseAuthAPI {
             Amplify.API.get(request: request) { (result) in
                 switch result {
                 case .success(let data):
+                   print( String(data: data, encoding: .utf8))
                     do {
                         let decoder = JSONDecoder()
+//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
                         let value = try decoder.decode([UserInsight].self, from: data)
                         completion(value)
                     }
                     catch {
-                        print("JSON error", error.localizedDescription)
+                        print("JSON error", error)
                         completion(nil)
                     }
                 case .failure(let error):

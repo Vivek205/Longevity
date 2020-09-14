@@ -1208,7 +1208,7 @@ up your health profile.</string>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup Complete!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqr-Bb-YdQ">
-                                    <rect key="frame" x="-125" y="-15" width="250" height="30"/>
+                                    <rect key="frame" x="-125" y="0.0" width="250" height="30"/>
                                     <constraints>
                                         <constraint firstAttribute="height" constant="30" id="8XV-Rs-iTs"/>
                                         <constraint firstAttribute="width" constant="250" id="reK-zL-vk4"/>
@@ -1220,7 +1220,7 @@ up your health profile.</string>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstItem="eqr-Bb-YdQ" firstAttribute="top" secondItem="8Bs-Ke-VrY" secondAttribute="top" constant="-15" id="emN-rp-jjr"/>
+                                <constraint firstItem="eqr-Bb-YdQ" firstAttribute="top" secondItem="8Bs-Ke-VrY" secondAttribute="top" id="emN-rp-jjr"/>
                                 <constraint firstItem="eqr-Bb-YdQ" firstAttribute="centerX" secondItem="8Bs-Ke-VrY" secondAttribute="centerX" id="maV-Dc-NeZ"/>
                             </constraints>
                         </view>
