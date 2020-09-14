@@ -48,6 +48,18 @@ class KeyChain {
         }
     }
 
+    class func remove(name: String) -> Bool {
+        let query = [
+        kSecClass as String       : kSecClassGenericPassword,
+        kSecAttrAccount as String : name,
+        kSecReturnData as String  : kCFBooleanTrue!,
+        kSecMatchLimit as String  : kSecMatchLimitOne ] as [String : Any]
+
+        let status: OSStatus = SecItemDelete(query as CFDictionary)
+
+        return status != noErr
+    }
+
     class func createUniqueID() -> String {
         let uuid: CFUUID = CFUUIDCreate(nil)
         let cfStr: CFString = CFUUIDCreateString(nil, uuid)

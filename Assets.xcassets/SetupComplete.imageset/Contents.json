@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "SetupComplete@1x.png",
+      "filename" : "Header illustration asset@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "SetupComplete@2x.png",
+      "filename" : "Header illustration asset@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "SetupComplete@3x.png",
+      "filename" : "Header illustration asset@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

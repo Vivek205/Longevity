@@ -164,6 +164,4 @@ extension SetupCompleteVC: ORKTaskViewControllerDelegate {
     func taskViewControllerShouldConfirmCancel(_ taskViewController: ORKTaskViewController?) -> Bool {
         return false
     }
-
-
 }

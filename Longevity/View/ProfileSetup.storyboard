@@ -1092,7 +1092,7 @@ up your health profile.</string>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileCompleteCell" id="0DW-1Y-DXC">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileCompleteCell" id="0DW-1Y-DXC" customClass="SetupProfileCompleteCell" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="0.0" y="0.0" width="414" height="490"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8FB-9y-A7d">
@@ -1106,23 +1106,17 @@ up your health profile.</string>
                                                         <constraint firstAttribute="width" constant="273" id="ZvB-c7-Tkt"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup Complete!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
-                                                    <rect key="frame" x="69" y="298" width="276.5" height="39.5"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="r9Q-41-FkT"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
+                                                    <rect key="frame" x="20" y="298" width="374" height="39.5"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                                    <rect key="frame" x="15" y="349.5" width="384" height="234.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
+                                                    <rect key="frame" x="15" y="349.5" width="384" height="29.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="6lj-dg-JSW"/>
                                                     </constraints>
-                                                    <string key="text">You can always edit your health profile and answers under your Profile Settings
-
-You are ready to begin your first “health” survey quetions that will help determine This and That</string>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -1130,16 +1124,22 @@ You are ready to begin your first “health” survey quetions that will help de
                                                 </label>
                                             </subviews>
                                             <constraints>
+                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" constant="20" id="HU4-55-ZWG"/>
                                                 <constraint firstItem="Ol2-mH-c3N" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="SaN-q0-VN4"/>
                                                 <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="12" id="Uqe-Y5-grK"/>
                                                 <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="8FB-9y-A7d" secondAttribute="top" id="VtA-Vz-h8A"/>
                                                 <constraint firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" constant="15" id="Xzh-ZK-8hd"/>
                                                 <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="28" id="aJ7-Vh-0d4"/>
                                                 <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="m6M-CY-7Cp"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="20" id="yQz-CG-BTE"/>
                                                 <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" constant="15" id="ypF-uP-yYs"/>
                                             </constraints>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="414" height="490"/>
+                                        <connections>
+                                            <outlet property="descriptionLabel" destination="Ol2-mH-c3N" id="csY-vw-WUv"/>
+                                            <outlet property="noteLabel" destination="K85-ba-4vg" id="rVi-AA-neM"/>
+                                        </connections>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
@@ -1207,44 +1207,21 @@ You are ready to begin your first “health” survey quetions that will help de
                             <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
                             <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                             <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="T6w-Vg-gFR" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="PWf-cf-0B4" userLabel="One">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="3cv-cT-fus" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="86c-f3-ohw" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="edD-1J-R8y" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="a4x-a3-tyH" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6gH-IU-N0J" userLabel="Six">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
+                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup Complete!" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="eqr-Bb-YdQ">
+                                    <rect key="frame" x="-125" y="0.0" width="250" height="30"/>
                                     <constraints>
-                                        <constraint firstAttribute="height" constant="3" id="ETl-jb-MEA"/>
-                                        <constraint firstAttribute="width" constant="250" id="gnv-ka-hxq"/>
+                                        <constraint firstAttribute="height" constant="30" id="8XV-Rs-iTs"/>
+                                        <constraint firstAttribute="width" constant="250" id="reK-zL-vk4"/>
                                     </constraints>
-                                </stackView>
+                                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
+                                    <nil key="textColor"/>
+                                    <nil key="highlightedColor"/>
+                                </label>
                             </subviews>
                             <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
                             <constraints>
-                                <constraint firstItem="T6w-Vg-gFR" firstAttribute="centerX" secondItem="8Bs-Ke-VrY" secondAttribute="centerX" id="T19-Gt-Kif"/>
-                                <constraint firstItem="T6w-Vg-gFR" firstAttribute="centerY" secondItem="8Bs-Ke-VrY" secondAttribute="centerY" id="oey-dK-raR"/>
+                                <constraint firstItem="eqr-Bb-YdQ" firstAttribute="top" secondItem="8Bs-Ke-VrY" secondAttribute="top" id="emN-rp-jjr"/>
+                                <constraint firstItem="eqr-Bb-YdQ" firstAttribute="centerX" secondItem="8Bs-Ke-VrY" secondAttribute="centerX" id="maV-Dc-NeZ"/>
                             </constraints>
                         </view>
                     </navigationItem>
@@ -1368,7 +1345,7 @@ You are ready to begin your first “health” survey quetions that will help de
     </scenes>
     <resources>
         <image name="PersonalSetupOne" width="261" height="224"/>
-        <image name="SetupComplete" width="273" height="270"/>
+        <image name="SetupComplete" width="224" height="224"/>
         <image name="dataPrivacyLogo" width="31" height="36"/>
         <image name="icon: add" width="40" height="40"/>
         <image name="setupProfileDevices" width="244" height="224"/>

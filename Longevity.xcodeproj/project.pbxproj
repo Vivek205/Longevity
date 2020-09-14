@@ -93,6 +93,7 @@
 		E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */ = {isa = PBXBuildFile; fileRef = E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */; };
 		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
 		E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */; };
+		E22DCFCE250F1F6C001E6891 /* SetupProfileCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22DCFCD250F1F6C001E6891 /* SetupProfileCompleteCell.swift */; };
 		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
 		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
 		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
@@ -304,6 +305,7 @@
 		E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreExistingCondition.swift; sourceTree = "<group>"; };
 		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
 		E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDisclaimerVC.swift; sourceTree = "<group>"; };
+		E22DCFCD250F1F6C001E6891 /* SetupProfileCompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileCompleteCell.swift; sourceTree = "<group>"; };
 		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
 		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
 		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
@@ -601,8 +603,9 @@
 				E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */,
 				E21BD6A924BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift */,
 				E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */,
-				E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */,
 				E2B0333724AA04A600929D39 /* TempSignoutVC.swift */,
+				E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */,
+				E22DCFCD250F1F6C001E6891 /* SetupProfileCompleteCell.swift */,
 			);
 			path = SetupProfile;
 			sourceTree = "<group>";
@@ -1165,6 +1168,7 @@
 				E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */,
 				E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */,
 				E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */,
+				E22DCFCE250F1F6C001E6891 /* SetupProfileCompleteCell.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
