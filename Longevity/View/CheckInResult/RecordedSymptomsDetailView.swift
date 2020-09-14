@@ -9,17 +9,22 @@
 import UIKit
 
 class RecordedSymptomsDetailView: UIView {
-    var insightData: UserInsight! {
+    var symptoms: [String]? {
         didSet {
-//            if let details = insightData?.details {
-//                self.insightDescription.text = insightData.userInsightDescription
-//                self.confidenceValue.text = details.confidence?.value
-//                self.confidenceDescription.text = details.confidence?.confidenceDescription
-//                self.histogramDescription.text = details.histogram?.histogramDescription
-//                self.createHistogramData()
-//            }
+            self.symptomsTableView.reloadData()
         }
     }
+//    var insightData: UserInsight! {
+//        didSet {
+//            //            if let details = insightData?.details {
+//            //                self.insightDescription.text = insightData.userInsightDescription
+//            //                self.confidenceValue.text = details.confidence?.value
+//            //                self.confidenceDescription.text = details.confidence?.confidenceDescription
+//            //                self.histogramDescription.text = details.histogram?.histogramDescription
+//            //                self.createHistogramData()
+//            //            }
+//        }
+//    }
     
     lazy var detailsDescription: UILabel = {
         let insightdesc = UILabel()
@@ -78,15 +83,18 @@ class RecordedSymptomsDetailView: UIView {
 extension RecordedSymptomsDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 3
+        return self.symptoms?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
         cell.backgroundColor = .white
+        guard let symptom = self.symptoms?[indexPath.item] else {
+            preconditionFailure("Symptom not available")
+        }
 
         let symptomLabel = UILabel()
-//        symptomLabel.text = history.symptoms[indexPath.row]
+        symptomLabel.text = symptom
         symptomLabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
         symptomLabel.textColor = UIColor(hexString: "#4E4E4E")
         symptomLabel.translatesAutoresizingMaskIntoConstraints = false

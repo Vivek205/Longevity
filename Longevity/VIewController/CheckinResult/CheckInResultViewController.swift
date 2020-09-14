@@ -115,6 +115,9 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 guard let cell = collectionView.getCell(with: RecordedSymptomsCell.self, at: indexPath) as? RecordedSymptomsCell else {
                     preconditionFailure("Invalid insight cell")
                 }
+                if let symptoms = self.checkinResult?.symptoms {
+                    cell.symptoms = symptoms
+                }
                 return cell
             }
         } else if indexPath.section == 1 {
