@@ -77,7 +77,9 @@ class CheckInResultViewController: UIViewController {
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
             self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
-            self?.checkinResult = AppSyncManager.instance.userInsights.value?.filter({ $0.name == .logs })[0].details?.history?[0]
+            if  let result  = AppSyncManager.instance.userInsights.value?.filter({ $0.name == .logs }), !result.isEmpty {
+                self?.checkinResult = result[0].details?.history?[0]
+            }
         }
         AppSyncManager.instance.syncUserInsights()
     }
@@ -118,6 +120,9 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         } else if indexPath.section == 1 {
             guard let cell = collectionView.getCell(with: CheckInInsightCell.self, at: indexPath) as? CheckInInsightCell else {
                 preconditionFailure("Invalid insight cell")
+            }
+            if let insight = self.checkinResult?.insights[indexPath.item] {
+                cell.inSight = insight
             }
             return cell
         } else {
