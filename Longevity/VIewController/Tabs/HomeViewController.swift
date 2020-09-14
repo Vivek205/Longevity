@@ -145,27 +145,18 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let headerView = tableView.getHeader(with: HomeViewHeader.self, index: section) else {
-            preconditionFailure("Invalid header view")
-        }
-        
-        var header = UIView()
         if section == 0 {
-            header = DashboardHeaderView()
+            guard let headerView = tableView.getHeader(with: DashboardHeaderView.self, index: section) as? DashboardHeaderView else {
+                preconditionFailure("Invalid header view")
+            }
+            return headerView
         } else {
-            header = DashboardSectionHeader(section: section)
+            guard let headerView = tableView.getHeader(with: DashboardSectionHeader.self, index: section) as? DashboardSectionHeader else {
+                preconditionFailure("Invalid header view")
+            }
+            headerView.headerType = HeaderType(rawValue: section) ?? .devices
+            return headerView
         }
-        header.translatesAutoresizingMaskIntoConstraints = false
-        headerView.addSubview(header)
-        
-        NSLayoutConstraint.activate([
-            header.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            header.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            header.topAnchor.constraint(equalTo: headerView.topAnchor),
-            header.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-        ])
-        
-        return headerView
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

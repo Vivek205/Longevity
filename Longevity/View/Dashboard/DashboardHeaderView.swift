@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardHeaderView: UIView {
+class DashboardHeaderView: UITableViewHeaderFooterView {
     
     let vTop = UIDevice.hasNotch ? 100.0 : 60.0
     
@@ -42,32 +42,61 @@ class DashboardHeaderView: UIView {
     let topMargin = 10.0
     let bottomMargin = 10.0
     
-    init() {
-        super.init(frame: CGRect.zero)
+    override init(reuseIdentifier: String?) {
+        super.init(reuseIdentifier: reuseIdentifier)
+        
         self.addSubview(bgImageView)
-        self.addSubview(dashboardTilesCollection)
-        NSLayoutConstraint.activate([
-            bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-            dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
-            dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-        ])
+              self.addSubview(dashboardTilesCollection)
+              NSLayoutConstraint.activate([
+                  bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                  bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                  bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
+                  bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+                  dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+                  dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+                  dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
+                  dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+              ])
+              
+              guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
+                  return
+              }
+              
+              layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
+              layout.scrollDirection = .horizontal
         
-        guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
-            return
-        }
-        
-        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
-        layout.scrollDirection = .horizontal
-  
-        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
-        }
+              AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
+                  self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
+              }
     }
+    
+    
+//    init() {
+//        super.init(reuseIdentifier: nil)
+//        self.addSubview(bgImageView)
+//        self.addSubview(dashboardTilesCollection)
+//        NSLayoutConstraint.activate([
+//            bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//            bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//            bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
+//            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+//            dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//            dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//            dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
+//            dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//        ])
+//
+//        guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
+//            return
+//        }
+//
+//        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
+//        layout.scrollDirection = .horizontal
+//
+//        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
+//            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
+//        }
+//    }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
