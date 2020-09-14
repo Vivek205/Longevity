@@ -9,14 +9,18 @@
 import UIKit
 
 class RecordedSymptomsCell: UICollectionViewCell {
-    
-    var insightData: UserInsight! {
+    var symptoms:[String]? {
         didSet {
-            
-            
+            self.detailsView.symptoms = symptoms
         }
     }
     
+//    var insightData: UserInsight! {
+//        didSet {
+//
+//
+//        }
+//    }
     lazy var expandCollapseImage: UIImageView = {
         let expandCollapse = UIImageView()
         expandCollapse.image = UIImage(named: "rightArrow")

@@ -292,13 +292,23 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
             headerlabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
             headerlabel.textColor = UIColor(hexString: "#4E4E4E")
             headerlabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            header.addSubview(headerlabel)
+
+            let countLabel = UILabel()
+            countLabel.translatesAutoresizingMaskIntoConstraints = false
+            countLabel.text = "\(history.symptoms.count)"
+
+             header.addSubview(headerlabel)
+             header.addSubview(countLabel)
+
             NSLayoutConstraint.activate([
                 headerlabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 10.0),
-                headerlabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
+                headerlabel.centerYAnchor.constraint(equalTo: header.centerYAnchor),
+
+                countLabel.leadingAnchor.constraint(equalTo: headerlabel.trailingAnchor, constant: 10.0),
+                countLabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
             ])
             header.backgroundColor = .white
+
             return header
         } else if section == 1 {
             let headerlabel = UILabel()
