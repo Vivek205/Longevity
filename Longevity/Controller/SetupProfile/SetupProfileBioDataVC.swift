@@ -68,6 +68,7 @@ class SetupProfileBioDataVC: UIViewController {
         picker.contentMode = .center
         picker.backgroundColor = UIColor.white
         picker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
+        picker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
 
         // DatePicker
         agePicker.autoresizingMask = .flexibleWidth
@@ -78,6 +79,7 @@ class SetupProfileBioDataVC: UIViewController {
         agePicker.isHidden = false
         agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
         agePicker.maximumDate = Date()
+        agePicker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
 
         // Toolbar
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))

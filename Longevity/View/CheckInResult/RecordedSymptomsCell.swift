@@ -12,6 +12,9 @@ class RecordedSymptomsCell: UICollectionViewCell {
     var symptoms:[String]? {
         didSet {
             self.detailsView.symptoms = symptoms
+            if let count = symptoms?.count {
+                 self.symptomsCount.text = "\(count)"
+            }
         }
     }
     
