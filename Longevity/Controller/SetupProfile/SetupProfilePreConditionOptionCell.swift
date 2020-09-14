@@ -22,7 +22,7 @@ class SetupProfilePreConditionOptionCell: UICollectionViewCell {
     @IBOutlet weak var conditionDescription: UILabel!
 
 
-    var optionId: Int?
+    var optionId: PreExistingMedicalConditionId?
     var delegate: SetupProfilePreConditionOptionCellDelegate?
 
 

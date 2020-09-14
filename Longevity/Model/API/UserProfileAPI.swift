@@ -100,6 +100,19 @@ class UserProfileAPI: BaseAuthAPI {
                         let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
                         let mesureUnit = MeasurementUnits(rawValue: unit) ?? .metric
                         let healthProfile = UserHealthProfile(weight: weight, height: height, gender: gender, birthday: birthday, unit: mesureUnit, devices: devices, preconditions: preExistingConditions)
+
+
+                        preExistingConditions?.forEach({ (condition) in
+                            if condition["type"] == "OTHER" {
+                                preExistingMedicalCondtionOtherText = condition["condition"]
+                                return
+                            }
+                            guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
+                                return element.id.rawValue == condition["condition"]
+                            }) else { return }
+                            preExistingMedicalConditionData[optionIndex].selected = true
+                        })
+
                         completion(healthProfile)
                     } catch {
                         print("json parse error", error)

@@ -78,12 +78,16 @@ class SetupProfilePreConditionVC: UIViewController {
 extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate {
     func checkBoxButton(wasPressedOnCell cell: SetupProfilePreConditionOptionCell) {
         print("checkbox button delegate")
-        if let optionId = cell.optionId as? Int {
-            preExistingMedicalConditionData[optionId].touched = true
-            let currentState = preExistingMedicalConditionData[optionId].selected
-            preExistingMedicalConditionData[optionId].selected = !currentState
-            collectionView.reloadData()
+        guard let optionIndex = preExistingMedicalConditionData.firstIndex(where:
+            { (element) -> Bool in
+            return element.id == cell.optionId
+        }) else {
+            return
         }
+            preExistingMedicalConditionData[optionIndex].touched = true
+            let currentState = preExistingMedicalConditionData[optionIndex].selected
+            preExistingMedicalConditionData[optionIndex].selected = !currentState
+            collectionView.reloadData()
     }
 }
 
@@ -169,11 +173,12 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             collectionView.dequeueReusableCell(
                 withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as! SetupProfilePreConditionOptionCell
         let optionData = preExistingMedicalConditionData[indexPath.row - 1]
+//        let checkboxSelected = optionData.selected
+
 
         cell.conditionName.text = optionData.name
         cell.conditionDescription.text = optionData.description
         cell.optionId = optionData.id
-//        cell.checkBoxButton.isHighlighted = optionData.selected
         cell.checkBoxButton.isSelected = optionData.selected
         cell.contentContainerView.layer.cornerRadius = 4
         cell.layer.shadowColor = UIColor.lightGray.cgColor
@@ -182,6 +187,9 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         cell.contentContainerView.layer.shadowOpacity = 0.14
         cell.contentContainerView.layer.masksToBounds = false
         cell.delegate = self
+
+       
+//        if let checkboxSelected = AppSyncManager.instance.healthProfile.value?.preconditions
         return cell
     }
 

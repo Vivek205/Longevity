@@ -24,7 +24,7 @@ func updateMedicalConditions() {
         }
 
         var updatedConditions =  selectedConditions.map { (item) -> [String:String] in
-            let value = ["condition": item.name, "type":"PREDEFINDED"] as [String : String]
+            let value = ["condition": item.id.rawValue, "type":"PREDEFINDED"] as [String : String]
             return value
         }
         if otherOption != nil {

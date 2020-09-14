@@ -83,6 +83,7 @@ class RecordedSymptomsDetailView: UIView {
 extension RecordedSymptomsDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        print("table view symptoms count", self.symptoms?.count)
         return self.symptoms?.count ?? 0
     }
     
