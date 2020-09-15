@@ -18,12 +18,16 @@ class RecordedSymptomsCell: UICollectionViewCell {
         }
     }
     
-//    var insightData: UserInsight! {
-//        didSet {
-//
-//
-//        }
-//    }
+    var isCellExpanded: Bool! {
+        didSet {
+            if isCellExpanded ?? false {
+                expandCollapseImage.image = UIImage(named: "rightArrow")?.rotate(radians: .pi / 2)
+            } else {
+                expandCollapseImage.image = UIImage(named: "rightArrow")
+            }
+        }
+    }
+    
     lazy var expandCollapseImage: UIImageView = {
         let expandCollapse = UIImageView()
         expandCollapse.image = UIImage(named: "rightArrow")
