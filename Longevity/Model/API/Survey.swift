@@ -226,39 +226,48 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
     let semaphore = DispatchSemaphore(value: 0)
     do {
         let data = try encoder.encode(payload)
-
+        print("enocded post body", String(data:data, encoding: .utf8))
         getCredentials(completion: { (credentials) in
-            let path =  "/survey/\(currentSurveyId)/question/next"
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-            let request = RESTRequest(apiName: "surveyAPI", path:path, headers: headers,
-                                      queryParameters: nil, body: data)
+            let surveyAPI = "https://smu3xkqh66.execute-api.us-west-2.amazonaws.com/development"
+            let path = "/survey/\(currentSurveyId)/question/next"
+            guard let requestUrl = URL(string: "\(surveyAPI)\(path)") else { semaphore.signal(); return}
+            var request = URLRequest(url: requestUrl)
+            request.httpMethod = "POST"
+            request.httpBody = data
+            request.setValue(credentials.idToken, forHTTPHeaderField: "token")
+            request.setValue(LoginType.PERSONAL, forHTTPHeaderField: "login_type")
+            request.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
-            _ = Amplify.API.post(request: request, listener: { (result) in
-                switch result {
-                case .success(let data):
+            let task = URLSession.shared.dataTask(with: request){
+                (data, response,_) in
+                print("response", response)
+                guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200,
+                data != nil else {
+                    semaphore.signal()
+                    return
+                }
+                if let data = data, let dataString = String(data: data, encoding: .utf8) {
+                    print("data string", dataString)
+                    if dataString == "null" {
+                        semaphore.signal()
+                        return
+                    }
                     do {
-                        let dataString = String(data:data, encoding: .utf8)
-                        if dataString == "null" {
-                            semaphore.signal()
-                            return
-                        }
-//                        print("dataString", dataString)
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+                         let decoder = JSONDecoder()
+                                           decoder.keyDecodingStrategy = .convertFromSnakeCase
                         let value = try decoder.decode(NextQuestion.self, from: data)
                         nextQuestionIdentifier = value.quesId
                         print("next question API", value)
                         semaphore.signal()
-                    } catch {
+                    } catch  {
                         print("json error", error)
                         semaphore.signal()
                     }
-
-                case .failure(let apiError):
-                    print("findNextQuestion",apiError)
-                    semaphore.signal()
                 }
-            })
+            }
+            task.resume()
         }) { (error) in
             print("credentials error", error)
             semaphore.signal()
@@ -269,8 +278,6 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
     }
 
 
-
-    //        _ = semaphore.wait(timeout: .now() + 0.240)
     _ = semaphore.wait(timeout: .distantFuture)
     print("exit", dateFormatter.string(from: Date()))
     return nextQuestionIdentifier
