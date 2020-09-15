@@ -14,17 +14,6 @@ class RecordedSymptomsDetailView: UIView {
             self.symptomsTableView.reloadData()
         }
     }
-//    var insightData: UserInsight! {
-//        didSet {
-//            //            if let details = insightData?.details {
-//            //                self.insightDescription.text = insightData.userInsightDescription
-//            //                self.confidenceValue.text = details.confidence?.value
-//            //                self.confidenceDescription.text = details.confidence?.confidenceDescription
-//            //                self.histogramDescription.text = details.histogram?.histogramDescription
-//            //                self.createHistogramData()
-//            //            }
-//        }
-//    }
     
     lazy var detailsDescription: UILabel = {
         let insightdesc = UILabel()
@@ -48,6 +37,7 @@ class RecordedSymptomsDetailView: UIView {
         let symptomsTable = UITableView(frame: CGRect.zero, style: .plain)
         symptomsTable.delegate = self
         symptomsTable.dataSource = self
+        symptomsTable.allowsSelection = false
         symptomsTable.tableFooterView = UIView()
         symptomsTable.translatesAutoresizingMaskIntoConstraints = false
         return symptomsTable
@@ -70,7 +60,7 @@ class RecordedSymptomsDetailView: UIView {
             divider1.trailingAnchor.constraint(equalTo: trailingAnchor),
             symptomsTableView.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 15.0),
             symptomsTableView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            symptomsTableView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            symptomsTableView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -1.0),
             symptomsTableView.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
     }
@@ -83,38 +73,65 @@ class RecordedSymptomsDetailView: UIView {
 extension RecordedSymptomsDetailView: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        print("table view symptoms count", self.symptoms?.count)
         return self.symptoms?.count ?? 0
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.getCell(with: UITableViewCell.self, at: indexPath)
-        cell.backgroundColor = .white
+        guard let cell = tableView.getCell(with: RecordedSymptomTableCell.self, at: indexPath) as? RecordedSymptomTableCell else { preconditionFailure("Invalid symptom cell")}
+        
         guard let symptom = self.symptoms?[indexPath.item] else {
             preconditionFailure("Symptom not available")
         }
-
-        let symptomLabel = UILabel()
-        symptomLabel.text = symptom
-        symptomLabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
-        symptomLabel.textColor = UIColor(hexString: "#4E4E4E")
-        symptomLabel.translatesAutoresizingMaskIntoConstraints = false
-
-        let checkImage = UIImageView()
-        checkImage.image = UIImage(named: "icon: checkbox-selected")
-        checkImage.contentMode = .scaleAspectFit
-        checkImage.translatesAutoresizingMaskIntoConstraints = false
-
-        cell.addSubview(symptomLabel)
-        cell.addSubview(checkImage)
-        NSLayoutConstraint.activate([
-            symptomLabel.leadingAnchor.constraint(equalTo: cell.leadingAnchor, constant: 14.0),
-            symptomLabel.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            checkImage.trailingAnchor.constraint(equalTo: cell.trailingAnchor, constant: -14.0),
-            checkImage.centerYAnchor.constraint(equalTo: cell.centerYAnchor),
-            checkImage.widthAnchor.constraint(equalToConstant: 24.0),
-            checkImage.heightAnchor.constraint(equalTo: checkImage.widthAnchor)
-        ])
+        cell.symptom = symptom
         return cell
     }
 }
+
+class RecordedSymptomTableCell: UITableViewCell {
+    
+        var symptom: String! {
+            didSet {
+                self.symptomLabel.text = symptom
+            }
+        }
+        
+        lazy var symptomLabel: UILabel = {
+            let symptomLabel = UILabel()
+            symptomLabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
+            symptomLabel.numberOfLines = 0
+            symptomLabel.textColor = UIColor(hexString: "#4E4E4E")
+            symptomLabel.translatesAutoresizingMaskIntoConstraints = false
+            return symptomLabel
+        }()
+        
+        lazy var checkImage: UIImageView = {
+            let checkImage = UIImageView()
+            checkImage.image = UIImage(named: "icon: checkbox-selected")
+            checkImage.contentMode = .scaleAspectFit
+            checkImage.translatesAutoresizingMaskIntoConstraints = false
+            return checkImage
+        }()
+        
+        override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
+            super.init(style: style, reuseIdentifier: reuseIdentifier)
+            
+            backgroundColor = .white
+            
+            addSubview(symptomLabel)
+            addSubview(checkImage)
+            NSLayoutConstraint.activate([
+                symptomLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14.0),
+                symptomLabel.topAnchor.constraint(equalTo: topAnchor, constant: 5.0),
+                symptomLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -5.0),
+                checkImage.leadingAnchor.constraint(greaterThanOrEqualTo: symptomLabel.trailingAnchor, constant: 10.0),
+                checkImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14.0),
+                checkImage.centerYAnchor.constraint(equalTo: centerYAnchor),
+                checkImage.widthAnchor.constraint(equalToConstant: 24.0),
+                checkImage.heightAnchor.constraint(equalTo: checkImage.widthAnchor)
+            ])
+        }
+        
+        required init?(coder: NSCoder) {
+            fatalError("init(coder:) has not been implemented")
+        }
+    }

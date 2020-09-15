@@ -9,13 +9,6 @@
 import UIKit
 
 class CheckInGoalCell: UICollectionViewCell {
-
-    lazy var divider: UIView = {
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.backgroundColor = UIColor(hexString: "#CECECE")
-        return divider
-    }()
     
     lazy var goalsView: UIView = {
         let goalsView = UIView()
@@ -46,16 +39,11 @@ class CheckInGoalCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        self.addSubview(divider)
         self.addSubview(goalsView)
         goalsView.addSubview(rowIndex)
         self.addSubview(goalsLabel)
         
         NSLayoutConstraint.activate([
-            divider.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 1.0),
-            divider.topAnchor.constraint(equalTo: self.topAnchor),
             goalsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 14.0),
             goalsView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14.0),
             goalsView.heightAnchor.constraint(equalToConstant: 24.0),
@@ -67,6 +55,8 @@ class CheckInGoalCell: UICollectionViewCell {
             goalsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14.0),
             goalsLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -14.0)
         ])
+        
+        self.backgroundColor = .white
     }
 
     required init?(coder: NSCoder) {
@@ -86,5 +76,20 @@ class CheckInGoalCell: UICollectionViewCell {
         attributedInfoText.append(attributedDescText)
         self.goalsLabel.attributedText = attributedInfoText
         self.rowIndex.text = "\(goalIndex)"
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.cornerRadius = 5.0
+        layer.shadowRadius = 1.0
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
 }
