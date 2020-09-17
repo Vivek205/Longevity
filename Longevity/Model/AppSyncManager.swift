@@ -17,6 +17,7 @@ class AppSyncManager  {
     var appShareLink: DynamicValue<String>
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
+    var userPreferences: DynamicValue<[UserPreference]>
     
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
@@ -24,13 +25,14 @@ class AppSyncManager  {
         self.isTermsAccepted = DynamicValue(true)
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
+        self.userPreferences = DynamicValue([UserPreference(preferenceType: .longevityRelease, communicationType: .email, status: false)])
         
         let insights = [UserInsight(name: .exposure, text: "COVID-19 Exposure", userInsightDescription: "COVID-19 Exposure", defaultOrder: 0, details: nil, isExpanded: false),
                         UserInsight(name: .risk, text: "COVID-19 Infection", userInsightDescription: "COVID-19 Infection", defaultOrder: 1, details: nil, isExpanded: false),
                         UserInsight(name: .distancing, text: "Social Distancing", userInsightDescription: "Social Distancing", defaultOrder: 2, details: nil, isExpanded: false),
                         UserInsight(name: .logs, text: "COVID Check-in Log", userInsightDescription: "COVID Check-in Log", defaultOrder: 3, details: nil, isExpanded: false)]
         self.userInsights = DynamicValue(insights)
-//        NotificationCenter.default.addObserver(self, selector: #selector(notificationCenterObserser), name: UIApplication.didBecomeActiveNotification, object: nil)
+
     }
     //User Attributes
     
@@ -116,6 +118,18 @@ class AppSyncManager  {
 //
 //           }
 //    }
+
+    func updateUserPreference(preferenceType:UserPreferenceType, communicationType: CommunicationType, status:Bool){
+        if let index = self.userPreferences.value?.firstIndex(where: { (preference) -> Bool in
+            return preference.preferenceType == preferenceType && preference.communicationType == communicationType
+        }) {
+            self.userPreferences.value?[index].status = status
+        }else {
+            self.userPreferences.value?.append(UserPreference(preferenceType: preferenceType, communicationType: communicationType, status: status))
+        }
+        let userPreferenceAPI = UserPreferenceAPI()
+        userPreferenceAPI.updateUserPreferences(userPreferences: self.userPreferences.value)
+    }
 
     fileprivate func getAppLink() {
         let userProfileAPI = UserProfileAPI()

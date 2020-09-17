@@ -25,6 +25,7 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         let notificationswitch = UISwitch()
         notificationswitch.onTintColor = .themeColor
         notificationswitch.translatesAutoresizingMaskIntoConstraints = false
+        notificationswitch.addTarget(self, action: #selector(doOk), for: .valueChanged)
         return notificationswitch
     }()
     
@@ -70,12 +71,26 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
             primaryButton.heightAnchor.constraint(equalToConstant: 48),
             primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
+
+        AppSyncManager.instance.userPreferences.addAndNotify(observer: self) {
+            [weak self] in
+            guard let userPreferences = AppSyncManager.instance.userPreferences.value,
+            let preference = userPreferences.first(where: {
+                (preference) -> Bool in
+                return preference.preferenceType == .longevityRelease && preference.communicationType == .email
+            })
+            else {return}
+
+            self?.notificationSwitch.isOn = preference.status
+        }
     }
     
     @objc func doOk() {
         if self.notificationSwitch.isOn {
+            AppSyncManager.instance.updateUserPreference(preferenceType: .longevityRelease, communicationType: .email, status: true)
             //TODO: Make API call
         } else {
+            AppSyncManager.instance.updateUserPreference(preferenceType: .longevityRelease, communicationType: .email, status: false)
             self.closeView()
         }
     }
