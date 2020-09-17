@@ -17,7 +17,7 @@ class AppSyncManager  {
     var appShareLink: DynamicValue<String>
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
-    var userPreferences: DynamicValue<[UserPreference]>
+    var userSubscriptions: DynamicValue<[UserSubscription]>
     
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
@@ -25,7 +25,7 @@ class AppSyncManager  {
         self.isTermsAccepted = DynamicValue(true)
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
-        self.userPreferences = DynamicValue([UserPreference(preferenceType: .longevityRelease, communicationType: .email, status: false)])
+        self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         
         let insights = [UserInsight(name: .exposure, text: "COVID-19 Exposure", userInsightDescription: "COVID-19 Exposure", defaultOrder: 0, details: nil, isExpanded: false),
                         UserInsight(name: .risk, text: "COVID-19 Infection", userInsightDescription: "COVID-19 Infection", defaultOrder: 1, details: nil, isExpanded: false),
@@ -58,9 +58,9 @@ class AppSyncManager  {
         }
     }
 
-    func fetchUserPreferences() {
-        let userPreferenceAPI = UserPreferenceAPI()
-        userPreferenceAPI.getUserPreferences()
+    func fetchUserSubscriptions() {
+        let userPreferenceAPI = UserSubscriptionAPI()
+        userPreferenceAPI.getUserSubscriptions()
     }
     
     func checkTermsAccepted() {
@@ -124,16 +124,16 @@ class AppSyncManager  {
 //           }
 //    }
 
-    func updateUserPreference(preferenceType:UserPreferenceType, communicationType: CommunicationType, status:Bool){
-        if let index = self.userPreferences.value?.firstIndex(where: { (preference) -> Bool in
-            return preference.preferenceType == preferenceType && preference.communicationType == communicationType
+    func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool){
+        if let index = self.userSubscriptions.value?.firstIndex(where: { (subscription) -> Bool in
+            return subscription.subscriptionType == subscriptionType && subscription.communicationType == communicationType
         }) {
-            self.userPreferences.value?[index].status = status
+            self.userSubscriptions.value?[index].status = status
         }else {
-            self.userPreferences.value?.append(UserPreference(preferenceType: preferenceType, communicationType: communicationType, status: status))
+            self.userSubscriptions.value?.append(UserSubscription(subscriptionType: subscriptionType, communicationType: communicationType, status: status))
         }
-        let userPreferenceAPI = UserPreferenceAPI()
-        userPreferenceAPI.updateUserPreferences(userPreferences: self.userPreferences.value)
+        let userPreferenceAPI = UserSubscriptionAPI()
+        userPreferenceAPI.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value)
     }
 
     fileprivate func getAppLink() {
@@ -151,7 +151,7 @@ class AppSyncManager  {
         self.fetchUserHealthProfile()
         self.checkTermsAccepted()
         self.fetchUserNotification()
-        self.fetchUserPreferences()
+        self.fetchUserSubscriptions()
         AppSyncManager.instance.syncUserInsights()
     }
 }

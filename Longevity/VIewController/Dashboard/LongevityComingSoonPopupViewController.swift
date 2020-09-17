@@ -25,7 +25,7 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         let notificationswitch = UISwitch()
         notificationswitch.onTintColor = .themeColor
         notificationswitch.translatesAutoresizingMaskIntoConstraints = false
-        notificationswitch.addTarget(self, action: #selector(doOk), for: .valueChanged)
+        notificationswitch.addTarget(self, action: #selector(handleNotificationSwitch), for: .valueChanged)
         return notificationswitch
     }()
     
@@ -72,25 +72,26 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
             primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
 
-        AppSyncManager.instance.userPreferences.addAndNotify(observer: self) {
+        AppSyncManager.instance.userSubscriptions.addAndNotify(observer: self) {
             [weak self] in
-            guard let userPreferences = AppSyncManager.instance.userPreferences.value,
-            let preference = userPreferences.first(where: {
-                (preference) -> Bool in
-                return preference.preferenceType == .longevityRelease && preference.communicationType == .email
+            guard let userSubscriptions = AppSyncManager.instance.userSubscriptions.value,
+            let subscription = userSubscriptions.first(where: {
+                (subscription) -> Bool in
+                return subscription.subscriptionType == .longevityRelease && subscription.communicationType == .email
             })
             else {return}
 
-            self?.notificationSwitch.isOn = preference.status
+            DispatchQueue.main.async {
+                self?.notificationSwitch.isOn = subscription.status
+            }
         }
     }
     
-    @objc func doOk() {
+    @objc func handleNotificationSwitch() {
         if self.notificationSwitch.isOn {
-            AppSyncManager.instance.updateUserPreference(preferenceType: .longevityRelease, communicationType: .email, status: true)
-            //TODO: Make API call
+            AppSyncManager.instance.updateUserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: true)
         } else {
-            AppSyncManager.instance.updateUserPreference(preferenceType: .longevityRelease, communicationType: .email, status: false)
+            AppSyncManager.instance.updateUserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)
             self.closeView()
         }
     }

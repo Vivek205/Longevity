@@ -110,7 +110,7 @@
 		E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24826E424E5326D0083EFAC /* CompletionStepVC.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
 		E2503AA324EBDDA70033A814 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2503AA224EBDDA70033A814 /* Date.swift */; };
-		E25074322512216E00CB171E /* UserPreferenceAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25074312512216E00CB171E /* UserPreferenceAPI.swift */; };
+		E25074322512216E00CB171E /* UserSubscriptionAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25074312512216E00CB171E /* UserSubscriptionAPI.swift */; };
 		E25185EC24CF042000F3068C /* Survey.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25185EB24CF042000F3068C /* Survey.swift */; };
 		E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */; };
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
@@ -327,7 +327,7 @@
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
 		E2503AA224EBDDA70033A814 /* Date.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Date.swift; sourceTree = "<group>"; };
-		E25074312512216E00CB171E /* UserPreferenceAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserPreferenceAPI.swift; sourceTree = "<group>"; };
+		E25074312512216E00CB171E /* UserSubscriptionAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserSubscriptionAPI.swift; sourceTree = "<group>"; };
 		E25185EB24CF042000F3068C /* Survey.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Survey.swift; sourceTree = "<group>"; };
 		E251EFE9248F8B4B0012F1C6 /* SignupByEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupByEmailVC.swift; sourceTree = "<group>"; };
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
@@ -808,7 +808,7 @@
 				E258E66524EE247100676056 /* UserProfileAPI.swift */,
 				C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */,
 				C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */,
-				E25074312512216E00CB171E /* UserPreferenceAPI.swift */,
+				E25074312512216E00CB171E /* UserSubscriptionAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1213,7 +1213,7 @@
 				C12F09CB24F837DD00623CC3 /* AppleHealthTopCell.swift in Sources */,
 				C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,
-				E25074322512216E00CB171E /* UserPreferenceAPI.swift in Sources */,
+				E25074322512216E00CB171E /* UserSubscriptionAPI.swift in Sources */,
 				C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
 				C1C8220824EB54A50074AF11 /* UIView+Extension.swift in Sources */,
@@ -1420,7 +1420,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1445,7 +1445,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 17;
+				CURRENT_PROJECT_VERSION = 18;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
