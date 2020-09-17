@@ -15,6 +15,13 @@ class ClinicalLoginVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.setNavigationBarHidden(false, animated: true)
+        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "#F5F6FA")
+        self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 24.0)!,
+                                                                        NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4E4E4E")]
+        
+        self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
         highlightImageButton(imgButton: clinicalTrialImageView)
         customizeImageButton(imgButton: clinicalTrialImageView)
         customizeImageButton(imgButton: personalImageView)
@@ -54,17 +61,4 @@ class ClinicalLoginVC: UIViewController {
     @IBAction func handlePersonalLogin(_ sender: Any) {
         performSegue(withIdentifier: "UnwindClinicalToPersonalLogin", sender: self)
     }
-
-    
-
-    /*
-    // MARK: - Navigation
-
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepare(for segue: UIStoryboardSegue, sender: Any?) {
-        // Get the new view controller using segue.destination.
-        // Pass the selected object to the new view controller.
-    }
-    */
-
 }
