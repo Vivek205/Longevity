@@ -172,24 +172,9 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let cell =
             collectionView.dequeueReusableCell(
                 withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as! SetupProfilePreConditionOptionCell
-        let optionData = preExistingMedicalConditionData[indexPath.row - 1]
-//        let checkboxSelected = optionData.selected
-
-
-        cell.conditionName.text = optionData.name
-        cell.conditionDescription.text = optionData.description
-        cell.optionId = optionData.id
-        cell.checkBoxButton.isSelected = optionData.selected
-        cell.contentContainerView.layer.cornerRadius = 4
-        cell.layer.shadowColor = UIColor.lightGray.cgColor
-        cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-        cell.contentContainerView.layer.shadowRadius = 4.0
-        cell.contentContainerView.layer.shadowOpacity = 0.14
-        cell.contentContainerView.layer.masksToBounds = false
+//        let optionData = preExistingMedicalConditionData[indexPath.row - 1]
+        cell.optionData = preExistingMedicalConditionData[indexPath.row - 1]
         cell.delegate = self
-
-       
-//        if let checkboxSelected = AppSyncManager.instance.healthProfile.value?.preconditions
         return cell
     }
 
