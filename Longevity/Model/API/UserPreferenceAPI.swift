@@ -27,7 +27,7 @@ class UserPreferenceAPI: BaseAuthAPI {
     private let apiName:String = "rejuveDevelopmentAPI"
 
     func getUserPreferences() {
-        let path = "/user/preference"
+        let path = "/user/notification/preference"
         self.getCredentials(completion: { [weak self] (credentials) in
              let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let request = RESTRequest(apiName: self?.apiName, path: path,
@@ -55,7 +55,7 @@ class UserPreferenceAPI: BaseAuthAPI {
 
     func updateUserPreferences(userPreferences : [UserPreference]?){
         guard let userPreferences = userPreferences else {return}
-        let path = "/user/preference"
+        let path = "/user/notification/preference"
         self.getCredentials(completion: { [weak self] (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let jsonEncoder = JSONEncoder()
@@ -63,6 +63,7 @@ class UserPreferenceAPI: BaseAuthAPI {
             var data:Data
             do {
                 data = try jsonEncoder.encode(userPreferences)
+                print(String(data: data, encoding: .utf8))
             }catch {
                 print("json error", error)
                 return

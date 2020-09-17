@@ -57,6 +57,11 @@ class AppSyncManager  {
             self?.userNotification.value = notification
         }
     }
+
+    func fetchUserPreferences() {
+        let userPreferenceAPI = UserPreferenceAPI()
+        userPreferenceAPI.getUserPreferences()
+    }
     
     func checkTermsAccepted() {
         let userProfileAPI = UserProfileAPI()
@@ -146,6 +151,7 @@ class AppSyncManager  {
         self.fetchUserHealthProfile()
         self.checkTermsAccepted()
         self.fetchUserNotification()
+        self.fetchUserPreferences()
         AppSyncManager.instance.syncUserInsights()
     }
 }
