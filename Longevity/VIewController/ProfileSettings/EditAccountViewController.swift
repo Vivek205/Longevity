@@ -11,6 +11,8 @@ import UIKit
 fileprivate let appSyncManager:AppSyncManager = AppSyncManager.instance
 
 class EditAccountViewController: UIViewController {
+    var modalPresentation = false
+    var changesSaved = true
     
     lazy var nameLabel: UILabel = {
         let name = UILabel()
@@ -166,10 +168,33 @@ class EditAccountViewController: UIViewController {
             }
 
         }
+
+        if self.modalPresentation {
+            if #available(iOS 13.0, *) {
+                self.isModalInPresentation = true
+                print("delegate", self.navigationController?.presentationController?.delegate)
+                self.navigationController?.presentationController?.delegate = self
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
     
     @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
+        if changesSaved {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        let alertVC = UIAlertController(title: "Discard changes", message: "Are you sure to discard all your unsaved changes?", preferredStyle: .actionSheet)
+        let dismiss = UIAlertAction(title: "dismiss", style: .destructive) {[weak self] (action) in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "cancel", style: .default) {[weak self] (action) in
+//            self?.dismiss(animated: true, completion: nil)
+        }
+        alertVC.addAction(dismiss)
+        alertVC.addAction(cancel)
+        self.present(alertVC, animated: true, completion: nil)
     }
 
     @objc func doneUpdate() {
@@ -187,5 +212,18 @@ class EditAccountViewController: UIViewController {
 extension EditAccountViewController: UITextFieldDelegate {
     func textFieldShouldReturn(_ textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+    }
+    func textFieldDidBeginEditing(_ textField: UITextField) {
+        self.changesSaved = false
+    }
+}
+
+extension EditAccountViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        self.closeView()
+    }
+
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return true
     }
 }

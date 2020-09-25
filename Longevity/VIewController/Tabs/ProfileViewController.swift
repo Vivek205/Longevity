@@ -312,6 +312,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     return
                 case .editaccount:
                     let editAccountViewController = EditAccountViewController()
+                    editAccountViewController.modalPresentation = true
                     let navigationController = UINavigationController(rootViewController: editAccountViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                 case .usemetricsystem:
