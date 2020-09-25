@@ -66,5 +66,14 @@ class AppleHealthConnectCell: UITableViewCell {
             connectButton.layer.shadowPath = UIBezierPath(roundedRect: connectButton.bounds, cornerRadius: connectButton.layer.cornerRadius).cgPath
         }
     }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        var view = connectButton.hitTest(connectButton.convert(point, from: self), with: event)
+        if view == nil {
+            view = super.hitTest(point, with: event)
+        }
+
+        return view
+    }
 }
 

@@ -48,6 +48,8 @@
 		C14DBC2425101197004D5180 /* CheckinLogSymptomsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */; };
 		C14DBC29251013DF004D5180 /* CheckinLogInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */; };
 		C14DBC2B25101833004D5180 /* CheckinLogGoal.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */; };
+		C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */; };
+		C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -263,6 +265,8 @@
 		C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogSymptomsCell.swift; sourceTree = "<group>"; };
 		C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogInsightCell.swift; sourceTree = "<group>"; };
 		C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogGoal.swift; sourceTree = "<group>"; };
+		C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogNoDataView.swift; sourceTree = "<group>"; };
+		C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -510,6 +514,7 @@
 				C19875B424DC784B00477185 /* Tabs */,
 				C19875AF24DC6B6B00477185 /* LNTabBarViewController.swift */,
 				E27C4F6C2500CBC50070A2D3 /* LoaderAnimationViewController.swift */,
+				C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */,
 			);
 			path = VIewController;
 			sourceTree = "<group>";
@@ -715,6 +720,7 @@
 				C14DBC2325101197004D5180 /* CheckinLogSymptomsCell.swift */,
 				C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */,
 				C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */,
+				C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */,
 			);
 			path = CheckinLog;
 			sourceTree = "<group>";
@@ -1111,6 +1117,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
+				C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */,
 				C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
@@ -1268,6 +1275,7 @@
 				C14DBC06250564BE004D5180 /* CheckInTitleView.swift in Sources */,
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
+				C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
