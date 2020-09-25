@@ -19,6 +19,8 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     @IBOutlet weak var footer: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var continueButton: CustomButtonFill!
+
+//    var termsOfServiceURLLoaded = false
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()
@@ -56,6 +58,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
     lazy var acceptCheckbox: CheckboxButton = {
         let button = CheckboxButton()
         button.translatesAutoresizingMaskIntoConstraints = false
+        button.addTarget(self, action: #selector(handleAcceptCheckboxTap(_:)), for: .touchUpInside)
         return button
     }()
     
@@ -71,6 +74,7 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         let view = WKWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.navigationDelegate = self
+//        view.scrollView.delegate = self
         return view
     }()
     
@@ -109,7 +113,8 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
         self.view.addSubview(acceptCard)
         acceptCard.addSubview(acceptLabel)
         acceptCard.addSubview(acceptCheckbox)
-        
+//        acceptCard.isHidden = true
+
         webView.load(URLRequest(url: URL(string: tosWebViewURL)!))
         
         webView.addSubview(spinner)
@@ -216,6 +221,7 @@ extension UIViewController {
 
 extension TermsOfServiceVC:  WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
+//        termsOfServiceURLLoaded = true
         spinner.stopAnimating()
     }
 
@@ -223,3 +229,13 @@ extension TermsOfServiceVC:  WKNavigationDelegate {
         spinner.stopAnimating()
     }
 }
+
+//extension TermsOfServiceVC: UIScrollViewDelegate {
+//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+//        if termsOfServiceURLLoaded {
+//            if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
+//                acceptCard.isHidden = false
+//            }
+//        }
+//    }
+//}

@@ -287,13 +287,16 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let biometricsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfileBioDataVC") as? SetupProfileBioDataVC else { return }
                     biometricsViewController.isFromSettings = true
+                    biometricsViewController.modalPresentation = true
                     let navigationController = UINavigationController(rootViewController: biometricsViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 case .updatepreconditions:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let preconditionsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC") as? SetupProfilePreConditionVC else { return }
                     preconditionsViewController.isFromSettings = true
+                    preconditionsViewController.modalPresentation = true
                     let navigationController = UINavigationController(rootViewController: preconditionsViewController)
+                    navigationController
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                 case .resetcheckin:
                     let resetCheckinViewController = ResetCheckInDataViewController()
@@ -441,8 +444,15 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         }else {
             AppSyncManager.instance.updateUserNotification(enabled: false)
         }
+    }
+}
 
-
-
+extension ProfileViewController: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        print("should dismiss")
+        return true
+    }
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        print("did attempt to dismiss")
     }
 }

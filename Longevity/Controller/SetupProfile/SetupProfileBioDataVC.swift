@@ -19,6 +19,9 @@ class SetupProfileBioDataVC: UIViewController {
     @IBOutlet weak var viewProgressBar: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
+
+    var modalPresentation = false
+    var changesSaved = true
     
     let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
     
@@ -58,6 +61,16 @@ class SetupProfileBioDataVC: UIViewController {
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
+
+        if self.modalPresentation {
+            if #available(iOS 13.0, *) {
+                self.isModalInPresentation = true
+                print("delegate", self.navigationController?.presentationController?.delegate)
+                self.navigationController?.presentationController?.delegate = self
+            } else {
+                // Fallback on earlier versions
+            }
+        }
     }
     
     func checkIfHealthKitSyncedAlready() {
@@ -192,7 +205,20 @@ class SetupProfileBioDataVC: UIViewController {
     }
     
     @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
+        if changesSaved {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        let alertVC = UIAlertController(title: "Discard changes", message: "Are you sure to discard all your unsaved changes?", preferredStyle: .actionSheet)
+        let dismiss = UIAlertAction(title: "dismiss", style: .destructive) {[weak self] (action) in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "cancel", style: .default) {[weak self] (action) in
+//            self?.dismiss(animated: true, completion: nil)
+        }
+        alertVC.addAction(dismiss)
+        alertVC.addAction(cancel)
+        self.present(alertVC, animated: true, completion: nil)
     }
     
     @objc func doneUpdate() {
@@ -219,14 +245,14 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
         picker.removeFromSuperview()
         agePicker.removeFromSuperview()
     }
-    
+
     @objc func onDoneButtonTapped() {
         removePickers()
         updateUserDefaultsOnPickerDone()
     }
     
     func updateUserDefaultsOnPickerDone(selectedRow: Int = 0) {
-        
+        changesSaved = false
         switch picker.accessibilityLabel {
         case PickerLabel.agePicker:
             let dateFormatter: DateFormatter = DateFormatter()
@@ -271,6 +297,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     }
     
     @objc func onAgeChanged(sender: UIDatePicker) {
+        changesSaved = false
         selectedAgePickerValue = sender.date
     }
     
@@ -453,5 +480,15 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let height = view.frame.size.height
         let width = view.frame.size.width
         return CGSize(width: width, height: CGFloat(60))
+    }
+}
+
+extension SetupProfileBioDataVC: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        self.closeView()
+    }
+
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return true
     }
 }

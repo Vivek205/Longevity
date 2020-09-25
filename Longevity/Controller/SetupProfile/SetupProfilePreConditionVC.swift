@@ -13,7 +13,10 @@ class SetupProfilePreConditionVC: UIViewController {
     @IBOutlet weak var viewProgressBar: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
-    
+
+    var modalPresentation = false
+    var changesSaved = true
+
     // MARK: Collection View Data
     private var conditionCount:Int = 0
     var numberOfTotalItems:Int = 0
@@ -38,6 +41,16 @@ class SetupProfilePreConditionVC: UIViewController {
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
             self.footerView.isHidden = true
+        }
+
+        if self.modalPresentation {
+            if #available(iOS 13.0, *) {
+                self.isModalInPresentation = true
+                print("delegate", self.navigationController?.presentationController?.delegate)
+                self.navigationController?.presentationController?.delegate = self
+            } else {
+                // Fallback on earlier versions
+            }
         }
     }
 
@@ -77,7 +90,7 @@ class SetupProfilePreConditionVC: UIViewController {
 
 extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate {
     func checkBoxButton(wasPressedOnCell cell: SetupProfilePreConditionOptionCell) {
-        print("checkbox button delegate")
+        changesSaved = false
         guard let optionIndex = preExistingMedicalConditionData.firstIndex(where:
             { (element) -> Bool in
             return element.id == cell.optionId
@@ -135,7 +148,23 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
     }
     
     @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
+        if changesSaved {
+            self.dismiss(animated: true, completion: nil)
+            return
+        }
+        let alertVC = UIAlertController(title: "Discard changes", message: "Are you sure to discard all your unsaved changes?", preferredStyle: .actionSheet)
+        let dismiss = UIAlertAction(title: "dismiss", style: .destructive) {[weak self] (action) in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        let cancel = UIAlertAction(title: "cancel", style: .default) {[weak self] (action) in
+//            self?.dismiss(animated: true, completion: nil)
+        }
+        alertVC.addAction(dismiss)
+        alertVC.addAction(cancel)
+        self.present(alertVC, animated: true, completion: nil)
+
+
+//        self.dismiss(animated: true, completion: nil)
     }
 
     @objc func doneUpdate() {
@@ -192,4 +221,15 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
     }
 
+}
+
+
+extension SetupProfilePreConditionVC: UIAdaptivePresentationControllerDelegate {
+    func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
+        self.closeView()
+    }
+
+    func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
+        return true
+    }
 }

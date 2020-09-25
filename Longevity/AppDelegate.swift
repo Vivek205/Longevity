@@ -36,6 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             configureCognito()
             print("Amplify configured with auth plugin")
             Logger.log("App Launched")
+
             print("arn value", UserDefaults.standard.value(forKey: UserDefaultsKeys().endpointArnForSNS))
         } catch {
             print("An error occurred setting up Amplify: \(error)")
@@ -295,6 +296,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     fileprivate func checkIfAppUpdated() {
+
         let previousBuild = UserDefaults.standard.string(forKey: "build")
         let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         UserDefaults.standard.set(currentBuild, forKey: "build")
