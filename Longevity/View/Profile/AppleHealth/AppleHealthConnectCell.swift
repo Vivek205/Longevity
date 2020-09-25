@@ -24,13 +24,13 @@ class AppleHealthConnectCell: UITableViewCell {
         
         self.backgroundColor = .clear
         
-        self.addSubview(connectButton)
+        self.contentView.addSubview(connectButton)
         
        NSLayoutConstraint.activate([
-            connectButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
-            connectButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
-            connectButton.topAnchor.constraint(equalTo: topAnchor, constant: 2.0),
-            connectButton.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -2.0)
+        connectButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15.0),
+        connectButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15.0),
+        connectButton.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 2.0),
+        connectButton.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -2.0)
         ])
     }
     
@@ -65,15 +65,6 @@ class AppleHealthConnectCell: UITableViewCell {
             connectButton.layer.masksToBounds = false
             connectButton.layer.shadowPath = UIBezierPath(roundedRect: connectButton.bounds, cornerRadius: connectButton.layer.cornerRadius).cgPath
         }
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        var view = connectButton.hitTest(connectButton.convert(point, from: self), with: event)
-        if view == nil {
-            view = super.hitTest(point, with: event)
-        }
-
-        return view
     }
 }
 

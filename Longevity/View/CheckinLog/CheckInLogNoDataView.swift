@@ -76,7 +76,8 @@ class CheckInLogNoDataView: UIView {
             
             checkinButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 75.0),
             checkinButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -75.0),
-            checkinButton.topAnchor.constraint(equalTo: self.info.bottomAnchor, constant: 20.0)
+            checkinButton.topAnchor.constraint(equalTo: self.info.bottomAnchor, constant: 20.0),
+            checkinButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
         ])
     }
     
@@ -90,14 +91,5 @@ class CheckInLogNoDataView: UIView {
         checkinButton.layer.cornerRadius = 10.0
         checkinButton.layer.borderWidth = 2.0
         checkinButton.layer.borderColor = UIColor.themeColor.cgColor
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        var view = checkinButton.hitTest(checkinButton.convert(point, from: self), with: event)
-        if view == nil {
-            view = super.hitTest(point, with: event)
-        }
-
-        return view
     }
 }

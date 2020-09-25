@@ -79,11 +79,11 @@ class CheckinLogCell: UICollectionViewCell {
         
         self.backgroundColor = .white
         
-        self.addSubview(symptomsCircle)
+        self.contentView.addSubview(symptomsCircle)
         self.symptomsCircle.addSubview(noofSymptoms)
-        self.addSubview(symptomsLabel)
-        self.addSubview(logDate)
-        self.addSubview(viewDetailsButton)
+        self.contentView.addSubview(symptomsLabel)
+        self.contentView.addSubview(logDate)
+        self.contentView.addSubview(viewDetailsButton)
         
         NSLayoutConstraint.activate([
             symptomsCircle.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
@@ -126,14 +126,5 @@ class CheckinLogCell: UICollectionViewCell {
         let detailsViewController = CheckInLogDetailsViewController()
         detailsViewController.history = self.history
         NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .coverVertical)
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        var view = viewDetailsButton.hitTest(viewDetailsButton.convert(point, from: self), with: event)
-        if view == nil {
-            view = super.hitTest(point, with: event)
-        }
-
-        return view
     }
 }

@@ -20,7 +20,6 @@ class CheckinLogViewController: BaseViewController {
     lazy var checkinlognodataView: CheckInLogNoDataView = {
         let checkinlognodata = CheckInLogNoDataView()
         checkinlognodata.translatesAutoresizingMaskIntoConstraints = false
-        checkinlognodata.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
         return checkinlognodata
     }()
 
@@ -48,8 +47,8 @@ class CheckinLogViewController: BaseViewController {
         super.viewDidLoad()
         self.titleView.titleLabel.text = "Check-in Log"
         
-        self.view.addSubview(logsCollectionView)
         self.titleView.addSubview(closeButton)
+        self.view.addSubview(logsCollectionView)
         self.view.addSubview(checkinlognodataView)
         
         NSLayoutConstraint.activate([
@@ -74,6 +73,8 @@ class CheckinLogViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 20.0, left: 15.0, bottom: 20.0, right: 15.0)
         layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .vertical
+        
+        self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
     }
 
     init() {

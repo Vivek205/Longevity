@@ -106,7 +106,6 @@ class ProfileSettingsCell: UITableViewCell {
         let settingsswitch = UISwitch()
         settingsswitch.onTintColor = .themeColor
         settingsswitch.translatesAutoresizingMaskIntoConstraints = false
-        settingsswitch.addTarget(self, action: #selector(handleSwitchToggle(_:)), for: .valueChanged)
         return settingsswitch
     }()
     
@@ -116,11 +115,11 @@ class ProfileSettingsCell: UITableViewCell {
         self.backgroundColor = .clear
         self.selectionStyle = .none
         
-        self.addSubview(settingBGView)
-        settingBGView.addSubview(settingName)
-        settingBGView.addSubview(settingsActionImage)
-        settingBGView.addSubview(settingsSwitch)
-        settingBGView.addSubview(settingStatus)
+        self.contentView.addSubview(settingBGView)
+        self.contentView.addSubview(settingName)
+        self.contentView.addSubview(settingsActionImage)
+        self.contentView.addSubview(settingsSwitch)
+        self.contentView.addSubview(settingStatus)
         
         NSLayoutConstraint.activate([
             settingBGView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
@@ -140,6 +139,8 @@ class ProfileSettingsCell: UITableViewCell {
             settingStatus.trailingAnchor.constraint(equalTo: settingsActionImage.leadingAnchor, constant: -10.0),
             settingStatus.centerYAnchor.constraint(equalTo: settingBGView.centerYAnchor)
         ])
+        
+        self.settingsSwitch.addTarget(self, action: #selector(handleSwitchToggle(_:)), for: .valueChanged)
     }
     
     required init?(coder: NSCoder) {
@@ -228,14 +229,5 @@ class ProfileSettingsCell: UITableViewCell {
                 }
             }
         }
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        var view = settingsSwitch.hitTest(settingsSwitch.convert(point, from: self), with: event)
-        if view == nil {
-            view = super.hitTest(point, with: event)
-        }
-
-        return view
     }
 }
