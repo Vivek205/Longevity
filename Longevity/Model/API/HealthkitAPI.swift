@@ -35,7 +35,7 @@ class HealthkitAPI: BaseAuthAPI {
                         print(value)
                     }
                     catch let error {
-                        print("JSON error: ", error.localizedDescription)
+                        print("HEALTHKIT/synchronize JSON error: ", error.localizedDescription)
                         onFailure(error)
                     }
                 case .failure(let error):

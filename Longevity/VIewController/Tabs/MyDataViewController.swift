@@ -95,12 +95,11 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         if insightData.name != .logs {
             self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
         } else {
-            
+            let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
             if let history = self.userInsights?[indexPath.item].details?.history {
-                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
                 checkinLogViewController.history = history
-                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
             }
+            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
         }
     }
     

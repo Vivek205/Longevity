@@ -43,11 +43,26 @@ class HomeViewController: BaseViewController {
         tableView.tableFooterView = UIView()
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -UIApplication.shared.statusBarFrame.height * 2),
+            tableView.topAnchor.constraint(equalTo: self.view.topAnchor,
+                                           constant: -UIApplication.shared.statusBarFrame.height * 2),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
+        
+        SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
+            DispatchQueue.main.async {
+                self?.removeSpinner()
+                self?.tableView.reloadData()
+            }
+        }
+        
+        SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [weak self] in
+            DispatchQueue.main.async {
+                self?.removeSpinner()
+                self?.tableView.reloadData()
+            }
+        }
     }
 
     func getSurveyList() {
@@ -76,15 +91,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-
         if section == 0 {
-            let count = SurveyTaskUtility.shared.repetitiveSurveyList.count
-            return count
-        }
-        if section == 1 {
+            return SurveyTaskUtility.shared.repetitiveSurveyList.value?.count ?? 0
+        } else if section == 1 {
             return 1
+        } else {
+            return SurveyTaskUtility.shared.oneTimeSurveyList.value?.count ?? 1
         }
-        return SurveyTaskUtility.shared.oneTimeSurveyList.isEmpty ? 1 : SurveyTaskUtility.shared.oneTimeSurveyList.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
@@ -92,9 +105,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-            
-            checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList[indexPath.row]
-            
+            checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
             return checkinCell
         }
         else if indexPath.section == 1 {
@@ -104,7 +115,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             devicesCell.delegate = self
             return devicesCell
         } else {
-            if SurveyTaskUtility.shared.oneTimeSurveyList.isEmpty {
+            if SurveyTaskUtility.shared.repetitiveSurveyList.value?.isEmpty ?? true {
                 guard let completionCell = tableView.getCell(with: DashboardTaskCompletedCell.self, at: indexPath) as? DashboardTaskCompletedCell else {
                     preconditionFailure("Invalid completion cell")
                 }
@@ -113,9 +124,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-
-
-            checkinCell.surveyResponse = SurveyTaskUtility.shared.oneTimeSurveyList[indexPath.row]
+            checkinCell.surveyResponse = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
             return checkinCell
         }
     }
@@ -161,10 +170,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        let selectedCell = tableView.cellForRow(at: indexPath)
-        if let dashboardCheckInCell = selectedCell as? DashboardCheckInCell {
-            self.showSurvey(dashboardCheckInCell)
-        }
+        guard let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell else { return }
+        self.showSurvey(selectedCell)
     }
 }
 
@@ -175,12 +182,7 @@ extension HomeViewController {
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
             DispatchQueue.main.async {
                 if task != nil {
-                    let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-//                    self.currentTask = task
-                    taskViewController.delegate = self
-                    taskViewController.navigationBar.backgroundColor = .white
-                    taskViewController.navigationBar.barTintColor = .white
-                    taskViewController.view.backgroundColor = .white
+                    let taskViewController = SurveyViewController(task: task)
                     NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                 } else {
                     self.showAlert(title: "Survey Not available",
@@ -199,93 +201,93 @@ extension HomeViewController {
     }
 }
 
-extension HomeViewController: ORKTaskViewControllerDelegate {
-    func taskViewController(_ taskViewController: ORKTaskViewController,
-                            stepViewControllerWillAppear stepViewController: ORKStepViewController) {
-        let taskViewAppearance =
-            UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
-        taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-        if let step = stepViewController.step {
-            if step is ORKInstructionStep || step is ORKCompletionStep {
-                return
-            }
-            SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
-        }
-    }
-
-    func taskViewController(_ taskViewController: ORKTaskViewController,
-                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
-        
-        switch reason {
-        case .completed:
-            print("completed")
-            self.getSurveyList()
-        case .discarded:
-            print("discarded")
-        case .failed:
-            print("failed")
-        case .saved:
-            print("saved")
-        @unknown default:
-            print("unknown reason")
-        }
-
-        taskViewController.dismiss(animated: true) {
-            print("task view controller dismissed")
-        }
-
-    }
-
-    func taskViewController(_ taskViewController: ORKTaskViewController,
-                            viewControllerFor step: ORKStep) -> ORKStepViewController? {
-        if step is ORKInstructionStep {
-            if step is ORKCompletionStep {
-                let stepVC = CompletionStepVC()
-                stepVC.step = step
-                return stepVC
-            }
-            // Default View Controller will be used
-            return nil
-        } else if step is ORKFormStep {
-            let formStepVC = FormStepVC()
-            formStepVC.step = step
-            return formStepVC
-        } else if step is ORKQuestionStep {
-            guard let questionStep = step as? ORKQuestionStep else {return nil}
-            if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
-                let stepVC = TextChoiceAnswerVC()
-                stepVC.step = step
-                return stepVC
-            }
-            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
-                let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
-                switch questionDetails?.quesType {
-                case .temperatureScale:
-                    let stepVC = TemperatureScaleAnswerVC()
-                    stepVC.step = step
-                    return stepVC
-                default:
-                    let stepVC = ContinuousScaleAnswerVC()
-                    stepVC.step = step
-                    return stepVC
-                }
-            }
-
-            if questionStep.answerFormat is ORKTextAnswerFormat {
-                let stepVC = TextAnswerVC()
-                stepVC.step = step
-                return stepVC
-            }
-        }
-        return nil
-    }
-
-    func taskViewControllerShouldConfirmCancel(_ taskViewController: ORKTaskViewController?) -> Bool {
-        return false
-    }
-
-
-}
+//extension HomeViewController: ORKTaskViewControllerDelegate {
+//    func taskViewController(_ taskViewController: ORKTaskViewController,
+//                            stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+//        let taskViewAppearance =
+//            UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
+//        taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+//        if let step = stepViewController.step {
+//            if step is ORKInstructionStep || step is ORKCompletionStep {
+//                return
+//            }
+//            SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
+//        }
+//    }
+//
+//    func taskViewController(_ taskViewController: ORKTaskViewController,
+//                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
+//
+//        switch reason {
+//        case .completed:
+//            print("completed")
+//            self.getSurveyList()
+//        case .discarded:
+//            print("discarded")
+//        case .failed:
+//            print("failed")
+//        case .saved:
+//            print("saved")
+//        @unknown default:
+//            print("unknown reason")
+//        }
+//
+//        taskViewController.dismiss(animated: true) {
+//            print("task view controller dismissed")
+//        }
+//
+//    }
+//
+//    func taskViewController(_ taskViewController: ORKTaskViewController,
+//                            viewControllerFor step: ORKStep) -> ORKStepViewController? {
+//        if step is ORKInstructionStep {
+//            if step is ORKCompletionStep {
+//                let stepVC = CompletionStepVC()
+//                stepVC.step = step
+//                return stepVC
+//            }
+//            // Default View Controller will be used
+//            return nil
+//        } else if step is ORKFormStep {
+//            let formStepVC = FormStepVC()
+//            formStepVC.step = step
+//            return formStepVC
+//        } else if step is ORKQuestionStep {
+//            guard let questionStep = step as? ORKQuestionStep else {return nil}
+//            if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
+//                let stepVC = TextChoiceAnswerVC()
+//                stepVC.step = step
+//                return stepVC
+//            }
+//            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
+//                let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
+//                switch questionDetails?.quesType {
+//                case .temperatureScale:
+//                    let stepVC = TemperatureScaleAnswerVC()
+//                    stepVC.step = step
+//                    return stepVC
+//                default:
+//                    let stepVC = ContinuousScaleAnswerVC()
+//                    stepVC.step = step
+//                    return stepVC
+//                }
+//            }
+//
+//            if questionStep.answerFormat is ORKTextAnswerFormat {
+//                let stepVC = TextAnswerVC()
+//                stepVC.step = step
+//                return stepVC
+//            }
+//        }
+//        return nil
+//    }
+//
+//    func taskViewControllerShouldConfirmCancel(_ taskViewController: ORKTaskViewController?) -> Bool {
+//        return false
+//    }
+//
+//
+//}
 
 class HomeViewHeader: UITableViewHeaderFooterView {
     override init(reuseIdentifier: String?) {

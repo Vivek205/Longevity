@@ -14,11 +14,16 @@ fileprivate let defaultModuleIconName:String = "icon : GI"
 fileprivate let appSyncmanager:AppSyncManager = AppSyncManager.instance
 
 final class SurveyTaskUtility: NSObject {
-    private override init() {}
     static let shared = SurveyTaskUtility()
     private var surveyList:[SurveyListItem]?
-    var repetitiveSurveyList:[SurveyListItem] = [SurveyListItem]()
-    var oneTimeSurveyList:[SurveyListItem] = [SurveyListItem]()
+    var repetitiveSurveyList: DynamicValue<[SurveyListItem]>
+    var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
+    
+    private override init() {
+        self.repetitiveSurveyList = DynamicValue([SurveyListItem]())
+        self.oneTimeSurveyList = DynamicValue([SurveyListItem]())
+    }
+    
     var currentSurveyId: String? {
         didSet {
             guard let surveyId = self.currentSurveyId else { return }
@@ -50,7 +55,16 @@ final class SurveyTaskUtility: NSObject {
         enum CreateSurveyError: Error {
             case surveyIdNotFound
         }
-        guard let surveyId = surveyId else {return onFailure(CreateSurveyError.surveyIdNotFound)}
+        
+        var surveyid: String?
+        
+        if surveyId == nil && !(self.repetitiveSurveyList.value?.isEmpty ?? true) {
+            surveyid = self.repetitiveSurveyList.value?[0].surveyId
+        } else {
+            surveyid = surveyId
+        }
+        
+        guard let surveyId = surveyid else {return onFailure(CreateSurveyError.surveyIdNotFound)}
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else { return completion(nil) }
             var steps = [ORKStep]()
@@ -274,17 +288,8 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
-        self.repetitiveSurveyList = [SurveyListItem]()
-        self.oneTimeSurveyList = [SurveyListItem]()
-
-        list.forEach { (survey) in
-            if survey.isRepetitive == true {
-                self.repetitiveSurveyList.append(survey)
-            } else if survey.lastSubmission == nil {
-                self.oneTimeSurveyList.append(survey)
-            }
-        }
-
+        self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
+        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true && $0.lastSubmission == nil })
     }
 
     func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {
@@ -383,5 +388,16 @@ final class SurveyTaskUtility: NSObject {
         let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
         else {return nil}
         return currentSurveyTraversedQuestions.last
+    }
+    
+    func reloadSurveys() {
+        func completion(_ surveys:[SurveyListItem]) {
+            
+        }
+
+        func onFailure(_ error:Error) {
+            
+        }
+        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 }
