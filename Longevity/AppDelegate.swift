@@ -12,6 +12,7 @@ import AmplifyPlugins
 import ResearchKit
 import Sentry
 import UserNotifications
+import BackgroundTasks
 import AWSSNS
 
 let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS_SANDBOX/RejuveDevelopment"
@@ -47,13 +48,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         ])
         
         if HKHealthStore.isHealthDataAvailable() {
-            if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-                HealthStore.shared.getHealthStore()
-                HealthStore.shared.startQueryingHealthData()
-            }
+            AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
+                if let devices = AppSyncManager.instance.healthProfile.value?.devices {
+                    HealthStore.shared.getHealthStore()
+                    HealthStore.shared.startQueryingHealthData()
+                }
+            })
         }
         
-        UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+        
         UNUserNotificationCenter.current().delegate = self
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -64,9 +67,20 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         presentLoaderAnimationViewController()
-//        self.setRootViewController()
         window?.makeKeyAndVisible()
-//        checkIfAppUpdated()
+        
+        if #available(iOS 13.0, *) {
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: "", using: nil) { (task) in
+                
+            }
+        } else {
+            if UIApplication.shared.backgroundRefreshStatus == .available {
+                UIApplication.shared.setMinimumBackgroundFetchInterval(UIApplication.backgroundFetchIntervalMinimum)
+            } else {
+                print("Background fetch is not available")
+            }
+        }
+        
         return true
     }
 
@@ -83,6 +97,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             self.window?.rootViewController = tabbarViewController
         } else {
             gotoLogin()
+        }
+    }
+    
+    func applicationDidEnterBackground(_ application: UIApplication) {
+        if let devices = AppSyncManager.instance.healthProfile.value?.devices {
+            HealthStore.shared.getHealthStore()
+            HealthStore.shared.startObservingHealthData()
+        }
+        
+        if #available(iOS 13.0, *) {
+            (UIApplication.shared.delegate as! AppDelegate).scheduleBackgroundFetch()
         }
     }
 
@@ -286,6 +311,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("Sign out failed with error \(error)")
                 }
             }
+        }
+    }
+    
+    @available(iOS 13.0, *)
+    func appHandleRefreshTask(task: BGAppRefreshTask) {
+        task.expirationHandler = {
+            task.setTaskCompleted(success: false)
+        }
+        
+        scheduleBackgroundFetch()
+    }
+    
+    @available(iOS 13.0, *)
+    func scheduleBackgroundFetch() {
+        let rejuveFetchTask = BGAppRefreshTaskRequest(identifier: "")
+        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 30 * 60)
+        
+        do {
+            try BGTaskScheduler.shared.submit(rejuveFetchTask)
+        } catch let error {
+            print(error.localizedDescription)
         }
     }
 }

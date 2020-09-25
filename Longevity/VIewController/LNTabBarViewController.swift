@@ -71,53 +71,51 @@ class LNTabBarViewController: UITabBarController {
         }
         retrieveARN()
     }
-        
-        func getCurrentUser() {
-            AppSyncManager.instance.syncUserProfile()
-            //getProfile()
-//            self.navigateToTheNextScreen()
-            retrieveARN()
+    
+    func getCurrentUser() {
+        AppSyncManager.instance.syncUserProfile()
+        retrieveARN()
     }
-        
-        func navigateToTheNextScreen(){
-            let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
-            let devices = AppSyncManager.instance.healthProfile.value?.devices
-            var healthKitConnected = false
-            var fitbitConnected = false
-            if let profile = AppSyncManager.instance.healthProfile.value {
-                if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
-                    healthKitConnected = true
-                }
-                if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
-                    fitbitConnected = true
-                }
+    
+    func navigateToTheNextScreen(){
+        let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
+        let devices = AppSyncManager.instance.healthProfile.value?.devices
+        var healthKitConnected = false
+        var fitbitConnected = false
+        if let profile = AppSyncManager.instance.healthProfile.value {
+            if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
+                healthKitConnected = true
             }
-
-            let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
-            
-            if isTermsAccepted == true {
-                let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-                var homeVC:UIViewController = UIViewController()
-
-                if providedPreExistingMedicalConditions == true {
-                    homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
-                }else if fitbitConnected {
-                    homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
-                }else if healthKitConnected {
-                    homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
-                } else {
-                    homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
-                }
-                
-                let navigationController = UINavigationController(rootViewController: homeVC)
-                navigationController.modalPresentationStyle = .fullScreen
-
-                self.present(navigationController, animated: true, completion: nil)
-
-            } else {
-                performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
+            if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
+                fitbitConnected = true
             }
         }
+        
+        let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
+        
+        if isTermsAccepted == true {
+            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+            var homeVC:UIViewController = UIViewController()
+            
+            if providedPreExistingMedicalConditions == true {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
+            }else if fitbitConnected {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
+            }else if healthKitConnected {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
+            } else {
+                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
+            }
+            
+            let navigationController = UINavigationController(rootViewController: homeVC)
+            navigationController.modalPresentationStyle = .fullScreen
+            
+            self.present(navigationController, animated: true, completion: nil)
+            
+        } else {
+            performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
+        }
+    }
 }
 
 extension LNTabBarViewController: UITabBarControllerDelegate {
@@ -143,7 +141,7 @@ extension LNTabBarViewController: UITabBarControllerDelegate {
         }
         let activityVC = UIActivityViewController(activityItems: sharemessage, applicationActivities: nil)
         activityVC.title = "Share Rejuve"
-//        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]
+        //        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]
         activityVC.popoverPresentationController?.sourceView = self.selectedViewController?.view
         self.selectedViewController?.present(activityVC, animated: true, completion: nil)
     }

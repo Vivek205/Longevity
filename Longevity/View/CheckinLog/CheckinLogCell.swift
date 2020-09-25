@@ -127,4 +127,13 @@ class CheckinLogCell: UICollectionViewCell {
         detailsViewController.history = self.history
         NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .coverVertical)
     }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        var view = viewDetailsButton.hitTest(viewDetailsButton.convert(point, from: self), with: event)
+        if view == nil {
+            view = super.hitTest(point, with: event)
+        }
+
+        return view
+    }
 }

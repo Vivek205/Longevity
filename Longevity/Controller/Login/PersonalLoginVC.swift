@@ -188,11 +188,11 @@ class PersonalLoginVC: UIViewController {
                 if item.text == UserAccountType.personal.rawValue{
                     highlightImageButton(imgButton: personalImageView)
                     normalizeImageButton(imgButton: clinicalTrialImageView)
-                } else {
-                    highlightImageButton(imgButton: clinicalTrialImageView)
-                    normalizeImageButton(imgButton: personalImageView)
                 }
-
+//                else {
+//                    highlightImageButton(imgButton: clinicalTrialImageView)
+//                    normalizeImageButton(imgButton: personalImageView)
+//                }
             }
         }
     }

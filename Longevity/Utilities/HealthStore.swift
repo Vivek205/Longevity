@@ -31,6 +31,8 @@ enum HealthType: String, CaseIterable, Codable {
     case exercise = "EXERCISE_TIME"
     case caloriesBurned = "CALORIES_BURNED"
     case restingHeartRate = "RESTING_HEART_RATE"
+    case handwashing = "HANDWASHING"
+    case oxygenlevel = "OXYGEN_SATURATION"
 }
 
 final class HealthStore {
@@ -41,18 +43,37 @@ final class HealthStore {
     
     var healthReadings: [HealthReading] = [HealthReading]()
     
-    private let healthDataTypes = Set([
-        HKObjectType.quantityType(forIdentifier: .stepCount)!,
-        HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
-        HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
-        HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
-        HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
-        HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
-        HKObjectType.quantityType(forIdentifier: .heartRate)!,
-        HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-        HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-        HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!
-    ])
+    private var healthDataTypes: Set<HKObjectType> {
+        if #available(iOS 14.0, *) {
+        return Set([
+            HKObjectType.quantityType(forIdentifier: .stepCount)!,
+            HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
+            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+            HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
+            HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
+            HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
+            HKObjectType.quantityType(forIdentifier: .heartRate)!,
+            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
+            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+            HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
+            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
+            HKObjectType.categoryType(forIdentifier: .handwashingEvent)!
+        ]) } else {
+            return Set([
+                HKObjectType.quantityType(forIdentifier: .stepCount)!,
+                HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
+                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+                HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
+                HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
+                HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
+                HKObjectType.quantityType(forIdentifier: .heartRate)!,
+                HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
+                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
+                HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+            ])
+        }
+    }
     
     private init() {}
     
@@ -390,7 +411,7 @@ final class HealthStore {
                 
                 
                 for result in resultArray {
-                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { break }
+                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { continue }
                     
                     let dateformatter = DateFormatter()
                     dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -434,7 +455,7 @@ final class HealthStore {
                 
                 
                 for result in resultArray {
-                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { break }
+                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { continue }
                     
                     let dateformatter = DateFormatter()
                     dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -442,11 +463,103 @@ final class HealthStore {
                     healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm", readingDate: dateformatter.string(from: result.startDate)))
                 }
                 
-                self.saveHealthData(healthType: .heartRate, healthReadings: healthReadings)
+                self.saveHealthData(healthType: .restingHeartRate, healthReadings: healthReadings)
             }
         }
         healthStore?.execute(query)
     }
+    
+    //Get Steps Count
+    func retrieveOxygenSaturation() {
+        //   Define the Step Quantity Type
+        let oxygenSaturation = HKQuantityType.quantityType(forIdentifier: HKQuantityTypeIdentifier.oxygenSaturation)
+        
+        //  Set the Predicates & Interval
+        var interval = DateComponents()
+        interval.minute = 1
+        
+        //predicate
+        let calendar = NSCalendar.current
+        let current = Date()
+        let components = calendar.dateComponents([.year,.month,.day], from: current as Date)
+        guard let startDate:Date = calendar.date(from: components) else { return }
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [.strictEndDate])
+        
+        /// Set sorting by date.
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+        
+        /// Create the query
+        let query = HKSampleQuery( sampleType: oxygenSaturation!, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (_, results, error) in
+            guard error == nil else {
+                print("Error: \(error!.localizedDescription)")
+                return
+            }
+            
+            if let resultArray = results, !resultArray.isEmpty {
+                var healthReadings = [HealthReading]()
+                
+                
+                for result in resultArray {
+                    guard let oxygenPercentage: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit.percent()) else { continue }
+                    
+                    let dateformatter = DateFormatter()
+                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    
+                    healthReadings.append(HealthReading(value: oxygenPercentage, unit: "%", readingDate: dateformatter.string(from: result.startDate)))
+                }
+                
+                self.saveHealthData(healthType: .oxygenlevel, healthReadings: healthReadings)
+            }
+        }
+        healthStore?.execute(query)
+    }
+    
+    //Get Handwashing Events
+    @available(iOS 14.0, *)
+    func retrieveHandwashingEvent() {
+        
+        let handwashingEvents = HKQuantityType.categoryType(forIdentifier: .handwashingEvent)
+        
+        //  Set the Predicates & Interval
+        var interval = DateComponents()
+        interval.minute = 1
+        
+        //predicate
+        let calendar = NSCalendar.current
+        let current = Date()
+        let components = calendar.dateComponents([.year,.month,.day], from: current as Date)
+        guard let startDate:Date = calendar.date(from: components) else { return }
+        let predicate = HKQuery.predicateForSamples(withStart: startDate, end: Date(), options: [.strictEndDate])
+        
+        /// Set sorting by date.
+        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+        
+        /// Create the query
+        let query = HKSampleQuery( sampleType: handwashingEvents!, predicate: predicate, limit: Int(HKObjectQueryNoLimit), sortDescriptors: [sortDescriptor]) { (_, results, error) in
+            guard error == nil else {
+                print("Error: \(error!.localizedDescription)")
+                return
+            }
+            
+            if let resultArray = results, !resultArray.isEmpty {
+                var healthReadings = [HealthReading]()
+                
+                
+                for result in resultArray {
+                    guard let handwashtimes: Int = (result as? HKCategorySample)?.value else { continue }
+                    
+                    let dateformatter = DateFormatter()
+                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    
+                    healthReadings.append(HealthReading(value: Double(handwashtimes), unit: "sec", readingDate: dateformatter.string(from: result.startDate)))
+                }
+                
+                self.saveHealthData(healthType: .handwashing, healthReadings: healthReadings)
+            }
+        }
+        healthStore?.execute(query)
+    }
+    
     
     fileprivate func getHKQuantitytypeFor(healthType: HealthType) -> HKQuantityTypeIdentifier {
         switch healthType {
@@ -497,57 +610,74 @@ final class HealthStore {
     }
     
     func queryForSampleType(type: HKSampleType) {
-        switch type {
-        case HKObjectType.quantityType(forIdentifier: .stepCount)!:
-            retrieveStepCount()
-            
-        case HKObjectType.quantityType(forIdentifier: .flightsClimbed)!:
-            retrieveFlightsClimbed()
-            
-        case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!:
-            retrieveDistance(healthType: .walking)
-            
-        case HKObjectType.quantityType(forIdentifier: .distanceCycling)!:
-            retrieveDistance(healthType: .cycling)
-            
-        case HKObjectType.quantityType(forIdentifier: .distanceSwimming)!:
-            retrieveDistance(healthType: .swimming)
-        case HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!:
-            retrieveDistance(healthType: .wheelchair)
-        case HKObjectType.quantityType(forIdentifier: .heartRate)!:
-            retrieveHeartRate()
-        case HKObjectType.quantityType(forIdentifier: .restingHeartRate)!:
-            retrieveRestingHeartRate()
-        case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!:
-            retrieveActiveCaloriesBurned()
-        case HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!:
-            retrieveExerciseTime()
-        default:
-            print("Unknown case")
+            switch type {
+            case HKObjectType.quantityType(forIdentifier: .stepCount)!:
+                retrieveStepCount()
+            case HKObjectType.quantityType(forIdentifier: .flightsClimbed)!:
+                retrieveFlightsClimbed()
+            case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!:
+                retrieveDistance(healthType: .walking)
+            case HKObjectType.quantityType(forIdentifier: .distanceCycling)!:
+                retrieveDistance(healthType: .cycling)
+            case HKObjectType.quantityType(forIdentifier: .distanceSwimming)!:
+                retrieveDistance(healthType: .swimming)
+            case HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!:
+                retrieveDistance(healthType: .wheelchair)
+            case HKObjectType.quantityType(forIdentifier: .heartRate)!:
+                retrieveHeartRate()
+            case HKObjectType.quantityType(forIdentifier: .restingHeartRate)!:
+                retrieveRestingHeartRate()
+            case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!:
+                retrieveActiveCaloriesBurned()
+            case HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!:
+                retrieveExerciseTime()
+            case HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!:
+                retrieveOxygenSaturation()
+            default:
+                break
+            }
+        
+        if #available(iOS 14.0, *) {
+            switch type {
+            case HKObjectType.categoryType(forIdentifier: .handwashingEvent)!:
+                retrieveHandwashingEvent()
+            default:
+                return
+            }
         }
     }
     
     func obServerQueryForSampleType(type: HKSampleType) {
-
-        switch type {
-        case HKObjectType.quantityType(forIdentifier: .stepCount)!:
-            retrieveStepCount()
-        case HKObjectType.quantityType(forIdentifier: .flightsClimbed)!:
-            retrieveFlightsClimbed()
-        case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!:
-            retrieveDistance(healthType: .walking)
-        case HKObjectType.quantityType(forIdentifier: .distanceCycling)!:
-            retrieveDistance(healthType: .cycling)
-        case HKObjectType.quantityType(forIdentifier: .distanceSwimming)!:
-            retrieveDistance(healthType: .swimming)
-        case HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!:
-            retrieveDistance(healthType: .wheelchair)
-        case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!:
-            retrieveActiveCaloriesBurned()
-        case HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!:
-            retrieveExerciseTime()
-        default:
-            return
+            switch type {
+            case HKObjectType.quantityType(forIdentifier: .stepCount)!:
+                retrieveStepCount()
+            case HKObjectType.quantityType(forIdentifier: .flightsClimbed)!:
+                retrieveFlightsClimbed()
+            case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!:
+                retrieveDistance(healthType: .walking)
+            case HKObjectType.quantityType(forIdentifier: .distanceCycling)!:
+                retrieveDistance(healthType: .cycling)
+            case HKObjectType.quantityType(forIdentifier: .distanceSwimming)!:
+                retrieveDistance(healthType: .swimming)
+            case HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!:
+                retrieveDistance(healthType: .wheelchair)
+            case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!:
+                retrieveActiveCaloriesBurned()
+            case HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!:
+                retrieveExerciseTime()
+            case HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!:
+                retrieveOxygenSaturation()
+            default:
+                break
+            }
+        
+        if #available(iOS 14.0, *) {
+            switch type {
+            case HKObjectType.categoryType(forIdentifier: .handwashingEvent)!:
+                retrieveHandwashingEvent()
+            default:
+                return
+            }
         }
     }
     
@@ -555,7 +685,7 @@ final class HealthStore {
         let dateformatter = DateFormatter()
         dateformatter.dateFormat = "yyyy-MM-dd"
         let date: String = dateformatter.string(from: Date())
-        let healthData = Healthdata(dataType: .heartRate, data: healthReadings, recordDate: date)
+        let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: date)
         let healthKit = HealthkitAPI()
         healthKit.synchronizeHealthkit(healthData: healthData, completion: {
             
