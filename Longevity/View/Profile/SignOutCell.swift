@@ -25,12 +25,12 @@ class SignOutCell: UITableViewCell {
         signoutButton.layer.cornerRadius = 10.0
         signoutButton.addTarget(self, action: #selector(doSignout), for: .touchUpInside)
         signoutButton.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(signoutButton)
+        self.contentView.addSubview(signoutButton)
         
         NSLayoutConstraint.activate([
-            signoutButton.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 80.0),
-            signoutButton.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -80.0),
-            signoutButton.centerYAnchor.constraint(equalTo: self.centerYAnchor)
+            signoutButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 80.0),
+            signoutButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -80.0),
+            signoutButton.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
         ])
     }
     

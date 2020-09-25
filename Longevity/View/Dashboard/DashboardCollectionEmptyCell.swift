@@ -46,7 +46,6 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         info.setImage(UIImage(named: "icon-info"), for: .normal)
         info.tintColor = .white
         info.translatesAutoresizingMaskIntoConstraints = false
-        info.addTarget(self, action: #selector(doOpenInfo), for: .touchUpInside)
         return info
     }()
     
@@ -63,13 +62,13 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         self.tileTitle.textColor = .white
         self.infoButton.tintColor = .white
         
-        self.addSubview(hexagonView)
-        self.hexagonView.addSubview(tileTitle)
-        self.hexagonView.addSubview(emptyCellMessage)
-        self.hexagonView.addSubview(infoButton)
+        self.contentView.addSubview(hexagonView)
+        self.contentView.addSubview(tileTitle)
+        self.contentView.addSubview(emptyCellMessage)
+        self.contentView.addSubview(infoButton)
         
         NSLayoutConstraint.activate([
-            hexagonView.topAnchor.constraint(equalTo: topAnchor, constant: vTop),
+            hexagonView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vTop),
             tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
             tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
@@ -81,6 +80,8 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
         ])
+        
+        self.infoButton.addTarget(self, action: #selector(doOpenInfo), for: .touchUpInside)
     }
     
     required init?(coder: NSCoder) {
@@ -92,14 +93,5 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         destination: LongevityComingSoonPopupViewController(),
         style: .overCurrentContext,
         completion: nil)
-    }
-    
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        var view = infoButton.hitTest(infoButton.convert(point, from: self), with: event)
-        if view == nil {
-            view = super.hitTest(point, with: event)
-        }
-
-        return view
     }
 }
