@@ -150,7 +150,7 @@ class EditAccountViewController: UIViewController {
         self.navigationItem.titleView = titleLabel
         let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
-        let rightButton = UIBarButtonItem(title:"Done", style: .plain, target: self, action: #selector(doneUpdate))
+        let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
         rightButton.tintColor = .themeColor
         self.navigationItem.leftBarButtonItem = leftbutton
         self.navigationItem.rightBarButtonItem = rightButton

@@ -48,7 +48,7 @@ class SetupProfileBioDataVC: UIViewController {
             self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
-            let rightButton = UIBarButtonItem(title:"Done", style: .plain, target: self, action: #selector(doneUpdate))
+            let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
             rightButton.tintColor = .themeColor
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
