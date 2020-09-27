@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-class SetupCompleteVC: UIViewController {
+class SetupCompleteVC: BaseProfileSetupViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     
     override func viewDidLoad() {
@@ -17,12 +17,14 @@ class SetupCompleteVC: UIViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
+        
         // Do any additional setup after loading the view.
+//        styleNavigationBar()
     }
 
     func navigateForward() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
-               appDelegate.setRootViewController()
+        appDelegate.setRootViewController()
     }
     
     @IBAction func onShowDashboard(_ sender: Any) {

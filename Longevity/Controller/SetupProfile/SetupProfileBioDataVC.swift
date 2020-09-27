@@ -12,7 +12,7 @@ import HealthKit
 
 fileprivate let healthKitStore: HKHealthStore = HKHealthStore()
 
-class SetupProfileBioDataVC: UIViewController {
+class SetupProfileBioDataVC: BaseProfileSetupViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var continueButton: CustomButtonFill!
@@ -53,6 +53,8 @@ class SetupProfileBioDataVC: UIViewController {
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
             self.footerView.isHidden = true
+        } else {
+            self.addProgressbar(progress: 40.0)
         }
         
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {

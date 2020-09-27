@@ -8,11 +8,12 @@
 
 import UIKit
 
-class SetupProfileNotificationVC: UIViewController {
+class SetupProfileNotificationVC: BaseProfileSetupViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
-        navigateToNextScreenIfAlreadyAuthorized()
+//        navigateToNextScreenIfAlreadyAuthorized()
+        self.addProgressbar(progress: 60.0)
     }
 
     func navigateToNextScreenIfAlreadyAuthorized() {
@@ -26,10 +27,8 @@ class SetupProfileNotificationVC: UIViewController {
 
             DispatchQueue.main.async {
                 let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-                let  homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDevicesVC")
-                let navigationController = UINavigationController(rootViewController: homeVC)
-                navigationController.modalPresentationStyle = .fullScreen
-                self.present(navigationController, animated: true, completion: nil)
+                let devicesVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDevicesVC")
+                self.navigationController?.pushViewController(devicesVC, animated: true)
             }
         }
     }

@@ -537,6 +537,7 @@
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="bEq-K9-ead">
                                                 <rect key="frame" x="0.0" y="10" width="374" height="53"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" textContentType="email"/>
                                             </textField>
@@ -564,6 +565,7 @@
                                         <subviews>
                                             <textField opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="EKG-Y7-kE3">
                                                 <rect key="frame" x="0.0" y="10" width="374" height="53"/>
+                                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                 <textInputTraits key="textInputTraits" returnKeyType="go" secureTextEntry="YES" textContentType="password"/>
                                             </textField>
@@ -1498,7 +1500,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z1Q-xo-ocY"/>
+        <segue reference="jxn-dO-fRl"/>
         <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
