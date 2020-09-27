@@ -93,27 +93,6 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         return trendimage
     }()
     
-    lazy var emptyCellMessage: UILabel = {
-        let emptyMessage = UILabel()
-        emptyMessage.font = UIFont(name: "Montserrat-Medium", size: 14.0)
-        emptyMessage.numberOfLines = 0
-        emptyMessage.lineBreakMode = .byWordWrapping
-        emptyMessage.textColor = .white
-        emptyMessage.text = "Coming Soon"
-        emptyMessage.textAlignment = .center
-        emptyMessage.translatesAutoresizingMaskIntoConstraints = false
-        return emptyMessage
-    }()
-    
-    lazy var infoButton: UIButton = {
-        let info = UIButton()
-        info.setImage(UIImage(named: "icon-info"), for: .normal)
-        info.tintColor = .white
-        info.translatesAutoresizingMaskIntoConstraints = false
-
-        return info
-    }()
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         self.addSubview(hexagonView)
@@ -124,7 +103,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         ])
     }
     
-    func setupCell(index: Int, isEmpty : Bool) {
+    func setupCell(index: Int) {
         let isEvenCell = index % 2 == 0
         let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
         
@@ -137,28 +116,6 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
         ])
         
-        if isEmpty {
-            self.hexagonView.backgroundColor = .clear
-            self.hexagonView.borderColor = .white
-            self.hexagonView.isEmptyCell = true
-            
-            self.tileTitle.text = "Longevity"
-            self.tileTitle.textColor = .white
-            self.infoButton.tintColor = .white
-            
-            self.hexagonView.addSubview(emptyCellMessage)
-            self.hexagonView.addSubview(infoButton)
-            
-            NSLayoutConstraint.activate([
-                emptyCellMessage.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
-                emptyCellMessage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-                emptyCellMessage.centerYAnchor.constraint(equalTo: hexagonView.centerYAnchor),
-                infoButton.topAnchor.constraint(equalTo: emptyCellMessage.bottomAnchor, constant: 20.0),
-                infoButton.centerXAnchor.constraint(equalTo: emptyCellMessage.centerXAnchor),
-                infoButton.widthAnchor.constraint(equalToConstant: 30.0),
-                infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
-            ])
-        } else {
             self.tileTitle.textColor = .checkinCompleted
             self.hexagonView.backgroundColor = .hexagonColor
             self.hexagonView.borderColor = .borderColor
@@ -185,7 +142,6 @@ class DashboardCollectionTileCell: UICollectionViewCell {
                 trendImage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
                 trendImage.bottomAnchor.constraint(equalTo: hexagonView.bottomAnchor, constant: -10.0)
             ])
-        }
     }
     
     required init?(coder: NSCoder) {
@@ -194,5 +150,14 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
+        
+        if let path = self.hexagonView.shapePath {
+            contentView.layer.masksToBounds = true
+            layer.shadowColor = UIColor.black.cgColor
+            layer.shadowOffset = CGSize(width: 0, height: 1.0)
+            layer.shadowRadius = 2.0
+            layer.shadowOpacity = 0.3
+            layer.masksToBounds = false
+        }
     }
 }
