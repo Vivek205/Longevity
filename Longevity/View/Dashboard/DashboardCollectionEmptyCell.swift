@@ -45,6 +45,7 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         let info = UIButton()
         info.setImage(UIImage(named: "icon-info"), for: .normal)
         info.tintColor = .white
+        info.isUserInteractionEnabled = false
         info.translatesAutoresizingMaskIntoConstraints = false
         return info
     }()
@@ -81,7 +82,9 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
         ])
         
-        self.infoButton.addTarget(self, action: #selector(doOpenInfo), for: .touchUpInside)
+        self.hexagonView.isUserInteractionEnabled = true
+        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenInfo))
+        self.hexagonView.addGestureRecognizer(taprecognizer)
     }
     
     required init?(coder: NSCoder) {

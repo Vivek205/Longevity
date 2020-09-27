@@ -51,6 +51,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         title.textColor = .checkinCompleted
         title.numberOfLines = 0
         title.lineBreakMode = .byWordWrapping
+        title.isUserInteractionEnabled = false
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -58,6 +59,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     lazy var guageView: UIImageView = {
         let guage = UIImageView()
         guage.contentMode = .scaleAspectFit
+        guage.isUserInteractionEnabled = false
         guage.translatesAutoresizingMaskIntoConstraints = false
         return guage
     }()
@@ -70,6 +72,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         risk.textColor = .themeColor
         risk.numberOfLines = 0
         risk.lineBreakMode = .byWordWrapping
+        risk.isUserInteractionEnabled = false
         risk.translatesAutoresizingMaskIntoConstraints = false
         return risk
     }()
@@ -80,6 +83,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         trend.text = "TRENDING DOWN"
         trend.numberOfLines = 0
         trend.lineBreakMode = .byWordWrapping
+        trend.isUserInteractionEnabled = false
         trend.font = UIFont(name: "Montserrat-Medium", size: 10)
         trend.translatesAutoresizingMaskIntoConstraints = false
         return trend
@@ -89,6 +93,7 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         let trendimage = UIImageView()
         trendimage.image = UIImage(named: "trending_up")
         trendimage.contentMode = .scaleAspectFit
+        trendimage.isUserInteractionEnabled = false
         trendimage.translatesAutoresizingMaskIntoConstraints = false
         return trendimage
     }()
@@ -113,35 +118,37 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             hexagonView.topAnchor.constraint(equalTo: topAnchor, constant: vTop),
             tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
+            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0)
         ])
         
-            self.tileTitle.textColor = .checkinCompleted
-            self.hexagonView.backgroundColor = .hexagonColor
-            self.hexagonView.borderColor = .borderColor
-            self.hexagonView.isEmptyCell = false
+        self.tileTitle.textColor = .checkinCompleted
+        self.hexagonView.backgroundColor = .hexagonColor
+        self.hexagonView.borderColor = .borderColor
+        self.hexagonView.isEmptyCell = false
 
-            self.hexagonView.addSubview(guageView)
-            self.hexagonView.addSubview(riskType)
-            self.hexagonView.addSubview(trendDirection)
-            self.hexagonView.addSubview(trendImage)
-            
-            NSLayoutConstraint.activate([
-                guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 5.0),
-                guageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25),
-                guageView.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 22.0),
-                riskType.topAnchor.constraint(equalTo: guageView.topAnchor),
-                riskType.leadingAnchor.constraint(equalTo: guageView.trailingAnchor),
-                riskType.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -20.0),
-                riskType.bottomAnchor.constraint(equalTo: guageView.bottomAnchor),
-                trendDirection.topAnchor.constraint(equalTo: riskType.bottomAnchor),
-                trendDirection.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 5.0),
-                trendDirection.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -5.0),
-                trendImage.heightAnchor.constraint(equalToConstant: 30.0),
-                trendImage.widthAnchor.constraint(equalTo: trendImage.heightAnchor),
-                trendImage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-                trendImage.bottomAnchor.constraint(equalTo: hexagonView.bottomAnchor, constant: -10.0)
-            ])
+        self.hexagonView.addSubview(guageView)
+        self.hexagonView.addSubview(riskType)
+        self.hexagonView.addSubview(trendDirection)
+        self.hexagonView.addSubview(trendImage)
+        
+        NSLayoutConstraint.activate([
+            guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 5.0),
+            guageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25),
+            guageView.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 22.0),
+            riskType.topAnchor.constraint(equalTo: guageView.topAnchor),
+            riskType.leadingAnchor.constraint(equalTo: guageView.trailingAnchor),
+            riskType.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -20.0),
+            riskType.bottomAnchor.constraint(equalTo: guageView.bottomAnchor),
+            trendDirection.topAnchor.constraint(equalTo: riskType.bottomAnchor),
+            trendDirection.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 5.0),
+            trendDirection.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -5.0),
+            trendImage.heightAnchor.constraint(equalToConstant: 30.0),
+            trendImage.widthAnchor.constraint(equalTo: trendImage.heightAnchor),
+            trendImage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
+            trendImage.bottomAnchor.constraint(equalTo: hexagonView.bottomAnchor, constant: -10.0)
+        ])
+        
+        self.hexagonView.isUserInteractionEnabled = true
     }
     
     required init?(coder: NSCoder) {
@@ -150,7 +157,6 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        
         if let path = self.hexagonView.shapePath {
             contentView.layer.masksToBounds = true
             layer.shadowColor = UIColor.black.cgColor
@@ -158,6 +164,17 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             layer.shadowRadius = 2.0
             layer.shadowOpacity = 0.3
             layer.masksToBounds = false
+        }
+        
+        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenMyDataTab))
+        taprecognizer.numberOfTapsRequired = 1
+        self.hexagonView.addGestureRecognizer(taprecognizer)
+    }
+    
+    @objc func doOpenMyDataTab() {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        if let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController {
+            tabBarController.selectedIndex = 1
         }
     }
 }

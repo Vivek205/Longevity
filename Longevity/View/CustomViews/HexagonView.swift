@@ -32,4 +32,12 @@ class HexagonView: UIView {
         borderLayer.fillColor = UIColor.clear.cgColor
         self.layer.insertSublayer(borderLayer, at: 0)
     }
+    
+    override func point(inside point: CGPoint, with event: UIEvent?) -> Bool {
+        if !isEmptyCell {
+            let points = UIBezierPath(ovalIn: shapePath?.bounds ?? CGRect.zero)
+            return points.contains(point)
+        }
+        return shapePath?.contains(point) ?? false
+    }
 }
