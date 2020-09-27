@@ -94,7 +94,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func setRootViewController() {
         if UserAuthAPI.shared.checkUserSignedIn() {
             let tabbarViewController = LNTabBarViewController()
-            tabbarViewController.modalPresentationStyle = .fullScreen
             self.window?.rootViewController = tabbarViewController
         } else {
             gotoLogin()

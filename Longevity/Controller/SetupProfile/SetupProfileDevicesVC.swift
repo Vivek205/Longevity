@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetupProfileDevicesVC: UIViewController {
+class SetupProfileDevicesVC: BaseProfileSetupViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
 
@@ -20,6 +20,7 @@ class SetupProfileDevicesVC: UIViewController {
         collectionView.delegate = self
         collectionView.dataSource = self
         checkIfDevicesAreConnectedAlready()
+        self.addProgressbar(progress: 80.0)
     }
 
     func checkIfDevicesAreConnectedAlready() {
@@ -27,14 +28,16 @@ class SetupProfileDevicesVC: UIViewController {
             [weak self] in
             if let devices = AppSyncManager.instance.healthProfile.value?.devices {
                 if let fitbit = devices[ExternalDevices.fitbit] {
-                    DispatchQueue.main.async {
-                        setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
-                        self?.collectionView.reloadData()
-                    }
+                    setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
+                }
+                if let watch = devices[ExternalDevices.healthkit] {
+                    setupProfileConnectDeviceOptionList[3]?.isConnected = watch["connected"] == 1
+                }
+                DispatchQueue.main.async {
+                    self?.collectionView.reloadData()
                 }
             }
         }
-
     }
 
     // MARK: Actions

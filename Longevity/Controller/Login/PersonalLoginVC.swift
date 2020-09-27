@@ -162,11 +162,7 @@ class PersonalLoginVC: UIViewController {
                             }
                         }
                     } else {
-                        print("SignUp Complete")
-                        DispatchQueue.main.async {
-                            self?.removeSpinner()
-                            self?.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-                        }
+                        self?.doLogin()
                         return
                     }
                 case .failure(let error):
@@ -177,7 +173,6 @@ class PersonalLoginVC: UIViewController {
                 }
             }
         }
-
     }
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
@@ -200,11 +195,8 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            retrieveARN()
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-            }
+//            retrieveARN()
+            self.doLogin()
         }
 
         func onFailure(error: AuthError) {
@@ -228,11 +220,8 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            retrieveARN()
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-            }
+//            retrieveARN()
+            self.doLogin()
         }
 
         func onFailure(error: AuthError) {
@@ -255,11 +244,8 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithApple(_ sender: Any) {
         self.showSpinner()
         func onSuccess() {
-            retrieveARN()
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.performSegue(withIdentifier: "LoginToProfileSetup", sender: self)
-            }
+//            retrieveARN()
+            self.doLogin()
         }
         func onFailure(error: AuthError) {
             DispatchQueue.main.async {
@@ -282,6 +268,12 @@ class PersonalLoginVC: UIViewController {
         print("un wound")
         
     }
-
+    
+    fileprivate func doLogin() {
+        DispatchQueue.main.async {
+            self.removeSpinner()
+            let appDelegate = UIApplication.shared.delegate as! AppDelegate
+            appDelegate.setRootViewController()
+        }
+    }
 }
-

@@ -147,6 +147,8 @@ class UserProfileAPI: BaseAuthAPI {
 
                         if json["isAccepted"] as! NSNumber == 1 {
                             completion(true)
+                        } else {
+                            completion(false)
                         }
                     }
                 }
