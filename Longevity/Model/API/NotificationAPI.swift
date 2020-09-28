@@ -56,13 +56,12 @@ class NotificationAPI:BaseAuthAPI {
         let status:String?
         let message: UserNotification?
     }
-    func updateNotification(completion: @escaping ((UserNotification?)-> Void),
+    func updateNotification(userNotification: Bool, completion: @escaping ((UserNotification?)-> Void),
                             failure: @escaping ()-> Void){
         guard let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString else {return}
 
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
-            let userNotification = AppSyncManager.instance.userNotification.value
             do {
                 let encoder = JSONEncoder()
                 encoder.keyEncodingStrategy = .convertToSnakeCase
