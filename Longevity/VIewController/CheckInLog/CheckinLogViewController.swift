@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ResearchKit
 
 class CheckinLogViewController: BaseViewController {
     
@@ -15,6 +16,12 @@ class CheckinLogViewController: BaseViewController {
             self.logsCollectionView.reloadData()
         }
     }
+    
+    lazy var checkinlognodataView: CheckInLogNoDataView = {
+        let checkinlognodata = CheckInLogNoDataView()
+        checkinlognodata.translatesAutoresizingMaskIntoConstraints = false
+        return checkinlognodata
+    }()
 
     lazy var logsCollectionView: UICollectionView = {
         let logsCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -40,8 +47,9 @@ class CheckinLogViewController: BaseViewController {
         super.viewDidLoad()
         self.titleView.titleLabel.text = "Check-in Log"
         
-        self.view.addSubview(logsCollectionView)
         self.titleView.addSubview(closeButton)
+        self.view.addSubview(logsCollectionView)
+        self.view.addSubview(checkinlognodataView)
         
         NSLayoutConstraint.activate([
             logsCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -51,7 +59,11 @@ class CheckinLogViewController: BaseViewController {
             closeButton.widthAnchor.constraint(equalToConstant: 30.0),
             closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor),
             closeButton.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor, constant: 20.0),
-            closeButton.centerYAnchor.constraint(equalTo: self.titleView.titleLabel.centerYAnchor)
+            closeButton.centerYAnchor.constraint(equalTo: self.titleView.titleLabel.centerYAnchor),
+            
+            checkinlognodataView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: CGFloat(self.headerHeight + 30.0)),
+            checkinlognodataView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            checkinlognodataView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
         ])
         
         guard let layout = logsCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -61,6 +73,8 @@ class CheckinLogViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 20.0, left: 15.0, bottom: 20.0, right: 15.0)
         layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .vertical
+        
+        self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
     }
 
     init() {
@@ -74,11 +88,40 @@ class CheckinLogViewController: BaseViewController {
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    @objc func showSurvey() {
+        self.showSpinner()
+
+        func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                if task != nil {
+                    self.dismiss(animated: false) { [weak self] in
+                        let taskViewController = SurveyViewController(task: task)
+                        NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+                    }
+                } else {
+                    self.showAlert(title: "Survey Not available",
+                                   message: "No questions are found for the survey. Please try after sometime")
+                }
+            }
+        }
+        func onCreateSurveyFailure(_ error: Error) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+        
+        SurveyTaskUtility.shared.createSurvey(surveyId: nil, completion: onCreateSurveyCompletion(_:),
+                                              onFailure: onCreateSurveyFailure(_:))
+    }
 }
 
 extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.history?.count ?? 0
+        let count = self.history?.count ?? 0
+        self.checkinlognodataView.isHidden = !(self.history?.isEmpty ?? true)
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -89,7 +132,8 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        return CGSize(width: collectionView.bounds.width, height: 150.0)
+        let sectionHeight = (self.history?.count ?? 0) > 0 ? 150.0 : 0.0
+        return CGSize(width: collectionView.bounds.width, height: CGFloat(sectionHeight))
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {

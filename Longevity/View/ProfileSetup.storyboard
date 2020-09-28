@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zqc-mS-75O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
@@ -119,50 +119,6 @@ up your health profile.</string>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="dz4-sf-FAa">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="9kP-H0-vdI" userLabel="ProgressBar">
-                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="rbe-fs-3a9" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-qP-UJK" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Mtj-UA-Mxf" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.89803921568627454" green="0.89803921568627454" blue="0.91764705882352937" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="B4H-WM-5mX" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eik-ze-FpG" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="A8B-iL-V5x" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wt-3b-RAF" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="3" id="3uD-mc-ug5"/>
-                                        <constraint firstAttribute="width" constant="250" id="YAg-io-GKt"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="rbe-fs-3a9" firstAttribute="centerX" secondItem="9kP-H0-vdI" secondAttribute="centerX" id="gYE-9b-w4B"/>
-                                <constraint firstItem="rbe-fs-3a9" firstAttribute="centerY" secondItem="9kP-H0-vdI" secondAttribute="centerY" id="iUT-lX-w2Z"/>
-                            </constraints>
-                        </view>
                     </navigationItem>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
@@ -174,7 +130,7 @@ up your health profile.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="mgK-hf-hZn" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="zzR-Y2-5eR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="3636" y="856"/>
+            <point key="canvasLocation" x="4543.4782608695659" y="855.80357142857144"/>
         </scene>
         <!--Setup Profile Bio DataVC-->
         <scene sceneID="Wfe-TF-4uK">
@@ -386,63 +342,18 @@ up your health profile.</string>
                     </view>
                     <navigationItem key="navigationItem" id="aNr-TS-z63">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="4a2-ig-Zen" userLabel="ProgressBar">
-                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TNB-GM-J0U" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kj3-KS-fR4" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0Vb-Fy-H79" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ulM-0s-gby" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Sx0-sF-y4z" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="zE4-1y-Njn" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWr-P5-v6x" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="250" id="9sO-GK-wdi"/>
-                                        <constraint firstAttribute="height" constant="3" id="Sid-XS-jZd"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="TNB-GM-J0U" firstAttribute="centerX" secondItem="4a2-ig-Zen" secondAttribute="centerX" id="NDk-Y8-4ng"/>
-                                <constraint firstItem="TNB-GM-J0U" firstAttribute="centerY" secondItem="4a2-ig-Zen" secondAttribute="centerY" id="Pox-9q-Nmb"/>
-                            </constraints>
-                        </view>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="Rnv-cI-MYv" id="LNS-4s-9gl"/>
                         <outlet property="continueButton" destination="HOc-Gh-tin" id="CRH-Hi-ahw"/>
                         <outlet property="footerView" destination="Bdi-8o-yPG" id="fEb-l2-Ys3"/>
                         <outlet property="viewNavigationItem" destination="aNr-TS-z63" id="0ZN-lB-dXU"/>
-                        <outlet property="viewProgressBar" destination="4a2-ig-Zen" id="EhQ-9B-BXG"/>
                         <segue destination="AXW-C6-PXE" kind="show" identifier="SetupProfileBioDataToNotification" id="g0d-OV-Nok"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dmi-z6-pNq" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="4461" y="856"/>
+            <point key="canvasLocation" x="5359" y="856"/>
         </scene>
         <!--Setup Profile NotificationVC-->
         <scene sceneID="js9-uj-F76">
@@ -525,50 +436,6 @@ up your health profile.</string>
                     </view>
                     <navigationItem key="navigationItem" id="w3v-Sh-G23">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="iLq-kn-VvS" userLabel="ProgressBar">
-                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bUS-xG-Zre" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tv-RC-55T" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4NZ-Le-ed0" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="t8x-w6-y09" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="pLU-KO-w3e" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="2nt-WR-dm0" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xea-Fk-FEy" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="width" constant="250" id="3Lc-hk-Bpy"/>
-                                        <constraint firstAttribute="height" constant="3" id="RRg-zP-YoO"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="bUS-xG-Zre" firstAttribute="centerY" secondItem="iLq-kn-VvS" secondAttribute="centerY" id="5o5-CW-ziP"/>
-                                <constraint firstItem="bUS-xG-Zre" firstAttribute="centerX" secondItem="iLq-kn-VvS" secondAttribute="centerX" id="Rvl-qC-t3Z"/>
-                            </constraints>
-                        </view>
                     </navigationItem>
                     <connections>
                         <segue destination="XcV-Lj-rTX" kind="show" identifier="SetupNotificationsToDevices" id="15S-WO-TRn"/>
@@ -576,7 +443,7 @@ up your health profile.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNH-L0-sGz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5226.0869565217399" y="854.46428571428567"/>
+            <point key="canvasLocation" x="6136.2318840579719" y="854.46428571428567"/>
         </scene>
         <!--Setup Profile DevicesVC-->
         <scene sceneID="Urf-v7-q9r">
@@ -753,50 +620,6 @@ up your health profile.</string>
                     </view>
                     <navigationItem key="navigationItem" id="ZD5-vF-Won">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="2dn-wr-9GN" userLabel="ProgressBar">
-                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OA2-rr-yHW" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b47-Y9-wg4" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ZUA-qZ-n2A" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="1Pf-Y6-NpT" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Uoa-1q-F8p" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HKH-RC-IoI" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sX-sg-vA6" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="3" id="bwh-Uu-D25"/>
-                                        <constraint firstAttribute="width" constant="250" id="uz2-9G-YDl"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="OA2-rr-yHW" firstAttribute="centerY" secondItem="2dn-wr-9GN" secondAttribute="centerY" id="Ssf-u7-0ui"/>
-                                <constraint firstItem="OA2-rr-yHW" firstAttribute="centerX" secondItem="2dn-wr-9GN" secondAttribute="centerX" id="hIE-Q6-OQR"/>
-                            </constraints>
-                        </view>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="MA6-7J-eVI" id="I3f-2s-72n"/>
@@ -805,7 +628,7 @@ up your health profile.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-Ps-g0S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="5957.971014492754" y="855.80357142857144"/>
+            <point key="canvasLocation" x="6868.115942028986" y="855.80357142857144"/>
         </scene>
         <!--Setup Profile Pre ConditionVC-->
         <scene sceneID="POz-6z-Jpn">
@@ -1010,61 +833,16 @@ up your health profile.</string>
                     </view>
                     <navigationItem key="navigationItem" id="aO2-5T-Q66">
                         <nil key="title"/>
-                        <view key="titleView" contentMode="scaleToFill" id="2Ij-2O-nq8" userLabel="ProgressBar">
-                            <rect key="frame" x="207" y="22" width="0.0" height="0.0"/>
-                            <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                            <subviews>
-                                <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="AkF-zQ-B1Z" userLabel="ProgressStack">
-                                    <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
-                                    <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-Ft-cON" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l7y-7D-x1S" userLabel="Two">
-                                            <rect key="frame" x="41.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="cIG-Pq-rxH" userLabel="Three">
-                                            <rect key="frame" x="83.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="8q0-9a-w8X" userLabel="Four">
-                                            <rect key="frame" x="125" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="bVe-tj-CfO" userLabel="Five">
-                                            <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
-                                            <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="siL-i1-EIz" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
-                                            <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
-                                            <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        </view>
-                                    </subviews>
-                                    <constraints>
-                                        <constraint firstAttribute="height" constant="3" id="Fj4-Cw-jVe"/>
-                                        <constraint firstAttribute="width" constant="250" id="Q21-d2-4UK"/>
-                                    </constraints>
-                                </stackView>
-                            </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
-                            <constraints>
-                                <constraint firstItem="AkF-zQ-B1Z" firstAttribute="centerX" secondItem="2Ij-2O-nq8" secondAttribute="centerX" id="7g2-Am-lxN"/>
-                                <constraint firstItem="AkF-zQ-B1Z" firstAttribute="centerY" secondItem="2Ij-2O-nq8" secondAttribute="centerY" id="bTe-ik-LkP"/>
-                            </constraints>
-                        </view>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="ZD6-xG-uNs" id="P3t-lX-JT5"/>
                         <outlet property="footerView" destination="HEU-Lb-Zsz" id="JBo-Oi-yaQ"/>
                         <outlet property="viewNavigationItem" destination="aO2-5T-Q66" id="2O4-BV-RXX"/>
-                        <outlet property="viewProgressBar" destination="2Ij-2O-nq8" id="CA2-C0-9Fj"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zLk-Fd-pvo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6715.9420289855079" y="855.80357142857144"/>
+            <point key="canvasLocation" x="7626.0869565217399" y="855.80357142857144"/>
         </scene>
         <!--Setup CompleteVC-->
         <scene sceneID="e2s-Zm-FRX">
@@ -1099,13 +877,13 @@ up your health profile.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
-                                                    <rect key="frame" x="20" y="298" width="374" height="39.5"/>
+                                                    <rect key="frame" x="15" y="295" width="384" height="39.5"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                                    <rect key="frame" x="15" y="349.5" width="384" height="29.5"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
+                                                    <rect key="frame" x="15" y="346.5" width="384" height="29.5"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="300" id="6lj-dg-JSW"/>
                                                     </constraints>
@@ -1116,14 +894,14 @@ up your health profile.</string>
                                                 </label>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" constant="20" id="HU4-55-ZWG"/>
+                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" constant="15" id="HU4-55-ZWG"/>
                                                 <constraint firstItem="Ol2-mH-c3N" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="SaN-q0-VN4"/>
                                                 <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="12" id="Uqe-Y5-grK"/>
                                                 <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="8FB-9y-A7d" secondAttribute="top" id="VtA-Vz-h8A"/>
                                                 <constraint firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" constant="15" id="Xzh-ZK-8hd"/>
-                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="28" id="aJ7-Vh-0d4"/>
+                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="25" id="aJ7-Vh-0d4"/>
                                                 <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="m6M-CY-7Cp"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="20" id="yQz-CG-BTE"/>
+                                                <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="15" id="yQz-CG-BTE"/>
                                                 <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" constant="15" id="ypF-uP-yYs"/>
                                             </constraints>
                                         </collectionViewCellContentView>
@@ -1224,7 +1002,7 @@ up your health profile.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACL-Si-545" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7495.652173913044" y="855.80357142857144"/>
+            <point key="canvasLocation" x="8405.7971014492759" y="855.80357142857144"/>
         </scene>
         <!--Temp SignoutVC-->
         <scene sceneID="p2a-ya-5Et">
@@ -1261,7 +1039,7 @@ up your health profile.</string>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h6p-QN-KbZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="KgS-UN-brR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="8288" y="856"/>
+            <point key="canvasLocation" x="9197.1014492753638" y="855.80357142857144"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="LMn-M1-LIA">
@@ -1271,7 +1049,7 @@ up your health profile.</string>
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vg1-cP-tBc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="9201" y="833"/>
+            <point key="canvasLocation" x="10110.144927536232" y="832.36607142857144"/>
         </scene>
         <!--Terms Of ServiceVC-->
         <scene sceneID="3bW-kz-Ev3">
@@ -1332,6 +1110,24 @@ up your health profile.</string>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="pIA-ov-eVW" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="9q7-ow-baX" userLabel="Exit" sceneMemberID="exit"/>
+            </objects>
+            <point key="canvasLocation" x="3723.188405797102" y="855.80357142857144"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="Wb7-4i-B6i">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="fCl-5I-BFf" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" insetsLayoutMarginsFromSafeArea="NO" id="2Vv-9a-gMh">
+                        <rect key="frame" x="0.0" y="44" width="414" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Zqc-mS-75O" kind="relationship" relationship="rootViewController" id="SdD-hj-UW2"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gIc-k3-cDF" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="2813.04347826087" y="855.80357142857144"/>
         </scene>

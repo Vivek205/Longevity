@@ -158,15 +158,6 @@ class OnboardingVC: UIViewController {
         self.navigationController?.pushViewController(loginVC, animated: true)
     }
 
-    func styleNavigationBar() {
-        let navigationBar = navigationController?.navigationBar
-        navigationBar?.barTintColor = UIColor.white
-        navigationBar?.isTranslucent = false
-        navigationBar?.setBackgroundImage(UIImage(), for: .default)
-        navigationBar?.shadowImage = UIImage()
-        navigationBar?.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
-    }
-
     func hideNavigationBar() {
         navigationController?.setNavigationBarHidden(true, animated: true)
     }
@@ -180,7 +171,7 @@ class OnboardingVC: UIViewController {
             if userSignedIn {
                 DispatchQueue.main.async {
                     //                    self.navigateToTheNextScreen()
-                    retrieveARN()
+//                    retrieveARN()
                 }
             }
         }

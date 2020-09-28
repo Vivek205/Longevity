@@ -8,7 +8,7 @@
 
 import UIKit
 
-class SetupProfilePreConditionVC: UIViewController {
+class SetupProfilePreConditionVC: BaseProfileSetupViewController {
     @IBOutlet weak var collectionView: UICollectionView!
     @IBOutlet weak var viewProgressBar: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
@@ -52,6 +52,8 @@ class SetupProfilePreConditionVC: UIViewController {
                 // Fallback on earlier versions
             }
         }
+        
+        self.addProgressbar(progress: 100.0)
     }
 
     deinit {

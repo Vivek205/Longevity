@@ -1,86 +1,33 @@
 //
-//  SetupCompleteVC.swift
+//  SurveyViewController.swift
 //  Longevity
 //
-//  Created by vivek on 14/07/20.
+//  Created by Jagan Kumar Mudila on 25/09/2020.
 //  Copyright © 2020 vivek. All rights reserved.
 //
-//
+
 import UIKit
 import ResearchKit
 
-class SetupCompleteVC: BaseProfileSetupViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate {
+    
+    init(task: ORKOrderedTask?) {
+        super.init(task: task, taskRun: nil)
+        self.delegate = self
+    }
+    
+    required init(coder aDecoder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.removeBackButtonNavigation()
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
-        // Do any additional setup after loading the view.
-//        styleNavigationBar()
-    }
-
-    func navigateForward() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.setRootViewController()
+        self.navigationBar.backgroundColor = .white
+        self.navigationBar.barTintColor = .white
+        self.view.backgroundColor = .white
     }
     
-    @IBAction func onShowDashboard(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.setRootViewController()
-    }
-
-    @IBAction func handleBeginSurvey(_ sender: Any) {
-        self.showSpinner()
-        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_01", completion: { [weak self] (task) in
-            guard let task = task else {
-                self?.removeSpinner()
-                self?.navigateForward()
-                return }
-            DispatchQueue.main.async {
-                let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-                taskViewController.delegate = self
-                taskViewController.navigationBar.backgroundColor = .white
-                taskViewController.navigationBar.barTintColor = .white
-                taskViewController.view.backgroundColor = .white
-                self?.removeSpinner()
-                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
-            }
-        }) { (error) in
-            self.removeSpinner()
-            self.navigateForward()
-        }
-    }
-
-
-}
-
-extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileCompleteCell", for: indexPath)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = view.frame.size.height
-        let width = view.frame.size.width
-         return CGSize(width: width - 40, height: height - 100)
-    }
-
-}
-
-extension SetupCompleteVC: ORKTaskViewControllerDelegate {
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             stepViewControllerWillAppear stepViewController: ORKStepViewController) {
         let taskViewAppearance =
@@ -96,11 +43,11 @@ extension SetupCompleteVC: ORKTaskViewControllerDelegate {
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
-
+        
         switch reason {
         case .completed:
             print("completed")
-//            self.getSurveyList()
+            self.getSurveyList()
         case .discarded:
             print("discarded")
         case .failed:
@@ -112,11 +59,26 @@ extension SetupCompleteVC: ORKTaskViewControllerDelegate {
         }
 
         taskViewController.dismiss(animated: true) {
-            [weak self] in
-            self?.navigateForward()
             print("task view controller dismissed")
         }
+    }
+    
+    func getSurveyList() {
+        self.showSpinner()
 
+        func completion(_ surveys:[SurveyListItem]) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+        }
+
+        func onFailure(_ error:Error) {
+            DispatchQueue.main.async {
+                print(error)
+                self.removeSpinner()
+            }
+        }
+        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,

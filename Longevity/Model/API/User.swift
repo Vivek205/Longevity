@@ -174,27 +174,27 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
 }
 
 
-func getUserAttributes() {
-    _ = Amplify.Auth.fetchUserAttributes() { result in
-        switch result {
-        case .success(let attributes):
-            for attribute in attributes {
-                let name = attribute.key
-                let value = attribute.value
-                if name.rawValue == CustomCognitoAttributes.longevityTNC {
-                    let data: Data? = value.data(using: .utf8)!
-                    let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
-
-                    if json!["isAccepted"] as! NSNumber == 1 {
-                        AppSyncManager.instance.isTermsAccepted.value = true
-                    }
-                }
-            }
-        case .failure(let error):
-            print("Fetching user attributes failed with error \(error)")
-        }
-    }
-}
+//func getUserAttributes() {
+//    _ = Amplify.Auth.fetchUserAttributes() { result in
+//        switch result {
+//        case .success(let attributes):
+//            for attribute in attributes {
+//                let name = attribute.key
+//                let value = attribute.value
+//                if name.rawValue == CustomCognitoAttributes.longevityTNC {
+//                    let data: Data? = value.data(using: .utf8)!
+//                    let json = (try? JSONSerialization.jsonObject(with: data!, options: [])) as? [String: Any]
+//
+//                    if json!["isAccepted"] as! NSNumber == 1 {
+//                        AppSyncManager.instance.isTermsAccepted.value = true
+//                    }
+//                }
+//            }
+//        case .failure(let error):
+//            print("Fetching user attributes failed with error \(error)")
+//        }
+//    }
+//}
 
 
 func acceptTNC(value: Bool) {

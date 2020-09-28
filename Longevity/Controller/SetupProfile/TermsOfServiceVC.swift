@@ -14,7 +14,7 @@ import WebKit
 fileprivate let termsOfServiceContent = TermsOfServiceContent()
 fileprivate let tosWebViewURL = "https://rejuve-public.s3-us-west-2.amazonaws.com/Beta-TOS.html"
 
-class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
+class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDelegate {
     // MARK: Outlets
     @IBOutlet weak var footer: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
@@ -160,6 +160,8 @@ class TermsOfServiceVC: UIViewController, UINavigationControllerDelegate {
             acceptLabel.bottomAnchor.constraint(equalTo: acceptCard.bottomAnchor, constant: -15.0)
         ])
         
+        styleNavigationBar()
+        
         if self.isFromSettings {
             let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
@@ -216,6 +218,15 @@ extension UIViewController {
     func removeBackButtonNavigation() {
         let backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
         self.navigationItem.backBarButtonItem = backBarButtonItem
+    }
+    
+    func styleNavigationBar() {
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.barTintColor = UIColor.white
+        navigationBar?.isTranslucent = false
+        navigationBar?.setBackgroundImage(UIImage(), for: .default)
+        navigationBar?.shadowImage = UIImage()
+        navigationBar?.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
     }
 }
 

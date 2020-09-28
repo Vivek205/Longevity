@@ -9,14 +9,15 @@
 import UIKit
 import Amplify
 
-class SetupProfileDisclaimerVC: UIViewController {
+class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
     // MARK: Outlets
     @IBOutlet weak var disclaimer: UILabel!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeDisclaimerLabel()
         self.removeBackButtonNavigation()
+        self.addProgressbar(progress: 20.0)
     }
 
     func customizeDisclaimerLabel() {
@@ -44,6 +45,4 @@ class SetupProfileDisclaimerVC: UIViewController {
     @IBAction func handleContinue(_ sender: Any) {
         performSegue(withIdentifier: "SetupProfileDisclaimerToBioData", sender: self)
     }
-
-
 }

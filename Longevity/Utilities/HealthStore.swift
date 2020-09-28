@@ -551,7 +551,7 @@ final class HealthStore {
                     let dateformatter = DateFormatter()
                     dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     
-                    healthReadings.append(HealthReading(value: Double(handwashtimes), unit: "sec", readingDate: dateformatter.string(from: result.startDate)))
+                    healthReadings.append(HealthReading(value: 1.0, unit: "wash", readingDate: dateformatter.string(from: result.startDate)))
                 }
                 
                 self.saveHealthData(healthType: .handwashing, healthReadings: healthReadings)

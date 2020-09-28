@@ -55,26 +55,23 @@ class LNTabBarViewController: UITabBarController {
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
         tabBar.insertSubview(bgImageView, at: 0)
         
-        //getCurrentUser()
         AppSyncManager.instance.syncUserProfile()
+        retrieveARN()
+    }
+    
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
         
-        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) { [weak self] in
+        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
             DispatchQueue.main.async {
                 if !(AppSyncManager.instance.isTermsAccepted.value ?? false) {
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
-                    tosViewController.isFromSettings = true
                     let navigationController = UINavigationController(rootViewController: tosViewController)
-                    NavigationUtility.presentOverCurrentContext(destination: navigationController )
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController, style: .overCurrentContext)
                 }
             }
         }
-        retrieveARN()
-    }
-    
-    func getCurrentUser() {
-        AppSyncManager.instance.syncUserProfile()
-        retrieveARN()
     }
     
     func navigateToTheNextScreen(){
