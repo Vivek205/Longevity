@@ -148,11 +148,12 @@ class ProfileViewController: BaseViewController {
     }
     
     func getProfileData() {
+        self.userActivities = nil
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserActivities(completion: { (userActivites) in
             self.userActivities = userActivites
         }, onFailure:  { (error) in
-            print(error)
+            self.userActivities = nil
         })
     }
 }
