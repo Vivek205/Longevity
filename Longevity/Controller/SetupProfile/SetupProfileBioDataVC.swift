@@ -39,7 +39,7 @@ class SetupProfileBioDataVC: UIViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-        continueButton.isEnabled = false
+//        continueButton.isEnabled = false
         createPickersAndToolbar()
         
         checkIfHealthKitSyncedAlready()

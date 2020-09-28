@@ -134,7 +134,7 @@ class FitbitModel: AuthHandlerType {
                     let accessToken = jsonData["access_token"] as! String
                     let refreshToken = jsonData["refresh_token"] as! String
                     let userId = jsonData["user_id"] as! String
-                    
+
                     self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
                     self.publishData(accessToken: accessToken, userId: userId)
                 }
@@ -202,22 +202,132 @@ class FitbitModel: AuthHandlerType {
                urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
                urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
 
-        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
-            guard let httpResponse = response as? HTTPURLResponse,
-                httpResponse.statusCode == 200,
-                data != nil else { return }
-            do {
-                if let jsonData: [String:Any] =
-                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-                    let accessToken = jsonData["access_token"] as! String
-                    let refreshToken = jsonData["refresh_token"] as! String
-                    let userId = jsonData["user_id"] as! String
-                    Logger.log("fitbit token refreshed")
-                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
-                    self.publishData(accessToken: accessToken, userId: userId)
-                }
-            } catch {}
+//        let configuration = URLSessionConfiguration.background(withIdentifier: "come.rejuve.fitbitrefresh")
+
+//        let bgSession = URLSession(configuration: configuration) //URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+
+//        bgSession.dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
+        BackgroundSession.shared.startdataTask(urlRequest)
+        BackgroundSession.shared.delegate = self
+
+//        let dataTask
+//        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
+//            guard let httpResponse = response as? HTTPURLResponse,
+//                httpResponse.statusCode == 200,
+//                data != nil else { return }
+//            do {
+//                if let jsonData: [String:Any] =
+//                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
+//                    let accessToken = jsonData["access_token"] as! String
+//                    let refreshToken = jsonData["refresh_token"] as! String
+//                    let userId = jsonData["user_id"] as! String
+//                    Logger.log("fitbit token refreshed")
+//                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
+//                    self.publishData(accessToken: accessToken, userId: userId)
+//                }
+//            } catch {}
+//        }
+//        dataTask.resume()
+    }
+}
+
+extension FitbitModel: BackgroundSessionDelegate {
+    func receivedtoken(data: Data) {
+        do {
+            if let jsonData: [String:Any] =
+                try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                let accessToken = jsonData["access_token"] as! String
+                let refreshToken = jsonData["refresh_token"] as! String
+                let userId = jsonData["user_id"] as! String
+                Logger.log("fitbit token refreshed")
+                self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
+                self.publishData(accessToken: accessToken, userId: userId)
+            }
+        } catch {}
+    }
+}
+
+protocol BackgroundSessionDelegate {
+    func receivedtoken(data: Data)
+}
+
+class BackgroundSession: NSObject {
+    static let shared = BackgroundSession()
+
+    static let identifier = "come.rejuve.fitbitrefresh"
+
+    var delegate: BackgroundSessionDelegate?
+
+    private var session: URLSession!
+
+    #if !os(macOS)
+    var savedCompletionHandler: (() -> Void)?
+    #endif
+
+    private override init() {
+        super.init()
+
+        let configuration = URLSessionConfiguration.background(withIdentifier: BackgroundSession.identifier)
+        configuration.waitsForConnectivity = true
+        session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
+    }
+
+    func start(_ request: URLRequest) {
+        session.downloadTask(with: request).resume()
+    }
+
+    func startdataTask(_ request: URLRequest) {
+        session.dataTask(with: request).resume()
+    }
+}
+
+extension BackgroundSession: URLSessionDelegate {
+    #if !os(macOS)
+    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
+        DispatchQueue.main.async {
+            self.savedCompletionHandler?()
+            self.savedCompletionHandler = nil
         }
-        dataTask.resume()
+    }
+    #endif
+}
+
+extension BackgroundSession: URLSessionTaskDelegate {
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
+                    completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
+        guard let response = response as? HTTPURLResponse,
+            (200...299).contains(response.statusCode),
+            let mimeType = response.mimeType,
+            mimeType == "text/html" else {
+            completionHandler(.cancel)
+            return
+        }
+        completionHandler(.allow)
+    }
+
+    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
+        self.delegate?.receivedtoken(data: data)
+    }
+
+    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
+        if let error = error {
+            // handle failure here
+            print("\(error.localizedDescription)")
+        }
+    }
+}
+
+extension BackgroundSession: URLSessionDownloadDelegate {
+    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
+        do {
+            let data = try Data(contentsOf: location)
+            let json = try JSONSerialization.jsonObject(with: data)
+
+            print("\(json)")
+            // do something with json
+        } catch {
+            print("\(error.localizedDescription)")
+        }
     }
 }

@@ -1,10 +1,11 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="16097.3" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zqc-mS-75O">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="Zqc-mS-75O">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="16087"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
+        <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
@@ -75,7 +76,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTi-dJ-ldN" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="8hx-MJ-xaj"/>
@@ -99,6 +100,7 @@ up your health profile.</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="mkO-53-DnK" secondAttribute="trailing" constant="20" id="6G6-3M-h2I"/>
@@ -113,7 +115,6 @@ up your health profile.</string>
                             <constraint firstAttribute="bottom" secondItem="JCo-Hv-yIO" secondAttribute="bottom" id="tCd-Vb-iUs"/>
                             <constraint firstItem="JCo-Hv-yIO" firstAttribute="top" secondItem="jTi-dJ-ldN" secondAttribute="bottom" id="xOr-UJ-nZ6"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
                     </view>
                     <toolbarItems/>
                     <navigationItem key="navigationItem" id="dz4-sf-FAa">
@@ -125,7 +126,7 @@ up your health profile.</string>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="rbe-fs-3a9" userLabel="ProgressStack">
                                     <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-qP-UJK" userLabel="One">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SOe-qP-UJK" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -145,7 +146,7 @@ up your health profile.</string>
                                             <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wt-3b-RAF" userLabel="Six">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4wt-3b-RAF" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -156,7 +157,7 @@ up your health profile.</string>
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="rbe-fs-3a9" firstAttribute="centerX" secondItem="9kP-H0-vdI" secondAttribute="centerX" id="gYE-9b-w4B"/>
                                 <constraint firstItem="rbe-fs-3a9" firstAttribute="centerY" secondItem="9kP-H0-vdI" secondAttribute="centerY" id="iUT-lX-w2Z"/>
@@ -186,7 +187,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Bdi-8o-yPG" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOc-Gh-tin" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOc-Gh-tin" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="NwO-30-YsX"/>
@@ -288,7 +289,7 @@ up your health profile.</string>
                                                         <constraint firstAttribute="width" constant="48" id="Xz6-Fs-uys"/>
                                                     </constraints>
                                                 </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fs-En-B7r" customClass="CustomButtonOutlined" customModule="Longevity" customModuleProvider="target">
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fs-En-B7r" customClass="CustomButtonOutlined" customModule="Longevity" customModuleProvider="target">
                                                     <rect key="frame" x="242" y="29" width="100" height="32"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="32" id="jaL-Xc-G7G"/>
@@ -367,6 +368,7 @@ up your health profile.</string>
                                 </cells>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="OS9-vg-Aoi"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rnv-cI-MYv" firstAttribute="top" secondItem="K84-UL-axb" secondAttribute="topMargin" id="5QF-7q-QJl"/>
@@ -381,7 +383,6 @@ up your health profile.</string>
                             <constraint firstItem="Rnv-cI-MYv" firstAttribute="leading" secondItem="OS9-vg-Aoi" secondAttribute="leading" id="nB2-Jd-uVv"/>
                             <constraint firstItem="Bdi-8o-yPG" firstAttribute="leading" secondItem="K84-UL-axb" secondAttribute="leading" id="rGk-17-Oss"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="OS9-vg-Aoi"/>
                     </view>
                     <navigationItem key="navigationItem" id="aNr-TS-z63">
                         <nil key="title"/>
@@ -392,7 +393,7 @@ up your health profile.</string>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="TNB-GM-J0U" userLabel="ProgressStack">
                                     <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kj3-KS-fR4" userLabel="One">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Kj3-KS-fR4" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -412,7 +413,7 @@ up your health profile.</string>
                                             <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWr-P5-v6x" userLabel="Six">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="NWr-P5-v6x" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -423,7 +424,7 @@ up your health profile.</string>
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="TNB-GM-J0U" firstAttribute="centerX" secondItem="4a2-ig-Zen" secondAttribute="centerX" id="NDk-Y8-4ng"/>
                                 <constraint firstItem="TNB-GM-J0U" firstAttribute="centerY" secondItem="4a2-ig-Zen" secondAttribute="centerY" id="Pox-9q-Nmb"/>
@@ -478,7 +479,7 @@ up your health profile.</string>
                                         <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="578" width="334" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="LCS-3d-tXo"/>
@@ -488,7 +489,7 @@ up your health profile.</string>
                                             <action selector="handleEnableNotification:" destination="AXW-C6-PXE" eventType="touchUpInside" id="mvL-3W-ziB"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-B4-IOn">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-B4-IOn">
                                         <rect key="frame" x="125" y="654" width="124" height="56"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                         <state key="normal" title="Maybe Later">
@@ -509,6 +510,7 @@ up your health profile.</string>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="ecy-Cx-H3Z"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ecy-Cx-H3Z" firstAttribute="bottom" secondItem="i3s-Nf-sga" secondAttribute="bottom" constant="15" id="100-3k-th2"/>
@@ -520,7 +522,6 @@ up your health profile.</string>
                             <constraint firstAttribute="bottom" secondItem="rSM-dg-wMI" secondAttribute="bottom" id="mAg-Iu-UT9"/>
                             <constraint firstItem="i3s-Nf-sga" firstAttribute="leading" secondItem="ecy-Cx-H3Z" secondAttribute="leading" constant="20" id="zmQ-wi-lMk"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="ecy-Cx-H3Z"/>
                     </view>
                     <navigationItem key="navigationItem" id="w3v-Sh-G23">
                         <nil key="title"/>
@@ -531,7 +532,7 @@ up your health profile.</string>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="bUS-xG-Zre" userLabel="ProgressStack">
                                     <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tv-RC-55T" userLabel="One">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="4tv-RC-55T" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -551,7 +552,7 @@ up your health profile.</string>
                                             <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xea-Fk-FEy" userLabel="Six">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Xea-Fk-FEy" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -562,7 +563,7 @@ up your health profile.</string>
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="bUS-xG-Zre" firstAttribute="centerY" secondItem="iLq-kn-VvS" secondAttribute="centerY" id="5o5-CW-ziP"/>
                                 <constraint firstItem="bUS-xG-Zre" firstAttribute="centerX" secondItem="iLq-kn-VvS" secondAttribute="centerX" id="Rvl-qC-t3Z"/>
@@ -588,7 +589,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3N-lR-Yap" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQB-q8-o6h" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQB-q8-o6h" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="Bfn-A0-62t"/>
@@ -599,7 +600,7 @@ up your health profile.</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="TQB-q8-o6h" firstAttribute="leading" secondItem="u3N-lR-Yap" secondAttribute="leading" constant="20" id="80e-1S-Gae"/>
                                     <constraint firstAttribute="trailing" secondItem="TQB-q8-o6h" secondAttribute="trailing" constant="20" id="HIO-9Y-wm3"/>
@@ -734,6 +735,7 @@ up your health profile.</string>
                                 </cells>
                             </collectionView>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="aob-2W-QyZ"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="u3N-lR-Yap" firstAttribute="leading" secondItem="aob-2W-QyZ" secondAttribute="leading" id="4pb-d8-VN9"/>
@@ -748,7 +750,6 @@ up your health profile.</string>
                             <constraint firstItem="u3N-lR-Yap" firstAttribute="trailing" secondItem="aob-2W-QyZ" secondAttribute="trailing" id="rfg-Js-Nfv"/>
                             <constraint firstItem="MA6-7J-eVI" firstAttribute="top" secondItem="aob-2W-QyZ" secondAttribute="top" id="ylV-hT-yD3"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="aob-2W-QyZ"/>
                     </view>
                     <navigationItem key="navigationItem" id="ZD5-vF-Won">
                         <nil key="title"/>
@@ -759,7 +760,7 @@ up your health profile.</string>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="OA2-rr-yHW" userLabel="ProgressStack">
                                     <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b47-Y9-wg4" userLabel="One">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="b47-Y9-wg4" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -779,7 +780,7 @@ up your health profile.</string>
                                             <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sX-sg-vA6" userLabel="Six">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="0sX-sg-vA6" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -790,7 +791,7 @@ up your health profile.</string>
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="OA2-rr-yHW" firstAttribute="centerY" secondItem="2dn-wr-9GN" secondAttribute="centerY" id="Ssf-u7-0ui"/>
                                 <constraint firstItem="OA2-rr-yHW" firstAttribute="centerX" secondItem="2dn-wr-9GN" secondAttribute="centerX" id="hIE-Q6-OQR"/>
@@ -943,11 +944,11 @@ up your health profile.</string>
                                                 </label>
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="Xol-C5-zuB">
                                                     <rect key="frame" x="0.0" y="59" width="404" height="100"/>
-                                                    <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                                    <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                                     <constraints>
                                                         <constraint firstAttribute="height" constant="100" id="1Pd-DJ-B2t"/>
                                                     </constraints>
-                                                    <color key="textColor" systemColor="labelColor" cocoaTouchSystemColor="darkTextColor"/>
+                                                    <color key="textColor" systemColor="labelColor"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -970,7 +971,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEU-Lb-Zsz" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKr-Jv-jeL" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKr-Jv-jeL" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="kCj-tF-vwt"/>
@@ -982,7 +983,7 @@ up your health profile.</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstAttribute="trailing" secondItem="rKr-Jv-jeL" secondAttribute="trailing" constant="20" id="Qgt-nd-RXh"/>
                                     <constraint firstItem="rKr-Jv-jeL" firstAttribute="top" secondItem="HEU-Lb-Zsz" secondAttribute="top" constant="24" id="bDY-cO-VGh"/>
@@ -991,6 +992,7 @@ up your health profile.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="VVb-na-gD1"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ZD6-xG-uNs" firstAttribute="leading" secondItem="Ktt-2p-Fdg" secondAttribute="leading" id="1ji-UQ-NEM"/>
@@ -1005,7 +1007,6 @@ up your health profile.</string>
                             <constraint firstItem="HEU-Lb-Zsz" firstAttribute="bottom" secondItem="VVb-na-gD1" secondAttribute="bottom" id="kdy-Pu-itU"/>
                             <constraint firstAttribute="trailing" secondItem="ZD6-xG-uNs" secondAttribute="trailing" id="rj0-cg-fSS"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="VVb-na-gD1"/>
                     </view>
                     <navigationItem key="navigationItem" id="aO2-5T-Q66">
                         <nil key="title"/>
@@ -1016,7 +1017,7 @@ up your health profile.</string>
                                 <stackView opaque="NO" contentMode="scaleToFill" distribution="fillEqually" translatesAutoresizingMaskIntoConstraints="NO" id="AkF-zQ-B1Z" userLabel="ProgressStack">
                                     <rect key="frame" x="-125" y="-1.5" width="250" height="3"/>
                                     <subviews>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-Ft-cON" userLabel="One">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Q28-Ft-cON" userLabel="One" customClass="LeftRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="0.0" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -1036,7 +1037,7 @@ up your health profile.</string>
                                             <rect key="frame" x="166.5" y="0.0" width="42" height="3"/>
                                             <color key="backgroundColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
-                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="siL-i1-EIz" userLabel="Six">
+                                        <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="siL-i1-EIz" userLabel="Six" customClass="RightRoundedView" customModule="Longevity" customModuleProvider="target">
                                             <rect key="frame" x="208.5" y="0.0" width="41.5" height="3"/>
                                             <color key="backgroundColor" red="0.8980392157" green="0.8980392157" blue="0.91764705879999997" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         </view>
@@ -1047,7 +1048,7 @@ up your health profile.</string>
                                     </constraints>
                                 </stackView>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="AkF-zQ-B1Z" firstAttribute="centerX" secondItem="2Ij-2O-nq8" secondAttribute="centerX" id="7g2-Am-lxN"/>
                                 <constraint firstItem="AkF-zQ-B1Z" firstAttribute="centerY" secondItem="2Ij-2O-nq8" secondAttribute="centerY" id="bTe-ik-LkP"/>
@@ -1137,7 +1138,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9K-JU-FGj" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="639" width="414" height="174"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ9-EH-Y8r" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ9-EH-Y8r" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="15" y="24" width="384" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="vKH-M4-ANK"/>
@@ -1147,7 +1148,7 @@ up your health profile.</string>
                                             <action selector="handleBeginSurvey:" destination="PS8-FZ-XHc" eventType="touchUpInside" id="dRw-KE-cAt"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-QW-eYm">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Ggy-QW-eYm">
                                         <rect key="frame" x="15" y="104" width="384" height="24"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="24" id="E9V-NC-yTm"/>
@@ -1177,6 +1178,7 @@ up your health profile.</string>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="gOS-uH-Kc5"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="top" secondItem="TtM-Tq-E1j" secondAttribute="bottom" id="176-aj-odz"/>
@@ -1191,7 +1193,6 @@ up your health profile.</string>
                             <constraint firstItem="TtM-Tq-E1j" firstAttribute="trailing" secondItem="gOS-uH-Kc5" secondAttribute="trailing" id="bjx-On-txZ"/>
                             <constraint firstItem="TtM-Tq-E1j" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" id="lhL-uD-Bya"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="gOS-uH-Kc5"/>
                     </view>
                     <navigationItem key="navigationItem" id="egL-Oi-kgI">
                         <nil key="title"/>
@@ -1210,7 +1211,7 @@ up your health profile.</string>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
-                            <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                            <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                             <constraints>
                                 <constraint firstItem="eqr-Bb-YdQ" firstAttribute="centerY" secondItem="8Bs-Ke-VrY" secondAttribute="centerY" id="emN-rp-jjr"/>
                                 <constraint firstItem="eqr-Bb-YdQ" firstAttribute="centerX" secondItem="8Bs-Ke-VrY" secondAttribute="centerX" id="maV-Dc-NeZ"/>
@@ -1233,7 +1234,7 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFW-H4-3Hb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFW-H4-3Hb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                 <rect key="frame" x="107" y="427" width="200" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="JGY-kz-hLK"/>
@@ -1245,12 +1246,12 @@ up your health profile.</string>
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                        <viewLayoutGuide key="safeArea" id="TVb-mH-bnY"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                         <constraints>
                             <constraint firstItem="vFW-H4-3Hb" firstAttribute="centerX" secondItem="ueo-Qh-iPM" secondAttribute="centerX" id="8EB-1D-SOT"/>
                             <constraint firstItem="vFW-H4-3Hb" firstAttribute="centerY" secondItem="ueo-Qh-iPM" secondAttribute="centerY" id="ESU-pg-m6c"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="TVb-mH-bnY"/>
                     </view>
                     <navigationItem key="navigationItem" id="v0Z-FD-ERC"/>
                     <connections>
@@ -1283,7 +1284,7 @@ up your health profile.</string>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YF2-08-RFx" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="766" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="15" y="28" width="384" height="48"/>
                                         <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                         <constraints>
@@ -1298,7 +1299,7 @@ up your health profile.</string>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor" cocoaTouchSystemColor="whiteColor"/>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
                                     <constraint firstItem="e95-nv-52a" firstAttribute="leading" secondItem="YF2-08-RFx" secondAttribute="leading" constant="15" id="Gn1-0h-q6v"/>
                                     <constraint firstItem="e95-nv-52a" firstAttribute="top" secondItem="YF2-08-RFx" secondAttribute="top" constant="28" id="HLa-az-Gb5"/>
@@ -1307,13 +1308,13 @@ up your health profile.</string>
                                 </constraints>
                             </view>
                         </subviews>
+                        <viewLayoutGuide key="safeArea" id="D0D-7s-sN3"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="YF2-08-RFx" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" id="Urs-uj-4Uf"/>
                             <constraint firstItem="D0D-7s-sN3" firstAttribute="bottom" secondItem="YF2-08-RFx" secondAttribute="bottom" id="WsP-e1-Kqv"/>
                             <constraint firstItem="YF2-08-RFx" firstAttribute="trailing" secondItem="D0D-7s-sN3" secondAttribute="trailing" id="eNP-3Z-GLk"/>
                         </constraints>
-                        <viewLayoutGuide key="safeArea" id="D0D-7s-sN3"/>
                     </view>
                     <navigationItem key="navigationItem" id="xL7-d0-VmB">
                         <barButtonItem key="rightBarButtonItem" title="Decline" id="osr-Q9-gqR">
@@ -1341,5 +1342,11 @@ up your health profile.</string>
         <image name="dataPrivacyLogo" width="31" height="36"/>
         <image name="setupProfileDevices" width="244" height="224"/>
         <image name="setupProfileNotification" width="234" height="224"/>
+        <systemColor name="labelColor">
+            <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
+        <systemColor name="systemBackgroundColor">
+            <color white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
+        </systemColor>
     </resources>
 </document>
