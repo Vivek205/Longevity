@@ -48,16 +48,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             //                "debug": true // Enabled debug when first installing is always helpful
         ])
         
-        if HKHealthStore.isHealthDataAvailable() {
-            AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
-                if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-                    HealthStore.shared.getHealthStore()
-                    HealthStore.shared.startQueryingHealthData()
-                }
-            })
-        }
-        
-        
         UNUserNotificationCenter.current().delegate = self
         
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -101,9 +91,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-            HealthStore.shared.getHealthStore()
-            HealthStore.shared.startObservingHealthData()
+        if HKHealthStore.isHealthDataAvailable() {
+            if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
+                HealthStore.shared.getHealthStore()
+                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] == 1 {
+                    HealthStore.shared.startObserving(device: .applehealth)
+                }
+                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch]?["connected"] == 1 {
+                    HealthStore.shared.startObserving(device: .applewatch)
+                }
+            }
         }
         
         if #available(iOS 13.0, *) {
@@ -317,11 +314,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     @available(iOS 13.0, *)
     func appHandleRefreshTask(task: BGAppRefreshTask) {
+        scheduleBackgroundFetch()
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
-        
-        scheduleBackgroundFetch()
     }
     
     @available(iOS 13.0, *)

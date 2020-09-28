@@ -51,6 +51,7 @@
 		C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */; };
 		C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */; };
 		C16AD1DC251FA30E007AF0D4 /* BaseProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1DB251FA30E007AF0D4 /* BaseProfileSetupViewController.swift */; };
+		C16AD1E1252276FB007AF0D4 /* AppleWatchConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1E0252276FB007AF0D4 /* AppleWatchConnectViewController.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -269,6 +270,7 @@
 		C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogNoDataView.swift; sourceTree = "<group>"; };
 		C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		C16AD1DB251FA30E007AF0D4 /* BaseProfileSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProfileSetupViewController.swift; sourceTree = "<group>"; };
+		C16AD1E0252276FB007AF0D4 /* AppleWatchConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchConnectViewController.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -501,6 +503,7 @@
 				C12F09C224F800EA00623CC3 /* AppleHealthConnectionViewController.swift */,
 				E2E8F93D24F94E7F003827CC /* FAQViewController.swift */,
 				E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */,
+				C16AD1E0252276FB007AF0D4 /* AppleWatchConnectViewController.swift */,
 			);
 			path = ProfileSettings;
 			sourceTree = "<group>";
@@ -1280,6 +1283,7 @@
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 				C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */,
+				C16AD1E1252276FB007AF0D4 /* AppleWatchConnectViewController.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

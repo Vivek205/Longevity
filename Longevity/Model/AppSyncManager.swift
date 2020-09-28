@@ -13,7 +13,7 @@ class AppSyncManager  {
 
     var userProfile: DynamicValue<UserProfile>
     var healthProfile: DynamicValue<UserHealthProfile>
-    var isTermsAccepted: DynamicValue<Bool>
+    var isTermsAccepted: DynamicValue<Bool> = DynamicValue(true)
     var appShareLink: DynamicValue<String>
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
@@ -22,7 +22,6 @@ class AppSyncManager  {
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preconditions: nil))
-        self.isTermsAccepted = DynamicValue(true)
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
@@ -80,7 +79,7 @@ class AppSyncManager  {
     
     func updateHealthProfile(deviceName: String, connected: Int) {
         let profile = self.healthProfile.value
-        if let devices = profile?.devices {
+        if !(profile?.devices?.isEmpty ?? true) {
             if let device = profile?.devices?[deviceName] {
                 self.healthProfile.value?.devices?[deviceName]?["connected"] = connected
             } else {
@@ -89,7 +88,6 @@ class AppSyncManager  {
         } else {
             self.healthProfile.value?.devices = [deviceName:["connected": connected]]
         }
-
         
         let userProfile = UserProfileAPI()
         userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!, completion: {
@@ -101,10 +99,9 @@ class AppSyncManager  {
 
     func updateUserNotification(enabled: Bool) {
         let localValue = self.userNotification.value?.isEnabled
-        self.userNotification.value?.isEnabled = enabled
 
         let notificationAPI = NotificationAPI()
-        notificationAPI.updateNotification(completion: { (notification) in
+        notificationAPI.updateNotification(userNotification: enabled, completion: { (notification) in
             self.userNotification.value = notification
         }) {
             self.userNotification.value?.isEnabled = localValue

@@ -8,6 +8,7 @@
 
 import UIKit
 import Amplify
+import HealthKit
 
 class LNTabBarViewController: UITabBarController {
     
@@ -57,6 +58,20 @@ class LNTabBarViewController: UITabBarController {
         
         AppSyncManager.instance.syncUserProfile()
         retrieveARN()
+        
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
+            if HKHealthStore.isHealthDataAvailable() {
+                if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
+                    HealthStore.shared.getHealthStore()
+                    if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] == 1 {
+                        HealthStore.shared.startObserving(device: .applehealth)
+                    }
+                    if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch]?["connected"] == 1 {
+                        HealthStore.shared.startObserving(device: .applewatch)
+                    }
+                }
+            }
+        })
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -74,45 +89,45 @@ class LNTabBarViewController: UITabBarController {
         }
     }
     
-    func navigateToTheNextScreen(){
-        let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
-        let devices = AppSyncManager.instance.healthProfile.value?.devices
-        var healthKitConnected = false
-        var fitbitConnected = false
-        if let profile = AppSyncManager.instance.healthProfile.value {
-            if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
-                healthKitConnected = true
-            }
-            if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
-                fitbitConnected = true
-            }
-        }
-        
-        let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
-        
-        if isTermsAccepted == true {
-            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-            var homeVC:UIViewController = UIViewController()
-            
-            if providedPreExistingMedicalConditions == true {
-                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
-            }else if fitbitConnected {
-                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
-            }else if healthKitConnected {
-                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
-            } else {
-                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
-            }
-            
-            let navigationController = UINavigationController(rootViewController: homeVC)
-            navigationController.modalPresentationStyle = .fullScreen
-            
-            self.present(navigationController, animated: true, completion: nil)
-            
-        } else {
-            performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
-        }
-    }
+//    func navigateToTheNextScreen(){
+//        let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
+//        let devices = AppSyncManager.instance.healthProfile.value?.devices
+//        var healthKitConnected = false
+//        var fitbitConnected = false
+//        if let profile = AppSyncManager.instance.healthProfile.value {
+//            if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
+//                healthKitConnected = true
+//            }
+//            if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
+//                fitbitConnected = true
+//            }
+//        }
+//
+//        let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
+//
+//        if isTermsAccepted == true {
+//            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+//            var homeVC:UIViewController = UIViewController()
+//
+//            if providedPreExistingMedicalConditions == true {
+//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
+//            }else if fitbitConnected {
+//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
+//            }else if healthKitConnected {
+//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
+//            } else {
+//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
+//            }
+//
+//            let navigationController = UINavigationController(rootViewController: homeVC)
+//            navigationController.modalPresentationStyle = .fullScreen
+//
+//            self.present(navigationController, animated: true, completion: nil)
+//
+//        } else {
+//            performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
+//        }
+//    }
 }
 
 extension LNTabBarViewController: UITabBarControllerDelegate {
@@ -132,7 +147,7 @@ extension LNTabBarViewController: UITabBarControllerDelegate {
     
     func showShareApp() {
         var sharemessage = [Any]()
-        sharemessage.append("Hey, I found this interesting app for COVID19 self-checks")
+        sharemessage.append("Hey, you should download Rejuve.  It's great companion in protecting yourself from COVID-19 and improving health safety.")
         if let applink = AppSyncManager.instance.appShareLink.value, !applink.isEmpty {
             sharemessage.append(applink)
         }
