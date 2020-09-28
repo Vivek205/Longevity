@@ -12,12 +12,18 @@ import Amplify
 class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
     // MARK: Outlets
     @IBOutlet weak var disclaimer: UILabel!
-    
+    @IBOutlet weak var infoLabel: UILabel!
+
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeDisclaimerLabel()
         self.removeBackButtonNavigation()
         self.addProgressbar(progress: 20.0)
+        let width = self.view.frame.width
+        NSLayoutConstraint.activate([
+            infoLabel.widthAnchor.constraint(equalToConstant: (width - 30)),
+            disclaimer.widthAnchor.constraint(equalToConstant: (width - 30))
+        ])
     }
 
     func customizeDisclaimerLabel() {
@@ -27,7 +33,7 @@ class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
 
         let detailsAttributes:[NSAttributedString.Key:Any] =
             [.font: UIFont(name: "Montserrat-Italic", size: CGFloat(18)),
-             .foregroundColor:UIColor.darkGray
+             .foregroundColor: UIColor.sectionHeaderColor
         ]
 
         let details =
