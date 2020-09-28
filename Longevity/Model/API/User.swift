@@ -23,6 +23,7 @@ struct ExternalDevices {
     static let fitbit = "FITBIT"
     static let healthkit = "HEALTHKIT"
     static let healthkitBio = "HEALTHKIT_BIO"
+    static let watch = "APPLEWATCH"
 }
 
 struct LoginType {

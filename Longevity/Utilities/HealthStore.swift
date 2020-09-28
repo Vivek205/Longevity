@@ -44,11 +44,16 @@ final class HealthStore {
     var healthReadings: [HealthReading] = [HealthReading]()
     
     private var healthDataTypes: Set<HKObjectType> {
-        if #available(iOS 14.0, *) {
         return Set([
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
             HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
             HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+        ])
+    }
+    
+    private var watchDataTypes: Set<HKObjectType> {
+        if #available(iOS 14.0, *) {
+        return Set([
             HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
             HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
             HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
@@ -60,9 +65,6 @@ final class HealthStore {
             HKObjectType.categoryType(forIdentifier: .handwashingEvent)!
         ]) } else {
             return Set([
-                HKObjectType.quantityType(forIdentifier: .stepCount)!,
-                HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
-                HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
                 HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
                 HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
                 HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
@@ -82,23 +84,22 @@ final class HealthStore {
             return healthStore
         } else {
             healthStore = HKHealthStore()
-            healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) {
-                (success, error) in
-                if !success {
-                    // Handle the error here.
-                } else {
-                    self.startQueryingHealthData()
-                }
-            }
             return healthStore!
         }
     }
     
-    func getHealthKitAuthorization(completion: @escaping ((Bool) -> Void)) {
+    func getHealthKitAuthorization(device: HealthDevices, completion: @escaping ((Bool) -> Void)) {
         healthStore = HKHealthStore()
-        healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) {
-            (success, error) in
-            completion(success)
+        if device == .applehealth {
+            healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) {
+                (success, error) in
+                completion(success)
+            }
+        } else if device == .applewatch {
+            healthStore?.requestAuthorization(toShare: nil, read: watchDataTypes) {
+                (success, error) in
+                completion(success)
+            }
         }
     }
     
@@ -576,8 +577,24 @@ final class HealthStore {
         }
     }
     
-    func startObservingHealthData() {
-        for type in healthDataTypes {
+    func startObserving(device: HealthDevices) {
+        if device == .applehealth {
+            self.startObservingHealthData(dataTypes: self.healthDataTypes)
+        } else if device == .applewatch {
+            self.startObservingHealthData(dataTypes: self.watchDataTypes)
+        }
+    }
+    
+    func startQuerying(device: HealthDevices) {
+        if device == .applehealth {
+            self.startQueryingHealthData(dataTypes: self.healthDataTypes)
+        } else if device == .applewatch {
+            self.startQueryingHealthData(dataTypes: self.watchDataTypes)
+        }
+    }
+    
+    fileprivate func startObservingHealthData(dataTypes: Set<HKObjectType>) {
+        for type in dataTypes {
             guard let sampleType = type as? HKSampleType else {
                 continue
             }
@@ -599,8 +616,8 @@ final class HealthStore {
         }
     }
     
-    func startQueryingHealthData() {
-        for type in healthDataTypes {
+    fileprivate func startQueryingHealthData(dataTypes: Set<HKObjectType>) {
+        for type in dataTypes {
             guard let sampleType = type as? HKSampleType else {
                 continue
             }

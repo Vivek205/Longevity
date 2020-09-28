@@ -11,7 +11,7 @@ import UIKit
 enum HealthDevices: Int, CaseIterable {
     case applehealth = 0
     case fitbit = 1
-    case newdevice = 2
+    case applewatch = 2
 }
 
 extension HealthDevices {
@@ -21,8 +21,8 @@ extension HealthDevices {
             return UIImage(named: "Icon-Apple-Health")
         case .fitbit:
             return UIImage(named: "icon:  fitbit logo")
-        default:
-            return nil
+        case .applewatch:
+            return UIImage(named: "icon: apple watch")
         }
     }
     
@@ -32,8 +32,8 @@ extension HealthDevices {
             return "Apple Health"
         case .fitbit:
             return "Fitbit"
-        default:
-            return "Add health device"
+        case .applewatch:
+            return "Apple Watch"
         }
     }
     
@@ -42,9 +42,9 @@ extension HealthDevices {
         case .applehealth:
             return "Sync your health information"
         case .fitbit:
-            return "Add your Fitbit product"
-        default:
-            return ""
+            return "Connect your Fitbit product"
+        case .applewatch:
+            return "Connect your device"
         }
     }
 }
@@ -62,6 +62,8 @@ class DashboardDevicesCell: UITableViewCell {
         devices.delegate = self
         devices.dataSource = self
         devices.showsHorizontalScrollIndicator = false
+        devices.isScrollEnabled = true
+        devices.isUserInteractionEnabled = true
         devices.translatesAutoresizingMaskIntoConstraints = false
         return devices
     }()
@@ -69,13 +71,13 @@ class DashboardDevicesCell: UITableViewCell {
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
-        self.addSubview(devicesCollection)
+        self.contentView.addSubview(devicesCollection)
         self.backgroundColor = UIColor(hexString: "#F5F6FA")
         NSLayoutConstraint.activate([
-            devicesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            devicesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            devicesCollection.topAnchor.constraint(equalTo: self.topAnchor),
-            devicesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            devicesCollection.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            devicesCollection.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            devicesCollection.topAnchor.constraint(equalTo: self.contentView.topAnchor),
+            devicesCollection.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor)
         ])
         
         guard let layout = devicesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {

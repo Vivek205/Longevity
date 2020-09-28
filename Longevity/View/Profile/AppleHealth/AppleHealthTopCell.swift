@@ -10,16 +10,6 @@ import UIKit
 
 class AppleHealthTopCell: UITableViewCell {
     
-    var isDeviceConnected: Bool! {
-        didSet {
-            if isDeviceConnected == true {
-                self.connectionStateIcon.tintColor = .themeColor
-            } else {
-                self.connectionStateIcon.tintColor = .lightGray
-            }
-        }
-    }
-    
     lazy var healthKitImage: UIImageView = {
         let healthkitImage = UIImageView()
         healthkitImage.image = UIImage(named: "healthkitIcon")
@@ -93,6 +83,8 @@ class AppleHealthTopCell: UITableViewCell {
         self.addSubview(horizontalStack)
         
         NSLayoutConstraint.activate([
+            healthKitImage.heightAnchor.constraint(equalToConstant: 80.0),
+            healthKitImage.widthAnchor.constraint(equalTo: healthKitImage.heightAnchor),
             horizontalStack.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
             horizontalStack.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
             horizontalStack.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0),
@@ -104,5 +96,15 @@ class AppleHealthTopCell: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setup(deviceImage: UIImage?, deviceName: String, isConnected: Bool) {
+        self.healthKitImage.image = deviceImage
+        self.healthkitName.text = deviceName
+        if isConnected == true {
+            self.connectionStateIcon.tintColor = .themeColor
+        } else {
+            self.connectionStateIcon.tintColor = .lightGray
+        }
     }
 }

@@ -1,14 +1,14 @@
 //
-//  AppleHealthConnectionViewController.swift
+//  AppleWatchConnectViewController.swift
 //  Longevity
 //
-//  Created by Jagan Kumar Mudila on 27/08/2020.
+//  Created by Jagan Kumar Mudila on 28/09/2020.
 //  Copyright © 2020 vivek. All rights reserved.
 //
 
 import UIKit
 
-class AppleHealthConnectionViewController: UIViewController {
+class AppleWatchConnectViewController: UIViewController {
     
     var isDeviceConnected: Bool = false
     
@@ -33,7 +33,7 @@ class AppleHealthConnectionViewController: UIViewController {
         self.connectionTableView.tableFooterView = UIView()
         
         let titleLabel = UILabel()
-        titleLabel.text = "Apple Health"
+        titleLabel.text = "Apple Watch"
         titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
         titleLabel.textColor = UIColor(hexString: "#4E4E4E")
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +52,7 @@ class AppleHealthConnectionViewController: UIViewController {
         
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
-            if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
+            if let device = profile?.devices?[ExternalDevices.watch], device["connected"] == 1 {
                 self?.isDeviceConnected = true
             } else {
                 self?.isDeviceConnected = false
@@ -67,7 +67,7 @@ class AppleHealthConnectionViewController: UIViewController {
     }
 }
 
-extension AppleHealthConnectionViewController: UITableViewDataSource, UITableViewDelegate {
+extension AppleWatchConnectViewController: UITableViewDataSource, UITableViewDelegate {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return 4
     }
@@ -75,7 +75,7 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         if indexPath.row == 0 {
             guard let cell = tableView.getCell(with: AppleHealthTopCell.self, at: indexPath) as? AppleHealthTopCell else { preconditionFailure("Invalid cell type") }
-            cell.setup(deviceImage: UIImage(named: "healthkitIcon"), deviceName: "Apple Health", isConnected: self.isDeviceConnected)
+            cell.setup(deviceImage: UIImage(named: "icon: apple watch"), deviceName: "Apple Watch", isConnected: self.isDeviceConnected)
             return cell
         } else if indexPath.row == 1 {
             guard let cell = tableView.getCell(with: AppleHealthStatusCell.self, at: indexPath) as? AppleHealthStatusCell else { preconditionFailure("Invalid cell type") }
@@ -104,15 +104,17 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
     }
     
     @objc func connectDevice() {
+
+
         var connected = self.isDeviceConnected ? 0 : 1
 
         if connected == 0 { // To be disconnected
-            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
         } else {
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {
                     DispatchQueue.main.async {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
                     }
                     return
                 } else {
@@ -123,19 +125,5 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
                 }
             }
         }
-
-//        let profile = AppSyncManager.instance.healthProfile.value
-//        if let device = profile?.devices?[ExternalDevices.healthkit] {
-//            AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] = connected
-//        } else {
-//            AppSyncManager.instance.healthProfile.value?.devices?.merge([ExternalDevices.healthkit: ["connected" : connected]]) { (current, _) in current }
-//        }
-//
-//        let userProfile = UserProfileAPI()
-//        userProfile.saveUserHealthProfile(healthProfile: AppSyncManager.instance.healthProfile.value!, completion: {
-//            print("Completed")
-//        }) { (error) in
-//            print("Failed to save health profile:" + error.localizedDescription)
-//        }
     }
 }

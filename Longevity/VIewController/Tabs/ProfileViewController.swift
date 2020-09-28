@@ -33,7 +33,7 @@ enum ProfileSetting: String {
     case resetcheckin = "Reset Check-in Data"
     case applehealth = "Apple Health"
     case fitbit = "Fitbit"
-    case addhealthdevice = "Add Health Device"
+    case applewatch = "Apple Watch"
     case notifications = "Notifications"
     case editaccount = "Edit Account Details"
     case usemetricsystem = "Use Metric System"
@@ -53,7 +53,7 @@ extension ProfileSetting {
         case .resetcheckin: return .navigate
         case .applehealth: return .navigate
         case .fitbit: return .switchcontrol
-        case .addhealthdevice: return .addcontrol
+        case .applewatch: return .addcontrol
         case .notifications: return .switchcontrol
         case .editaccount: return .navigate
         case .usemetricsystem: return .switchcontrol
@@ -71,8 +71,8 @@ extension ProfileSetting {
         case .updatepreconditions: return .center
         case .resetcheckin: return .bottom
         case .applehealth: return .topmost
-        case .fitbit: return .bottom
-        //        case .addhealthdevice: return .bottom
+        case .fitbit: return .center
+        case .applewatch: return .bottom
         case .notifications: return .topmost
         case .editaccount: return .center
         case .usemetricsystem: return .bottom
@@ -95,7 +95,7 @@ class ProfileViewController: BaseViewController {
     }
     
     var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions, .resetcheckin],
-                                        [.applehealth, .fitbit],
+                                        [.applehealth, .fitbit, .applewatch],
                                         [.notifications, .editaccount, .usemetricsystem],
                                         [.faqs, .termsofservice, .contactsupport],
                                         [.signout], [.appversion]]
@@ -305,8 +305,12 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let appleHealthViewController = AppleHealthConnectionViewController()
                     let navigationController = UINavigationController(rootViewController: appleHealthViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController)
+                    
                 case .fitbit: return
-                case .addhealthdevice: return
+                case .applewatch:
+                    let applewatchViewController = AppleWatchConnectViewController()
+                    let navigationController = UINavigationController(rootViewController: applewatchViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 case .notifications:
                     //                    openSettings()
                     return
@@ -347,7 +351,7 @@ extension ProfileViewController: UserProfileHeaderDelegate {
     func selected(profileView: ProfileView) {
         self.currentProfileView = profileView
     }
-
+    
     func openSettings() {
         if let appSettings = NSURL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings as URL, options: [:], completionHandler: nil)
@@ -372,16 +376,16 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
             return
         }
     }
-
+    
     func handleMetricSystemSwitch() {
         HealthKitUtil.shared.toggleSelectedUnit()
         updateHealthProfile()
     }
-
+    
     func handleFitbitSwitch(newState isOn: Bool) {
         let connected = isOn ? 1 : 0
         let fitbitModel = FitbitModel()
-
+        
         if isOn  {
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {
@@ -394,13 +398,13 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                                 print("Auth flow finished with error \(String(describing: error))")
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                             } else {
-
+                                
                                 fitbitModel.token(authCode: authCode!)
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                             }
                         }
                     }
-
+                    
                     return
                 } else {
                     DispatchQueue.main.async {
@@ -410,7 +414,7 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                     }
                 }
             }
-
+            
         } else {
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
         }
@@ -431,9 +435,9 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                     DispatchQueue.main.async {
                         UIApplication.shared.registerForRemoteNotifications()
                     }
-            }
+                }
         }
-
+        
         if isOn {
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {

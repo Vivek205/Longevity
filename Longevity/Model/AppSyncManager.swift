@@ -79,7 +79,7 @@ class AppSyncManager  {
     
     func updateHealthProfile(deviceName: String, connected: Int) {
         let profile = self.healthProfile.value
-        if let devices = profile?.devices {
+        if !(profile?.devices?.isEmpty ?? true) {
             if let device = profile?.devices?[deviceName] {
                 self.healthProfile.value?.devices?[deviceName]?["connected"] = connected
             } else {

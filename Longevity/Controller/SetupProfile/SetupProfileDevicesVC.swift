@@ -74,11 +74,12 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                             }
                         }
                     default:
-                        HealthStore.shared.getHealthKitAuthorization { (authorized) in
+                        HealthStore.shared.getHealthStore()
+                        HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
                             if authorized {
-                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: 1)
                             } else {
-                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 0)
+                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: 0)
                             }
                         }
                     }
