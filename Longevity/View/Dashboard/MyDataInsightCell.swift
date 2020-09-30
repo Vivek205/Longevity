@@ -182,7 +182,7 @@ class MyDataInsightCell: UICollectionViewCell {
         
         contentView.layer.cornerRadius = 5.0
         contentView.layer.borderWidth = 1.0
-        contentView.layer.borderColor = UIColor.borderColor.cgColor
+        contentView.layer.borderColor = (insightData?.isExpanded ?? false) ? UIColor.themeColor.cgColor : UIColor.borderColor.cgColor
         contentView.layer.masksToBounds = true
     }
 }
