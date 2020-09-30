@@ -10,6 +10,8 @@ import UIKit
 
 class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
 
+    var originalStatus: Bool = false
+    
     lazy var emailNotification: UILabel = {
         let notification = UILabel()
         notification.font = UIFont(name: "Montserrat-Medium", size: 16.0)
@@ -25,7 +27,6 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         let notificationswitch = UISwitch()
         notificationswitch.onTintColor = .themeColor
         notificationswitch.translatesAutoresizingMaskIntoConstraints = false
-        notificationswitch.addTarget(self, action: #selector(handleNotificationSwitch), for: .valueChanged)
         return notificationswitch
     }()
     
@@ -45,7 +46,6 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         self.containerView.addSubview(emailNotification)
         self.containerView.addSubview(notificationSwitch)
         self.containerView.addSubview(primaryButton)
-        
         self.titleLabel.text = "Longevity"
         
         let infoText = "Coming soon to you!"
@@ -83,16 +83,21 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
 
             DispatchQueue.main.async {
                 self?.notificationSwitch.isOn = subscription.status
+                self?.originalStatus = subscription.status
             }
         }
     }
     
-    @objc func handleNotificationSwitch() {
-        if self.notificationSwitch.isOn {
-            AppSyncManager.instance.updateUserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: true)
-        } else {
-            AppSyncManager.instance.updateUserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)
-            self.closeView()
+    override func primaryButtonPressed(_ sender: UIButton) {
+        let currentStatus = self.notificationSwitch.isOn
+        if self.originalStatus != currentStatus {
+            self.showSpinner()
+            AppSyncManager.instance.updateUserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: currentStatus) { [weak self] in
+                DispatchQueue.main.async {
+                    self?.removeSpinner()
+                    self?.dismiss(animated: true, completion: nil)
+                }
+            }
         }
     }
 }

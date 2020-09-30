@@ -27,7 +27,7 @@ extension RejuveTab {
             return "Profile"
         case .shareApp:
             return "Share App"
-        case .logger:
+        default:
             return "Local Logs"
         }
     }
@@ -42,7 +42,7 @@ extension RejuveTab {
             return "Profile Activity"
         case .shareApp:
             return "Share App"
-        case .logger:
+        default:
             return "Logs"
         }
     }
@@ -57,7 +57,7 @@ extension RejuveTab {
             return UIImage(named: "tab-profile")
         case .shareApp:
             return UIImage(named: "tab-share")
-        case .logger:
+        default:
             return UIImage(named: "tab-share")
         }
     }

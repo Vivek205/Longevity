@@ -33,7 +33,7 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         
         if self.isFromSettings {
-            self.viewProgressBar.isHidden = true
+//            self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
             let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
@@ -41,6 +41,8 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
             self.footerView.isHidden = true
+        } else {
+            self.addProgressbar(progress: 100.0)
         }
 
         if self.modalPresentation {
@@ -52,8 +54,6 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
                 // Fallback on earlier versions
             }
         }
-        
-        self.addProgressbar(progress: 100.0)
     }
 
     deinit {

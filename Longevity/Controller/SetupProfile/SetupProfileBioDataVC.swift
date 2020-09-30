@@ -45,7 +45,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         checkIfHealthKitSyncedAlready()
         
         if self.isFromSettings {
-            self.viewProgressBar.isHidden = true
+//            self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
             let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
@@ -98,9 +98,14 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         agePicker.backgroundColor = UIColor.white
         agePicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
         agePicker.datePickerMode = .date
+        if #available(iOS 13.4, *) {
+            agePicker.preferredDatePickerStyle = .wheels
+        } else {
+            // Fallback on earlier versions
+        }
         agePicker.isHidden = false
         agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
-        agePicker.maximumDate = Date()
+        agePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())
         agePicker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
         
         // Toolbar

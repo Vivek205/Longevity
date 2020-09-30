@@ -28,7 +28,7 @@ class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
 
     func customizeDisclaimerLabel() {
         let headingAttributes:[NSAttributedString.Key:Any] =
-            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18))]
+            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor(hexString: "#4E4E4E")]
         let heading = NSMutableAttributedString(string: "Disclaimer: ", attributes: headingAttributes)
 
         let detailsAttributes:[NSAttributedString.Key:Any] =
