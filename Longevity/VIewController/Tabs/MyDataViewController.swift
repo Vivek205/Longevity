@@ -106,13 +106,13 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat(collectionView.bounds.width) - 20.0
         var height: CGFloat = 80.0
-        
+
         guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
-        
+
         if insightData.name != .logs && (insightData.isExpanded ?? false) {
             height = 430.0
         }
-        
+
         return CGSize(width: width, height: height)
     }
 }
