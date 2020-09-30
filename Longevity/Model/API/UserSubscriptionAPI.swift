@@ -62,7 +62,7 @@ class UserSubscriptionAPI: BaseAuthAPI {
         }
     }
 
-    func updateUserSubscriptions(userSubscriptions : [UserSubscription]?){
+    func updateUserSubscriptions(userSubscriptions : [UserSubscription]?, completion: @escaping(() -> Void)){
         guard let userSubscriptions = userSubscriptions else {return}
         let path = "/user/subscriptions"
         self.getCredentials(completion: { [weak self] (credentials) in

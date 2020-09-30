@@ -9,7 +9,6 @@
 import UIKit
 
 class MyDataViewController: BaseViewController {
-    var isCellExpanded: [Int:Bool] = [Int:Bool]()
     
     var userInsights: [UserInsight]? {
         didSet {
@@ -61,6 +60,15 @@ class MyDataViewController: BaseViewController {
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
             self?.userInsights = AppSyncManager.instance.userInsights.value
         }
+    }
+    
+    func expandItemfor(insightType: CardType) {
+        guard let expandedIndex = self.userInsights?.firstIndex(where: { $0.name == insightType }) else { return }
+        for index in 0..<(self.userInsights?.count ?? 0) {
+            self.userInsights?[index].isExpanded = expandedIndex == index
+        }
+        self.myDataCollectionView.reloadData()
+        self.myDataCollectionView.scrollToItem(at: IndexPath(item: expandedIndex, section: 0), at: .top, animated: true)
     }
 }
 

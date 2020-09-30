@@ -12,11 +12,18 @@ import Charts
 class MyDataInsightDetailView: UIView {
     var insightData: UserInsight! {
         didSet {
+            self.insightDescription.text = insightData?.userInsightDescription
             if let details = insightData?.details {
-                self.confidenceNoValue.isHidden = true
-                self.confidenceValue.isHidden = false
-                self.insightDescription.text = insightData.userInsightDescription
-                self.confidenceValue.text = details.confidence?.value
+                
+                if let confidencevalue = details.confidence?.value, !confidencevalue.isEmpty {
+                    self.confidenceValue.text = confidencevalue
+                    self.confidenceNoValue.isHidden = true
+                    self.confidenceValue.isHidden = false
+                } else {
+                    self.confidenceNoValue.isHidden = false
+                    self.confidenceValue.isHidden = true
+                }
+                
                 self.confidenceDescription.text = details.confidence?.confidenceDescription
                 self.histogramDescription.text = details.histogram?.histogramDescription
                 self.createHistogramData()
@@ -231,7 +238,7 @@ class MyDataInsightDetailView: UIView {
         layerGradient.name = "gradLayer"
         layerGradient.frame = histogramView.contentRect//CGRect(x: 0, y: 0, width: histogramView.bounds.width, height: histogramView.bounds.height)
         let color1 = UIColor(red: 230.0/255.0, green: 115.0/255.0, blue: 129.0/255.0, alpha: 1.0).withAlphaComponent(0.3).cgColor
-        let color2 = UIColor.white.cgColor
+        let color2 = UIColor.white.withAlphaComponent(0.3).cgColor
         let color3 = UIColor(red: 89.0/255.0, green: 187.0/255.0, blue: 110.0/255.0, alpha: 1.0).withAlphaComponent(0.3).cgColor
         layerGradient.colors = [color1, color2, color3]//[UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
         layerGradient.locations = [0.0, 0.5, 1.0]
@@ -261,7 +268,8 @@ class MyDataInsightDetailView: UIView {
             let data = LineChartData()
             data.addDataSet(line)
             self.histogramView.data = data
-            self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: true)
+            self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: false)
+            self.histogramView.xAxis.granularity = 1
             self.chartNoDataLabel.isHidden = true
         }
     }

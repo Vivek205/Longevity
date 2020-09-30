@@ -19,19 +19,45 @@ class AppSyncManager  {
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     
+    fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
+                                userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
+                                defaultOrder: 0,
+                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                 confidence: Confidence(value: "",
+                                                                        confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
+                                                 histogram: Histogram(histogramDescription: "Your COVID-19 exposure risk over the time of your check-ins."), submissions: nil),
+                                isExpanded: false),
+                    UserInsight(name: .risk, text: "COVID-19 Infection",
+                                userInsightDescription: "Infection risk estimates your chance of having COVID-19 based on your symptoms and exposure history.",
+                                defaultOrder: 1,
+                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                 confidence: Confidence(value: "",
+                                                                        confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
+                                                 histogram: Histogram(histogramDescription: "Your COVID-19 Infection risk over the time of your check-ins."), submissions: nil),
+                                isExpanded: false),
+                    UserInsight(name: .distancing,
+                                text: "Social Distancing",
+                                userInsightDescription: "Your Social Distancing Score demonstrates whether you have practiced social distancing guidelines, wore a mask, and self-quarantined according to your local government’s instructions.",
+                                defaultOrder: 2,
+                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                 confidence: Confidence(value: "",
+                                                                        confidenceDescription: "How well the AI can assess your social distancing situation. More check-ins and health data improves the accuracy."),
+                                                 histogram: Histogram(histogramDescription: "Your social distancing over the time of your check-ins."), submissions: nil),
+                                isExpanded: false),
+                    UserInsight(name: .logs,
+                                text: "COVID Check-in Log",
+                                userInsightDescription: "COVID Check-in Log",
+                                defaultOrder: 3,
+                                details: nil,
+                                isExpanded: false)]
+    
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preconditions: nil))
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
-        
-        let insights = [UserInsight(name: .exposure, text: "COVID-19 Exposure", userInsightDescription: "COVID-19 Exposure", defaultOrder: 0, details: nil, isExpanded: false),
-                        UserInsight(name: .risk, text: "COVID-19 Infection", userInsightDescription: "COVID-19 Infection", defaultOrder: 1, details: nil, isExpanded: false),
-                        UserInsight(name: .distancing, text: "Social Distancing", userInsightDescription: "Social Distancing", defaultOrder: 2, details: nil, isExpanded: false),
-                        UserInsight(name: .logs, text: "COVID Check-in Log", userInsightDescription: "COVID Check-in Log", defaultOrder: 3, details: nil, isExpanded: false)]
-        self.userInsights = DynamicValue(insights)
-
+        self.userInsights = DynamicValue(self.defaultInsights)
     }
     //User Attributes
     
@@ -70,9 +96,11 @@ class AppSyncManager  {
     }
     
     func syncUserInsights() {
-        UserInsightsAPI.instance.get { [weak self] (insights) in
-            if let insights = insights {
+        UserInsightsAPI.instance.get { [weak self] (userinsights) in
+            if let insights = userinsights {
                 self?.userInsights.value = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            } else {
+                self?.userInsights.value = self?.defaultInsights
             }
         }
     }
@@ -121,7 +149,7 @@ class AppSyncManager  {
 //           }
 //    }
 
-    func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool){
+    func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool, completion: @escaping(() -> Void)){
         if let index = self.userSubscriptions.value?.firstIndex(where: { (subscription) -> Bool in
             return subscription.subscriptionType == subscriptionType && subscription.communicationType == communicationType
         }) {
@@ -130,7 +158,7 @@ class AppSyncManager  {
             self.userSubscriptions.value?.append(UserSubscription(subscriptionType: subscriptionType, communicationType: communicationType, status: status))
         }
         let userPreferenceAPI = UserSubscriptionAPI()
-        userPreferenceAPI.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value)
+        userPreferenceAPI.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
     }
 
     fileprivate func getAppLink() {

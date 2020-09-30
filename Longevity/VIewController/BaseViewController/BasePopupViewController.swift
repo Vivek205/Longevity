@@ -39,9 +39,9 @@ class BasePopupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = .clear
+        self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         
-        self.view.addSubview(blurBackGround)
+//        self.view.addSubview(blurBackGround)
         self.view.addSubview(containerView)
         self.containerView.addSubview(closeButton)
         
@@ -61,10 +61,31 @@ class BasePopupViewController: UIViewController {
             closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20.0),
             closeButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20.0)
         ])
+        
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
+        tapgesture.numberOfTouchesRequired = 1
+        
+        self.view.addGestureRecognizer(tapgesture)
     }
     
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        UIView.animate(withDuration: 1.0) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
+        }
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+        super.viewWillDisappear(animated)
+        
+        UIView.animate(withDuration: 0.1) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        }
     }
 }
 

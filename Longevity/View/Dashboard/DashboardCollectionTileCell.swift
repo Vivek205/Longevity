@@ -15,16 +15,31 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             self.tileTitle.text = insightData?.text
             self.trendDirection.isHidden = false
             self.trendImage.isHidden = false
+            
             if let details = insightData?.details {
-                self.riskType.text = details.riskLevel?.text
-                self.riskType.font = details.riskLevel?.textFont
-                self.riskType.textColor = .themeColor
-                self.guageView.image = details.riskLevel?.riskIcon
-                self.trendDirection.text = details.trending?.text
-                self.trendDirection.textColor = details.sentiment?.tintColor
-                self.trendImage.image = details.trending?.trendIcon
-                self.trendImage.tintColor = details.sentiment?.tintColor
-                self.trendImage.isHidden = details.trending == .same
+                if let risklevel = details.riskLevel {
+                    self.riskType.isHidden = false
+                    self.riskType.text = risklevel.text
+                    self.riskType.font = risklevel.textFont
+                    self.riskType.textColor = .themeColor
+                    self.guageView.image = risklevel.riskIcon
+                } else {
+                    self.riskType.text = RiskLevel.none.text
+                    self.riskType.font = RiskLevel.none.textFont
+                    self.riskType.textColor = UIColor(hexString: "#9B9B9B")
+                    self.guageView.image =  RiskLevel.none.riskIcon
+                }
+                
+                if let trending = details.trending {
+                    self.trendDirection.text = trending.text
+                    self.trendDirection.textColor = details.sentiment?.tintColor
+                    self.trendImage.image = trending.trendIcon
+                    self.trendImage.tintColor = details.sentiment?.tintColor
+                    self.trendImage.isHidden = trending == .same
+                } else {
+                    self.trendImage.isHidden = true
+                    self.trendDirection.isHidden = true
+                }
             } else {
                 self.riskType.text = RiskLevel.none.text
                 self.riskType.font = RiskLevel.none.textFont
@@ -100,11 +115,11 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.addSubview(hexagonView)
+        self.contentView.addSubview(hexagonView)
         NSLayoutConstraint.activate([
-            hexagonView.leadingAnchor.constraint(equalTo: leadingAnchor),
-            hexagonView.trailingAnchor.constraint(equalTo: trailingAnchor),
-            hexagonView.heightAnchor.constraint(equalTo: widthAnchor)
+            hexagonView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            hexagonView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            hexagonView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor)
         ])
     }
     
@@ -149,6 +164,9 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         ])
         
         self.hexagonView.isUserInteractionEnabled = true
+        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenMyDataTab))
+        taprecognizer.numberOfTapsRequired = 1
+        self.hexagonView.addGestureRecognizer(taprecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -165,16 +183,17 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             layer.shadowOpacity = 0.3
             layer.masksToBounds = false
         }
-        
-        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenMyDataTab))
-        taprecognizer.numberOfTapsRequired = 1
-        self.hexagonView.addGestureRecognizer(taprecognizer)
     }
     
     @objc func doOpenMyDataTab() {
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
-        if let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController {
-            tabBarController.selectedIndex = 1
+        guard let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController else {
+            return
         }
+        tabBarController.selectedIndex = 1
+        guard let viewController = tabBarController.viewControllers?[1] as? MyDataViewController else {
+            return
+        }
+        viewController.expandItemfor(insightType: self.insightData.name)
     }
 }
