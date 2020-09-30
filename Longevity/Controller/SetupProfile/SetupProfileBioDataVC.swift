@@ -39,7 +39,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-        continueButton.isEnabled = false
+//        continueButton.isEnabled = false
         createPickersAndToolbar()
         
         checkIfHealthKitSyncedAlready()
@@ -305,7 +305,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     
     func showGenderPicker() {
         picker.selectRow(0, inComponent: 0, animated: true)
-        pickerData = ["male", "female","other"]
+        pickerData = ["Male", "Female","Other"]
         selectedPickerValue = pickerData[0]
         picker.accessibilityLabel = PickerLabel.genderPicker
         picker.reloadAllComponents()
@@ -339,7 +339,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     
     func button(wasPressedOnCell cell: SetupProfileBioOptionCell) {
         switch cell.label.text {
-        case "Sync Apple Health Profile":
+        case "Apple Health":
             authorizeHealthKitInApp()
         case "Gender":
             showGenderPicker()

@@ -29,7 +29,7 @@ enum SetupProfileCompletionStatus: String {
 
 
 public var setupProfileOptionList:[Int: SetupProfileOption] = [
-    2: SetupProfileOption(image: #imageLiteral(resourceName: "Icon-Apple-Health"), label: "Sync Apple Health Profile", buttonText: "SYNC"),
+    2: SetupProfileOption(image: #imageLiteral(resourceName: "Icon-Apple-Health"), label: "Apple Health", buttonText: "SYNC"),
     3: SetupProfileOption(image: #imageLiteral(resourceName: "icon: Gender"), label: "Gender"),
     4: SetupProfileOption(image: UIImage(named: "icon : Age") ?? UIImage(), label: "Age"),
     5: SetupProfileOption(image: UIImage(named: "icon : height") ?? UIImage(), label: "Height"),

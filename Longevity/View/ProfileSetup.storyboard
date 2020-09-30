@@ -68,7 +68,7 @@ up your health profile.</string>
                                             <constraint firstAttribute="width" constant="300" id="OpS-a3-Nlo"/>
                                         </constraints>
                                         <fontDescription key="fontDescription" name="Montserrat-Italic" family="Montserrat" pointSize="18"/>
-                                        <nil key="textColor"/>
+                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
                                 </subviews>
@@ -123,6 +123,7 @@ up your health profile.</string>
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="disclaimer" destination="TTa-qf-JMf" id="vuh-OG-6Lf"/>
+                        <outlet property="infoLabel" destination="HO4-Wh-MeV" id="QCO-Kn-Sb6"/>
                         <segue destination="zzR-Y2-5eR" kind="unwind" identifier="unwindTOSToOnboarding" unwindAction="unwindToOnboarding:" id="MGb-Pc-TaY"/>
                         <segue destination="YhE-Gr-gSC" kind="show" identifier="SetupProfileDisclaimerToBioData" id="QRg-l1-FGQ"/>
                     </connections>
@@ -213,10 +214,10 @@ up your health profile.</string>
                                                         <constraint firstAttribute="height" constant="36" id="M1d-FB-0nC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your body and location data is kept private and never sold to any 3rd party. " textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8L-W4-7fI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your body and location data is kept private and never shared" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8L-W4-7fI">
                                                     <rect key="frame" x="59" y="0.0" width="303" height="90"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
-                                                    <nil key="textColor"/>
+                                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -257,8 +258,8 @@ up your health profile.</string>
                                                         <action selector="handleButtonPress:" destination="ciS-LT-VRg" eventType="touchUpInside" id="5KP-zp-V4U"/>
                                                     </connections>
                                                 </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Sync Apple Health Profile" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTf-cO-4YF">
-                                                    <rect key="frame" x="83" y="24.5" width="159" height="41"/>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Health" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTf-cO-4YF">
+                                                    <rect key="frame" x="83" y="35" width="159" height="20.5"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>

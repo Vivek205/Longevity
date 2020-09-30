@@ -20,11 +20,11 @@ struct OnboardingCarouselData {
 
 fileprivate var carouselData = [
     OnboardingCarouselData(bgImageName: "onboardingBgYellow", carouselImageName: "onboardingOne",
-                           titleText: "Powerful and safe AI-insights", infoText: "We use AI that protects your data to generate your personalized health insights and recommendations."),
+                           titleText: "COVID-19 Risk Management", infoText: "Track COVID-19 symptoms and infection risks.  Gain personalized insights report with health goals."),
     OnboardingCarouselData(bgImageName: "onboardingBgGreen", carouselImageName: "onboardingTwo",
                            titleText: "Digital Twin of your body", infoText: "Create your personalized health profile, and connect your favorite health tracking devices to detail insights."),
     OnboardingCarouselData(bgImageName: "onboardingBgYellow", carouselImageName: "onboardingThree",
-                           titleText: "COVID-19 Risk Management", infoText: "Track COVID-19 symptoms and infection risks.  Gain personalized insights report with health goals.")
+    titleText: "Powerful and safe AI-insights", infoText: "We use AI that protects your data to generate your personalized health insights and recommendations.")
 ]
 
 class OnboardingVC: UIViewController {
