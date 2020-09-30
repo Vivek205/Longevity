@@ -216,7 +216,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         if indexPath.section == 0 && self.currentResultView == .analysis {
             if indexPath.item < (self.userInsights?.count ?? 0) {
                 guard let insightData = self.userInsights?[indexPath.item] else { return }
-                    self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
+                self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
             } else {
                 self.isSymptomsExpanded = !self.isSymptomsExpanded
                 collectionView.reloadItems(at: [indexPath])

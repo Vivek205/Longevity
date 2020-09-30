@@ -13,6 +13,8 @@ class MyDataInsightDetailView: UIView {
     var insightData: UserInsight! {
         didSet {
             if let details = insightData?.details {
+                self.confidenceNoValue.isHidden = true
+                self.confidenceValue.isHidden = false
                 self.insightDescription.text = insightData.userInsightDescription
                 self.confidenceValue.text = details.confidence?.value
                 self.confidenceDescription.text = details.confidence?.confidenceDescription
@@ -50,11 +52,21 @@ class MyDataInsightDetailView: UIView {
     
     lazy var confidenceValue: UILabel = {
         let confidence = UILabel()
-        confidence.text = "Medium"
+        confidence.text = ""
         confidence.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
         confidence.textColor = .themeColor
         confidence.translatesAutoresizingMaskIntoConstraints = false
         return confidence
+    }()
+    
+    lazy var confidenceNoValue: UILabel = {
+        let confidencenovalue = UILabel()
+        confidencenovalue.text = "More data needed"
+        confidencenovalue.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        confidencenovalue.textColor = UIColor(hexString: "#9B9B9B")
+        confidencenovalue.textAlignment = .right
+        confidencenovalue.translatesAutoresizingMaskIntoConstraints = false
+        return confidencenovalue
     }()
     
     lazy var confidenceDescription: UILabel = {
@@ -105,6 +117,10 @@ class MyDataInsightDetailView: UIView {
     
     lazy var histogramView: LineChartView = {
         let histogramView = LineChartView()
+        histogramView.noDataText = "More data needed"
+        histogramView.noDataFont = UIFont(name: "Montserrat-Regular", size: 12.0)!
+        histogramView.noDataTextColor = UIColor(hexString: "#9B9B9B")
+        histogramView.noDataTextAlignment = .center
         histogramView.rightAxis.enabled = false
         let leftAxis = histogramView.leftAxis
         leftAxis.calculate(min: -1.0, max: 1.0)
@@ -121,12 +137,23 @@ class MyDataInsightDetailView: UIView {
         return histogramView
     }()
     
+    lazy var chartNoDataLabel: UILabel = {
+        let chartnodata = UILabel()
+        chartnodata.text = "More data needed"
+        chartnodata.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        chartnodata.textColor = UIColor(hexString: "#9B9B9B")
+        chartnodata.textAlignment = .center
+        chartnodata.translatesAutoresizingMaskIntoConstraints = false
+        return chartnodata
+    }()
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
         self.addSubview(insightDescription)
         self.addSubview(divider1)
         self.addSubview(confidence)
+        self.addSubview(confidenceNoValue)
         self.addSubview(confidenceValue)
         self.addSubview(confidenceDescription)
         self.addSubview(divider2)
@@ -134,20 +161,26 @@ class MyDataInsightDetailView: UIView {
 //        self.addSubview(histogramDay)
         self.addSubview(histogramView)
         self.addSubview(histogramDescription)
+        self.addSubview(chartNoDataLabel)
         
         NSLayoutConstraint.activate([
             insightDescription.topAnchor.constraint(equalTo: topAnchor),
             insightDescription.leadingAnchor.constraint(equalTo: leadingAnchor),
             insightDescription.trailingAnchor.constraint(equalTo: trailingAnchor),
-            divider1.topAnchor.constraint(equalTo: insightDescription.bottomAnchor, constant: 14.0),
+            divider1.topAnchor.constraint(equalTo: insightDescription.bottomAnchor, constant: 8.0),
             divider1.leadingAnchor.constraint(equalTo: leadingAnchor),
             divider1.heightAnchor.constraint(equalToConstant: 1.0),
             divider1.trailingAnchor.constraint(equalTo: trailingAnchor),
             confidence.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
             confidence.leadingAnchor.constraint(equalTo: leadingAnchor),
+            confidence.widthAnchor.constraint(equalToConstant: 100.0),
             confidenceValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
             confidenceValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
             confidenceValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
+            confidenceNoValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
+            confidenceNoValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0),
+            confidenceNoValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
+            
             confidenceDescription.topAnchor.constraint(equalTo: confidence.bottomAnchor, constant: 8.0),
             confidenceDescription.leadingAnchor.constraint(equalTo: leadingAnchor),
             confidenceDescription.trailingAnchor.constraint(equalTo: trailingAnchor),
@@ -163,11 +196,19 @@ class MyDataInsightDetailView: UIView {
             histogramView.topAnchor.constraint(equalTo: trendHistogram.bottomAnchor, constant: 8.0),
             histogramView.leadingAnchor.constraint(equalTo: leadingAnchor),
             histogramView.trailingAnchor.constraint(equalTo: trailingAnchor),
+            chartNoDataLabel.leadingAnchor.constraint(equalTo: histogramView.leadingAnchor),
+            chartNoDataLabel.trailingAnchor.constraint(equalTo: histogramView.trailingAnchor),
+            chartNoDataLabel.centerYAnchor.constraint(equalTo: histogramView.centerYAnchor),
+//            histogramView.heightAnchor.constraint(equalToConstant: 65.0),
             histogramDescription.topAnchor.constraint(equalTo: histogramView.bottomAnchor, constant: 8.0),
             histogramDescription.leadingAnchor.constraint(equalTo: leadingAnchor),
             histogramDescription.trailingAnchor.constraint(equalTo: trailingAnchor),
             histogramDescription.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
+        
+        self.confidenceNoValue.isHidden = false
+        self.chartNoDataLabel.isHidden = false
+        self.confidenceValue.isHidden = true
     }
     
     required init?(coder: NSCoder) {
@@ -188,12 +229,14 @@ class MyDataInsightDetailView: UIView {
 
         let layerGradient = CAGradientLayer()
         layerGradient.name = "gradLayer"
-        layerGradient.frame = CGRect(x: 0, y: 0, width: histogramView.bounds.width, height: histogramView.bounds.height)
-        layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
-        layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
-        layerGradient.endPoint = CGPoint(x: 0, y: 1.0)
+        layerGradient.frame = histogramView.contentRect//CGRect(x: 0, y: 0, width: histogramView.bounds.width, height: histogramView.bounds.height)
+        let color1 = UIColor(red: 230.0/255.0, green: 115.0/255.0, blue: 129.0/255.0, alpha: 1.0).withAlphaComponent(0.3).cgColor
+        let color2 = UIColor.white.cgColor
+        let color3 = UIColor(red: 89.0/255.0, green: 187.0/255.0, blue: 110.0/255.0, alpha: 1.0).withAlphaComponent(0.3).cgColor
+        layerGradient.colors = [color1, color2, color3]//[UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
+        layerGradient.locations = [0.0, 0.5, 1.0]
 
-        trendHistogram.layer.insertSublayer(layerGradient, at: 0)
+        histogramView.layer.insertSublayer(layerGradient, at: 0)
     }
     
     fileprivate func createHistogramData() {
@@ -219,6 +262,7 @@ class MyDataInsightDetailView: UIView {
             data.addDataSet(line)
             self.histogramView.data = data
             self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: true)
+            self.chartNoDataLabel.isHidden = true
         }
     }
     

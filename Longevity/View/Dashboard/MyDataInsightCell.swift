@@ -18,6 +18,7 @@ class MyDataInsightCell: UICollectionViewCell {
             self.tileTitle.text = insightData?.text
             
             if let details = insightData?.details {
+                self.riskType.isHidden = false
                 self.riskType.text = details.riskLevel?.text
                 self.riskType.font = details.riskLevel?.textFont
                 self.riskType.textColor = .themeColor
@@ -27,24 +28,35 @@ class MyDataInsightCell: UICollectionViewCell {
                 self.trendImage.image = details.trending?.trendIcon
                 self.trendImage.tintColor = details.sentiment?.tintColor
                 self.trendImage.isHidden = details.trending == .same
-                self.detailsView.isHidden = !(insightData?.isExpanded ?? false)
-                self.detailsView.insightData = insightData
-                
-                if insightData?.isExpanded ?? false {
-                    expandCollapseImage.image = UIImage(named: "rightArrow")?.rotate(radians: .pi / 2)
-                } else {
-                    expandCollapseImage.image = UIImage(named: "rightArrow")
-                }
+                self.nodataLabel.isHidden = true
             } else {
-                self.riskType.text = RiskLevel.none.text
-                self.riskType.font = RiskLevel.none.textFont
-                self.riskType.textColor = UIColor(hexString: "#9B9B9B")
+                self.riskType.isHidden = true
                 self.guageView.image =  RiskLevel.none.riskIcon
                 self.trendDirection.isHidden = true
                 self.trendImage.isHidden = true
+                self.nodataLabel.isHidden = false
+            }
+            
+            self.detailsView.isHidden = !(insightData?.isExpanded ?? false)
+            self.detailsView.insightData = insightData
+            
+            if insightData?.isExpanded ?? false {
+                expandCollapseImage.image = UIImage(named: "rightArrow")?.rotate(radians: .pi / 2)
+            } else {
+                expandCollapseImage.image = UIImage(named: "rightArrow")
             }
         }
     }
+    
+    lazy var nodataLabel: UILabel = {
+        let nodatalabel = UILabel()
+        nodatalabel.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        nodatalabel.text = "More data needed"
+        nodatalabel.textColor = UIColor(hexString: "#9B9B9B")
+        nodatalabel.textAlignment = .right
+        nodatalabel.translatesAutoresizingMaskIntoConstraints = false
+        return nodatalabel
+    }()
     
     lazy var expandCollapseImage: UIImageView = {
         let expandCollapse = UIImageView()
@@ -118,6 +130,7 @@ class MyDataInsightCell: UICollectionViewCell {
         self.addSubview(tileTitle)
         self.addSubview(guageView)
         self.addSubview(riskType)
+        self.addSubview(nodataLabel)
         self.addSubview(trendImage)
         self.addSubview(trendDirection)
         self.addSubview(detailsView)
@@ -151,8 +164,12 @@ class MyDataInsightCell: UICollectionViewCell {
             
             self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 80.0),
             self.detailsView.leadingAnchor.constraint(equalTo: self.tileTitle.leadingAnchor),
-            self.detailsView.trailingAnchor.constraint(equalTo: self.trendDirection.trailingAnchor),
-            self.detailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0)
+            self.detailsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
+            self.detailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
+            
+            self.nodataLabel.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor, constant: 10.0),
+            self.nodataLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
+            self.nodataLabel.centerYAnchor.constraint(equalTo: self.guageView.centerYAnchor)
         ])
     }
     
