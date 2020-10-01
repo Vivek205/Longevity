@@ -68,7 +68,7 @@ class MyDataViewController: BaseViewController {
             self.userInsights?[index].isExpanded = expandedIndex == index
         }
         self.myDataCollectionView.reloadData()
-        self.myDataCollectionView.scrollToItem(at: IndexPath(item: expandedIndex, section: 0), at: .top, animated: true)
+        self.myDataCollectionView.scrollToItem(at: IndexPath(item: expandedIndex, section: 0), at: .bottom, animated: true)
     }
 }
 
