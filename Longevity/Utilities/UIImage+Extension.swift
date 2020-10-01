@@ -10,11 +10,11 @@ import UIKit
 
 extension UIImage {
     class func imageWithColor(color: UIColor, size: CGSize) -> UIImage {
-        let rect: CGRect = CGRect(x: 0 , y: 0, width: size.width, height: size.height * 2)
+        let rect: CGRect = CGRect(x: 0 , y: 0.5, width: size.width, height: size.height * 2)
         UIGraphicsBeginImageContextWithOptions(rect.size, false, 0)
         color.setFill()
-        UIColor.lightGray.setStroke()
-        let path = UIBezierPath(roundedRect: CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: rect.height)) , byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 25.0, height: 25.0))
+        UIColor.black.withAlphaComponent(0.3).setStroke()
+        let path = UIBezierPath(roundedRect: CGRect(origin: rect.origin, size: CGSize(width: rect.width, height: rect.height)) , byRoundingCorners: [.topLeft, .topRight], cornerRadii: CGSize(width: 20.0, height: 20.0))
         path.fill()
         path.lineWidth = 0.5
         path.stroke()
