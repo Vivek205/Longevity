@@ -8,7 +8,7 @@
 
 import Foundation
 
-class RKCQuestionView: UICollectionViewCell {
+class RKCQuestionView: UICollectionReusableView {
 
     let headerLabel: UILabel = {
         let labelView = QuestionHeaderLabel()

@@ -20,10 +20,11 @@ enum SettingAccessory: Int {
     case none
 }
 
-enum SettingPosition {
+enum CellPosition {
     case topmost
     case center
     case bottom
+    case none
 }
 
 enum ProfileSetting: String {
@@ -64,7 +65,7 @@ extension ProfileSetting {
         }
     }
     
-    var settingPosition: SettingPosition {
+    var settingPosition: CellPosition {
         switch self {
         case .exportcheckin: return .topmost
         case .updatebiometrics: return .center

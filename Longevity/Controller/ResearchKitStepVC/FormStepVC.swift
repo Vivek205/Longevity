@@ -15,7 +15,7 @@ class FormStepVC: ORKStepViewController {
     
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
+        collection.backgroundColor = UIColor.clear //UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
@@ -39,6 +39,9 @@ class FormStepVC: ORKStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.navigationController?.navigationBar.barTintColor = .white
+        
         presentViews()
         addKeyboardObservers()
         print("did load", self.view.frame.origin.y )
@@ -99,15 +102,16 @@ class FormStepVC: ORKStepViewController {
             return
         }
 
-        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
         layout.scrollDirection = .vertical
-        layout.minimumInteritemSpacing = 20.0
+        layout.minimumInteritemSpacing = 0.0
+        layout.minimumLineSpacing = 0.0
+        layout.invalidateLayout()
     }
 
     @objc func handleContinue(sender: UIButton) {
         self.goForward()
     }
-
 }
 
 extension FormStepVC: UICollectionViewDelegate,
@@ -117,7 +121,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return 0
         }
         if formStep.formItems != nil {
-            return formStep.formItems!.count + 1
+            return formStep.formItems!.count
         }
         return 0
     }
@@ -128,33 +132,21 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         guard let formStep = self.step as? ORKFormStep else {
             return defaultCell
         }
-        guard formStep.formItems != nil else {
+        guard let formItems = formStep.formItems else {
             return defaultCell
         }
 
-        if indexPath.item == 0 {
-
-            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
-            let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-                as! RKCQuestionView
-            questionCell.createLayout(header: formStep.title ?? "",
-                                      subHeader: questionSubheader ?? "",
-                                      question: formStep.text ?? "", extraInfo: nil)
-            return questionCell
-
-        }
-
-        let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
+        let item = formItems[indexPath.item]
         let prefillAnswer = prefillForm(questionId: item.identifier)
-
+        let cellPosition = self.getCellPostion(formItems: formItems, index: indexPath.item)
         if item.identifier == "" {
             let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
                                                          at: indexPath) as! RKCFormSectionItemView
-            sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder)
+            sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder, cellPosition: cellPosition)
             return sectionItemCell
         }
 
-        if formStep.formItems?.count == indexPath.item && item.answerFormat?.questionType == .text {
+        if (formStep.formItems?.count ?? 0) - 1 == indexPath.item && item.answerFormat?.questionType == .text {
             let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
                                                   at: indexPath) as! RKCFormTextAnswerView
             itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
@@ -173,7 +165,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
             itemCell.createLayout(identifier:item.identifier, question: item.text!,
                                   answerFormat: item.answerFormat!,
-                                  lastResponseAnswer: prefillAnswer)
+                                  lastResponseAnswer: prefillAnswer, cellPosition: cellPosition)
             return itemCell
         }
 
@@ -181,10 +173,49 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        var height = CGFloat(38)
+        var height = CGFloat(55.0)
         let width = self.view.bounds.width
 
-        if indexPath.item == 0 {
+        guard let formStep = self.step as? ORKFormStep else {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+        guard formStep.formItems != nil else {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+        let item = formStep.formItems![indexPath.item] as ORKFormItem
+
+        if item.identifier == "" {
+            return CGSize(width: width - CGFloat(40), height: height)
+        }
+
+        if (formStep.formItems?.count ?? 0) - 1 == indexPath.item && item.answerFormat?.questionType == .text {
+            let answerCell = RKCFormTextAnswerView()
+            let questionText = item.text ?? ""
+            height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
+            height += 100 // height for textView
+            return CGSize(width: width, height: height)
+        }
+
+        return CGSize(width: width - CGFloat(40), height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? RKCQuestionView else {
+            preconditionFailure("Invalid cell type")
+        }
+        
+        if let formStep = self.step as? ORKFormStep {
+            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
+            headerView.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "", question: formStep.text ?? "", extraInfo: nil)
+        }
+        
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        var height = CGFloat(38)
+        let width = self.view.bounds.width
+        
             if let step = self.step as? ORKFormStep {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
@@ -198,33 +229,29 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 height += 60.0
             }
             return CGSize(width: width, height: height)
+    }
+    
+    fileprivate func getCellPostion(formItems: [ORKFormItem], index: Int) -> CellPosition {
+        let fItem = formItems.firstIndex { $0.identifier == "" }
+        let lItem = formItems.lastIndex { $0.identifier == "" }
+        
+        guard let firstItem = fItem else {
+            return .center
         }
-
-        guard let formStep = self.step as? ORKFormStep else {
-            return CGSize(width: width - CGFloat(40), height: height)
+        
+        guard let lastItem = lItem else {
+            return .center
         }
-        guard formStep.formItems != nil else {
-            return CGSize(width: width - CGFloat(40), height: height)
+        
+        if index == firstItem {
+            return .topmost
+        } else if index == lastItem {
+            return .bottom
+        } else if index > firstItem && index < lastItem {
+            return .center
+        } else {
+            return .none
         }
-        let item = formStep.formItems![indexPath.item - 1] as ORKFormItem
-
-        if item.identifier == "" {
-            return CGSize(width: width - CGFloat(40), height: height)
-        }
-
-        if formStep.formItems?.count == indexPath.item && item.answerFormat?.questionType == .text {
-            let answerCell = RKCFormTextAnswerView()
-            let questionText = item.text ?? ""
-            height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
-            height += 100 // height for textView
-            return CGSize(width: width, height: height)
-        }
-
-        return CGSize(width: width - CGFloat(40), height: height)
-
-
-
-
     }
 }
 

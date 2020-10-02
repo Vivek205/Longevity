@@ -150,8 +150,6 @@ class OnboardingVC: UIViewController {
     }
 
     @objc func handleLogin(_ sender: UIButton) {
-
-
         let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
         let loginVC = storyboard.instantiateViewController(withIdentifier: "PersonalLoginVC")
         self.navigationController?.modalPresentationStyle = .fullScreen

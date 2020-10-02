@@ -41,7 +41,6 @@ class LNTabBarViewController: UITabBarController {
         }
         self.tabBar.tintColor = .themeColor
         self.tabBar.unselectedItemTintColor = .unselectedColor
-        
         self.delegate = self
         
         let homeViewController = HomeViewController()

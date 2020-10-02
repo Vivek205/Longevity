@@ -11,8 +11,11 @@ import ResearchKit
 
 class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate {
     
-    init(task: ORKOrderedTask?) {
+    var isFirstTask: Bool = false
+    
+    init(task: ORKOrderedTask?, isFirstTask: Bool = false) {
         super.init(task: task, taskRun: nil)
+        self.isFirstTask = isFirstTask
         self.delegate = self
     }
     
@@ -25,6 +28,11 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
         
         self.navigationBar.backgroundColor = .white
         self.navigationBar.barTintColor = .white
+        if self.isFirstTask {
+            self.navigationItem.backBarButtonItem = nil
+            self.navigationItem.hidesBackButton = true
+        }
+        
         self.view.backgroundColor = .white
     }
     
@@ -35,6 +43,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         if let step = stepViewController.step {
             if step is ORKInstructionStep || step is ORKCompletionStep {
+                self.navigationItem.backBarButtonItem = UIBarButtonItem()
                 return
             }
             SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)

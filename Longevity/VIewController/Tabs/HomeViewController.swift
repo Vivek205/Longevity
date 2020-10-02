@@ -182,7 +182,7 @@ extension HomeViewController {
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
             DispatchQueue.main.async {
                 if task != nil {
-                    let taskViewController = SurveyViewController(task: task)
+                    let taskViewController = SurveyViewController(task: task, isFirstTask: true)
                     NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                 } else {
                     self.showAlert(title: "Survey Not available",
