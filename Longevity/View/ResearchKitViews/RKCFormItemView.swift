@@ -12,9 +12,16 @@ import ResearchKit
 class RKCFormItemView: UICollectionViewCell {
     var itemIdentifier: String?
 
+    lazy var verticalLine: UIView = {
+        let verticalLine = UIView()
+        verticalLine.backgroundColor = UIColor(hexString: "#D6D6D6")
+        verticalLine.translatesAutoresizingMaskIntoConstraints = false
+        return verticalLine
+    }()
+    
     lazy var booleanAnswerView: RKCFormBooleanAnswerView = {
         let booleanView = RKCFormBooleanAnswerView()
-        booleanView.createLayout(yesText: "yes", noText: "No")
+        booleanView.createLayout(yesText: "Yes", noText: "No")
         booleanView.delegate = self
         return booleanView
     }()
@@ -36,7 +43,7 @@ class RKCFormItemView: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createLayout(identifier:String, question:String, answerFormat: ORKAnswerFormat, lastResponseAnswer: String?) {
+    func createLayout(identifier:String, question:String, answerFormat: ORKAnswerFormat, lastResponseAnswer: String?, cellPosition: CellPosition) {
         self.itemIdentifier = identifier
         var answerView:UIView
         switch answerFormat.questionType {
@@ -76,7 +83,15 @@ class RKCFormItemView: UICollectionViewCell {
             answerView.heightAnchor.constraint(equalToConstant: 32),
             answerView.widthAnchor.constraint(equalToConstant: 113)
         ])
-
+        
+        if cellPosition != .none {
+            self.addSubview(verticalLine)
+            NSLayoutConstraint.activate([
+                                            verticalLine.widthAnchor.constraint(equalToConstant: 1.5),
+                                            verticalLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24.0),
+                                            verticalLine.topAnchor.constraint(equalTo: self.topAnchor),
+                                            verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
+        }
     }
 }
 

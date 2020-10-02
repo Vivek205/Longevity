@@ -10,6 +10,13 @@ import UIKit
 
 class RKCFormSectionItemView: UICollectionViewCell {
 
+    lazy var verticalLine: UIView = {
+        let verticalLine = UIView()
+        verticalLine.backgroundColor = UIColor(hexString: "#D6D6D6")
+        verticalLine.translatesAutoresizingMaskIntoConstraints = false
+        return verticalLine
+    }()
+    
     lazy var iconImage: UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -30,10 +37,12 @@ class RKCFormSectionItemView: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
 
-    func createLayout(heading:String, iconName: String?) {
+    func createLayout(heading:String, iconName: String?, cellPosition: CellPosition) {
         let iconNameFromModule = SurveyTaskUtility.shared.getIconName(for: heading)
         self.addSubview(iconImage)
+        
         iconImage.image = UIImage(named: iconNameFromModule)
+        
         NSLayoutConstraint.activate([
             iconImage.centerYAnchor.constraint(equalTo: self.centerYAnchor),
             iconImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -49,6 +58,29 @@ class RKCFormSectionItemView: UICollectionViewCell {
             headingLabel.topAnchor.constraint(equalTo: self.topAnchor),
             headingLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
-
+        
+        if cellPosition != .none {
+            self.addSubview(verticalLine)
+            self.sendSubviewToBack(verticalLine)
+            NSLayoutConstraint.activate([
+            verticalLine.widthAnchor.constraint(equalToConstant: 1.5),
+            verticalLine.centerXAnchor.constraint(equalTo: iconImage.centerXAnchor)])
+            if cellPosition == .topmost {
+                NSLayoutConstraint.activate([
+                    verticalLine.topAnchor.constraint(equalTo: iconImage.centerYAnchor),
+                    verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+                ])
+            } else if cellPosition == .center {
+                NSLayoutConstraint.activate([
+                    verticalLine.topAnchor.constraint(equalTo: self.topAnchor),
+                    verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+                ])
+            } else if cellPosition == .bottom {
+                NSLayoutConstraint.activate([
+                    verticalLine.topAnchor.constraint(equalTo: self.topAnchor),
+                    verticalLine.bottomAnchor.constraint(equalTo: iconImage.centerYAnchor)
+                ])
+            }
+        }
     }
 }

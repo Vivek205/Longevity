@@ -17,7 +17,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
         collection.translatesAutoresizingMaskIntoConstraints = false
         collection.delegate = self
         collection.dataSource = self
-        collection.backgroundColor = UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
+        collection.backgroundColor = .clear //UIColor(red: 229.0/255, green: 229.0/255, blue: 234.0/255, alpha: 1)
         collection.alwaysBounceVertical = true  
         return collection
     }()
@@ -40,9 +40,10 @@ class TextChoiceAnswerVC: ORKStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationController?.navigationBar.barTintColor = .white
         presentViews()
 
-        questionAnswerCollection.register(RKCQuestionView.self, forCellWithReuseIdentifier: "question")
+//        questionAnswerCollection.register(RKCQuestionView.self, forCellWithReuseIdentifier: "question")
     }
 
     func presentViews() {
@@ -80,7 +81,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
             return
         }
 
-        layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20.0
     }
@@ -101,7 +102,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                return answerFormat.textChoices.count + 1
+                return answerFormat.textChoices.count
             }
             return 2
         }
@@ -110,28 +111,28 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.item == 0 {
-            if let step = self.step as? ORKQuestionStep {
-                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-                    as! RKCQuestionView
-                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
-                                          question: step.question!, extraInfo: step.text)
-                return questionCell
-            }
-        }
+//        if indexPath.item == 0 {
+//            if let step = self.step as? ORKQuestionStep {
+//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+//                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
+//                    as! RKCQuestionView
+//                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
+//                                          question: step.question!, extraInfo: step.text)
+//                return questionCell
+//            }
+//        }
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                 let currentAnswerValue: String? =
                     SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: step.identifier)
 
-                let choice = answerFormat.textChoices[indexPath.item - 1]
+                let choice = answerFormat.textChoices[indexPath.item]
                 let answerViewCell = collectionView.getCell(with: TextChoiceAnswerViewCell.self, at: indexPath)
                     as! TextChoiceAnswerViewCell
                 answerViewCell.delegate = self
                 answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
-                answerViewCell.value = indexPath.item - 1
+                answerViewCell.value = indexPath.item// - 1
                 if Int(currentAnswerValue ?? "") == answerViewCell.value {
                     answerViewCell.toggleIsChosenOption()
                     continueButton.isEnabled = true
@@ -152,7 +153,59 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height = CGFloat(100.0)
         let width = self.view.bounds.width
-        if indexPath.item == 0 {
+//        if indexPath.item == 0 {
+//            if let step = self.step as? ORKQuestionStep {
+//                let questionCell = RKCQuestionView()
+//                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+//
+//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+//                height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
+//                if step.text != nil {
+//                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
+//                }
+//                // INSETS
+//                height += 60.0
+//            }
+//            return CGSize(width: width, height: height)
+//        }
+
+        if let step = self.step as? ORKQuestionStep {
+            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
+                let choice = answerFormat.textChoices[indexPath.item]
+                let answerCell = TextChoiceAnswerViewCell()
+                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
+                if choice.detailText != nil {
+                    height += choice.detailText!
+                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
+                }
+
+                height += 50
+            }
+        }
+
+
+        return CGSize(width: width - CGFloat(40), height: height)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? RKCQuestionView else {
+            preconditionFailure("Invalid cell type")
+        }
+        
+        if let step = self.step as? ORKQuestionStep {
+            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+            headerView.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
+                                    question: step.question!, extraInfo: step.text)
+        }
+        
+        return headerView
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        var height = CGFloat(100.0)
+        let width = self.view.bounds.width
+
             if let step = self.step as? ORKQuestionStep {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
@@ -167,24 +220,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 height += 60.0
             }
             return CGSize(width: width, height: height)
-        }
-
-        if let step = self.step as? ORKQuestionStep {
-            if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
-                let choice = answerFormat.textChoices[indexPath.item - 1]
-                let answerCell = TextChoiceAnswerViewCell()
-                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
-                if choice.detailText != nil {
-                    height += choice.detailText!
-                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
-                }
-
-                height += 50
-            }
-        }
-
-
-        return CGSize(width: width - CGFloat(40), height: height)
     }
     
 }

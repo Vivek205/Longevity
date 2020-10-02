@@ -60,8 +60,8 @@ class RKCFormBooleanAnswerView: UIView {
     }
 
     func createLayout(yesText: String, noText: String) {
-        self.segmentedControl.setTitle(yesText, forSegmentAt: 0)
-        self.segmentedControl.setTitle(noText, forSegmentAt: 1)
+        self.segmentedControl.setTitle(noText, forSegmentAt: 0)
+        self.segmentedControl.setTitle(yesText, forSegmentAt: 1)
     }
 
     @objc func handleSegmentedControlChanged(_ sender: UISwitch) {

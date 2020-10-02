@@ -527,9 +527,9 @@
 		C19875B124DC6CFD00477185 /* Utilities */ = {
 			isa = PBXGroup;
 			children = (
+				C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */,
 				E2D127E3249B5BCF00467E43 /* SurveyTask.swift */,
 				C12F09AA24F4943800623CC3 /* HealthStore.swift */,
-				C19875CC24DD5F0C00477185 /* UICollectionView+Extension.swift */,
 				C19875CA24DD5ECB00477185 /* UITableView+Extension.swift */,
 				C19875C024DC884300477185 /* NavigationUtility.swift */,
 				C19875B224DC6D1600477185 /* UIColor+Extension.swift */,

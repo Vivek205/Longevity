@@ -97,7 +97,7 @@ class CheckinLogViewController: BaseViewController {
                 self.removeSpinner()
                 if task != nil {
                     self.dismiss(animated: false) { [weak self] in
-                        let taskViewController = SurveyViewController(task: task)
+                        let taskViewController = SurveyViewController(task: task, isFirstTask: true)
                         NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                     }
                 } else {
