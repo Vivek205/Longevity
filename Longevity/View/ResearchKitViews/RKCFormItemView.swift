@@ -14,7 +14,7 @@ class RKCFormItemView: UICollectionViewCell {
 
     lazy var booleanAnswerView: RKCFormBooleanAnswerView = {
         let booleanView = RKCFormBooleanAnswerView()
-        booleanView.createLayout(yesText: "yes", noText: "No")
+        booleanView.createLayout(yesText: "Yes", noText: "No")
         booleanView.delegate = self
         return booleanView
     }()
