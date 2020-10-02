@@ -113,7 +113,11 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
             guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
                 preconditionFailure("Invalid tile cell type")
             }
-            tileCell.insightData = self.userInsights?[indexPath.item]
+            
+            //Workaround for the hexagons sequence
+            let index = indexPath.item == 1 ? 2 : indexPath.item == 2 ? 1 : indexPath.item
+            
+            tileCell.insightData = self.userInsights?[index]
             tileCell.setupCell(index: indexPath.item)
             return tileCell
         } else {

@@ -94,5 +94,14 @@ class BaseViewController: UIViewController {
     
     fileprivate func setTabItems() {
         self.tabBarItem = UITabBarItem(title: self.viewTab?.tabTitle, image: self.viewTab?.tabIcon, tag: self.viewTab?.rawValue ?? 0)
+        
+        let textAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#8E8E93"), NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 11.0)]
+        
+        self.tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
+        
+        let selectedTextAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4A4A4A"), NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 11.0)]
+        self.tabBarItem.setTitleTextAttributes(selectedTextAttributes, for: .selected)
+        
+        self.tabBarItem.imageInsets = UIEdgeInsets(top: 2.0, left: 2.0, bottom: 0.0, right: 2.0)
     }
 }

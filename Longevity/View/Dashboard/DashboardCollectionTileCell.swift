@@ -127,7 +127,10 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         let isEvenCell = index % 2 == 0
         let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
         
-        self.hexagonView.addSubview(tileTitle)
+        self.backgroundColor = .clear
+        self.contentView.backgroundColor = .clear
+        
+        self.contentView.addSubview(tileTitle)
         
         NSLayoutConstraint.activate([
             hexagonView.topAnchor.constraint(equalTo: topAnchor, constant: vTop),
@@ -141,10 +144,10 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         self.hexagonView.borderColor = .borderColor
         self.hexagonView.isEmptyCell = false
 
-        self.hexagonView.addSubview(guageView)
-        self.hexagonView.addSubview(riskType)
-        self.hexagonView.addSubview(trendDirection)
-        self.hexagonView.addSubview(trendImage)
+        self.contentView.addSubview(guageView)
+        self.contentView.addSubview(riskType)
+        self.contentView.addSubview(trendDirection)
+        self.contentView.addSubview(trendImage)
         
         NSLayoutConstraint.activate([
             guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 5.0),
@@ -195,5 +198,15 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             return
         }
         viewController.expandItemfor(insightType: self.insightData.name)
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        for view in self.contentView.subviews {
+            if view == hitView {
+                return view
+            }
+        }
+        return nil
     }
 }
