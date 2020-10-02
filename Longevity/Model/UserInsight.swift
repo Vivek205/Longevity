@@ -157,7 +157,7 @@ struct Details: Codable {
 
 // MARK: - Confidence
 struct Confidence: Codable {
-    let value, confidenceDescription: String
+    let value, confidenceDescription: String?
 
     enum CodingKeys: String, CodingKey {
         case value

@@ -19,7 +19,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     @IBOutlet weak var viewProgressBar: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
-
+    
     var modalPresentation = false
     var changesSaved = true
     
@@ -39,13 +39,13 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-//        continueButton.isEnabled = false
+        //        continueButton.isEnabled = false
         createPickersAndToolbar()
         
         checkIfHealthKitSyncedAlready()
         
         if self.isFromSettings {
-//            self.viewProgressBar.isHidden = true
+            //            self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
             let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
@@ -63,7 +63,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
-
+        
         if self.modalPresentation {
             if #available(iOS 13.0, *) {
                 self.isModalInPresentation = true
@@ -157,15 +157,15 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     
     func authorizeHealthKitInApp() {
         healthKitUtil.authorize
-            { (success, error) in
-                print("is healthkit authorized?", success)
-                if !success {
-                    print("Healthdata not authorized")
-                    return
-                }
-                DispatchQueue.main.async {
-                    self.readHealthData()
-                }
+        { (success, error) in
+            print("is healthkit authorized?", success)
+            if !success {
+                print("Healthdata not authorized")
+                return
+            }
+            DispatchQueue.main.async {
+                self.readHealthData()
+            }
         }
     }
     
@@ -221,7 +221,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             self?.dismiss(animated: true, completion: nil)
         }
         let cancel = UIAlertAction(title: "cancel", style: .default) {[weak self] (action) in
-//            self?.dismiss(animated: true, completion: nil)
+            //            self?.dismiss(animated: true, completion: nil)
         }
         alertVC.addAction(dismiss)
         alertVC.addAction(cancel)
@@ -252,7 +252,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
         picker.removeFromSuperview()
         agePicker.removeFromSuperview()
     }
-
+    
     @objc func onDoneButtonTapped() {
         removePickers()
         updateUserDefaultsOnPickerDone()
@@ -384,7 +384,7 @@ extension SetupProfileBioDataVC: UIPickerViewDelegate, UIPickerViewDataSource {
 }
 
 extension SetupProfileBioDataVC:UICollectionViewDelegate,
-UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+                                UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -417,10 +417,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             
             return cell
         } else {
-            let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SetupProfileBioOptionCell",
-                    for: indexPath) as! SetupProfileBioOptionCell
+            guard let cell = collectionView.dequeueReusableCell( withReuseIdentifier: "SetupProfileBioOptionCell",
+                                                                 for: indexPath) as? SetupProfileBioOptionCell else { preconditionFailure("Invalid cell type")}
             let option = setupProfileOptionList[indexPath.row]
             cell.logo.image = option?.image
             cell.label.text = option?.label
@@ -429,23 +427,23 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let isSynced = option?.isSynced
             if(isSynced == true) {
                 cell.button.layer.borderColor = UIColor.clear.cgColor
+                cell.button.setTitleColor(.themeColor, for: .normal)
                 cell.button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18)
-            }else {
+            } else {
                 cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+                cell.button.setTitleColor(.themeColor, for: .normal)
                 cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
             }
             cell.delegate = self
             
-            // SYNC Button
-            if indexPath.row == 2 && cell.label.text == "Sync Apple Health Profile" {
+            // Connect Apple Health Button
+            if indexPath.row == 2 && cell.label.text == "Apple Health" {
                 if healthKitUtil.isHealthkitSynced {
-                    cell.button.setImage(#imageLiteral(resourceName: "icon: check mark"), for: .normal)
-                    cell.button.tintColor = #colorLiteral(red: 0.4175422788, green: 0.7088702321, blue: 0.7134250998, alpha: 1)
-                    cell.button.setTitle("SYNCED", for: .normal)
+                    cell.button.setTitle("DISCONNECT", for: .normal)
+                    cell.button.setTitleColor(UIColor(hexString: "#B00020"), for: .normal)
                     cell.button.layer.borderColor = UIColor.clear.cgColor
                 } else{
-                    cell.button.setImage(nil, for: .normal)
-                    cell.button.setTitle("SYNC", for: .normal)
+                    cell.button.setTitle("CONNECT", for: .normal)
                     cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
                 }
             }
@@ -494,7 +492,7 @@ extension SetupProfileBioDataVC: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
         self.closeView()
     }
-
+    
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return true
     }
