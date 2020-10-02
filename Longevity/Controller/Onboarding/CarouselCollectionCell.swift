@@ -21,6 +21,7 @@ class CarouselCollectionCell: UICollectionViewCell {
 
     lazy var backgroundImage:UIImageView = {
         let view = UIImageView()
+        view.contentMode = .scaleAspectFill
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()
@@ -60,7 +61,7 @@ class CarouselCollectionCell: UICollectionViewCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
 
-        self.addSubview(carouselImage)
+//        self.addSubview(carouselImage)
               self.addSubview(backgroundImage)
               self.addSubview(carouselImage)
               self.addSubview(titleLabel)
