@@ -43,7 +43,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         if let step = stepViewController.step {
             if step is ORKInstructionStep || step is ORKCompletionStep {
-                self.navigationItem.backBarButtonItem = UIBarButtonItem()
+//                self.navigationItem.backBarButtonItem = UIBarButtonItem()
                 return
             }
             SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
@@ -92,9 +92,14 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             viewControllerFor step: ORKStep) -> ORKStepViewController? {
+
         if step is ORKInstructionStep {
             if step is ORKCompletionStep {
                 let stepVC = CompletionStepVC()
+                stepVC.step = step
+                return stepVC
+            } else if step is ORKInstructionStep {
+                let stepVC = SurveyIntroViewController()
                 stepVC.step = step
                 return stepVC
             }
@@ -102,12 +107,14 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             return nil
         } else if step is ORKFormStep {
             let formStepVC = FormStepVC()
+//            formStepVC.isFirstQuestion = isFirstQuestion
             formStepVC.step = step
             return formStepVC
         } else if step is ORKQuestionStep {
             guard let questionStep = step as? ORKQuestionStep else {return nil}
             if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
                 let stepVC = TextChoiceAnswerVC()
+//                stepVC.isFirstQuestion = isFirstQuestion
                 stepVC.step = step
                 return stepVC
             }
@@ -116,6 +123,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 switch questionDetails?.quesType {
                 case .temperatureScale:
                     let stepVC = TemperatureScaleAnswerVC()
+//                    stepVC.isFirstQuestion = isFirstQuestion
                     stepVC.step = step
                     return stepVC
                 default:

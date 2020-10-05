@@ -11,6 +11,8 @@ import ResearchKit
 
 class ContinuousScaleAnswerVC: ORKStepViewController {
 
+    var isFirstQuestion: Bool = false
+    
     override var step: ORKStep? {
         didSet {
             if let step = self.step as? ORKQuestionStep {
@@ -78,6 +80,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.navigationItem.hidesBackButton = isFirstQuestion
         createLayout()
     }
 

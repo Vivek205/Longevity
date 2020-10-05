@@ -27,4 +27,21 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     @IBAction func handleConnectDevice(_ sender: UIButton) {
         delegate?.connectBtn(wasPressedOnCell: self)
     }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.borderWidth = 1.0
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 0)
+        layer.cornerRadius = 5.0
+        layer.shadowRadius = 1.0
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
+    }
 }
