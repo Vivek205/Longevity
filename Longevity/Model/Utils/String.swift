@@ -55,3 +55,14 @@ extension String {
         return  image ?? UIImage()
     }
 }
+
+// MARK: Capitalizing First Character
+extension String {
+    func capitalizeFirstChar() -> String {
+        return prefix(1).capitalized + dropFirst()
+    }
+
+    mutating func capitalizeFirstChar() {
+        self = self.capitalizeFirstChar()
+    }
+}

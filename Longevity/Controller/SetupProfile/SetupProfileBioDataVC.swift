@@ -68,7 +68,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         if self.modalPresentation {
             if #available(iOS 13.0, *) {
                 self.isModalInPresentation = true
-                print("delegate", self.navigationController?.presentationController?.delegate)
                 self.navigationController?.presentationController?.delegate = self
             }
         }
@@ -77,7 +76,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             let profile = AppSyncManager.instance.healthProfile.value
             if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
                 if let gender = AppSyncManager.instance.healthProfile.value?.gender, !gender.isEmpty {
-                    setupProfileOptionList[3]?.buttonText = "\(gender)"
+                    setupProfileOptionList[3]?.buttonText = gender.capitalizeFirstChar()
                     setupProfileOptionList[3]?.isSynced = true
                 }
                 
@@ -86,17 +85,28 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
                     setupProfileOptionList[4]?.isSynced = true
                 }
                 
-                if let height = AppSyncManager.instance.healthProfile.value?.height, !height.isEmpty {
-                    setupProfileOptionList[5]?.buttonText = "\(height)"
+                if var height = AppSyncManager.instance.healthProfile.value?.height,
+                   !height.isEmpty,
+                    let unit = AppSyncManager.instance.healthProfile.value?.unit {
+                    if unit == .imperial {
+                        height = self?.healthKitUtil.getHeightStringInImperial() ?? ""
+                    }
+                    setupProfileOptionList[5]?.buttonText = "\(height) \(unit.height)"
                     setupProfileOptionList[5]?.isSynced = true
                 }
                 
-                if let weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty {
-                    setupProfileOptionList[6]?.buttonText = "\(weight)"
+                if var weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty,
+                   let unit = AppSyncManager.instance.healthProfile.value?.unit{
+                    if unit == .imperial {
+                        weight = self?.healthKitUtil.getWeightStringInImperial() ?? ""
+                    }
+                    setupProfileOptionList[6]?.buttonText = "\(weight) \(unit.weight)"
                     setupProfileOptionList[6]?.isSynced = true
                 }
             }
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
     
@@ -152,9 +162,11 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     }
     
     @IBAction func handleMetricTogglePress(_ sender: Any) {
+        self.removePickers()
         healthKitUtil.toggleSelectedUnit()
-        guard healthKitUtil.isHealthkitSynced else {return}
-        
+        if !healthKitUtil.isHealthkitSynced {
+            healthKitUtil.authorize(completion: nil)
+            }
         switch healthKitUtil.selectedUnit {
         case .metric:
             if let height = AppSyncManager.instance.healthProfile.value?.height {
@@ -325,9 +337,16 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     }
     
     func showGenderPicker() {
-        picker.selectRow(0, inComponent: 0, animated: true)
         pickerData = ["Male", "Female","Other"]
-        selectedPickerValue = pickerData[0]
+        if let gender = AppSyncManager.instance.healthProfile.value?.gender,
+           let genderIndex = pickerData.firstIndex(of: gender){
+            selectedPickerValue = gender.capitalizeFirstChar()
+            picker.selectRow(genderIndex, inComponent: 0, animated: true)
+            selectedPickerValue = pickerData[genderIndex]
+        } else {
+            picker.selectRow(0, inComponent: 0, animated: true)
+            selectedPickerValue = pickerData[0]
+        }
         picker.accessibilityLabel = PickerLabel.genderPicker
         picker.reloadAllComponents()
         showPicker()
@@ -337,6 +356,18 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
         pickerData = healthKitUtil.getHeightPickerOptions()
         picker.selectRow(30, inComponent: 0, animated: true)
         selectedPickerValue = pickerData[30]
+
+        if var height = AppSyncManager.instance.healthProfile.value?.height,
+           let unit = AppSyncManager.instance.healthProfile.value?.unit {
+            if unit == .imperial {
+                height = healthKitUtil.getFeet(fromCentimeter: height)
+            }
+            if let heightIndex = pickerData.firstIndex(of: "\(height) \(healthKitUtil.selectedUnit.height)") {
+                selectedPickerValue = pickerData[heightIndex]
+                picker.selectRow(heightIndex, inComponent: 0, animated: true)
+            }
+        }
+
         picker.accessibilityLabel = PickerLabel.heightPicker
         picker.reloadAllComponents()
         showPicker()
@@ -346,6 +377,17 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
         pickerData = healthKitUtil.getWeightPickerOptions()
         picker.selectRow(30, inComponent: 0, animated: true)
         selectedPickerValue = pickerData[30]
+
+        if var weight = AppSyncManager.instance.healthProfile.value?.weight,
+           let unit = AppSyncManager.instance.healthProfile.value?.unit {
+            if unit == .imperial {
+                weight = healthKitUtil.getPounds(fromKilo: weight)
+            }
+            if let weightIndex = pickerData.firstIndex(of: "\(weight) \(healthKitUtil.selectedUnit.weight)") {
+                selectedPickerValue = pickerData[weightIndex]
+                picker.selectRow(weightIndex, inComponent: 0, animated: true)
+            }
+        }
         picker.accessibilityLabel = PickerLabel.weightPicker
         picker.reloadAllComponents()
         showPicker()
@@ -388,8 +430,6 @@ extension SetupProfileBioDataVC: UIPickerViewDelegate, UIPickerViewDataSource {
     }
     
     func pickerView(_ pickerView: UIPickerView, titleForRow pickerRow: Int, forComponent component: Int) -> String? {
-        //        print("\(pickerData[row])")
-        
         return String(pickerData[pickerRow])
     }
     
