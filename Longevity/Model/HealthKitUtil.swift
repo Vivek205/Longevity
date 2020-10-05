@@ -89,6 +89,9 @@ final class HealthKitUtil {
     }
     let minimumHeightCm = 100
     let maximumHeightCm = 260
+    let minimumHeightFt = 3.28
+    let maximumHeightFt = 8.54
+    let stepHeightFt = 0.01
     let minimumWeightKg = 28
     let maximumWeightKg = 200
 
@@ -119,7 +122,7 @@ final class HealthKitUtil {
     var latestHeightSample: HKQuantitySample?
     var latestWeightSample: HKQuantitySample?
 
-    func authorize(completion: @escaping(_ success: Bool,_ error: Error?) -> Void) {
+    func authorize(completion: ((_ success: Bool,_ error: Error?) -> Void)?) {
         guard let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
             let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
             let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
@@ -143,7 +146,7 @@ final class HealthKitUtil {
             } else {
                 UserDefaults.standard.set(true, forKey: UserDefaultsKeys().healthkitBioConnected)
             }
-            completion(success, error)
+            completion?(success, error)
         }
     }
 
@@ -201,7 +204,12 @@ final class HealthKitUtil {
             AppSyncManager.instance.healthProfile.value?.birthday = birthDateString
         }
         if let gender = self.userCharacteristicData?.biologicalSex?.string {
-            AppSyncManager.instance.healthProfile.value?.gender = gender
+            if let localGender = AppSyncManager.instance.healthProfile.value?.gender {
+                print("local gender", localGender)
+            }else {
+                AppSyncManager.instance.healthProfile.value?.gender = gender
+            }
+
         }
 
         return self.userCharacteristicData
@@ -212,8 +220,8 @@ final class HealthKitUtil {
         var heightString:String? = nil
         if self.selectedUnit == MeasurementUnits.metric {
             let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
-            heightString = "\(String(format: "%.2f", heightInCentimeters)) \(self.selectedUnit.height)"
-            AppSyncManager.instance.healthProfile.value?.height = String(format: "%.2f",heightInCentimeters)
+            heightString = "\(String(format: "%.0f", heightInCentimeters)) \(self.selectedUnit.height)"
+            AppSyncManager.instance.healthProfile.value?.height = String(format: "%.0f",heightInCentimeters)
         } else {
             let heightInFeet = heightSample.quantity.doubleValue(for: HKUnit.foot())
             heightString = "\(String(format: "%.2f", heightInFeet)) \(self.selectedUnit.height)"
@@ -234,7 +242,13 @@ final class HealthKitUtil {
     func getCentimeter(fromFeet value:String) -> String {
         let feet = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.feet)
         let centi = feet.converted(to: .centimeters)
-        return String(format: "%.2f", centi.value)
+        return String(format: "%.0f", centi.value)
+    }
+
+    func getFeet(fromCentimeter value:String) -> String {
+        let centimeter = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.centimeters)
+        let feet = centimeter.converted(to: .feet)
+        return  String(format: "%.2f", feet.value)
     }
 
     func getHeightPickerOptions() -> [String] {
@@ -242,14 +256,10 @@ final class HealthKitUtil {
         switch selectedUnit {
         case .metric:
              pickerData = Array(minimumHeightCm...maximumHeightCm).map { "\($0) \(selectedUnit.height)"}
-            print("metric heights", pickerData)
         case .imperial:
-            pickerData = Array(minimumHeightCm...maximumHeightCm).map({[weak self] (value) -> String in
-                let heightInCenti = Measurement(value: Double(value), unit: UnitLength.centimeters)
-                let heightInFeet = heightInCenti.converted(to: .feet)
-                return "\(String(format: "%.2f", heightInFeet.value)) \(self?.selectedUnit.height ?? "")"
-            })
-            print("imperial heights", pickerData)
+            for value in stride(from: minimumHeightFt, to: maximumHeightFt, by: stepHeightFt) {
+                pickerData.append("\(String(format: "%.2f", value)) \(self.selectedUnit.height)")
+            }
         }
         return pickerData
     }
@@ -294,14 +304,14 @@ final class HealthKitUtil {
         var weightString:String? = nil
         if self.selectedUnit == MeasurementUnits.metric {
             let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-            weightString = "\(String(format: "%.2f", weightInKilograms)) \(self.selectedUnit.weight)"
-            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.2f",weightInKilograms)
+            weightString = "\(String(format: "%.0f", weightInKilograms)) \(self.selectedUnit.weight)"
+            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.0f",weightInKilograms)
         } else {
             let weightInPounds = weightSample.quantity.doubleValue(for: HKUnit.pound())
-            weightString = "\(String(format: "%.2f", weightInPounds)) \(self.selectedUnit.weight)"
+            weightString = "\(String(format: "%.0f", weightInPounds)) \(self.selectedUnit.weight)"
             // NOTE: Always store metric value in Appsync manager
             let weightInKilograms = weightSample.quantity.doubleValue(for: HKUnit.gramUnit(with: .kilo))
-            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.2f",weightInKilograms)
+            AppSyncManager.instance.healthProfile.value?.weight = String(format: "%.0f",weightInKilograms)
         }
         return weightString
     }
@@ -310,13 +320,19 @@ final class HealthKitUtil {
         guard let weight = AppSyncManager.instance.healthProfile.value?.weight else { return nil}
         let weightInKilo = Measurement(value: (weight as NSString).doubleValue, unit: UnitMass.kilograms)
         let weightInPounds = weightInKilo.converted(to: .pounds)
-        return String(format: "%.2f", weightInPounds.value)
+        return String(format: "%.0f", weightInPounds.value)
     }
 
     func getKilo(fromPounds value:String) -> String {
         let pounds = Measurement(value: (value as NSString).doubleValue, unit: UnitMass.pounds)
         let kilo = pounds.converted(to: .kilograms)
-         return String(format: "%.2f", kilo.value)
+         return String(format: "%.0f", kilo.value)
+    }
+
+    func getPounds(fromKilo value:String) -> String {
+        let kilo = Measurement(value: (value as NSString).doubleValue, unit: UnitMass.kilograms)
+        let pounds = kilo.converted(to: .pounds)
+        return String(format: "%.0f", pounds.value)
     }
 
     func getWeightPickerOptions() -> [String] {
@@ -324,14 +340,12 @@ final class HealthKitUtil {
            switch selectedUnit {
            case .metric:
                 pickerData = Array(minimumWeightKg...maximumWeightKg).map { "\($0) \(selectedUnit.weight)"}
-               print("metric weights", pickerData)
            case .imperial:
                pickerData = Array(minimumWeightKg...maximumWeightKg).map({[weak self] (value) -> String in
                 let weightInKg = Measurement(value: Double(value), unit: UnitMass.kilograms)
                 let weightInPounds = weightInKg.converted(to: .pounds)
-                   return "\(String(format: "%.2f", weightInPounds.value)) \(self?.selectedUnit.weight ?? "")"
+                   return "\(String(format: "%.0f", weightInPounds.value)) \(self?.selectedUnit.weight ?? "")"
                })
-               print("imperial heights", pickerData)
            }
            return pickerData
        }
