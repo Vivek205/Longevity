@@ -61,8 +61,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         window?.makeKeyAndVisible()
         
         if #available(iOS 13.0, *) {
-            BGTaskScheduler.shared.register(forTaskWithIdentifier: "", using: nil) { (task) in
-                
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { (task) in
+                self.appHandleRefreshTask(task: task as! BGAppRefreshTask)
             }
         } else {
             if UIApplication.shared.backgroundRefreshStatus == .available {
@@ -71,6 +71,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 print("Background fetch is not available")
             }
         }
+        
+//        let fitbitModel = FitbitModel()
+//        fitbitModel.refreshTheToken()
         
         return true
     }
@@ -104,13 +107,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         if #available(iOS 13.0, *) {
-            (UIApplication.shared.delegate as! AppDelegate).scheduleBackgroundFetch()
+            if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.fitbit]?["connected"] == 1 {
+                (UIApplication.shared.delegate as! AppDelegate).scheduleBackgroundFetch()
+            }
         }
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         //        Implement this method if your app supports the fetch background mode. When an opportunity arises to download data, the system calls this method to give your app a chance to download any data it needs. Your implementation of this method should download the data, prepare that data for use, and call the block in the completionHandler parameter.
         //        When this method is called, your app has up to 30 seconds of wall-clock time to perform the download operation and call the specified completion handler block
+    }
+    
+    func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
+        
     }
 
     func configureCognito() {
@@ -140,7 +149,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let request = AWSSNSCreatePlatformEndpointInput()
         request?.token = token
         request?.platformApplicationArn = SNSPlatformApplicationARN
-
 
 
         awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
@@ -318,12 +326,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         task.expirationHandler = {
             task.setTaskCompleted(success: false)
         }
+        
+        let queue = OperationQueue()
+        queue.addOperations(FitbitModel.getOperationsToRefreshFitbitToken(), waitUntilFinished: false)
+        
+        queue.operations.last?.completionBlock = {
+            task.setTaskCompleted(success: !(queue.operations.last?.isCancelled ?? false))
+        }
     }
     
     @available(iOS 13.0, *)
     func scheduleBackgroundFetch() {
-        let rejuveFetchTask = BGAppRefreshTaskRequest(identifier: "")
-        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 30 * 60)
+        let rejuveFetchTask = BGAppRefreshTaskRequest(identifier: "io.rejuve.Longevity.bgFetch")
+        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60 * 60)
         
         do {
             try BGTaskScheduler.shared.submit(rejuveFetchTask)

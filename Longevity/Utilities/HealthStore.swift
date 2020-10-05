@@ -47,32 +47,24 @@ final class HealthStore {
         return Set([
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
             HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
-            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!,
+            HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
         ])
     }
     
     private var watchDataTypes: Set<HKObjectType> {
         if #available(iOS 14.0, *) {
         return Set([
-            HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
-            HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
-            HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
-            HKObjectType.quantityType(forIdentifier: .heartRate)!,
-            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-            HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-            HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
+            HKObjectType.quantityType(forIdentifier: .distanceCycling)!, HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
+            HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!, HKObjectType.quantityType(forIdentifier: .heartRate)!,
+            HKObjectType.quantityType(forIdentifier: .restingHeartRate)!, HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+            HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!, HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
             HKObjectType.categoryType(forIdentifier: .handwashingEvent)!
         ]) } else {
             return Set([
-                HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
-                HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
-                HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!,
-                HKObjectType.quantityType(forIdentifier: .heartRate)!,
-                HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
-                HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
-                HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-                HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+                HKObjectType.quantityType(forIdentifier: .distanceCycling)!, HKObjectType.quantityType(forIdentifier: .distanceSwimming)!,
+                HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!, HKObjectType.quantityType(forIdentifier: .heartRate)!,
+                HKObjectType.quantityType(forIdentifier: .restingHeartRate)!, HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
+                HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!, HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
             ])
         }
     }
@@ -89,9 +81,24 @@ final class HealthStore {
     }
     
     func getHealthKitAuthorization(device: HealthDevices, completion: @escaping ((Bool) -> Void)) {
-        healthStore = HKHealthStore()
+        
+        if self.healthStore == nil {
+            self.healthStore = HKHealthStore()
+        }
         if device == .applehealth {
-            healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) {
+            
+            guard let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
+                let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
+                let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
+                let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
+                let height = HKSampleType.quantityType(forIdentifier: .height)
+                else {
+                    print("error", "data not available")
+                    return
+            }
+            let healthKitTypesToRead:Set<HKObjectType> = Set([dateOfBirth, biologicalSex,bloodType, bodyMass, height]).union(healthDataTypes)
+            
+            healthStore?.requestAuthorization(toShare: nil, read: healthKitTypesToRead) {
                 (success, error) in
                 completion(success)
             }
