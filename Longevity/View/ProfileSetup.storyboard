@@ -1056,7 +1056,7 @@ up your health profile.</string>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="15" y="28" width="384" height="48"/>
-                                        <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="iSF-Gp-Sk9"/>
                                         </constraints>
