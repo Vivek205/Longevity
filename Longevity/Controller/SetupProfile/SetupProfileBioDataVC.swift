@@ -96,7 +96,9 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
                     setupProfileOptionList[6]?.isSynced = true
                 }
             }
-            self?.collectionView.reloadData()
+            DispatchQueue.main.async {
+                self?.collectionView.reloadData()
+            }
         }
     }
     
