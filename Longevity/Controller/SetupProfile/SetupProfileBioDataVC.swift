@@ -34,6 +34,8 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     
     var isFromSettings: Bool = false
     
+//    var isHealthDataSynced: Bool = false
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
@@ -45,7 +47,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         checkIfHealthKitSyncedAlready()
         
         if self.isFromSettings {
-            //            self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
             let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
@@ -69,9 +70,33 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
                 self.isModalInPresentation = true
                 print("delegate", self.navigationController?.presentationController?.delegate)
                 self.navigationController?.presentationController?.delegate = self
-            } else {
-                // Fallback on earlier versions
             }
+        }
+        
+        AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
+            let profile = AppSyncManager.instance.healthProfile.value
+            if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
+                if let gender = AppSyncManager.instance.healthProfile.value?.gender, !gender.isEmpty {
+                    setupProfileOptionList[3]?.buttonText = "\(gender)"
+                    setupProfileOptionList[3]?.isSynced = true
+                }
+                
+                if let birthday = AppSyncManager.instance.healthProfile.value?.birthday, !birthday.isEmpty {
+                    setupProfileOptionList[4]?.buttonText = self?.calculateAge(birthDate: birthday) ?? ""
+                    setupProfileOptionList[4]?.isSynced = true
+                }
+                
+                if let height = AppSyncManager.instance.healthProfile.value?.height, !height.isEmpty {
+                    setupProfileOptionList[5]?.buttonText = "\(height)"
+                    setupProfileOptionList[5]?.isSynced = true
+                }
+                
+                if let weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty {
+                    setupProfileOptionList[6]?.buttonText = "\(weight)"
+                    setupProfileOptionList[6]?.isSynced = true
+                }
+            }
+            self?.collectionView.reloadData()
         }
     }
     
@@ -100,12 +125,11 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         agePicker.datePickerMode = .date
         if #available(iOS 13.4, *) {
             agePicker.preferredDatePickerStyle = .wheels
-        } else {
-            // Fallback on earlier versions
         }
         agePicker.isHidden = false
-        agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
         agePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())
+        agePicker.date = Calendar.current.date(byAdding: .year, value: -20, to: Date()) ?? Date()
+        agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
         agePicker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
         
         // Toolbar
@@ -156,59 +180,51 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     }
     
     func authorizeHealthKitInApp() {
-        healthKitUtil.authorize
-        { (success, error) in
-            print("is healthkit authorized?", success)
-            if !success {
-                print("Healthdata not authorized")
-                return
-            }
-            DispatchQueue.main.async {
-                self.readHealthData()
-            }
-        }
+        let appleHealthViewController = AppleHealthConnectionViewController()
+        let navigationController = UINavigationController(rootViewController: appleHealthViewController)
+        NavigationUtility.presentOverCurrentContext(destination: navigationController)
     }
     
     func readHealthData() {
         if let characteristicData = healthKitUtil.readCharacteristicData() {
-            if let currentAge = characteristicData.currentAge {
-                setupProfileOptionList[4]?.isSynced = true
-                setupProfileOptionList[4]?.buttonText = "\(currentAge) years"
-            }
-            if let biologicalSex = characteristicData.biologicalSex {
-                setupProfileOptionList[3]?.isSynced = true
-                setupProfileOptionList[3]?.buttonText = biologicalSex.string
-            }
+//            if let currentAge = characteristicData.currentAge {
+//                setupProfileOptionList[4]?.isSynced = true
+//                setupProfileOptionList[4]?.buttonText = "\(currentAge) years"
+//            }
+//            if let biologicalSex = characteristicData.biologicalSex {
+//                setupProfileOptionList[3]?.isSynced = true
+//                setupProfileOptionList[3]?.buttonText = biologicalSex.string
+//            }
+//            self.collectionView.reloadData()
         }
         
         healthKitUtil.readHeightData {
             (height, error) in
-            guard let heightSample = height as? HKQuantitySample else {return}
-            let heightString = self.healthKitUtil.getHeightString(from: heightSample)
-            DispatchQueue.main.async {
-                setupProfileOptionList[5]?.buttonText = heightString ?? ""
-                setupProfileOptionList[5]?.isSynced = true
-                self.continueButton.isEnabled = true
-                self.collectionView.reloadData()
-            }
+//            guard let heightSample = height as? HKQuantitySample else {return}
+//            let heightString = self.healthKitUtil.getHeightString(from: heightSample)
+//            DispatchQueue.main.async {
+//                setupProfileOptionList[5]?.buttonText = heightString ?? ""
+//                setupProfileOptionList[5]?.isSynced = true
+//                self.continueButton.isEnabled = true
+//                self.collectionView.reloadData()
+//            }
         }
         
         healthKitUtil.readWeightData {
             (weight, error) in
-            if error != nil {
-                return
-            }
-            guard let weightSample = weight as? HKQuantitySample else {return}
-            let weightString = self.healthKitUtil.getWeightString(from: weightSample)
-            DispatchQueue.main.async {
-                setupProfileOptionList[6]?.buttonText = weightString ?? ""
-                setupProfileOptionList[6]?.isSynced = true
-                self.continueButton.isEnabled = true
-                self.collectionView.reloadData()
-            }
+//            if error != nil {
+//                return
+//            }
+//            guard let weightSample = weight as? HKQuantitySample else {return}
+//            let weightString = self.healthKitUtil.getWeightString(from: weightSample)
+//            DispatchQueue.main.async {
+//                setupProfileOptionList[6]?.buttonText = weightString ?? ""
+//                setupProfileOptionList[6]?.isSynced = true
+//                self.continueButton.isEnabled = true
+//                self.collectionView.reloadData()
+//            }
         }
         self.continueButton.isEnabled = true
-        self.collectionView.reloadData()
     }
     
     @objc func closeView() {
@@ -395,13 +411,11 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.row == 0 {
             let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SetupProfileBioTitleCell", for: indexPath)
+                collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioTitleCell", for: indexPath)
             return cell
         } else if indexPath.row == 1 {
             let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
+                collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
         } else if indexPath.row == 7 {
             let cell =
@@ -438,12 +452,14 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
             
             // Connect Apple Health Button
             if indexPath.row == 2 && cell.label.text == "Apple Health" {
-                if healthKitUtil.isHealthkitSynced {
+                if let profile = AppSyncManager.instance.healthProfile.value,
+                   let device = profile.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
                     cell.button.setTitle("DISCONNECT", for: .normal)
                     cell.button.setTitleColor(UIColor(hexString: "#B00020"), for: .normal)
                     cell.button.layer.borderColor = UIColor.clear.cgColor
-                } else{
+                } else {
                     cell.button.setTitle("CONNECT", for: .normal)
+                    cell.button.setTitleColor(.themeColor, for: .normal)
                     cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
                 }
             }
@@ -485,6 +501,18 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
         let height = view.frame.size.height
         let width = view.frame.size.width
         return CGSize(width: width, height: CGFloat(60))
+    }
+    
+    fileprivate func calculateAge(birthDate: String) -> String {
+        let formatter = DateFormatter()
+        formatter.dateFormat = "dd-MM-yyyy"
+        guard let birthday = formatter.date(from: birthDate) else { return "" }
+        let form = DateComponentsFormatter()
+        form.maximumUnitCount = 2
+        form.unitsStyle = .full
+        form.allowedUnits = [.year]
+        let currentAge = form.string(from: birthday, to: Date()) ?? ""
+        return currentAge
     }
 }
 

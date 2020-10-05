@@ -207,8 +207,8 @@ class FitbitModel: AuthHandlerType {
 //        let bgSession = URLSession(configuration: configuration) //URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
 
 //        bgSession.dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
-        BackgroundSession.shared.startdataTask(urlRequest)
-        BackgroundSession.shared.delegate = self
+//        BackgroundSession.shared.start(urlRequest) //.startdataTask(urlRequest)
+//        BackgroundSession.shared.delegate = self
 
 //        let dataTask
 //        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
@@ -228,6 +228,31 @@ class FitbitModel: AuthHandlerType {
 //            } catch {}
 //        }
 //        dataTask.resume()
+    }
+    
+    static func getOperationsToRefreshFitbitToken() -> [Operation] {
+        let fetchFitbitToken = FetchFitbitTokenOperation()
+        let publishToServer = PublishFitbitTokenOperation()
+        let refreshFitbitToken = BlockOperation { [unowned fetchFitbitToken, unowned publishToServer] in
+            guard let accessToken = fetchFitbitToken.accessToken else {
+                return
+            }
+            guard let userID = fetchFitbitToken.userID else {
+                return
+            }
+            guard let refreshToken = fetchFitbitToken.refreshToken else {
+                return
+            }
+            publishToServer.accessToken = accessToken
+            publishToServer.refreshToken = refreshToken
+            publishToServer.userID = userID
+        }
+        refreshFitbitToken.addDependency(fetchFitbitToken)
+        publishToServer.addDependency(refreshFitbitToken)
+        
+        return [fetchFitbitToken,
+                refreshFitbitToken,
+                publishToServer]
     }
 }
 
@@ -258,6 +283,8 @@ class BackgroundSession: NSObject {
 
     var delegate: BackgroundSessionDelegate?
 
+    var receivedData: Data?
+    
     private var session: URLSession!
 
     #if !os(macOS)
@@ -269,6 +296,7 @@ class BackgroundSession: NSObject {
 
         let configuration = URLSessionConfiguration.background(withIdentifier: BackgroundSession.identifier)
         configuration.waitsForConnectivity = true
+        configuration.sessionSendsLaunchEvents = true
         session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
 
@@ -307,13 +335,16 @@ extension BackgroundSession: URLSessionTaskDelegate {
     }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        self.delegate?.receivedtoken(data: data)
+        //self.delegate?.receivedtoken(data: data)
+        self.receivedData?.append(data)
     }
 
     func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
         if let error = error {
-            // handle failure here
             print("\(error.localizedDescription)")
+        } else if let receivedData = self.receivedData,
+                  let string = String(data: receivedData, encoding: .utf8) {
+            print(string)
         }
     }
 }
@@ -322,12 +353,103 @@ extension BackgroundSession: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         do {
             let data = try Data(contentsOf: location)
-            let json = try JSONSerialization.jsonObject(with: data)
+            if let jsonData: [String:Any] =
+                try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
+                let accessToken = jsonData["access_token"] as! String
+                let refreshToken = jsonData["refresh_token"] as! String
+                let userId = jsonData["user_id"] as! String
+                guard let accessTokenData = accessToken.data(using: .utf8),
+                let refreshTokenData = refreshToken.data(using: .utf8) else {
+                    return
+                }
 
-            print("\(json)")
-            // do something with json
+                KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
+                KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+                Logger.log("fitbit token saved in keychain")
+            }
         } catch {
             print("\(error.localizedDescription)")
         }
+    }
+}
+
+class FetchFitbitTokenOperation: Operation {
+    
+    var refreshToken: String?
+    var accessToken: String?
+    var userID: String?
+    
+    override func main() {
+            guard let refreshTokenData = KeyChain.load(name: KeychainKeys.FitbitRefreshToken) else {return}
+            let refreshToken = String(data: refreshTokenData, encoding: .utf8)
+
+            let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
+                   var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
+                   urlComponents?.queryItems = [
+                       URLQueryItem(name: "grant_type", value: "refresh_token"),
+                       URLQueryItem(name: "refresh_token", value:refreshToken)
+                   ]
+
+            var urlRequest = URLRequest(url: (urlComponents?.url)!)
+                   urlRequest.httpMethod = "POST"
+                   urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
+                   urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+
+            let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
+                guard let httpResponse = response as? HTTPURLResponse,
+                    httpResponse.statusCode == 200,
+                    data != nil else { return }
+                do {
+                    if let jsonData: [String:Any] =
+                        try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
+                        self.accessToken = jsonData["access_token"] as! String
+                        self.refreshToken = jsonData["refresh_token"] as! String
+                        self.userID = jsonData["user_id"] as! String
+                    }
+                } catch {}
+            }
+            dataTask.resume()
+    }
+}
+
+class PublishFitbitTokenOperation: Operation {
+    
+    var refreshToken: String?
+    var accessToken: String?
+    var userID: String?
+    
+//    init(accessToken: String, userID: String) {
+//        self.accessToken = accessToken
+//        self.userID = userID
+//    }
+    
+    override func main() {
+        func onGettingCredentials(_ credentials: Credentials){
+            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+            let body = JSON(["access_token": self.accessToken, "user_id": self.userID])
+                   var bodyData:Data = Data()
+                   do {
+                       bodyData = try body.rawData()
+                   } catch  {
+                       print(error)
+                   }
+                   let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
+                           _ = Amplify.API.post(request: request, listener: { (result) in
+                       switch result{
+                       case .success(let data):
+                           let responseString = String(data: data, encoding: .utf8)
+                           Logger.log("Fitbit data published")
+                       case .failure(let apiError):
+                           print(" publish data error \(apiError)")
+                           Logger.log("Fitbit publish failure \(apiError)")
+                       }
+                   })
+        }
+
+        func onFailureCredentials(_ error: Error?) {
+              print("publishData failed to fetch credentials \(error)")
+          }
+
+        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     }
 }
