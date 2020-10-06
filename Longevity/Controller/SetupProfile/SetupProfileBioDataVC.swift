@@ -548,7 +548,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
                 verticalLine.widthAnchor.constraint(equalToConstant: 1.5),
                 verticalLine.centerXAnchor.constraint(equalTo: cell.logo.centerXAnchor)
             ])
-            
+
             if indexPath.item == 2 {
                 NSLayoutConstraint.activate([
                     verticalLine.topAnchor.constraint(equalTo: cell.logo.centerYAnchor),

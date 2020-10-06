@@ -21,6 +21,12 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
     // MARK: Delegate
     var delegate: SetupProfileBioOptionCellDelegate?
 
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.label.font = UIFont(name: "Montserrat-Medium", size: 18)
+        self.label.textColor = .sectionHeaderColor
+    }
+
     // MARK: Actions
     @IBAction func handleButtonPress(_ sender: Any) {
         delegate?.button(wasPressedOnCell: self)
