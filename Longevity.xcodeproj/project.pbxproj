@@ -120,6 +120,7 @@
 		E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */; };
 		E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */; };
 		E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */; };
+		E252C4A0252C315200B0E34F /* LocationUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E252C49F252C315200B0E34F /* LocationUtil.swift */; };
 		E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */; };
 		E258E66224ED0B3500676056 /* ContinuousScaleAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */; };
 		E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66524EE247100676056 /* UserProfileAPI.swift */; };
@@ -341,6 +342,8 @@
 		E251EFEB248F9E6F0012F1C6 /* SignupConfirmVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignupConfirmVC.swift; sourceTree = "<group>"; };
 		E251EFED248FB9390012F1C6 /* CustomUnwindSegue.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomUnwindSegue.swift; sourceTree = "<group>"; };
 		E251EFEF2490926D0012F1C6 /* OnboardingContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingContent.swift; sourceTree = "<group>"; };
+		E252C49F252C315200B0E34F /* LocationUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LocationUtil.swift; sourceTree = "<group>"; };
+		E252C4A1252C5B8900B0E34F /* Coimbatore.gpx */ = {isa = PBXFileReference; lastKnownFileType = text.xml; path = Coimbatore.gpx; sourceTree = "<group>"; };
 		E258E65C24EC12B000676056 /* RKCFormTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormTextAnswerView.swift; sourceTree = "<group>"; };
 		E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContinuousScaleAnswerVC.swift; sourceTree = "<group>"; };
 		E258E66524EE247100676056 /* UserProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAPI.swift; sourceTree = "<group>"; };
@@ -538,6 +541,8 @@
 				C1C8220724EB54A50074AF11 /* UIView+Extension.swift */,
 				C193943024EF0DC500BDB3BD /* UIFont+Extension.swift */,
 				C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */,
+				E252C49F252C315200B0E34F /* LocationUtil.swift */,
+				E252C4A1252C5B8900B0E34F /* Coimbatore.gpx */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1126,6 +1131,7 @@
 				C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */,
 				C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */,
 				C16AD1DC251FA30E007AF0D4 /* BaseProfileSetupViewController.swift in Sources */,
+				E252C4A0252C315200B0E34F /* LocationUtil.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
@@ -1436,15 +1442,15 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = H6A3R6WG95;
+				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
@@ -1461,14 +1467,14 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 20;
+				CURRENT_PROJECT_VERSION = 21;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

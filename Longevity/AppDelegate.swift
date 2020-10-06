@@ -49,7 +49,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         ])
         
         UNUserNotificationCenter.current().delegate = self
-        
         window = UIWindow(frame: UIScreen.main.bounds)
         
         /// To remove support for dark mode

@@ -8,6 +8,7 @@
 
 import UIKit
 import HealthKit
+import CoreLocation
 //import ResearchKit
 
 fileprivate let healthKitStore: HKHealthStore = HKHealthStore()
@@ -24,6 +25,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     var changesSaved = true
     
     let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
+    let locationManager = CLLocationManager()
     
     var toolBar = UIToolbar()
     var picker  = UIPickerView()
@@ -41,7 +43,8 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-        //        continueButton.isEnabled = false
+        self.locationManager.delegate = self
+
         createPickersAndToolbar()
         
         checkIfHealthKitSyncedAlready()
@@ -74,7 +77,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
-            if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
+            if let device = profile?.devices?[ExternalDevices.healthkit] {
                 if let gender = AppSyncManager.instance.healthProfile.value?.gender, !gender.isEmpty {
                     setupProfileOptionList[3]?.buttonText = gender.capitalizeFirstChar()
                     setupProfileOptionList[3]?.isSynced = true
@@ -102,6 +105,27 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
                     }
                     setupProfileOptionList[6]?.buttonText = "\(weight) \(unit.weight)"
                     setupProfileOptionList[6]?.isSynced = true
+                }
+
+                if let location = AppSyncManager.instance.healthProfile.value?.location {
+                    var locationString = ""
+                    if let city = location.city,
+                       let state = location.state
+                    {
+                        locationString = "\(city), \(state)"
+                    }
+                    if  let postalCode = location.zipcode {
+                        locationString = "\(locationString) zip: \(postalCode)"
+                    }
+
+                    if !locationString.isEmpty {
+                        DispatchQueue.main.async {
+                            setupProfileOptionList[7]?.buttonText = locationString
+                            setupProfileOptionList[7]?.isSynced = true
+                            let indexPath = NSIndexPath(row: 7, section: 0) as IndexPath
+                            self?.collectionView.reloadItems(at: [indexPath])
+                        }
+                    }
                 }
             }
             DispatchQueue.main.async {
@@ -413,6 +437,8 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
             showHeightPicker()
         case "Weight":
             showWeightPicker()
+        case "Location":
+            getCurrentLocation()
         default:
             print("do nothing")
         }
@@ -445,7 +471,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 8
+        return 9
     }
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -457,7 +483,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
-        } else if indexPath.row == 7 {
+        } else if indexPath.row == 8 {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
@@ -565,3 +591,25 @@ extension SetupProfileBioDataVC: UIAdaptivePresentationControllerDelegate {
         return true
     }
 }
+
+extension SetupProfileBioDataVC: CLLocationManagerDelegate {
+    func getCurrentLocation() {
+        self.locationManager.requestWhenInUseAuthorization()
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if(authorizationStatus == .authorizedWhenInUse ||
+            authorizationStatus == .authorizedAlways) {
+                self.changesSaved = false
+                LocationUtil.shared.updateLocation()
+             }
+    }
+
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if(authorizationStatus == .authorizedWhenInUse ||
+            authorizationStatus == .authorizedAlways) {
+            LocationUtil.shared.updateLocation()
+        }
+    }
+}
+
+

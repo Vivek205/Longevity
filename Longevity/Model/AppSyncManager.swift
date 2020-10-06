@@ -125,6 +125,17 @@ class AppSyncManager  {
         }
     }
 
+    func updateHealthProfile(location:LocationDetails) {
+        self.healthProfile.value?.location = location
+        let userProfile = UserProfileAPI()
+        userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!) {
+            print("updated location")
+        } onFailure: { (error) in
+            print("Failed to save health profile-location:" + error.localizedDescription)
+        }
+
+    }
+
     func updateUserNotification(enabled: Bool) {
         let localValue = self.userNotification.value?.isEnabled
 

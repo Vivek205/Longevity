@@ -22,4 +22,14 @@ struct UserHealthProfile: Codable {
     var unit: MeasurementUnits
     var devices: [String: [String: Int]]?
     var preconditions: [[String:String]]?
+    var location: LocationDetails?
+}
+
+struct LocationDetails: Codable {
+    var latitude: String?
+    var longitude: String?
+    var zipcode: String?
+    var state: String?
+    var city: String?
+    var country: String?
 }
