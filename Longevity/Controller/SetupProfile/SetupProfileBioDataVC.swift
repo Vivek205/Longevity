@@ -509,9 +509,17 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
                 cell.button.layer.borderColor = UIColor.clear.cgColor
                 cell.button.setTitleColor(.themeColor, for: .normal)
                 cell.button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+
             } else {
                 cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
                 cell.button.setTitleColor(.themeColor, for: .normal)
+                cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
+            }
+
+            if indexPath.row == 7 {
+                cell.button.titleLabel?.lineBreakMode = .byWordWrapping
+                cell.button.titleLabel?.numberOfLines = 2
+                cell.button.titleLabel?.textAlignment = .center
                 cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
             }
             cell.delegate = self
@@ -546,7 +554,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
                     verticalLine.topAnchor.constraint(equalTo: cell.logo.centerYAnchor),
                     verticalLine.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
                 ])
-            } else if indexPath.item == 6 {
+            } else if indexPath.item == 7 {
                 NSLayoutConstraint.activate([
                     verticalLine.topAnchor.constraint(equalTo: cell.topAnchor),
                     verticalLine.bottomAnchor.constraint(equalTo: cell.logo.centerYAnchor)
@@ -596,6 +604,12 @@ extension SetupProfileBioDataVC: CLLocationManagerDelegate {
     func getCurrentLocation() {
         self.locationManager.requestWhenInUseAuthorization()
         let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus == .denied || authorizationStatus == .restricted {
+            self.showAlert(title: "Allow Location Access",
+                           message: "Please enable location access in your device settings")
+            return
+        }
+
         if(authorizationStatus == .authorizedWhenInUse ||
             authorizationStatus == .authorizedAlways) {
                 self.changesSaved = false
