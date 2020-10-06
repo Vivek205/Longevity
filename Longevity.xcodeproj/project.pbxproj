@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
+		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
 		C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */; };
@@ -226,6 +227,7 @@
 /* Begin PBXFileReference section */
 		718E061F905C01115E0C6E2E /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
 		C12F09B624F6F94D00623CC3 /* ResetCheckInDataViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetCheckInDataViewController.swift; sourceTree = "<group>"; };
@@ -688,6 +690,7 @@
 				E24826E424E5326D0083EFAC /* CompletionStepVC.swift */,
 				E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */,
 				E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */,
+				C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -1156,6 +1159,7 @@
 				E2BCA5722486542C007204B9 /* SignupVC.swift in Sources */,
 				E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */,
 				C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */,
+				C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
 				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
 				C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */,
@@ -1434,13 +1438,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 20;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
@@ -1464,7 +1468,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

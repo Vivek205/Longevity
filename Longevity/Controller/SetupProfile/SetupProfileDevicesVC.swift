@@ -74,7 +74,6 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                             }
                         }
                     default:
-                        HealthStore.shared.getHealthStore()
                         HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
                             if authorized {
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: 1)
@@ -144,11 +143,11 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
         let width = view.frame.size.width
         switch indexPath.row {
         case 0:
-            return CGSize(width: width - 40, height: CGFloat(270))
+            return CGSize(width: width - 30, height: CGFloat(270))
         case 1:
-            return CGSize(width: width - 40, height: CGFloat(150))
+            return CGSize(width: width - 30, height: CGFloat(150))
         default:
-            return CGSize(width: width - 40, height: CGFloat(80))
+            return CGSize(width: width - 30, height: CGFloat(80))
         }
     }
 }

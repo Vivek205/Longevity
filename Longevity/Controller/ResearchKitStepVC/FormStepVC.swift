@@ -10,6 +10,9 @@ import UIKit
 import ResearchKit
 
 class FormStepVC: ORKStepViewController {
+    
+    var isFirstQuestion: Bool = false
+    
     var keyboardHeight: CGFloat?
     var initialYOrigin: CGFloat = CGFloat(0)
     
@@ -41,6 +44,7 @@ class FormStepVC: ORKStepViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = .white
+        self.navigationItem.hidesBackButton = isFirstQuestion
         
         presentViews()
         addKeyboardObservers()

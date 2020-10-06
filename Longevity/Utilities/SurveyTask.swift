@@ -68,6 +68,7 @@ final class SurveyTaskUtility: NSObject {
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else { return completion(nil) }
             var steps = [ORKStep]()
+            
             let instructionStep = ORKInstructionStep(identifier: "IntroStep")
             instructionStep.title = "Intro: \(surveyDetails!.name) Survey"
             instructionStep.text = surveyDetails?.description
