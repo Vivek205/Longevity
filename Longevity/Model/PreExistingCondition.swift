@@ -34,9 +34,9 @@ var preExistingMedicalConditionData:[PreExistingMedicalConditionModel] = [
     PreExistingMedicalConditionModel(id:.highBloodPressure,name: "High Blood Pressure", description: "primary hypertension (not related to another medical condition),secondary hypertension (caused by a medical condition)."),
     PreExistingMedicalConditionModel(id:.lungDisease,name: "Lung Disease", description: "asthma, pneumonia, bronchitis, or chronic obstructive pulmonary disease (COPD)."),
     PreExistingMedicalConditionModel(id:.kidneyDisease,name: "Kidney Disease", description: "kidney stones, chronic kidney disease, glomerulonephritis,polycystic kidney disease, or urinary tract infections."),
-    PreExistingMedicalConditionModel(id:.cancer,name: "Cancer", description: "breast cancer, lung cancer, prostate cancer, kidney cancer, or leukemia."),
-    PreExistingMedicalConditionModel(id:.immunocompromised,name: "Cancer", description: "Your immune system has been diagnosed as being impaired. Some conditions and treatments can weaken your immune system such as cancer  or post-transplant treatments, and HIV."),
-    PreExistingMedicalConditionModel(id:.psychologicalDisorder,name: "Cancer", description: "depression, anxiety disorders, eating disorder, PTSD, OCD, bipolar disorder, personality disorder, or schizophrenia.")
+    PreExistingMedicalConditionModel(id:.cancer,name: "Cancer", description: "Examples: breast cancer, lung cancer, prostate cancer, kidney cancer, or leukemia."),
+    PreExistingMedicalConditionModel(id:.immunocompromised,name: "Immunocompromised", description: "Your immune system has been diagnosed as being impaired. Some conditions and treatments can weaken your immune system such as cancer  or post-transplant treatments, and HIV."),
+    PreExistingMedicalConditionModel(id:.psychologicalDisorder,name: "Psychological Disorder(s)", description: "Examples: depression, anxiety disorders, eating disorder, PTSD, OCD, bipolar disorder, personality disorder, or schizophrenia.")
 ]
 
 var preExistingMedicalCondtionOtherText: String?
