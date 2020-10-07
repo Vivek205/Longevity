@@ -34,24 +34,50 @@ class SetupCompleteVC: BaseProfileSetupViewController {
 
     @IBAction func handleBeginSurvey(_ sender: Any) {
         self.showSpinner()
-        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_01", completion: { [weak self] (task) in
-            guard let task = task else {
-                self?.removeSpinner()
-                self?.navigateForward()
-                return }
+//        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_01", completion: { [weak self] (task) in
+//            guard let task = task else {
+//                self?.removeSpinner()
+//                self?.navigateForward()
+//                return }
+//            DispatchQueue.main.async {
+//                let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
+//                taskViewController.delegate = self
+//                taskViewController.navigationBar.backgroundColor = .white
+//                taskViewController.navigationBar.barTintColor = .white
+//                taskViewController.view.backgroundColor = .white
+//                self?.removeSpinner()
+//                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+//            }
+//        }) { (error) in
+//            self.removeSpinner()
+//            self.navigateForward()
+//        }
+        
+        
+        func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
             DispatchQueue.main.async {
-                let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-                taskViewController.delegate = self
-                taskViewController.navigationBar.backgroundColor = .white
-                taskViewController.navigationBar.barTintColor = .white
-                taskViewController.view.backgroundColor = .white
-                self?.removeSpinner()
-                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+                self.removeSpinner()
+                if task != nil {
+                    self.dismiss(animated: false) { [weak self] in
+                        let taskViewController = SurveyViewController(task: task, isFirstTask: true)
+                        NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+                    }
+                } else {
+                    self.showAlert(title: "Survey Not available",
+                                   message: "No questions are found for the survey. Please try after sometime")
+                    self.navigateForward()
+                }
             }
-        }) { (error) in
-            self.removeSpinner()
-            self.navigateForward()
         }
+        func onCreateSurveyFailure(_ error: Error) {
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.navigateForward()
+            }
+        }
+        
+        SurveyTaskUtility.shared.createSurvey(surveyId: nil, completion: onCreateSurveyCompletion(_:),
+                                              onFailure: onCreateSurveyFailure(_:))
     }
 
 
