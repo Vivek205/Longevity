@@ -85,10 +85,10 @@ class BasePopUpModalViewController: UIViewController {
             infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 24.0),
         ])
         
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
-        tapgesture.numberOfTouchesRequired = 1
-
-        self.view.addGestureRecognizer(tapgesture)
+//        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
+//        tapgesture.numberOfTouchesRequired = 1
+//
+//        self.view.addGestureRecognizer(tapgesture)
     }
     
     @objc func closeView() {
@@ -104,9 +104,9 @@ class BasePopUpModalViewController: UIViewController {
         self.containerView.layer.cornerRadius = 10.0
         self.containerView.layer.masksToBounds = true
         
-        UIView.animate(withDuration: 0.5) {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
-        }
+//        UIView.animate(withDuration: 0.5) {
+//            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
+//        }
     }
 
     @objc func primaryButtonPressed(_ sender: UIButton) {

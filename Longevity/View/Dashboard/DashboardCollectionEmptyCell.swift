@@ -94,7 +94,7 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
     @objc func doOpenInfo() {
         NavigationUtility.presentOverCurrentContext(
         destination: LongevityComingSoonPopupViewController(),
-        style: .overCurrentContext,
+        style: .pageSheet,
         completion: nil)
     }
 }
