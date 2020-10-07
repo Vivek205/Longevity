@@ -73,7 +73,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
         let statusbutton = UIButton()
         statusbutton.setImage(UIImage(named: "icon: add"), for: .normal)
         statusbutton.imageView?.contentMode = .scaleAspectFit
-        statusbutton.addTarget(self, action: #selector(addDevice), for: .touchUpInside)
+        statusbutton.isUserInteractionEnabled = false
         statusbutton.translatesAutoresizingMaskIntoConstraints = false
         return statusbutton
     }()
@@ -195,6 +195,10 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     }
     
     @objc func addDevice() {
+        
+    }
+    
+    func selectCell() {
         if connectionStatus == .notConnected {
             UNUserNotificationCenter.current().getNotificationSettings {
                 (settings) in
@@ -230,6 +234,28 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 } else {
                     self.delegate?.showNotificationError(forCell: self)
                 }
+            }
+        } else {
+            if self.device == .applehealth {
+                let appleHealthViewController = AppleHealthConnectionViewController()
+                let navigationController = UINavigationController(rootViewController: appleHealthViewController)
+                NavigationUtility.presentOverCurrentContext(destination: navigationController)
+            } else if self.device == .fitbit {
+                let appdelegate = UIApplication.shared.delegate as! AppDelegate
+                guard let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController else {
+                    return
+                }
+                tabBarController.selectedIndex = 2
+                guard let viewController = tabBarController.viewControllers?[2] as? ProfileViewController else {
+                    return
+                }
+                viewController.currentProfileView = .settings
+                viewController.profileTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
+//                viewController.expandItemfor(insightType: self.insightData.name)
+            } else if self.device == .applewatch {
+                let applewatchViewController = AppleWatchConnectViewController()
+                let navigationController = UINavigationController(rootViewController: applewatchViewController)
+                NavigationUtility.presentOverCurrentContext(destination: navigationController)
             }
         }
     }
