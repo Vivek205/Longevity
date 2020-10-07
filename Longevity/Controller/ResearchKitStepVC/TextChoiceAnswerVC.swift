@@ -11,8 +11,7 @@ import ResearchKit
 
 class TextChoiceAnswerVC: ORKStepViewController {
     var chosenCells: [TextChoiceAnswerViewCell]?
-    
-    var isFirstQuestion: Bool = false
+
 
     lazy var questionAnswerCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -43,7 +42,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barTintColor = .white
-        self.navigationItem.hidesBackButton = isFirstQuestion
         presentViews()
 
 //        questionAnswerCollection.register(RKCQuestionView.self, forCellWithReuseIdentifier: "question")

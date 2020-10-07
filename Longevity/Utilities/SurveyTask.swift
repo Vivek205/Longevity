@@ -401,4 +401,32 @@ final class SurveyTaskUtility: NSObject {
         }
         getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
+
+    func isFirstStep(stepId: String?) -> Bool {
+        guard let stepId = stepId,
+              !stepId.isEmpty,
+              let surveyDetails = self.getCurrentSurveyDetails()
+        else { return false }
+        var firstStepId = ""
+        let categories = surveyDetails.displaySettings.categories
+
+        guard let firstCategory = categories.first else {return false}
+
+        for (_, categoryValue) in firstCategory {
+            if categoryValue.view == SurveyCategoryViewTypes.oneCategoryPerPage {
+                firstStepId = "\(categoryValue.id)"
+            } else {
+                guard let firstModule = categoryValue.modules.first else {return false}
+                for (_, moduleValue) in firstModule {
+                    guard let filteredQuestions =
+                            surveyDetails.questions.filter({ $0.categoryId == categoryValue.id
+                                                            && $0.moduleId == moduleValue.id}) as? [Question],
+                    let firstQuestion = filteredQuestions.first
+                    else { return false }
+                    firstStepId = firstQuestion.quesId
+                }
+            }
+        }
+        return stepId == firstStepId
+    }
 }

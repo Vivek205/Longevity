@@ -126,6 +126,7 @@
 		E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66524EE247100676056 /* UserProfileAPI.swift */; };
 		E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */; };
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
+		E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */; };
@@ -349,6 +350,7 @@
 		E258E66524EE247100676056 /* UserProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAPI.swift; sourceTree = "<group>"; };
 		E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormInlineTextAnswerView.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
+		E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKStepViewController+Extension.swift"; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
 		E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCompletedCell.swift; sourceTree = "<group>"; };
@@ -543,6 +545,7 @@
 				C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */,
 				E252C49F252C315200B0E34F /* LocationUtil.swift */,
 				E252C4A1252C5B8900B0E34F /* Coimbatore.gpx */,
+				E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1171,6 +1174,7 @@
 				C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */,
 				E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */,
 				C14DBC0825056583004D5180 /* CheckInResultHeader.swift in Sources */,
+				E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */,
 				C14DBC1025080152004D5180 /* CheckInNextGoals.swift in Sources */,
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,

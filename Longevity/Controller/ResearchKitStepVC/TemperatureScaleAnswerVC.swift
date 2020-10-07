@@ -22,7 +22,6 @@ class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationItem.hidesBackButton = self.isFirstQuestion
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) {
             [weak self] in
             if let unit = AppSyncManager.instance.healthProfile.value?.unit {
