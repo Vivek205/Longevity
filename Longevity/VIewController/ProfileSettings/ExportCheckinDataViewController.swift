@@ -25,7 +25,7 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
         ])
 
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
-            let infoText = "Your data will be formatted as a PDF and sent to your email address here:\n\n"
+            let infoText = "Your data will be sent to your email address here:\n\n"
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedInfoText = NSMutableAttributedString(string: infoText, attributes: attributes)
             guard let email = AppSyncManager.instance.userProfile.value?.email else {return}
