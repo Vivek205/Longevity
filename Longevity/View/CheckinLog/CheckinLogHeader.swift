@@ -87,6 +87,8 @@ class CheckinLogHeader: UICollectionReusableView {
         self.symptomsCircle.layer.masksToBounds = true
         self.nosymptomsCircle.layer.cornerRadius = 9.0
         self.nosymptomsCircle.layer.masksToBounds = true
+
+        self.segmentedControl.isHidden = true
     }
     
     required init?(coder: NSCoder) {

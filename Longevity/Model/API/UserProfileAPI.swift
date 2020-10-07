@@ -44,6 +44,20 @@ struct UserActivity: Decodable {
     var isLast: Bool?
 }
 
+struct UserProfileResponse: Decodable {
+    let status: Int
+    let message: String
+    let data: UserProfilePartial
+}
+
+struct UserProfilePartial: Decodable {
+    var id: String?
+    var name: String? // shall I make this var?
+    let email: String?
+    var phone: String?
+}
+
+
 class UserProfileAPI: BaseAuthAPI {
     
     func getProfile(completion: @escaping ((UserProfile?)-> Void)) {
@@ -53,20 +67,22 @@ class UserProfileAPI: BaseAuthAPI {
             _ = Amplify.API.get(request: request, listener: { (result) in
                 switch result {
                 case .success(let data):
-                    do {
-                        let jsonData = try JSON(data: data)
-                        let userProfileData = jsonData["data"]
-                        let keys = UserDefaultsKeys()
-                        let name = userProfileData[keys.name].rawString() ?? ""
-                        let email = userProfileData[keys.email].rawString() ?? ""
-                        let phone = userProfileData[keys.phone].rawString() ?? ""
-                        
-                        let userProfile = UserProfile(name: name, email: email, phone: phone)
-                        
-                        completion(userProfile)
-                    } catch {
-                        print("json parse error", error)
-                    }
+                        do {
+                            let jsonDecoder = JSONDecoder()
+                            print("user profile string", String(data: data, encoding: .utf8))
+                            let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
+                            guard let email = userProfileResponse.data.email else {completion(nil);return}
+                            var userProfile = UserProfile(name: "", email: email, phone: "")
+                            if let name = userProfileResponse.data.name, !name.isEmpty {
+                                userProfile.name = name
+                            }
+                            if let phone = userProfileResponse.data.phone, !phone.isEmpty {
+                                userProfile.phone = phone
+                            }
+                            completion(userProfile)
+                        } catch {
+                            print("json decode error", error)
+                        }
                 case .failure(let apiError):
                     print("getProfile failed \(apiError.localizedDescription)")
                     completion(nil)

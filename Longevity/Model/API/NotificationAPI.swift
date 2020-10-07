@@ -63,11 +63,13 @@ class NotificationAPI:BaseAuthAPI {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
             do {
+                let body = ["isEnabled":userNotification]
                 let encoder = JSONEncoder()
                 encoder.keyEncodingStrategy = .convertToSnakeCase
-                let data = try encoder.encode(userNotification)
-
-                let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/status", headers: headers, body: data)
+                let data = try encoder.encode(body)
+                let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
+                                          path: "/device/\(deviceIdForVendor)/notification/status",
+                                          headers: headers, body: data)
 
                 _ = Amplify.API.post(request: request, listener: { (result) in
                     switch result{
