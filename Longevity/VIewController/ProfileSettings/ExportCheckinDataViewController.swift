@@ -10,9 +10,10 @@ import UIKit
 
 class ExportCheckinDataViewController: BasePopUpModalViewController {
     
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.showBackdrop = true
         self.containerView.addSubview(self.actionButton)
 
         self.titleLabel.text = "Check-in Data"

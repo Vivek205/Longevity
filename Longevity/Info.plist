@@ -63,9 +63,9 @@
 	<string>We will use your health information to better track Covid Analysis.</string>
 	<key>NSHealthUpdateUsageDescription</key>
 	<string>We will use your health information to better track Covid Analysis.</string>
-	<key>NSLocationWhenInUseUsageDescription</key>
-	<string>We capture location info to improve our survey result</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
+	<string>We capture location info to improve our survey result</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
 	<string>We capture location info to improve our survey result</string>
 	<key>NSMicrophoneUsageDescription</key>
 	<string>We are using ResearchKit which is using microphone for its tasks</string>

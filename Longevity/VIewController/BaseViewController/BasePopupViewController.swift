@@ -41,7 +41,7 @@ class BasePopupViewController: UIViewController {
         
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
         
-//        self.view.addSubview(blurBackGround)
+        self.view.addSubview(blurBackGround)
         self.view.addSubview(containerView)
         self.containerView.addSubview(closeButton)
         

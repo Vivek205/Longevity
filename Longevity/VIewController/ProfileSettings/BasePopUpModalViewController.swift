@@ -9,6 +9,18 @@
 import UIKit
 
 class BasePopUpModalViewController: UIViewController {
+    lazy var backdrop: UIView = {
+        let backdropView = UIView()
+        backdropView.translatesAutoresizingMaskIntoConstraints = false
+        backdropView.backgroundColor = UIColor(white: 0, alpha: 0.5)
+        return backdropView
+    }()
+
+    var showBackdrop: Bool = false {
+        didSet {
+            self.backdrop.isHidden = !self.showBackdrop
+        }
+    }
     
     lazy var closeButton: UIButton = {
         let close = UIButton()
@@ -63,8 +75,13 @@ class BasePopUpModalViewController: UIViewController {
         self.containerView.addSubview(closeButton)
         self.containerView.addSubview(titleLabel)
         self.containerView.addSubview(infoLabel)
+        self.view.addSubview(backdrop)
         
         NSLayoutConstraint.activate([
+            backdrop.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            backdrop.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            backdrop.topAnchor.constraint(equalTo: view.topAnchor),
+            backdrop.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
             containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
             containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0),
@@ -88,7 +105,7 @@ class BasePopUpModalViewController: UIViewController {
 //        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
 //        tapgesture.numberOfTouchesRequired = 1
 //
-//        self.view.addGestureRecognizer(tapgesture)
+        self.view.sendSubviewToBack(backdrop)
     }
     
     @objc func closeView() {

@@ -93,6 +93,10 @@ class UserProfileAPI: BaseAuthAPI {
             completion(nil)
         }
     }
+
+    struct HealthProfileResponse:Decodable {
+        let data: UserHealthProfile
+    }
     
     func getHealthProfile(completion: @escaping ((UserHealthProfile?)-> Void)) {
         self.getCredentials(completion: { (credentials) in
@@ -103,33 +107,27 @@ class UserProfileAPI: BaseAuthAPI {
                 case .success(let data):
                     do {
                         let jsonData = try JSON(data: data)
-                        
-                        let defaults = UserDefaults.standard
-                        let keys = UserDefaultsKeys()
-                        let userProfileData = jsonData["data"]
-                        let weight = userProfileData[keys.weight].rawString() ?? ""
-                        let height = userProfileData[keys.height].rawString() ?? ""
-                        let gender = userProfileData[keys.gender].rawString() ?? ""
-                        let birthday = userProfileData[keys.birthday].rawString() ?? ""
-                        let unit = userProfileData[keys.unit].rawString() ?? ""
-                        let devices = userProfileData[keys.devices].rawValue as? [String:[String:Int]]
-                        let preExistingConditions = userProfileData["pre_existing_conditions"].rawValue as? [[String:String]]
-                        let mesureUnit = MeasurementUnits(rawValue: unit) ?? .metric
-                        let healthProfile = UserHealthProfile(weight: weight, height: height, gender: gender, birthday: birthday, unit: mesureUnit, devices: devices, preconditions: preExistingConditions)
+
+                        let jsonDecoder = JSONDecoder()
+                        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                        let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
+                        print(decodedData)
+
+                        if let preExistingConditions = decodedData.data.preconditions {
+                            preExistingConditions.forEach({ (condition) in
+                                if condition["type"] == "OTHER" {
+                                    preExistingMedicalCondtionOtherText = condition["condition"]
+                                    return
+                                }
+                                guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
+                                    return element.id.rawValue == condition["condition"]
+                                }) else { return }
+                                preExistingMedicalConditionData[optionIndex].selected = true
+                            })
+                        }
 
 
-                        preExistingConditions?.forEach({ (condition) in
-                            if condition["type"] == "OTHER" {
-                                preExistingMedicalCondtionOtherText = condition["condition"]
-                                return
-                            }
-                            guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
-                                return element.id.rawValue == condition["condition"]
-                            }) else { return }
-                            preExistingMedicalConditionData[optionIndex].selected = true
-                        })
-
-                        completion(healthProfile)
+                        completion(decodedData.data)
                     } catch {
                         print("json parse error", error)
                     }
@@ -298,14 +296,16 @@ class UserProfileAPI: BaseAuthAPI {
                 keys.gender: healthProfile.gender,
                 keys.birthday: healthProfile.birthday,
                 keys.unit: healthProfile.unit.rawValue,
-                "devices": healthProfile.devices
+                "devices": healthProfile.devices,
+                "location": healthProfile.location
                 ] as [String : Any]
 
-            let body = JSON(bodyDict)
-
+            
             var bodyData:Data = Data()
             do {
-                bodyData = try body.rawData()
+                let jsonEncoder = JSONEncoder()
+                jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
+                bodyData = try jsonEncoder.encode(healthProfile)
                 print(String(data: bodyData, encoding: .utf8))
             } catch  {
                 print(error)
