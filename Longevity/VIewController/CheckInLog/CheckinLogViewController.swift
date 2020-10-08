@@ -132,7 +132,7 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let sectionHeight = (self.history?.count ?? 0) > 0 ? 150.0 : 0.0
+        let sectionHeight = (self.history?.count ?? 0) > 0 ? 100.0 : 0.0
         return CGSize(width: collectionView.bounds.width, height: CGFloat(sectionHeight))
     }
     

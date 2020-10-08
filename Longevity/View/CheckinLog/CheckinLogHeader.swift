@@ -73,14 +73,14 @@ class CheckinLogHeader: UICollectionReusableView {
         addSubview(stackview)
         
         NSLayoutConstraint.activate([
-            segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
-            segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 80.0),
+//            segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            segmentedControl.topAnchor.constraint(equalTo: topAnchor, constant: 80.0),
             symptomsCircle.widthAnchor.constraint(equalToConstant: 18.0),
             symptomsCircle.heightAnchor.constraint(equalTo: symptomsCircle.widthAnchor),
             nosymptomsCircle.widthAnchor.constraint(equalToConstant: 18.0),
             nosymptomsCircle.heightAnchor.constraint(equalTo: nosymptomsCircle.widthAnchor),
             stackview.centerXAnchor.constraint(equalTo: centerXAnchor),
-            stackview.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20.0)
+            stackview.topAnchor.constraint(equalTo: topAnchor, constant: 80.0)
         ])
         
         self.symptomsCircle.layer.cornerRadius = 9.0
