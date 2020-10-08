@@ -86,8 +86,6 @@ class DashboardDevicesCell: UITableViewCell {
         
         layout.sectionInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 20.0)
         layout.scrollDirection = .horizontal
-        
-        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -111,6 +109,15 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = collectionView.bounds.height
         return CGSize(width: 130.0, height: height - 20.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        collectionView.deselectItem(at: indexPath, animated: true)
+        
+        guard let cell = collectionView.cellForItem(at: indexPath) as? DashboardDeviceCollectionCell else {
+            return
+        }
+        cell.selectCell()
     }
 }
 
