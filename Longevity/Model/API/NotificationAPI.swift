@@ -63,9 +63,8 @@ class NotificationAPI:BaseAuthAPI {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
             do {
-                let body = ["isEnabled":userNotification]
+                let body = ["is_enabled":userNotification ? 1 : 0]
                 let encoder = JSONEncoder()
-                encoder.keyEncodingStrategy = .convertToSnakeCase
                 let data = try encoder.encode(body)
                 let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
                                           path: "/device/\(deviceIdForVendor)/notification/status",
