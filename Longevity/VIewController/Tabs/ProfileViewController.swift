@@ -284,7 +284,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 switch cell.profileSetting {
                 case .exportcheckin:
                     let exportCheckinViewController = ExportCheckinDataViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
+                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .formSheet, completion: nil)
                 case .updatebiometrics:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let biometricsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfileBioDataVC") as? SetupProfileBioDataVC else { return }
@@ -302,7 +302,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                 case .resetcheckin:
                     let resetCheckinViewController = ResetCheckInDataViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
+                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .formSheet, completion: nil)
                 case .applehealth:
                     let appleHealthViewController = AppleHealthConnectionViewController()
                     let navigationController = UINavigationController(rootViewController: appleHealthViewController)

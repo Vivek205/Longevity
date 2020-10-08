@@ -68,6 +68,7 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
         
         layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .vertical
+        layout.invalidateLayout()
     }
 }
 
