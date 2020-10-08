@@ -13,6 +13,11 @@ class BaseProfileSetupViewController: UIViewController {
     lazy var progressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
+        let progressViewHeight = progressView.bounds.height
+        progressView.subviews.forEach { (subview) in
+            subview.layer.masksToBounds = true
+            subview.layer.cornerRadius = progressViewHeight / 2.0
+        }
         return progressView
     }()
     
