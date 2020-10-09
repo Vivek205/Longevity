@@ -185,13 +185,18 @@ class EditAccountViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
             return
         }
-        let alertVC = UIAlertController(title: "Discard changes", message: "Are you sure to discard all your unsaved changes?", preferredStyle: .actionSheet)
-        let dismiss = UIAlertAction(title: "dismiss", style: .destructive) {[weak self] (action) in
+        let alertVC = UIAlertController(title: nil, message: "You have unsaved changes", preferredStyle: .actionSheet)
+        let saveChanges = UIAlertAction(title: "Save Changes", style: .default) { [weak self] (action) in
+            self?.doneUpdate()
+        }
+        saveChanges.setValue(UIColor.themeColor, forKey: "titleTextColor")
+        let dismiss = UIAlertAction(title: "Discard", style: .destructive) {[weak self] (action) in
             self?.dismiss(animated: true, completion: nil)
         }
-        let cancel = UIAlertAction(title: "cancel", style: .default) {[weak self] (action) in
-//            self?.dismiss(animated: true, completion: nil)
+        let cancel = UIAlertAction(title: "Cancel", style: .cancel) { (action) in
         }
+        cancel.setValue(UIColor.themeColor, forKey: "titleTextColor")
+        alertVC.addAction(saveChanges)
         alertVC.addAction(dismiss)
         alertVC.addAction(cancel)
         self.present(alertVC, animated: true, completion: nil)
