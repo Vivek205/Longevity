@@ -139,32 +139,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let keys = UserDefaultsKeys()
         defaults.set(token, forKey: keys.deviceTokenForSNS)
         Logger.log("device token created \(token)")
-        // Check if ARN is created already
-        guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
-            return
-        }
-
-        let awsSNS = AWSSNS.default()
-        let request = AWSSNSCreatePlatformEndpointInput()
-        request?.token = token
-        request?.platformApplicationArn = SNSPlatformApplicationARN
-
-
-        awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
-            if task.error != nil {
-                print("Error: \(String(describing: task.error))")
-            } else {
-                let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
-                if let endpointArnForSNS = createEndpointResponse.endpointArn {
-                    print("endpointArn: \(endpointArnForSNS)")
-                    Logger.log("ARN endpoint created")
-                    defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
-                    registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
-                    AppSyncManager.instance.updateUserNotification(enabled: true)
-                }
-            }
-            return nil
-        })
+        updateARNToken()
     }
 
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
@@ -344,6 +319,41 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch let error {
             print(error.localizedDescription)
         }
+    }
+    
+    func updateARNToken() {
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        // Check if ARN is created already
+        guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
+            return
+        }
+        
+        guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
+            return
+        }
+
+        let awsSNS = AWSSNS.default()
+        let request = AWSSNSCreatePlatformEndpointInput()
+        request?.token = token
+        request?.platformApplicationArn = SNSPlatformApplicationARN
+
+
+        awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
+            if task.error != nil {
+                print("Error: \(String(describing: task.error))")
+            } else {
+                let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
+                if let endpointArnForSNS = createEndpointResponse.endpointArn {
+                    print("endpointArn: \(endpointArnForSNS)")
+                    Logger.log("ARN endpoint created")
+                    defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
+                    registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
+                    AppSyncManager.instance.updateUserNotification(enabled: true)
+                }
+            }
+            return nil
+        })
     }
 }
 

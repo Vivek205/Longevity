@@ -22,21 +22,21 @@ class BaseAuthAPI {
                         onFailure: @escaping (_ error: Error)-> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        if let idTokenExpData = KeyChain.load(name: KeychainKeys.idTokenExp) {
-            if let idTokenExp = String(data: idTokenExpData, encoding: .utf8) {
+//        if let idTokenExpData = KeyChain.load(name: KeychainKeys.idTokenExp) {
+        if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem() {
                        if let expDate = dateFormatter.date(from: idTokenExp) {
                         let currentDate = Date()
                         if currentDate < expDate {
-                            if let idTokenData = KeyChain.load(name: KeychainKeys.idToken) {
-                                if let idToken = String(data: idTokenData, encoding: .utf8) {
+//                            if let idTokenData = KeyChain.load(name: KeychainKeys.idToken) {
+                            if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
                                     return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
                                 }
-                            }
+//                            }
                         }
                        }
             }
 
-        }
+//        }
 
         var usersub = "", identityId = "", accessKey = "", idToken = ""
         var credentials = Credentials()
@@ -72,8 +72,11 @@ class BaseAuthAPI {
                         return completion(credentials)
                     }
 
-                    KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
-                    KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
+                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).saveItem(dateString50MinFuture)
+                    
+//                    KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
+//                    KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
     //                print(tokens.idToken)
                 }
 

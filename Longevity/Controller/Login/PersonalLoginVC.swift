@@ -275,6 +275,7 @@ class PersonalLoginVC: UIViewController {
             self.removeSpinner()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.setRootViewController()
+            appDelegate.updateARNToken()
         }
     }
 }

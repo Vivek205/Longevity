@@ -181,14 +181,17 @@ class FitbitModel: AuthHandlerType {
             return
         }
 
-        KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
-        KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+        try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(accessToken)
+        try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(refreshToken)
+        
+//        KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
+//        KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
         Logger.log("fitbit token saved in keychain")
     }
 
     func refreshTheToken() {
-        guard let refreshTokenData = KeyChain.load(name: KeychainKeys.FitbitRefreshToken) else {return}
-        let refreshToken = String(data: refreshTokenData, encoding: .utf8)
+        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else { return }
+//        let refreshToken = String(data: refreshTokenData, encoding: .utf8)
 
         let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
                var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
@@ -363,8 +366,10 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                     return
                 }
 
-                KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
-                KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+//                KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
+//                KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+                try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(accessToken)
+                try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(refreshToken)
                 Logger.log("fitbit token saved in keychain")
             }
         } catch {
@@ -380,8 +385,8 @@ class FetchFitbitTokenOperation: Operation {
     var userID: String?
     
     override func main() {
-            guard let refreshTokenData = KeyChain.load(name: KeychainKeys.FitbitRefreshToken) else {return}
-            let refreshToken = String(data: refreshTokenData, encoding: .utf8)
+        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else { return }
+//            let refreshToken = String(data: refreshTokenData, encoding: .utf8)
 
             let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
                    var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
