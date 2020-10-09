@@ -41,8 +41,10 @@ class SignOutCell: UITableViewCell {
     @objc func doSignout() {
         func onSuccess(isSignedOut: Bool) {
             clearUserDefaults()
-            KeyChain.remove(name: KeychainKeys.idToken)
-            KeyChain.remove(name: KeychainKeys.idTokenExp)
+            try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken, accessGroup: nil).deleteItem()
+            try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp, accessGroup: nil).deleteItem()
+//            KeyChain.remove(name: KeychainKeys.idToken)
+//            KeyChain.remove(name: KeychainKeys.idTokenExp)
             DispatchQueue.main.async {
                 
                 if var topController = UIApplication.shared.keyWindow?.rootViewController {

@@ -48,6 +48,12 @@ class SetupProfileNotificationVC: BaseProfileSetupViewController {
     }
     
     @IBAction func handleMayBeLater(_ sender: Any) {
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        if let snsArnCreatedAlready = defaults.value(forKey: keys.endpointArnForSNS) as? String, !snsArnCreatedAlready.isEmpty {
+            AppSyncManager.instance.updateUserNotification(enabled: false)
+        }
+        
         self.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
     }
     
