@@ -26,7 +26,7 @@ class AppleWatchConnectViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(hexString: "#FFFFFF") //UIColor(hexString: "#F5F6FA")
+        self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
         self.view.addSubview(connectionTableView)
         
         self.connectionTableView.backgroundColor = .clear
@@ -38,6 +38,7 @@ class AppleWatchConnectViewController: UIViewController {
         titleLabel.textColor = UIColor(hexString: "#4E4E4E")
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
+        self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
         self.navigationItem.titleView = titleLabel
         let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor

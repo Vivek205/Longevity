@@ -10,23 +10,7 @@ import UIKit
 
 class AppleHealthStatusCell: UITableViewCell {
     
-    lazy var statusImage: UIImageView = {
-        let statusimage = UIImageView()
-        statusimage.image = UIImage(named: "icon: check mark")
-        statusimage.contentMode = .scaleAspectFit
-        statusimage.translatesAutoresizingMaskIntoConstraints = false
-        return statusimage
-    }()
     
-    lazy var deviceStatus: UILabel = {
-        let status = UILabel()
-        status.text = "Connected"
-        status.font = UIFont(name: "Montserrat-Medium", size: 24.0)
-        status.textColor = UIColor(hexString: "#5AA7A7")
-        status.textAlignment = .center
-        status.translatesAutoresizingMaskIntoConstraints = false
-        return status
-    }()
     
     lazy var howitWorksLabel: UILabel = {
         let howitworks = UILabel()
@@ -42,20 +26,25 @@ class AppleHealthStatusCell: UITableViewCell {
         
         self.backgroundColor = .clear
         
-        let horizontaStack = UIStackView(arrangedSubviews: [statusImage, deviceStatus])
-        horizontaStack.alignment = .fill
-        horizontaStack.axis = .horizontal
-        horizontaStack.distribution = .fillProportionally
-        horizontaStack.spacing = 10.0
-        horizontaStack.translatesAutoresizingMaskIntoConstraints = false
+//        let horizontaStack = UIStackView(arrangedSubviews: [statusImage, deviceStatus])
+//        horizontaStack.alignment = .fill
+//        horizontaStack.axis = .horizontal
+//        horizontaStack.distribution = .fillProportionally
+//        horizontaStack.spacing = 10.0
+//        horizontaStack.translatesAutoresizingMaskIntoConstraints = false
         
-        self.addSubview(horizontaStack)
+//        self.addSubview(statusImage)
+//        self.addSubview(deviceStatus)
         self.addSubview(howitWorksLabel)
         
         NSLayoutConstraint.activate([
-            horizontaStack.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
-            horizontaStack.centerXAnchor.constraint(equalTo: centerXAnchor),
-            howitWorksLabel.topAnchor.constraint(equalTo: horizontaStack.bottomAnchor, constant: 15.0),
+//            deviceStatus.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
+//            deviceStatus.centerXAnchor.constraint(equalTo: centerXAnchor),
+//            statusImage.widthAnchor.constraint(equalToConstant: 30.0),
+//            statusImage.heightAnchor.constraint(equalTo: statusImage.widthAnchor),
+//            statusImage.centerYAnchor.constraint(equalTo: deviceStatus.centerYAnchor),
+//            statusImage.trailingAnchor.constraint(equalTo: deviceStatus.leadingAnchor, constant: 10.0),
+            howitWorksLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
             howitWorksLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             howitWorksLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
             howitWorksLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15.0)
