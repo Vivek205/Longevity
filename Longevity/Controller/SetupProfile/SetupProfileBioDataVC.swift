@@ -89,10 +89,17 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
                         self?.collectionView.reloadItems(at: [IndexPath(item: 3, section: 0)])
                     }
                     
+                    self?.selectedAgePickerValue = Calendar.current.date(byAdding: .year, value: -20, to: Date()) ?? Date()
+                    
                     if let birthday = AppSyncManager.instance.healthProfile.value?.birthday, !birthday.isEmpty {
                         setupProfileOptionList[4]?.buttonText = self?.calculateAge(birthDate: birthday) ?? ""
                         setupProfileOptionList[4]?.isSynced = true
                         self?.collectionView.reloadItems(at: [IndexPath(item: 4, section: 0)])
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd-MM-yyyy"
+                        if let birthDate = formatter.date(from: birthday) {
+                            self?.selectedAgePickerValue = birthDate
+                        }
                     }
                     
                     if var height = AppSyncManager.instance.healthProfile.value?.height,
@@ -167,14 +174,16 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             agePicker.preferredDatePickerStyle = .wheels
         }
         agePicker.isHidden = false
+        agePicker.backgroundColor = .white
         agePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())
-        agePicker.date = Calendar.current.date(byAdding: .year, value: -20, to: Date()) ?? Date()
+        agePicker.date = self.selectedAgePickerValue
         agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
         agePicker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
         
         // Toolbar
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .blackTranslucent
+        toolBar.tintColor = .white
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
     }
     
