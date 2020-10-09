@@ -164,7 +164,7 @@ up your health profile.</string>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnv-cI-MYv">
                                 <rect key="frame" x="0.0" y="88" width="414" height="629"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" sectionInsetReference="layoutMargins" id="KeX-mN-UsO">
+                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="0.0" minimumInteritemSpacing="0.0" sectionInsetReference="layoutMargins" id="KeX-mN-UsO">
                                     <size key="itemSize" width="128" height="128"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
@@ -195,7 +195,7 @@ up your health profile.</string>
                                         <size key="customSize" width="362" height="90"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioInfoCell" id="f2H-Iv-rhN">
-                                        <rect key="frame" x="26" y="108" width="362" height="90"/>
+                                        <rect key="frame" x="26" y="98" width="362" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OCP-uc-RIP">
                                             <rect key="frame" x="0.0" y="0.0" width="362" height="90"/>
@@ -226,58 +226,8 @@ up your health profile.</string>
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="362" height="90"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioOptionCell" id="ciS-LT-VRg" customClass="SetupProfileBioOptionCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="26" y="208" width="362" height="90"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="1dL-LU-MgO">
-                                            <rect key="frame" x="0.0" y="0.0" width="362" height="90"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="ULU-H9-EG7">
-                                                    <rect key="frame" x="20" y="21" width="48" height="48"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="48" id="0bm-QG-Knh"/>
-                                                        <constraint firstAttribute="width" constant="48" id="Xz6-Fs-uys"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="6fs-En-B7r" customClass="CustomButtonOutlined" customModule="Longevity" customModuleProvider="target">
-                                                    <rect key="frame" x="242" y="29" width="100" height="32"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="32" id="jaL-Xc-G7G"/>
-                                                        <constraint firstAttribute="width" constant="100" id="yd6-lG-xfH"/>
-                                                    </constraints>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="14"/>
-                                                    <state key="normal" title="Button"/>
-                                                    <connections>
-                                                        <action selector="handleButtonPress:" destination="ciS-LT-VRg" eventType="touchUpInside" id="5KP-zp-V4U"/>
-                                                    </connections>
-                                                </button>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Apple Health" textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="uTf-cO-4YF">
-                                                    <rect key="frame" x="83" y="35" width="159" height="20.5"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="6fs-En-B7r" firstAttribute="centerY" secondItem="1dL-LU-MgO" secondAttribute="centerY" id="DrR-Kj-XJ3"/>
-                                                <constraint firstItem="6fs-En-B7r" firstAttribute="leading" secondItem="uTf-cO-4YF" secondAttribute="trailing" id="KOJ-DL-iuI"/>
-                                                <constraint firstItem="ULU-H9-EG7" firstAttribute="centerY" secondItem="1dL-LU-MgO" secondAttribute="centerY" id="NiN-81-H7J"/>
-                                                <constraint firstAttribute="trailing" secondItem="6fs-En-B7r" secondAttribute="trailing" constant="20" id="SKK-Gd-ST3"/>
-                                                <constraint firstItem="uTf-cO-4YF" firstAttribute="leading" secondItem="ULU-H9-EG7" secondAttribute="trailing" constant="15" id="iGQ-8b-wLu"/>
-                                                <constraint firstItem="ULU-H9-EG7" firstAttribute="leading" secondItem="1dL-LU-MgO" secondAttribute="leading" constant="20" id="kd7-PN-In7"/>
-                                                <constraint firstItem="uTf-cO-4YF" firstAttribute="centerY" secondItem="1dL-LU-MgO" secondAttribute="centerY" id="p0U-7S-z7t"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="362" height="90"/>
-                                        <connections>
-                                            <outlet property="button" destination="6fs-En-B7r" id="gz8-CM-R0Z"/>
-                                            <outlet property="label" destination="uTf-cO-4YF" id="cIf-ur-pqn"/>
-                                            <outlet property="logo" destination="ULU-H9-EG7" id="zQS-V6-MVC"/>
-                                        </connections>
-                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioMetric" id="WQR-t7-1eQ" customClass="SetupProfileUnitSelectionCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="9" y="308" width="396" height="90"/>
+                                        <rect key="frame" x="9" y="188" width="396" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9EJ-Ej-88h">
                                             <rect key="frame" x="0.0" y="0.0" width="396" height="90"/>
@@ -545,15 +495,18 @@ up your health profile.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hke-Zl-aPo">
-                                                    <rect key="frame" x="270" y="63.5" width="59" height="32"/>
-                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="0.0" maxY="5"/>
+                                                    <rect key="frame" x="266" y="63.5" width="60" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="Ztj-8m-g4L"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                     <state key="normal" title="Button"/>
                                                     <connections>
                                                         <action selector="handleConnectDevice:" destination="fDR-Fe-bHv" eventType="touchUpInside" id="wv8-e4-P1T"/>
                                                     </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="apd-rW-3GS">
-                                                    <rect key="frame" x="68" y="5" width="81.5" height="149"/>
+                                                    <rect key="frame" x="68" y="5" width="196" height="149"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJ1-rg-BsJ">
                                                             <rect key="frame" x="0.0" y="0.0" width="44.5" height="85"/>
@@ -573,10 +526,10 @@ up your health profile.</string>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="7DS-tx-W4B"/>
-                                                <constraint firstItem="Hke-Zl-aPo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="10" id="Cw2-BX-YUf"/>
                                                 <constraint firstItem="apd-rW-3GS" firstAttribute="leading" secondItem="H8R-Cv-SP1" secondAttribute="trailing" constant="10" id="SfJ-2S-iOB"/>
-                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" constant="5" id="XAn-82-kWv"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" constant="8" id="XAn-82-kWv"/>
                                                 <constraint firstAttribute="bottom" secondItem="apd-rW-3GS" secondAttribute="bottom" constant="5" id="bZr-71-hha"/>
+                                                <constraint firstAttribute="trailing" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="70" id="g25-4e-Hf2"/>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="leading" secondItem="sTf-mj-jrF" secondAttribute="leading" constant="10" id="onT-vk-Hbh"/>
                                                 <constraint firstItem="Hke-Zl-aPo" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="t97-Rx-gUz"/>
                                                 <constraint firstItem="apd-rW-3GS" firstAttribute="top" secondItem="sTf-mj-jrF" secondAttribute="top" constant="5" id="vzx-qF-WIg"/>

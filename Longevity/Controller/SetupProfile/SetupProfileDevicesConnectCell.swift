@@ -28,6 +28,50 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
         delegate?.connectBtn(wasPressedOnCell: self)
     }
     
+    lazy var addedStateView: UIStackView = {
+        let addedImage = UIImageView()
+        addedImage.image = UIImage(#imageLiteral(resourceName: "icon: checked"))
+        addedImage.contentMode = .scaleAspectFit
+        addedImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        let addTitle = UILabel()
+        addTitle.text = "ADDED"
+        addTitle.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        addTitle.textAlignment = .center
+        addTitle.textColor = .themeColor
+        addTitle.translatesAutoresizingMaskIntoConstraints = false
+        
+        let stack = UIStackView(arrangedSubviews: [addedImage, addTitle])
+        stack.axis = .vertical
+        stack.alignment = .center
+        stack.distribution = .fillProportionally
+        stack.translatesAutoresizingMaskIntoConstraints = false
+        
+        return stack
+    }()
+    
+    func setupCell(index: Int) {
+        let option = setupProfileConnectDeviceOptionList[index]
+        self.image.image = option?.image
+        self.titleLabel.text = option?.title
+        self.descriptionLabel.text = option?.description
+        
+        self.addedStateView.removeFromSuperview()
+        
+        if option?.isConnected == true {
+            self.contentView.addSubview(addedStateView)
+            
+            NSLayoutConstraint.activate([
+                addedStateView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+                addedStateView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8.0)
+            ])
+            self.connectBtn.isHidden = true
+        } else {
+            self.connectBtn.isHidden = false
+            self.connectBtn.setImage(#imageLiteral(resourceName: "icon: add"), for: .normal)
+        }
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         

@@ -88,9 +88,11 @@ class RKCFormItemView: UICollectionViewCell {
             self.addSubview(verticalLine)
             NSLayoutConstraint.activate([
                                             verticalLine.widthAnchor.constraint(equalToConstant: 1.5),
-                                            verticalLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 24.0),
+                                            verticalLine.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 23.0),
                                             verticalLine.topAnchor.constraint(equalTo: self.topAnchor),
                                             verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)])
+        } else {
+            self.verticalLine.removeFromSuperview()
         }
     }
 }
