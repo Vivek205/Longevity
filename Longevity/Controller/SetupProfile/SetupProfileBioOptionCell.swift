@@ -59,7 +59,7 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             self.biometricImage.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 20.0),
-            self.biometricImage.heightAnchor.constraint(equalToConstant: 48.0),
+            self.biometricImage.heightAnchor.constraint(equalToConstant: 50.0),
             self.biometricImage.widthAnchor.constraint(equalTo: self.biometricImage.heightAnchor),
             self.biometricImage.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
             
@@ -113,12 +113,12 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
             self.biometricSyncButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
         }
 
-        if index == 7 {
-            self.biometricSyncButton.titleLabel?.lineBreakMode = .byWordWrapping
-            self.biometricSyncButton.titleLabel?.numberOfLines = 2
-            self.biometricSyncButton.titleLabel?.textAlignment = .center
-            self.biometricSyncButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
-        }
+//        if index == 6 {
+//            self.biometricSyncButton.titleLabel?.lineBreakMode = .byWordWrapping
+//            self.biometricSyncButton.titleLabel?.numberOfLines = 2
+//            self.biometricSyncButton.titleLabel?.textAlignment = .center
+//            self.biometricSyncButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
+//        }
         
         // Connect Apple Health Button
         if index == 2 && self.biometricLabel.text == "Apple Health" {
@@ -148,7 +148,7 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
                 verticalLine.topAnchor.constraint(equalTo: self.topAnchor, constant: 30.0),
                 verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor)
             ])
-        } else if index == 7 {
+        } else if index == 6 {
             NSLayoutConstraint.activate([
                 verticalLine.topAnchor.constraint(equalTo: self.topAnchor),
                 verticalLine.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30.0)
