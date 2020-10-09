@@ -325,9 +325,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         // Check if ARN is created already
-        guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
-            return
-        }
+//        guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
+//            return
+//        }
         
         guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
             return
@@ -348,8 +348,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     print("endpointArn: \(endpointArnForSNS)")
                     Logger.log("ARN endpoint created")
                     defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
-                    registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
-                    AppSyncManager.instance.updateUserNotification(enabled: true)
+                    registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS) {
+                        AppSyncManager.instance.updateUserNotification(enabled: true)
+                    } failure: {
+                        
+                    }
                 }
             }
             return nil

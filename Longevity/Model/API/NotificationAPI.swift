@@ -98,7 +98,7 @@ class NotificationAPI:BaseAuthAPI {
     }
 }
 
-func registerARN(platform:String, arnEndpoint: String) {
+func registerARN(platform:String, arnEndpoint: String, success: @escaping(()-> Void), failure: @escaping(()-> Void)) {
     guard let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString else {return}
 
     func onGettingCredentials(_ credentials: Credentials){
@@ -124,8 +124,10 @@ func registerARN(platform:String, arnEndpoint: String) {
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 Logger.log("register ARN sucess \(responseString)")
+                success()
             case .failure(let apiError):
                 Logger.log("registerARN failed \(apiError)")
+                failure()
             }
         })
     }
