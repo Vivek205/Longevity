@@ -51,6 +51,12 @@ extension CheckInStatus {
 
 class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
+
+    var isRepetitiveSurveyList: Bool = false {
+        didSet {
+            checkInTitle.textColor = .themeColor    
+        }
+    }
     
     var surveyResponse: SurveyListItem! {
         didSet {
@@ -82,6 +88,7 @@ class DashboardCheckInCell: UITableViewCell {
         let title2 = UILabel()
         title2.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
         title2.translatesAutoresizingMaskIntoConstraints = false
+        title2.textColor = .checkinCompleted
         return title2
     }()
     
