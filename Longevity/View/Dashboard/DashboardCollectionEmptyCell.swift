@@ -8,14 +8,7 @@
 
 import UIKit
 
-class DashboardCollectionEmptyCell: UICollectionViewCell {
-    
-    lazy var hexagonView : HexagonView = {
-        let hexagon = HexagonView()
-        hexagon.backgroundColor = .hexagonColor
-        hexagon.translatesAutoresizingMaskIntoConstraints = false
-        return hexagon
-    }()
+class DashboardCollectionEmptyCell: CommonHexagonCell {
     
     lazy var tileTitle: UILabel = {
         let title = UILabel()
@@ -63,7 +56,6 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
         self.tileTitle.textColor = .white
         self.infoButton.tintColor = .white
         
-        self.contentView.addSubview(hexagonView)
         self.contentView.addSubview(tileTitle)
         self.contentView.addSubview(emptyCellMessage)
         self.contentView.addSubview(infoButton)
@@ -81,6 +73,39 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
         ])
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func doOpenInfo() {
+        NavigationUtility.presentOverCurrentContext(
+        destination: LongevityComingSoonPopupViewController(),
+        style: .pageSheet,
+        completion: nil)
+    }
+}
+
+class CommonHexagonCell: UICollectionViewCell {
+    
+    lazy var hexagonView : HexagonView = {
+        let hexagon = HexagonView()
+        hexagon.backgroundColor = .hexagonColor
+        hexagon.translatesAutoresizingMaskIntoConstraints = false
+        return hexagon
+    }()
+    
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
+        self.contentView.addSubview(hexagonView)
+        
+        NSLayoutConstraint.activate([
+            hexagonView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            hexagonView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            hexagonView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor)
+        ])
         
         self.hexagonView.isUserInteractionEnabled = true
         let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenInfo))
@@ -92,9 +117,16 @@ class DashboardCollectionEmptyCell: UICollectionViewCell {
     }
     
     @objc func doOpenInfo() {
-        NavigationUtility.presentOverCurrentContext(
-        destination: LongevityComingSoonPopupViewController(),
-        style: .pageSheet,
-        completion: nil)
+        
+    }
+    
+    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
+        let hitView = super.hitTest(point, with: event)
+        for view in self.contentView.subviews {
+            if view == hitView {
+                return view
+            }
+        }
+        return nil
     }
 }

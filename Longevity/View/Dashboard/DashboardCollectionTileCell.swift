@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardCollectionTileCell: UICollectionViewCell {
+class DashboardCollectionTileCell: CommonHexagonCell {
     
     var insightData: UserInsight! {
         didSet {
@@ -51,12 +51,12 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         }
     }
     
-    lazy var hexagonView : HexagonView = {
-        let hexagon = HexagonView()
-        hexagon.backgroundColor = .hexagonColor
-        hexagon.translatesAutoresizingMaskIntoConstraints = false
-        return hexagon
-    }()
+//    lazy var hexagonView : HexagonView = {
+//        let hexagon = HexagonView()
+//        hexagon.backgroundColor = .hexagonColor
+//        hexagon.translatesAutoresizingMaskIntoConstraints = false
+//        return hexagon
+//    }()
     
     lazy var tileTitle: UILabel = {
         let title = UILabel()
@@ -115,12 +115,10 @@ class DashboardCollectionTileCell: UICollectionViewCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.contentView.addSubview(hexagonView)
-        NSLayoutConstraint.activate([
-            hexagonView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
-            hexagonView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
-            hexagonView.heightAnchor.constraint(equalTo: self.contentView.widthAnchor)
-        ])
+        
+        self.hexagonView.backgroundColor = .hexagonColor
+        
+//        self.contentView.addSubview(hexagonView)
     }
     
     func setupCell(index: Int) {
@@ -165,11 +163,6 @@ class DashboardCollectionTileCell: UICollectionViewCell {
             trendImage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
             trendImage.bottomAnchor.constraint(equalTo: hexagonView.bottomAnchor, constant: -10.0)
         ])
-        
-        self.hexagonView.isUserInteractionEnabled = true
-        let taprecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenMyDataTab))
-        taprecognizer.numberOfTapsRequired = 1
-        self.hexagonView.addGestureRecognizer(taprecognizer)
     }
     
     required init?(coder: NSCoder) {
@@ -200,13 +193,15 @@ class DashboardCollectionTileCell: UICollectionViewCell {
         viewController.expandItemfor(insightType: self.insightData.name)
     }
     
-    override func hitTest(_ point: CGPoint, with event: UIEvent?) -> UIView? {
-        let hitView = super.hitTest(point, with: event)
-        for view in self.contentView.subviews {
-            if view == hitView {
-                return view
-            }
+    override func doOpenInfo() {
+        let appdelegate = UIApplication.shared.delegate as! AppDelegate
+        guard let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController else {
+            return
         }
-        return nil
+        tabBarController.selectedIndex = 1
+        guard let viewController = tabBarController.viewControllers?[1] as? MyDataViewController else {
+            return
+        }
+        viewController.expandItemfor(insightType: self.insightData.name)
     }
 }
