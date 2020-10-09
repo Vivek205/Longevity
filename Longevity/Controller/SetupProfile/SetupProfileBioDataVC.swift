@@ -56,6 +56,16 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             rightButton.tintColor = .themeColor
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
+            
+            let titleLabel = UILabel()
+            titleLabel.text = "Update Biometrics"
+            titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
+            titleLabel.textColor = UIColor(hexString: "#4E4E4E")
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
+            self.navigationItem.titleView = titleLabel
+            
             self.footerView.isHidden = true
         } else {
             self.addProgressbar(progress: 40.0)
@@ -493,7 +503,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
         1
     }
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 9
+        return 8
     }
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -505,7 +515,7 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
-        } else if indexPath.item == 8 {
+        } else if indexPath.item == 7 {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
@@ -530,7 +540,8 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width
-        return CGSize(width: width, height: CGFloat(60))
+        let height = (self.isFromSettings && indexPath.item == 0) ? 0.0 : 65.0
+        return CGSize(width: width, height: CGFloat(height))
     }
     
     fileprivate func calculateAge(birthDate: String) -> String {

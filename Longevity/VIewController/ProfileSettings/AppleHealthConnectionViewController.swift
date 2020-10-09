@@ -26,7 +26,7 @@ class AppleHealthConnectionViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(hexString: "#FFFFFF") //UIColor(hexString: "#F5F6FA")
+        self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
         self.view.addSubview(connectionTableView)
         
         self.connectionTableView.backgroundColor = .clear
@@ -42,6 +42,7 @@ class AppleHealthConnectionViewController: UIViewController {
         let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
         self.navigationItem.leftBarButtonItem = leftbutton
+        self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
         
         NSLayoutConstraint.activate([
             self.connectionTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
