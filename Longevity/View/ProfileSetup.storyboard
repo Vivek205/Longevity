@@ -587,7 +587,7 @@ up your health profile.</string>
                                 <rect key="frame" x="0.0" y="813" width="414" height="83"/>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZD6-xG-uNs">
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZD6-xG-uNs">
                                 <rect key="frame" x="0.0" y="88" width="414" height="629"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="eHG-3Y-ccy">
@@ -736,7 +736,7 @@ up your health profile.</string>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="HEU-Lb-Zsz" userLabel="Footer">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEU-Lb-Zsz" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKr-Jv-jeL" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
@@ -756,7 +756,6 @@ up your health profile.</string>
                                     <constraint firstAttribute="trailing" secondItem="rKr-Jv-jeL" secondAttribute="trailing" constant="20" id="Qgt-nd-RXh"/>
                                     <constraint firstItem="rKr-Jv-jeL" firstAttribute="top" secondItem="HEU-Lb-Zsz" secondAttribute="top" constant="24" id="bDY-cO-VGh"/>
                                     <constraint firstItem="rKr-Jv-jeL" firstAttribute="leading" secondItem="HEU-Lb-Zsz" secondAttribute="leading" constant="20" id="dby-7r-a9x"/>
-                                    <constraint firstAttribute="height" constant="96" id="jER-Iz-BIG"/>
                                 </constraints>
                             </view>
                         </subviews>
