@@ -356,7 +356,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
             setupProfileOptionList[5]?.isSynced = true
             var splitValue = selectedPickerValue.components(separatedBy: " ")[0]
             if healthKitUtil.selectedUnit == .imperial {
-                splitValue = healthKitUtil.getCentimeter(fromFeet: splitValue)
+                splitValue = healthKitUtil.getCentimeter(fromFeetInches: splitValue)
             }
             AppSyncManager.instance.healthProfile.value?.height = splitValue
             

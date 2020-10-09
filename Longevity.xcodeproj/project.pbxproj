@@ -111,6 +111,7 @@
 		E2386A362488C23C0068030E /* ChangePasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A352488C23C0068030E /* ChangePasswordVC.swift */; };
 		E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2386A372488F4DE0068030E /* ResetPasswordVC.swift */; };
 		E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23A2CC52480C92C0051EE7A /* GradientView.swift */; };
+		E242A6692530701200AC6152 /* Array+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E242A6682530701100AC6152 /* Array+Extension.swift */; };
 		E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24826E424E5326D0083EFAC /* CompletionStepVC.swift */; };
 		E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */ = {isa = PBXBuildFile; fileRef = E24DED0F24B30B1500A61892 /* UserDefaults.swift */; };
 		E2503AA324EBDDA70033A814 /* Date.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2503AA224EBDDA70033A814 /* Date.swift */; };
@@ -333,6 +334,7 @@
 		E2386A352488C23C0068030E /* ChangePasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChangePasswordVC.swift; sourceTree = "<group>"; };
 		E2386A372488F4DE0068030E /* ResetPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ResetPasswordVC.swift; sourceTree = "<group>"; };
 		E23A2CC52480C92C0051EE7A /* GradientView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = GradientView.swift; sourceTree = "<group>"; };
+		E242A6682530701100AC6152 /* Array+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Array+Extension.swift"; sourceTree = "<group>"; };
 		E24826E424E5326D0083EFAC /* CompletionStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompletionStepVC.swift; sourceTree = "<group>"; };
 		E24DED0F24B30B1500A61892 /* UserDefaults.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserDefaults.swift; sourceTree = "<group>"; };
 		E24DED1A24B5D4E500A61892 /* Longevity-Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Longevity-Bridging-Header.h"; sourceTree = "<group>"; };
@@ -546,6 +548,7 @@
 				E252C49F252C315200B0E34F /* LocationUtil.swift */,
 				E252C4A1252C5B8900B0E34F /* Coimbatore.gpx */,
 				E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */,
+				E242A6682530701100AC6152 /* Array+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1203,6 +1206,7 @@
 				E290B60624BC75D500C51655 /* String.swift in Sources */,
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
+				E242A6692530701200AC6152 /* Array+Extension.swift in Sources */,
 				E21BD6AA24BDB1E30001B90D /* SetupProfilePreConditionOptionCell.swift in Sources */,
 				E258E65D24EC12B000676056 /* RKCFormTextAnswerView.swift in Sources */,
 				E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */,

@@ -224,6 +224,7 @@ final class HealthKitUtil {
             AppSyncManager.instance.healthProfile.value?.height = String(format: "%.0f",heightInCentimeters)
         } else {
             let heightInFeet = heightSample.quantity.doubleValue(for: HKUnit.foot())
+            
             heightString = "\(String(format: "%.2f", heightInFeet)) \(self.selectedUnit.height)"
             // NOTE: Always store metric value in Appsync manager
             let heightInCentimeters = heightSample.quantity.doubleValue(for: HKUnit.meterUnit(with: .centi))
@@ -236,11 +237,15 @@ final class HealthKitUtil {
         guard let height = AppSyncManager.instance.healthProfile.value?.height else { return nil}
         let heightInCenti = Measurement(value: (height as NSString).doubleValue, unit: UnitLength.centimeters)
         let heightInFeet = heightInCenti.converted(to: .feet)
-        return String(format: "%.2f", heightInFeet.value)
+        let feetInches = convertFeetToFeetInches(feet: heightInFeet.value)
+        return feetInchesToString(feetInches: feetInches)
     }
 
-    func getCentimeter(fromFeet value:String) -> String {
-        let feet = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.feet)
+    func getCentimeter(fromFeetInches value:String) -> String {
+
+//        let feet = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.feet)
+        let feetValue = convertFeetInchesToFeet(feetInches: value)
+        let feet = Measurement(value: feetValue, unit: UnitLength.feet)
         let centi = feet.converted(to: .centimeters)
         return String(format: "%.0f", centi.value)
     }
@@ -248,8 +253,36 @@ final class HealthKitUtil {
     func getFeet(fromCentimeter value:String) -> String {
         let centimeter = Measurement(value: (value as NSString).doubleValue, unit: UnitLength.centimeters)
         let feet = centimeter.converted(to: .feet)
-        return  String(format: "%.2f", feet.value)
+        let feetInches = convertFeetToFeetInches(feet: feet.value)
+        return feetInchesToString(feetInches: feetInches)
     }
+
+    func convertFeetToFeetInches(feet: Double) -> (Double, Double)  {
+        let splitFeet = modf(feet)
+        var wholeFeet = splitFeet.0
+        var wholeInches = round(splitFeet.1 * 12)
+
+        if wholeInches == 12 {
+            wholeInches = Double(0)
+            wholeFeet += 1.0
+        }
+        return (wholeFeet, wholeInches)
+    }
+
+    func convertFeetInchesToFeet(feetInches: String) -> Double {
+        let splitString = feetInches.components(separatedBy: "'")
+        guard  let wholeFeet = Double(splitString[0]),
+        let wholeInches = Double(splitString[1]) else {
+            return Double(0)
+        }
+        let feet = wholeFeet + (wholeInches / 12)
+        return feet
+    }
+
+    func feetInchesToString(feetInches:(Double, Double)) -> String{
+        return  "\(String(format: "%.0f", feetInches.0))'\(String(format: "%.0f", feetInches.1))''"
+    }
+    
 
     func getHeightPickerOptions() -> [String] {
         var pickerData: [String] = [String]()
@@ -258,10 +291,12 @@ final class HealthKitUtil {
              pickerData = Array(minimumHeightCm...maximumHeightCm).map { "\($0) \(selectedUnit.height)"}
         case .imperial:
             for value in stride(from: minimumHeightFt, to: maximumHeightFt, by: stepHeightFt) {
-                pickerData.append("\(String(format: "%.2f", value)) \(self.selectedUnit.height)")
+                let feetInches = convertFeetToFeetInches(feet: value)
+                pickerData.append("\(feetInchesToString(feetInches: feetInches)) \(self.selectedUnit.height)")
             }
         }
-        return pickerData
+        let uniqueValues = pickerData.uniques
+        return uniqueValues
     }
 
     func readHeightData(completion: ((_ height: HKQuantitySample?,_ error: Error?) -> Void)? = nil) {

@@ -45,6 +45,8 @@ class PersonalLoginVC: UIViewController {
         let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
 
         self.view.addGestureRecognizer(backgroundTapGesture)
+
+
     }
 
     override func viewDidLayoutSubviews() {
