@@ -24,8 +24,12 @@ class ProfileSettingsCell: UITableViewCell {
             
             if profileSetting.settingAccessory == .addcontrol {
                 self.settingsActionImage.isHidden = false
-                self.settingsActionImage.image = UIImage(named: "addButton")
                 self.settingsActionImage.tintColor = .themeColor
+                if let device = AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch], device["connected"] == 1, self.profileSetting == .applewatch {
+                    self.settingsActionImage.image = UIImage(named: "icon: arrow")
+                } else {
+                    self.settingsActionImage.image = UIImage(named: "addButton")
+                }
             } else if profileSetting.settingAccessory == .navigate {
                 self.settingsActionImage.isHidden = false
                 self.settingsActionImage.image = UIImage(named: "icon: arrow")
@@ -53,18 +57,28 @@ class ProfileSettingsCell: UITableViewCell {
                 self.settingBGView.layer.masksToBounds = false
             }
             
-            settingStatus.isHidden = profileSetting != .applehealth
+            settingStatus.isHidden = profileSetting != .applehealth && profileSetting != .applewatch
             if !settingStatus.isHidden {
                 AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
                     DispatchQueue.main.async {
                         let profile = AppSyncManager.instance.healthProfile.value
-                        var deviceConnected = false
-                        if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
-                            deviceConnected = true
-                        } else {
-                            deviceConnected = false
+                        var settingStatusText = ""
+                        if self?.profileSetting == .applehealth {
+                            if let device = profile?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
+                                settingStatusText = "Connected"
+                            } else {
+                                settingStatusText = "Not Connected"
+                            }
+                        } else if self?.profileSetting == .applewatch {
+                            if let device = profile?.devices?[ExternalDevices.watch], device["connected"] == 1 {
+                                settingStatusText = "Connected"
+                                self?.settingsActionImage.image = UIImage(named: "icon: arrow")
+                            } else {
+                                settingStatusText = ""
+                                self?.settingsActionImage.image = UIImage(named: "addButton")
+                            }
                         }
-                        self?.settingStatus.text = deviceConnected ? "Connected" : "Not Connected"
+                        self?.settingStatus.text = settingStatusText
                     }
                 }
             }

@@ -18,9 +18,9 @@ class RKCFormBooleanAnswerView: UIView {
 
     lazy var segmentedControl: UISegmentedControl = {
         let uiSegmentedControl = UISegmentedControl(items: ["",""])
-        uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
+        
         uiSegmentedControl.backgroundColor = UIColor(red: 118/255, green: 118/255, blue: 128/255, alpha: 0.12)
-        uiSegmentedControl.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        
         if #available(iOS 13.0, *) {
             uiSegmentedControl.selectedSegmentTintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         } else {
@@ -30,7 +30,13 @@ class RKCFormBooleanAnswerView: UIView {
                 uiSegmentedControl.tintColor = #colorLiteral(red: 0.5568627451, green: 0.5568627451, blue: 0.5764705882, alpha: 0.8979291524)
             }
         }
+        
+        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 13.0)]
+        uiSegmentedControl.setTitleTextAttributes(titleAttributes, for: .normal)
+        let selectedTitleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 13.0)]
+        uiSegmentedControl.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         uiSegmentedControl.layer.cornerRadius = 6.93
+        uiSegmentedControl.translatesAutoresizingMaskIntoConstraints = false
 
         return uiSegmentedControl
     }()

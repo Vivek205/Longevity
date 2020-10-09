@@ -64,6 +64,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
+        layout.sectionInset = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
@@ -78,58 +79,70 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
             let profile = AppSyncManager.instance.healthProfile.value
             if let device = profile?.devices?[ExternalDevices.healthkit] {
-                if let gender = AppSyncManager.instance.healthProfile.value?.gender, !gender.isEmpty {
-                    setupProfileOptionList[3]?.buttonText = gender.capitalizeFirstChar()
-                    setupProfileOptionList[3]?.isSynced = true
-                }
-                
-                if let birthday = AppSyncManager.instance.healthProfile.value?.birthday, !birthday.isEmpty {
-                    setupProfileOptionList[4]?.buttonText = self?.calculateAge(birthDate: birthday) ?? ""
-                    setupProfileOptionList[4]?.isSynced = true
-                }
-                
-                if var height = AppSyncManager.instance.healthProfile.value?.height,
-                   !height.isEmpty,
-                    let unit = AppSyncManager.instance.healthProfile.value?.unit {
-                    if unit == .imperial {
-                        height = self?.healthKitUtil.getHeightStringInImperial() ?? ""
+                DispatchQueue.main.async {
+                    
+                    self?.collectionView.reloadItems(at: [IndexPath(item: 2, section: 0)])
+                    
+                    if let gender = AppSyncManager.instance.healthProfile.value?.gender, !gender.isEmpty {
+                        setupProfileOptionList[3]?.buttonText = gender.capitalizeFirstChar()
+                        setupProfileOptionList[3]?.isSynced = true
+                        self?.collectionView.reloadItems(at: [IndexPath(item: 3, section: 0)])
                     }
-                    setupProfileOptionList[5]?.buttonText = "\(height) \(unit.height)"
-                    setupProfileOptionList[5]?.isSynced = true
-                }
-                
-                if var weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty,
-                   let unit = AppSyncManager.instance.healthProfile.value?.unit{
-                    if unit == .imperial {
-                        weight = self?.healthKitUtil.getWeightStringInImperial() ?? ""
+                    
+                    self?.selectedAgePickerValue = Calendar.current.date(byAdding: .year, value: -20, to: Date()) ?? Date()
+                    
+                    if let birthday = AppSyncManager.instance.healthProfile.value?.birthday, !birthday.isEmpty {
+                        setupProfileOptionList[4]?.buttonText = self?.calculateAge(birthDate: birthday) ?? ""
+                        setupProfileOptionList[4]?.isSynced = true
+                        self?.collectionView.reloadItems(at: [IndexPath(item: 4, section: 0)])
+                        let formatter = DateFormatter()
+                        formatter.dateFormat = "dd-MM-yyyy"
+                        if let birthDate = formatter.date(from: birthday) {
+                            self?.selectedAgePickerValue = birthDate
+                        }
                     }
-                    setupProfileOptionList[6]?.buttonText = "\(weight) \(unit.weight)"
-                    setupProfileOptionList[6]?.isSynced = true
-                }
+                    
+                    if var height = AppSyncManager.instance.healthProfile.value?.height,
+                       !height.isEmpty,
+                        let unit = AppSyncManager.instance.healthProfile.value?.unit {
+                        if unit == .imperial {
+                            height = self?.healthKitUtil.getHeightStringInImperial() ?? ""
+                        }
+                        setupProfileOptionList[5]?.buttonText = "\(height) \(unit.height)"
+                        setupProfileOptionList[5]?.isSynced = true
+                        self?.collectionView.reloadItems(at: [IndexPath(item: 5, section: 0)])
+                    }
+                    
+                    if var weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty,
+                       let unit = AppSyncManager.instance.healthProfile.value?.unit{
+                        if unit == .imperial {
+                            weight = self?.healthKitUtil.getWeightStringInImperial() ?? ""
+                        }
+                        setupProfileOptionList[6]?.buttonText = "\(weight) \(unit.weight)"
+                        setupProfileOptionList[6]?.isSynced = true
+                        self?.collectionView.reloadItems(at: [IndexPath(item: 6, section: 0)])
+                    }
 
-                if let location = AppSyncManager.instance.healthProfile.value?.location {
-                    var locationString = ""
-                    if let city = location.city,
-                       let state = location.state
-                    {
-                        locationString = "\(city), \(state)"
-                    }
-                    if  let postalCode = location.zipcode {
-                        locationString = "\(locationString) zip: \(postalCode)"
-                    }
+                    if let location = AppSyncManager.instance.healthProfile.value?.location {
+                        var locationString = ""
+                        if let city = location.city,
+                           let state = location.state
+                        {
+                            locationString = "\(city), \(state)"
+                        }
+                        if  let postalCode = location.zipcode {
+                            locationString = "\(locationString) zip: \(postalCode)"
+                        }
 
-                    if !locationString.isEmpty {
-                        DispatchQueue.main.async {
-                            setupProfileOptionList[7]?.buttonText = locationString
-                            setupProfileOptionList[7]?.isSynced = true
-                            let indexPath = NSIndexPath(row: 7, section: 0) as IndexPath
-                            self?.collectionView.reloadItems(at: [indexPath])
+                        if !locationString.isEmpty {
+                                setupProfileOptionList[7]?.buttonText = locationString
+                                setupProfileOptionList[7]?.isSynced = true
+                                let indexPath = NSIndexPath(row: 7, section: 0) as IndexPath
+                                self?.collectionView.reloadItems(at: [indexPath])
                         }
                     }
                 }
-            }
-            DispatchQueue.main.async {
-                self?.collectionView.reloadData()
+                
             }
         }
     }
@@ -161,16 +174,17 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             agePicker.preferredDatePickerStyle = .wheels
         }
         agePicker.isHidden = false
+        agePicker.backgroundColor = .white
         agePicker.maximumDate = Calendar.current.date(byAdding: .year, value: -1, to: Date())
-        agePicker.date = Calendar.current.date(byAdding: .year, value: -20, to: Date()) ?? Date()
+        agePicker.date = self.selectedAgePickerValue
         agePicker.addTarget(self, action: #selector(onAgeChanged(sender:)), for: .valueChanged)
         agePicker.setValue(UIColor.sectionHeaderColor, forKey: "textColor")
         
         // Toolbar
         toolBar = UIToolbar.init(frame: CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 50))
         toolBar.barStyle = .blackTranslucent
+        toolBar.tintColor = .white
         toolBar.items = [UIBarButtonItem.init(title: "Done", style: .done, target: self, action: #selector(onDoneButtonTapped))]
-        
     }
     
     func actualValue(selectedOption: String) -> Double {
@@ -195,23 +209,25 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         case .metric:
             if let height = AppSyncManager.instance.healthProfile.value?.height {
                 setupProfileOptionList[5]?.buttonText = "\(height) \(healthKitUtil.selectedUnit.height)"
+                self.collectionView.reloadItems(at: [IndexPath(item: 5, section: 0)])
             }
             if let weight = AppSyncManager.instance.healthProfile.value?.weight {
                 setupProfileOptionList[6]?.buttonText = "\(weight) \(healthKitUtil.selectedUnit.weight)"
+                self.collectionView.reloadItems(at: [IndexPath(item: 6, section: 0)])
             }
             break
         case .imperial:
             if let height = healthKitUtil.getHeightStringInImperial() {
                 setupProfileOptionList[5]?.buttonText = "\(height) \(healthKitUtil.selectedUnit.height)"
+                self.collectionView.reloadItems(at: [IndexPath(item: 5, section: 0)])
             }
             if let weight = healthKitUtil.getWeightStringInImperial() {
                 setupProfileOptionList[6]?.buttonText = "\(weight) \(healthKitUtil.selectedUnit.weight)"
+                self.collectionView.reloadItems(at: [IndexPath(item: 6, section: 0)])
             }
             
             break
         }
-        
-        self.collectionView.reloadData()
         return
     }
     
@@ -232,6 +248,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
 //                setupProfileOptionList[3]?.buttonText = biologicalSex.string
 //            }
 //            self.collectionView.reloadData()
+            
         }
         
         healthKitUtil.readHeightData {
@@ -425,7 +442,7 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     }
     
     func button(wasPressedOnCell cell: SetupProfileBioOptionCell) {
-        switch cell.label.text {
+        switch cell.biometricLabel.text {
         case "Apple Health":
             authorizeHealthKitInApp()
         case "Gender":
@@ -475,15 +492,15 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
     }
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.row == 0 {
+        if indexPath.item == 0 {
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioTitleCell", for: indexPath)
             return cell
-        } else if indexPath.row == 1 {
+        } else if indexPath.item == 1 {
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
-        } else if indexPath.row == 8 {
+        } else if indexPath.item == 8 {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
@@ -497,83 +514,17 @@ extension SetupProfileBioDataVC:UICollectionViewDelegate,
             
             return cell
         } else {
-            guard let cell = collectionView.dequeueReusableCell( withReuseIdentifier: "SetupProfileBioOptionCell",
-                                                                 for: indexPath) as? SetupProfileBioOptionCell else { preconditionFailure("Invalid cell type")}
-            let option = setupProfileOptionList[indexPath.row]
-            cell.logo.image = option?.image
-            cell.label.text = option?.label
-            cell.button.setTitle(option?.buttonText, for: .normal)
-            cell.button.setImage(nil, for: .normal)
-            let isSynced = option?.isSynced
-            if(isSynced == true) {
-                cell.button.layer.borderColor = UIColor.clear.cgColor
-                cell.button.setTitleColor(.themeColor, for: .normal)
-                cell.button.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18)
-
-            } else {
-                cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-                cell.button.setTitleColor(.themeColor, for: .normal)
-                cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
-            }
-
-            if indexPath.row == 7 {
-                cell.button.titleLabel?.lineBreakMode = .byWordWrapping
-                cell.button.titleLabel?.numberOfLines = 2
-                cell.button.titleLabel?.textAlignment = .center
-                cell.button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
-            }
+            guard let cell = collectionView.getCell(with: SetupProfileBioOptionCell.self, at: indexPath) as? SetupProfileBioOptionCell
+            else { preconditionFailure("Invalid cell type") }
+            cell.setupCell(index: indexPath.item)
             cell.delegate = self
-            
-            // Connect Apple Health Button
-            if indexPath.row == 2 && cell.label.text == "Apple Health" {
-                if let profile = AppSyncManager.instance.healthProfile.value,
-                   let device = profile.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
-                    cell.button.setTitle("DISCONNECT", for: .normal)
-                    cell.button.setTitleColor(UIColor(hexString: "#B00020"), for: .normal)
-                    cell.button.layer.borderColor = UIColor.clear.cgColor
-                } else {
-                    cell.button.setTitle("CONNECT", for: .normal)
-                    cell.button.setTitleColor(.themeColor, for: .normal)
-                    cell.button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-                }
-            }
-            
-            let verticalLine = UIView()
-            verticalLine.backgroundColor = UIColor(hexString: "#D6D6D6")
-            verticalLine.translatesAutoresizingMaskIntoConstraints = false
-            
-            cell.addSubview(verticalLine)
-            
-            NSLayoutConstraint.activate([
-                verticalLine.widthAnchor.constraint(equalToConstant: 1.5),
-                verticalLine.centerXAnchor.constraint(equalTo: cell.logo.centerXAnchor)
-            ])
-
-            if indexPath.item == 2 {
-                NSLayoutConstraint.activate([
-                    verticalLine.topAnchor.constraint(equalTo: cell.logo.centerYAnchor),
-                    verticalLine.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
-                ])
-            } else if indexPath.item == 7 {
-                NSLayoutConstraint.activate([
-                    verticalLine.topAnchor.constraint(equalTo: cell.topAnchor),
-                    verticalLine.bottomAnchor.constraint(equalTo: cell.logo.centerYAnchor)
-                ])
-            } else {
-                NSLayoutConstraint.activate([
-                    verticalLine.topAnchor.constraint(equalTo: cell.topAnchor),
-                    verticalLine.bottomAnchor.constraint(equalTo: cell.bottomAnchor)
-                ])
-            }
-            cell.sendSubviewToBack(verticalLine)
             return cell
         }
     }
     func collectionView(_ collectionView: UICollectionView,
                         layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = view.frame.size.height
-        let width = view.frame.size.width
+        let width = collectionView.bounds.width
         return CGSize(width: width, height: CGFloat(60))
     }
     

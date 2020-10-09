@@ -326,8 +326,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 case .faqs:
                     let faqViewController = FAQViewController()
                     NavigationUtility.presentOverCurrentContext(destination: faqViewController,
-                                                                style: .overCurrentContext,
-                                                                transitionStyle: .crossDissolve,
+                                                                style: .formSheet,
+//                                                                transitionStyle: .crossDissolve,
                                                                 completion: nil)
                     return
                 case .termsofservice:
