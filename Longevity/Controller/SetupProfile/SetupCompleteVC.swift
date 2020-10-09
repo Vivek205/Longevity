@@ -99,11 +99,9 @@ extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource,
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = view.frame.size.height
-        let width = view.frame.size.width
-         return CGSize(width: width - 40, height: height - 100)
+        let width = collectionView.bounds.width - 30.0
+        return CGSize(width: width, height: collectionView.bounds.height)
     }
-
 }
 
 extension SetupCompleteVC: ORKTaskViewControllerDelegate {
