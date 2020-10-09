@@ -106,15 +106,12 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
             self.biometricSyncButton.layer.borderColor = UIColor.clear.cgColor
             self.biometricSyncButton.setTitleColor(.themeColor, for: .normal)
             self.biometricSyncButton.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18)
-
         } else {
             self.biometricSyncButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
             self.biometricSyncButton.layer.borderWidth = 2.0
             self.biometricSyncButton.setTitleColor(.themeColor, for: .normal)
             self.biometricSyncButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 14)
         }
-        
-        print(index)
 
         if index == 7 {
             self.biometricSyncButton.titleLabel?.lineBreakMode = .byWordWrapping

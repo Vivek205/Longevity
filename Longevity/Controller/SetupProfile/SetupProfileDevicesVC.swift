@@ -30,7 +30,7 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
                 if let fitbit = devices[ExternalDevices.fitbit] {
                     setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
                 }
-                if let watch = devices[ExternalDevices.healthkit] {
+                if let watch = devices[ExternalDevices.watch] {
                     setupProfileConnectDeviceOptionList[3]?.isConnected = watch["connected"] == 1
                 }
                 DispatchQueue.main.async {
@@ -113,26 +113,7 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
             return cell
         default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesConnectCell", for: indexPath) as! SetupProfileDevicesConnectCell
-            let option = setupProfileConnectDeviceOptionList[indexPath.row]
-            cell.image.image = option?.image
-            cell.titleLabel.text = option?.title
-            cell.descriptionLabel.text = option?.description
-            cell.contentContainerView.layer.cornerRadius = 4
-            cell.contentContainerView.layer.shadowColor = UIColor.lightGray.cgColor
-            cell.layer.shadowOffset = CGSize(width: 2.0, height: 2.0)
-            cell.layer.shadowRadius = 2.0
-            cell.layer.shadowOpacity = 0.14
-            cell.layer.masksToBounds = false
-            if option?.isConnected == true {
-                cell.connectBtn.setTitle("ADDED", for: .normal)
-                cell.connectBtn.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
-                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: checked"), for: .normal)
-            } else {
-                cell.connectBtn.setTitle(nil, for: .normal)
-                cell.connectBtn.setImage(#imageLiteral(resourceName: "icon: add"), for: .normal)
-            }
-            
-            cell.connectBtn.alignVertical(spacing: 5.0)
+            cell.setupCell(index: indexPath.item)
             cell.delegate = self
             return cell
         }

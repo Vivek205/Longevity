@@ -495,15 +495,18 @@ up your health profile.</string>
                                                     </constraints>
                                                 </imageView>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Hke-Zl-aPo">
-                                                    <rect key="frame" x="270" y="63.5" width="59" height="32"/>
-                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="0.0" maxY="5"/>
+                                                    <rect key="frame" x="266" y="63.5" width="60" height="32"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="60" id="Ztj-8m-g4L"/>
+                                                    </constraints>
+                                                    <inset key="contentEdgeInsets" minX="5" minY="5" maxX="5" maxY="5"/>
                                                     <state key="normal" title="Button"/>
                                                     <connections>
                                                         <action selector="handleConnectDevice:" destination="fDR-Fe-bHv" eventType="touchUpInside" id="wv8-e4-P1T"/>
                                                     </connections>
                                                 </button>
                                                 <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="top" spacing="1" translatesAutoresizingMaskIntoConstraints="NO" id="apd-rW-3GS">
-                                                    <rect key="frame" x="68" y="5" width="81.5" height="149"/>
+                                                    <rect key="frame" x="68" y="5" width="196" height="149"/>
                                                     <subviews>
                                                         <label opaque="NO" userInteractionEnabled="NO" contentMode="bottom" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Title" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="kJ1-rg-BsJ">
                                                             <rect key="frame" x="0.0" y="0.0" width="44.5" height="85"/>
@@ -523,10 +526,10 @@ up your health profile.</string>
                                             <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                             <constraints>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="7DS-tx-W4B"/>
-                                                <constraint firstItem="Hke-Zl-aPo" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="10" id="Cw2-BX-YUf"/>
                                                 <constraint firstItem="apd-rW-3GS" firstAttribute="leading" secondItem="H8R-Cv-SP1" secondAttribute="trailing" constant="10" id="SfJ-2S-iOB"/>
-                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" constant="5" id="XAn-82-kWv"/>
+                                                <constraint firstAttribute="trailing" secondItem="Hke-Zl-aPo" secondAttribute="trailing" constant="8" id="XAn-82-kWv"/>
                                                 <constraint firstAttribute="bottom" secondItem="apd-rW-3GS" secondAttribute="bottom" constant="5" id="bZr-71-hha"/>
+                                                <constraint firstAttribute="trailing" secondItem="apd-rW-3GS" secondAttribute="trailing" constant="70" id="g25-4e-Hf2"/>
                                                 <constraint firstItem="H8R-Cv-SP1" firstAttribute="leading" secondItem="sTf-mj-jrF" secondAttribute="leading" constant="10" id="onT-vk-Hbh"/>
                                                 <constraint firstItem="Hke-Zl-aPo" firstAttribute="centerY" secondItem="sTf-mj-jrF" secondAttribute="centerY" id="t97-Rx-gUz"/>
                                                 <constraint firstItem="apd-rW-3GS" firstAttribute="top" secondItem="sTf-mj-jrF" secondAttribute="top" constant="5" id="vzx-qF-WIg"/>
