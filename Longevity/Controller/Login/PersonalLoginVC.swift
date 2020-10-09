@@ -41,8 +41,12 @@ class PersonalLoginVC: UIViewController {
         normalizeImageButton(imgButton: clinicalTrialImageView)
         //        self.removeBackButtonNavigation()
         self.orLabel.backgroundColor = UIColor(hexString: "#F5F6FA")
+
+        let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
+
+        self.view.addGestureRecognizer(backgroundTapGesture)
     }
-    
+
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -52,11 +56,18 @@ class PersonalLoginVC: UIViewController {
         self.customizeButtonWithImage(button: facebookButton)
     }
 
+    @objc func handleBackgroundTap() {
+        self.closeKeyboard()
+    }
+
+    func closeKeyboard() {
+        self.formEmail.resignFirstResponder()
+        self.formPassword.resignFirstResponder()
+    }
+
     func customizeButtons(){
         customizeImageButton(imgButton: personalImageView)
         customizeImageButton(imgButton: clinicalTrialImageView)
-//        addButtonShadow(button: googleButton)
-
     }
 
     func customizeButtonWithImage(button: UIButton){
@@ -68,16 +79,6 @@ class PersonalLoginVC: UIViewController {
         button.layer.masksToBounds = false
         button.layer.shadowPath = UIBezierPath(roundedRect: button.bounds, cornerRadius: button.layer.cornerRadius).cgPath
     }
-
-//    func addButtonShadow(button:UIButton){
-//        button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
-//        button.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-//        button.layer.cornerRadius = 10.0
-//        button.layer.shadowRadius = 1.0
-//        button.layer.shadowOpacity = 1.0
-//        button.layer.masksToBounds = false
-//        button.layer.shadowPath = UIBezierPath(roundedRect: button.bounds, cornerRadius: button.layer.cornerRadius).cgPath
-//    }
 
     func customizeImageButton(imgButton: UIView){
         imgButton.layer.masksToBounds = true
@@ -117,6 +118,7 @@ class PersonalLoginVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
+        self.closeKeyboard()
         if let email = self.formEmail.text, let password = self.formPassword.text {
 
             func validate() -> Bool {
@@ -176,6 +178,7 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
+        self.closeKeyboard()
         let containerView = sender.view! as UIView
         for subview in containerView.subviews{
             if let item = subview as? UILabel{
@@ -184,18 +187,14 @@ class PersonalLoginVC: UIViewController {
                     highlightImageButton(imgButton: personalImageView)
                     normalizeImageButton(imgButton: clinicalTrialImageView)
                 }
-//                else {
-//                    highlightImageButton(imgButton: clinicalTrialImageView)
-//                    normalizeImageButton(imgButton: personalImageView)
-//                }
             }
         }
     }
 
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
+        self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
-//            retrieveARN()
             self.doLogin()
         }
 
@@ -218,9 +217,9 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
+        self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
-//            retrieveARN()
             self.doLogin()
         }
 
@@ -242,9 +241,9 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithApple(_ sender: Any) {
+        self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
-//            retrieveARN()
             self.doLogin()
         }
         func onFailure(error: AuthError) {

@@ -72,7 +72,7 @@ class UserProfileAPI: BaseAuthAPI {
                             print("user profile string", String(data: data, encoding: .utf8))
                             let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
                             guard let email = userProfileResponse.data.email else {completion(nil);return}
-                            var userProfile = UserProfile(name: "", email: email, phone: "")
+                            var userProfile = UserProfile(name: "User", email: email, phone: "")
                             if let name = userProfileResponse.data.name, !name.isEmpty {
                                 userProfile.name = name
                             }
