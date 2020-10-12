@@ -163,7 +163,9 @@ class PersonalLoginVC: UIViewController {
                                 print("success", success)
                                 return
                             case .failure(let error):
-                                print("error", error)
+                                DispatchQueue.main.async {
+                                    self?.removeSpinner()
+                                }
                                 return
                             }
                         }
