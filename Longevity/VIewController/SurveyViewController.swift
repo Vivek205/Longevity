@@ -10,6 +10,11 @@ import UIKit
 import ResearchKit
 
 class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate {
+
+    func reloadSurveys() {
+
+    }
+
     
     var isFirstTask: Bool = false
     
@@ -66,10 +71,21 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
         @unknown default:
             print("unknown reason")
         }
-
-        taskViewController.dismiss(animated: true) {
-            print("task view controller dismissed")
+        taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+        self.showSpinner()
+        getSurveys { (_) in
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+            }
+        } onFailure: { (_) in
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+            }
         }
+
+
     }
     
     func getSurveyList() {

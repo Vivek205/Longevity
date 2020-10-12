@@ -22,19 +22,19 @@ class BaseAuthAPI {
                         onFailure: @escaping (_ error: Error)-> Void) {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-
+        
         if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem() {
-                       if let expDate = dateFormatter.date(from: idTokenExp) {
-                        let currentDate = Date()
-                        if currentDate < expDate {
-
-                            if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
-                                    return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
-                                }
-
-                        }
-                       }
+            if let expDate = dateFormatter.date(from: idTokenExp) {
+                let currentDate = Date()
+                if currentDate < expDate {
+                    
+                    if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
+                        return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
+                    }
+                    
+                }
             }
+        }
 
 
 
@@ -53,7 +53,7 @@ class BaseAuthAPI {
                 if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
 
                     let awsCredentials = try awsCredentialsProvider.getAWSCredentials().get()
-    //                print("expiry", awsCredentials.expiration)
+                    //                print("expiry", awsCredentials.expiration)
                     credentials.accessKey = awsCredentials.accessKey
                 }
 
@@ -68,16 +68,16 @@ class BaseAuthAPI {
                     let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
 
                     guard let idTokenData = tokens.idToken.data(using: .utf8),
-                    let idTokenExpData = dateString50MinFuture.data(using: .utf8) else {
+                          let idTokenExpData = dateString50MinFuture.data(using: .utf8) else {
                         return completion(credentials)
                     }
 
                     try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
                     try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).saveItem(dateString50MinFuture)
                     
-//                    KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
-//                    KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
-    //                print(tokens.idToken)
+                    //                    KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
+                    //                    KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
+                    //                print(tokens.idToken)
                 }
 
                 completion(credentials)

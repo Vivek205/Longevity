@@ -9,6 +9,42 @@
 import UIKit
 
 class DashboardTaskCell: UITableViewCell {
+
+    var surveyDetails: SurveyListItem? {
+        didSet {
+            if let surveyId = surveyDetails?.surveyId {
+                taskIcon.image = UIImage(named: "icon: \(surveyId)")
+
+                if let details = SurveyTaskUtility.shared.surveyDetails[surveyId] as? SurveyDetails,
+                   let questions = details.questions as? [Question],
+                   let localAnswers = SurveyTaskUtility.shared.localSavedAnswers[surveyId] as? [String:String],
+                   let traversedQuestions = SurveyTaskUtility.shared.traversedQuestions[surveyId],
+                   var lastAnsweredQuestion = traversedQuestions.last
+                {
+                    if localAnswers[lastAnsweredQuestion] == nil {
+                        lastAnsweredQuestion = traversedQuestions[traversedQuestions.count - 2]
+                    }
+
+                    let lastAnsweredQuestionIndex = questions.firstIndex { (ques) -> Bool in
+                        return ques.quesId == lastAnsweredQuestion
+                    } ?? 0
+
+                    let totalQuestions = Float(details.questions.count)
+                    let answeredQuestions = Float(lastAnsweredQuestionIndex + 1)
+                    let userProgress = answeredQuestions / totalQuestions
+
+                    self.progressLabel.isHidden = false
+                    self.progressLabel.text =
+                        "\(String(format: "%.0f", answeredQuestions ))/\(String(format: "%.0f",totalQuestions))"
+
+                    self.progressBar.isHidden = false
+                    self.progressBar.setProgress(userProgress, animated: true)
+                }
+            }
+            taskTitle.text = surveyDetails?.name
+            taskDescription.text = surveyDetails?.description
+        }
+    }
     
     lazy var taskIcon: UIImageView = {
         let icon = UIImageView()
@@ -40,6 +76,7 @@ class DashboardTaskCell: UITableViewCell {
         lastupdated.font = UIFont(name: "Montserrat-Regular", size: 14.0)
         lastupdated.textAlignment = .center
         lastupdated.translatesAutoresizingMaskIntoConstraints = false
+        lastupdated.isHidden = true
         return lastupdated
     }()
     
@@ -48,6 +85,7 @@ class DashboardTaskCell: UITableViewCell {
         progressbar.trackTintColor = .progressTrackColor
         progressbar.progressTintColor = .progressColor
         progressbar.translatesAutoresizingMaskIntoConstraints = false
+        progressbar.isHidden = true
         return progressbar
     }()
     

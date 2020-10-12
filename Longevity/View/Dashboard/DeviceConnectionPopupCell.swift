@@ -14,6 +14,7 @@ class DeviceConnectionPopupCell: UICollectionViewCell {
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
         label.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+        label.textColor = .sectionHeaderColor
         return label
     }()
 
@@ -21,7 +22,8 @@ class DeviceConnectionPopupCell: UICollectionViewCell {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        UIFont(name: "Montserrat-Regular", size: 16)
+        label.font = UIFont(name: "Montserrat-Regular", size: 16)
+        label.textColor = .sectionHeaderColor
         return label
     }()
 

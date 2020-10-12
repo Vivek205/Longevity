@@ -126,11 +126,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 }
                 return completionCell
             }
-            guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+            guard let taskCell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
                 preconditionFailure("Invalid device cell")
             }
-            checkinCell.surveyResponse = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
-            return checkinCell
+            taskCell.surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
+
+            return taskCell
         }
     }
     
@@ -154,7 +155,16 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         } else if indexPath.section == 1 {
             return 170.0
         } else {
-            return 140.0
+            if SurveyTaskUtility.shared.oneTimeSurveyList.value?.isEmpty ?? true {
+                return 100
+            }
+            if let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row],
+               let surveyId = surveyDetails.surveyId as? String,
+               let details = SurveyTaskUtility.shared.surveyDetails[surveyId] as? SurveyDetails,
+               let localAnswers = SurveyTaskUtility.shared.localSavedAnswers[surveyId] as? [String:String], !localAnswers.isEmpty {
+                return 140.0
+                }
+            return 125.0
         }
     }
     
@@ -175,13 +185,23 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: true)
-        guard let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell else { return }
-        self.showSurvey(selectedCell)
+        if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
+           let surveyId = selectedCell.surveyId
+        {
+            self.showSurvey(surveyId)
+            return }
+
+        if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
+           let surveyId = taskCell.surveyDetails?.surveyId
+        {
+            self.showSurvey(surveyId)
+            return
+        }
     }
 }
 
 extension HomeViewController {
-    func showSurvey(_ selectedSurveyCell: DashboardCheckInCell) {
+    func showSurvey(_ surveyId: String) {
         self.showSpinner()
 
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
@@ -201,7 +221,7 @@ extension HomeViewController {
                 self.removeSpinner()
             }
         }
-        SurveyTaskUtility.shared.createSurvey(surveyId: selectedSurveyCell.surveyId, completion: onCreateSurveyCompletion(_:),
+        SurveyTaskUtility.shared.createSurvey(surveyId: surveyId, completion: onCreateSurveyCompletion(_:),
                                               onFailure: onCreateSurveyFailure(_:))
     }
 }

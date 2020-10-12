@@ -14,9 +14,9 @@ fileprivate struct DeviceConnectionInfo {
 }
 
 fileprivate let deviceConnectionInfoList:[DeviceConnectionInfo] = [
-    DeviceConnectionInfo(title: "Health Kit", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
-    DeviceConnectionInfo(title: "Fitbit Devices", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
-    DeviceConnectionInfo(title: "Apple Watch Devices", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
+    DeviceConnectionInfo(title: "Health Kit", info: "HealthKit provides a central repository for health and fitness data recorded by your iPhone and Apple Watch. With your permission, Rejuve app communicates with Apple Health to access your health data to generate more accurate personalized AI insight reports."),
+    DeviceConnectionInfo(title: "Fitbit Devices", info: "Fitbit helps you track your daily activity, exercise, sleep, nutrition and weight. With your permission, Rejuve app uses this data to compute more accurate personalized AI insight reports."),
+    DeviceConnectionInfo(title: "Apple Watch Devices", info: "Apple Watch is an advanced wearable that can communicate with your iPhone’s Apple Health and the Rejuve app. With your permission, Rejuve uses Apple Watch data to compute more accurate personalized AI insight reports.")
 ]
 
 class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
@@ -60,7 +60,10 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
             primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
         ])
         
-        titleLabel.text = "Device Connections"
+        titleLabel.text = "Device \n Connections"
+        titleLabel.numberOfLines = 2
+        titleLabel.textAlignment = .center
+        titleLabel.lineBreakMode = .byWordWrapping
         
         guard let layout = deviceInfoCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return

@@ -30,16 +30,16 @@ final class SurveyTaskUtility: NSObject {
             self.surveyName = self.surveyDetails[surveyId]??.name
         }
     }
-    private var surveyDetails: [String:SurveyDetails?] = [String:SurveyDetails?]()
+    var surveyDetails: [String:SurveyDetails?] = [String:SurveyDetails?]()
     private var currentTask: ORKOrderedTask?
     var surveyName: String?
     private var iconNameForModuleName: [String: String?] = [String:String?]()
     private var lastSubmission: String?
     private var lastSubmissionId: String?
     private var lastResponse: [SurveyLastResponseData]?
-    private var localSavedAnswers:[String:[String:String]] = [String:[String:String]]()//[SurveyId:[QuestionId:Answer]]
+    var localSavedAnswers:[String:[String:String]] = [String:[String:String]]()//[SurveyId:[QuestionId:Answer]]
     private var serverSubmittedAnswers:[String:[SurveyLastResponseData]] = [String:[SurveyLastResponseData]]()
-    private var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
+    var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
 //    private var currentQuestion: String?
 
     var surveyTagline: String? {
