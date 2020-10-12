@@ -177,7 +177,7 @@ class UserProfileAPI: BaseAuthAPI {
                            onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-            let queryParams = ["offset":"0", "limit":"100"]
+            let queryParams = ["offset":"0", "limit":"50"]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/activities", headers: headers,
                                       queryParameters: queryParams, body: nil)
             Amplify.API.get(request: request) { (result) in
