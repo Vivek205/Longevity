@@ -14,8 +14,16 @@ extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
+        self.hideBackButtonForFirstQuestion()
+        self.customizeStyle()
+    }
+
+    func hideBackButtonForFirstQuestion() {
         let isFirstQuestion = SurveyTaskUtility.shared.isFirstStep(stepId: self.step?.identifier)
         self.navigationItem.hidesBackButton = isFirstQuestion
     }
 
+    func customizeStyle() {
+        self.view.backgroundColor = .appBackgroundColor
+    }
 }

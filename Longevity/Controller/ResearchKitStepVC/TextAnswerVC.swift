@@ -41,7 +41,11 @@ class TextAnswerVC: ORKStepViewController {
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.delegate = self
         textView.layer.cornerRadius = 16.5
-
+        textView.layer.borderColor = UIColor.borderColor.cgColor
+        textView.layer.borderWidth = 1
+        textView.text = "Type here"
+        textView.textColor = .placeHolder
+        textView.font = UIFont(name: AppFontName.regular, size: 18)
         let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: self.view.bounds.width, height: 50))
         toolbar.barStyle = .default
         toolbar.items = [
@@ -58,6 +62,7 @@ class TextAnswerVC: ORKStepViewController {
         button.setTitle("clear", for: .normal)
         button.layer.borderColor = UIColor.clear.cgColor
         button.addTarget(self, action: #selector(handleClear(sender:)), for: .touchUpInside)
+        
         return button
     }()
 
@@ -122,6 +127,10 @@ class TextAnswerVC: ORKStepViewController {
 
         continueButton.isEnabled = false
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
+
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
 
     func setKeyboardTypeOfTextView(){
@@ -144,9 +153,13 @@ class TextAnswerVC: ORKStepViewController {
         self.goForward()
     }
 
+    @objc func closeKeyboard() {
+        answerTextView.resignFirstResponder()
+    }
+
     @objc func handleTextViewDone(sender: Any) {
         print("textView done")
-        answerTextView.resignFirstResponder()
+        closeKeyboard()
         guard let identifier = step?.identifier else {return}
         SurveyTaskUtility.shared.saveCurrentSurveyAnswerLocally(questionIdentifier: identifier,
                                                                 answer: answerTextView.text)
@@ -154,12 +167,28 @@ class TextAnswerVC: ORKStepViewController {
     }
 
     @objc func handleClear(sender: Any) {
-        answerTextView.text = nil
         continueButton.isEnabled = false
+        answerTextView.text = "Type here"
+        answerTextView.textColor = .placeHolder
+        answerTextView.layer.borderColor = UIColor.borderColor.cgColor
     }
 
 }
 
 extension TextAnswerVC: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        if textView.textColor == .placeHolder {
+            textView.text = nil
+            textView.textColor = .black
+            textView.layer.borderColor = UIColor.themeColor.cgColor
+        }
+    }
 
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.text.isEmpty {
+            textView.text = "Type here"
+            textView.textColor = .placeHolder
+            textView.layer.borderColor = UIColor.borderColor.cgColor
+        }
+    }
 }

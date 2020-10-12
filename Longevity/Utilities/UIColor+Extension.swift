@@ -85,4 +85,8 @@ extension UIColor {
     @nonobjc class var textInput: UIColor {
         return UIColor(hexString: "#212121")
     }
+
+    @nonobjc class var placeHolder: UIColor {
+        return UIColor(hexString: "#C2C2C2")
+    }
 }

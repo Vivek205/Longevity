@@ -46,8 +46,8 @@ class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
                     let maxFahrenheit = celsiusToFahrenheit(value: maxCelsius)
                     self?.slider.minimumValue = Float(minFahrenheit)
                     self?.slider.maximumValue = Float(maxFahrenheit)
-                    self?.slider.minimumValueImage = "\(String(format: "%.2f", minFahrenheit)) \u{00B0} C".toImage()
-                    self?.slider.maximumValueImage = "\(String(format: "%.2f", maxFahrenheit)) \u{00B0} C".toImage()
+                    self?.slider.minimumValueImage = "\(String(format: "%.2f", minFahrenheit)) \u{00B0} F".toImage()
+                    self?.slider.maximumValueImage = "\(String(format: "%.2f", maxFahrenheit)) \u{00B0} F".toImage()
                     if let localSavedAnswer =
                         SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: self?.step?.identifier ?? "")  {
                         let localAnswerFahrenheit = celsiusToFahrenheit(value: (localSavedAnswer as NSString).doubleValue)

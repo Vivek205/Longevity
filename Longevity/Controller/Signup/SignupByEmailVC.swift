@@ -127,7 +127,7 @@ class SignupByEmailVC: UIViewController {
                     return false
                 }
                 if phone.isEmpty || !(phone.isValidPhone) {
-                    showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number. Valid format is \n +{CountryCode}{PhoneNumber}")
+                    showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number in the format \n +{CountryCode}{PhoneNumber}")
                     return false
                 }
                 if password.isEmpty {

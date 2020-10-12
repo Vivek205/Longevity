@@ -111,20 +111,20 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
                     onFailure: @escaping (_ error: Error)-> Void) {
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-//    KeyChain.load(name: KeychainKeys.idTokenExp)
+
     if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem()  {
-//        if let idTokenExp = String(data: idTokenExpData, encoding: .utf8) {
+
             if let expDate = dateFormatter.date(from: idTokenExp) {
                 let currentDate = Date()
                 if currentDate < expDate {
                     if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
-//                        if let idToken = String(data: idTokenData, encoding: .utf8) {
+
                             completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
                             return
-//                        }
+
                     }
                 }
-//            }
+
         }
     }
 
