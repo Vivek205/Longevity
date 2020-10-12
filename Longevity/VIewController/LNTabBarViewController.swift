@@ -60,8 +60,8 @@ class LNTabBarViewController: UITabBarController {
         tabBar.insertSubview(bgImageView, at: 0)
         
         AppSyncManager.instance.syncUserProfile()
-        retrieveARN()
-        
+        AppSyncManager.instance.fetchUserNotification()
+
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
             if HKHealthStore.isHealthDataAvailable() {
                 if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {

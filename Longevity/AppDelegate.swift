@@ -37,7 +37,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("Amplify configured with auth plugin")
             Logger.log("App Launched")
 
-            print("arn value", UserDefaults.standard.value(forKey: UserDefaultsKeys().endpointArnForSNS))
+            print("arn value", AppSyncManager.instance.userNotification.value?.endpointArn)
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
@@ -325,12 +325,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         // Check if ARN is created already
-        guard defaults.object(forKey: keys.endpointArnForSNS) == nil else {
+        guard AppSyncManager.instance.userNotification.value?.endpointArn == nil else {
             return
         }
         
         guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
             return
+        }
+
+        if let _ = defaults.string(forKey: keys.vendorDeviceID) {
+//            Do Nothing
+        } else {
+            let vendorDeviceID = UIDevice.current.identifierForVendor?.uuidString
+            defaults.setValue(vendorDeviceID, forKey: keys.vendorDeviceID)
         }
 
         let awsSNS = AWSSNS.default()
@@ -347,9 +354,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if let endpointArnForSNS = createEndpointResponse.endpointArn {
                     print("endpointArn: \(endpointArnForSNS)")
                     Logger.log("ARN endpoint created")
-                    defaults.set(endpointArnForSNS, forKey: keys.endpointArnForSNS)
-                    registerARN(platform: "IOS", arnEndpoint: endpointArnForSNS)
-                    AppSyncManager.instance.updateUserNotification(enabled: true)
+//                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
+                    AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
+                    let notificationAPI = NotificationAPI()
+                    notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
+                    
                 }
             }
             return nil

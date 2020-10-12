@@ -120,6 +120,7 @@ class PersonalLoginVC: UIViewController {
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
+
         self.closeKeyboard()
         if let email = self.formEmail.text, let password = self.formPassword.text {
 
@@ -152,6 +153,7 @@ class PersonalLoginVC: UIViewController {
                             switch result {
                             case .success(let success):
                                 DispatchQueue.main.async {
+                                    
                                     self?.removeSpinner()
                                     let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
                                     guard let signupConfirmVC = storyboard.instantiateViewController(withIdentifier: "SignupConfirmVC") as? SignupConfirmVC else {return}
@@ -275,7 +277,7 @@ class PersonalLoginVC: UIViewController {
             self.removeSpinner()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.setRootViewController()
-            appDelegate.updateARNToken()
+            AppSyncManager.instance.fetchUserNotification()
         }
     }
 }

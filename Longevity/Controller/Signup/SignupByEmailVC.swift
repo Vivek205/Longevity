@@ -59,6 +59,10 @@ class SignupByEmailVC: UIViewController {
         self.addKeyboardObservers()
         print("self.view.frame.origin.y", self.view.frame.origin.y)
         self.rollbackYOrigin = self.view.frame.origin.y
+
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
+        self.view.addGestureRecognizer(tapGesture)
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -86,8 +90,17 @@ class SignupByEmailVC: UIViewController {
         nextResponder.becomeFirstResponder()
     }
 
+    @objc func closeKeyboard() {
+        guard let activeTextField = self.activeTextField else {
+            self.view.endEditing(true)
+            return
+        }
+        activeTextField.resignFirstResponder()
+    }
+
     // MARK: Actions
     @IBAction func handleSignup(_ sender: Any) {
+        self.closeKeyboard()
         func onSuccess() {
             DispatchQueue.main.async {
                 self.performSegue(withIdentifier: "SignupEmailToConfirm", sender: self)
@@ -112,7 +125,7 @@ class SignupByEmailVC: UIViewController {
                     return false
                 }
                 if phone.isEmpty || !(phone.isValidPhone) {
-                    showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number.")
+                    showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number. Valid format is \n +{CountryCode}{PhoneNumber}")
                     return false
                 }
                 if password.isEmpty {

@@ -443,13 +443,21 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
         if isOn {
             UNUserNotificationCenter.current().getNotificationSettings { (settings) in
                 if settings.authorizationStatus == .authorized {
-                    AppSyncManager.instance.updateUserNotification(enabled: true)
-                    return
+                    if let snsARN = AppSyncManager.instance.userNotification.value?.endpointArn , !snsARN.isEmpty {
+                        print("ARN", snsARN)
+                        AppSyncManager.instance.updateUserNotification(enabled: true)
+                    }else {
+                        registerForPushNotifications()
+                    }
+                }else {
+                    registerForPushNotifications()
                 }
-                registerForPushNotifications()
             }
         }else {
-            AppSyncManager.instance.updateUserNotification(enabled: false)
+            if let snsARN = AppSyncManager.instance.userNotification.value?.endpointArn , !snsARN.isEmpty {
+                print("ARN", snsARN)
+                AppSyncManager.instance.updateUserNotification(enabled: false)
+            }
         }
     }
 }

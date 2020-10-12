@@ -229,7 +229,7 @@ func findNextQuestion(moduleId: Int? ,questionId: String, answerValue: String) -
         print("enocded post body", String(data:data, encoding: .utf8))
         getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-            let surveyAPI = "https://smu3xkqh66.execute-api.us-west-2.amazonaws.com/development"
+            let surveyAPI = "https://smu3xkqh66.execute-api.us-west-2.amazonaws.com/development/v1"
             let path = "/survey/\(currentSurveyId)/question/next"
             guard let requestUrl = URL(string: "\(surveyAPI)\(path)") else { semaphore.signal(); return}
             var request = URLRequest(url: requestUrl)

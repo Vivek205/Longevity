@@ -33,7 +33,8 @@ extension MeasurementUnits {
     }
 }
 
-struct UserDefaultsKeys {
+struct UserDefaultsKeys: PropertyLoopable {
+    static let instance: UserDefaultsKeys = UserDefaultsKeys()
     let name = "name"
     let weight = "weight"
     let height = "height"
@@ -48,15 +49,55 @@ struct UserDefaultsKeys {
     let failureNotificationCount = "failureNotificationCount"
     let setupProfileCompletionStatus = "setupProfileCompletionStatus"
     let deviceTokenForSNS = "deviceTokenForSNS"
-    let endpointArnForSNS = "endpointArnForSNS"
+    let vendorDeviceID = "vendorDeviceID"
+    let snsARN = "endpointArnForSNS"
     let email = "email"
     let logger = "logger"
     let healthkitBioConnected = "healthkitBioConnected"
 }
 
 func clearUserDefaults() {
-//    let domain = Bundle.main.bundleIdentifier!
-//    UserDefaults.standard.removePersistentDomain(forName: domain)
-//    UserDefaults.standard.synchronize()
-//    print(Array(UserDefaults.standard.dictionaryRepresentation().keys).count)
+    AppSyncManager.instance.userNotification.value?.endpointArn = nil
+    AppSyncManager.instance.userNotification.value?.isEnabled = false
+    do {
+        let allProperties = try UserDefaultsKeys.instance.allProperties()
+        allProperties.forEach { (property) in
+            print("property", property.key, property.value)
+            if let value = property.value as? String, value != UserDefaultsKeys.instance.vendorDeviceID {
+                UserDefaults.standard.removeObject(forKey: value)
+            }
+        }
+        print(try UserDefaultsKeys.instance.allProperties())
+    } catch _ {}
+}
+
+
+protocol PropertyLoopable
+{
+    func allProperties() throws -> [String: Any]
+}
+
+extension PropertyLoopable
+{
+    func allProperties() throws -> [String: Any] {
+
+        var result: [String: Any] = [:]
+
+        let mirror = Mirror(reflecting: self)
+
+        guard let style = mirror.displayStyle, style == .struct || style == .class else {
+            //throw some error
+            throw NSError(domain: "hris.to", code: 777, userInfo: nil)
+        }
+
+        for (labelMaybe, valueMaybe) in mirror.children {
+            guard let label = labelMaybe else {
+                continue
+            }
+
+            result[label] = valueMaybe
+        }
+
+        return result
+    }
 }
