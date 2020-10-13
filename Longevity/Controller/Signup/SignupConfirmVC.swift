@@ -102,7 +102,7 @@ class SignupConfirmVC: UIViewController {
             }
         }
         guard let email = self.userEmail else {return}
-        guard let confirmationCode = self.otpInput.text, !confirmationCode.isEmpty else {
+        guard let confirmationCode = self.otpInput.text?.trimmingCharacters(in: .whitespacesAndNewlines), !confirmationCode.isEmpty else {
             self.showAlert(title: "Enter OTP", message: "The OTP field cannot be empty")
             self.removeSpinner()
             return
@@ -127,7 +127,7 @@ class SignupConfirmVC: UIViewController {
 
     @objc func handleResendOTP() {
         self.closeKeyboard()
-        guard let email = self.userEmail else {return}
+        guard let email = self.userEmail?.trimmingCharacters(in: .whitespacesAndNewlines) else {return}
         self.showSpinner()
         _ = Amplify.Auth.resendSignUpCode(for: email) { (result) in
             switch result {

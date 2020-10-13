@@ -31,7 +31,7 @@ enum ProfileSetting: String {
     case exportcheckin = "Export Check-in Data"
     case updatebiometrics = "Update Biometrics"
     case updatepreconditions = "Update Pre-conditions"
-    case resetcheckin = "Reset Check-in Data"
+//    case resetcheckin = "Reset Check-in Data"
     case applehealth = "Apple Health"
     case fitbit = "Fitbit"
     case applewatch = "Apple Watch"
@@ -51,7 +51,7 @@ extension ProfileSetting {
         case .exportcheckin: return .navigate
         case .updatebiometrics: return .navigate
         case .updatepreconditions: return .navigate
-        case .resetcheckin: return .navigate
+//        case .resetcheckin: return .navigate
         case .applehealth: return .navigate
         case .fitbit: return .switchcontrol
         case .applewatch: return .addcontrol
@@ -70,7 +70,7 @@ extension ProfileSetting {
         case .exportcheckin: return .topmost
         case .updatebiometrics: return .center
         case .updatepreconditions: return .center
-        case .resetcheckin: return .bottom
+//        case .resetcheckin: return .bottom
         case .applehealth: return .topmost
         case .fitbit: return .center
         case .applewatch: return .bottom
@@ -95,7 +95,9 @@ class ProfileViewController: BaseViewController {
         }
     }
     
-    var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions, .resetcheckin],
+    var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions,
+//                                         .resetcheckin
+                                        ],
                                         [.applehealth, .fitbit, .applewatch],
                                         [.notifications, .editaccount, .usemetricsystem],
                                         [.faqs, .termsofservice, .contactsupport],
@@ -300,9 +302,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let navigationController = UINavigationController(rootViewController: preconditionsViewController)
                     navigationController
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
-                case .resetcheckin:
-                    let resetCheckinViewController = ResetCheckInDataViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .formSheet, completion: nil)
+//                case .resetcheckin:
+//                    let resetCheckinViewController = ResetCheckInDataViewController()
+//                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .formSheet, completion: nil)
                 case .applehealth:
                     let appleHealthViewController = AppleHealthConnectionViewController()
                     let navigationController = UINavigationController(rootViewController: appleHealthViewController)

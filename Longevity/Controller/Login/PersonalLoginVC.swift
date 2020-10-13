@@ -122,7 +122,8 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleLogin(_ sender: Any) {
 
         self.closeKeyboard()
-        if let email = self.formEmail.text, let password = self.formPassword.text {
+        if let email = self.formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+           let password = self.formPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
 
             func validate() -> Bool {
                 if email.isEmpty || !(email.isValidEmail){

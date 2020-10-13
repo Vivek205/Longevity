@@ -117,10 +117,10 @@ class SignupByEmailVC: UIViewController {
             }
         }
 
-        if let name = formName.text,
-            let email = formEmail.text,
-            let phone = formPhone.text ,
-            let password = formPassword.text{
+        if let name = formName.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let email = formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+            let phone = formPhone.text?.trimmingCharacters(in: .whitespacesAndNewlines) ,
+            let password = formPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines){
             func validate() -> Bool {
                 if email.isEmpty || !(email.isValidEmail) {
                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
