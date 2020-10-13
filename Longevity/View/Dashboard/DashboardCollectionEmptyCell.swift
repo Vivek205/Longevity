@@ -82,7 +82,7 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     override func doOpenInfo() {
         NavigationUtility.presentOverCurrentContext(
         destination: LongevityComingSoonPopupViewController(),
-        style: .pageSheet,
+            style: .overCurrentContext, transitionStyle: .crossDissolve,
         completion: nil)
     }
 }

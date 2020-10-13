@@ -74,9 +74,9 @@ class DashboardSectionHeader: UITableViewHeaderFooterView {
     @objc func doAction() {
         switch self.headerType {
         case .devices:
-            NavigationUtility.presentOverCurrentContext(destination: DeviceConnectionsPopupViewController(), style: .formSheet, completion: nil)
+            NavigationUtility.presentOverCurrentContext(destination: DeviceConnectionsPopupViewController(), style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
         case .tasks:
-            NavigationUtility.presentOverCurrentContext(destination: MyTasksInfoPopupViewController(), style: .formSheet, completion: nil)
+            NavigationUtility.presentOverCurrentContext(destination: MyTasksInfoPopupViewController(), style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
         default:
             return
         }
