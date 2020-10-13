@@ -222,6 +222,15 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             }
             return CGSize(width: width, height: height)
     }
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? TextChoiceAnswerViewCell
+        else { return }
+        print(cell.titleLabel.text)
+        cell.toggleIsChosenOption()
+        checkboxButton(wasPressedOnCell: cell)
+//        collectionView.reloadItems(at: [indexPath])
+//        collectionView.reloadData()
+    }
     
 }
 

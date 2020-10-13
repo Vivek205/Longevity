@@ -90,7 +90,7 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
             extraInfoLabel.text = extraInfo
             NSLayoutConstraint.activate([
                 extraInfoLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
-                extraInfoLabel.trailingAnchor.constraint(equalTo: cardView.trailingAnchor),
+                extraInfoLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
                 extraInfoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
                 extraInfoLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10)
             ])
@@ -112,7 +112,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         } else {
             self.layer.borderColor = UIColor.white.cgColor
         }
-
     }
 
     @objc func handleCheckboxTapped(_ sender: Any) {

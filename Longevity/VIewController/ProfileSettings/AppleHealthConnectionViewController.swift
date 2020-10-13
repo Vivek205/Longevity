@@ -110,19 +110,20 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
         if connected == 0 { // To be disconnected
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
         } else {
-            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                if settings.authorizationStatus == .authorized {
-                    DispatchQueue.main.async {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
-                    }
-                    return
-                } else {
-                    DispatchQueue.main.async {
-                        self.showAlert(title: "Enable Notification",
-                        message: "Please enable device notification to connect the external devices")
-                    }
-                }
-            }
+            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+//            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+//                if settings.authorizationStatus == .authorized {
+//                    DispatchQueue.main.async {
+//                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+//                    }
+//                    return
+//                } else {
+//                    DispatchQueue.main.async {
+//                        self.showAlert(title: "Enable Notification",
+//                        message: "Please enable device notification to connect the external devices")
+//                    }
+//                }
+//            }
         }
 
 //        let profile = AppSyncManager.instance.healthProfile.value
