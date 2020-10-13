@@ -41,6 +41,10 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
             self.footerView.isHidden = true
+
+            NSLayoutConstraint.activate([
+                self.footerView.heightAnchor.constraint(equalToConstant: 0)
+            ])
         } else {
             self.addProgressbar(progress: 100.0)
         }

@@ -44,6 +44,7 @@ class CompletionStepVC: ORKStepViewController {
         self.backButtonItem = nil
         self.completeSurvey()
         self.presentViews()
+        self.navigationItem.hidesBackButton = true
     }
 
     func completeSurvey() {
