@@ -324,6 +324,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func updateARNToken() {
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
+        let notificationAPI = NotificationAPI()
         // Check if ARN is created already
         guard AppSyncManager.instance.userNotification.value?.endpointArn == nil else {
             return
@@ -333,11 +334,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
 
-        if let _ = defaults.string(forKey: keys.vendorDeviceID) {
-//            Do Nothing
-        } else {
-            let vendorDeviceID = UIDevice.current.identifierForVendor?.uuidString
-            defaults.setValue(vendorDeviceID, forKey: keys.vendorDeviceID)
+        let deviceIdForVendor = notificationAPI.getDeviceIdForVendor()
+        if deviceIdForVendor == nil {
+            _ = notificationAPI.createDeviceIdForVendor()
         }
 
         let awsSNS = AWSSNS.default()
@@ -356,7 +355,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     Logger.log("ARN endpoint created")
 //                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
                     AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
-                    let notificationAPI = NotificationAPI()
+
                     notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
                     
                 }

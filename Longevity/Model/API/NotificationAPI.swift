@@ -29,9 +29,34 @@ struct UpdateNotificationResponse:Codable {
 }
 
 class NotificationAPI:BaseAuthAPI {
+    func getDeviceIdForVendor() -> String? {
+        do {
+            let deviceIdForVendor = try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.identifierForVendor).readItem()
+            return deviceIdForVendor
+        } catch  {
+            return nil
+        }
+    }
+
+    func createDeviceIdForVendor() -> Bool {
+        guard let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
+        else {
+            Logger.log("deviceIdForVendor is not generated")
+            return false
+        }
+        do {
+            try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.identifierForVendor).saveItem(deviceIdForVendor)
+            return true
+        } catch  {
+            Logger.log("unable to save deviceIdForVendor in KeyChain \(error)")
+            return false
+        }
+
+    }
+
 
     func getNotification(completion: @escaping ((UserNotification?)-> Void)) {
-        guard let deviceIdForVendor = UserDefaults.standard.string(forKey: UserDefaultsKeys().vendorDeviceID)
+        guard let deviceIdForVendor = self.getDeviceIdForVendor()
         else {return}
 
         self.getCredentials(completion: { (credentials) in
@@ -49,7 +74,6 @@ class NotificationAPI:BaseAuthAPI {
                         if let message = value.data, message.endpointArn != nil {
                             completion(message)
                         }
-
                     } catch {
                         print("json error", error)
                     }
@@ -65,7 +89,7 @@ class NotificationAPI:BaseAuthAPI {
 
     func updateNotification(userNotification: Bool, completion: @escaping ((UserNotification?)-> Void),
                             failure: @escaping ()-> Void){
-        guard let deviceIdForVendor = UserDefaults.standard.string(forKey: UserDefaultsKeys().vendorDeviceID)
+        guard let deviceIdForVendor = self.getDeviceIdForVendor()
         else {return}
 
         self.getCredentials(completion: { (credentials) in
@@ -108,12 +132,11 @@ class NotificationAPI:BaseAuthAPI {
     }
 
     func registerARN(platform: NotificationDevicePlatforms, arnEndpoint: String) {
-        guard let deviceIdForVendor = UserDefaults.standard.string(forKey: UserDefaultsKeys().vendorDeviceID)
+        guard let deviceIdForVendor = self.getDeviceIdForVendor()
         else {return}
 
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
-
 
             let body = JSON([
                 "platform" : platform.rawValue,

@@ -13,14 +13,6 @@ class BaseProfileSetupViewController: UIViewController {
     lazy var progressView: UIProgressView = {
         let progressView = UIProgressView()
         progressView.translatesAutoresizingMaskIntoConstraints = false
-        let progressViewHeight = progressView.frame.size.height
-        progressView.layer.cornerRadius = progressViewHeight / 2
-        progressView.clipsToBounds = true
-        progressView.subviews.forEach { (subview) in
-            subview.layer.masksToBounds = true
-            subview.layer.cornerRadius = progressViewHeight / 2.0
-            subview.clipsToBounds = true
-        }
         return progressView
     }()
     
@@ -30,6 +22,19 @@ class BaseProfileSetupViewController: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "#F5F6FA")
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 24.0)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4E4E4E")]
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        let progressViewHeight = progressView.frame.size.height
+        progressView.layer.cornerRadius = progressViewHeight / 2
+        progressView.clipsToBounds = true
+        progressView.subviews.forEach { (subview) in
+            subview.layer.masksToBounds = true
+            subview.layer.cornerRadius = progressViewHeight / 2.0
+            subview.clipsToBounds = true
+        }
     }
     
     func addProgressbar(progress: Float) {

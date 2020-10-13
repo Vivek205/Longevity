@@ -15,6 +15,7 @@ struct KeychainKeys {
     static let FitbitRefreshToken = "FitbitRefreshToken"
     static let idToken = "idToken"
     static let idTokenExp = "idTokenExp"
+    static let identifierForVendor = "identifierForVendor"
 }
 // Keychain Configuration
 struct KeychainConfiguration {

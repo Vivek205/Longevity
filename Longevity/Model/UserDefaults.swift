@@ -49,7 +49,6 @@ struct UserDefaultsKeys: PropertyLoopable {
     let failureNotificationCount = "failureNotificationCount"
     let setupProfileCompletionStatus = "setupProfileCompletionStatus"
     let deviceTokenForSNS = "deviceTokenForSNS"
-    let vendorDeviceID = "vendorDeviceID"
     let snsARN = "endpointArnForSNS"
     let email = "email"
     let logger = "logger"
@@ -63,9 +62,6 @@ func clearUserDefaults() {
         let allProperties = try UserDefaultsKeys.instance.allProperties()
         allProperties.forEach { (property) in
             print("property", property.key, property.value)
-            if let value = property.value as? String, value != UserDefaultsKeys.instance.vendorDeviceID {
-                UserDefaults.standard.removeObject(forKey: value)
-            }
         }
         print(try UserDefaultsKeys.instance.allProperties())
     } catch _ {}
