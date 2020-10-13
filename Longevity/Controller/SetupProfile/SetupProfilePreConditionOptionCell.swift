@@ -16,8 +16,28 @@ class SetupProfilePreConditionOptionCell: UICollectionViewCell {
     
     var optionData: PreExistingMedicalConditionModel! {
         didSet {
-            self.conditionName.text = optionData.name
-            self.conditionDescription.text = optionData.description
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18.0),.foregroundColor: UIColor(hexString: "#000000")]
+            let attributedoptionData = NSMutableAttributedString(string: optionData.name, attributes: attributes)
+            
+            let gapAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 17.0)]
+            
+            let gapAttributedText = NSMutableAttributedString(string: "\n", attributes: gapAttributes)
+            
+            attributedoptionData.append(gapAttributedText)
+            
+            let optionDataDesc = optionData.description ?? ""
+            
+            let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#666666")]
+            let attributedDescText = NSMutableAttributedString(string: optionDataDesc, attributes: descAttributes)
+            
+            attributedoptionData.append(attributedDescText)
+            attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 1.8
+            attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
+            self.conditionName.attributedText = attributedoptionData
+            
             self.optionId = optionData.id
             self.checkBoxButton.isSelected = optionData.selected
         }
@@ -30,7 +50,6 @@ class SetupProfilePreConditionOptionCell: UICollectionViewCell {
     @IBOutlet weak var checkBoxButton: CheckboxButton!
     
     @IBOutlet weak var conditionName: UILabel!
-    @IBOutlet weak var conditionDescription: UILabel!
 
 
     var optionId: PreExistingMedicalConditionId?
