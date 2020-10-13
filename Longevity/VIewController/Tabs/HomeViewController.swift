@@ -188,8 +188,20 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
-            self.showSurvey(surveyId)
-            return }
+            if selectedCell.status != .completedToday {
+                self.showSurvey(surveyId)
+                return
+            }
+            if let userInsights = AppSyncManager.instance.userInsights.value {
+                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+                print(userInsights)
+                if let history = userInsights.last?.details?.history {
+                    checkinLogViewController.history = history
+                }
+                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+
+            }
+        }
 
         if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
            let surveyId = taskCell.surveyDetails?.surveyId

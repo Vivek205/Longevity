@@ -8,6 +8,8 @@
 
 import UIKit
 
+fileprivate let dateFormat = "yyyy-MM-dd HH:mm:ss"
+
 enum CheckInStatus: Int {
     case notstarted
     case completedToday
@@ -23,11 +25,11 @@ extension CheckInStatus {
             return "{#days} days logged"
         case .completed:
             let dateFormatter = DateFormatter()
-            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.dateFormat = dateFormat
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString ?? "") {
                 let timeAgo = lastSubmissionDate.timeAgoDisplay()
-                return "last updated: \(timeAgo)"
+                return "last tracked: \(timeAgo)"
             }
             return ""
         }
@@ -43,6 +45,17 @@ extension CheckInStatus {
             return UIImage(named: "checkinnotdone")
         }
     }
+
+    var titleText: String? {
+        switch self {
+        case .notstarted:
+            return "COVID Check-in"
+        case .completedToday:
+            return "Check-in Complete"
+        case .completed:
+            return "COVID Check-in"
+        }
+    }
     
     var titleColor: UIColor {
         switch self {
@@ -55,28 +68,55 @@ extension CheckInStatus {
         }
     }
 
-//    var subtitleText
+    var subtitleText: String {
+        switch self {
+        case .notstarted:
+            return "How are you feeling today?"
+        case .completedToday:
+            return "View your check-in log"
+        case .completed:
+            return "How are you feeling today?"
+        }
+    }
+
+    var subtitleColor: UIColor {
+        switch self {
+        case .notstarted:
+            return .checkinCompleted
+        case .completedToday:
+            return .checkinNotCompleted
+        case .completed:
+            return .checkinCompleted
+        }
+    }
 }
 
 class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
 
-    var isRepetitiveSurveyList: Bool = false {
-        didSet {
-            checkInTitle.textColor = .themeColor    
-        }
-    }
+    var isRepetitiveSurveyList: Bool = false
+
+    var status: CheckInStatus = .notstarted
     
     var surveyResponse: SurveyListItem! {
         didSet {
-            var status:CheckInStatus = .notstarted
-            if surveyResponse.lastSubmission != nil {
+            if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty {
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = dateFormat
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 
-//                status = .completed
+                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
+                    var calendar = Calendar.current
+                    calendar.timeZone = TimeZone(abbreviation: "UTC")!
+                    if calendar.isDateInToday(lastSubmissionDate) {
+                        status = .completedToday
+                    }else {
+                        status = .completed
+                    }
+                }
                 status = .completedToday
             }
-            self.setupCell(title: surveyResponse.name, status: status ,
-                           lastSubmissionDateString: surveyResponse.lastSubmission)
+            self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission)
             self.surveyId = surveyResponse.surveyId
         }
     }
@@ -153,7 +193,7 @@ class DashboardCheckInCell: UITableViewCell {
             verticleStack.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
         ])
         
-        self.setupCell(title: "COVID Check-in", status: .notstarted, lastSubmissionDateString: nil)
+        self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil)
         self.selectionStyle = .none
     }
     
@@ -161,12 +201,12 @@ class DashboardCheckInCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, status: CheckInStatus, lastSubmissionDateString: String?) {
+    func setupCell(title: String, lastSubmissionDateString: String?) {
         self.checkInIcon.image = status.statusIcon
-        self.checkInTitle.text = title
+        self.checkInTitle.text = status.titleText
         self.checkInTitle.textColor = status.titleColor
-        self.checkInTitle2.text = "How are you feeling today?"
-        self.checkInTitle2.textColor = .checkinCompleted
+        self.checkInTitle2.text = status.subtitleText
+        self.checkInTitle2.textColor = status.subtitleColor
         self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString)
         self.lastUpdated.textColor = .statusColor
     }
