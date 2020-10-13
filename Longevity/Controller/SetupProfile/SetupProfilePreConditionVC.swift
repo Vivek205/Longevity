@@ -103,10 +103,11 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
         }) else {
             return
         }
-            preExistingMedicalConditionData[optionIndex].touched = true
-            let currentState = preExistingMedicalConditionData[optionIndex].selected
-            preExistingMedicalConditionData[optionIndex].selected = !currentState
-            collectionView.reloadData()
+        updateitemSelection(optionIndex:optionIndex)
+//            preExistingMedicalConditionData[optionIndex].touched = true
+//            let currentState = preExistingMedicalConditionData[optionIndex].selected
+//            preExistingMedicalConditionData[optionIndex].selected = !currentState
+//            collectionView.reloadData()
     }
 }
 
@@ -229,7 +230,32 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
     }
 
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        switch indexPath.row {
+        case titleRowIndex:
+            print("title clicked")
+            self.view.endEditing(true)
+        case textAreaRowIndex:
+            changesSaved = false
+            print("textArea clicked")
+        default:
+            self.view.endEditing(true)
+            changesSaved = false
+            updateitemSelection(optionIndex:( indexPath.item - 1))
+        }
+    }
+
+    func updateitemSelection(optionIndex: Int) {
+        let details = preExistingMedicalConditionData[optionIndex]
+        preExistingMedicalConditionData[optionIndex].touched = true
+        let currentState = preExistingMedicalConditionData[optionIndex].selected
+        preExistingMedicalConditionData[optionIndex].selected = !currentState
+        collectionView.reloadItems(at: [IndexPath(item: optionIndex+1, section: 0)])
+        print("condition tapped", details)
+    }
 }
+
+
 
 
 extension SetupProfilePreConditionVC: UIAdaptivePresentationControllerDelegate {

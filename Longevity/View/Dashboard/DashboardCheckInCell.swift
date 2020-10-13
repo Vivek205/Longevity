@@ -10,6 +10,7 @@ import UIKit
 
 enum CheckInStatus: Int {
     case notstarted
+    case completedToday
     case completed
 }
 
@@ -18,6 +19,8 @@ extension CheckInStatus {
         switch self {
         case .notstarted:
             return "Get started today"
+        case .completedToday:
+            return "{#days} days logged"
         case .completed:
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -34,8 +37,10 @@ extension CheckInStatus {
         switch self {
         case .notstarted:
             return UIImage(named: "checkinnotdone")
-        case .completed:
+        case .completedToday:
             return UIImage(named: "checkindone")
+        case .completed:
+            return UIImage(named: "checkinnotdone")
         }
     }
     
@@ -43,10 +48,14 @@ extension CheckInStatus {
         switch self {
         case .notstarted:
             return .checkinNotCompleted
-        case .completed:
+        case .completedToday:
             return .checkinCompleted
+        case .completed:
+            return .checkinNotCompleted
         }
     }
+
+//    var subtitleText
 }
 
 class DashboardCheckInCell: UITableViewCell {
@@ -62,7 +71,9 @@ class DashboardCheckInCell: UITableViewCell {
         didSet {
             var status:CheckInStatus = .notstarted
             if surveyResponse.lastSubmission != nil {
-                status = .completed
+
+//                status = .completed
+                status = .completedToday
             }
             self.setupCell(title: surveyResponse.name, status: status ,
                            lastSubmissionDateString: surveyResponse.lastSubmission)
