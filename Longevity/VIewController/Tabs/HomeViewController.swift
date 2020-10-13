@@ -199,7 +199,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                     checkinLogViewController.history = history
                 }
                 NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-
             }
         }
 

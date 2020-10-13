@@ -207,8 +207,13 @@ class DashboardCheckInCell: UITableViewCell {
         self.checkInTitle.textColor = status.titleColor
         self.checkInTitle2.text = status.subtitleText
         self.checkInTitle2.textColor = status.subtitleColor
+        self.checkInTitle2.font = UIFont(name: AppFontName.semibold, size: 16.0)
         self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString)
         self.lastUpdated.textColor = .statusColor
+
+        if status == .completedToday {
+            self.checkInTitle2.font = UIFont(name: AppFontName.regular, size: 16.0)
+        }
     }
     
     override func layoutSubviews() {
