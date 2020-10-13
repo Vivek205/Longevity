@@ -139,10 +139,7 @@ up your health profile.</string>
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOc-Gh-tin" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="24" width="374" height="48"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="NwO-30-YsX"/>
-                                        </constraints>
+                                        <rect key="frame" x="20" y="24" width="374" height="30"/>
                                         <state key="normal" title="Continue"/>
                                         <connections>
                                             <action selector="handleContinue:" destination="YhE-Gr-gSC" eventType="touchUpInside" id="KzM-TI-S0r"/>
