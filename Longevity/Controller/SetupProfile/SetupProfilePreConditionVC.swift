@@ -40,6 +40,15 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
             rightButton.tintColor = .themeColor
             self.viewNavigationItem.leftBarButtonItem = leftbutton
             self.viewNavigationItem.rightBarButtonItem = rightButton
+            
+            let titleLabel = UILabel()
+            titleLabel.text = "Update Pre-conditions"
+            titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
+            titleLabel.textColor = UIColor(hexString: "#4E4E4E")
+            titleLabel.translatesAutoresizingMaskIntoConstraints = false
+            
+            self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
+            self.navigationItem.titleView = titleLabel
             self.footerView.isHidden = true
 
             NSLayoutConstraint.activate([
@@ -48,6 +57,10 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
         } else {
             self.addProgressbar(progress: 100.0)
         }
+        
+        NSLayoutConstraint.activate([
+            self.footerView.heightAnchor.constraint(equalToConstant: self.isFromSettings ? 0.0 : 96.0)
+        ])
 
         if self.modalPresentation {
             if #available(iOS 13.0, *) {
@@ -222,9 +235,9 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         switch indexPath.row {
         case titleRowIndex:
-            return CGSize(width: width - 40, height: CGFloat(150))
+            return CGSize(width: width - 40, height: self.isFromSettings ? 0.0 : CGFloat(150))
         case textAreaRowIndex:
-            return CGSize(width: width - 40, height: CGFloat(200))
+            return CGSize(width: width - 40, height: self.isFromSettings ? 0.0 : CGFloat(200))
         default:
             return CGSize(width: width - 40, height: CGFloat(130))
         }
