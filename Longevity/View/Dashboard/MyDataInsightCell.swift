@@ -175,7 +175,7 @@ class MyDataInsightCell: UICollectionViewCell {
             self.trendDirection.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
             self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor),
             
-            self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 80.0),
+            self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 60.0),
             self.detailsView.leadingAnchor.constraint(equalTo: self.tileTitle.leadingAnchor),
             self.detailsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
             self.detailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
