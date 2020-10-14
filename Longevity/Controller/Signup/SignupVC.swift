@@ -136,7 +136,7 @@ class SignupVC: UIViewController {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.performSegue(withIdentifier: "SignupToProfileSetup", sender: self)
+                self.enterTheApp()
             }
         }
 
@@ -161,7 +161,7 @@ class SignupVC: UIViewController {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.performSegue(withIdentifier: "SignupToProfileSetup", sender: self)
+                self.enterTheApp()
             }
         }
 
@@ -188,7 +188,7 @@ class SignupVC: UIViewController {
         func onSuccess() {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.performSegue(withIdentifier: "SignupToProfileSetup", sender: self)
+                self.enterTheApp()
             }
             }
 
@@ -214,5 +214,9 @@ class SignupVC: UIViewController {
         self.performSegue(withIdentifier: "SignupToLogin", sender: self)
     }
 
-
+    func enterTheApp() {
+        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        appDelegate.setRootViewController()
+        AppSyncManager.instance.fetchUserNotification()
+    }
 }
