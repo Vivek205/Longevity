@@ -17,12 +17,13 @@ enum CheckInStatus: Int {
 }
 
 extension CheckInStatus {
-    func status(lastSubmissionDateString: String?) -> String {
+    func status(lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) -> String {
         switch self {
         case .notstarted:
             return "Get started today"
         case .completedToday:
-            return "{#days} days logged"
+            guard let noOfTimesSurveyTaken = noOfTimesSurveyTaken else {return ""}
+            return "\(noOfTimesSurveyTaken) days logged"
         case .completed:
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = dateFormat
@@ -115,7 +116,8 @@ class DashboardCheckInCell: UITableViewCell {
                     }
                 }
             }
-            self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission)
+            self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
+                           noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
         }
     }
@@ -192,7 +194,7 @@ class DashboardCheckInCell: UITableViewCell {
             verticleStack.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
         ])
         
-        self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil)
+        self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil, noOfTimesSurveyTaken: nil)
         self.selectionStyle = .none
     }
     
@@ -200,14 +202,15 @@ class DashboardCheckInCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, lastSubmissionDateString: String?) {
+    func setupCell(title: String, lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) {
         self.checkInIcon.image = status.statusIcon
         self.checkInTitle.text = status.titleText
         self.checkInTitle.textColor = status.titleColor
         self.checkInTitle2.text = status.subtitleText
         self.checkInTitle2.textColor = status.subtitleColor
         self.checkInTitle2.font = UIFont(name: AppFontName.semibold, size: 16.0)
-        self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString)
+        self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString,
+                                              noOfTimesSurveyTaken: noOfTimesSurveyTaken)
         self.lastUpdated.textColor = .statusColor
 
         if status == .completedToday {

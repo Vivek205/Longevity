@@ -25,6 +25,7 @@ struct SurveyListItem: Decodable {
     let lastSubmissionId: String?
     let response: [SurveyLastResponseData]?
     let isRepetitive: Bool?
+    let noOfTimesSurveyTaken: Int?
 }
 
 func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
