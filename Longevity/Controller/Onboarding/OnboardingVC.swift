@@ -229,13 +229,15 @@ class OnboardingVC: UIViewController {
 fileprivate var spinnerView: UIView?
 extension UIViewController{
     func showSpinner() {
-        spinnerView = UIView(frame: self.view.bounds)
+        spinnerView = UIView(frame: UIScreen.main.bounds)
         spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
         let spinner = UIActivityIndicatorView(style: .whiteLarge)
         spinner.center = spinnerView?.center as! CGPoint
         spinner.startAnimating()
         spinnerView?.addSubview(spinner)
-        self.view.addSubview(spinnerView!)
+        let window = UIApplication.shared.keyWindow!
+        window.addSubview(spinnerView!)
+        window.bringSubviewToFront(spinnerView!)
     }
 
     func removeSpinner() {
