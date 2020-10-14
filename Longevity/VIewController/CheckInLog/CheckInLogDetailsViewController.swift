@@ -107,6 +107,9 @@ class CheckInLogDetailsViewController: UIViewController {
         tapgesture.numberOfTouchesRequired = 1
         
         self.view.addGestureRecognizer(tapgesture)
+        
+        containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height,
+                                     width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
     }
     
     @objc func closeView() {
@@ -135,17 +138,23 @@ class CheckInLogDetailsViewController: UIViewController {
         self.containerView.layer.cornerRadius = 20.0
         self.containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.containerView.layer.masksToBounds = true
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
         
-        UIView.animate(withDuration: 1.0) {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.15)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
+            self.containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height / 2.0, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
         
-        UIView.animate(withDuration: 0.5) {
-            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut) {
+            self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
+            self.containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
         }
     }
 }

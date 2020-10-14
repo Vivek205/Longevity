@@ -230,16 +230,44 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = view.frame.size.height
-        let width = view.frame.size.width
+        let width = collectionView.bounds.width - 28.0
 
         switch indexPath.row {
         case titleRowIndex:
-            return CGSize(width: width - 40, height: self.isFromSettings ? 0.0 : CGFloat(150))
+            return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(150))
         case textAreaRowIndex:
-            return CGSize(width: width - 40, height: self.isFromSettings ? 0.0 : CGFloat(200))
+            return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(200))
         default:
-            return CGSize(width: width - 40, height: CGFloat(130))
+            
+            let optionData = preExistingMedicalConditionData[indexPath.row - 1]
+            
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18.0),.foregroundColor: UIColor(hexString: "#000000")]
+            let attributedoptionData = NSMutableAttributedString(string: optionData.name, attributes: attributes)
+            
+            let gapAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 17.0)]
+            
+            let gapAttributedText = NSMutableAttributedString(string: "\n", attributes: gapAttributes)
+            
+            attributedoptionData.append(gapAttributedText)
+            
+            let optionDataDesc = optionData.description ?? ""
+            
+            let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#666666")]
+            let attributedDescText = NSMutableAttributedString(string: optionDataDesc, attributes: descAttributes)
+            
+            attributedoptionData.append(attributedDescText)
+            
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 1.8
+            attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
+            
+            attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
+            
+            let containerWidth = width - 57.0
+            
+            let height = attributedoptionData.height(containerWidth: containerWidth) + 32.0
+            
+            return CGSize(width: width, height: height)
         }
     }
 
@@ -278,5 +306,24 @@ extension SetupProfilePreConditionVC: UIAdaptivePresentationControllerDelegate {
 
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return true
+    }
+}
+
+extension NSAttributedString {
+
+    func height(containerWidth: CGFloat) -> CGFloat {
+
+        let rect = self.boundingRect(with: CGSize.init(width: containerWidth, height: CGFloat.greatestFiniteMagnitude),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return ceil(rect.size.height)
+    }
+
+    func width(containerHeight: CGFloat) -> CGFloat {
+
+        let rect = self.boundingRect(with: CGSize.init(width: CGFloat.greatestFiniteMagnitude, height: containerHeight),
+                                     options: [.usesLineFragmentOrigin, .usesFontLeading],
+                                     context: nil)
+        return ceil(rect.size.width)
     }
 }

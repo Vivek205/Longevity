@@ -286,7 +286,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 switch cell.profileSetting {
                 case .exportcheckin:
                     let exportCheckinViewController = ExportCheckinDataViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .formSheet, completion: nil)
+                    NavigationUtility.presentOverCurrentContext(destination: exportCheckinViewController, style: .overCurrentContext, transitionStyle: .crossDissolve, completion: nil)
                 case .updatebiometrics:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let biometricsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfileBioDataVC") as? SetupProfileBioDataVC else { return }
