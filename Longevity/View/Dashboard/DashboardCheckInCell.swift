@@ -114,7 +114,6 @@ class DashboardCheckInCell: UITableViewCell {
                         status = .completed
                     }
                 }
-                status = .completedToday
             }
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission)
             self.surveyId = surveyResponse.surveyId
