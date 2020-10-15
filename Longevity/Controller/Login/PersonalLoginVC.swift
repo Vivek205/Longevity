@@ -40,18 +40,16 @@ class PersonalLoginVC: UIViewController {
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
 
-
-        personalImageView.isHidden = true
-        clinicalTrialImageView.isHidden = true
-
-        //        self.removeBackButtonNavigation()
+        personalImageView.removeFromSuperview()
+        clinicalTrialImageView.removeFromSuperview()
+        parentStackContainer.removeArrangedSubview(parentStackContainer.arrangedSubviews[0])
+        parentStackContainer.removeArrangedSubview(parentStackContainer.arrangedSubviews[0])
+        
         self.orLabel.backgroundColor = UIColor(hexString: "#F5F6FA")
 
         let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
 
         self.view.addGestureRecognizer(backgroundTapGesture)
-
-
     }
 
     override func viewDidLayoutSubviews() {

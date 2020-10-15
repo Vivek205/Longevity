@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 718E061F905C01115E0C6E2E /* Pods_Longevity.framework */; };
+		4A9F1454A87CC9145E68A114 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
@@ -132,6 +132,7 @@
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
 		E25E8C91253754AF00502F86 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E8C90253754AF00502F86 /* UITextField+Extension.swift */; };
 		E25E8C96253756C400502F86 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E8C95253756C400502F86 /* UIButton+Extension.swift */; };
+		E25E8C9A25386ECE00502F86 /* DividerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E8C9925386ECD00502F86 /* DividerView.swift */; };
 		E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -233,8 +234,8 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		718E061F905C01115E0C6E2E /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
@@ -316,7 +317,6 @@
 		C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
-		DF6B6599CA44D1447B7D21BD /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
 		E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormSectionItemView.swift; sourceTree = "<group>"; };
 		E20256E124E2ACB800896F2C /* RKCFormItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormItemView.swift; sourceTree = "<group>"; };
@@ -362,6 +362,7 @@
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
 		E25E8C90253754AF00502F86 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
 		E25E8C95253756C400502F86 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
+		E25E8C9925386ECD00502F86 /* DividerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DividerView.swift; sourceTree = "<group>"; };
 		E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKStepViewController+Extension.swift"; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
@@ -431,6 +432,7 @@
 		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserLogin.storyboard; sourceTree = "<group>"; };
 		E2ECB8CA247FE2BE0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2ECB8CC247FE2BE0020A27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -441,7 +443,7 @@
 				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
-				760205963AAC292171173490 /* Pods_Longevity.framework in Frameworks */,
+				4A9F1454A87CC9145E68A114 /* Pods_Longevity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -451,8 +453,8 @@
 		04C2A7532EFF18097D0A9CCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */,
-				DF6B6599CA44D1447B7D21BD /* Pods-Longevity.release.xcconfig */,
+				EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */,
+				980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -462,7 +464,7 @@
 			children = (
 				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				718E061F905C01115E0C6E2E /* Pods_Longevity.framework */,
+				2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -828,6 +830,7 @@
 				E2C86D5524A5CE66005CE57E /* CustomButtonOutlined.swift */,
 				E290B60724BCA1EA00C51655 /* CheckboxButton.swift */,
 				C14ABA4E24E3220E00C81580 /* HexagonView.swift */,
+				E25E8C9925386ECD00502F86 /* DividerView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -972,14 +975,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
 			buildPhases = (
-				E9D9461D09C6BFAE120D8B5D /* [CP] Check Pods Manifest.lock */,
+				F1E411527F7FB40D00D9BD14 /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
 				C198758224DAE80700477185 /* Embed Frameworks */,
-				6EEF99DEE2138D2FD3D1C02D /* [CP] Embed Pods Frameworks */,
+				61A820FD74D690D05DDD864F /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1073,7 +1076,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6EEF99DEE2138D2FD3D1C02D /* [CP] Embed Pods Frameworks */ = {
+		61A820FD74D690D05DDD864F /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1127,7 +1130,7 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=rejuve\nexport SENTRY_PROJECT=rejuve\nexport SENTRY_AUTH_TOKEN=f61c5bbd1ee24dd99d2f45fa189a29fe5af2fbcaa7e14c8891e046897b3f2665\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
-		E9D9461D09C6BFAE120D8B5D /* [CP] Check Pods Manifest.lock */ = {
+		F1E411527F7FB40D00D9BD14 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1318,6 +1321,7 @@
 				E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */,
 				C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */,
 				C19875BA24DC79EB00477185 /* ProfileViewController.swift in Sources */,
+				E25E8C9A25386ECE00502F86 /* DividerView.swift in Sources */,
 				C14ABA4724E3039900C81580 /* UserInsight.swift in Sources */,
 				E2503AA324EBDDA70033A814 /* Date.swift in Sources */,
 				C12F09B924F6F97B00623CC3 /* BasePopUpModalViewController.swift in Sources */,
@@ -1472,7 +1476,7 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 77FBD8776335EE24B707E1CE /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
@@ -1497,7 +1501,7 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = DF6B6599CA44D1447B7D21BD /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = 980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;

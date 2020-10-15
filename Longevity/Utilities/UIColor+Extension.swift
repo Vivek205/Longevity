@@ -89,4 +89,8 @@ extension UIColor {
     @nonobjc class var placeHolder: UIColor {
         return UIColor(hexString: "#C2C2C2")
     }
+
+    @nonobjc class var facebook: UIColor {
+        return UIColor(hexString: "#25479B")
+    }
 }

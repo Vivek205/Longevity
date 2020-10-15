@@ -51,7 +51,7 @@ class SignupByEmailVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        customizeButton(button: submitButton)
+//        customizeButton(button: submitButton)
         formName.delegate = self
         formEmail.delegate = self
         formPhone.delegate = self
