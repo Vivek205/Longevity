@@ -690,12 +690,16 @@
                                             <constraint firstAttribute="trailing" secondItem="xIN-kF-9FI" secondAttribute="trailing" id="r3o-5u-GyY"/>
                                         </constraints>
                                     </view>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Forgot Password ?" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ahw-N0-hRL">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Qvj-cC-uJ8" userLabel="Forgot Password ?">
                                         <rect key="frame" x="0.0" y="657" width="374" height="63"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
-                                        <color key="textColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
+                                        <state key="normal" title="Forgot Password ?">
+                                            <color key="titleColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="calibratedRGB"/>
+                                        </state>
+                                        <connections>
+                                            <action selector="handleForgotPassword:" destination="DKT-YJ-RMe" eventType="touchUpInside" id="AYm-o9-ikf"/>
+                                        </connections>
+                                    </button>
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YQt-NB-i37">
                                         <rect key="frame" x="0.0" y="730" width="374" height="63"/>
                                         <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
@@ -1459,7 +1463,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z1Q-xo-ocY"/>
+        <segue reference="5k2-Eq-Tba"/>
         <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>

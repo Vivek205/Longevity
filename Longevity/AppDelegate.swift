@@ -45,7 +45,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         SentrySDK.start(options: [
             "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
             "enableAutoSessionTracking": true
-            //                "debug": true // Enabled debug when first installing is always helpful
         ])
         
         UNUserNotificationCenter.current().delegate = self

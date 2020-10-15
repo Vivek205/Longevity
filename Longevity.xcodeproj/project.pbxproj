@@ -96,6 +96,7 @@
 		E20CD88E253738A600ADADB4 /* ForgotPasswordCaptureEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */; };
 		E20CD890253738DA00ADADB4 /* ForgotPasswordOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */; };
 		E20CD8922537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8912537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift */; };
+		E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -130,6 +131,8 @@
 		E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66524EE247100676056 /* UserProfileAPI.swift */; };
 		E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */; };
 		E25D398424E140DE0052B513 /* TextChoiceAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */; };
+		E25E8C91253754AF00502F86 /* UITextField+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E8C90253754AF00502F86 /* UITextField+Extension.swift */; };
+		E25E8C96253756C400502F86 /* UIButton+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E25E8C95253756C400502F86 /* UIButton+Extension.swift */; };
 		E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */; };
 		E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; };
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
@@ -322,6 +325,7 @@
 		E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordCaptureEmailVC.swift; sourceTree = "<group>"; };
 		E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordOtpVC.swift; sourceTree = "<group>"; };
 		E20CD8912537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordNewPasswordVC.swift; sourceTree = "<group>"; };
+		E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
 		E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalHistoryAPI.swift; sourceTree = "<group>"; };
@@ -358,6 +362,8 @@
 		E258E66524EE247100676056 /* UserProfileAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileAPI.swift; sourceTree = "<group>"; };
 		E258E66724EE970000676056 /* RKCFormInlineTextAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormInlineTextAnswerView.swift; sourceTree = "<group>"; };
 		E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextChoiceAnswerViewCell.swift; sourceTree = "<group>"; };
+		E25E8C90253754AF00502F86 /* UITextField+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UITextField+Extension.swift"; sourceTree = "<group>"; };
+		E25E8C95253756C400502F86 /* UIButton+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIButton+Extension.swift"; sourceTree = "<group>"; };
 		E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ORKStepViewController+Extension.swift"; sourceTree = "<group>"; };
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
@@ -555,6 +561,9 @@
 				E252C4A1252C5B8900B0E34F /* Coimbatore.gpx */,
 				E2637E79252D97720040CFC7 /* ORKStepViewController+Extension.swift */,
 				E242A6682530701100AC6152 /* Array+Extension.swift */,
+				E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */,
+				E25E8C90253754AF00502F86 /* UITextField+Extension.swift */,
+				E25E8C95253756C400502F86 /* UIButton+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1150,6 +1159,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E25E8C91253754AF00502F86 /* UITextField+Extension.swift in Sources */,
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,
 				C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */,
 				C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */,
@@ -1238,6 +1248,7 @@
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
 				C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */,
 				C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */,
+				E25E8C96253756C400502F86 /* UIButton+Extension.swift in Sources */,
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
@@ -1252,6 +1263,7 @@
 				C19875B324DC6D1600477185 /* UIColor+Extension.swift in Sources */,
 				C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */,
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
+				E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */,

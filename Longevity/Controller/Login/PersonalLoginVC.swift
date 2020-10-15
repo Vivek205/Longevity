@@ -274,6 +274,12 @@ class PersonalLoginVC: UIViewController {
         print("un wound")
         
     }
+
+    @IBAction func handleForgotPassword(_ sender: Any) {
+        let destinationVC = ForgotPasswordCaptureEmailVC()
+        self.navigationController?.pushViewController(destinationVC, animated: true)
+    }
+
     
     fileprivate func doLogin() {
         DispatchQueue.main.async {

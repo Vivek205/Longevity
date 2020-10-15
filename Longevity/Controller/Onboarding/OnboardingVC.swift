@@ -255,6 +255,12 @@ extension UIViewController {
         self.present(alert, animated: true)
     }
 
+    func showAlert(title: String, message: String, action: UIAlertAction) {
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        alert.addAction(action)
+        self.present(alert, animated: true)
+    }
+
     @objc func handleUIAlertAction(_ action: UIAlertAction) {
 
     }
