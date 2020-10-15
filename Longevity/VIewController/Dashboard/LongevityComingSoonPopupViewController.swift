@@ -30,22 +30,13 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         return notificationswitch
     }()
     
-    lazy var primaryButton: CustomButtonFill = {
-        let button = CustomButtonFill()
-        button.setTitle("Ok", for: .normal)
-        button.setTitleColor(.white, for: .normal)
-        button.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
         self.containerView.addSubview(emailNotification)
         self.containerView.addSubview(notificationSwitch)
-        self.containerView.addSubview(primaryButton)
+        self.containerView.addSubview(actionButton)
+        self.actionButton.setTitle("Ok", for: .normal)
         self.titleLabel.text = "Longevity"
         
         let infoText = "Coming soon to you!"
@@ -65,11 +56,12 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
             self.notificationSwitch.centerYAnchor.constraint(equalTo: emailNotification.centerYAnchor),
             notificationSwitch.leadingAnchor.constraint(equalTo: emailNotification.trailingAnchor, constant: 11.0),
             notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
-            primaryButton.topAnchor.constraint(equalTo: emailNotification.bottomAnchor, constant: 24.0),
-            primaryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            primaryButton.widthAnchor.constraint(equalToConstant: view.bounds.width - 120),
-            primaryButton.heightAnchor.constraint(equalToConstant: 48),
-            primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
+            actionButton.topAnchor.constraint(equalTo: emailNotification.bottomAnchor, constant: 24.0),
+            actionButton.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
+            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 30.0),
+            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            actionButton.heightAnchor.constraint(equalToConstant: 48),
+            actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
 
         AppSyncManager.instance.userSubscriptions.addAndNotify(observer: self) {

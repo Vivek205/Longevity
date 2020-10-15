@@ -57,8 +57,8 @@ class BasePopUpModalViewController: UIViewController {
         return info
     }()
     
-    lazy var actionButton: UIButton = {
-        let export = UIButton()
+    lazy var actionButton: CustomButtonFill = {
+        let export = CustomButtonFill()
         export.setTitle("Export Now", for: .normal)
         export.setTitleColor(.white, for: .normal)
         export.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
@@ -139,11 +139,7 @@ class BasePopUpModalViewController: UIViewController {
     }
     
     override func viewDidLayoutSubviews() {
-        super.viewDidLayoutSubviews()
-        
-        self.actionButton.layer.cornerRadius = 10.0
-        self.actionButton.layer.masksToBounds = true
-        
+        super.viewDidLayoutSubviews()       
         self.containerView.layer.cornerRadius = 10.0
         self.containerView.layer.masksToBounds = true
     }

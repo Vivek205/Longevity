@@ -30,34 +30,27 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
         return collection
     }()
     
-    lazy var primaryButton: CustomButtonFill = {
-        let button = CustomButtonFill()
-        button.setTitle("Ok", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        return button
-    }()
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(deviceInfoCollection)
-        self.view.addSubview(primaryButton)
+        self.containerView.addSubview(deviceInfoCollection)
+        self.containerView.addSubview(self.actionButton)
+        self.actionButton.setTitle("Ok", for: .normal)
         
         let screenHeight = UIScreen.main.bounds.height
         
         NSLayoutConstraint.activate([
-            deviceInfoCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            deviceInfoCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
+            deviceInfoCollection.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
+            deviceInfoCollection.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
             deviceInfoCollection.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            deviceInfoCollection.bottomAnchor.constraint(equalTo: primaryButton.topAnchor, constant: -30),
+            deviceInfoCollection.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -30),
             
-            containerView.heightAnchor.constraint(equalToConstant: screenHeight - 80.0),
+            containerView.heightAnchor.constraint(equalToConstant: screenHeight - 150.0),
             
-            primaryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            primaryButton.widthAnchor.constraint(equalToConstant: view.bounds.width - 120),
-            primaryButton.heightAnchor.constraint(equalToConstant: 48),
-            primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
+            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 30.0),
+            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            actionButton.heightAnchor.constraint(equalToConstant: 48),
+            actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
         ])
         
         titleLabel.text = "Device \n Connections"
