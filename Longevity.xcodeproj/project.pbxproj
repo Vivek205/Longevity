@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		4A9F1454A87CC9145E68A114 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */; };
+		48EF3ECD9418B7F2B78F5D85 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
@@ -235,8 +235,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
@@ -434,7 +435,6 @@
 		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserLogin.storyboard; sourceTree = "<group>"; };
 		E2ECB8CA247FE2BE0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2ECB8CC247FE2BE0020A27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -445,7 +445,7 @@
 				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
-				4A9F1454A87CC9145E68A114 /* Pods_Longevity.framework in Frameworks */,
+				48EF3ECD9418B7F2B78F5D85 /* Pods_Longevity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -455,8 +455,8 @@
 		04C2A7532EFF18097D0A9CCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */,
-				980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */,
+				1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */,
+				484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -466,7 +466,7 @@
 			children = (
 				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				2126C61C992C8EC762FC56B3 /* Pods_Longevity.framework */,
+				BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -978,14 +978,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
 			buildPhases = (
-				F1E411527F7FB40D00D9BD14 /* [CP] Check Pods Manifest.lock */,
+				18D6ADED2C2E1C5A50E731F6 /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
 				C198758224DAE80700477185 /* Embed Frameworks */,
-				61A820FD74D690D05DDD864F /* [CP] Embed Pods Frameworks */,
+				F4A7A653857492847233B7B1 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1079,21 +1079,26 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		61A820FD74D690D05DDD864F /* [CP] Embed Pods Frameworks */ = {
+		18D6ADED2C2E1C5A50E731F6 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			name = "[CP] Embed Pods Frameworks";
+			inputPaths = (
+				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
+				"${PODS_ROOT}/Manifest.lock",
+			);
+			name = "[CP] Check Pods Manifest.lock";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			outputPaths = (
+				"$(DERIVED_FILE_DIR)/Pods-Longevity-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
+			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
 			showEnvVarsInLog = 0;
 		};
 		E23A2CC72480EFC30051EE7A /* SwiftLint */ = {
@@ -1133,26 +1138,21 @@
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=rejuve\nexport SENTRY_PROJECT=rejuve\nexport SENTRY_AUTH_TOKEN=f61c5bbd1ee24dd99d2f45fa189a29fe5af2fbcaa7e14c8891e046897b3f2665\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
 		};
-		F1E411527F7FB40D00D9BD14 /* [CP] Check Pods Manifest.lock */ = {
+		F4A7A653857492847233B7B1 /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
 			);
 			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
-			inputPaths = (
-				"${PODS_PODFILE_DIR_PATH}/Podfile.lock",
-				"${PODS_ROOT}/Manifest.lock",
-			);
-			name = "[CP] Check Pods Manifest.lock";
+			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-			);
-			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Longevity-checkManifestLockResult.txt",
+				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_PODFILE_DIR_PATH}/Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n# This output is used by Xcode 'outputs' to avoid re-running this script phase.\necho \"SUCCESS\" > \"${SCRIPT_OUTPUT_FILE_0}\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1480,7 +1480,7 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = EFA707524450B818959C6D46 /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = 1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
@@ -1505,7 +1505,7 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 980F12A28EFAC3AF779C94C3 /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = 484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;

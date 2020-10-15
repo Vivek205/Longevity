@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             configureCognito()
             print("Amplify configured with auth plugin")
             Logger.log("App Launched")
-            ConnectionManager.instance.observeReachability()
+            ConnectionManager.instance.addConnectionObserver()
             print("arn value", AppSyncManager.instance.userNotification.value?.endpointArn)
         } catch {
             print("An error occurred setting up Amplify: \(error)")
