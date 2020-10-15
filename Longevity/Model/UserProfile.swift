@@ -21,7 +21,7 @@ struct UserHealthProfile: Codable {
     var birthday: String
     var unit: MeasurementUnits
     var devices: [String: [String: Int]]?
-    var preconditions: [[String:String]]?
+    var preExistingConditions: [[String:String]]?
     var location: LocationDetails?
 }
 

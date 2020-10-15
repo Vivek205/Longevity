@@ -106,14 +106,14 @@ class UserProfileAPI: BaseAuthAPI {
                 switch result {
                 case .success(let data):
                     do {
-                        let jsonData = try JSON(data: data)
+//                        let jsonData = try JSON(data: data)
 
                         let jsonDecoder = JSONDecoder()
                         jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
                         let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
                         print(decodedData)
 
-                        if let preExistingConditions = decodedData.data.preconditions {
+                        if let preExistingConditions = decodedData.data.preExistingConditions {
                             preExistingConditions.forEach({ (condition) in
                                 if condition["type"] == "OTHER" {
                                     preExistingMedicalCondtionOtherText = condition["condition"]

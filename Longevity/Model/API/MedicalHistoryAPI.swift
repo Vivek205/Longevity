@@ -31,7 +31,7 @@ func updateMedicalConditions() {
             updatedConditions.append(["condition": otherOption!, "type": "OTHER"])
         }
 
-        AppSyncManager.instance.healthProfile.value?.preconditions = updatedConditions
+        AppSyncManager.instance.healthProfile.value?.preExistingConditions = updatedConditions
 
         let jsonToSend = ["pre_existing_conditions":updatedConditions]
         let body = JSON(jsonToSend)
