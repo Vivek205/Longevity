@@ -154,6 +154,7 @@
 		E27E295024F79C9B00244CF7 /* CheckinLogViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */; };
 		E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */; };
 		E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */; };
+		E280BAD72538868600E1ED12 /* ConnectionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = E280BAD62538868600E1ED12 /* ConnectionManager.swift */; };
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2524D7CE3A001F093F /* SurveyCardView.swift */; };
 		E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2A24D7D7AF001F093F /* CardView.swift */; };
@@ -383,6 +384,7 @@
 		E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogViewController.swift; sourceTree = "<group>"; };
 		E27E295224F7A11700244CF7 /* CheckinLogHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogHeader.swift; sourceTree = "<group>"; };
 		E27E295424F7A5C000244CF7 /* CheckinLogCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckinLogCell.swift; sourceTree = "<group>"; };
+		E280BAD62538868600E1ED12 /* ConnectionManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConnectionManager.swift; sourceTree = "<group>"; };
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E288BB2524D7CE3A001F093F /* SurveyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCardView.swift; sourceTree = "<group>"; };
 		E288BB2A24D7D7AF001F093F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
@@ -564,6 +566,7 @@
 				E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */,
 				E25E8C90253754AF00502F86 /* UITextField+Extension.swift */,
 				E25E8C95253756C400502F86 /* UIButton+Extension.swift */,
+				E280BAD62538868600E1ED12 /* ConnectionManager.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1190,6 +1193,7 @@
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
 				E27E295524F7A5C000244CF7 /* CheckinLogCell.swift in Sources */,
 				E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */,
+				E280BAD72538868600E1ED12 /* ConnectionManager.swift in Sources */,
 				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
 				E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */,
 				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,

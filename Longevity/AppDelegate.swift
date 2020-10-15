@@ -20,7 +20,7 @@ let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS_SAN
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window : UIWindow?
-    
+
     override init() {
         super.init()
         UIFont.overrideInitialize()
@@ -36,7 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             configureCognito()
             print("Amplify configured with auth plugin")
             Logger.log("App Launched")
-
+            ConnectionManager.instance.observeReachability()
             print("arn value", AppSyncManager.instance.userNotification.value?.endpointArn)
         } catch {
             print("An error occurred setting up Amplify: \(error)")
@@ -362,6 +362,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return nil
         })
     }
+
 }
 
 enum NotificationType: String {
