@@ -39,6 +39,11 @@ class PersonalLoginVC: UIViewController {
         customizeButtons()
         highlightImageButton(imgButton: personalImageView)
         normalizeImageButton(imgButton: clinicalTrialImageView)
+
+
+        personalImageView.isHidden = true
+        clinicalTrialImageView.isHidden = true
+
         //        self.removeBackButtonNavigation()
         self.orLabel.backgroundColor = UIColor(hexString: "#F5F6FA")
 

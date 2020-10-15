@@ -38,6 +38,8 @@ class DashboardTaskCell: UITableViewCell {
 
                     self.progressBar.isHidden = false
                     self.progressBar.setProgress(userProgress, animated: true)
+                }else {
+                    self.setDefaultProgressBar()
                 }
             }
             taskTitle.text = surveyDetails?.name
@@ -75,7 +77,6 @@ class DashboardTaskCell: UITableViewCell {
         lastupdated.font = UIFont(name: "Montserrat-Regular", size: 14.0)
         lastupdated.textAlignment = .center
         lastupdated.translatesAutoresizingMaskIntoConstraints = false
-        lastupdated.isHidden = true
         return lastupdated
     }()
     
@@ -84,7 +85,6 @@ class DashboardTaskCell: UITableViewCell {
         progressbar.trackTintColor = .progressTrackColor
         progressbar.progressTintColor = .progressColor
         progressbar.translatesAutoresizingMaskIntoConstraints = false
-        progressbar.isHidden = true
         return progressbar
     }()
     
@@ -142,8 +142,12 @@ class DashboardTaskCell: UITableViewCell {
         self.taskIcon.image = UIImage(named: "task1")
         self.taskTitle.text = "Lvl 2 Survey Name"
         self.taskDescription.text = "Subtext explaining what/ why/ how this survey will help"
-        self.progressLabel.text = "220/320"
-        self.progressBar.setProgress(Float(220 / 320), animated: true)
+        self.setDefaultProgressBar()
+    }
+
+    func setDefaultProgressBar() {
+        self.progressLabel.text = "0%"
+        self.progressBar.setProgress(Float(0), animated: false)
     }
     
     override func layoutSubviews() {

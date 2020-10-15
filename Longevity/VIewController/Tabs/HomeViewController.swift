@@ -158,13 +158,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if SurveyTaskUtility.shared.oneTimeSurveyList.value?.isEmpty ?? true {
                 return 100
             }
-            if let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row],
-               let surveyId = surveyDetails.surveyId as? String,
-               let details = SurveyTaskUtility.shared.surveyDetails[surveyId] as? SurveyDetails,
-               let localAnswers = SurveyTaskUtility.shared.localSavedAnswers[surveyId] as? [String:String], !localAnswers.isEmpty {
-                return 140.0
-                }
-            return 125.0
+            return 140.0
         }
     }
     

@@ -95,7 +95,6 @@
 		E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256E324E2BFC900896F2C /* RKCFormBooleanAnswerView.swift */; };
 		E20CD88E253738A600ADADB4 /* ForgotPasswordCaptureEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */; };
 		E20CD890253738DA00ADADB4 /* ForgotPasswordOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */; };
-		E20CD8922537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8912537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift */; };
 		E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
@@ -324,7 +323,6 @@
 		E20256E324E2BFC900896F2C /* RKCFormBooleanAnswerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormBooleanAnswerView.swift; sourceTree = "<group>"; };
 		E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordCaptureEmailVC.swift; sourceTree = "<group>"; };
 		E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordOtpVC.swift; sourceTree = "<group>"; };
-		E20CD8912537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordNewPasswordVC.swift; sourceTree = "<group>"; };
 		E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
@@ -629,7 +627,6 @@
 			children = (
 				E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */,
 				E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */,
-				E20CD8912537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift */,
 			);
 			path = ForgotPassword;
 			sourceTree = "<group>";
@@ -1185,7 +1182,6 @@
 				C19875C324DC8C0400477185 /* UIImage+Extension.swift in Sources */,
 				E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */,
 				E27C4F6124FE07F60070A2D3 /* CarouselCollectionCell.swift in Sources */,
-				E20CD8922537390500ADADB4 /* ForgotPasswordNewPasswordVC.swift in Sources */,
 				E258E66824EE970000676056 /* RKCFormInlineTextAnswerView.swift in Sources */,
 				C12F09EC24FD4CE600623CC3 /* UserProfile.swift in Sources */,
 				E2A5705D24CB095000DC07AB /* Array.swift in Sources */,
@@ -1482,7 +1478,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1507,7 +1503,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 34;
+				CURRENT_PROJECT_VERSION = 35;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
