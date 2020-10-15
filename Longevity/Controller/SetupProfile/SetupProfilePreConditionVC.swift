@@ -18,7 +18,6 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
     var changesSaved = true
 
     // MARK: Collection View Data
-    private var conditionCount:Int = 0
     var numberOfTotalItems:Int = 0
     var titleRowIndex:Int = 0
     var textAreaRowIndex:Int = 0
@@ -26,8 +25,15 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
 
     var isFromSettings: Bool = false
     
+    var currentEditedText: String = ""
+    var currentPreExistingMedicalConditions:[PreExistingMedicalConditionModel]?
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        self.currentEditedText = preExistingMedicalCondtionOtherText ?? ""
+        self.currentPreExistingMedicalConditions = preExistingMedicalConditionData
+        
         initializeCollectionViewData()
         addKeyboardObservers()
         self.removeBackButtonNavigation()
@@ -89,22 +95,19 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
     }
 
-
-
     func initializeCollectionViewData() {
-        conditionCount = preExistingMedicalConditionData.count
-        numberOfTotalItems = conditionCount + 2
+        let conditionsCount = currentPreExistingMedicalConditions?.count ?? 0
+        numberOfTotalItems = conditionsCount + 2
         titleRowIndex = 0
-        textAreaRowIndex = conditionCount + 1
+        textAreaRowIndex = conditionsCount + 1
         collectionView.delegate = self
         collectionView.dataSource = self
     }
 
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateMedicalConditions()
+        self.doSaveData()
     }
-
 }
 
 extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate {
@@ -130,28 +133,24 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
         animateTextView(showKeyboard: true)
     }
     func textViewDidChange(_ textView: UITextView) {
-        preExistingMedicalCondtionOtherText = textView.text
+        self.currentEditedText = textView.text
     }
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        preExistingMedicalCondtionOtherText = textView.text
+        if self.currentEditedText != preExistingMedicalCondtionOtherText {
+            self.changesSaved = false
+        }
         animateTextView(showKeyboard: false)
     }
 
     func textView(_ textView: UITextView,
-    shouldChangeTextIn range: NSRange,
-    replacementText text: String) -> Bool {
-        if text == "\n" {
-            animateTextView(showKeyboard: false)
-            textView.resignFirstResponder()
-            return false
-        }
+                  shouldChangeTextIn range: NSRange,
+                  replacementText text: String) -> Bool {
         return true
     }
 
     func animateTextView(showKeyboard: Bool) {
         print("animate text view", self.keyboardHeight)
-//        let keyboardHeight = CGFloat(200)
         let movementDistance = self.keyboardHeight ?? CGFloat(200)
         let movementDuration = CGFloat(0.3)
         let movement = showKeyboard ? -movementDistance : 0
@@ -167,7 +166,12 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
            }
     }
     
+    @objc func endTextEditing() {
+        self.view.endEditing(true)
+    }
+    
     @objc func closeView() {
+        self.view.endEditing(true)
         if changesSaved {
             self.dismiss(animated: true, completion: nil)
             return
@@ -190,8 +194,22 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
     }
 
     @objc func doneUpdate() {
-        updateMedicalConditions()
+        self.doSaveData()
         self.dismiss(animated: true, completion: nil)
+    }
+    
+    fileprivate func doSaveData() {
+        preExistingMedicalCondtionOtherText = self.currentEditedText
+        if let updatedConditions = self.currentPreExistingMedicalConditions {
+            preExistingMedicalConditionData = updatedConditions
+        }
+        updateMedicalConditions()
+    }
+    
+    @objc func doClearDescription() {
+        self.currentEditedText = ""
+        let index = currentPreExistingMedicalConditions?.count ?? 0
+        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
     }
 }
 
@@ -216,15 +234,16 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
             cell.otherOptionTextView.delegate = self
+            cell.otherOptionTextView.addInputAccessoryView(title: "Done", target: self, selector: #selector(endTextEditing))
             cell.otherOptionTextView.text = preExistingMedicalCondtionOtherText
+            cell.clearDescriptionButton.addTarget(self, action: #selector(doClearDescription), for: .touchUpInside)
             return cell
         }
 
         let cell =
             collectionView.dequeueReusableCell(
                 withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as! SetupProfilePreConditionOptionCell
-//        let optionData = preExistingMedicalConditionData[indexPath.row - 1]
-        cell.optionData = preExistingMedicalConditionData[indexPath.row - 1]
+        cell.optionData = self.currentPreExistingMedicalConditions?[indexPath.row - 1]
         cell.delegate = self
         return cell
     }
@@ -236,7 +255,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         case titleRowIndex:
             return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(150))
         case textAreaRowIndex:
-            return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(200))
+            return CGSize(width: width, height: CGFloat(200))
         default:
             
             let optionData = preExistingMedicalConditionData[indexPath.row - 1]
@@ -287,17 +306,14 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     }
 
     func updateitemSelection(optionIndex: Int) {
-        let details = preExistingMedicalConditionData[optionIndex]
-        preExistingMedicalConditionData[optionIndex].touched = true
-        let currentState = preExistingMedicalConditionData[optionIndex].selected
-        preExistingMedicalConditionData[optionIndex].selected = !currentState
-        collectionView.reloadItems(at: [IndexPath(item: optionIndex+1, section: 0)])
+        guard let details = self.currentPreExistingMedicalConditions?[optionIndex] else { return }
+        self.currentPreExistingMedicalConditions?[optionIndex].touched = true
+        let currentState = self.currentPreExistingMedicalConditions?[optionIndex].selected ?? false
+        self.currentPreExistingMedicalConditions?[optionIndex].selected = !currentState
+        collectionView.reloadItems(at: [IndexPath(item: optionIndex + 1, section: 0)])
         print("condition tapped", details)
     }
 }
-
-
-
 
 extension SetupProfilePreConditionVC: UIAdaptivePresentationControllerDelegate {
     func presentationControllerDidAttemptToDismiss(_ presentationController: UIPresentationController) {
@@ -325,5 +341,19 @@ extension NSAttributedString {
                                      options: [.usesLineFragmentOrigin, .usesFontLeading],
                                      context: nil)
         return ceil(rect.size.width)
+    }
+}
+
+extension UITextView {
+    func addInputAccessoryView(title: String, target: Any, selector: Selector) {
+        let toolBar = UIToolbar(frame: CGRect(x: 0.0,
+                                              y: 0.0,
+                                              width: UIScreen.main.bounds.size.width,
+                                              height: 44.0))
+        toolBar.barStyle = .blackTranslucent
+        toolBar.tintColor = .white
+        let barButton = UIBarButtonItem(title: title, style: .done, target: target, action: selector)
+        toolBar.setItems([barButton], animated: false)
+        self.inputAccessoryView = toolBar
     }
 }
