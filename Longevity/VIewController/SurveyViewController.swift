@@ -72,8 +72,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             print("unknown reason")
         }
         taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-        self.showSpinner()
-        getSurveys { (_) in
+        getSurveys{ (_) in
             DispatchQueue.main.async {
                 self.removeSpinner()
                 taskViewController.dismiss(animated: true) {print("task view controller dismissed")}

@@ -50,7 +50,6 @@ class CompletionStepVC: ORKStepViewController {
     func completeSurvey() {
         func completion() {
             print("survey completed")
-           
         }
         func onFailure(_ error: Error) {
             print("failed to complete the survey")
