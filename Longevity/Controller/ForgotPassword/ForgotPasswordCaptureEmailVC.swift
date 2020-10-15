@@ -10,8 +10,9 @@ import UIKit
 import Amplify
 
 class ForgotPasswordCaptureEmailVC: UIViewController {
+    var username: String?
     lazy var descriptionLabel: UILabel =  {
-        let label = UILabel(text: "A vertification code will be sent to your mobile number.",
+        let label = UILabel(text: "A verification code will be sent to your registered mobile phone.",
                             font: UIFont(name: AppFontName.medium, size: 18),
                             textColor: .sectionHeaderColor, textAlignment: .center, numberOfLines: 2)
         return label
@@ -21,18 +22,20 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
         let textField = UITextField(placeholder: "Email", keyboardType: .emailAddress)
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
+        textField.textContentType = .emailAddress
         return textField
     }()
 
     lazy var ctaButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleContinue))
+        button.isEnabled = false
         return button
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.title = "Forgot Password"
+        self.title = "Forgot Password?"
         self.view.backgroundColor = .appBackgroundColor
 
         self.view.addSubview(descriptionLabel)
@@ -40,7 +43,7 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
         self.view.addSubview(ctaButton)
 
 
-        var nav = self.navigationController?.navigationBar
+        let nav = self.navigationController?.navigationBar
         nav?.titleTextAttributes = [NSAttributedString.Key.foregroundColor: UIColor.sectionHeaderColor,
                                     NSAttributedString.Key.font: UIFont(name: AppFontName.semibold, size: 24)]
 
@@ -54,6 +57,15 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         self.view.addGestureRecognizer(tapGesture)
+
+        if let username = self.username, !username.isEmpty {
+            self.emailTextField.text = username
+            if username.isValidEmail {
+                self.ctaButton.isEnabled = true
+            }
+        }
+
+        emailTextField.addTarget(self, action: #selector(shouldContinueBeEnabled), for: .editingChanged)
     }
 
     @objc func closeKeyboard(){
@@ -101,5 +113,12 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
 
-    
+    @objc func shouldContinueBeEnabled() {
+        if let text = emailTextField.text,
+           !text.isEmpty, text.isValidEmail {
+            ctaButton.isEnabled = true
+        }else {
+            ctaButton.isEnabled = false
+        }
+    }
 }

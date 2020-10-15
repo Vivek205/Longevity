@@ -105,7 +105,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
 
         checkbox.isSelected = isChosenOption
         if isChosenOption {
-            // FIXME: BorderColor not working
             self.layer.borderColor =
                 UIColor(red: 90/255, green: 167/255, blue: 167/255, alpha: 1).cgColor
             self.layer.borderWidth = 2

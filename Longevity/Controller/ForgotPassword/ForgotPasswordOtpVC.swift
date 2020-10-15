@@ -20,9 +20,15 @@ class ForgotPasswordOtpVC: UIViewController {
     }()
 
     lazy var otpTextField: UITextField = {
-        let textField = UITextField(placeholder: "Confirmation Cxode", keyboardType: .emailAddress)
+        let textField = UITextField(placeholder: "Verification Code", keyboardType: .numberPad)
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
+        if #available(iOS 12.0, *) {
+            textField.textContentType = .oneTimeCode
+        } else {
+            // Fallback on earlier versions
+        }
+
         return textField
     }()
 
@@ -31,11 +37,30 @@ class ForgotPasswordOtpVC: UIViewController {
         textField.autocapitalizationType = .none
         textField.autocorrectionType = .no
         textField.isSecureTextEntry = true
+        if #available(iOS 12.0, *) {
+            textField.textContentType = .newPassword
+        } else {
+            // Fallback on earlier versions
+        }
+        return textField
+    }()
+
+    lazy var confirmPasswordTextField: UITextField = {
+        let textField = UITextField(placeholder: "Confirm Password", keyboardType: .default)
+        textField.autocapitalizationType = .none
+        textField.autocorrectionType = .no
+        textField.isSecureTextEntry = true
+        if #available(iOS 12.0, *) {
+            textField.textContentType = .newPassword
+        } else {
+            // Fallback on earlier versions
+        }
         return textField
     }()
 
     lazy var ctaButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Verify", target: self, action: #selector(handleVerify))
+        button.isEnabled = false
         return button
     }()
 
@@ -57,22 +82,29 @@ class ForgotPasswordOtpVC: UIViewController {
         view.addSubview(otpTextField)
         view.addSubview(ctaButton)
         view.addSubview(resendButton)
+        view.addSubview(confirmPasswordTextField)
 
 
         let descriptionLabelHeight = descriptionLabel.text?.height(withConstrainedWidth: view.frame.width, font: descriptionLabel.font)
 
         descriptionLabel.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 28, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: descriptionLabelHeight ?? 0))
 
-        passwordTextField.anchor(top: descriptionLabel.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 56))
+        otpTextField.anchor(top: descriptionLabel.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 56))
 
-        otpTextField.anchor(top: passwordTextField.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 56))
+        passwordTextField.anchor(top: otpTextField.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 56))
 
-        ctaButton.anchor(top: otpTextField.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 48))
+        confirmPasswordTextField.anchor(top: passwordTextField.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 56))
+
+        ctaButton.anchor(top: confirmPasswordTextField.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 48))
 
         resendButton.anchor(top: ctaButton.bottomAnchor, leading: view.leadingAnchor, bottom: nil, trailing: view.trailingAnchor, padding: .init(top: 24, left: 15, bottom: 0, right: 15), size: .init(width: 0, height: 48))
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         self.view.addGestureRecognizer(tapGesture)
+
+        [otpTextField, passwordTextField, confirmPasswordTextField].forEach({
+            $0.addTarget(self, action: #selector(shouldContinueBeEnabled), for: .editingChanged)
+        })
     }
 
     @objc func closeKeyboard(){
@@ -82,11 +114,19 @@ class ForgotPasswordOtpVC: UIViewController {
     @objc func handleVerify() {
         self.closeKeyboard()
         guard let username = self.username,
+              let confirmationCode = self.otpTextField.text?.trimmingCharacters(in: .whitespaces),
+              !confirmationCode.isEmpty,
               let newPassword = self.passwordTextField.text?.trimmingCharacters(in: .whitespaces),
               !newPassword.isEmpty,
-              let confirmationCode = self.otpTextField.text?.trimmingCharacters(in: .whitespaces),
-              !confirmationCode.isEmpty  else {
+              let confirmPassword = self.confirmPasswordTextField.text?.trimmingCharacters(in: .whitespaces),
+              !confirmPassword.isEmpty
+              else {
             self.showAlert(title: "Invalid Values", message: "Please fill all values before proceeding")
+            return
+        }
+
+        guard newPassword == confirmPassword else {
+            self.showAlert(title: "Passwords don't match", message: "New password and confirm password should be exactly the same")
             return
         }
 
@@ -149,7 +189,19 @@ class ForgotPasswordOtpVC: UIViewController {
         }
     }
 
-
+    @objc func shouldContinueBeEnabled() {
+        if let otp = otpTextField.text,
+           !otp.isEmpty,
+           let password = passwordTextField.text,
+           !password.isEmpty,
+           let confirmPassword = confirmPasswordTextField.text,
+           !confirmPassword.isEmpty
+            {
+            ctaButton.isEnabled = true
+        } else {
+            ctaButton.isEnabled = false
+        }
+    }
 
     @objc func navigateToLogin(_ action: UIAlertAction) {
         if let viewControllers = self.navigationController?.viewControllers {
@@ -159,3 +211,4 @@ class ForgotPasswordOtpVC: UIViewController {
     }
 
 }
+

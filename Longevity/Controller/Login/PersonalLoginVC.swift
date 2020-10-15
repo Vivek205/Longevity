@@ -277,6 +277,7 @@ class PersonalLoginVC: UIViewController {
 
     @IBAction func handleForgotPassword(_ sender: Any) {
         let destinationVC = ForgotPasswordCaptureEmailVC()
+        destinationVC.username = formEmail.text
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
 
