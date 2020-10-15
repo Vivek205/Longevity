@@ -22,6 +22,7 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
             actionButton.topAnchor.constraint(greaterThanOrEqualTo: infoLabel.bottomAnchor, constant: 20.0),
             actionButton.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 60.0),
             actionButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -60.0),
+            actionButton.heightAnchor.constraint(equalToConstant: 48.0),
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -45.0)
         ])
 

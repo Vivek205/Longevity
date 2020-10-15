@@ -8,91 +8,34 @@
 
 import UIKit
 
-
-fileprivate struct MyTasksInfo {
-    let title:String
-    let info:String
-}
-
-fileprivate let myTasksInfoList:[MyTasksInfo] = [
-    MyTasksInfo(title: "Subject Title", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
-    MyTasksInfo(title: "Subject Title", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."),
-    MyTasksInfo(title: "Subject Title", info: "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.")
-]
-
-
 class MyTasksInfoPopupViewController: BasePopUpModalViewController {
-    
-    lazy var myTasksInfoCollection: UICollectionView = {
-        let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
-        collection.translatesAutoresizingMaskIntoConstraints = false
-        collection.delegate = self
-        collection.dataSource = self
-        collection.backgroundColor = .clear
-        return collection
-    }()
-    
-    lazy var primaryButton: CustomButtonFill = {
-        let button = CustomButtonFill()
-        button.setTitle("Ok", for: .normal)
-        button.translatesAutoresizingMaskIntoConstraints = false
-        button.addTarget(self, action: #selector(closeView), for: .touchUpInside)
-        return button
-    }()
-    
+       
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(myTasksInfoCollection)
-        self.view.addSubview(primaryButton)
+        self.containerView.addSubview(self.actionButton)
+        self.actionButton.setTitle("Ok", for: .normal)
+        self.titleLabel.text = "My Tasks"
+
+        let infoTitleText = "Available Surveys\n\n"
+        let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+        let attributedInfoText = NSMutableAttributedString(string: infoTitleText, attributes: attributes)
         
-        let screenHeight = UIScreen.main.bounds.height
+        let infoDescText = "Rejuve Surveys allow you to learn more about your health in an easy and quick way. Using survey data, data from your connected wearables, and your HealthKit, we generate personalized AI insight reports just for you.\n\nThe AI used to compute your personalized insight report is powered by SingularityNET and available on the SingularityNET marketplace. More specifically, we are using a bayesian network which allows for prediction, anomaly detection, diagnostics, automated insight, reasoning, time series prediction, and decision making based on the data you provide it."
+        
+        let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+            let descAttributesText = NSMutableAttributedString(string: infoDescText, attributes: descAttributes)
+            attributedInfoText.append(descAttributesText)
+        self.infoLabel.attributedText = attributedInfoText
         
         NSLayoutConstraint.activate([
-            myTasksInfoCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
-            myTasksInfoCollection.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            myTasksInfoCollection.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
-            myTasksInfoCollection.bottomAnchor.constraint(equalTo: primaryButton.topAnchor, constant: -30),
-            
-            containerView.heightAnchor.constraint(equalToConstant: screenHeight - 80.0),
-            
-            primaryButton.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            primaryButton.widthAnchor.constraint(equalToConstant: view.bounds.width - 120),
-            primaryButton.heightAnchor.constraint(equalToConstant: 48),
-            primaryButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
+            actionButton.topAnchor.constraint(greaterThanOrEqualTo: infoLabel.bottomAnchor, constant: 30.0),
+            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 30.0),
+            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            actionButton.heightAnchor.constraint(equalToConstant: 48),
+            actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
         ])
         
-        titleLabel.text = "My Tasks"
         
-        guard let layout = myTasksInfoCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
-            return
-        }
-        
-        layout.minimumInteritemSpacing = 18
-        layout.scrollDirection = .vertical
-    }
-}
-
-
-extension MyTasksInfoPopupViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return myTasksInfoList.count
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.getCell(with: DeviceConnectionPopupCell.self, at: indexPath) as? DeviceConnectionPopupCell else { preconditionFailure("Invalid cell")}
-        let details = myTasksInfoList[indexPath.item]
-        cell.setText(title: details.title, info: details.info)
-        return cell
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width - 40
-        //        let height = CGFloat(100)
-        let details = myTasksInfoList[indexPath.item]
-        let titleHeight = details.title.height(withConstrainedWidth: width - 40, font:UIFont(name: "Montserrat-SemiBold", size: 18) ?? UIFont())
-        let infoHeight = details.info.height(withConstrainedWidth: width - 40, font: UIFont(name: "Montserrat-Regular", size: 16) ?? UIFont())
-        let height = titleHeight + infoHeight + CGFloat(20)
-        return CGSize(width: width, height: height)
     }
 }
