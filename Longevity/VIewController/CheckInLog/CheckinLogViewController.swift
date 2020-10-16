@@ -148,4 +148,8 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
         let width = collectionView.bounds.width - 30.0
         return CGSize(width: width, height: 92.0)
     }
+
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        guard let cell = collectionView.cellForItem(at: indexPath) as? 
+    }
 }
