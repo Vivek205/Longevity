@@ -327,10 +327,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     return
                 case .faqs:
                     let faqViewController = FAQViewController()
-                    NavigationUtility.presentOverCurrentContext(destination: faqViewController,
-                                                                style: .formSheet,
-//                                                                transitionStyle: .crossDissolve,
-                                                                completion: nil)
+                    let navigationController = UINavigationController(rootViewController: faqViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                     return
                 case .termsofservice:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
