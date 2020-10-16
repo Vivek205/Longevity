@@ -64,12 +64,11 @@ class CheckinLogCell: UICollectionViewCell {
         return date
     }()
     
-    lazy var viewDetailsButton: UIButton = {
-        let viewdetails = UIButton()
-        viewdetails.setTitle("View Details", for: .normal)
-        viewdetails.setTitleColor(UIColor(hexString: "#5AA7A7"), for: .normal)
-        viewdetails.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 16.0)
-        viewdetails.addTarget(self, action: #selector(onViewDetails), for: .touchUpInside)
+    lazy var viewDetailsLabel: UILabel = {
+        let viewdetails = UILabel()
+        viewdetails.text = "View Details"
+        viewdetails.textColor = UIColor(hexString: "#5AA7A7")
+        viewdetails.font = UIFont(name: "Montserrat-Medium", size: 16.0)
         viewdetails.translatesAutoresizingMaskIntoConstraints = false
         return viewdetails
     }()
@@ -83,7 +82,7 @@ class CheckinLogCell: UICollectionViewCell {
         self.symptomsCircle.addSubview(noofSymptoms)
         self.contentView.addSubview(symptomsLabel)
         self.contentView.addSubview(logDate)
-        self.contentView.addSubview(viewDetailsButton)
+        self.contentView.addSubview(viewDetailsLabel)
         
         NSLayoutConstraint.activate([
             symptomsCircle.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
@@ -97,8 +96,8 @@ class CheckinLogCell: UICollectionViewCell {
             logDate.leadingAnchor.constraint(equalTo: symptomsCircle.trailingAnchor, constant: 20.0),
             logDate.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
             logDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            viewDetailsButton.leadingAnchor.constraint(equalTo: logDate.leadingAnchor),
-            viewDetailsButton.topAnchor.constraint(equalTo: logDate.bottomAnchor, constant: 12.0)
+            viewDetailsLabel.leadingAnchor.constraint(equalTo: logDate.leadingAnchor),
+            viewDetailsLabel.topAnchor.constraint(equalTo: logDate.bottomAnchor, constant: 12.0)
         ])
     }
 
@@ -122,9 +121,9 @@ class CheckinLogCell: UICollectionViewCell {
         symptomsCircle.layer.masksToBounds = true
     }
     
-    @objc func onViewDetails() {
+    func onViewDetails() {
         let detailsViewController = CheckInLogDetailsViewController()
         detailsViewController.history = self.history
-        NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .coverVertical)
+        NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .crossDissolve)
     }
 }

@@ -87,6 +87,7 @@ class CheckinLogGoal: UITableViewCell {
         attributedInfoText.append(attributedDescText)
         goalsLabel.attributedText = attributedInfoText
         rowIndex.text = "\(index + 1)"
+        self.divider.isHidden = index == 0
     }
 }
 
