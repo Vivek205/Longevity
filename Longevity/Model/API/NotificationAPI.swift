@@ -38,30 +38,33 @@ class NotificationAPI:BaseAuthAPI {
         }
     }
 
-    func createDeviceIdForVendor() -> Bool {
+    func createDeviceIdForVendor() -> String? {
         guard let deviceIdForVendor = UIDevice.current.identifierForVendor?.uuidString
         else {
             Logger.log("deviceIdForVendor is not generated")
-            return false
+            return nil
         }
         do {
             try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.identifierForVendor).saveItem(deviceIdForVendor)
-            return true
+            return deviceIdForVendor
         } catch  {
             Logger.log("unable to save deviceIdForVendor in KeyChain \(error)")
-            return false
+            return nil
         }
-
+        return deviceIdForVendor
     }
 
 
     func getNotification(completion: @escaping ((UserNotification?)-> Void)) {
-        guard let deviceIdForVendor = self.getDeviceIdForVendor()
-        else {return}
+        guard let deviceIdForVendor = self.getDeviceIdForVendor() else {
+            completion(nil)
+            return
+        }
 
         self.getCredentials(completion: { (credentials) in
             print("scss")
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
+            
             let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification" , headers: headers)
             _ = Amplify.API.get(request: request, listener: { (result) in
                 switch result{
@@ -73,12 +76,16 @@ class NotificationAPI:BaseAuthAPI {
                         let value = try decoder.decode(UpdateNotificationResponse.self, from: data)
                         if let message = value.data, message.endpointArn != nil {
                             completion(message)
+                        } else {
+                            completion(nil)
                         }
                     } catch {
                         print("json error", error)
+                        completion(nil)
                     }
                 case .failure(let apiError):
                     Logger.log("retrieveARN failed \(apiError)")
+                    completion(nil)
                 }
             })
 
@@ -132,9 +139,6 @@ class NotificationAPI:BaseAuthAPI {
     }
 
     func registerARN(platform: NotificationDevicePlatforms, arnEndpoint: String) {
-        guard let deviceIdForVendor = self.getDeviceIdForVendor()
-        else {return}
-
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
 
@@ -150,12 +154,20 @@ class NotificationAPI:BaseAuthAPI {
                 print(error)
             }
 
-            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor)/notification/register" , headers: headers, body: bodyData)
+            var deviceIdForVendor = self.getDeviceIdForVendor()
+            
+            if deviceIdForVendor == nil {
+                deviceIdForVendor = createDeviceIdForVendor()
+            }
+            
+            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/device/\(deviceIdForVendor!)/notification/register" , headers: headers, body: bodyData)
 
             _ = Amplify.API.post(request: request, listener: { (result) in
                 switch result {
                 case .success(let data):
-                    AppSyncManager.instance.updateUserNotification(enabled: true)
+                    AppSyncManager.instance.userNotification.value?.endpointArn = arnEndpoint
+                    AppSyncManager.instance.userNotification.value?.isEnabled = true
+//                    AppSyncManager.instance.updateUserNotification(enabled: true)
                     let responseString = String(data: data, encoding: .utf8)
                     Logger.log("register ARN sucess \(responseString)")
                 case .failure(let apiError):

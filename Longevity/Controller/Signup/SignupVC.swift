@@ -304,6 +304,6 @@ class SignupVC: UIViewController {
     func enterTheApp() {
         let appDelegate = UIApplication.shared.delegate as! AppDelegate
         appDelegate.setRootViewController()
-        AppSyncManager.instance.fetchUserNotification()
+//        AppSyncManager.instance.fetchUserNotification()
     }
 }
