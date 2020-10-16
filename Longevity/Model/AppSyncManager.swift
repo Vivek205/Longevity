@@ -79,7 +79,15 @@ class AppSyncManager  {
         let notificationAPI = NotificationAPI()
         notificationAPI.getNotification{
             [weak self] (notification) in
-            self?.userNotification.value = notification
+            if notification != nil {
+                self?.userNotification.value = notification
+            }
+            
+            //Checking ARN Satus
+            DispatchQueue.main.async {
+                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                appDelegate.checkARNStatus()
+            }
         }
     }
 
