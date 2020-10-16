@@ -88,8 +88,8 @@ class CheckInLogDetailsViewController: UIViewController {
             containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             bezelView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 13.0),
             bezelView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            bezelView.heightAnchor.constraint(equalToConstant: 2.0),
-            bezelView.widthAnchor.constraint(equalToConstant: 30.0),
+            bezelView.heightAnchor.constraint(equalToConstant: 5.0),
+            bezelView.widthAnchor.constraint(equalToConstant: 36.0),
             logDate.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
             logDate.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 14.5),
             exportButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
@@ -138,6 +138,9 @@ class CheckInLogDetailsViewController: UIViewController {
         self.containerView.layer.cornerRadius = 20.0
         self.containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.containerView.layer.masksToBounds = true
+        
+        self.bezelView.layer.cornerRadius = 2.5
+        self.bezelView.layer.masksToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
