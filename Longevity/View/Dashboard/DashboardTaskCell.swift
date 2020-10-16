@@ -32,7 +32,7 @@ class DashboardTaskCell: UITableViewCell {
                     let totalQuestions = Float(questions.count)
                     let answeredQuestions = Float(lastAnsweredQuestionIndex + 1)
                     let userProgress = answeredQuestions / totalQuestions
-                    let userProgressPercent = String(format: "%0.1f", userProgress * 100)
+                    let userProgressPercent = String(format: "%.0f", userProgress * 100)
                     self.progressLabel.isHidden = false
                     self.progressLabel.text = "\(userProgressPercent) %"
 

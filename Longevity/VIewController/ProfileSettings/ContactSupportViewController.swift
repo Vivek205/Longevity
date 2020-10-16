@@ -28,6 +28,12 @@ class ContactSupportViewController: BasePopupViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.title = "Contact Support"
+
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.sectionHeaderColor,
+            NSAttributedString.Key.font: UIFont(name: AppFontName.semibold, size: 17)]
 
         let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
