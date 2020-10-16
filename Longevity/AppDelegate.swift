@@ -366,7 +366,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func checkARNStatus() {
-        guard let endpointaARN = AppSyncManager.instance.userNotification.value?.endpointArn else {
+        guard let endpointARN = AppSyncManager.instance.userNotification.value?.endpointArn else {
             self.createARNEndPoint()
             return
         }
@@ -379,16 +379,50 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let awsSNS = AWSSNS.default()
         let request = AWSSNSGetEndpointAttributesInput()
-        request?.endpointArn = AppSyncManager.instance.userNotification.value?.endpointArn
+        request?.endpointArn = endpointARN
         awsSNS.getEndpointAttributes(request!) { [weak self] (response, error) in
             if error != nil {
                 self?.createARNEndPoint()
             } else {
-                if let endpointARN = AppSyncManager.instance.userNotification.value?.endpointArn {
-                    let notificationAPI = NotificationAPI()
-                    notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointARN)
+                print("arn", endpointARN)
+                if let response = response as? AWSSNSGetEndpointAttributesResponse {
+                    let isEnabledSNS = response.attributes!["Enabled"]
+                    print("isEnabledSNS", isEnabledSNS)
+                    if isEnabledSNS != "true" {
+                        self?.setSNSEndpointAttributes(endpointArn: endpointARN)
+                    }
                 }
+
+//                let notificationAPI = NotificationAPI()
+//                notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointARN)
+
+//                if let endpointARN = AppSyncManager.instance.userNotification.value?.endpointArn {
+
+//                }
             }
+        }
+    }
+
+    func setSNSEndpointAttributes(endpointArn: String) {
+        let awsSNS = AWSSNS.default()
+        guard let request = AWSSNSSetEndpointAttributesInput() else {
+            print("request unavailable")
+            return
+        }
+        let defaults = UserDefaults.standard
+        let keys = UserDefaultsKeys()
+        guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
+            return
+        }
+
+        request.attributes = ["Enabled":"true", "Token":token]
+        request.endpointArn = endpointArn
+        awsSNS.setEndpointAttributes(request) { (error) in
+            if error != nil {
+                let notificationAPI = NotificationAPI()
+                notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArn)
+            }
+            print("setEndpointAttributes error", error)
         }
     }
     
