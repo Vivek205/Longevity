@@ -384,9 +384,22 @@ class FetchFitbitTokenOperation: Operation {
     var accessToken: String?
     var userID: String?
     
-    override func main() {
+    private var downloading = false
+    
+    override var isAsynchronous: Bool {
+        return true
+    }
+    
+    override var isExecuting: Bool {
+        return downloading
+    }
+    
+    override var isFinished: Bool {
+        return self.accessToken != nil
+    }
+    
+    override func start() {
         guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else { return }
-//            let refreshToken = String(data: refreshTokenData, encoding: .utf8)
 
             let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
                    var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
@@ -423,12 +436,24 @@ class PublishFitbitTokenOperation: Operation {
     var accessToken: String?
     var userID: String?
     
-//    init(accessToken: String, userID: String) {
-//        self.accessToken = accessToken
-//        self.userID = userID
-//    }
+    var responseString: String?
     
-    override func main() {
+    private var downloading = false
+    
+    override var isAsynchronous: Bool {
+        return true
+    }
+    
+    override var isExecuting: Bool {
+        return downloading
+    }
+    
+    override var isFinished: Bool {
+        return self.responseString != nil
+    }
+    
+    override func start() {
+        self.downloading = true
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let body = JSON(["access_token": self.accessToken, "user_id": self.userID])
@@ -439,20 +464,23 @@ class PublishFitbitTokenOperation: Operation {
                        print(error)
                    }
                    let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
-                           _ = Amplify.API.post(request: request, listener: { (result) in
+                           _ = Amplify.API.post(request: request, listener: { [weak self] (result) in
                        switch result{
                        case .success(let data):
-                           let responseString = String(data: data, encoding: .utf8)
+                        self?.responseString = String(data: data, encoding: .utf8)
+                        self?.downloading = false
                            Logger.log("Fitbit data published")
                        case .failure(let apiError):
                            print(" publish data error \(apiError)")
                            Logger.log("Fitbit publish failure \(apiError)")
+                        self?.downloading = false
                        }
                    })
         }
 
         func onFailureCredentials(_ error: Error?) {
-              print("publishData failed to fetch credentials \(error)")
+            print("publishData failed to fetch credentials \(error)")
+            self.downloading = false
           }
 
         _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))

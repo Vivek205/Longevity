@@ -75,6 +75,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
 //        checkARNStatus()
         
+        if HKHealthStore.isHealthDataAvailable() {
+            HealthStore.shared.getHealthStore()
+            HealthStore.shared.startObserving(device: .applehealth)
+            HealthStore.shared.startObserving(device: .applewatch)
+        }
+        
         return true
     }
 
@@ -94,21 +100,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-        if HKHealthStore.isHealthDataAvailable() {
-            if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
-                HealthStore.shared.getHealthStore()
-                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] == 1 {
-                    HealthStore.shared.startObserving(device: .applehealth)
-                }
-                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch]?["connected"] == 1 {
-                    HealthStore.shared.startObserving(device: .applewatch)
-                }
-            }
-        }
+//        if HKHealthStore.isHealthDataAvailable() {
+//            if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
+//                HealthStore.shared.getHealthStore()
+//                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] == 1 {
+//                    HealthStore.shared.startObserving(device: .applehealth)
+//                }
+//                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch]?["connected"] == 1 {
+//                    HealthStore.shared.startObserving(device: .applewatch)
+//                }
+//            }
+//        }
         
         if #available(iOS 13.0, *) {
             if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.fitbit]?["connected"] == 1 {
-                (UIApplication.shared.delegate as! AppDelegate).scheduleBackgroundFetch()
+                self.scheduleBackgroundFetch()
             }
         }
     }

@@ -10,7 +10,7 @@ import Foundation
 import Amplify
 
 class HealthkitAPI: BaseAuthAPI {
-    func synchronizeHealthkit (healthData: Healthdata,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
+    func synchronizeHealthkit (deviceName: String, healthData: Healthdata,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             
@@ -24,7 +24,7 @@ class HealthkitAPI: BaseAuthAPI {
                 print("body data error",error.localizedDescription)
             }
             
-            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/application/HEALTHKIT/synchronize", headers: headers, queryParameters: nil, body: bodyData)
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/application/\(deviceName)/synchronize", headers: headers, queryParameters: nil, body: bodyData)
             Amplify.API.post(request: request) { (result) in
                 switch result {
                 case .success(let data):

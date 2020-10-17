@@ -37,6 +37,17 @@ extension HealthDevices {
         }
     }
     
+    var deviceType: String {
+        switch self {
+        case .applehealth:
+            return "HEALTHKIT"
+        case .fitbit:
+            return "Fitbit"
+        case .applewatch:
+            return "APPLEWATCH"
+        }
+    }
+    
     var descriptions: String {
         switch self {
         case .applehealth:
