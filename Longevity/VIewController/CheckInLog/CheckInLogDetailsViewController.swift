@@ -88,8 +88,8 @@ class CheckInLogDetailsViewController: UIViewController {
             containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             bezelView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 13.0),
             bezelView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
-            bezelView.heightAnchor.constraint(equalToConstant: 2.0),
-            bezelView.widthAnchor.constraint(equalToConstant: 30.0),
+            bezelView.heightAnchor.constraint(equalToConstant: 5.0),
+            bezelView.widthAnchor.constraint(equalToConstant: 36.0),
             logDate.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
             logDate.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 14.5),
             exportButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
@@ -138,6 +138,9 @@ class CheckInLogDetailsViewController: UIViewController {
         self.containerView.layer.cornerRadius = 20.0
         self.containerView.layer.maskedCorners = [.layerMinXMinYCorner, .layerMaxXMinYCorner]
         self.containerView.layer.masksToBounds = true
+        
+        self.bezelView.layer.cornerRadius = 2.5
+        self.bezelView.layer.masksToBounds = true
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -201,47 +204,13 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.getHeader(with: CommonHeader.self, index: section) as? CommonHeader else { return nil }
         if section == 0 {
-            let headerlabel = UILabel()
-            headerlabel.text = "Recorded Symptoms"
-            headerlabel.font = UIFont(name: "Montserrat-Regular", size: 18.0)
-            headerlabel.textColor = UIColor(hexString: "#4E4E4E")
-            headerlabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            header.addSubview(headerlabel)
-            NSLayoutConstraint.activate([
-                headerlabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 10.0),
-                headerlabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
-            ])
-            header.backgroundColor = .white
-            return header
+            header.setupHeaderText(font: UIFont(name: "Montserrat-Regular", size: 18.0), title: "Recorded Symptoms")
         } else if section == 1 {
-            let headerlabel = UILabel()
-            headerlabel.text = "Insights"
-            headerlabel.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
-            headerlabel.textColor = UIColor(hexString: "#4E4E4E")
-            headerlabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            header.addSubview(headerlabel)
-            NSLayoutConstraint.activate([
-                headerlabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 10.0),
-                headerlabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
-            ])
-            header.backgroundColor = .white
-            return header
+            header.setupHeaderText(font: UIFont(name: "Montserrat-SemiBold", size: 24.0), title: "Insights")
         } else {
-            let headerlabel = UILabel()
-            headerlabel.text = "Your next \(history.goals.count) goal(s)"
-            headerlabel.font = UIFont(name: "Montserrat-SemiBold", size: 18.0)
-            headerlabel.textColor = UIColor(hexString: "#4E4E4E")
-            headerlabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            header.addSubview(headerlabel)
-            NSLayoutConstraint.activate([
-                headerlabel.leadingAnchor.constraint(equalTo: header.leadingAnchor, constant: 10.0),
-                headerlabel.centerYAnchor.constraint(equalTo: header.centerYAnchor)
-            ])
-            return header
+            header.setupHeaderText(font: UIFont(name: "Montserrat-SemiBold", size: 18.0), title: "Your next \(history.goals.count) goal(s)")
         }
+        return header
     }
     
     func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
@@ -259,6 +228,16 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
 
 
 class CommonHeader: UITableViewHeaderFooterView {
+    
+    lazy var headerlabel: UILabel = {
+        let headerlabel = UILabel()
+        headerlabel.text = ""
+        headerlabel.font = UIFont(name: "Montserrat-SemiBold", size: 18.0)
+        headerlabel.textColor = UIColor(hexString: "#4E4E4E")
+        headerlabel.translatesAutoresizingMaskIntoConstraints = false
+        return headerlabel
+    }()
+    
     override init(reuseIdentifier: String?) {
         super.init(reuseIdentifier: reuseIdentifier)
         
@@ -267,16 +246,24 @@ class CommonHeader: UITableViewHeaderFooterView {
         view.translatesAutoresizingMaskIntoConstraints = false
         
         self.addSubview(view)
+        view.addSubview(headerlabel)
         
         NSLayoutConstraint.activate([
             view.leadingAnchor.constraint(equalTo: leadingAnchor),
             view.trailingAnchor.constraint(equalTo: trailingAnchor),
             view.topAnchor.constraint(equalTo: topAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1.0)
+            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1.0),
+            headerlabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
+            headerlabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    func setupHeaderText(font: UIFont?, title: String) {
+        self.headerlabel.text = title
+        self.headerlabel.font = font
     }
 }
