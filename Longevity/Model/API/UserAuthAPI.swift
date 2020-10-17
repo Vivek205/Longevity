@@ -8,6 +8,7 @@
 
 import Foundation
 import Amplify
+import AWSSNS
 
 class UserAuthAPI {
     
@@ -30,4 +31,43 @@ class UserAuthAPI {
         _ = semaphore.wait(timeout: .distantFuture)
         return isSignedIn
     }
+
+    func signout(completion: ((Error?) -> Void)?) {
+        func signoutFromAws() {
+            _ = Amplify.Auth.signOut(listener: { (result) in
+                print(try? result.get())
+                switch result {
+                case .success():
+                    completion?(nil)
+                case .failure(let error):
+                    completion?(error)
+                }
+            })
+        }
+
+        guard let endpointArn = AppSyncManager.instance.userNotification.value?.endpointArn
+        else {
+            signoutFromAws()
+            return
+        }
+
+        let notificationAPI = NotificationAPI()
+        let appDelegate = AppDelegate()
+
+        appDelegate.deleteARNEndpoint(endpointArn: "endpointArn") { (error) in
+            guard error == nil else {
+                completion?(error)
+                return
+            }
+
+            notificationAPI.deleteNotification { (error) in
+                guard error == nil else {
+                    signoutFromAws()
+                    return
+                }
+                signoutFromAws()
+            }
+        }
+    }
+
 }

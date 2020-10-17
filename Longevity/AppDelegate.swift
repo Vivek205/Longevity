@@ -162,7 +162,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         Logger.log("did receive background notification \(apsData)")
         if let type = apsData["type"] as? String {
-            if let notificationType = NotificationType(rawValue: type) {
+            if let notificationType = PushNotificationType(rawValue: type) {
                 switch notificationType {
                 case .syncFitbit:
                     let fitbitModel = FitbitModel()
@@ -203,7 +203,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Logger.log("received foreground notification - will present")
         if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
             if let type =  apsData["type"] as? String {
-                if let notificationType = NotificationType(rawValue: type) {
+                if let notificationType = PushNotificationType(rawValue: type) {
                     completionHandler(.alert)
 //                    switch notificationType {
 //                    case .syncFitbit:
@@ -243,7 +243,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Logger.log("received foreground notification - did receive")
         if let apsData = response.notification.request.content.userInfo["aps"] as? [String: Any] {
             if let type = apsData["type"] as? String {
-                if let notificationType = NotificationType(rawValue: type) {
+                if let notificationType = PushNotificationType(rawValue: type) {
                     switch notificationType {
                     case .syncFitbit:
                         let fitbitModel = FitbitModel()
@@ -427,7 +427,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func createARNEndPoint() {
-        
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
         
@@ -457,9 +456,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return nil
         })
     }
+
+    func deleteARNEndpoint(endpointArn: String ,completion: ((Error?) -> Void)?) {
+        let awsSNS = AWSSNS.default()
+        guard let request = AWSSNSDeleteEndpointInput() else {return}
+        request.endpointArn = endpointArn
+        awsSNS.deleteEndpoint(request, completionHandler: completion)
+    }
 }
 
-enum NotificationType: String {
+enum PushNotificationType: String {
     case syncFitbit = "SYNC_FITBIT"
     case covidReportProcessed = "COVID_REPORT_PROCESSED"
 }

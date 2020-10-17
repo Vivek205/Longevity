@@ -67,15 +67,21 @@ class SignOutCell: UITableViewCell {
             
             topController.showSpinner()
         }
-        
-        _ = Amplify.Auth.signOut() { (result) in
-            switch result {
-            case .success:
-                print("Successfully signed out")
-                onSuccess(isSignedOut: true)
-            case .failure(let error):
+        let userAuthAPI = UserAuthAPI()
+        userAuthAPI.signout { (error) in
+            guard error == nil else {
                 print("Sign out failed with error \(error)")
+                Logger.log("\(error)")
+                DispatchQueue.main.async {
+
+                    if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                        topController.showAlert(title: "Signout Failed!", message: "Unable to signout. Please try again later")
+                        topController.removeSpinner()
+                    }
+                }
+                return
             }
+            onSuccess(isSignedOut: true)
         }
     }
 }
