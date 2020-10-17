@@ -12,15 +12,13 @@ import Network
 final class ConnectionManager: NSObject {
     static let instance = ConnectionManager()
     private var reachability : Reachability!
-//    private var monitor: NWPathMonitor?
 
     func addConnectionObserver(){
-        observeReachability()
-//        if #available(iOS 12.0, *) {
-//            monitorNetworkPath()
-//        } else {
-//            observeReachability()
-//        }
+        if #available(iOS 12.0, *) {
+            monitorNetworkPath()
+        } else {
+            observeReachability()
+        }
 
     }
 
@@ -39,21 +37,11 @@ final class ConnectionManager: NSObject {
         guard  let reachability = note.object as? Reachability else { return }
         if reachability.connection != .unavailable {
             print("connected")
+            AppSyncManager.instance.internetConnectionAvailable.value = true
         }else {
             print("not connected")
+            AppSyncManager.instance.internetConnectionAvailable.value = false
         }
-//        switch reachability.connection {
-//        case .cellular:
-//            print("Cellular")
-//        case .wifi:
-//            print("Wifi")
-//        case .none:
-//            print("none")
-//        case .unavailable:
-//            print("unavailable")
-//        }
-
-//        print("isConnected", reachability)
     }
 
     @available(iOS 12.0, *)
@@ -64,28 +52,15 @@ final class ConnectionManager: NSObject {
 
             if path.status == .satisfied {
                 print("connected")
+                AppSyncManager.instance.internetConnectionAvailable.value = true
             }else {
                 print("not connected")
+                AppSyncManager.instance.internetConnectionAvailable.value = false
             }
-
-//            switch path.status {
-//            case .requiresConnection:
-//            print("reuire connection")
-//            case .unsatisfied:
-//            print("unsatisfied")
-//            case .satisfied:
-//            print("satisifed")
-//            @unknown default:
-//                print("unknown default")
-//            }
             print("is Expensive", path.isExpensive)
         }
 
         let queue = DispatchQueue(label: "NetworkPathMonitor")
         monitor.start(queue: queue)
-
-//        Timer.scheduledTimer(withTimeInterval: 1, repeats: true) { timer in
-//            print("currentpath status",monitor.currentPath.status, self.reachability.connection.description)
-//        }
     }
 }

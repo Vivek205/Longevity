@@ -9,11 +9,11 @@
 import UIKit
 import WebKit
 
-class FAQViewController: BasePopUpModalViewController {
-
+class FAQViewController: BasePopupViewController {
     lazy var webView: WKWebView = {
         let view = WKWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
+        view.load(URLRequest(url: URL(string: "https://forum.rejuve.io/faq")!))
         view.navigationDelegate = self
         return view
     }()
@@ -28,26 +28,32 @@ class FAQViewController: BasePopUpModalViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.containerView.addSubview(webView)
+        self.title = "FAQ"
 
-        let screenHeight = UIScreen.main.bounds.height
-        let modalHeight = screenHeight - (UIDevice.hasNotch ? 100.0 : 60.0)
+        let navigationBar = navigationController?.navigationBar
+        navigationBar?.titleTextAttributes = [
+            NSAttributedString.Key.foregroundColor: UIColor.sectionHeaderColor,
+            NSAttributedString.Key.font: UIFont(name: AppFontName.semibold, size: 17)]
+        navigationBar?.isTranslucent = false
+        navigationBar?.barTintColor = .white
 
+        let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
+        leftbutton.tintColor = .themeColor
+        self.navigationItem.leftBarButtonItem = leftbutton
+
+        self.view.addSubview(webView)
         webView.addSubview(spinner)
         spinner.hidesWhenStopped = true
 
         NSLayoutConstraint.activate([
-            containerView.heightAnchor.constraint(equalToConstant: modalHeight),
-            webView.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
-            webView.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-            webView.topAnchor.constraint(equalTo: self.closeButton.bottomAnchor, constant: 2),
-            webView.bottomAnchor.constraint(equalTo: self.containerView.bottomAnchor),
+            webView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
+            webView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            webView.topAnchor.constraint(equalTo: view.topAnchor),
+            webView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
 
-            spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinner.centerYAnchor.constraint(equalTo: view.centerYAnchor)
+            spinner.centerXAnchor.constraint(equalTo: webView.centerXAnchor),
+            spinner.centerYAnchor.constraint(equalTo: webView.centerYAnchor)
         ])
-
-        webView.load(URLRequest(url: URL(string: "https://forum.rejuve.io/faq")!))
     }
 }
 
@@ -60,3 +66,4 @@ extension FAQViewController:  WKNavigationDelegate {
         spinner.stopAnimating()
     }
 }
+

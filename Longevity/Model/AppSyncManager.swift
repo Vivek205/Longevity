@@ -18,6 +18,7 @@ class AppSyncManager  {
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
+    var internetConnectionAvailable: DynamicValue<Bool> = DynamicValue(true)
     
     fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
