@@ -528,7 +528,7 @@ final class HealthStore {
             }
 
             healthStore?.execute(observerQuery)
-            healthStore?.enableBackgroundDelivery(for: sampleType, frequency: .immediate) { (completed, error) in
+            healthStore?.enableBackgroundDelivery(for: sampleType, frequency: .hourly) { (completed, error) in
                 if !completed {
                     if let theError = error{
                         print("Failed to enable background health queries enabled")
