@@ -14,8 +14,10 @@ class SignupByEmailVC: UIViewController {
     var activeTextField: UITextField?
     var rollbackYOrigin: CGFloat?
     var countryCode: String?
+
+
     lazy var countryPickerView: CountryPickerView = {
-        let cpv = CountryPickerView(frame: .init(x: 0, y: 0, width: 120, height: 120))
+        let cpv = CountryPickerView(frame: .init(x: 8, y: 0, width: 120, height: 120))
         return cpv
     }()
 
@@ -33,36 +35,104 @@ class SignupByEmailVC: UIViewController {
         didSet {
             formName.tag = 0
             formName.inputAccessoryView = keyboardToolbar
+            formName.backgroundColor = .white
         }
     }
     @IBOutlet weak var formEmail: UITextField! {
         didSet {
             formEmail.tag = 1
             formEmail.inputAccessoryView = keyboardToolbar
+            formEmail.backgroundColor = .white
         }
     }
     @IBOutlet weak var formPhone: UITextField! {
         didSet {
             formPhone.tag = 2
             formPhone.inputAccessoryView = keyboardToolbar
-            formPhone.leftView = countryPickerView
-            formPhone.leftViewMode = .always
 
+
+            let padding = 8
+            let size = 120
+            let leftView = UIView(frame: CGRect(x: 0, y: 0, width: size+padding, height: size) )
+            leftView.addSubview(countryPickerView)
+            countryPickerView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
+            formPhone.leftView = leftView
+
+
+            formPhone.leftViewMode = .always
+            formPhone.backgroundColor = .white
+
+//            formPhone.lef
         }
     }
     @IBOutlet weak var formPassword: UITextField! {
         didSet {
             formPassword.tag = 3
             formPassword.inputAccessoryView = keyboardToolbar
+            formPassword.backgroundColor = .white
         }
     }
     @IBOutlet weak var submitButton: UIButton!
 
+
+
 //    MARK: - Form Labels
-//    lazy var nameLabel: UILabel = {
-//        let label = UILabel()
-//        
-//    }()
+    lazy var namelabelView: UIView = {
+        let labelView = UIView()
+        return labelView
+    }()
+    lazy var nameLabel: UILabel = {
+        let label = UILabel(text: "Name (optional)", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        return label
+    }()
+
+    lazy var emaillabelView: UIView = {
+        let labelView = UIView()
+        return labelView
+    }()
+    lazy var emailLabel: UILabel = {
+        let label = UILabel(text: "Email", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        return label
+    }()
+
+    lazy var phonelabelView: UIView = {
+        let labelView = UIView()
+        return labelView
+    }()
+    lazy var phoneLabel: UILabel = {
+        let label = UILabel(text: "Phone", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        return label
+    }()
+
+    lazy var passwordlabelView: UIView = {
+        let labelView = UIView()
+        return labelView
+    }()
+    lazy var passwordLabel: UILabel = {
+        let label = UILabel(text: "Create Password", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        return label
+    }()
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+
+        namelabelView.addColors(colors: [.appBackgroundColor, .white])
+        namelabelView.addSubview(nameLabel)
+        nameLabel.fillSuperview(padding: .init(top: 0, left: 4, bottom: 0, right: 4))
+
+        emaillabelView.addColors(colors: [.appBackgroundColor, .white])
+        emaillabelView.addSubview(emailLabel)
+        emailLabel.fillSuperview(padding: .init(top: 0, left: 4, bottom: 0, right: 4))
+
+        phonelabelView.addColors(colors: [.appBackgroundColor, .white])
+        phonelabelView.addSubview(phoneLabel)
+        phoneLabel.fillSuperview(padding: .init(top: 0, left: 4, bottom: 0, right: 4))
+
+        passwordlabelView.addColors(colors: [.appBackgroundColor, .white])
+        passwordlabelView.addSubview(passwordLabel)
+        passwordLabel.fillSuperview(padding: .init(top: 0, left: 4, bottom: 0, right: 4))
+
+    }
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,11 +142,26 @@ class SignupByEmailVC: UIViewController {
         formPhone.delegate = self
         formPassword.delegate = self
         self.addKeyboardObservers()
-        print("self.view.frame.origin.y", self.view.frame.origin.y)
         self.rollbackYOrigin = self.view.frame.origin.y
 
+        self.view.addSubview(namelabelView)
+        self.view.addSubview(emaillabelView)
+        self.view.addSubview(phonelabelView)
+        self.view.addSubview(passwordlabelView)
+
+        namelabelView.centerYTo(formName.topAnchor)
+        namelabelView.anchor(.leading(formName.leadingAnchor, constant: 10.0), .width(nameLabel.frame.size.width))
+
+        emaillabelView.centerYTo(formEmail.topAnchor)
+        emaillabelView.anchor(.leading(formEmail.leadingAnchor, constant: 10.0), .width(emailLabel.frame.size.width))
+
+        phonelabelView.centerYTo(formPhone.topAnchor)
+        phonelabelView.anchor(.leading(formPhone.leadingAnchor, constant: 10.0), .width(phoneLabel.frame.size.width))
+
+        passwordlabelView.centerYTo(formPassword.topAnchor)
+        passwordlabelView.anchor(.leading(formPassword.leadingAnchor, constant: 10.0), .width(phoneLabel.frame.size.width))
+
         self.navigationItem.backBarButtonItem = UIBarButtonItem(title: "", style: .plain, target: nil, action: nil)
-//        self.navigationItem.backBarButtonItem?.title = ""
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         self.view.addGestureRecognizer(tapGesture)
@@ -132,8 +217,7 @@ class SignupByEmailVC: UIViewController {
             }
         }
 
-        if let name = formName.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            let email = formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
+        if   let email = formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             var phone = formPhone.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             let password = formPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines){
             print("countryPickerView", countryPickerView.selectedCountry)
@@ -159,7 +243,12 @@ class SignupByEmailVC: UIViewController {
             guard validate() else { return }
             self.showSpinner()
 
-            let userAttributes = [AuthUserAttribute(.email, value: email), AuthUserAttribute(.phoneNumber, value: phone),  AuthUserAttribute(.name, value: name), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]
+            var userAttributes = [AuthUserAttribute(.email, value: email),                                                 AuthUserAttribute(.phoneNumber, value: phone), AuthUserAttribute(.unknown(CustomCognitoAttributes.longevityTNC), value: CustomCognitoAttributesDefaults.longevityTNC)]
+
+            if let name = formName.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
+                userAttributes.append(AuthUserAttribute(.name, value: name))
+            }
+
             let options = AuthSignUpRequest.Options(userAttributes: userAttributes)
             
             _ = Amplify.Auth.signUp(username: email, password: password, options: options) { result in

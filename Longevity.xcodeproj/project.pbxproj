@@ -158,6 +158,7 @@
 		E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E28653C124A3950000403729 /* ClinicalLoginVC.swift */; };
 		E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2524D7CE3A001F093F /* SurveyCardView.swift */; };
 		E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E288BB2A24D7D7AF001F093F /* CardView.swift */; };
+		E289D0CB253D9DF700E5E826 /* TextfieldLabelView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E289D0CA253D9DF600E5E826 /* TextfieldLabelView.swift */; };
 		E290B60624BC75D500C51655 /* String.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60524BC75D500C51655 /* String.swift */; };
 		E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60724BCA1EA00C51655 /* CheckboxButton.swift */; };
 		E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */; };
@@ -389,6 +390,7 @@
 		E28653C124A3950000403729 /* ClinicalLoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ClinicalLoginVC.swift; sourceTree = "<group>"; };
 		E288BB2524D7CE3A001F093F /* SurveyCardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyCardView.swift; sourceTree = "<group>"; };
 		E288BB2A24D7D7AF001F093F /* CardView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CardView.swift; sourceTree = "<group>"; };
+		E289D0CA253D9DF600E5E826 /* TextfieldLabelView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TextfieldLabelView.swift; sourceTree = "<group>"; };
 		E290B60524BC75D500C51655 /* String.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = String.swift; sourceTree = "<group>"; };
 		E290B60724BCA1EA00C51655 /* CheckboxButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckboxButton.swift; sourceTree = "<group>"; };
 		E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionVC.swift; sourceTree = "<group>"; };
@@ -834,6 +836,7 @@
 				E290B60724BCA1EA00C51655 /* CheckboxButton.swift */,
 				C14ABA4E24E3220E00C81580 /* HexagonView.swift */,
 				E25E8C9925386ECD00502F86 /* DividerView.swift */,
+				E289D0CA253D9DF600E5E826 /* TextfieldLabelView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1179,6 +1182,7 @@
 				C14DBC2B25101833004D5180 /* CheckinLogGoal.swift in Sources */,
 				E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */,
 				C19875B624DC79B000477185 /* HomeViewController.swift in Sources */,
+				E289D0CB253D9DF700E5E826 /* TextfieldLabelView.swift in Sources */,
 				E274F09124C9671B00969CD8 /* TextChoiceAnswerVC.swift in Sources */,
 				E251EFF02490926D0012F1C6 /* OnboardingContent.swift in Sources */,
 				E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */,

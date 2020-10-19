@@ -130,7 +130,7 @@
                             </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="6Mb-m3-ime"/>
-                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                        <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="WgZ-ja-rgS" secondAttribute="trailing" constant="20" id="1oa-1M-Qzh"/>
                             <constraint firstItem="6Mb-m3-ime" firstAttribute="trailing" secondItem="b9r-B2-m6A" secondAttribute="trailing" constant="20" id="1uc-PK-zGz"/>
