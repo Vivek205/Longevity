@@ -88,6 +88,7 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
             return cell
         } else {
             guard let cell = tableView.getCell(with: HowItWorksCell.self, at: indexPath) as? HowItWorksCell else { preconditionFailure("Invalid cell type") }
+            cell.setupCell(howitworksDescription: "\n\nUse Apple Health to import data from your mobile phone to Rejuve.  This will help improve AI accuracy for your health analysis and insights.\n\n", importedDescription: "\n\nGender (Sex), Weight, Height, Date of Birth, and Blood Type.\n\n")
             return cell
         }
     }
