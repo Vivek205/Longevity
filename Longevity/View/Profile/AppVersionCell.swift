@@ -19,7 +19,7 @@ class AppVersionCell: UITableViewCell {
         let buildNumber = Bundle.main.infoDictionary?["CFBundleVersion"] ?? ""
         
         let appNameLabel = UILabel()
-        appNameLabel.text = "Rejuve \(shortVersion) (\(buildNumber))\n© 2020"
+        appNameLabel.text = "Rejuve © 2020 \nversion \(shortVersion) (\(buildNumber))"
         appNameLabel.numberOfLines = 2
         appNameLabel.font = UIFont(name: "Montserrat-Light", size: 18.0)
         appNameLabel.textColor = UIColor(hexString: "#4E4E4E")

@@ -42,7 +42,7 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
         NSLayoutConstraint.activate([
             deviceInfoCollection.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor),
             deviceInfoCollection.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor),
-            deviceInfoCollection.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 20),
+            deviceInfoCollection.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 0),
             deviceInfoCollection.bottomAnchor.constraint(equalTo: actionButton.topAnchor, constant: -30),
             
             containerView.heightAnchor.constraint(equalToConstant: screenHeight - 150.0),
@@ -57,6 +57,8 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
         titleLabel.numberOfLines = 2
         titleLabel.textAlignment = .center
         titleLabel.lineBreakMode = .byWordWrapping
+
+//        titleLabel.topAnchor.constraint(equalTo: self.containerView.topAnchor, constant: 40).isActive = true
         
         guard let layout = deviceInfoCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return

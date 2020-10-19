@@ -13,18 +13,22 @@ extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.hideBackButtonForFirstQuestion()
         self.customizeStyle()
+        self.customizeNavbarButtons()
 
         if !(step is ORKInstructionStep) {
+            self.customizeBackButton()
             self.addProgressBar()
         }
-
     }
 
-    func hideBackButtonForFirstQuestion() {
+    func customizeBackButton() {
         let isFirstQuestion = SurveyTaskUtility.shared.isFirstStep(stepId: self.step?.identifier)
         self.navigationItem.hidesBackButton = isFirstQuestion
+        if !isFirstQuestion {
+            self.backButtonItem = UIBarButtonItem(image: UIImage(named: "icon: arrow-left"), style: .plain,
+                                                  target: self, action: #selector(goBackward))
+        }
     }
 
     func customizeStyle() {
@@ -59,7 +63,6 @@ extension ORKStepViewController {
     }
 
     func calculateAndUpdateProgress() {
-
         func updateProgress(progress: Float) {
             self.navigationItem.titleView?.subviews.forEach({ (subview) in
                 if let subview = subview as? UIProgressView {
@@ -67,7 +70,6 @@ extension ORKStepViewController {
                 }
             })
         }
-
         if let task = self.taskViewController?.task as? ORKOrderedTask,
            let step = self.step {
             let currentStepIndex = task.steps.firstIndex { (taskStep) -> Bool in
@@ -78,9 +80,10 @@ extension ORKStepViewController {
         }else {
             updateProgress(progress: 0)
         }
+    }
 
+    func customizeNavbarButtons() {
 
-
-
+        self.cancelButtonItem?.title = "Exit"
     }
 }

@@ -42,13 +42,13 @@ final class SurveyTaskUtility: NSObject {
     var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
 //    private var currentQuestion: String?
 
-    var surveyTagline: String? {
-        let today = Date()
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "E.MMM.d"
-        let dateString = dateFormatter.string(from: today)
-        return dateString
-    }
+//    var surveyTagline: String? {
+//        let today = Date()
+//        let dateFormatter = DateFormatter()
+//        dateFormatter.dateFormat = "E.MMM.d"
+//        let dateString = dateFormatter.string(from: today)
+//        return "dateString"
+//    }
 
     func createSurvey(surveyId: String?, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
                       onFailure: @escaping (_ error: Error) -> Void) {

@@ -35,7 +35,7 @@ struct UpdateNotificationResponse:Codable {
 struct NotificationPayload: Codable {
     let platform: String
     let endpointArn:String
-    let isEnabled: Int
+    let isEnabled: Bool
 }
 
 class NotificationAPI:BaseAuthAPI {
@@ -115,7 +115,7 @@ class NotificationAPI:BaseAuthAPI {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
             do {
-                let body = NotificationPayload(platform: NotificationDevicePlatforms.iphone.rawValue, endpointArn: endpointArn, isEnabled: userNotification ? 1 : 0)
+                let body = NotificationPayload(platform: NotificationDevicePlatforms.iphone.rawValue, endpointArn: endpointArn, isEnabled: userNotification)
                 let encoder = JSONEncoder()
                 encoder.keyEncodingStrategy = .convertToSnakeCase
                 let data = try encoder.encode(body)
@@ -154,7 +154,7 @@ class NotificationAPI:BaseAuthAPI {
     func registerARN(platform: NotificationDevicePlatforms, arnEndpoint: String) {
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "content-type":"application/json", "login_type":LoginType.PERSONAL]
-            let body = NotificationPayload(platform: platform.rawValue, endpointArn: arnEndpoint, isEnabled:  1)
+            let body = NotificationPayload(platform: platform.rawValue, endpointArn: arnEndpoint, isEnabled:  true)
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             var data:Data = Data()

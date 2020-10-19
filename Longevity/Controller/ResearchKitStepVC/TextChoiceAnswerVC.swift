@@ -112,16 +112,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     func collectionView(_ collectionView: UICollectionView,
                         cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-//        if indexPath.item == 0 {
-//            if let step = self.step as? ORKQuestionStep {
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-//                let questionCell = collectionView.getCell(with: RKCQuestionView.self, at: indexPath)
-//                    as! RKCQuestionView
-//                questionCell.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
-//                                          question: step.question!, extraInfo: step.text)
-//                return questionCell
-//            }
-//        }
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
@@ -195,9 +185,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
         
         if let step = self.step as? ORKQuestionStep {
-            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-            headerView.createLayout(header: step.title ?? "", subHeader: questionSubheader ?? "",
-                                    question: step.question!, extraInfo: step.text)
+//            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+            headerView.createLayout(header: step.title ?? "", question: step.question!, extraInfo: step.text)
         }
         
         return headerView
@@ -211,14 +200,14 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
                 if step.text != nil {
                     height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
                 }
                 // INSETS
-                height += 60.0
+                height += 30.0
             }
             return CGSize(width: width, height: height)
     }

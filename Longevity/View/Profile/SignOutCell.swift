@@ -30,7 +30,8 @@ class SignOutCell: UITableViewCell {
         NSLayoutConstraint.activate([
             signoutButton.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 80.0),
             signoutButton.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -80.0),
-            signoutButton.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor)
+            signoutButton.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
+            signoutButton.heightAnchor.constraint(equalToConstant: 36)
         ])
     }
     

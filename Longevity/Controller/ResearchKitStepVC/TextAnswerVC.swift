@@ -14,11 +14,10 @@ class TextAnswerVC: ORKStepViewController {
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
         questionView.translatesAutoresizingMaskIntoConstraints = false
-        let subheader = SurveyTaskUtility.shared.surveyTagline
+//        let subheader = SurveyTaskUtility.shared.surveyTagline
         let questionStep = self.step as? ORKQuestionStep
         let question = questionStep?.question
-        questionView.createLayout(header: "", subHeader: subheader ?? "",
-                                  question: question ?? "", extraInfo: nil)
+        questionView.createLayout(header: "", question: question ?? "", extraInfo: nil)
         return questionView
     }()
 
@@ -86,9 +85,9 @@ class TextAnswerVC: ORKStepViewController {
             if let title = step.title {
                 questionViewHeight += title.height(withConstrainedWidth: self.view.bounds.width - 40, font: questionView.headerLabel.font)
             }
-            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-            questionViewHeight += questionSubheader.height(withConstrainedWidth: self.view.bounds.width - 40 ,
-                                                           font: questionView.subHeaderLabel.font)
+//            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+//            questionViewHeight += questionSubheader.height(withConstrainedWidth: self.view.bounds.width - 40 ,
+//                                                           font: questionView.subHeaderLabel.font)
             questionViewHeight += step.question!.height(withConstrainedWidth: self.view.bounds.width - 40,
                                                         font: questionView.questionLabel.font)
             if let extraInfo = step.text {
@@ -96,7 +95,7 @@ class TextAnswerVC: ORKStepViewController {
                                                        font: questionView.extraInfoLabel.font)
             }
             // INSETS
-            questionViewHeight += 60.0
+            questionViewHeight += 30.0
         }
 
         NSLayoutConstraint.activate([

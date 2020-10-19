@@ -206,8 +206,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
         
         if let formStep = self.step as? ORKFormStep {
-            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
-            headerView.createLayout(header: formStep.title ?? "", subHeader: questionSubheader ?? "", question: formStep.text ?? "", extraInfo: nil)
+//            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
+            headerView.createLayout(header: formStep.title ?? "", question: formStep.text ?? "", extraInfo: nil)
         }
         
         return headerView
@@ -221,13 +221,13 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 let questionCell = RKCQuestionView()
                 height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
+//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 if step.text != nil {
                     height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
                 }
                 // INSETS
-                height += 60.0
+                height += 30.0
             }
             return CGSize(width: width, height: height)
     }

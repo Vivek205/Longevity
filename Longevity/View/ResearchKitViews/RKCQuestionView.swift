@@ -17,12 +17,12 @@ class RKCQuestionView: UICollectionReusableView {
         return labelView
     }()
 
-    let subHeaderLabel: UILabel = {
-        let labelView = QuestionSubheaderLabel()
-        labelView.translatesAutoresizingMaskIntoConstraints = false
-        labelView.textAlignment = .center
-        return labelView
-    }()
+//    let subHeaderLabel: UILabel = {
+//        let labelView = QuestionSubheaderLabel()
+//        labelView.translatesAutoresizingMaskIntoConstraints = false
+//        labelView.textAlignment = .center
+//        return labelView
+//    }()
 
     let questionLabel: UILabel = {
         let labelView = QuestionQuestionLabel()
@@ -82,14 +82,14 @@ class RKCQuestionView: UICollectionReusableView {
             headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
         ])
 
-        headerView.addSubview(subHeaderLabel)
+//        headerView.addSubview(subHeaderLabel)
 
-        NSLayoutConstraint.activate([
-            subHeaderLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            subHeaderLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
-            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-        ])
+//        NSLayoutConstraint.activate([
+//            subHeaderLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
+//            subHeaderLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
+//            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
+//            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
+//        ])
 
         self.addSubview(questionLabel)
 
@@ -111,11 +111,11 @@ class RKCQuestionView: UICollectionReusableView {
     }
 
 
-    func createLayout(header: String, subHeader: String, question:String, extraInfo: String?) {
+    func createLayout(header: String, question:String, extraInfo: String?) {
 
         headerLabel.text = SurveyTaskUtility.shared.getCurrentSurveyName()
 
-        subHeaderLabel.text = subHeader
+//        subHeaderLabel.text = subHeader
 
         questionLabel.text = question
 
