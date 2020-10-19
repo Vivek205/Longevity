@@ -100,7 +100,7 @@ class SignupByEmailVC: UIViewController {
         return labelView
     }()
     lazy var phoneLabel: UILabel = {
-        let label = UILabel(text: "Phone", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        let label = UILabel(text: "Mobile Phone", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
         return label
     }()
 
