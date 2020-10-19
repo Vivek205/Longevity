@@ -30,7 +30,17 @@ class SignupConfirmVC: UIViewController {
         textField.placeholder = "Verification Code"
         textField.clearButtonMode = .whileEditing
         textField.textColor = .textInput
+        textField.keyboardType = .numberPad
         return textField
+    }()
+
+    lazy var otpInputLabelView: UIView = {
+        let labelView = UIView()
+        return labelView
+    }()
+    lazy var otpInputLabel: UILabel = {
+        let label = UILabel(text: "Verification Code", font: UIFont(name: AppFontName.regular, size: 12), textColor: .textInput, textAlignment: .center, numberOfLines: 1)
+        return label
     }()
 
     lazy var verifyButton: CustomButtonFill  = {
@@ -61,6 +71,7 @@ class SignupConfirmVC: UIViewController {
         self.view.addSubview(otpInput)
         self.view.addSubview(verifyButton)
         self.view.addSubview(resendButton)
+        self.view.addSubview(otpInputLabelView)
 
         let width = self.view.bounds.width
         let infoHeight = infoLabel.text?.height(withConstrainedWidth: width - 30, font: infoLabel.font)
@@ -87,8 +98,17 @@ class SignupConfirmVC: UIViewController {
             resendButton.heightAnchor.constraint(equalToConstant: 22)
         ])
 
+        otpInputLabelView.centerYTo(otpInput.topAnchor)
+        otpInputLabelView.anchor(.leading(otpInput.leadingAnchor, constant: 10.0), .width(otpInputLabel.frame.size.width))
+
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
         self.view.addGestureRecognizer(tapGesture)
+    }
+
+    override func viewDidLayoutSubviews() {
+        otpInputLabelView.addColors(colors: [.appBackgroundColor, .white])
+        otpInputLabelView.addSubview(otpInputLabel)
+        otpInputLabel.fillSuperview(padding: .init(top: 0, left: 4, bottom: 0, right: 4))
     }
 
     // MARK: Actions
