@@ -36,7 +36,7 @@ class HowItWorksCell: UITableViewCell {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedInfoText = NSMutableAttributedString(string: howitworksLabel, attributes: attributes)
         
-        let howitworksDescription = "\n\nUse Apple Health to import data from other apps into Rejuve and vice versa. This will help improve AI accuracy for your health analysis and insights.\n\n"
+        let howitworksDescription = "\n\nUse Apple Health to import data from your mobile phone to Rejuve.  This will help improve AI accuracy for your health analysis and insights.\n\n"
         let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedDescription = NSMutableAttributedString(string: howitworksDescription, attributes: attributes2)
         
@@ -44,18 +44,18 @@ class HowItWorksCell: UITableViewCell {
         let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedvaluesImported = NSMutableAttributedString(string: valuesImported, attributes: attributes3)
         
-        let importedDescription = "\n\nGender, Body Weight, Height, Activity, etc etc, etc, etc ,etc\n\n"
+        let importedDescription = "\n\nGender (Sex), Weight, Height, Date of Birth, and Blood Type.\n\n"
         let attributes4: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedImportedDescription = NSMutableAttributedString(string: importedDescription, attributes: attributes4)
         
-        let visitLearnMore = "Visit Rejuve.com to learn more"
-        let attributes5: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18.0),.foregroundColor: UIColor.themeColor]
-        let attributedvisitLearnMore = NSMutableAttributedString(string: visitLearnMore, attributes: attributes5)
+//        let visitLearnMore = "Visit Rejuve.com to learn more"
+//        let attributes5: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18.0),.foregroundColor: UIColor.themeColor]
+//        let attributedvisitLearnMore = NSMutableAttributedString(string: visitLearnMore, attributes: attributes5)
         
         attributedInfoText.append(attributedDescription)
         attributedInfoText.append(attributedvaluesImported)
         attributedInfoText.append(attributedImportedDescription)
-        attributedInfoText.append(attributedvisitLearnMore)
+//        attributedInfoText.append(attributedvisitLearnMore)
         
         self.howitWorksLabel.attributedText = attributedInfoText
     }
