@@ -20,4 +20,5 @@ target 'Longevity' do
 #  MARK: JSON
   pod 'SwiftyJSON', '~> 4.0'
   pod 'Charts'
+  pod 'CountryPickerView'
 end

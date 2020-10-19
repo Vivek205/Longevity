@@ -19,11 +19,7 @@ class SignupVC: UIViewController {
     @IBOutlet weak var userPassword: UITextField!
     @IBOutlet weak var personalUseImageButton: UIImageView!
     @IBOutlet weak var clinicalTrialImageButton: UIImageView!
-//    @IBOutlet weak var signupButton: CustomButtonFill!
-//    @IBOutlet weak var appleButton: UIButton!
-//    @IBOutlet weak var googleButton: UIButton!
-//    @IBOutlet weak var facebookButton: UIButton!
-//    @IBOutlet weak var loginButton: UIButton!
+
     @IBOutlet weak var personalImageView: UIView!
     @IBOutlet weak var clinicalTrialImageView: UIView!
     @IBOutlet weak var parentStackContainer: UIStackView!

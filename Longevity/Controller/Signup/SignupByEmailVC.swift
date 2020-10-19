@@ -8,10 +8,16 @@
 
 import UIKit
 import Amplify
+import CountryPickerView
 
 class SignupByEmailVC: UIViewController {
     var activeTextField: UITextField?
     var rollbackYOrigin: CGFloat?
+    var countryCode: String?
+    lazy var countryPickerView: CountryPickerView = {
+        let cpv = CountryPickerView(frame: .init(x: 0, y: 0, width: 120, height: 120))
+        return cpv
+    }()
 
     lazy var keyboardToolbar:UIToolbar = {
         let toolbar = UIToolbar(frame:CGRect(x: 0, y: 0, width: UIScreen.main.bounds.width, height: 50))
@@ -39,6 +45,9 @@ class SignupByEmailVC: UIViewController {
         didSet {
             formPhone.tag = 2
             formPhone.inputAccessoryView = keyboardToolbar
+            formPhone.leftView = countryPickerView
+            formPhone.leftViewMode = .always
+
         }
     }
     @IBOutlet weak var formPassword: UITextField! {
@@ -48,6 +57,12 @@ class SignupByEmailVC: UIViewController {
         }
     }
     @IBOutlet weak var submitButton: UIButton!
+
+//    MARK: - Form Labels
+//    lazy var nameLabel: UILabel = {
+//        let label = UILabel()
+//        
+//    }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -119,8 +134,12 @@ class SignupByEmailVC: UIViewController {
 
         if let name = formName.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             let email = formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
-            let phone = formPhone.text?.trimmingCharacters(in: .whitespacesAndNewlines) ,
+            var phone = formPhone.text?.trimmingCharacters(in: .whitespacesAndNewlines),
             let password = formPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines){
+            print("countryPickerView", countryPickerView.selectedCountry)
+            phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
+            print("phone", phone, phone.isValidPhone)
+
             func validate() -> Bool {
                 if email.isEmpty || !(email.isValidEmail) {
                     showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
