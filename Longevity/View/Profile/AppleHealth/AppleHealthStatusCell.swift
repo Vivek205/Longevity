@@ -47,14 +47,14 @@ class AppleHealthStatusCell: UITableViewCell {
             howitWorksLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
             howitWorksLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             howitWorksLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
-            howitWorksLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15.0)
+            howitWorksLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
         
-        let howitworksLabel = "Note: Go to Apple Health to change settings."
+        let howitworksLabel = "To change settings, go to Apple Health."
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Italic", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedInfoText = NSMutableAttributedString(string: howitworksLabel, attributes: attributes)
         
-        let howitworksDescription = "\n\niOS Settings > Health > Data Access & Devices > Rejuve"
+        let howitworksDescription = "\n\niOS Settings > Health > Data \nAccess & Devices > Rejuve"
         let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedDescription = NSMutableAttributedString(string: howitworksDescription, attributes: attributes2)
         
