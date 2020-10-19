@@ -112,19 +112,28 @@ extension AppleWatchConnectViewController: UITableViewDataSource, UITableViewDel
         if connected == 0 { // To be disconnected
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
         } else {
-            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                if settings.authorizationStatus == .authorized {
-                    DispatchQueue.main.async {
-                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
-                    }
-                    return
+            
+            HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
+                if authorized {
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
                 } else {
-                    DispatchQueue.main.async {
-                        self.showAlert(title: "Enable Notification",
-                        message: "Please enable device notification to connect the external devices")
-                    }
+                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
                 }
             }
+            
+//            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
+//                if settings.authorizationStatus == .authorized {
+//                    DispatchQueue.main.async {
+//                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
+//                    }
+//                    return
+//                } else {
+//                    DispatchQueue.main.async {
+//                        self.showAlert(title: "Enable Notification",
+//                        message: "Please enable device notification to connect the external devices")
+//                    }
+//                }
+//            }
         }
     }
 }
