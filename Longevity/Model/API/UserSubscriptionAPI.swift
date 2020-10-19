@@ -33,10 +33,11 @@ class UserSubscriptionAPI: BaseAuthAPI {
     private let apiName:String = "rejuveDevelopmentAPI"
 
     func getUserSubscriptions() {
-        let path = "/user/subscriptions"
+
         self.getCredentials(completion: { [weak self] (credentials) in
              let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-            let request = RESTRequest(apiName: self?.apiName, path: path,
+            let path = "/user/subscriptions"
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: path,
                                       headers: headers, queryParameters: nil, body: nil)
             _ = Amplify.API.get(request: request, listener: { (result) in
                 switch result {
@@ -54,7 +55,7 @@ class UserSubscriptionAPI: BaseAuthAPI {
                         print("json error", error)
                     }
                 case .failure(let error):
-                    print("error")
+                    print("error", error)
                 }
             })
         }) { (error) in
@@ -64,7 +65,7 @@ class UserSubscriptionAPI: BaseAuthAPI {
 
     func updateUserSubscriptions(userSubscriptions : [UserSubscription]?, completion: @escaping(() -> Void)){
         guard let userSubscriptions = userSubscriptions else {return}
-        let path = "/user/subscriptions"
+
         self.getCredentials(completion: { [weak self] (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let jsonEncoder = JSONEncoder()
@@ -75,10 +76,11 @@ class UserSubscriptionAPI: BaseAuthAPI {
                 print(String(data: data, encoding: .utf8))
             }catch {
                 print("json error", error)
+                completion()
                 return
             }
-
-            let request = RESTRequest(apiName: self?.apiName, path: path,
+            let path = "/user/subscriptions"
+            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: path,
             headers: headers, queryParameters: nil, body: data)
             _ = Amplify.API.post(request: request, listener: { (result) in
                 print("result",result)
@@ -92,15 +94,19 @@ class UserSubscriptionAPI: BaseAuthAPI {
                         if let subscriptionData = value.data {
                             AppSyncManager.instance.userSubscriptions.value = subscriptionData
                         }
+                        completion()
                     } catch  {
                         print("json error", error)
+                        completion()
                     }
                 case .failure(let error):
-                    print("error")
+                    completion()
+                    print("error", error)
                 }
             })
         }) { (error) in
              print(error.localizedDescription)
+            completion()
         }
     }
 }
