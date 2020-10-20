@@ -28,6 +28,15 @@ final class LocationUtil: NSObject {
     private let locationManager = CLLocationManager()
     var currentLocation:DynamicValue<LocationDetails>
 
+    var locationJsonString: String? {
+        let encoder = JSONEncoder()
+        if let data = try? encoder.encode(currentLocation.value) {
+            return String(data: data, encoding: .utf8)
+        }
+
+        return nil
+    }
+
     override init() {
         self.currentLocation = DynamicValue(LocationDetails())
         super.init()
@@ -98,6 +107,15 @@ final class LocationUtil: NSObject {
             self.currentLocation.value = locationDetails
 //            AppSyncManager.instance.updateHealthProfile(location: locationDetails)
         }
+    }
+
+    func saveLocation(json: String) -> LocationDetails? {
+        guard !json.isEmpty else { return nil}
+        let decoder = JSONDecoder()
+        let data = Data(json.utf8)
+        guard let value = try? decoder.decode(LocationDetails.self, from: data) else { return nil }
+        self.currentLocation.value = value
+        return value
     }
 }
 

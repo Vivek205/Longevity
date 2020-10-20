@@ -9,6 +9,7 @@
 import UIKit
 
 class RKCFormLocationView: UICollectionViewCell {
+    var itemIdentifier: String?
     lazy var questionLabel: UILabel  = {
         let label = UILabel()
         label.textColor = .sectionHeaderColor
@@ -30,33 +31,42 @@ class RKCFormLocationView: UICollectionViewCell {
         return label
     }()
 
-    func updateLocationLabel(location: String) {
+    func updateLocationLabel(location: LocationDetails) {
+        guard location.latitude != nil else { return }
+        var locationString = ""
+        if let city = location.city,
+           let state = location.state
+        {
+            locationString = "\(city), \(state)"
+        }
+        if  let postalCode = location.zipcode {
+            locationString = "\(locationString) \(postalCode)"
+        }
+
         locationSelectorButton.removeFromSuperview()
         addSubview(locationLabel)
 
-        locationLabel.text = location
+        locationLabel.text = locationString
         locationLabel.anchor(top: topAnchor, leading: questionLabel.trailingAnchor,
                              bottom: bottomAnchor, trailing: trailingAnchor)
         locationLabel.anchor(.height(32))
     }
 
+    func saveAnswerLocally() {
+        guard let identifier = self.itemIdentifier,
+              let locationJsonString = LocationUtil.shared.locationJsonString else {return}
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: locationJsonString)
+    }
+
+
     override init(frame: CGRect) {
         super.init(frame: frame)
+
         LocationUtil.shared.currentLocation.addAndNotify(observer: self) {
             if let currentlocation = LocationUtil.shared.currentLocation.value {
-                var locationString = ""
-                if let city = currentlocation.city,
-                   let state = currentlocation.state
-                {
-                    locationString = "\(city), \(state)"
-                }
-                if  let postalCode = currentlocation.zipcode {
-                    locationString = "\(locationString) \(postalCode)"
-                }
-                if !locationString.isEmpty {
-                    DispatchQueue.main.async {
-                        self.updateLocationLabel(location: locationString)
-                    }
+                self.saveAnswerLocally()
+                DispatchQueue.main.async {
+                    self.updateLocationLabel(location: currentlocation)
                 }
             }
         }
@@ -68,6 +78,7 @@ class RKCFormLocationView: UICollectionViewCell {
     }
 
     func setupCell(identifier:String, question:String, lastResponseAnswer: String?) {
+        self.itemIdentifier = identifier
         questionLabel.text = question
 
         addSubview(questionLabel)
@@ -76,6 +87,16 @@ class RKCFormLocationView: UICollectionViewCell {
         questionLabel.anchor(top: topAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: locationSelectorButton.leadingAnchor, padding: .init(top: 0, left: 60, bottom: 0, right: 0), size: .zero)
         locationSelectorButton.centerYTo(centerYAnchor)
         locationSelectorButton.anchor(top: nil, leading: nil, bottom: nil, trailing: trailingAnchor, padding: .zero, size: .init(width: 113, height: 32))
+
+
+        if let lastResponseAnswer = lastResponseAnswer,
+           let location = LocationUtil.shared.saveLocation(json: lastResponseAnswer) {
+            self.updateLocationLabel(location: location)
+        }
+
+        if let location = LocationUtil.shared.currentLocation.value as? LocationDetails {
+            self.updateLocationLabel(location: location)
+        }
     }
 }
 
