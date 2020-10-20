@@ -85,11 +85,11 @@ class BasePopUpModalViewController: UIViewController {
             closeButton.widthAnchor.constraint(equalToConstant: 25),
             closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor),
             closeButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20.0),
-            closeButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 20.0),
+            closeButton.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 18.0),
             
             titleLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 20.0),
             titleLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -20.0),
-            titleLabel.centerYAnchor.constraint(equalTo: closeButton.centerYAnchor),
+            titleLabel.topAnchor.constraint(equalTo: closeButton.topAnchor),
             
             infoLabel.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 18.0),
             infoLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -18.0),
