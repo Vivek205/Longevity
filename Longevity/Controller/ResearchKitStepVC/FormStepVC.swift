@@ -199,7 +199,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let answerCell = RKCFormTextAnswerView()
             let questionText = item.text ?? ""
             height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
-            height += 100 // height for textView
+            height += 132 // height for textView & clear button
             return CGSize(width: width, height: height)
         }
 

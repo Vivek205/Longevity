@@ -55,6 +55,13 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         textView.layer.borderColor = UIColor.borderColor.cgColor
         return textView
     }()
+
+    lazy var clearButton: UIButton = {
+        let button = UIButton(title: "Clear", target: self, action: #selector(handleClear(_:)))
+        button.isHidden = true
+        button.setTitleColor(.themeColor, for: .normal)
+        return button
+    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -69,11 +76,19 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         self.itemIdentifier = identifier
         self.addSubview(questionLabel)
         self.addSubview(answerTextView)
+        self.addSubview(clearButton)
+        
         questionLabel.text = question
-        answerTextView.text = lastResponseAnswer ?? ""
+        if let lastResponseAnswer = lastResponseAnswer {
+            answerTextView.text = lastResponseAnswer
+            answerTextView.layer.borderColor = UIColor.themeColor.cgColor
+            clearButton.isHidden = false
+        }
 
         if let localSavedAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier){
             answerTextView.text = localSavedAnswer
+            answerTextView.layer.borderColor = UIColor.themeColor.cgColor
+            clearButton.isHidden = false
         }
         
         NSLayoutConstraint.activate([
@@ -86,12 +101,22 @@ class RKCFormTextAnswerView: UICollectionViewCell {
             answerTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             answerTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
             answerTextView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-            answerTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//            answerTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            answerTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
+
+        clearButton.anchor(top: answerTextView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 24))
     }
 
     @objc func handleKeyboardDoneBarButtonTapped(_ sender: Any) {
         self.answerTextView.resignFirstResponder()
+    }
+
+    @objc func handleClear(_ sender: Any) {
+        self.answerTextView.text = ""
+        self.answerTextView.layer.borderColor = UIColor.borderColor.cgColor
+        guard let identifier = self.itemIdentifier else { return }
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: "")
     }
 }
 
@@ -112,11 +137,20 @@ extension RKCFormTextAnswerView: UITextViewDelegate {
 
     func textViewDidChange(_ textView: UITextView) {
         delegate?.textViewDidChange(textView)
+
+        if textView.hasText {
+            clearButton.isHidden = false
+        }else {
+            clearButton.isHidden = true
+        }
+
         guard let identifier = self.itemIdentifier else { return }
         SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: textView.text)
+
     }
     func textViewDidChangeSelection(_ textView: UITextView) {
         print("changed selection")
+        
     }
 
 
