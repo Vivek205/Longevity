@@ -39,7 +39,6 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         
         if self.isFromSettings {
-//            self.viewProgressBar.isHidden = true
             let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
             leftbutton.tintColor = .themeColor
             let rightButton = UIBarButtonItem(title:"Save", style: .plain, target: self, action: #selector(doneUpdate))
@@ -120,35 +119,24 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
             return
         }
         updateitemSelection(optionIndex:optionIndex)
-//            preExistingMedicalConditionData[optionIndex].touched = true
-//            let currentState = preExistingMedicalConditionData[optionIndex].selected
-//            preExistingMedicalConditionData[optionIndex].selected = !currentState
-//            collectionView.reloadData()
     }
 }
 
-extension SetupProfilePreConditionVC: UITextViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        
-        animateTextView(showKeyboard: true)
-    }
-    func textViewDidChange(_ textView: UITextView) {
-        self.currentEditedText = textView.text
-    }
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        if self.currentEditedText != preExistingMedicalCondtionOtherText {
-            self.changesSaved = false
+extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
+    func animateKeyboard(show: Bool) {
+        if !show {
+            if self.currentEditedText != preExistingMedicalCondtionOtherText {
+                self.changesSaved = false
+            }
         }
-        animateTextView(showKeyboard: false)
+        
+        animateTextView(showKeyboard: show)
     }
-
-    func textView(_ textView: UITextView,
-                  shouldChangeTextIn range: NSRange,
-                  replacementText text: String) -> Bool {
-        return true
+    
+    func updateCurrentText(text: String?) {
+        self.currentEditedText = text ?? ""
     }
-
+    
     func animateTextView(showKeyboard: Bool) {
         print("animate text view", self.keyboardHeight)
         let movementDistance = self.keyboardHeight ?? CGFloat(200)
@@ -164,10 +152,6 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
                 self.keyboardHeight = keyboardRectangle.height
                 print("keyboard height", self.keyboardHeight)
            }
-    }
-    
-    @objc func endTextEditing() {
-        self.view.endEditing(true)
     }
     
     @objc func closeView() {
@@ -205,12 +189,6 @@ extension SetupProfilePreConditionVC: UITextViewDelegate {
         }
         updateMedicalConditions()
     }
-    
-    @objc func doClearDescription() {
-        self.currentEditedText = ""
-        let index = currentPreExistingMedicalConditions?.count ?? 0
-        self.collectionView.reloadItems(at: [IndexPath(item: index, section: 0)])
-    }
 }
 
 extension SetupProfilePreConditionVC: UICollectionViewDelegate,
@@ -233,10 +211,9 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
-            cell.otherOptionTextView.delegate = self
-            cell.otherOptionTextView.addInputAccessoryView(title: "Done", target: self, selector: #selector(endTextEditing))
-            cell.otherOptionTextView.text = preExistingMedicalCondtionOtherText
-            cell.clearDescriptionButton.addTarget(self, action: #selector(doClearDescription), for: .touchUpInside)
+            cell.configureTextView(text: preExistingMedicalCondtionOtherText)
+            cell.delegate = self
+            
             return cell
         }
 
