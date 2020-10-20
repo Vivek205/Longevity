@@ -140,12 +140,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let item = formItems[indexPath.item]
         let prefillAnswer = prefillForm(questionId: item.identifier)
         let cellPosition = self.getCellPostion(formItems: formItems, index: indexPath.item)
-        if item.identifier == "" {
-            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
-                                                         at: indexPath) as! RKCFormSectionItemView
-            sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder, cellPosition: cellPosition)
-            return sectionItemCell
-        }
+
 
         if (formStep.formItems?.count ?? 0) - 1 == indexPath.item && item.answerFormat?.questionType == .text {
             let itemCell = collectionView.getCell(with: RKCFormTextAnswerView.self,
@@ -155,6 +150,13 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return itemCell
         }
 
+        if item.identifier == "" {
+            let sectionItemCell = collectionView.getCell(with: RKCFormSectionItemView.self,
+                                                         at: indexPath) as! RKCFormSectionItemView
+            sectionItemCell.createLayout(heading: item.text!, iconName: item.placeholder, cellPosition: cellPosition)
+            return sectionItemCell
+        }
+
         switch item.answerFormat?.questionType {
         case .text:
             let itemCell = collectionView.getCell(with: RKCFormInlineTextAnswerView.self,
@@ -162,6 +164,10 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             itemCell.createLayout(identifier:item.identifier, question: item.text!, lastResponseAnswer: prefillAnswer)
             itemCell.delegate = self
             return itemCell
+        case .location:
+            guard let locationCell = collectionView.getCell(with: RKCFormLocationView.self, at: indexPath) as? RKCFormLocationView else { preconditionFailure("Invalid cell")}
+            locationCell.setupCell(identifier: item.identifier, question: item.text ?? "", lastResponseAnswer: prefillAnswer)
+            return locationCell
         default:
             let itemCell = collectionView.getCell(with: RKCFormItemView.self, at: indexPath) as! RKCFormItemView
             itemCell.createLayout(identifier:item.identifier, question: item.text!,
@@ -258,6 +264,10 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
 
 extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        animateTextView(showKeyboard: true)
+    }
+
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         animateTextView(showKeyboard: true)
         return true

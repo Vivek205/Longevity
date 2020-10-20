@@ -28,10 +28,10 @@ class RKCFormItemView: UICollectionViewCell {
 
     lazy var questionLabel: UILabel = {
         let label = UILabel()
-        label.textColor = .black
+        label.textColor = .sectionHeaderColor
+        label.font = UIFont(name: AppFontName.medium, size: 18)
         label.translatesAutoresizingMaskIntoConstraints = false
         label.numberOfLines = 0
-        label.textColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
         return label
     }()
 

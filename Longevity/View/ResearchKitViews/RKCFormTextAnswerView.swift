@@ -9,12 +9,17 @@
 import UIKit
 
 protocol RKCFormTextAnswerViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView)
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     func textViewDidChange(_ textView: UITextView)
     func textViewDidEndEditing(_ textView: UITextView)
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool
+}
+/// Default implementation of optional methods
+extension RKCFormTextAnswerViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {}
 }
 
 class RKCFormTextAnswerView: UICollectionViewCell {
@@ -23,8 +28,8 @@ class RKCFormTextAnswerView: UICollectionViewCell {
     
     lazy var questionLabel: UILabel  = {
         let label = UILabel()
-        label.font = UIFont(name: "Montserrat-Regular", size: 18)
-        label.textColor = UIColor(red: 78/255, green: 78/255, blue: 78/255, alpha: 1)
+        label.textColor = .sectionHeaderColor
+        label.font = UIFont(name: AppFontName.medium, size: 18)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
@@ -46,6 +51,8 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         textView.layer.cornerRadius = 16.5
         textView.translatesAutoresizingMaskIntoConstraints = false
         textView.inputAccessoryView = self.keyboardToolbar
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.borderColor.cgColor
         return textView
     }()
     
@@ -89,6 +96,20 @@ class RKCFormTextAnswerView: UICollectionViewCell {
 }
 
 extension RKCFormTextAnswerView: UITextViewDelegate {
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        textView.layer.borderWidth = 1
+        textView.layer.borderColor = UIColor.themeColor.cgColor
+    }
+
+    func textViewDidEndEditing(_ textView: UITextView) {
+        if textView.hasText {
+            textView.layer.borderColor = UIColor.themeColor.cgColor
+        } else {
+            textView.layer.borderColor = UIColor.borderColor.cgColor
+        }
+        delegate?.textViewDidEndEditing(textView)
+    }
+
     func textViewDidChange(_ textView: UITextView) {
         delegate?.textViewDidChange(textView)
         guard let identifier = self.itemIdentifier else { return }
@@ -98,15 +119,13 @@ extension RKCFormTextAnswerView: UITextViewDelegate {
         print("changed selection")
     }
 
+
+
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
         delegate?.textViewShouldBeginEditing(textView)
         return true
     }
 
-
-    func textViewDidEndEditing(_ textView: UITextView) {
-        delegate?.textViewDidEndEditing(textView)
-    }
 
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,

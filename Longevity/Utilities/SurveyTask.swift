@@ -89,9 +89,12 @@ final class SurveyTaskUtility: NSObject {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
                                 SurveyTaskUtility.shared.setIconName(for: moduleName, iconName: moduleValue.iconName)
-                                //                                SurveyTaskUtility.iconNameForModuleName[moduleName] = moduleValue.iconName
-                                sectionItem.placeholder = moduleValue.iconName
-                                items += [sectionItem]
+
+
+                                if moduleValue.iconName != nil {
+                                    sectionItem.placeholder = moduleValue.iconName
+                                    items += [sectionItem]
+                                }
 
                                 if  let filteredQuestions = surveyDetails?.questions
                                     .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
@@ -101,6 +104,8 @@ final class SurveyTaskUtility: NSObject {
 
                                         if filteredQuestion.quesType == .text {
                                             answerFormat = ORKTextAnswerFormat()
+                                        }else if filteredQuestion.quesType == .location {
+                                            answerFormat = ORKLocationAnswerFormat()
                                         }
 
                                         let item = ORKFormItem(identifier: "\(filteredQuestion.quesId)",

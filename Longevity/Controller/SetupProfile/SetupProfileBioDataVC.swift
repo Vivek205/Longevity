@@ -8,7 +8,7 @@
 
 import UIKit
 import HealthKit
-import CoreLocation
+//import CoreLocation
 //import ResearchKit
 
 fileprivate let healthKitStore: HKHealthStore = HKHealthStore()
@@ -25,7 +25,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     var changesSaved = true
     
     let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
-    let locationManager = CLLocationManager()
+//    let locationManager = CLLocationManager()
     
     var toolBar = UIToolbar()
     var picker  = UIPickerView()
@@ -43,7 +43,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-        self.locationManager.delegate = self
+//        self.locationManager.delegate = self
 
         createPickersAndToolbar()
         
@@ -475,8 +475,8 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
             showHeightPicker()
         case "Weight":
             showWeightPicker()
-        case "Location":
-            getCurrentLocation()
+//        case "Location":
+//            getCurrentLocation()
         default:
             print("do nothing")
         }
@@ -573,30 +573,18 @@ extension SetupProfileBioDataVC: UIAdaptivePresentationControllerDelegate {
     }
 }
 
-extension SetupProfileBioDataVC: CLLocationManagerDelegate {
-    func getCurrentLocation() {
-        self.locationManager.requestWhenInUseAuthorization()
-        let authorizationStatus = CLLocationManager.authorizationStatus()
-        if authorizationStatus == .denied || authorizationStatus == .restricted {
-            self.showAlert(title: "Allow Location Access",
-                           message: "Please enable location access in your device settings")
-            return
-        }
-
-        if(authorizationStatus == .authorizedWhenInUse ||
-            authorizationStatus == .authorizedAlways) {
-                self.changesSaved = false
-                LocationUtil.shared.updateLocation()
-             }
-    }
-
-    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-        let authorizationStatus = CLLocationManager.authorizationStatus()
-        if(authorizationStatus == .authorizedWhenInUse ||
-            authorizationStatus == .authorizedAlways) {
-            LocationUtil.shared.updateLocation()
-        }
-    }
-}
+//extension SetupProfileBioDataVC: CLLocationManagerDelegate {
+//    func getCurrentLocation() {
+//
+//    }
+//
+//    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+//        let authorizationStatus = CLLocationManager.authorizationStatus()
+//        if(authorizationStatus == .authorizedWhenInUse ||
+//            authorizationStatus == .authorizedAlways) {
+//            LocationUtil.shared.updateLocation()
+//        }
+//    }
+//}
 
 

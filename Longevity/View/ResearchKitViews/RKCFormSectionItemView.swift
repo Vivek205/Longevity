@@ -25,6 +25,8 @@ class RKCFormSectionItemView: UICollectionViewCell {
 
     lazy var headingLabel: UILabel = {
         let label = UILabel()
+        label.font = UIFont(name: AppFontName.medium, size: 18)
+        label.textColor = .statusColor
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -57,6 +59,7 @@ class RKCFormSectionItemView: UICollectionViewCell {
             headingLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             headingLabel.topAnchor.constraint(equalTo: self.topAnchor),
             headingLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+
         ])
         
         if cellPosition != .none {

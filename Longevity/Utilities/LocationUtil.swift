@@ -9,12 +9,33 @@
 import Foundation
 import CoreLocation
 
+struct LocationDetails: Codable {
+    var latitude: String?
+    var longitude: String?
+    var zipcode: String?
+    var state: String?
+    var city: String?
+    var country: String?
+}
+
+enum LocationError:Error {
+    case accessDenied
+    case accesNotDetermined
+}
+
 final class LocationUtil: NSObject {
     static let shared = LocationUtil()
     private let locationManager = CLLocationManager()
+    var currentLocation:DynamicValue<LocationDetails>
 
-    func lookUpCurrentLocation(completionHandler: @escaping (CLPlacemark?)
-                    -> Void ) {
+    override init() {
+        self.currentLocation = DynamicValue(LocationDetails())
+        super.init()
+        locationManager.delegate = self
+    }
+
+
+    func lookUpCurrentLocation(completionHandler: ((CLPlacemark?)-> Void)? = nil ) {
         // Use the last reported location.
         if let lastLocation = self.locationManager.location {
             let geocoder = CLGeocoder()
@@ -24,18 +45,37 @@ final class LocationUtil: NSObject {
                         completionHandler: { (placemarks, error) in
                 if error == nil {
                     let firstLocation = placemarks?[0]
-                    completionHandler(firstLocation)
+                    completionHandler?(firstLocation)
                 }
                 else {
                  // An error occurred during geocoding.
-                    completionHandler(nil)
+                    completionHandler?(nil)
                 }
             })
         }
         else {
             // No location was available.
-            completionHandler(nil)
+            completionHandler?(nil)
         }
+    }
+
+    func getCurrentLocation(completion:((Error?)->Void)?) {
+        self.locationManager.requestWhenInUseAuthorization()
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        if authorizationStatus == .denied ||  authorizationStatus == .restricted {
+            completion?(LocationError.accessDenied)
+            return
+        }
+        if authorizationStatus == .notDetermined {
+            completion?(LocationError.accesNotDetermined)
+            return
+        }
+
+        if(authorizationStatus == .authorizedWhenInUse ||
+            authorizationStatus == .authorizedAlways) {
+            self.lookUpCurrentLocation()
+            completion?(nil)
+             }
     }
 
     func updateLocation() {
@@ -55,7 +95,18 @@ final class LocationUtil: NSObject {
             if let postalCode = placemark?.postalCode {
                 locationDetails.zipcode = "\(postalCode)"
             }
-            AppSyncManager.instance.updateHealthProfile(location: locationDetails)
+            self.currentLocation.value = locationDetails
+//            AppSyncManager.instance.updateHealthProfile(location: locationDetails)
+        }
+    }
+}
+
+extension LocationUtil:CLLocationManagerDelegate {
+    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
+        let authorizationStatus = CLLocationManager.authorizationStatus()
+        print(authorizationStatus)
+        if !(authorizationStatus == .denied || authorizationStatus == .notDetermined || authorizationStatus == .restricted) {
+            self.updateLocation()
         }
     }
 }
