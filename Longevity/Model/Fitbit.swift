@@ -237,13 +237,8 @@ class FitbitModel: AuthHandlerType {
         let fetchFitbitToken = FetchFitbitTokenOperation()
         let publishToServer = PublishFitbitTokenOperation()
         let refreshFitbitToken = BlockOperation { [unowned fetchFitbitToken, unowned publishToServer] in
-            guard let accessToken = fetchFitbitToken.accessToken else {
-                return
-            }
-            guard let userID = fetchFitbitToken.userID else {
-                return
-            }
-            guard let refreshToken = fetchFitbitToken.refreshToken else {
+            guard let accessToken = fetchFitbitToken.accessToken, let userID = fetchFitbitToken.userID, let refreshToken = fetchFitbitToken.refreshToken else {
+                publishToServer.cancel()
                 return
             }
             publishToServer.accessToken = accessToken
@@ -366,8 +361,6 @@ extension BackgroundSession: URLSessionDownloadDelegate {
                     return
                 }
 
-//                KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
-//                KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
                 try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(accessToken)
                 try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(refreshToken)
                 Logger.log("fitbit token saved in keychain")
@@ -384,8 +377,6 @@ class FetchFitbitTokenOperation: Operation {
     var accessToken: String?
     var userID: String?
     
-    private var downloading = false
-    
     override var isAsynchronous: Bool {
         return true
     }
@@ -395,11 +386,36 @@ class FetchFitbitTokenOperation: Operation {
     }
     
     override var isFinished: Bool {
-        return self.accessToken != nil
+        return refreshToken != nil && accessToken != nil
+    }
+    
+    override func cancel() {
+        super.cancel()
+    }
+    
+    private var downloading = false
+    
+    func finish() {
+        guard downloading else { return }
+        
+        willChangeValue(forKey: #keyPath(isExecuting))
+        willChangeValue(forKey: #keyPath(isFinished))
+        
+        downloading = false
+        
+        didChangeValue(forKey: #keyPath(isFinished))
+        didChangeValue(forKey: #keyPath(isExecuting))
     }
     
     override func start() {
-        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else { return }
+        willChangeValue(forKey: #keyPath(isExecuting))
+        downloading = true
+        didChangeValue(forKey: #keyPath(isExecuting))
+        
+        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else {
+            self.cancel()
+            return
+        }
 
             let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
                    var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
@@ -416,15 +432,26 @@ class FetchFitbitTokenOperation: Operation {
             let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
                 guard let httpResponse = response as? HTTPURLResponse,
                     httpResponse.statusCode == 200,
-                    data != nil else { return }
+                    data != nil else {
+                    self.cancel()
+                    return
+                }
                 do {
                     if let jsonData: [String:Any] =
                         try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
                         self.accessToken = jsonData["access_token"] as! String
                         self.refreshToken = jsonData["refresh_token"] as! String
                         self.userID = jsonData["user_id"] as! String
+                        
+                        try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(self.accessToken!)
+                        try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(self.refreshToken!)
+                        
+                        self.finish()
                     }
-                } catch {}
+                } catch {
+                    self.cancel()
+                    return
+                }
             }
             dataTask.resume()
     }
@@ -438,8 +465,6 @@ class PublishFitbitTokenOperation: Operation {
     
     var responseString: String?
     
-    private var downloading = false
-    
     override var isAsynchronous: Bool {
         return true
     }
@@ -449,11 +474,32 @@ class PublishFitbitTokenOperation: Operation {
     }
     
     override var isFinished: Bool {
-        return self.responseString != nil
+        return responseString != nil
+    }
+    
+    override func cancel() {
+        super.cancel()
+    }
+    
+    private var downloading = false
+    
+    func finish() {
+        guard downloading else { return }
+        
+        willChangeValue(forKey: #keyPath(isExecuting))
+        willChangeValue(forKey: #keyPath(isFinished))
+        
+        downloading = false
+        
+        didChangeValue(forKey: #keyPath(isFinished))
+        didChangeValue(forKey: #keyPath(isExecuting))
     }
     
     override func start() {
-        self.downloading = true
+        willChangeValue(forKey: #keyPath(isExecuting))
+        downloading = true
+        didChangeValue(forKey: #keyPath(isExecuting))
+        
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let body = JSON(["access_token": self.accessToken, "user_id": self.userID])
@@ -468,12 +514,12 @@ class PublishFitbitTokenOperation: Operation {
                        switch result{
                        case .success(let data):
                         self?.responseString = String(data: data, encoding: .utf8)
-                        self?.downloading = false
+                        self?.finish()
                            Logger.log("Fitbit data published")
                        case .failure(let apiError):
                            print(" publish data error \(apiError)")
                            Logger.log("Fitbit publish failure \(apiError)")
-                        self?.downloading = false
+                        self?.cancel()
                        }
                    })
         }

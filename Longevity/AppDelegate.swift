@@ -122,6 +122,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         //        Implement this method if your app supports the fetch background mode. When an opportunity arises to download data, the system calls this method to give your app a chance to download any data it needs. Your implementation of this method should download the data, prepare that data for use, and call the block in the completionHandler parameter.
         //        When this method is called, your app has up to 30 seconds of wall-clock time to perform the download operation and call the specified completion handler block
+        
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        queue.addOperations(FitbitModel.getOperationsToRefreshFitbitToken(), waitUntilFinished: false)
+        
+        queue.operations.last?.completionBlock = {
+            if !(queue.operations.last?.isCancelled ?? false) {
+                completionHandler(.newData)
+            } else {
+                completionHandler(.failed)
+            }
+        }
     }
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
@@ -309,6 +321,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
         queue.addOperations(FitbitModel.getOperationsToRefreshFitbitToken(), waitUntilFinished: false)
         
         queue.operations.last?.completionBlock = {
@@ -319,7 +332,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @available(iOS 13.0, *)
     func scheduleBackgroundFetch() {
         let rejuveFetchTask = BGAppRefreshTaskRequest(identifier: "io.rejuve.Longevity.bgFetch")
-        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 5 * 60 * 60)
+        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60 * 60)
         
         do {
             try BGTaskScheduler.shared.submit(rejuveFetchTask)
