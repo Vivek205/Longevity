@@ -18,6 +18,10 @@ class SignupByEmailVC: UIViewController {
 
     lazy var countryPickerView: CountryPickerView = {
         let cpv = CountryPickerView(frame: .init(x: 8, y: 0, width: 120, height: 120))
+        cpv.dataSource = self
+        cpv.font = UIFont(name: AppFontName.semibold, size: 16) ?? UIFont()
+        cpv.textColor = .themeColor
+        cpv.accessibilityViewIsModal = true
         return cpv
     }()
 
@@ -355,6 +359,20 @@ extension SignupByEmailVC {
     @objc func keyboardWillBeHidden(notification: NSNotification){
         guard let rollbackYOrigin = self.rollbackYOrigin else {return}
         self.view.frame.origin.y = rollbackYOrigin
+    }
+}
+
+extension SignupByEmailVC: CountryPickerViewDataSource {
+    func showPhoneCodeInList(in countryPickerView: CountryPickerView) -> Bool {
+        return true
+    }
+
+    func navigationTitle(in countryPickerView: CountryPickerView) -> String? {
+        return "Select Country"
+    }
+
+    func searchBarPosition(in countryPickerView: CountryPickerView) -> SearchBarPosition {
+        return .hidden
     }
 }
 

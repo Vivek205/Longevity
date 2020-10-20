@@ -456,7 +456,9 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
     func showAgePicker() {
         removePickers()
         picker.accessibilityLabel = PickerLabel.agePicker
+        agePicker.frame = CGRect.init(x: 0.0, y: UIScreen.main.bounds.size.height - 300, width: UIScreen.main.bounds.size.width, height: 300)
         self.view.addSubview(agePicker)
+        print(agePicker.frame.size.width)
         self.view.addSubview(toolBar)
     }
     

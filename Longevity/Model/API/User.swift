@@ -112,21 +112,21 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
     let dateFormatter = DateFormatter()
     dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
 
-//    if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem()  {
-//
-//        if let expDate = dateFormatter.date(from: idTokenExp) {
-//            let currentDate = Date()
-//            if currentDate < expDate {
-//                if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
-//
-//                    completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
-//                    return
-//
-//                }
-//            }
-//
-//        }
-//    }
+    if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem()  {
+
+        if let expDate = dateFormatter.date(from: idTokenExp) {
+            let currentDate = Date()
+            if currentDate < expDate {
+                if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
+
+                    completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
+                    return
+
+                }
+            }
+
+        }
+    }
 
     var usersub = "", identityId = "", accessKey = "", idToken = ""
     var credentials = Credentials()
@@ -152,7 +152,6 @@ func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
                 let tokens = try cognitoTokenProvider.getCognitoTokens().get()
                 credentials.idToken = tokens.idToken
 
-                // FIXME: Temp solution
                 let secondsOffset50Mins = Double(50 * 60)
                 let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
                 let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)

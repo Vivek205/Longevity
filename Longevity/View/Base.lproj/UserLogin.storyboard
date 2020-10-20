@@ -47,7 +47,9 @@
                         <viewLayoutGuide key="safeArea" id="xfO-bS-KSN"/>
                         <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                     </view>
-                    <navigationItem key="navigationItem" title="Signup" id="eS3-md-Rux"/>
+                    <navigationItem key="navigationItem" title="Signup" id="eS3-md-Rux">
+                        <barButtonItem key="backBarButtonItem" title=" " id="4Dk-Is-KK1"/>
+                    </navigationItem>
                     <connections>
                         <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
                         <segue destination="RlX-kq-iGh" kind="show" identifier="SignupToProfileSetup" id="Z1Q-xo-ocY"/>
@@ -158,7 +160,9 @@
                             <constraint firstItem="XXo-Ca-vDu" firstAttribute="top" secondItem="dvL-ie-KfK" secondAttribute="bottom" constant="33" id="zjo-bD-Siz"/>
                         </constraints>
                     </view>
-                    <navigationItem key="navigationItem" title="Signup" id="xQR-XP-6PK"/>
+                    <navigationItem key="navigationItem" title="Signup" id="xQR-XP-6PK">
+                        <barButtonItem key="backBarButtonItem" title=" " id="nES-d2-S9o"/>
+                    </navigationItem>
                     <connections>
                         <outlet property="formEmail" destination="XXo-Ca-vDu" id="uoc-ey-fqw"/>
                         <outlet property="formName" destination="dvL-ie-KfK" id="wmY-Jf-Sy8"/>
@@ -1182,8 +1186,8 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="5k2-Eq-Tba"/>
-        <segue reference="ppv-oQ-y3h"/>
+        <segue reference="Z1Q-xo-ocY"/>
+        <segue reference="EyO-Hz-vMi"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>
