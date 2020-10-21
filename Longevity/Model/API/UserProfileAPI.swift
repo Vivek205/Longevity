@@ -44,6 +44,13 @@ struct UserActivity: Decodable {
     var isLast: Bool?
 }
 
+struct UserActivityResponse: Decodable {
+    let offset: String
+    let limit: String
+    let totalActivitiesCount: String
+    let activities: [UserActivity]
+}
+
 struct UserProfileResponse: Decodable {
     let status: Int
     let message: String
@@ -186,8 +193,8 @@ class UserProfileAPI: BaseAuthAPI {
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode([UserActivity].self, from: data)
-                        completion(value)
+                        let value = try decoder.decode(UserActivityResponse.self, from: data)
+                        completion(value.activities)
                     }
                     catch {
                         print("JSON error", error)
