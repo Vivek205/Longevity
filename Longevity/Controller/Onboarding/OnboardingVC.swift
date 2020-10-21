@@ -22,9 +22,9 @@ fileprivate var carouselData = [
     OnboardingCarouselData(bgImageName: "onboardingBgYellow", carouselImageName: "onboardingOne",
                            titleText: "COVID-19 Risk Management", infoText: "Track COVID-19 symptoms and infection risks.  Gain personalized insights report with health goals."),
     OnboardingCarouselData(bgImageName: "onboardingBgGreen", carouselImageName: "onboardingTwo",
-                           titleText: "Digital Twin of your body", infoText: "Create your personalized health profile, and connect your favorite health tracking devices to detail insights."),
+                           titleText: "Digital Body Twin", infoText: "Create your personalized health profile, and connect your favorite health tracking devices to detail insights."),
     OnboardingCarouselData(bgImageName: "onboardingBgYellow", carouselImageName: "onboardingThree",
-    titleText: "Powerful and safe AI-insights", infoText: "We use AI that protects your data to generate your personalized health insights and recommendations.")
+    titleText: "Powerful & Secure AI-insights", infoText: "We use AI that protects your data to generate your personalized health insights and reports.")
 ]
 
 class OnboardingVC: UIViewController {
@@ -45,7 +45,7 @@ class OnboardingVC: UIViewController {
         control.pageIndicatorTintColor = .pageIndicatorTintColor
         control.currentPageIndicatorTintColor = .themeColor
         control.numberOfPages = carouselData.count
-        control.transform = CGAffineTransform(scaleX: 2, y: 2)
+        control.transform = CGAffineTransform(scaleX: 1, y: 1)
         control.currentPage = 0
         return control
     }()
@@ -74,14 +74,15 @@ class OnboardingVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
+        self.view.backgroundColor = .appBackgroundColor
+        
         self.view.addSubview(carouselCollection)
         self.view.addSubview(pageControl)
         self.view.addSubview(getStartedButton)
         self.view.addSubview(loginButtonLocal)
 
         let loginButtonBottomMargin = UIDevice.hasNotch ? 83.0 : 30.0
-        let pageControlBottomMargin = UIDevice.hasNotch ? 32.0 : 5.0
+        let pageControlBottomMargin = UIDevice.hasNotch ? 32.0 : 10.0
 
         NSLayoutConstraint.activate([
             carouselCollection.leadingAnchor.constraint(equalTo: view.leadingAnchor),

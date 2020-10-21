@@ -38,10 +38,11 @@ class CarouselCollectionCell: UICollectionViewCell {
         label.text = "adfld"
         label.numberOfLines = 0
         label.textColor = .sectionHeaderColor
-        label.font = UIFont(name: "Montserrat-SemiBold", size: 40)
+        label.font = UIFont(name: "Montserrat-SemiBold", size: 32)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.textAlignment = .center
         return label
     }()
 
@@ -51,10 +52,11 @@ class CarouselCollectionCell: UICollectionViewCell {
         label.text = "alfdjslfjasldfjl"
         label.numberOfLines = 0
         label.textColor = .sectionHeaderColor
-        label.font = UIFont(name: "Montserrat-Regular", size: 24)
+        label.font = UIFont(name: "Montserrat-Regular", size: 20)
         label.adjustsFontForContentSizeCategory = true
         label.adjustsFontSizeToFitWidth = true
         label.minimumScaleFactor = 0.5
+        label.textAlignment = .justified
         return label
     }()
 
@@ -67,9 +69,10 @@ class CarouselCollectionCell: UICollectionViewCell {
               self.addSubview(titleLabel)
               self.addSubview(infoLabel)
 
-        let titleLabelTopMargin = UIDevice.hasNotch ? 32.0 : 5.0
+        let backgroundImageHeight:CGFloat = self.bounds.height * 0.87
+        let titleLabelTopMargin:CGFloat = UIDevice.hasNotch ? 20.0 : 5.0
+        let infoLabelTopMargin:CGFloat = UIDevice.hasNotch ? 20.0 : 5.0
 
-        let backgroundImageHeight = self.bounds.height * 0.6
         NSLayoutConstraint.activate([
             backgroundImage.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             backgroundImage.trailingAnchor.constraint(equalTo: self.trailingAnchor),
@@ -86,9 +89,9 @@ class CarouselCollectionCell: UICollectionViewCell {
             titleLabel.topAnchor.constraint(equalTo: self.carouselImage.bottomAnchor,
                                             constant: CGFloat(titleLabelTopMargin)),
 
-            infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 10),
+            infoLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            infoLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
+            infoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: infoLabelTopMargin)
 //            infoLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor)
         ])
     }

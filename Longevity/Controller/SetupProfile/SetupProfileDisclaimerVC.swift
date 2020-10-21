@@ -11,12 +11,19 @@ import Amplify
 
 class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
     // MARK: Outlets
+    @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var disclaimer: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeDisclaimerLabel()
+        titleLabel.font = UIFont(name: AppFontName.semibold,
+                                 size: 24)
+        titleLabel.textColor = .sectionHeaderColor
+        infoLabel.font = UIFont(name: AppFontName.regular, size: 20)
+        infoLabel.textColor = .sectionHeaderColor
+
         self.removeBackButtonNavigation()
         self.addProgressbar(progress: 20.0)
         let width = self.view.frame.width

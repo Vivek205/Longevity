@@ -19,8 +19,6 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     @IBOutlet weak var footer: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var continueButton: CustomButtonFill!
-
-//    var termsOfServiceURLLoaded = false
     
     lazy var titleLabel: UILabel = {
         let label = UILabel()

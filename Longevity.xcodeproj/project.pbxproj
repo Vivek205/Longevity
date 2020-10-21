@@ -652,10 +652,10 @@
 			isa = PBXGroup;
 			children = (
 				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
+				E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */,
 				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
 				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
 				E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */,
-				E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */,
 				E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */,
 				E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */,
 				E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */,
