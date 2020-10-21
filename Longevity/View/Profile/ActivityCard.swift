@@ -9,7 +9,7 @@
 import UIKit
 
 class ActivityCard : UIView {
-    var activity:UserActivity? {
+    var activity:UserActivityDetails? {
         didSet {
             activityTitle.text = activity?.title
             activitySubTitle.text = activity?.description
@@ -25,6 +25,7 @@ class ActivityCard : UIView {
         activitytitle.font = UIFont(name: "Montserrat-Medium", size: 14.0)
         activitytitle.textColor = UIColor.black.withAlphaComponent(0.87)
         activitytitle.translatesAutoresizingMaskIntoConstraints = false
+        activitytitle.numberOfLines = 0
         return activitytitle
     }()
     
@@ -41,6 +42,7 @@ class ActivityCard : UIView {
         activitysubtitle.font = UIFont(name: "Montserrat-Regular", size: 12.0)
         activitysubtitle.textColor = UIColor(hexString: "#4A4A4A")
         activitysubtitle.translatesAutoresizingMaskIntoConstraints = false
+        activitysubtitle.numberOfLines = 0
         return activitysubtitle
     }()
     

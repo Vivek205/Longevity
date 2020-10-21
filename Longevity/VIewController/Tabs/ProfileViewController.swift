@@ -87,7 +87,7 @@ extension ProfileSetting {
 
 class ProfileViewController: BaseViewController {
     
-    var userActivities: [UserActivity]! {
+    var userActivities: [UserActivityDetails]! {
         didSet {
             DispatchQueue.main.async {
                 self.profileTableView.reloadData()
@@ -112,6 +112,12 @@ class ProfileViewController: BaseViewController {
         profileTable.dataSource = self
         profileTable.translatesAutoresizingMaskIntoConstraints = false
         return profileTable
+    }()
+
+    lazy var seeMoreButton: CustomButtonOutlined = {
+        let button = CustomButtonOutlined(title: "See More", target: self, action: #selector(handleLoadMore))
+//        button.isHidden = true
+        return button
     }()
     
     var currentProfileView: ProfileView! {
@@ -139,6 +145,7 @@ class ProfileViewController: BaseViewController {
         super.viewDidLoad()
         
         self.view.addSubview(profileTableView)
+//        self.view.addSubview(seeMoreButton)
         
         NSLayoutConstraint.activate([
             profileTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -146,18 +153,60 @@ class ProfileViewController: BaseViewController {
             profileTableView.topAnchor.constraint(equalTo: self.view.topAnchor),
             profileTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
+
+
+
         self.currentProfileView = .activity
         getProfileData()
     }
     
     func getProfileData() {
-        self.userActivities = nil
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getUserActivities(completion: { (userActivites) in
-            self.userActivities = userActivites
-        }, onFailure:  { (error) in
-            self.userActivities = nil
+//        self.userActivities = nil
+//        let userProfileAPI = UserProfileAPI()
+//        userProfileAPI.getUserActivities(completion: { (userActivites) in
+//            self.userActivities = userActivites
+//        }, onFailure:  { (error) in
+//            self.userActivities = nil
+//        })
+        AppSyncManager.instance.fetchUserActivity()
+        AppSyncManager.instance.userActivity?.addAndNotify(observer: self, completionHandler: {
+            [weak self] in
+            if let userActivities = AppSyncManager.instance.userActivity?.value?.activities {
+                self?.userActivities = userActivities
+                DispatchQueue.main.async {
+                    self?.profileTableView.reloadData()
+                }
+            }
         })
+
+    }
+
+    func shoulLoadMoreBeDisplayed() -> Bool{
+        if var currentOffset:Int = AppSyncManager.instance.userActivity?.value?.offset,
+           let currentLimit:Int = AppSyncManager.instance.userActivity?.value?.limit,
+           let totalCount:Int = AppSyncManager.instance.userActivity?.value?.totalActivitiesCount {
+            return (currentOffset + currentLimit) < totalCount
+        }
+        return true
+    }
+
+    @objc func handleLoadMore() {
+        self.showSpinner()
+                if var currentOffset:Int = AppSyncManager.instance.userActivity?.value?.offset,
+                   let currentLimit:Int = AppSyncManager.instance.userActivity?.value?.limit,
+                   let totalCount:Int = AppSyncManager.instance.userActivity?.value?.totalActivitiesCount {
+                    if (currentOffset + currentLimit) < totalCount {
+                        currentOffset += currentLimit
+                    }
+                    AppSyncManager.instance.fetchUserActivity(offset: currentOffset, limit: currentLimit) { [weak self](_) in
+                        DispatchQueue.main.async {
+                            self?.profileTableView.reloadData()
+//                            self?.profileTableView.scrollToR
+                            self?.removeSpinner()
+                        }
+                    }
+                }
+
     }
 }
 
@@ -183,7 +232,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             guard let activityCell = tableView.getCell(with: ProfileActivityCell.self, at: indexPath) as? ProfileActivityCell else {
                 preconditionFailure("Invalid activity cell")
             }
-            var activity:UserActivity?
+            var activity:UserActivityDetails?
             if let userActivities = self.userActivities {
                 if userActivities.count > indexPath.row {
                     activity = userActivities[indexPath.row]
@@ -230,6 +279,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             }
         }
     }
+
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
@@ -273,6 +323,26 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         } else {
             return 40.0
         }
+    }
+
+    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
+        if self.currentProfileView == .activity && shoulLoadMoreBeDisplayed() {
+            let footerView = UIView()
+            footerView.backgroundColor = .appBackgroundColor
+            footerView.frame = .init(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+            footerView.addSubview(seeMoreButton)
+                    seeMoreButton.anchor(.top(footerView.topAnchor, constant: 24), .width(228), .height(38))
+                    seeMoreButton.centerXTo(footerView.centerXAnchor)
+            return footerView
+        }
+        return nil
+    }
+
+    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
+        if self.currentProfileView == .activity && shoulLoadMoreBeDisplayed(){
+            return 100
+        }
+        return 0
     }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {

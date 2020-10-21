@@ -11,7 +11,7 @@ import UIKit
 fileprivate var defaultActivityImageName = "checkindone"
 
 class ProfileActivityCell: UITableViewCell {
-    var activity: UserActivity? {
+    var activity: UserActivityDetails? {
         didSet {
             activityCard.activity = activity
             if let activityType = activity?.activityType {

@@ -35,7 +35,7 @@ extension UserActivityType {
     }
 }
 
-struct UserActivity: Decodable {
+struct UserActivityDetails: Decodable {
     let title: String
     let username: String
     let activityType: UserActivityType
@@ -44,11 +44,11 @@ struct UserActivity: Decodable {
     var isLast: Bool?
 }
 
-struct UserActivityResponse: Decodable {
-    let offset: String
-    let limit: String
-    let totalActivitiesCount: String
-    let activities: [UserActivity]
+struct UserActivity: Decodable {
+    let offset: Int
+    let limit: Int
+    let totalActivitiesCount: Int
+    var activities: [UserActivityDetails]
 }
 
 struct UserProfileResponse: Decodable {
@@ -180,11 +180,12 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
-    func getUserActivities(completion: @escaping (_ userActivities:[UserActivity])-> Void,
+    func getUserActivities(offset:Int = 0 ,limit:Int = 50 ,completion: @escaping (_ userActivities:UserActivity)-> Void,
                            onFailure: @escaping (_ error: Error)-> Void) {
+
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-            let queryParams = ["offset":"0", "limit":"50"]
+            let queryParams = ["offset":"\(offset)", "limit":"\(limit)"]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/activities", headers: headers,
                                       queryParameters: queryParams, body: nil)
             Amplify.API.get(request: request) { (result) in
@@ -193,8 +194,8 @@ class UserProfileAPI: BaseAuthAPI {
                     do {
                         let decoder = JSONDecoder()
                         decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode(UserActivityResponse.self, from: data)
-                        completion(value.activities)
+                        let value = try decoder.decode(UserActivity.self, from: data)
+                        completion(value)
                     }
                     catch {
                         print("JSON error", error)
