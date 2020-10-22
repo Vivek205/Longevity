@@ -33,16 +33,16 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mkO-53-DnK">
-                                <rect key="frame" x="20" y="88" width="374" height="629"/>
+                                <rect key="frame" x="15" y="88" width="384" height="629"/>
                                 <subviews>
                                     <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonalSetupOne" translatesAutoresizingMaskIntoConstraints="NO" id="G2z-bX-NAL">
-                                        <rect key="frame" x="44.5" y="0.0" width="285" height="377"/>
+                                        <rect key="frame" x="49.5" y="0.0" width="285" height="377"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="285" id="xBM-wE-qiI"/>
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IP-bf-WoA">
-                                        <rect key="frame" x="87" y="377" width="200" height="67"/>
+                                        <rect key="frame" x="92" y="377" width="200" height="67"/>
                                         <constraints>
                                             <constraint firstAttribute="width" constant="200" id="OsN-21-vsX"/>
                                         </constraints>
@@ -50,8 +50,8 @@
                                         <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
                                     </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" textAlignment="center" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV" userLabel="Info">
-                                        <rect key="frame" x="15.5" y="444" width="343" height="148"/>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV" userLabel="Info">
+                                        <rect key="frame" x="20.5" y="444" width="343" height="148"/>
                                         <string key="text">Personalize your results and 
 reduce questions by setting 
 up your health profile.</string>
@@ -60,7 +60,7 @@ up your health profile.</string>
                                         <nil key="highlightedColor"/>
                                     </label>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer:  If you are experiencing an acute medical condition, you need to consult your doctor immediatly. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TTa-qf-JMf" userLabel="Disclaimer">
-                                        <rect key="frame" x="11.5" y="592" width="351.5" height="37"/>
+                                        <rect key="frame" x="16.5" y="592" width="351.5" height="37"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Italic" family="Montserrat" pointSize="18"/>
                                         <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -97,11 +97,11 @@ up your health profile.</string>
                         <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="mkO-53-DnK" secondAttribute="trailing" constant="20" id="6G6-3M-h2I"/>
+                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="mkO-53-DnK" secondAttribute="trailing" constant="15" id="6G6-3M-h2I"/>
                             <constraint firstItem="jTi-dJ-ldN" firstAttribute="leading" secondItem="A99-0r-8zI" secondAttribute="leading" id="HXb-IX-6dX"/>
                             <constraint firstItem="JCo-Hv-yIO" firstAttribute="leading" secondItem="A99-0r-8zI" secondAttribute="leading" id="JkE-Xh-j6J"/>
                             <constraint firstAttribute="trailing" secondItem="jTi-dJ-ldN" secondAttribute="trailing" id="QZB-2i-S3e"/>
-                            <constraint firstItem="mkO-53-DnK" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="20" id="UJf-Ua-ccy"/>
+                            <constraint firstItem="mkO-53-DnK" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="15" id="UJf-Ua-ccy"/>
                             <constraint firstItem="PrV-6t-uqf" firstAttribute="bottom" secondItem="jTi-dJ-ldN" secondAttribute="bottom" id="VLi-vn-cjZ"/>
                             <constraint firstItem="jTi-dJ-ldN" firstAttribute="top" secondItem="mkO-53-DnK" secondAttribute="bottom" id="adu-fA-TKs"/>
                             <constraint firstAttribute="trailing" secondItem="JCo-Hv-yIO" secondAttribute="trailing" id="fRE-m3-IZn"/>

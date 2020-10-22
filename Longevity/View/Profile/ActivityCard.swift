@@ -15,7 +15,7 @@ class ActivityCard : UIView {
             activitySubTitle.text = activity?.description
             let dateString = UTCStringToLocalDateString(dateString: activity?.loggedAt ?? "",
                                                         dateFormat: "yyyy-MM-dd HH:mm:ss",
-                                                        outputDateFormat: "MMM dd '|' h:mm a")
+                                                        outputDateFormat: "E. MMM. d")
             activityDate.text = dateString
         }
     }
@@ -56,14 +56,14 @@ class ActivityCard : UIView {
         addSubview(activitySubTitle)
         
         NSLayoutConstraint.activate([
-            activityTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
-            activityTitle.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+            activityTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 7.0),
+            activityTitle.topAnchor.constraint(equalTo: topAnchor, constant: 7.0),
             activitySubTitle.topAnchor.constraint(equalTo: activityTitle.topAnchor, constant: 10.0),
             activitySubTitle.leadingAnchor.constraint(equalTo: activityTitle.leadingAnchor),
             activitySubTitle.trailingAnchor.constraint(equalTo: activityTitle.trailingAnchor, constant: -10.0),
-            activitySubTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0),
+            activitySubTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7.0),
             activityDate.centerYAnchor.constraint(equalTo: activityTitle.centerYAnchor),
-            activityDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+            activityDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.0),
             activityDate.leadingAnchor.constraint(greaterThanOrEqualTo: activityTitle.trailingAnchor, constant: 10.0)
         ])
     }
