@@ -42,6 +42,7 @@ struct UserActivityDetails: Decodable {
     let description: String
     let loggedAt: String
     var isLast: Bool?
+    var isLoading: Bool?
 }
 
 struct UserActivity: Decodable {
@@ -180,7 +181,7 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
-    func getUserActivities(offset:Int = 0 ,limit:Int = 50 ,completion: @escaping (_ userActivities:UserActivity)-> Void,
+    func getUserActivities(offset:Int = 0 ,limit:Int = 10 ,completion: @escaping (_ userActivities:UserActivity)-> Void,
                            onFailure: @escaping (_ error: Error)-> Void) {
 
         self.getCredentials(completion: { (credentials) in

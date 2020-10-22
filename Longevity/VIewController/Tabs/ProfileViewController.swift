@@ -31,7 +31,7 @@ enum ProfileSetting: String {
     case exportcheckin = "Export Check-in Data"
     case updatebiometrics = "Update Biometrics"
     case updatepreconditions = "Update Pre-conditions"
-//    case resetcheckin = "Reset Check-in Data"
+    //    case resetcheckin = "Reset Check-in Data"
     case applehealth = "Apple Health"
     case fitbit = "Fitbit"
     case applewatch = "Apple Watch"
@@ -51,7 +51,7 @@ extension ProfileSetting {
         case .exportcheckin: return .navigate
         case .updatebiometrics: return .navigate
         case .updatepreconditions: return .navigate
-//        case .resetcheckin: return .navigate
+        //        case .resetcheckin: return .navigate
         case .applehealth: return .navigate
         case .fitbit: return .switchcontrol
         case .applewatch: return .addcontrol
@@ -70,7 +70,7 @@ extension ProfileSetting {
         case .exportcheckin: return .topmost
         case .updatebiometrics: return .center
         case .updatepreconditions: return .center
-//        case .resetcheckin: return .bottom
+        //        case .resetcheckin: return .bottom
         case .applehealth: return .topmost
         case .fitbit: return .center
         case .applewatch: return .bottom
@@ -86,22 +86,26 @@ extension ProfileSetting {
 }
 
 class ProfileViewController: BaseViewController {
-    
-    var userActivities: [UserActivityDetails]! {
-        didSet {
-            DispatchQueue.main.async {
-                self.profileTableView.reloadData()
-            }
-        }
-    }
+
+    //    MARK: Pagintion variables
+    var currentCount : Int = 0
+    var isFetchInProgress : Bool = false
+    var currentPage:Int = 1
+    var currentOffset:Int = 0
+    var currentLimit: Int = 50
+    var total:Int = 0
+
+
+
+    var userActivities: [UserActivityDetails] = []
     
     var settings: [[ProfileSetting]] = [[.exportcheckin,.updatebiometrics,.updatepreconditions,
-//                                         .resetcheckin
-                                        ],
-                                        [.applehealth, .fitbit, .applewatch],
-                                        [.notifications, .editaccount, .usemetricsystem],
-                                        [.faqs, .termsofservice, .contactsupport],
-                                        [.signout], [.appversion]]
+                                         //                                         .resetcheckin
+    ],
+    [.applehealth, .fitbit, .applewatch],
+    [.notifications, .editaccount, .usemetricsystem],
+    [.faqs, .termsofservice, .contactsupport],
+    [.signout], [.appversion]]
     var settingsSections: [String] = ["COVID DATA", "DEVICE CONNECTIONS", "ACCOUNT", "INFORMATION", "",""]
     
     lazy var profileTableView: UITableView = {
@@ -110,13 +114,14 @@ class ProfileViewController: BaseViewController {
         profileTable.separatorStyle = .none
         profileTable.delegate = self
         profileTable.dataSource = self
+        profileTable.prefetchDataSource = self
         profileTable.translatesAutoresizingMaskIntoConstraints = false
         return profileTable
     }()
 
     lazy var seeMoreButton: CustomButtonOutlined = {
         let button = CustomButtonOutlined(title: "See More", target: self, action: #selector(handleLoadMore))
-//        button.isHidden = true
+
         return button
     }()
     
@@ -125,7 +130,8 @@ class ProfileViewController: BaseViewController {
             self.titleView.titleLabel.text = currentProfileView == ProfileView.activity ? "Profile Activity" : "Settings"
             
             if currentProfileView == ProfileView.activity {
-                self.getProfileData()
+                //                self.getProfileData()
+                self.profileTableView.reloadData()
             }
             else {
                 self.profileTableView.reloadData()
@@ -145,7 +151,7 @@ class ProfileViewController: BaseViewController {
         super.viewDidLoad()
         
         self.view.addSubview(profileTableView)
-//        self.view.addSubview(seeMoreButton)
+        //        self.view.addSubview(seeMoreButton)
         
         NSLayoutConstraint.activate([
             profileTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -161,52 +167,61 @@ class ProfileViewController: BaseViewController {
     }
     
     func getProfileData() {
-//        self.userActivities = nil
-//        let userProfileAPI = UserProfileAPI()
-//        userProfileAPI.getUserActivities(completion: { (userActivites) in
-//            self.userActivities = userActivites
-//        }, onFailure:  { (error) in
-//            self.userActivities = nil
-//        })
-        AppSyncManager.instance.fetchUserActivity()
-        AppSyncManager.instance.userActivity?.addAndNotify(observer: self, completionHandler: {
-            [weak self] in
-            if let userActivities = AppSyncManager.instance.userActivity?.value?.activities {
-                self?.userActivities = userActivities
-                DispatchQueue.main.async {
-                    self?.profileTableView.reloadData()
-                }
-            }
-        })
-
-    }
-
-    func shoulLoadMoreBeDisplayed() -> Bool{
-        if var currentOffset:Int = AppSyncManager.instance.userActivity?.value?.offset,
-           let currentLimit:Int = AppSyncManager.instance.userActivity?.value?.limit,
-           let totalCount:Int = AppSyncManager.instance.userActivity?.value?.totalActivitiesCount {
-            return (currentOffset + currentLimit) < totalCount
+        guard !self.isFetchInProgress else {
+            return
         }
-        return true
+        self.isFetchInProgress = true
+        let userProfileAPI = UserProfileAPI()
+
+        userProfileAPI.getUserActivities(offset: currentOffset, limit: currentLimit) { (userActivity) in
+            self.isFetchInProgress = false
+            self.currentOffset += self.currentLimit
+            self.currentPage = (userActivity.offset / userActivity.limit) + 1
+            self.total = userActivity.totalActivitiesCount
+            self.userActivities.append(contentsOf: userActivity.activities)
+            self.currentCount = self.userActivities.count
+
+            if self.currentPage > 1 {
+                let newIndexPathsToReload = self.calculateIndexPathsToReload(from: userActivity)
+                self.onGetProfileCompleted(with: newIndexPathsToReload)
+            }else {
+                self.onGetProfileCompleted(with: .none)
+            }
+
+        } onFailure: { (error) in
+            self.isFetchInProgress = false
+            print("failure")
+        }
     }
 
-    @objc func handleLoadMore() {
-        self.showSpinner()
-                if var currentOffset:Int = AppSyncManager.instance.userActivity?.value?.offset,
-                   let currentLimit:Int = AppSyncManager.instance.userActivity?.value?.limit,
-                   let totalCount:Int = AppSyncManager.instance.userActivity?.value?.totalActivitiesCount {
-                    if (currentOffset + currentLimit) < totalCount {
-                        currentOffset += currentLimit
-                    }
-                    AppSyncManager.instance.fetchUserActivity(offset: currentOffset, limit: currentLimit) { [weak self](_) in
-                        DispatchQueue.main.async {
-                            self?.profileTableView.reloadData()
-//                            self?.profileTableView.scrollToR
-                            self?.removeSpinner()
-                        }
-                    }
-                }
+    func onGetProfileCompleted(with newIndexPathsToReload: [IndexPath]?) {
+        DispatchQueue.main.async {
+            guard let newIndexPathsToReload = newIndexPathsToReload else {
+                self.profileTableView.reloadData()
+                return
+            }
+            let indexPathsToReload = self.visibleIndexPathsToReload(intersecting: newIndexPathsToReload)
+            if !indexPathsToReload.isEmpty {
+                self.profileTableView.reloadRows(at: indexPathsToReload, with: .automatic)
+            }
+        }
+    }
 
+    @objc func handleLoadMore(for index:Int) {
+        let offset = index
+        let userProfileAPI = UserProfileAPI()
+        print("fetching data for row: ", index)
+        userProfileAPI.getUserActivities(offset:offset, limit: 1) { (userActivity) in
+            var enhancedUserActivity = userActivity
+            DispatchQueue.main.async {
+                let indexPath = IndexPath(row: index, section: 0)
+                self.profileTableView.beginUpdates()
+                self.profileTableView.reloadRows(at: [indexPath], with: .fade)
+                self.profileTableView.endUpdates()
+            }
+        } onFailure: { (error) in
+            print("failed data for row:", index)
+        }
     }
 }
 
@@ -221,7 +236,8 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         if self.currentProfileView == .activity {
-            return self.userActivities?.count ?? 0
+            return self.total
+            //            return AppSyncManager.instance.userActivity?.value?.totalActivitiesCount ?? 0
         } else {
             return self.settings[section].count
         }
@@ -233,15 +249,15 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                 preconditionFailure("Invalid activity cell")
             }
             var activity:UserActivityDetails?
-            if let userActivities = self.userActivities {
-                if userActivities.count > indexPath.row {
-                    activity = userActivities[indexPath.row]
-                }
-                
-                if indexPath.row == userActivities.count - 1 {
-                    activity?.isLast = true
-                }
+            //            if let userActivities = self.userActivities {
+            if userActivities.count > indexPath.row {
+                activity = userActivities[indexPath.row]
             }
+
+            if indexPath.row == userActivities.count - 1 {
+                activity?.isLast = true
+            }
+            //            }
             activityCell.activity = activity
             return activityCell
         } else {
@@ -324,26 +340,6 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             return 40.0
         }
     }
-
-    func tableView(_ tableView: UITableView, viewForFooterInSection section: Int) -> UIView? {
-        if self.currentProfileView == .activity && shoulLoadMoreBeDisplayed() {
-            let footerView = UIView()
-            footerView.backgroundColor = .appBackgroundColor
-            footerView.frame = .init(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
-            footerView.addSubview(seeMoreButton)
-                    seeMoreButton.anchor(.top(footerView.topAnchor, constant: 24), .width(228), .height(38))
-                    seeMoreButton.centerXTo(footerView.centerXAnchor)
-            return footerView
-        }
-        return nil
-    }
-
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        if self.currentProfileView == .activity && shoulLoadMoreBeDisplayed(){
-            return 100
-        }
-        return 0
-    }
     
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
         tableView.deselectRow(at: indexPath, animated: false)
@@ -372,9 +368,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     let navigationController = UINavigationController(rootViewController: preconditionsViewController)
                     navigationController
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
-//                case .resetcheckin:
-//                    let resetCheckinViewController = ResetCheckInDataViewController()
-//                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .formSheet, completion: nil)
+                //                case .resetcheckin:
+                //                    let resetCheckinViewController = ResetCheckInDataViewController()
+                //                    NavigationUtility.presentOverCurrentContext(destination: resetCheckinViewController, style: .formSheet, completion: nil)
                 case .applehealth:
                     let appleHealthViewController = AppleHealthConnectionViewController()
                     let navigationController = UINavigationController(rootViewController: appleHealthViewController)
@@ -418,6 +414,33 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
         }
     }
 }
+
+extension ProfileViewController: UITableViewDataSourcePrefetching {
+
+    func tableView(_ tableView: UITableView, prefetchRowsAt indexPaths: [IndexPath]) {
+        if indexPaths.contains(where: isLoadingCell) {
+            self.getProfileData()
+        }
+    }
+
+    func isLoadingCell(for indexPath: IndexPath) -> Bool {
+        return indexPath.row >= self.currentCount
+    }
+
+    func visibleIndexPathsToReload(intersecting indexPaths:[IndexPath]) ->[IndexPath] {
+        let indexPathsForVisibleRows = profileTableView.indexPathsForVisibleRows ?? []
+        let indexPathsIntersection = Set(indexPathsForVisibleRows).intersection(indexPaths)
+        return Array(indexPathsIntersection)
+    }
+
+    private func calculateIndexPathsToReload(from userActivity: UserActivity) -> [IndexPath]? {
+        let startIndex = userActivity.offset
+        let endIndex = userActivity.offset + userActivity.limit - 1
+        return (startIndex..<endIndex).map { IndexPath(row: $0, section: 0) }
+    }
+
+}
+
 
 extension ProfileViewController: UserProfileHeaderDelegate {
     func selected(profileView: ProfileView) {

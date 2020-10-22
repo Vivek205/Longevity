@@ -19,7 +19,7 @@ class AppSyncManager  {
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<Bool> = DynamicValue(true)
-    var userActivity: DynamicValue<UserActivity>?
+//    var userActivity: DynamicValue<UserActivity>?
     
     fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
@@ -59,7 +59,7 @@ class AppSyncManager  {
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
-        self.userActivity = DynamicValue(UserActivity(offset: 0, limit: 50, totalActivitiesCount: 0, activities: [UserActivityDetails(title: "", username: "", activityType: .ACCOUNTCREATED, description: "", loggedAt: "", isLast: nil)]))
+//        self.userActivity = DynamicValue(UserActivity(offset: 0, limit: 50, totalActivitiesCount: 0, activities: [UserActivityDetails(title: "", username: "", activityType: .ACCOUNTCREATED, description: "", loggedAt: "", isLast: nil)]))
         self.userInsights = DynamicValue(self.defaultInsights)
     }
     //User Attributes
@@ -192,21 +192,21 @@ class AppSyncManager  {
         }
     }
 
-    func fetchUserActivity(offset:Int = 0, limit:Int = 50, completion:((Error?) -> Void)? = nil) {
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getUserActivities(offset:offset, limit: limit) { (userActivity) in
-            var enhancedUserActivity = userActivity
-            if offset > 0, let currentActvities = self.userActivity?.value?.activities {
-                enhancedUserActivity.activities = currentActvities + enhancedUserActivity.activities 
-            }
-            self.userActivity?.value = enhancedUserActivity
-            completion?(nil)
-        } onFailure: { (error) in
-            print("fetchUserActivity error: - ", error)
-            completion?(error)
-        }
-
-    }
+//    func fetchUserActivity(offset:Int = 0, limit:Int = 10, completion:((Error?) -> Void)? = nil) {
+//        let userProfileAPI = UserProfileAPI()
+//        userProfileAPI.getUserActivities(offset:offset, limit: limit) { (userActivity) in
+//            var enhancedUserActivity = userActivity
+//            if offset > 0, let currentActvities = self.userActivity?.value?.activities {
+//                enhancedUserActivity.activities = currentActvities + enhancedUserActivity.activities 
+//            }
+//            self.userActivity?.value = enhancedUserActivity
+//            completion?(nil)
+//        } onFailure: { (error) in
+//            print("fetchUserActivity error: - ", error)
+//            completion?(error)
+//        }
+//
+//    }
 
     func syncUserProfile() {
         self.fetchUserProfile()

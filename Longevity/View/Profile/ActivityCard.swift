@@ -17,8 +17,28 @@ class ActivityCard : UIView {
                                                         dateFormat: "yyyy-MM-dd HH:mm:ss",
                                                         outputDateFormat: "E. MMM. d")
             activityDate.text = dateString
+
+            if activity?.activityType == nil {
+                activityDate.isHidden = true
+                spinner.startAnimating()
+            }else {
+                activityDate.isHidden = false
+                spinner.stopAnimating()
+            }
         }
     }
+
+    lazy var spinner: UIActivityIndicatorView = {
+        let spinner = UIActivityIndicatorView()
+        if #available(iOS 13.0, *) {
+            spinner.style = .medium
+        } else {
+            spinner.style = .gray
+        }
+        spinner.color = .gray
+
+        return spinner
+    }()
     
     lazy var activityTitle: UILabel = {
         let activitytitle = UILabel()
@@ -66,6 +86,11 @@ class ActivityCard : UIView {
             activityDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.0),
             activityDate.leadingAnchor.constraint(greaterThanOrEqualTo: activityTitle.trailingAnchor, constant: 10.0)
         ])
+
+        addSubview(spinner)
+        bringSubviewToFront(spinner)
+        spinner.hidesWhenStopped = true
+        spinner.fillSuperview()
     }
     
     required init?(coder: NSCoder) {
