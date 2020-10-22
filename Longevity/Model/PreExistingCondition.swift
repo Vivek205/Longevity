@@ -29,9 +29,9 @@ struct PreExistingMedicalConditionModel {
 
 
 var preExistingMedicalConditionData:[PreExistingMedicalConditionModel] = [
-    PreExistingMedicalConditionModel(id: .cardiovascularDisease,name: "Cardiovascular Disease", description: "Examples: angine, heart attacks, heart failures, coronary heart disease,strokes, peripheral arterial disease, or aortic disease."),
+    PreExistingMedicalConditionModel(id: .cardiovascularDisease,name: "Cardiovascular Disease", description: "Examples: angina, heart attacks, heart failures, coronary heart disease, strokes, peripheral arterial disease, or aortic disease."),
     PreExistingMedicalConditionModel(id:.diabetes,name: "Diabetes", description: "Examples: Type 1 Diabetes or Type 2 Diabetes."),
-    PreExistingMedicalConditionModel(id:.highBloodPressure,name: "High Blood Pressure", description: "Examples: primary hypertension (not related to another medical condition),secondary hypertension (caused by a medical condition)."),
+    PreExistingMedicalConditionModel(id:.highBloodPressure,name: "High Blood Pressure", description: "Examples: primary hypertension (not related to another medical condition), secondary hypertension (caused by a medical condition)."),
     PreExistingMedicalConditionModel(id:.lungDisease,name: "Lung Disease", description: "Examples: asthma, pneumonia, bronchitis, or chronic obstructive pulmonary disease (COPD)."),
     PreExistingMedicalConditionModel(id:.kidneyDisease,name: "Kidney Disease", description: "Examples: kidney stones, chronic kidney disease, glomerulonephritis, polycystic kidney disease, or urinary tract infections."),
     PreExistingMedicalConditionModel(id:.cancer,name: "Cancer", description: "Examples: breast cancer, lung cancer, prostate cancer, kidney cancer, or leukemia."),
