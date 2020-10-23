@@ -36,9 +36,6 @@ class PersonalLoginVC: UIViewController {
         self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "#F5F6FA")
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 24.0)!,
                                                                         NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4E4E4E")]
-//        customizeButtons()
-//        highlightImageButton(imgButton: personalImageView)
-//        normalizeImageButton(imgButton: clinicalTrialImageView)
 
         personalImageView.removeFromSuperview()
         clinicalTrialImageView.removeFromSuperview()
@@ -71,11 +68,7 @@ class PersonalLoginVC: UIViewController {
         self.formEmail.resignFirstResponder()
         self.formPassword.resignFirstResponder()
     }
-//
-//    func customizeButtons(){
-//        customizeImageButton(imgButton: personalImageView)
-//        customizeImageButton(imgButton: clinicalTrialImageView)
-//    }
+
 
     func customizeButtonWithImage(button: UIButton){
         button.layer.shadowColor = UIColor(red: 0, green: 0, blue: 0, alpha: 0.25).cgColor
@@ -86,45 +79,14 @@ class PersonalLoginVC: UIViewController {
         button.layer.masksToBounds = false
         button.layer.shadowPath = UIBezierPath(roundedRect: button.bounds, cornerRadius: button.layer.cornerRadius).cgPath
     }
-//
-//    func customizeImageButton(imgButton: UIView){
-//        imgButton.layer.masksToBounds = true
-//        imgButton.layer.borderWidth = 2
-//        imgButton.layer.cornerRadius = 10
-//    }
-
-//    func highlightImageButton(imgButton: UIView){
-//        imgButton.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-//        imgButton.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-//        imgButton.backgroundColor = .white
-//        for subview in imgButton.subviews{
-//            if let item = subview as? UIImageView{
-//                item.image = item.image?.withRenderingMode(.alwaysTemplate)
-//                item.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-//            }
-//            if let item = subview as? UILabel {
-//                item.textColor = .themeColor
-//            }
-//        }
-//    }
-//
-//    func normalizeImageButton(imgButton: UIView){
-//        imgButton.layer.borderColor = #colorLiteral(red: 0.9176470588, green: 0.9294117647, blue: 0.9450980392, alpha: 1)
-//        imgButton.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
-//        imgButton.backgroundColor = .clear
-//        for subview in imgButton.subviews{
-//            if let item = subview as? UIImageView{
-//                item.image = item.image?.withRenderingMode(.alwaysTemplate)
-//                item.tintColor = #colorLiteral(red: 0.8392156863, green: 0.8392156863, blue: 0.8392156863, alpha: 1)
-//            }
-//            if let item = subview as? UILabel {
-//                item.textColor = UIColor(hexString: "#212121")
-//            }
-//        }
-//    }
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
+
+        if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            Alert(type: .offlineNotification)
+            return
+        }
 
         self.closeKeyboard()
         if let email = self.formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -191,19 +153,14 @@ class PersonalLoginVC: UIViewController {
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
         self.closeKeyboard()
-//        let containerView = sender.view! as UIView
-//        for subview in containerView.subviews{
-//            if let item = subview as? UILabel{
-//                print(UserAccountType.personal.rawValue)
-//                if item.text == UserAccountType.personal.rawValue{
-//                    highlightImageButton(imgButton: personalImageView)
-//                    normalizeImageButton(imgButton: clinicalTrialImageView)
-//                }
-//            }
-//        }
     }
 
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
+        if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            Alert(type: .offlineNotification)
+            return
+        }
+
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -229,6 +186,11 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
+        if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            Alert(type: .offlineNotification)
+            return
+        }
+
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -253,6 +215,10 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithApple(_ sender: Any) {
+        if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            Alert(type: .offlineNotification)
+            return
+        }
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -274,13 +240,16 @@ class PersonalLoginVC: UIViewController {
         }
     }
 
-
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
         print("un wound")
         
     }
 
     @IBAction func handleForgotPassword(_ sender: Any) {
+        if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            Alert(type: .offlineNotification)
+            return
+        }
         let destinationVC = ForgotPasswordCaptureEmailVC()
         destinationVC.username = formEmail.text
         self.navigationController?.pushViewController(destinationVC, animated: true)
@@ -292,7 +261,6 @@ class PersonalLoginVC: UIViewController {
             self.removeSpinner()
             let appDelegate = UIApplication.shared.delegate as! AppDelegate
             appDelegate.setRootViewController()
-//            AppSyncManager.instance.fetchUserNotification()
         }
     }
 }

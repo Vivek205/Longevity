@@ -11,7 +11,6 @@ import ResearchKit
 
 class HomeViewController: BaseViewController {
     var surveyId: String?
-    //    var surveyList: [SurveyListItem]?
     var currentTask: ORKOrderedTask?
     
     lazy var tableView: UITableView = {
@@ -182,6 +181,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
+            if AppSyncManager.instance.internetConnectionAvailable.value == false {
+                Alert(type: .offlineNotification)
+                return
+            }
             if selectedCell.status != .completedToday {
                 self.showSurvey(surveyId)
                 return
@@ -199,6 +202,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
            let surveyId = taskCell.surveyDetails?.surveyId
         {
+            if AppSyncManager.instance.internetConnectionAvailable.value == false {
+                Alert(type: .offlineNotification)
+                return
+            }
             self.showSurvey(surveyId)
             return
         }

@@ -54,7 +54,7 @@ class UserAuthAPI {
         let notificationAPI = NotificationAPI()
         let appDelegate = AppDelegate()
 
-        appDelegate.deleteARNEndpoint(endpointArn: "endpointArn") { (error) in
+        appDelegate.deleteARNEndpoint(endpointArn: endpointArn) { (error) in
             guard error == nil else {
                 completion?(error)
                 return

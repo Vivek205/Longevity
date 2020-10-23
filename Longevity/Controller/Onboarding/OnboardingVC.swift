@@ -247,11 +247,36 @@ extension UIViewController{
     }
 }
 
+enum UIAlertType {
+    case offlineNotification
+}
+
+extension UIAlertType {
+    var title: String {
+        switch self {
+        case .offlineNotification:
+            return "No Internet Connection.."
+        }
+    }
+    var message: String {
+        switch self {
+        case .offlineNotification:
+            return "Please reconnect your Internet to continue this app action."
+        }
+    }
+    var color: UIColor {
+        switch self {
+        case .offlineNotification:
+            return UIColor(red: (242/255.0), green: (242/255.0), blue: (242/255.0), alpha: 0.8)
+        }
+    }
+}
 
 // MARK: Alert
 extension UIViewController {
     func showAlert(title: String, message: String) {
         let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+
         alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
         self.present(alert, animated: true)
     }
@@ -261,6 +286,18 @@ extension UIViewController {
         alert.addAction(action)
         self.present(alert, animated: true)
     }
+
+    func showAlert(type: UIAlertType) {
+        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+
+        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
+        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
+            subview.backgroundColor = type.color
+        }
+
+        self.present(alert, animated: true)
+    }
+    
 
     @objc func handleUIAlertAction(_ action: UIAlertAction) {
 
