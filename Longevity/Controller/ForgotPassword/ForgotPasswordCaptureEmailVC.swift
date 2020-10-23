@@ -75,7 +75,7 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
     @objc func handleContinue() {
         self.closeKeyboard()
         guard let username = emailTextField.text?.trimmingCharacters(in: .whitespaces), !username.isEmpty else {
-            self.showAlert(title: "Invalid Email!", message: "Please enter a valid email")
+            Alert(title: "Invalid Email!", message: "Please enter a valid email")
             return
         }
         self.showSpinner()
@@ -100,7 +100,7 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
             } catch {
                 print("Reset password failed with error \(error)")
                 DispatchQueue.main.async {
-                    self?.showAlert(title: "Error", message: "\(error)")
+                    Alert(title: "Error", message: "\(error)")
                     self?.removeSpinner()
                 }
             }

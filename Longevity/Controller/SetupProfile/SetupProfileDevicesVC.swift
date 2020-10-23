@@ -85,7 +85,7 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                 }
             } else {
                 DispatchQueue.main.async {
-                    self.showAlert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
+                    Alert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
                 }
             }
         }

@@ -121,13 +121,13 @@ class CheckInLogDetailsViewController: UIViewController {
         self.showSpinner()
         userInsightAPI.exportUserApplicationData(completion: {
             DispatchQueue.main.async {
-                self.showAlert(title: "Success", message: "Your data has been sent to your email.")
+                Alert(title: "Success", message: "Your data has been sent to your email.")
                 self.removeSpinner()
             }
         }) { (error) in
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Failure", message: "Unable to export your data. Please try again later.")
+                Alert(title: "Failure", message: "Unable to export your data. Please try again later.")
             }
         }
     }

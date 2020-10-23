@@ -57,10 +57,12 @@ class LNTabBarViewController: UITabBarController {
                                 profileViewController, shareAppViewController]
         #endif
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
+//        let bgImageView2 = UIImageView(image: UIImage.imageWithColor(color: .black, size: tabBar.frame.size))
+
         tabBar.insertSubview(bgImageView, at: 0)
+//        tabBar.addSubview(bgImageView2)
         
         AppSyncManager.instance.syncUserProfile()
-//        AppSyncManager.instance.fetchUserNotification()
 
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
             if HKHealthStore.isHealthDataAvailable() {
@@ -82,6 +84,7 @@ class LNTabBarViewController: UITabBarController {
         super.viewDidAppear(animated)
         
         AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
+
             DispatchQueue.main.async {
                 if !(AppSyncManager.instance.isTermsAccepted.value ?? false) {
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
@@ -97,12 +100,14 @@ class LNTabBarViewController: UITabBarController {
         AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) {
             if AppSyncManager.instance.internetConnectionAvailable.value == false {
                 DispatchQueue.main.async {
+                    self.tabBarController?.selectedIndex = 0
                     if let items = self.tabBarController?.tabBar.items {
                         items.forEach{$0.isEnabled = false}
                     }
                 }
-            }else {
+            } else {
                 DispatchQueue.main.async {
+                    AppSyncManager.instance.syncUserProfile()
                     if let items = self.tabBarController?.tabBar.items {
                         items.forEach{$0.isEnabled = true}
                     }

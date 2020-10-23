@@ -102,6 +102,7 @@ class AppSyncManager  {
     func checkTermsAccepted() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
+            guard let termsAccepted = termsAccepted else {return}
             self?.isTermsAccepted.value = termsAccepted
         }
     }

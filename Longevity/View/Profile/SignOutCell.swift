@@ -74,9 +74,9 @@ class SignOutCell: UITableViewCell {
                 print("Sign out failed with error \(error)")
                 Logger.log("\(error)")
                 DispatchQueue.main.async {
-
+                    Alert(title: "Signout Failed!", message: "Unable to signout. Please try again later")
                     if var topController = UIApplication.shared.keyWindow?.rootViewController {
-                        topController.showAlert(title: "Signout Failed!", message: "Unable to signout. Please try again later")
+
                         topController.removeSpinner()
                     }
                 }

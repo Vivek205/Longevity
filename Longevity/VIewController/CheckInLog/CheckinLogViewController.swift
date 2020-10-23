@@ -101,8 +101,7 @@ class CheckinLogViewController: BaseViewController {
                         NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                     }
                 } else {
-                    self.showAlert(title: "Survey Not available",
-                                   message: "No questions are found for the survey. Please try after sometime")
+                    Alert(title: "Survey Not available", message: "No questions are found for the survey. Please try after sometime")
                 }
             }
         }

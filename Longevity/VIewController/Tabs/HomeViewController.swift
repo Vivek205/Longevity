@@ -222,7 +222,7 @@ extension HomeViewController {
                     let taskViewController = SurveyViewController(task: task, isFirstTask: true)
                     NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                 } else {
-                    self.showAlert(title: "Survey Not available",
+                   Alert(title: "Survey Not available",
                                    message: "No questions are found for the survey. Please try after sometime")
                 }
                 self.removeSpinner()
@@ -264,7 +264,7 @@ class HomeViewHeader: UITableViewHeaderFooterView {
 extension HomeViewController:DashboardDevicesCellDelegate {
     func showError(forDeviceCollectionCell cell: DashboardDeviceCollectionCell) {
         DispatchQueue.main.async {
-            self.showAlert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
+            Alert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
         }
     }
 }

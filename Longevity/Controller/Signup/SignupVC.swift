@@ -139,7 +139,7 @@ class SignupVC: UIViewController {
         func onFailure(error: AuthError) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Signup Failed" , message: error.errorDescription)
+                Alert(title: "Signup Failed" , message: error.errorDescription)
             }
         }
         _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
@@ -169,7 +169,7 @@ class SignupVC: UIViewController {
             print("Sign in failed \(error)")
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Signup Failed" , message: error.errorDescription)
+                Alert(title: "Signup Failed" , message: error.errorDescription)
             }
         }
 
@@ -200,7 +200,7 @@ class SignupVC: UIViewController {
             print("Sign in failed \(error)")
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Signup Failed" , message: error.errorDescription)
+                Alert(title: "Signup Failed" , message: error.errorDescription)
             }
         }
 

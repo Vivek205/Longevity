@@ -216,7 +216,7 @@ class SignupByEmailVC: UIViewController {
         func onFailure(errorDescription: String) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Login Failed" , message: errorDescription)
+               Alert(title: "Login Failed" , message: errorDescription)
             }
         }
 
@@ -229,15 +229,15 @@ class SignupByEmailVC: UIViewController {
 
             func validate() -> Bool {
                 if email.isEmpty || !(email.isValidEmail) {
-                    showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    Alert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
                     return false
                 }
                 if phone.isEmpty || !(phone.isValidPhone) {
-                    showAlert(title: "Error - Invalid Phone", message: "Please provide a valid phone number in the format \n +{CountryCode}{PhoneNumber}")
+                    Alert(title: "Error - Invalid Phone", message: "Please provide a valid phone number in the format \n +{CountryCode}{PhoneNumber}")
                     return false
                 }
                 if password.isEmpty {
-                    showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    Alert(title: "Error - Invalid Password", message: "Password cannot be empty.")
                     return false
                 }
                 return true

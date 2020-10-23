@@ -104,15 +104,10 @@ extension RKCFormLocationView: CLLocationManagerDelegate {
     @objc func getCurrentLocation() {
         LocationUtil.shared.getCurrentLocation { (error) in
             if let error = error as? LocationError, error != .accesNotDetermined {
-                if var topController = UIApplication.shared.keyWindow?.rootViewController {
-                    while let presentedViewController = topController.presentedViewController {
-                        topController = presentedViewController
-                    }
                     DispatchQueue.main.async {
-                        topController.showAlert(title: "Allow Location Access",
+                        Alert(title: "Allow Location Access",
                                                 message: "Please enable location access in your device settings")
                     }
-                }
             }
         }
     }

@@ -149,7 +149,7 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
-    func getUserAttributes(completion: @escaping ((Bool)-> Void)) {
+    func getUserAttributes(completion: @escaping ((Bool?)-> Void)) {
         let keys = UserDefaultsKeys()
         _ = Amplify.Auth.fetchUserAttributes() { result in
             switch result {
@@ -159,11 +159,11 @@ class UserProfileAPI: BaseAuthAPI {
                     let value = attribute.value
                     if name.rawValue == CustomCognitoAttributes.longevityTNC {
                         guard let data = value.data(using: .utf8) as? Data else {
-                            completion(false)
+                            completion(nil)
                             return
                         }
                         guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                            completion(false)
+                            completion(nil)
                             return
                         }
 
@@ -176,7 +176,7 @@ class UserProfileAPI: BaseAuthAPI {
                 }
             case .failure(let error):
                 print("Fetching user attributes failed with error \(error)")
-                completion(false)
+                completion(nil)
             }
         }
     }

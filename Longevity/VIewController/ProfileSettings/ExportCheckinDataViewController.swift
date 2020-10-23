@@ -45,23 +45,25 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
         let userInsightsAPI = UserInsightsAPI()
 
         self.showSpinner()
+        let action = UIAlertAction(title: "OK", style: .default, handler: self.handleUIAlertAction(_:) )
 
         userInsightsAPI.exportUserApplicationData(completion: {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Success",
-                               message: "Your data has been exported successfully. You will receive an email shortly.")
+                Alert(title: "Success",
+                               message: "Your data has been exported successfully. You will receive an email shortly.", action: action)
             }
 
         }) { (error) in
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Failure", message: "Unable to export your data. Please try later.")
+
+                Alert(title: "Failure", message: "Unable to export your data. Please try later.", action: action)
             }
         }
     }
 
-    override func handleUIAlertAction(_ action: UIAlertAction) {
+    func handleUIAlertAction(_ action: UIAlertAction) {
         self.closeView()
     }
 }

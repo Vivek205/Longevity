@@ -177,7 +177,7 @@ class OnboardingVC: UIViewController {
 
         func onFailure(error: AuthError) {
             print(error)
-            self.showAlert(title: "Login Failed" , message: error.errorDescription)
+            Alert(title: "Login Failed" , message: error.errorDescription)
         }
 
         _ = Amplify.Auth.fetchAuthSession { (result) in
@@ -273,36 +273,36 @@ extension UIAlertType {
 }
 
 // MARK: Alert
-extension UIViewController {
-    func showAlert(title: String, message: String) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
-        self.present(alert, animated: true)
-    }
-
-    func showAlert(title: String, message: String, action: UIAlertAction) {
-        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-        alert.addAction(action)
-        self.present(alert, animated: true)
-    }
-
-    func showAlert(type: UIAlertType) {
-        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
-
-        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
-        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
-            subview.backgroundColor = type.color
-        }
-
-        self.present(alert, animated: true)
-    }
-    
-
-    @objc func handleUIAlertAction(_ action: UIAlertAction) {
-
-    }
-}
+//extension UIViewController {
+//    func showAlert(title: String, message: String) {
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
+//        self.present(alert, animated: true)
+//    }
+//
+//    func showAlert(title: String, message: String, action: UIAlertAction) {
+//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+//        alert.addAction(action)
+//        self.present(alert, animated: true)
+//    }
+//
+//    func showAlert(type: UIAlertType) {
+//        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+//
+//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
+//        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
+//            subview.backgroundColor = type.color
+//        }
+//
+//        self.present(alert, animated: true)
+//    }
+//    
+//
+//    @objc func handleUIAlertAction(_ action: UIAlertAction) {
+//
+//    }
+//}
 
 
 extension OnboardingVC:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

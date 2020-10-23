@@ -503,7 +503,7 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                     return
                 } else {
                     DispatchQueue.main.async {
-                        self.showAlert(title: "Enable Notification",
+                        Alert(title: "Enable Notification",
                                        message: "Please enable notification to connect the fitbit device")
                         AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                     }

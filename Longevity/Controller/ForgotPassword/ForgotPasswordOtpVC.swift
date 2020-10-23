@@ -121,12 +121,12 @@ class ForgotPasswordOtpVC: UIViewController {
               let confirmPassword = self.confirmPasswordTextField.text?.trimmingCharacters(in: .whitespaces),
               !confirmPassword.isEmpty
               else {
-            self.showAlert(title: "Invalid Values", message: "Please fill all values before proceeding")
+            Alert(title: "Invalid Values", message: "Please fill all values before proceeding")
             return
         }
 
         guard newPassword == confirmPassword else {
-            self.showAlert(title: "Passwords don't match", message: "New password and confirm password should be exactly the same")
+            Alert(title: "Passwords don't match", message: "New password and confirm password should be exactly the same")
             return
         }
 
@@ -141,14 +141,14 @@ class ForgotPasswordOtpVC: UIViewController {
                case .success:
                 DispatchQueue.main.async {
                     let action = UIAlertAction(title: "Login", style: .default, handler: self?.navigateToLogin(_:))
-                    self?.showAlert(title: "Success",
+                    Alert(title: "Success",
                                     message: "Password has been reset successfully. Please login with the new password to continue",action: action)
                     self?.removeSpinner()
                 }
                case .failure(let error):
                    print("Reset password failed with error \(error)")
                 DispatchQueue.main.async {
-                    self?.showAlert(title: "Password reset failure", message: "failure!!")
+                    Alert(title: "Password reset failure", message: "failure!!")
                     self?.removeSpinner()
                 }
                }
@@ -158,7 +158,7 @@ class ForgotPasswordOtpVC: UIViewController {
     @objc func handleResend() {
         self.closeKeyboard()
         guard let username = self.username else {
-            self.showAlert(title: "Username not found", message: "Please enter the username again in the previous step")
+           Alert(title: "Username not found", message: "Please enter the username again in the previous step")
             return}
 
         self.showSpinner()
@@ -168,21 +168,21 @@ class ForgotPasswordOtpVC: UIViewController {
                 switch resetResult.nextStep {
                 case .confirmResetPasswordWithCode(let deliveryDetails, let info):
                     DispatchQueue.main.async {
-                        self?.showAlert(title: "Resent OTP", message: "OTP has been sent again to the registered phone number")
+                       Alert(title: "Resent OTP", message: "OTP has been sent again to the registered phone number")
                         self?.removeSpinner()
                     }
                     print("Confirm reset password with code send to - \(deliveryDetails) \(info)")
                 case .done:
                     print("Reset completed")
                     DispatchQueue.main.async {
-                        self?.showAlert(title: "Success", message: "password reset success")
+                        Alert(title: "Success", message: "password reset success")
                         self?.removeSpinner()
                     }
                 }
             } catch {
                 print("Reset password failed with error \(error)")
                 DispatchQueue.main.async {
-                    self?.showAlert(title: "error", message: "\(error)")
+                    Alert(title: "error", message: "\(error)")
                     self?.removeSpinner()
                 }
             }

@@ -94,11 +94,11 @@ class PersonalLoginVC: UIViewController {
 
             func validate() -> Bool {
                 if email.isEmpty || !(email.isValidEmail){
-                    showAlert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+                    Alert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
                     return false
                 }
                 if password.isEmpty{
-                    showAlert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+                    Alert(title: "Error - Invalid Password", message: "Password cannot be empty.")
                     return false
                 }
                 return true
@@ -144,7 +144,7 @@ class PersonalLoginVC: UIViewController {
                 case .failure(let error):
                     DispatchQueue.main.async {
                         self?.removeSpinner()
-                        self?.showAlert(title: "Login Failed" , message: error.errorDescription)
+                        Alert(title: "Login Failed" , message: error.errorDescription)
                     }
                 }
             }
@@ -171,7 +171,7 @@ class PersonalLoginVC: UIViewController {
             print("Sign in failed \(error)")
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Login Failed" , message: error.errorDescription)
+                Alert(title: "Login Failed" , message: error.errorDescription)
             }
         }
 
@@ -200,7 +200,7 @@ class PersonalLoginVC: UIViewController {
         func onFailure(error: AuthError) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Login Failed" , message: error.errorDescription)
+                Alert(title: "Login Failed" , message: error.errorDescription)
             }
         }
         _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
@@ -227,7 +227,7 @@ class PersonalLoginVC: UIViewController {
         func onFailure(error: AuthError) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.showAlert(title: "Login Failed" , message: error.errorDescription)
+                Alert(title: "Login Failed" , message: error.errorDescription)
             }
         }
         _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in

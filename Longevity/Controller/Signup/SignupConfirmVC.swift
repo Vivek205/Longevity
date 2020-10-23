@@ -123,7 +123,7 @@ class SignupConfirmVC: UIViewController {
         }
         guard let email = self.userEmail else {return}
         guard let confirmationCode = self.otpInput.text?.trimmingCharacters(in: .whitespacesAndNewlines), !confirmationCode.isEmpty else {
-            self.showAlert(title: "Enter OTP", message: "The OTP field cannot be empty")
+            Alert(title: "Enter OTP", message: "The OTP field cannot be empty")
             self.removeSpinner()
             return
         }
@@ -137,7 +137,7 @@ class SignupConfirmVC: UIViewController {
                     onSuccess()
                 case .failure(let error):
                     DispatchQueue.main.async {
-                        self.showAlert(title: "Verify Account Failed", message: error.errorDescription)
+                        Alert(title: "Verify Account Failed", message: error.errorDescription)
                         self.removeSpinner()
                     }
                 }
@@ -155,13 +155,13 @@ class SignupConfirmVC: UIViewController {
                 DispatchQueue.main.async {
                     self.removeSpinner()
                     //                    self.performSegue(withIdentifier: "UnwindSignupConfirmToLogin", sender: self)
-                    self.showAlert(title: "Resent OTP", message: "OTP has been resent to your registered phone number")
+                    Alert(title: "Resent OTP", message: "OTP has been resent to your registered phone number")
                 }
                 print("success", success)
                 return
             case .failure(let error):
                 DispatchQueue.main.async {
-                    self.showAlert(title: "Resend OTP Failed", message: error.errorDescription)
+                    Alert(title: "Resend OTP Failed", message: error.errorDescription)
                     self.removeSpinner()
                 }
                 return
