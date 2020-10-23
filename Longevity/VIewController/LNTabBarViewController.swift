@@ -75,6 +75,7 @@ class LNTabBarViewController: UITabBarController {
                 }
             }
         })
+        self.handleNetworkConnectionChange()
     }
     
     override func viewDidAppear(_ animated: Bool) {
@@ -91,46 +92,24 @@ class LNTabBarViewController: UITabBarController {
             }
         }
     }
-    
-//    func navigateToTheNextScreen(){
-//        let isTermsAccepted = AppSyncManager.instance.isTermsAccepted.value
-//        let devices = AppSyncManager.instance.healthProfile.value?.devices
-//        var healthKitConnected = false
-//        var fitbitConnected = false
-//        if let profile = AppSyncManager.instance.healthProfile.value {
-//            if let healthKitDevice = profile.devices?[ExternalDevices.healthkit], healthKitDevice["connected"] == 1 {
-//                healthKitConnected = true
-//            }
-//            if let fitbitDevice = profile.devices?[ExternalDevices.fitbit], fitbitDevice["connected"] == 1 {
-//                fitbitConnected = true
-//            }
-//        }
-//
-//        let providedPreExistingMedicalConditions = !(AppSyncManager.instance.healthProfile.value?.preconditions?.isEmpty ?? true)
-//
-//        if isTermsAccepted == true {
-//            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-//            var homeVC:UIViewController = UIViewController()
-//
-//            if providedPreExistingMedicalConditions == true {
-//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupCompleteVC")
-//            }else if fitbitConnected {
-//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC")
-//            }else if healthKitConnected {
-//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileNotificationVC")
-//            } else {
-//                homeVC = storyboard.instantiateViewController(withIdentifier: "SetupProfileDisclaimerVC")
-//            }
-//
-//            let navigationController = UINavigationController(rootViewController: homeVC)
-//            navigationController.modalPresentationStyle = .fullScreen
-//
-//            self.present(navigationController, animated: true, completion: nil)
-//
-//        } else {
-//            performSegue(withIdentifier: "OnboardingToProfileSetup", sender: self)
-//        }
-//    }
+
+    func handleNetworkConnectionChange() {
+        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) {
+            if AppSyncManager.instance.internetConnectionAvailable.value == false {
+                DispatchQueue.main.async {
+                    if let items = self.tabBarController?.tabBar.items {
+                        items.forEach{$0.isEnabled = false}
+                    }
+                }
+            }else {
+                DispatchQueue.main.async {
+                    if let items = self.tabBarController?.tabBar.items {
+                        items.forEach{$0.isEnabled = true}
+                    }
+                }
+            }
+        }
+    }
 }
 
 extension LNTabBarViewController: UITabBarControllerDelegate {
