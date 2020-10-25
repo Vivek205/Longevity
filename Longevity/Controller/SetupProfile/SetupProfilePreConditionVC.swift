@@ -54,17 +54,14 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
             
             self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
             self.navigationItem.titleView = titleLabel
-            self.footerView.isHidden = true
-
-            NSLayoutConstraint.activate([
-                self.footerView.heightAnchor.constraint(equalToConstant: 0)
-            ])
         } else {
             self.addProgressbar(progress: 100.0)
         }
         
+        let footerheight: CGFloat = self.isFromSettings ? 0.0 : UIDevice.hasNotch ? 130.0 : 96.0
+        
         NSLayoutConstraint.activate([
-            self.footerView.heightAnchor.constraint(equalToConstant: self.isFromSettings ? 0.0 : 96.0)
+            self.footerView.heightAnchor.constraint(equalToConstant: footerheight)
         ])
 
         if self.modalPresentation {

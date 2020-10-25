@@ -14,10 +14,16 @@ class SetupProfileNotificationVC: BaseProfileSetupViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
-        let descriptionLabelWidth:CGFloat = UIScreen.main.bounds.width - 30.0
-        descriptionLabel.anchor(.width(descriptionLabelWidth))
+//        let descriptionLabelWidth:CGFloat = UIScreen.main.bounds.width - 30.0
+//        descriptionLabel.anchor(.width(descriptionLabelWidth))
 
         self.addProgressbar(progress: 60.0)
+        
+        let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
+        
+//        NSLayoutConstraint.activate([
+//            self.footerView.heightAnchor.constraint(equalToConstant: footerheight)
+//        ])
     }
 
 

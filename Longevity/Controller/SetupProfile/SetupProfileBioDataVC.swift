@@ -71,8 +71,10 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             self.addProgressbar(progress: 40.0)
         }
         
+        let footerheight: CGFloat = self.isFromSettings ? 0.0 : UIDevice.hasNotch ? 130.0 : 96.0
+        
         NSLayoutConstraint.activate([
-            self.footerView.heightAnchor.constraint(equalToConstant: self.isFromSettings ? 0.0 : 96.0)
+            self.footerView.heightAnchor.constraint(equalToConstant: footerheight)
         ])
         
         guard let layout = collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {

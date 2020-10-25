@@ -503,32 +503,32 @@ class PublishFitbitTokenOperation: Operation {
         func onGettingCredentials(_ credentials: Credentials){
             let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
             let body = JSON(["access_token": self.accessToken, "user_id": self.userID])
-                   var bodyData:Data = Data()
-                   do {
-                       bodyData = try body.rawData()
-                   } catch  {
-                       print(error)
-                   }
-                   let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
-                           _ = Amplify.API.post(request: request, listener: { [weak self] (result) in
-                       switch result{
-                       case .success(let data):
-                        self?.responseString = String(data: data, encoding: .utf8)
-                        self?.finish()
-                           Logger.log("Fitbit data published")
-                       case .failure(let apiError):
-                           print(" publish data error \(apiError)")
-                           Logger.log("Fitbit publish failure \(apiError)")
-                        self?.cancel()
-                       }
-                   })
+            var bodyData:Data = Data()
+            do {
+                bodyData = try body.rawData()
+            } catch  {
+                print(error)
+            }
+            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
+            _ = Amplify.API.post(request: request, listener: { [weak self] (result) in
+                switch result{
+                case .success(let data):
+                    self?.responseString = String(data: data, encoding: .utf8)
+                    self?.finish()
+                    Logger.log("Fitbit data published")
+                case .failure(let apiError):
+                    print(" publish data error \(apiError)")
+                    Logger.log("Fitbit publish failure \(apiError)")
+                    self?.cancel()
+                }
+            })
         }
-
+        
         func onFailureCredentials(_ error: Error?) {
             print("publishData failed to fetch credentials \(error)")
             self.downloading = false
-          }
-
+        }
+        
         _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     }
 }

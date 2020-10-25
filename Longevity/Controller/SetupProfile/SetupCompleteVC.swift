@@ -10,16 +10,32 @@ import UIKit
 import ResearchKit
 
 class SetupCompleteVC: BaseProfileSetupViewController {
-    @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var noteLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
-        collectionView.delegate = self
-        collectionView.dataSource = self
         
-        // Do any additional setup after loading the view.
-//        styleNavigationBar()
+        let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
+        
+        let headingAttributes:[NSAttributedString.Key:Any] =
+            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor.sectionHeaderColor]
+        let heading = NSMutableAttributedString(string: "Note: ", attributes: headingAttributes)
+
+        let detailsAttributes:[NSAttributedString.Key:Any] =
+            [.font: UIFont(name: "Montserrat-Italic", size: CGFloat(18)),
+             .foregroundColor: UIColor.sectionHeaderColor
+        ]
+
+        let details =
+            NSMutableAttributedString(
+                string: "You can edit your health profile any time from your Profile Settings",attributes: detailsAttributes)
+
+        var noteContent: NSMutableAttributedString = NSMutableAttributedString()
+        noteContent.append(heading)
+        noteContent.append(details)
+
+        noteLabel.attributedText = noteContent
     }
 
     func navigateForward() {
@@ -34,26 +50,6 @@ class SetupCompleteVC: BaseProfileSetupViewController {
 
     @IBAction func handleBeginSurvey(_ sender: Any) {
         self.showSpinner()
-//        SurveyTaskUtility.shared.createSurvey(surveyId: "COVID_CHECK_IN_01", completion: { [weak self] (task) in
-//            guard let task = task else {
-//                self?.removeSpinner()
-//                self?.navigateForward()
-//                return }
-//            DispatchQueue.main.async {
-//                let taskViewController = ORKTaskViewController(task: task, taskRun: nil)
-//                taskViewController.delegate = self
-//                taskViewController.navigationBar.backgroundColor = .white
-//                taskViewController.navigationBar.barTintColor = .white
-//                taskViewController.view.backgroundColor = .white
-//                self?.removeSpinner()
-//                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
-//            }
-//        }) { (error) in
-//            self.removeSpinner()
-//            self.navigateForward()
-//        }
-        
-        
         func onCreateSurveyCompletion(_ task: ORKOrderedTask?) {
             DispatchQueue.main.async {
                 self.removeSpinner()
@@ -78,29 +74,6 @@ class SetupCompleteVC: BaseProfileSetupViewController {
         
         SurveyTaskUtility.shared.createSurvey(surveyId: nil, completion: onCreateSurveyCompletion(_:),
                                               onFailure: onCreateSurveyFailure(_:))
-    }
-
-
-}
-
-extension SetupCompleteVC: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
-
-    func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 1
-    }
-    
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        1
-    }
-
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileCompleteCell", for: indexPath)
-        return cell
-    }
-
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = collectionView.bounds.width - 30.0
-        return CGSize(width: width, height: collectionView.bounds.height)
     }
 }
 

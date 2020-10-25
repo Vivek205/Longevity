@@ -11,7 +11,8 @@ import UIKit
 class SetupProfileDevicesVC: BaseProfileSetupViewController {
     // MARK: Outlets
     @IBOutlet weak var collectionView: UICollectionView!
-
+    @IBOutlet weak var footerView: UIView!
+    
     var fitbitModel: FitbitModel = FitbitModel()
 
     override func viewDidLoad() {
@@ -21,6 +22,12 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
         collectionView.dataSource = self
         checkIfDevicesAreConnectedAlready()
         self.addProgressbar(progress: 80.0)
+        
+        let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
+
+        NSLayoutConstraint.activate([
+            self.footerView.heightAnchor.constraint(equalToConstant: footerheight)
+        ])
     }
 
     func checkIfDevicesAreConnectedAlready() {
@@ -100,36 +107,36 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return 4
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        switch indexPath.row {
-        case 0:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesImageCell", for: indexPath)
-            return cell
-        case 1:
-            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesInfoCell", for: indexPath)
-            return cell
-        default:
+//        switch indexPath.row {
+//        case 0:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesImageCell", for: indexPath)
+//            return cell
+//        case 1:
+//            let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesInfoCell", for: indexPath)
+//            return cell
+//        default:
             let cell = collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileDevicesConnectCell", for: indexPath) as! SetupProfileDevicesConnectCell
-            cell.setupCell(index: indexPath.item)
+            cell.setupCell(index: indexPath.item + 2)
             cell.delegate = self
             return cell
-        }
+//        }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let height = view.frame.size.height
         let width = view.frame.size.width
-        switch indexPath.row {
-        case 0:
-            return CGSize(width: width - 30, height: CGFloat(270))
-        case 1:
-            return CGSize(width: width - 30, height: CGFloat(150))
-        default:
+//        switch indexPath.row {
+//        case 0:
+//            return CGSize(width: width - 30, height: CGFloat(270))
+//        case 1:
+//            return CGSize(width: width - 30, height: CGFloat(150))
+//        default:
             return CGSize(width: width - 30, height: CGFloat(80))
-        }
+//        }
     }
 }
 
