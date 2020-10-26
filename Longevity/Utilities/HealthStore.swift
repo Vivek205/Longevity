@@ -45,6 +45,11 @@ final class HealthStore {
     
     private var healthDataTypes: Set<HKObjectType> {
         return Set([
+            HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!,
+            HKObjectType.characteristicType(forIdentifier: .biologicalSex)!,
+            HKObjectType.characteristicType(forIdentifier: .bloodType)!,
+            HKObjectType.quantityType(forIdentifier: .bodyMass)!,
+            HKSampleType.quantityType(forIdentifier: .height)!,
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
             HKObjectType.quantityType(forIdentifier: .flightsClimbed)!,
             HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!
@@ -89,33 +94,30 @@ final class HealthStore {
     }
     
     func getHealthKitAuthorization(device: HealthDevices, completion: @escaping ((Bool) -> Void)) {
-        
-        if self.healthStore == nil {
-            self.healthStore = HKHealthStore()
+        if HKHealthStore.isHealthDataAvailable() {
+            if self.healthStore == nil {
+                self.healthStore = HKHealthStore()
+            }
+            if device == .applehealth {
+                healthStore?.requestAuthorization(toShare: nil, read: healthDataTypes) { (success, error) in
+                    completion(success)
+                }
+            } else if device == .applewatch {
+                healthStore?.requestAuthorization(toShare: nil, read: watchDataTypes) { (success, error) in
+                    completion(success)
+                }
+            }
         }
-        if device == .applehealth {
-            guard let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
-                let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
-                let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
-                let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
-                let height = HKSampleType.quantityType(forIdentifier: .height)
-                else {
-                    print("error", "data not available")
-                    return
+    }
+    
+    func getAllAuthorization() {
+        if HKHealthStore.isHealthDataAvailable() {
+            if self.healthStore == nil {
+                self.healthStore = HKHealthStore()
             }
-            let healthKitTypesToRead:Set<HKObjectType> = Set([dateOfBirth,
-                                                              biologicalSex,
-                                                              bloodType,
-                                                              bodyMass,
-                                                              height]).union(healthDataTypes)
-            
-            healthStore?.requestAuthorization(toShare: nil, read: healthKitTypesToRead) { (success, error) in
-                completion(success)
-            }
-        } else if device == .applewatch {
-            healthStore?.requestAuthorization(toShare: nil, read: watchDataTypes) { (success, error) in
-                completion(success)
-            }
+            let allHealthTypes = healthDataTypes.union(watchDataTypes)
+            healthStore?.requestAuthorization(toShare: nil,
+                                              read: allHealthTypes) { (success, error) in }
         }
     }
     
@@ -466,7 +468,6 @@ final class HealthStore {
             if let resultArray = results, !resultArray.isEmpty {
                 var healthReadings = [HealthReading]()
                 
-                
                 for result in resultArray {
                     guard let handwashtimes: Int = (result as? HKCategorySample)?.value else { continue }
                     
@@ -508,14 +509,6 @@ final class HealthStore {
         }
     }
     
-    func startQuerying(device: HealthDevices) {
-        if device == .applehealth {
-            self.startQueryingHealthData(dataTypes: self.healthDataTypes)
-        } else if device == .applewatch {
-            self.startQueryingHealthData(dataTypes: self.watchDataTypes)
-        }
-    }
-    
     fileprivate func startObservingHealthData(dataTypes: Set<HKObjectType>) {
         for type in dataTypes {
             guard let sampleType = type as? HKSampleType else {
@@ -537,56 +530,6 @@ final class HealthStore {
                 }
             }
         }
-    }
-    
-    fileprivate func startQueryingHealthData(dataTypes: Set<HKObjectType>) {
-        for type in dataTypes {
-            guard let sampleType = type as? HKSampleType else {
-                continue
-            }
-            
-            self.queryForSampleType(type: sampleType)
-        }
-    }
-    
-    func queryForSampleType(type: HKSampleType) {
-//            switch type {
-//            case HKObjectType.quantityType(forIdentifier: .stepCount)!:
-//                retrieveStepCount()
-//            case HKObjectType.quantityType(forIdentifier: .flightsClimbed)!:
-//                retrieveFlightsClimbed()
-//            case HKObjectType.quantityType(forIdentifier: .distanceWalkingRunning)!:
-//                retrieveDistance(healthType: .walking)
-//            case HKObjectType.quantityType(forIdentifier: .distanceCycling)!:
-//                retrieveDistance(healthType: .cycling)
-//            case HKObjectType.quantityType(forIdentifier: .distanceSwimming)!:
-//                retrieveDistance(healthType: .swimming)
-//            case HKObjectType.quantityType(forIdentifier: .distanceWheelchair)!:
-//                retrieveDistance(healthType: .wheelchair)
-//            case HKObjectType.quantityType(forIdentifier: .heartRate)!:
-//                retrieveHeartRate()
-//            case HKObjectType.quantityType(forIdentifier: .restingHeartRate)!:
-//                retrieveRestingHeartRate()
-//            case HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!:
-//                retrieveActiveCaloriesBurned()
-//            case HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!:
-//                retrieveExerciseTime {
-//
-//                }
-//            case HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!:
-//                retrieveOxygenSaturation()
-//            default:
-//                break
-//            }
-//
-//        if #available(iOS 14.0, *) {
-//            switch type {
-//            case HKObjectType.categoryType(forIdentifier: .handwashingEvent)!:
-//                retrieveHandwashingEvent()
-//            default:
-//                return
-//            }
-//        }
     }
     
     func obServerQueryForSampleType(type: HKSampleType, completion: @escaping(() -> Void)) {

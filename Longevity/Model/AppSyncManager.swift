@@ -71,10 +71,36 @@ class AppSyncManager  {
         }
     }
     
+    func checkIsDeviceConnected() {
+        var healthKitConnected: Bool = false
+        var appleWatchConnected: Bool = false
+        
+        if let device = self.healthProfile.value?.devices?[ExternalDevices.healthkit], device["connected"] == 1 {
+            healthKitConnected = true
+        }
+        
+        if let device = self.healthProfile.value?.devices?[ExternalDevices.watch], device["connected"] == 1 {
+            appleWatchConnected = true
+        }
+        
+        if healthKitConnected && appleWatchConnected {
+            HealthStore.shared.getAllAuthorization()
+        } else if healthKitConnected {
+            HealthStore.shared.getHealthKitAuthorization(device: .applehealth) { (success) in
+                
+            }
+        } else if appleWatchConnected {
+            HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (success) in
+                
+            }
+        }
+    }
+    
     func fetchUserHealthProfile() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getHealthProfile { [weak self] (healthProfile) in
             self?.healthProfile.value = healthProfile
+            self?.checkIsDeviceConnected()
         }
     }
 

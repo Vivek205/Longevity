@@ -227,7 +227,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
         switch indexPath.row {
         case titleRowIndex:
-            return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(150))
+            return CGSize(width: width, height: self.isFromSettings ? 0.0 : CGFloat(120))
         case textAreaRowIndex:
             return CGSize(width: width, height: CGFloat(200))
         default:
