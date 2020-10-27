@@ -40,9 +40,7 @@ class CustomButtonFill: UIButton {
         styleButton()
     }
     
-    override func draw(_ rect: CGRect) {
-        super.draw(rect)
-        
+    lazy var shadowLayer: UIView = {
         let shadowLayer = UIView(frame: self.frame)
         shadowLayer.backgroundColor = UIColor.clear
         shadowLayer.layer.shadowColor = UIColor.darkGray.cgColor
@@ -52,7 +50,12 @@ class CustomButtonFill: UIButton {
         shadowLayer.layer.shadowRadius = 1
         shadowLayer.layer.masksToBounds = true
         shadowLayer.clipsToBounds = false
-
+        return shadowLayer
+    }()
+    
+    override func draw(_ rect: CGRect) {
+        super.draw(rect)
+        self.shadowLayer.removeFromSuperview()
         self.superview?.addSubview(shadowLayer)
         self.superview?.bringSubviewToFront(self)
     }

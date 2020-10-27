@@ -144,7 +144,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             
             acceptCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             acceptCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            acceptCard.bottomAnchor.constraint(equalTo: footer.topAnchor, constant: -12.0),
+            acceptCard.bottomAnchor.constraint(equalTo: self.continueButton.topAnchor, constant: -50.0),
             acceptCard.heightAnchor.constraint(equalToConstant: 74.0),
             
             acceptCheckbox.centerYAnchor.constraint(equalTo: acceptCard.centerYAnchor),
@@ -192,6 +192,14 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     
     @objc func handleAcceptCheckboxTap(_ sender: CardView) {
         acceptCheckbox.isSelected = !acceptCheckbox.isSelected
+        acceptCard.layer.cornerRadius = 4.0
+        if acceptCheckbox.isSelected {
+            acceptCard.layer.borderWidth = 2.0
+            acceptCard.layer.borderColor = UIColor.themeColor.cgColor
+        } else {
+            acceptCard.layer.borderWidth = 0
+//            acceptCard.layer.borderColor = UIColor.themeColor.cgColor
+        }
         continueButton.isEnabled = acceptCheckbox.isSelected
     }
     
