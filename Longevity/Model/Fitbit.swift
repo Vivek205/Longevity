@@ -274,10 +274,10 @@ protocol BackgroundSessionDelegate {
     func receivedtoken(data: Data)
 }
 
-class BackgroundSession: NSObject {
-    static let shared = BackgroundSession()
+class FitbitFetchBackground: NSObject {
+    static let shared = FitbitFetchBackground()
 
-    static let identifier = "come.rejuve.fitbitrefresh"
+    static let identifier = "com.rejuve.fitbitrefresh"
 
     var delegate: BackgroundSessionDelegate?
 
@@ -292,8 +292,8 @@ class BackgroundSession: NSObject {
     private override init() {
         super.init()
 
-        let configuration = URLSessionConfiguration.background(withIdentifier: BackgroundSession.identifier)
-        configuration.waitsForConnectivity = true
+        let configuration = URLSessionConfiguration.background(withIdentifier: FitbitFetchBackground.identifier)
+        configuration.allowsCellularAccess = true
         configuration.sessionSendsLaunchEvents = true
         session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
@@ -301,13 +301,9 @@ class BackgroundSession: NSObject {
     func start(_ request: URLRequest) {
         session.downloadTask(with: request).resume()
     }
-
-    func startdataTask(_ request: URLRequest) {
-        session.dataTask(with: request).resume()
-    }
 }
 
-extension BackgroundSession: URLSessionDelegate {
+extension FitbitFetchBackground: URLSessionDelegate {
     #if !os(macOS)
     func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
         DispatchQueue.main.async {
@@ -318,7 +314,7 @@ extension BackgroundSession: URLSessionDelegate {
     #endif
 }
 
-extension BackgroundSession: URLSessionTaskDelegate {
+extension FitbitFetchBackground: URLSessionTaskDelegate {
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
                     completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
@@ -347,7 +343,7 @@ extension BackgroundSession: URLSessionTaskDelegate {
     }
 }
 
-extension BackgroundSession: URLSessionDownloadDelegate {
+extension FitbitFetchBackground: URLSessionDownloadDelegate {
     func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
         do {
             let data = try Data(contentsOf: location)
@@ -445,10 +441,11 @@ class FetchFitbitTokenOperation: Operation {
                         
                         try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(self.accessToken!)
                         try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(self.refreshToken!)
-                        
+                        Logger.log("FitbitToken Fetch Success: \(Date())")
                         self.finish()
                     }
                 } catch {
+                    Logger.log("FitbitToken Fetch Failed: \(error.localizedDescription)")
                     self.cancel()
                     return
                 }
@@ -515,10 +512,10 @@ class PublishFitbitTokenOperation: Operation {
                 case .success(let data):
                     self?.responseString = String(data: data, encoding: .utf8)
                     self?.finish()
-                    Logger.log("Fitbit data published")
+                    Logger.log("FitbitSync Success: \(Date())")
                 case .failure(let apiError):
                     print(" publish data error \(apiError)")
-                    Logger.log("Fitbit publish failure \(apiError)")
+                    Logger.log("FitbitSync Failed: \(apiError.errorDescription) \(Date())")
                     self?.cancel()
                 }
             })

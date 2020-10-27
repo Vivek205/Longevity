@@ -574,11 +574,15 @@ final class HealthStore {
         let date: String = dateformatter.string(from: Date())
         let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: date)
         let healthKit = HealthkitAPI()
-        Logger.log("HealthType:\(healthType.rawValue), \(date)")
+        
         healthKit.synchronizeHealthkit(deviceName: deviceType.deviceType, healthData: healthData, completion: {
-            
+            Logger.log("HealthSync Success:\(healthType.rawValue), \(Date())")
         }) { (error) in
-            print(error.localizedDescription)
+//            print(error.localizedDescription)
+//            let dateformatter = DateFormatter()
+//            dateformatter.dateFormat = "yyyy-MM-dd"
+//            let date: String = dateformatter.string(from: Date())
+            Logger.log("HealthSync Failed:\(healthType.rawValue), \(Date())")
         }
     }
 }
