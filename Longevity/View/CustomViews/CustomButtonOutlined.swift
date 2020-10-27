@@ -18,6 +18,10 @@ class CustomButtonOutlined: UIButton {
         super.init(coder: coder)
         styleButton()
     }
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.styleButton()
+    }
 
     func styleButton() {
         layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
