@@ -33,7 +33,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
     lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Next", for: .normal)
+        buttonView.setTitle("Continue", for: .normal)
         return buttonView
     }()
 

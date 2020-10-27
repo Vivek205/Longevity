@@ -28,7 +28,7 @@ class CompletionStepVC: ORKStepViewController {
     lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Done", for: .normal)
+        buttonView.setTitle("Finish", for: .normal)
         return buttonView
     }()
 

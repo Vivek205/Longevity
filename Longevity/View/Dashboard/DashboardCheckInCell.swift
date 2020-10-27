@@ -110,7 +110,8 @@ class DashboardCheckInCell: UITableViewCell {
                     var calendar = Calendar.current
                     calendar.timeZone = TimeZone(abbreviation: "UTC")!
                     if calendar.isDateInToday(lastSubmissionDate) {
-                        status = .completedToday
+                        #warning("Uncomment below")
+//                        status = .completedToday
                     } else {
                         status = .completed
                     }

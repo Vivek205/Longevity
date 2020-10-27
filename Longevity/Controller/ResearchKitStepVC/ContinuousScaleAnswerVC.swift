@@ -55,7 +55,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Next", for: .normal)
+        buttonView.setTitle("Continue", for: .normal)
         buttonView.addTarget(self, action: #selector(handleContinue(_:)), for: .touchUpInside)
         buttonView.isEnabled = false
         return buttonView
