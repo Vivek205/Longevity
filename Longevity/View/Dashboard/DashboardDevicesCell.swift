@@ -128,10 +128,6 @@ extension DashboardDevicesCell: UICollectionViewDelegate, UICollectionViewDataSo
         guard let cell = collectionView.cellForItem(at: indexPath) as? DashboardDeviceCollectionCell else {
             return
         }
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         cell.selectCell()
     }
 }

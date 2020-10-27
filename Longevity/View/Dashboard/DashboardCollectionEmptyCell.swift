@@ -80,10 +80,6 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     }
     
     override func doOpenInfo() {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         NavigationUtility.presentOverCurrentContext(
         destination: LongevityComingSoonPopupViewController(),
             style: .overCurrentContext, transitionStyle: .crossDissolve,

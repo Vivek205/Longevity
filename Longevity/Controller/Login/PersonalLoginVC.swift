@@ -83,10 +83,6 @@ class PersonalLoginVC: UIViewController {
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
 
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
 
         self.closeKeyboard()
         if let email = self.formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
@@ -156,11 +152,6 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
-
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -186,11 +177,6 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
-
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -215,10 +201,6 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleSigninWithApple(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         self.closeKeyboard()
         self.showSpinner()
         func onSuccess() {
@@ -246,10 +228,6 @@ class PersonalLoginVC: UIViewController {
     }
 
     @IBAction func handleForgotPassword(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         let destinationVC = ForgotPasswordCaptureEmailVC()
         destinationVC.username = formEmail.text
         self.navigationController?.pushViewController(destinationVC, animated: true)

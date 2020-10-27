@@ -115,19 +115,11 @@ class SignupVC: UIViewController {
     }
 
     @objc func handleSignupWithEmail() {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         self.performSegue(withIdentifier: "SignupToEmailSignup", sender: self)
     }
     
 
     @objc func handleSigninWithGoogle(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         self.showSpinner()
         func onSuccess() {
             DispatchQueue.main.async {
@@ -153,10 +145,6 @@ class SignupVC: UIViewController {
     }
 
     @objc func handleSigninWithFacebook(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         self.showSpinner()
         func onSuccess() {
             DispatchQueue.main.async {
@@ -184,10 +172,6 @@ class SignupVC: UIViewController {
     }
 
     @objc func handleSigninWithApple(_ sender: Any) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         self.showSpinner()
         func onSuccess() {
             DispatchQueue.main.async {

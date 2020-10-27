@@ -12,14 +12,29 @@ import Network
 final class ConnectionManager: NSObject {
     static let instance = ConnectionManager()
     private var reachability : Reachability!
+    private let offlineNotificationView: OfflineNotificationView = OfflineNotificationView()
+    private var timer: Timer?
+
+    func startTimer() {
+        guard timer == nil else {return}
+        DispatchQueue.main.async {
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ (_) in
+                self.addConnectionObserver()
+            }
+        }
+    }
+
+    func stopTimer() {
+        timer?.invalidate()
+        timer = nil
+    }
 
     func addConnectionObserver(){
-        if #available(iOS 12.0, *) {
-            monitorNetworkPath()
-        } else {
-            observeReachability()
-        }
-
+            if #available(iOS 12.0, *) {
+                self.monitorNetworkPath()
+            } else {
+                self.observeReachability()
+            }
     }
 
     func observeReachability() {
@@ -38,9 +53,13 @@ final class ConnectionManager: NSObject {
         if reachability.connection != .unavailable {
             print("connected")
             AppSyncManager.instance.internetConnectionAvailable.value = true
-        }else {
+            self.showNotification(false)
+            self.stopTimer()
+        } else {
             print("not connected")
             AppSyncManager.instance.internetConnectionAvailable.value = false
+            self.showNotification(true)
+            self.startTimer()
         }
     }
 
@@ -53,14 +72,36 @@ final class ConnectionManager: NSObject {
             if path.status == .satisfied {
                 print("connected")
                 AppSyncManager.instance.internetConnectionAvailable.value = true
-            }else {
+                self.showNotification(false)
+                self.stopTimer()
+            } else {
                 print("not connected")
                 AppSyncManager.instance.internetConnectionAvailable.value = false
+                self.showNotification(true)
+                self.startTimer()
             }
             print("is Expensive", path.isExpensive)
         }
 
         let queue = DispatchQueue(label: "NetworkPathMonitor")
         monitor.start(queue: queue)
+    }
+
+    private func showNotification(_ show: Bool) {
+        if show {
+            DispatchQueue.main.async {
+                if var topController = UIApplication.shared.keyWindow?.rootViewController {
+                    while let presentedViewController = topController.presentedViewController {
+                        topController = presentedViewController
+                    }
+                    topController.view.addSubview(self.offlineNotificationView)
+                    self.offlineNotificationView.fillSuperview()
+                }
+            }
+        }else {
+            DispatchQueue.main.async {
+                self.offlineNotificationView.removeFromSuperview()
+            }
+        }
     }
 }

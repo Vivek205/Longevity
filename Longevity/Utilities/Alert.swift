@@ -26,17 +26,17 @@ final class Alert {
         self.present(alert: alert, animated: true)
     }
     
-    @discardableResult
-    convenience init(type: UIAlertType) {
-        self.init()
-        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
-        
-        alert.addAction(UIAlertAction(title: "OK", style: .default ))
-        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
-            subview.backgroundColor = type.color
-        }
-        self.present(alert: alert, animated: true)
-    }
+//    @discardableResult
+//    convenience init(type: UIAlertType) {
+//        self.init()
+//        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
+//        
+//        alert.addAction(UIAlertAction(title: "OK", style: .default ))
+//        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
+//            subview.backgroundColor = type.color
+//        }
+//        self.present(alert: alert, animated: true)
+//    }
 
     private func present(alert:UIAlertController, animated: Bool) {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {

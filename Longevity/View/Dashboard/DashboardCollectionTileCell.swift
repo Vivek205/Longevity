@@ -182,10 +182,6 @@ class DashboardCollectionTileCell: CommonHexagonCell {
     }
     
     @objc func doOpenMyDataTab() {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         guard let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController else {
             return
@@ -198,10 +194,6 @@ class DashboardCollectionTileCell: CommonHexagonCell {
     }
     
     override func doOpenInfo() {
-        if AppSyncManager.instance.internetConnectionAvailable.value == false {
-            Alert(type: .offlineNotification)
-            return
-        }
         let appdelegate = UIApplication.shared.delegate as! AppDelegate
         guard let tabBarController =  appdelegate.window?.rootViewController as? LNTabBarViewController else {
             return

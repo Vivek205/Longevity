@@ -198,6 +198,7 @@
 		E2D9973724A4FC00006CFA1F /* SetupProfileBioOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */; };
 		E2E14BF924AF0BFC007C0470 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E14BF824AF0BFC007C0470 /* User.swift */; };
 		E2E5EFD92542A25C003ADAEC /* Alert.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5EFD82542A259003ADAEC /* Alert.swift */; };
+		E2E5EFDB2542E0FD003ADAEC /* OfflineNotificationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E5EFDA2542E0FB003ADAEC /* OfflineNotificationView.swift */; };
 		E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2E8F93D24F94E7F003827CC /* FAQViewController.swift */; };
 		E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */; };
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
@@ -432,6 +433,7 @@
 		E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileBioOptionCell.swift; sourceTree = "<group>"; };
 		E2E14BF824AF0BFC007C0470 /* User.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
 		E2E5EFD82542A259003ADAEC /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
+		E2E5EFDA2542E0FB003ADAEC /* OfflineNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineNotificationView.swift; sourceTree = "<group>"; };
 		E2E8F93D24F94E7F003827CC /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
 		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -840,6 +842,7 @@
 				E290B60724BCA1EA00C51655 /* CheckboxButton.swift */,
 				C14ABA4E24E3220E00C81580 /* HexagonView.swift */,
 				E25E8C9925386ECD00502F86 /* DividerView.swift */,
+				E2E5EFDA2542E0FB003ADAEC /* OfflineNotificationView.swift */,
 			);
 			path = CustomViews;
 			sourceTree = "<group>";
@@ -1261,6 +1264,7 @@
 				E25E8C96253756C400502F86 /* UIButton+Extension.swift in Sources */,
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
+				E2E5EFDB2542E0FD003ADAEC /* OfflineNotificationView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
 				C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */,
@@ -1494,7 +1498,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1519,7 +1523,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 45;
+				CURRENT_PROJECT_VERSION = 46;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
