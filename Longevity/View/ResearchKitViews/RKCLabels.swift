@@ -79,7 +79,7 @@ class AnswerTitleLabel: UILabel {
         styleLabel()
     }
     func styleLabel() {
-        self.font = UIFont(name: "Montserrat-Medium", size: 22)
+        self.font = UIFont(name: "Montserrat-Medium", size: 18)
         self.textColor = UIColor(red: 0, green: 0, blue: 0, alpha: 1)
     }
 }
@@ -94,7 +94,7 @@ class AnswerDescriptionLabel: UILabel {
         styleLabel()
     }
     func styleLabel() {
-        self.font = UIFont(name: "Montserrat-Medium", size: 14)
+        self.font = UIFont(name: AppFontName.regular, size: 14)
         self.textColor = UIColor(red: 102/255, green: 102/255, blue: 102/255, alpha: 1)
     }
 }

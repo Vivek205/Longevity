@@ -103,15 +103,15 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         let questionLabelHeight:CGFloat = questionLabel.text?.height(withConstrainedWidth: self.frame.size.width, font:questionLabel.font) ?? 10
         
         NSLayoutConstraint.activate([
-            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 30),
+            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -30),
             questionLabel.topAnchor.constraint(equalTo: self.topAnchor),
             questionLabel.heightAnchor.constraint(equalToConstant: 88)
         ])
         
         NSLayoutConstraint.activate([
-            answerTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
-            answerTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
+            answerTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 17),
+            answerTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -17),
             answerTextView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -25),
             answerTextView.heightAnchor.constraint(equalToConstant: 100)
         ])

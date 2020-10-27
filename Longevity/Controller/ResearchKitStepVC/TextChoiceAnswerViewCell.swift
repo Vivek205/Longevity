@@ -7,6 +7,7 @@
 //
 
 import UIKit
+import ResearchKit
 
 protocol TextChoiceAnswerViewChangedDelegate {
     func checkboxButton(wasPressedOnCell cell:TextChoiceAnswerViewCell)
@@ -16,6 +17,13 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
     var isChosenOption = false
     var delegate: TextChoiceAnswerViewChangedDelegate?
     var value:Int?
+    var answerFormatStyle:ORKChoiceAnswerStyle? {
+        didSet {
+            if answerFormatStyle == .singleChoice {
+                self.checkbox.setImage(nil, for: .normal)
+            }
+        }
+    }
 
     lazy var cardView: CardView = {
         let cardView = CardView()
@@ -71,7 +79,7 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
-            titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 10)
+            titleLabel.topAnchor.constraint(equalTo: cardView.topAnchor, constant: 15)
         ])
 
         let titleLabelBottomAnchor =  titleLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10)
@@ -92,7 +100,7 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
                 extraInfoLabel.leadingAnchor.constraint(equalTo: cardView.leadingAnchor, constant: 20),
                 extraInfoLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
                 extraInfoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-                extraInfoLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -10)
+                extraInfoLabel.bottomAnchor.constraint(equalTo: cardView.bottomAnchor, constant: -15)
             ])
 
         } else {

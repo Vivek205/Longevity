@@ -37,7 +37,7 @@ class TextChoiceAnswerVC: ORKStepViewController {
         return buttonView
     }()
 
-    var choiceViews: [RKCTextChoiceAnswerView] = [RKCTextChoiceAnswerView]()
+//    var choiceViews: [RKCTextChoiceAnswerView] = [RKCTextChoiceAnswerView]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -124,6 +124,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 answerViewCell.delegate = self
                 answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
                 answerViewCell.value = indexPath.item// - 1
+                answerViewCell.answerFormatStyle = answerFormat.style
                 if Int(currentAnswerValue ?? "") == answerViewCell.value {
                     answerViewCell.toggleIsChosenOption()
                     continueButton.isEnabled = true
@@ -171,7 +172,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                         .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
                 }
 
-                height += 50
+                height += 30
             }
         }
 

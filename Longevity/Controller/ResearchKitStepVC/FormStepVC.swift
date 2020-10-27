@@ -193,22 +193,22 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         let width = self.view.bounds.width
 
         guard let formStep = self.step as? ORKFormStep else {
-            return CGSize(width: width - CGFloat(40), height: height)
+            return CGSize(width: width - CGFloat(30), height: height)
         }
         guard formStep.formItems != nil else {
-            return CGSize(width: width - CGFloat(40), height: height)
+            return CGSize(width: width - CGFloat(30), height: height)
         }
         let item = formStep.formItems![indexPath.item] as ORKFormItem
 
         if item.identifier == "" {
-            return CGSize(width: width - CGFloat(40), height: height)
+            return CGSize(width: width - CGFloat(30), height: height)
         }
 
         if (formStep.formItems?.count ?? 0) - 1 == indexPath.item
             && item.answerFormat?.questionType == .text {
             let answerCell = RKCFormTextAnswerView()
             let questionText = item.text ?? ""
-            height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
+            height = questionText.height(withConstrainedWidth: width - 30.0, font: answerCell.questionLabel.font)
 //            if answerCell.isClearButtonHidden {
 //                height += 110
 //            }else {
@@ -219,7 +219,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width, height: height + 130)
         }
 
-        return CGSize(width: width - CGFloat(40), height: height)
+        return CGSize(width: width - CGFloat(30), height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {

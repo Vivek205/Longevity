@@ -94,8 +94,8 @@ class RKCQuestionView: UICollectionReusableView {
         self.addSubview(questionLabel)
 
         NSLayoutConstraint.activate([
-            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
+            questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
             questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
         ])
 

@@ -37,6 +37,7 @@ class RKCTextChoiceAnswerView: UIView {
 
     func createLayout(answer: String, info: String?) {
         self.addSubview(checkbox)
+//        checkbox.setImage(nil, for: .normal)
         checkbox.translatesAutoresizingMaskIntoConstraints = false
         checkbox.centerYAnchor.constraint(equalTo: self.centerYAnchor).isActive = true
         checkbox.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20).isActive = true
