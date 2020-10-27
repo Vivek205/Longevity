@@ -65,8 +65,8 @@ class DashboardTaskCell: UITableViewCell {
         let taskdesc = UILabel()
         taskdesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
         taskdesc.textColor = .checkinCompleted
-        taskdesc.numberOfLines = 0
-        taskdesc.lineBreakMode = .byWordWrapping
+        taskdesc.numberOfLines = 2
+        taskdesc.lineBreakMode = .byTruncatingTail
         taskdesc.translatesAutoresizingMaskIntoConstraints = false
         return taskdesc
     }()

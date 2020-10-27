@@ -13,6 +13,8 @@ class FormStepVC: ORKStepViewController {
     
     var keyboardHeight: CGFloat?
     var initialYOrigin: CGFloat = CGFloat(0)
+    var textViewHeight: CGFloat = 101
+    var rollbackYOrigin: CGFloat?
     
     lazy var formItemsCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -42,11 +44,18 @@ class FormStepVC: ORKStepViewController {
         super.viewDidLoad()
         
         self.navigationController?.navigationBar.barTintColor = .white
+        self.rollbackYOrigin = self.view.frame.origin.y
         
         presentViews()
         addKeyboardObservers()
         print("did load", self.view.frame.origin.y )
         self.initialYOrigin = self.view.frame.origin.y
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        print("self.view.frame.origin.y", self.view.frame.origin.y)
+        self.rollbackYOrigin = self.view.frame.origin.y
     }
 
     deinit {
@@ -195,12 +204,19 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return CGSize(width: width - CGFloat(40), height: height)
         }
 
-        if (formStep.formItems?.count ?? 0) - 1 == indexPath.item && item.answerFormat?.questionType == .text {
+        if (formStep.formItems?.count ?? 0) - 1 == indexPath.item
+            && item.answerFormat?.questionType == .text {
             let answerCell = RKCFormTextAnswerView()
             let questionText = item.text ?? ""
             height = questionText.height(withConstrainedWidth: width - 40.0, font: answerCell.questionLabel.font)
-            height += 132 // height for textView & clear button
-            return CGSize(width: width, height: height)
+//            if answerCell.isClearButtonHidden {
+//                height += 110
+//            }else {
+//                height += 130
+//            }
+
+             // height for textView & clear button
+            return CGSize(width: width, height: height + 130)
         }
 
         return CGSize(width: width - CGFloat(40), height: height)
@@ -212,7 +228,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
         
         if let formStep = self.step as? ORKFormStep {
-//            let questionSubheader = SurveyTaskUtility.shared.surveyTagline
             headerView.createLayout(header: formStep.title ?? "", question: formStep.text ?? "", extraInfo: nil)
         }
         
@@ -264,62 +279,56 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
 
 extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerViewDelegate {
-    func textViewDidBeginEditing(_ textView: UITextView) {
-        animateTextView(showKeyboard: true)
-    }
-
-    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {
-        animateTextView(showKeyboard: true)
-        return true
-    }
-    func textViewDidChange(_ textView: UITextView) {
-        animateTextView(showKeyboard: true)
-    }
+    func textViewDidBeginEditing(_ textView: UITextView) {}
 
     func textViewDidEndEditing(_ textView: UITextView) {
-        animateTextView(showKeyboard: false)
+        if let rollbackYOrigin = self.rollbackYOrigin, self.view.frame.origin.y != rollbackYOrigin {
+            self.view.frame.origin.y = rollbackYOrigin
+        }
+    }
+
+    func textViewDidChange(_ textView: UITextView) {
+//        if let formStep = self.step as? ORKFormStep ,
+//           let formItems = formStep.formItems{
+//            let textViewItemIndex = formItems.count  - 1
+//            formItemsCollection.reloadItems(at: [IndexPath(row: textViewItemIndex, section: 0)])
+//        }
+
+
     }
 
     func textView(_ textView: UITextView,
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool {
-//        if text == "\n" {
-//            animateTextView(showKeyboard: false)
-//            textView.resignFirstResponder()
-//            return false
-//        }
         return true
     }
 
-    func animateTextView(showKeyboard: Bool) {
-        print("Y position", self.view.frame.origin.y, "initial", self.initialYOrigin)
-        if self.view.frame.origin.y > CGFloat(0) {
-            self.initialYOrigin = self.view.frame.origin.y
-        }
-        let movementDistance = self.keyboardHeight ?? CGFloat(0)
-        let movement = showKeyboard ? -(movementDistance) : self.initialYOrigin
-        self.view.frame.origin.y = movement
-    }
-
     func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     func removeKeyboardObservers() {
         NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardWillShowNotification, object: nil)
         NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification,
-                                                  object: nil)
     }
 
-    @objc func keyboardWillChange(notification: Notification) {
-        print("keyboard notification \(notification.name.rawValue)")
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-            let keyboardRectangle = keyboardFrame.cgRectValue
-            self.keyboardHeight = keyboardRectangle.height
-            print("keyboard height", self.keyboardHeight)
-        }
+    @objc func keyboardWasShown(notification: NSNotification) {
+        guard let info = notification.userInfo else {return}
+        let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        guard let keyboardHeight = keyboardSize?.height ,
+            let navbarHeight = self.navigationController?.navigationBar.frame.size.height
+        else {return}
+        let topPadding:CGFloat = 30.0
+        let viewYPadding = navbarHeight + topPadding
+
+        var visibleScreen : CGRect = self.view.frame
+        visibleScreen.size.height -= (keyboardHeight + viewYPadding)
+        self.view.frame.origin.y = -(keyboardHeight - textViewHeight - viewYPadding - 100)
+    }
+
+    @objc func keyboardWillBeHidden(notification: NSNotification){
+        guard let rollbackYOrigin = self.rollbackYOrigin else {return}
+        self.view.frame.origin.y = rollbackYOrigin
     }
 }

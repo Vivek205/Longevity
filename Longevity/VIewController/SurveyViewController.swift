@@ -31,8 +31,8 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationBar.backgroundColor = .white
-        self.navigationBar.barTintColor = .white
+//        self.navigationBar.backgroundColor = .white
+//        self.navigationBar.barTintColor = .blue
         if self.isFirstTask {
             self.navigationItem.backBarButtonItem = nil
             self.navigationItem.hidesBackButton = true
@@ -43,12 +43,15 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             stepViewControllerWillAppear stepViewController: ORKStepViewController) {
+//        taskViewController.navigationBar.barTintColor = .orange
         let taskViewAppearance =
             UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+//        taskViewAppearance.tint
         if let step = stepViewController.step {
             if step is ORKInstructionStep || step is ORKCompletionStep {
 //                self.navigationItem.backBarButtonItem = UIBarButtonItem()
+
                 return
             }
             SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)

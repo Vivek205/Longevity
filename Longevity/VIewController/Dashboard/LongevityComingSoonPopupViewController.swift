@@ -39,11 +39,11 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         self.actionButton.setTitle("Ok", for: .normal)
         self.titleLabel.text = "Longevity"
         
-        let infoText = "Coming soon to you!"
+        let infoText = "Coming soon!"
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedInfoText = NSMutableAttributedString(string: infoText, attributes: attributes)
         
-        let infoText2 = "\n\nCalculate your longevity age, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat."
+        let infoText2 = "\n\nPredicted your biological age from different data types and your health history profile.  Track your wellness in detail, helping you to control your aging and extend your healthy productive longevity.  Provide you with easy-to-do tasks on a daily basis."
         let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedInfoText2 = NSMutableAttributedString(string: infoText2, attributes: attributes2)
         
@@ -58,8 +58,8 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
             notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
             actionButton.topAnchor.constraint(equalTo: emailNotification.bottomAnchor, constant: 24.0),
             actionButton.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
-            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 30.0),
-            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 59.0),
+            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -59.0),
             actionButton.heightAnchor.constraint(equalToConstant: 48),
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
@@ -90,6 +90,8 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
                     self?.dismiss(animated: true, completion: nil)
                 }
             }
+        }else {
+            self.dismiss(animated: true, completion: nil)
         }
     }
 }

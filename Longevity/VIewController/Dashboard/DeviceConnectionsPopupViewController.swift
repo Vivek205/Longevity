@@ -47,8 +47,8 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
             
             containerView.heightAnchor.constraint(equalToConstant: screenHeight - 150.0),
             
-            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 30.0),
-            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 59.0),
+            actionButton.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -59.0),
             actionButton.heightAnchor.constraint(equalToConstant: 48),
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -27)
         ])
@@ -67,6 +67,11 @@ class DeviceConnectionsPopupViewController: BasePopUpModalViewController {
         layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
+    }
+
+    override func primaryButtonPressed(_ sender: UIButton) {
+        super.primaryButtonPressed(sender)
+        self.dismiss(animated: true, completion: nil)
     }
 }
 

@@ -83,7 +83,12 @@ extension ORKStepViewController {
     }
 
     func customizeNavbarButtons() {
-
+//        navigationController?.navigationBar.backgroundColor = .yellow
+//        navigationController?.navigationBar.barTintColor = .blue
+//        self.navigationBar
+//        navigationController?.navigationBar.tintColor = .orange
+        UINavigationBar.appearance().barTintColor = .systemPink
+//        self.navigationItem.backgr
         self.cancelButtonItem?.title = "Exit"
     }
 }

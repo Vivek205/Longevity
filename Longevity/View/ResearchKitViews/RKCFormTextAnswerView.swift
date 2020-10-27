@@ -17,6 +17,12 @@ protocol RKCFormTextAnswerViewDelegate {
                   shouldChangeTextIn range: NSRange,
                   replacementText text: String) -> Bool
 }
+
+// MARK: Optional delegate methods' default implementation
+extension RKCFormTextAnswerViewDelegate {
+    func textViewShouldBeginEditing(_ textView: UITextView) -> Bool {return true}
+    func textViewDidChange(_ textView: UITextView){}
+}
 /// Default implementation of optional methods
 extension RKCFormTextAnswerViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {}
@@ -25,6 +31,7 @@ extension RKCFormTextAnswerViewDelegate {
 class RKCFormTextAnswerView: UICollectionViewCell {
     var itemIdentifier:String?
     var delegate: RKCFormTextAnswerViewDelegate?
+    var isClearButtonHidden = true
     
     lazy var questionLabel: UILabel  = {
         let label = UILabel()
@@ -53,6 +60,8 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         textView.inputAccessoryView = self.keyboardToolbar
         textView.layer.borderWidth = 1
         textView.layer.borderColor = UIColor.borderColor.cgColor
+        textView.font = UIFont(name: AppFontName.regular, size: 18)
+        textView.textColor = .black
         return textView
     }()
 
@@ -90,22 +99,29 @@ class RKCFormTextAnswerView: UICollectionViewCell {
             answerTextView.layer.borderColor = UIColor.themeColor.cgColor
             clearButton.isHidden = false
         }
+
+        let questionLabelHeight:CGFloat = questionLabel.text?.height(withConstrainedWidth: self.frame.size.width, font:questionLabel.font) ?? 10
         
         NSLayoutConstraint.activate([
             questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            questionLabel.topAnchor.constraint(equalTo: self.topAnchor)
+            questionLabel.topAnchor.constraint(equalTo: self.topAnchor),
+            questionLabel.heightAnchor.constraint(equalToConstant: 88)
         ])
         
         NSLayoutConstraint.activate([
             answerTextView.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20),
             answerTextView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20),
-            answerTextView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor),
-//            answerTextView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            answerTextView.topAnchor.constraint(equalTo: questionLabel.bottomAnchor, constant: -25),
             answerTextView.heightAnchor.constraint(equalToConstant: 100)
         ])
 
         clearButton.anchor(top: answerTextView.bottomAnchor, leading: leadingAnchor, bottom: bottomAnchor, trailing: trailingAnchor, padding: .init(top: 8, left: 0, bottom: 0, right: 0), size: .init(width: 0, height: 24))
+    }
+
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        self.answerTextView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
     }
 
     @objc func handleKeyboardDoneBarButtonTapped(_ sender: Any) {
@@ -117,6 +133,7 @@ class RKCFormTextAnswerView: UICollectionViewCell {
         self.answerTextView.layer.borderColor = UIColor.borderColor.cgColor
         guard let identifier = self.itemIdentifier else { return }
         SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: "")
+        clearButton.isHidden = true
     }
 }
 
@@ -136,14 +153,12 @@ extension RKCFormTextAnswerView: UITextViewDelegate {
     }
 
     func textViewDidChange(_ textView: UITextView) {
-        delegate?.textViewDidChange(textView)
-
         if textView.hasText {
             clearButton.isHidden = false
         }else {
             clearButton.isHidden = true
         }
-
+        delegate?.textViewDidChange(textView)
         guard let identifier = self.itemIdentifier else { return }
         SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: textView.text)
 
