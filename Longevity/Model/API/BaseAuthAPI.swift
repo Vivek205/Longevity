@@ -23,18 +23,18 @@ class BaseAuthAPI {
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
         
-//        if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem() {
-//            if let expDate = dateFormatter.date(from: idTokenExp) {
-//                let currentDate = Date()
-//                if currentDate < expDate {
-//
-//                    if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
-//                        return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
-//                    }
-//
-//                }
-//            }
-//        }
+        if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem() {
+            if let expDate = dateFormatter.date(from: idTokenExp) {
+                let currentDate = Date()
+                if currentDate < expDate {
+
+                    if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
+                        return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
+                    }
+
+                }
+            }
+        }
 
 
 
