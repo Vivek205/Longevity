@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -32,43 +32,33 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="mkO-53-DnK">
-                                <rect key="frame" x="15" y="88" width="384" height="629"/>
-                                <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonalSetupOne" translatesAutoresizingMaskIntoConstraints="NO" id="G2z-bX-NAL">
-                                        <rect key="frame" x="49.5" y="0.0" width="285" height="377"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="285" id="xBM-wE-qiI"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IP-bf-WoA">
-                                        <rect key="frame" x="92" y="377" width="200" height="67"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="200" id="OsN-21-vsX"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
-                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" lineBreakMode="tailTruncation" numberOfLines="3" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV" userLabel="Info">
-                                        <rect key="frame" x="20.5" y="444" width="343" height="148"/>
-                                        <string key="text">Personalize your results and 
-reduce questions by setting 
-up your health profile.</string>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer:  If you are experiencing an acute medical condition, you need to consult your doctor immediatly. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TTa-qf-JMf" userLabel="Disclaimer">
-                                        <rect key="frame" x="16.5" y="592" width="351.5" height="37"/>
-                                        <fontDescription key="fontDescription" name="Montserrat-Italic" family="Montserrat" pointSize="18"/>
-                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                </subviews>
-                            </stackView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonalSetupOne" translatesAutoresizingMaskIntoConstraints="NO" id="G2z-bX-NAL">
+                                <rect key="frame" x="77" y="112" width="260" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="224" id="JOf-Kg-u9v"/>
+                                    <constraint firstAttribute="width" constant="260" id="g26-EW-IS0"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Setup" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="8IP-bf-WoA">
+                                <rect key="frame" x="20" y="360" width="374" height="39.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Personalize your results and increase accuracy by setting up your health profile." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HO4-Wh-MeV" userLabel="Info">
+                                <rect key="frame" x="15" y="411.5" width="384" height="73.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Disclaimer:  If you are experiencing an acute medical condition, you need to consult your doctor immediatly. " lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="9" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="TTa-qf-JMf" userLabel="Disclaimer">
+                                <rect key="frame" x="15" y="509" width="384" height="66"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Italic" family="Montserrat" pointSize="18"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTi-dJ-ldN" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="717" width="414" height="96"/>
+                                <rect key="frame" x="0.0" y="766" width="414" height="130"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
@@ -83,31 +73,30 @@ up your health profile.</string>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="96" id="9TX-Dw-XMP"/>
+                                    <constraint firstAttribute="height" constant="130" id="9TX-Dw-XMP"/>
                                     <constraint firstItem="a8S-60-J8A" firstAttribute="leading" secondItem="jTi-dJ-ldN" secondAttribute="leading" constant="20" id="WdY-X8-Ws9"/>
                                     <constraint firstAttribute="trailing" secondItem="a8S-60-J8A" secondAttribute="trailing" constant="20" id="h5y-TK-eOT"/>
                                     <constraint firstItem="a8S-60-J8A" firstAttribute="top" secondItem="jTi-dJ-ldN" secondAttribute="top" constant="24" id="jc6-lK-MTb"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="JCo-Hv-yIO" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="PrV-6t-uqf"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="mkO-53-DnK" secondAttribute="trailing" constant="15" id="6G6-3M-h2I"/>
+                            <constraint firstItem="G2z-bX-NAL" firstAttribute="centerX" secondItem="A99-0r-8zI" secondAttribute="centerX" id="6x3-hh-vFu"/>
+                            <constraint firstItem="G2z-bX-NAL" firstAttribute="top" secondItem="PrV-6t-uqf" secondAttribute="top" constant="24" id="A1p-2M-Dkd"/>
+                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="TTa-qf-JMf" secondAttribute="trailing" constant="15" id="B3K-zT-ffL"/>
+                            <constraint firstItem="8IP-bf-WoA" firstAttribute="top" secondItem="G2z-bX-NAL" secondAttribute="bottom" constant="24" id="Gkw-s4-zps"/>
                             <constraint firstItem="jTi-dJ-ldN" firstAttribute="leading" secondItem="A99-0r-8zI" secondAttribute="leading" id="HXb-IX-6dX"/>
-                            <constraint firstItem="JCo-Hv-yIO" firstAttribute="leading" secondItem="A99-0r-8zI" secondAttribute="leading" id="JkE-Xh-j6J"/>
+                            <constraint firstItem="TTa-qf-JMf" firstAttribute="top" secondItem="HO4-Wh-MeV" secondAttribute="bottom" constant="24" id="M7Y-yJ-ZsP"/>
+                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="8IP-bf-WoA" secondAttribute="trailing" constant="20" id="Nx2-jq-vga"/>
                             <constraint firstAttribute="trailing" secondItem="jTi-dJ-ldN" secondAttribute="trailing" id="QZB-2i-S3e"/>
-                            <constraint firstItem="mkO-53-DnK" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="15" id="UJf-Ua-ccy"/>
-                            <constraint firstItem="PrV-6t-uqf" firstAttribute="bottom" secondItem="jTi-dJ-ldN" secondAttribute="bottom" id="VLi-vn-cjZ"/>
-                            <constraint firstItem="jTi-dJ-ldN" firstAttribute="top" secondItem="mkO-53-DnK" secondAttribute="bottom" id="adu-fA-TKs"/>
-                            <constraint firstAttribute="trailing" secondItem="JCo-Hv-yIO" secondAttribute="trailing" id="fRE-m3-IZn"/>
-                            <constraint firstItem="mkO-53-DnK" firstAttribute="top" secondItem="PrV-6t-uqf" secondAttribute="top" id="q2x-cT-BWt"/>
-                            <constraint firstAttribute="bottom" secondItem="JCo-Hv-yIO" secondAttribute="bottom" id="tCd-Vb-iUs"/>
-                            <constraint firstItem="JCo-Hv-yIO" firstAttribute="top" secondItem="jTi-dJ-ldN" secondAttribute="bottom" id="xOr-UJ-nZ6"/>
+                            <constraint firstItem="TTa-qf-JMf" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="15" id="RM5-Se-xSV"/>
+                            <constraint firstAttribute="bottom" secondItem="jTi-dJ-ldN" secondAttribute="bottom" id="VLi-vn-cjZ"/>
+                            <constraint firstItem="HO4-Wh-MeV" firstAttribute="top" secondItem="8IP-bf-WoA" secondAttribute="bottom" constant="12" id="ZFi-fc-eM7"/>
+                            <constraint firstItem="PrV-6t-uqf" firstAttribute="trailing" secondItem="HO4-Wh-MeV" secondAttribute="trailing" constant="15" id="fEI-WT-5n7"/>
+                            <constraint firstItem="8IP-bf-WoA" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="20" id="kKz-Mf-HKM"/>
+                            <constraint firstItem="HO4-Wh-MeV" firstAttribute="leading" secondItem="PrV-6t-uqf" secondAttribute="leading" constant="15" id="zRg-g7-PDv"/>
                         </constraints>
                     </view>
                     <toolbarItems/>
@@ -156,10 +145,6 @@ up your health profile.</string>
                                     <constraint firstAttribute="trailing" secondItem="HOc-Gh-tin" secondAttribute="trailing" constant="20" id="na4-9D-xBN"/>
                                     <constraint firstItem="HOc-Gh-tin" firstAttribute="top" secondItem="Bdi-8o-yPG" secondAttribute="top" constant="24" id="nop-VV-2H5"/>
                                 </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Rx2-1u-P0J" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                             </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="Rnv-cI-MYv">
                                 <rect key="frame" x="0.0" y="88" width="414" height="629"/>
@@ -273,13 +258,9 @@ up your health profile.</string>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="Rnv-cI-MYv" firstAttribute="top" secondItem="K84-UL-axb" secondAttribute="topMargin" id="5QF-7q-QJl"/>
-                            <constraint firstItem="Rx2-1u-P0J" firstAttribute="top" secondItem="Bdi-8o-yPG" secondAttribute="bottom" id="69H-vN-d3N"/>
-                            <constraint firstItem="Bdi-8o-yPG" firstAttribute="bottom" secondItem="OS9-vg-Aoi" secondAttribute="bottom" id="AFi-xx-rCE"/>
-                            <constraint firstItem="Rx2-1u-P0J" firstAttribute="leading" secondItem="K84-UL-axb" secondAttribute="leading" id="JA5-M3-77M"/>
+                            <constraint firstItem="Bdi-8o-yPG" firstAttribute="bottom" secondItem="K84-UL-axb" secondAttribute="bottom" id="AFi-xx-rCE"/>
                             <constraint firstItem="OS9-vg-Aoi" firstAttribute="trailing" secondItem="Rnv-cI-MYv" secondAttribute="trailing" id="LwR-dW-ivo"/>
                             <constraint firstItem="Bdi-8o-yPG" firstAttribute="top" secondItem="Rnv-cI-MYv" secondAttribute="bottom" id="TZL-bY-kDZ"/>
-                            <constraint firstAttribute="trailing" secondItem="Rx2-1u-P0J" secondAttribute="trailing" id="eL2-bV-dhc"/>
-                            <constraint firstAttribute="bottom" secondItem="Rx2-1u-P0J" secondAttribute="bottom" id="kzM-b9-571"/>
                             <constraint firstAttribute="trailing" secondItem="Bdi-8o-yPG" secondAttribute="trailing" id="n4p-r6-NFA"/>
                             <constraint firstItem="Rnv-cI-MYv" firstAttribute="leading" secondItem="OS9-vg-Aoi" secondAttribute="leading" id="nB2-Jd-uVv"/>
                             <constraint firstItem="Bdi-8o-yPG" firstAttribute="leading" secondItem="K84-UL-axb" secondAttribute="leading" id="rGk-17-Oss"/>
@@ -308,45 +289,34 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" distribution="fillProportionally" alignment="center" spacing="28" translatesAutoresizingMaskIntoConstraints="NO" id="i3s-Nf-sga">
-                                <rect key="frame" x="20" y="88" width="374" height="710"/>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setupProfileNotification" translatesAutoresizingMaskIntoConstraints="NO" id="CjM-Ap-ExH">
+                                <rect key="frame" x="77" y="112" width="260" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="224" id="9YJ-oN-3Bg"/>
+                                    <constraint firstAttribute="width" constant="260" id="AqY-l4-YXz"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgi-x2-lR3">
+                                <rect key="frame" x="127" y="360" width="160" height="29.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow us to provide you a better service.  Enable notifications to recieve scheduled reminders and updates  " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lQ-x2-dP5">
+                                <rect key="frame" x="15" y="413.5" width="384" height="98"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rSM-dg-wMI" userLabel="BottomBackground">
+                                <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
+                                <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
+                            </view>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="wOB-BE-hiF">
+                                <rect key="frame" x="0.0" y="722" width="414" height="174"/>
                                 <subviews>
-                                    <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setupProfileNotification" translatesAutoresizingMaskIntoConstraints="NO" id="CjM-Ap-ExH">
-                                        <rect key="frame" x="44.5" y="0.0" width="285" height="274.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="285" id="AqY-l4-YXz"/>
-                                        </constraints>
-                                    </imageView>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Notifications" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Wgi-x2-lR3">
-                                        <rect key="frame" x="62" y="302.5" width="250" height="36.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="250" id="kMK-1y-ZSF"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
-                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow us to provide you a better service.  Enable notifications to recieve scheduled reminders and updates  " textAlignment="center" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lQ-x2-dP5">
-                                        <rect key="frame" x="12" y="367" width="350" height="179.5"/>
-                                        <constraints>
-                                            <constraint firstAttribute="width" constant="350" id="2VQ-PY-lxO"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                        <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <nil key="highlightedColor"/>
-                                    </label>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="20" y="574.5" width="334" height="48"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="LCS-3d-tXo"/>
-                                        </constraints>
-                                        <state key="normal" title="Enable Now"/>
-                                        <connections>
-                                            <action selector="handleEnableNotification:" destination="AXW-C6-PXE" eventType="touchUpInside" id="mvL-3W-ziB"/>
-                                        </connections>
-                                    </button>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FlW-B4-IOn">
-                                        <rect key="frame" x="125" y="650.5" width="124" height="59.5"/>
+                                        <rect key="frame" x="25" y="104" width="364" height="37"/>
                                         <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                         <state key="normal" title="Maybe Later">
                                             <color key="titleColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -355,28 +325,46 @@ up your health profile.</string>
                                             <action selector="handleMayBeLater:" destination="AXW-C6-PXE" eventType="touchUpInside" id="24g-dk-Jwz"/>
                                         </connections>
                                     </button>
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                        <rect key="frame" x="15" y="24" width="384" height="48"/>
+                                        <constraints>
+                                            <constraint firstAttribute="height" constant="48" id="LCS-3d-tXo"/>
+                                        </constraints>
+                                        <state key="normal" title="Enable Now"/>
+                                        <connections>
+                                            <action selector="handleEnableNotification:" destination="AXW-C6-PXE" eventType="touchUpInside" id="mvL-3W-ziB"/>
+                                        </connections>
+                                    </button>
                                 </subviews>
+                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
                                 <constraints>
-                                    <constraint firstAttribute="trailing" secondItem="4jT-8s-mCb" secondAttribute="trailing" constant="20" id="97S-2V-Prx"/>
-                                    <constraint firstItem="4jT-8s-mCb" firstAttribute="leading" secondItem="i3s-Nf-sga" secondAttribute="leading" constant="20" id="j9U-Wa-PAm"/>
+                                    <constraint firstAttribute="trailing" secondItem="4jT-8s-mCb" secondAttribute="trailing" constant="15" id="4I3-xe-7Mt"/>
+                                    <constraint firstItem="4jT-8s-mCb" firstAttribute="leading" secondItem="wOB-BE-hiF" secondAttribute="leading" constant="15" id="GZq-kg-PSl"/>
+                                    <constraint firstItem="FlW-B4-IOn" firstAttribute="leading" secondItem="wOB-BE-hiF" secondAttribute="leading" constant="25" id="aZJ-Du-4ar"/>
+                                    <constraint firstAttribute="height" constant="174" id="hbR-qR-Oj0"/>
+                                    <constraint firstAttribute="trailing" secondItem="FlW-B4-IOn" secondAttribute="trailing" constant="25" id="lwJ-RQ-N0l"/>
+                                    <constraint firstItem="4jT-8s-mCb" firstAttribute="top" secondItem="wOB-BE-hiF" secondAttribute="top" constant="24" id="tQP-SI-v2e"/>
+                                    <constraint firstItem="FlW-B4-IOn" firstAttribute="top" secondItem="4jT-8s-mCb" secondAttribute="bottom" constant="32" id="wwf-OX-0bp"/>
                                 </constraints>
-                            </stackView>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="rSM-dg-wMI" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="798" width="414" height="98"/>
-                                <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                             </view>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="ecy-Cx-H3Z"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="ecy-Cx-H3Z" firstAttribute="bottom" secondItem="i3s-Nf-sga" secondAttribute="bottom" constant="15" id="100-3k-th2"/>
-                            <constraint firstItem="rSM-dg-wMI" firstAttribute="top" secondItem="i3s-Nf-sga" secondAttribute="bottom" id="5CU-av-B92"/>
-                            <constraint firstAttribute="trailing" secondItem="i3s-Nf-sga" secondAttribute="trailing" constant="20" id="6gL-3g-mrv"/>
+                            <constraint firstItem="wOB-BE-hiF" firstAttribute="leading" secondItem="ecy-Cx-H3Z" secondAttribute="leading" id="A8k-ms-2mF"/>
+                            <constraint firstItem="ecy-Cx-H3Z" firstAttribute="trailing" secondItem="8lQ-x2-dP5" secondAttribute="trailing" constant="15" id="AId-7a-ZdJ"/>
                             <constraint firstAttribute="trailing" secondItem="rSM-dg-wMI" secondAttribute="trailing" id="Bbf-Xo-d54"/>
-                            <constraint firstItem="i3s-Nf-sga" firstAttribute="top" secondItem="ecy-Cx-H3Z" secondAttribute="top" id="G9Z-8T-W3T"/>
+                            <constraint firstItem="8lQ-x2-dP5" firstAttribute="leading" secondItem="ecy-Cx-H3Z" secondAttribute="leading" constant="15" id="EYN-yt-JkN"/>
+                            <constraint firstItem="Wgi-x2-lR3" firstAttribute="centerX" secondItem="7g3-u9-RZ8" secondAttribute="centerX" id="J5E-6F-3Cy"/>
+                            <constraint firstItem="ecy-Cx-H3Z" firstAttribute="trailing" secondItem="wOB-BE-hiF" secondAttribute="trailing" id="Kuf-Gn-RAM"/>
+                            <constraint firstItem="CjM-Ap-ExH" firstAttribute="top" secondItem="ecy-Cx-H3Z" secondAttribute="top" constant="24" id="MMZ-8m-stm"/>
                             <constraint firstItem="rSM-dg-wMI" firstAttribute="leading" secondItem="7g3-u9-RZ8" secondAttribute="leading" id="Rdk-4C-B2i"/>
+                            <constraint firstItem="rSM-dg-wMI" firstAttribute="top" secondItem="wOB-BE-hiF" secondAttribute="bottom" id="Rr6-GQ-gyD"/>
+                            <constraint firstItem="8lQ-x2-dP5" firstAttribute="top" secondItem="Wgi-x2-lR3" secondAttribute="bottom" constant="24" id="gz9-rD-xM6"/>
+                            <constraint firstItem="CjM-Ap-ExH" firstAttribute="centerX" secondItem="7g3-u9-RZ8" secondAttribute="centerX" id="hxX-XX-44K"/>
+                            <constraint firstAttribute="bottom" secondItem="wOB-BE-hiF" secondAttribute="bottom" id="igD-4l-8Wm"/>
                             <constraint firstAttribute="bottom" secondItem="rSM-dg-wMI" secondAttribute="bottom" id="mAg-Iu-UT9"/>
-                            <constraint firstItem="i3s-Nf-sga" firstAttribute="leading" secondItem="ecy-Cx-H3Z" secondAttribute="leading" constant="20" id="zmQ-wi-lMk"/>
+                            <constraint firstItem="Wgi-x2-lR3" firstAttribute="top" secondItem="CjM-Ap-ExH" secondAttribute="bottom" constant="24" id="u3E-Jw-zRa"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="w3v-Sh-G23">
@@ -399,8 +387,8 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="u3N-lR-Yap" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="717" width="414" height="96"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u3N-lR-Yap" userLabel="Footer">
+                                <rect key="frame" x="0.0" y="800" width="414" height="96"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQB-q8-o6h" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
@@ -418,15 +406,10 @@ up your health profile.</string>
                                     <constraint firstItem="TQB-q8-o6h" firstAttribute="leading" secondItem="u3N-lR-Yap" secondAttribute="leading" constant="20" id="80e-1S-Gae"/>
                                     <constraint firstAttribute="trailing" secondItem="TQB-q8-o6h" secondAttribute="trailing" constant="20" id="HIO-9Y-wm3"/>
                                     <constraint firstItem="TQB-q8-o6h" firstAttribute="top" secondItem="u3N-lR-Yap" secondAttribute="top" constant="24" id="O5L-hf-P92"/>
-                                    <constraint firstAttribute="height" constant="96" id="diy-wv-zjE"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="9d0-lU-UBa" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MA6-7J-eVI">
-                                <rect key="frame" x="0.0" y="88" width="414" height="629"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="MA6-7J-eVI">
+                                <rect key="frame" x="0.0" y="511" width="414" height="289"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="csc-aw-5Ix">
                                     <size key="itemSize" width="414" height="315"/>
@@ -435,62 +418,8 @@ up your health profile.</string>
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileDevicesImageCell" id="hyE-tU-RJz">
-                                        <rect key="frame" x="40" y="0.0" width="334" height="315"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="B3G-mF-8hu">
-                                            <rect key="frame" x="0.0" y="0.0" width="334" height="315"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setupProfileDevices" translatesAutoresizingMaskIntoConstraints="NO" id="DJn-Lk-K6x">
-                                                    <rect key="frame" x="24.5" y="0.0" width="285" height="224"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="285" id="NUs-Tx-Jof"/>
-                                                    </constraints>
-                                                </imageView>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="DJn-Lk-K6x" firstAttribute="centerX" secondItem="B3G-mF-8hu" secondAttribute="centerX" id="nV3-w1-0B9"/>
-                                                <constraint firstItem="DJn-Lk-K6x" firstAttribute="top" secondItem="B3G-mF-8hu" secondAttribute="top" id="r9K-vQ-2yy"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="334" height="315"/>
-                                    </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileDevicesInfoCell" id="n2l-cL-yOd">
-                                        <rect key="frame" x="40" y="325" width="334" height="151"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="mfu-Uj-DFQ">
-                                            <rect key="frame" x="0.0" y="0.0" width="334" height="151"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Health Devices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QOl-Iq-hcP">
-                                                    <rect key="frame" x="0.0" y="0.0" width="334" height="29.5"/>
-                                                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
-                                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you using Fitbit or other health tracking devices? Connect them to improve your results." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="yvT-DF-PsM">
-                                                    <rect key="frame" x="0.0" y="17.5" width="334" height="117.5"/>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
-                                            <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                            <constraints>
-                                                <constraint firstItem="QOl-Iq-hcP" firstAttribute="leading" secondItem="mfu-Uj-DFQ" secondAttribute="leading" id="3wf-ua-K6f"/>
-                                                <constraint firstItem="yvT-DF-PsM" firstAttribute="leading" secondItem="mfu-Uj-DFQ" secondAttribute="leading" id="BsF-Y6-jb9"/>
-                                                <constraint firstAttribute="trailing" secondItem="yvT-DF-PsM" secondAttribute="trailing" id="Gxu-Rj-AcR"/>
-                                                <constraint firstItem="QOl-Iq-hcP" firstAttribute="bottom" secondItem="yvT-DF-PsM" secondAttribute="top" constant="12" id="Isv-Oi-Ss4"/>
-                                                <constraint firstAttribute="trailing" secondItem="QOl-Iq-hcP" secondAttribute="trailing" id="Jn8-aV-qmz"/>
-                                                <constraint firstItem="QOl-Iq-hcP" firstAttribute="top" secondItem="mfu-Uj-DFQ" secondAttribute="top" id="RE1-90-apk"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="334" height="151"/>
-                                    </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileDevicesConnectCell" id="fDR-Fe-bHv" customClass="SetupProfileDevicesConnectCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="40" y="486" width="334" height="159"/>
+                                        <rect key="frame" x="40" y="0.0" width="334" height="159"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sTf-mj-jrF">
                                             <rect key="frame" x="0.0" y="0.0" width="334" height="159"/>
@@ -555,21 +484,43 @@ up your health profile.</string>
                                     </collectionViewCell>
                                 </cells>
                             </collectionView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="setupProfileDevices" translatesAutoresizingMaskIntoConstraints="NO" id="PLp-C5-W6d">
+                                <rect key="frame" x="77" y="112" width="260" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="260" id="6Hm-Uf-3SW"/>
+                                    <constraint firstAttribute="height" constant="224" id="qRu-E7-Htd"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Health Devices" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qok-Nu-gFp">
+                                <rect key="frame" x="114" y="360" width="186" height="29.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
+                                <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Are you using Fitbit or other health tracking devices? Connect them to improve your results." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="CxJ-1e-BlF">
+                                <rect key="frame" x="15" y="413.5" width="384" height="73.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
+                                <color key="textColor" red="0.30588235289999999" green="0.30588235289999999" blue="0.30588235289999999" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="aob-2W-QyZ"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
+                            <constraint firstItem="CxJ-1e-BlF" firstAttribute="leading" secondItem="aob-2W-QyZ" secondAttribute="leading" constant="15" id="4Zv-g0-6SI"/>
                             <constraint firstItem="u3N-lR-Yap" firstAttribute="leading" secondItem="aob-2W-QyZ" secondAttribute="leading" id="4pb-d8-VN9"/>
-                            <constraint firstItem="9d0-lU-UBa" firstAttribute="top" secondItem="u3N-lR-Yap" secondAttribute="bottom" id="6MQ-Za-Hjh"/>
-                            <constraint firstAttribute="bottom" secondItem="9d0-lU-UBa" secondAttribute="bottom" id="Fey-5H-oGt"/>
-                            <constraint firstAttribute="trailing" secondItem="MA6-7J-eVI" secondAttribute="trailing" id="IBc-AW-pHM"/>
-                            <constraint firstItem="9d0-lU-UBa" firstAttribute="leading" secondItem="onI-zn-S5J" secondAttribute="leading" id="P5t-DJ-HJF"/>
-                            <constraint firstItem="aob-2W-QyZ" firstAttribute="bottom" secondItem="u3N-lR-Yap" secondAttribute="bottom" id="Zj1-lV-jDM"/>
-                            <constraint firstAttribute="trailing" secondItem="9d0-lU-UBa" secondAttribute="trailing" id="daM-Xo-CsH"/>
+                            <constraint firstItem="CxJ-1e-BlF" firstAttribute="top" secondItem="Qok-Nu-gFp" secondAttribute="bottom" constant="24" id="FpU-fD-Eby"/>
+                            <constraint firstItem="aob-2W-QyZ" firstAttribute="trailing" secondItem="MA6-7J-eVI" secondAttribute="trailing" id="IBc-AW-pHM"/>
+                            <constraint firstItem="PLp-C5-W6d" firstAttribute="centerX" secondItem="onI-zn-S5J" secondAttribute="centerX" id="ZZ0-rP-hL8"/>
+                            <constraint firstAttribute="bottom" secondItem="u3N-lR-Yap" secondAttribute="bottom" id="Zj1-lV-jDM"/>
+                            <constraint firstItem="Qok-Nu-gFp" firstAttribute="centerX" secondItem="onI-zn-S5J" secondAttribute="centerX" id="gRH-dB-CQh"/>
                             <constraint firstItem="MA6-7J-eVI" firstAttribute="leading" secondItem="aob-2W-QyZ" secondAttribute="leading" id="hRB-jE-AfT"/>
                             <constraint firstItem="u3N-lR-Yap" firstAttribute="top" secondItem="MA6-7J-eVI" secondAttribute="bottom" id="iV3-19-ht8"/>
+                            <constraint firstItem="PLp-C5-W6d" firstAttribute="top" secondItem="aob-2W-QyZ" secondAttribute="top" constant="24" id="kT2-DJ-aQt"/>
+                            <constraint firstItem="aob-2W-QyZ" firstAttribute="trailing" secondItem="CxJ-1e-BlF" secondAttribute="trailing" constant="15" id="nEO-Cr-zCW"/>
+                            <constraint firstItem="Qok-Nu-gFp" firstAttribute="top" secondItem="PLp-C5-W6d" secondAttribute="bottom" constant="24" id="qC9-J4-Kj8"/>
                             <constraint firstItem="u3N-lR-Yap" firstAttribute="trailing" secondItem="aob-2W-QyZ" secondAttribute="trailing" id="rfg-Js-Nfv"/>
-                            <constraint firstItem="MA6-7J-eVI" firstAttribute="top" secondItem="aob-2W-QyZ" secondAttribute="top" id="ylV-hT-yD3"/>
+                            <constraint firstItem="MA6-7J-eVI" firstAttribute="top" secondItem="CxJ-1e-BlF" secondAttribute="bottom" constant="24" id="ylV-hT-yD3"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="ZD5-vF-Won">
@@ -577,6 +528,7 @@ up your health profile.</string>
                     </navigationItem>
                     <connections>
                         <outlet property="collectionView" destination="MA6-7J-eVI" id="I3f-2s-72n"/>
+                        <outlet property="footerView" destination="u3N-lR-Yap" id="CyG-A9-nxQ"/>
                         <segue destination="5Xi-7J-lk0" kind="show" identifier="SetupProfileDevicesToPreExistingConditions" id="6rd-or-q4K"/>
                     </connections>
                 </viewController>
@@ -592,10 +544,6 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ght-FB-yLa" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="896" width="414" height="0.0"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
                             <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" ambiguous="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="ZD6-xG-uNs">
                                 <rect key="frame" x="0.0" y="88" width="414" height="629"/>
                                 <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
@@ -603,11 +551,11 @@ up your health profile.</string>
                                     <size key="itemSize" width="386" height="127"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="14" minY="24" maxX="14" maxY="10"/>
+                                    <inset key="sectionInset" minX="14" minY="15" maxX="14" maxY="10"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreHeadingCell" id="jfm-93-eHT">
-                                        <rect key="frame" x="14" y="24" width="386" height="127"/>
+                                        <rect key="frame" x="14" y="15" width="386" height="127"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="rl5-Fd-NQa">
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="127"/>
@@ -624,11 +572,11 @@ up your health profile.</string>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Do you have any conditions that affect your daily health?" textAlignment="natural" lineBreakMode="wordWrap" numberOfLines="2" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="GVz-03-cGa">
-                                                    <rect key="frame" x="0.0" y="62" width="386" height="59"/>
+                                                    <rect key="frame" x="0.0" y="62" width="386" height="49"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="400" id="MYG-h1-gfb"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
+                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
@@ -645,7 +593,7 @@ up your health profile.</string>
                                         <size key="customSize" width="386" height="127"/>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOptionCell" id="EBo-6s-jNl" customClass="SetupProfilePreConditionOptionCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="161" width="386" height="127"/>
+                                        <rect key="frame" x="14" y="152" width="386" height="127"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Tc6-L6-apa">
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="127"/>
@@ -686,7 +634,7 @@ up your health profile.</string>
                                         </connections>
                                     </collectionViewCell>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOtherCell" id="fYh-i2-8CO" customClass="SetupProfileOtherOptionCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="14" y="298" width="386" height="215"/>
+                                        <rect key="frame" x="14" y="289" width="386" height="215"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OUC-Xo-tOd">
                                             <rect key="frame" x="0.0" y="0.0" width="386" height="215"/>
@@ -772,14 +720,10 @@ up your health profile.</string>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="ZD6-xG-uNs" firstAttribute="leading" secondItem="Ktt-2p-Fdg" secondAttribute="leading" id="1ji-UQ-NEM"/>
-                            <constraint firstItem="ght-FB-yLa" firstAttribute="top" secondItem="HEU-Lb-Zsz" secondAttribute="bottom" id="2Nu-pb-ss2"/>
-                            <constraint firstItem="ght-FB-yLa" firstAttribute="leading" secondItem="Ktt-2p-Fdg" secondAttribute="leading" id="7yd-12-Xdr"/>
                             <constraint firstItem="HEU-Lb-Zsz" firstAttribute="leading" secondItem="Ktt-2p-Fdg" secondAttribute="leading" id="9s0-Fn-yaZ"/>
                             <constraint firstItem="ZD6-xG-uNs" firstAttribute="top" secondItem="VVb-na-gD1" secondAttribute="top" id="Bbk-rb-VRy"/>
                             <constraint firstItem="HEU-Lb-Zsz" firstAttribute="top" secondItem="ZD6-xG-uNs" secondAttribute="bottom" id="HRb-oY-nrL"/>
                             <constraint firstAttribute="trailing" secondItem="HEU-Lb-Zsz" secondAttribute="trailing" id="IOh-XB-aIp"/>
-                            <constraint firstAttribute="bottom" secondItem="ght-FB-yLa" secondAttribute="bottom" id="N9r-t1-gQT"/>
-                            <constraint firstAttribute="trailing" secondItem="ght-FB-yLa" secondAttribute="trailing" id="PrE-wD-fcf"/>
                             <constraint firstItem="HEU-Lb-Zsz" firstAttribute="bottom" secondItem="Ktt-2p-Fdg" secondAttribute="bottom" id="kdy-Pu-itU"/>
                             <constraint firstAttribute="trailing" secondItem="ZD6-xG-uNs" secondAttribute="trailing" id="rj0-cg-fSS"/>
                         </constraints>
@@ -805,67 +749,22 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="TtM-Tq-E1j">
-                                <rect key="frame" x="0.0" y="88" width="414" height="551"/>
-                                <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                                <collectionViewFlowLayout key="collectionViewLayout" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xpY-bR-VgG">
-                                    <size key="itemSize" width="414" height="490"/>
-                                    <size key="headerReferenceSize" width="0.0" height="0.0"/>
-                                    <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
-                                </collectionViewFlowLayout>
-                                <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileCompleteCell" id="0DW-1Y-DXC" customClass="SetupProfileCompleteCell" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="0.0" y="0.0" width="414" height="490"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="8FB-9y-A7d">
-                                            <rect key="frame" x="0.0" y="0.0" width="414" height="490"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SetupComplete" translatesAutoresizingMaskIntoConstraints="NO" id="PaW-c9-flq">
-                                                    <rect key="frame" x="95" y="24" width="224" height="224"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="height" constant="224" id="HJ2-5k-kSw"/>
-                                                        <constraint firstAttribute="width" constant="224" id="ZvB-c7-Tkt"/>
-                                                    </constraints>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Description" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
-                                                    <rect key="frame" x="0.0" y="272" width="414" height="39.5"/>
-                                                    <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="32"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                                    <rect key="frame" x="0.0" y="323.5" width="414" height="29.5"/>
-                                                    <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                                    <nil key="textColor"/>
-                                                    <nil key="highlightedColor"/>
-                                                    <string key="userLabel">You can always edit your health profile and answers under your Profile Settings  You are ready to begin your first “health” survey quetions that will help determine This and That</string>
-                                                </label>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" id="HU4-55-ZWG"/>
-                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="SaN-q0-VN4"/>
-                                                <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="12" id="Uqe-Y5-grK"/>
-                                                <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="8FB-9y-A7d" secondAttribute="top" constant="24" id="VtA-Vz-h8A"/>
-                                                <constraint firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" id="Xzh-ZK-8hd"/>
-                                                <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="24" id="aJ7-Vh-0d4"/>
-                                                <constraint firstAttribute="bottom" relation="greaterThanOrEqual" secondItem="K85-ba-4vg" secondAttribute="bottom" constant="10" id="hc6-qR-5ty"/>
-                                                <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="8FB-9y-A7d" secondAttribute="centerX" id="m6M-CY-7Cp"/>
-                                                <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" id="yQz-CG-BTE"/>
-                                                <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="8FB-9y-A7d" secondAttribute="leading" id="ypF-uP-yYs"/>
-                                            </constraints>
-                                        </collectionViewCellContentView>
-                                        <size key="customSize" width="414" height="490"/>
-                                        <connections>
-                                            <outlet property="descriptionLabel" destination="Ol2-mH-c3N" id="csY-vw-WUv"/>
-                                            <outlet property="noteLabel" destination="K85-ba-4vg" id="rVi-AA-neM"/>
-                                        </connections>
-                                    </collectionViewCell>
-                                </cells>
-                            </collectionView>
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SetupComplete" translatesAutoresizingMaskIntoConstraints="NO" id="PaW-c9-flq">
+                                <rect key="frame" x="77" y="112" width="260" height="224"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="224" id="HJ2-5k-kSw"/>
+                                    <constraint firstAttribute="width" constant="260" id="ZvB-c7-Tkt"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
+                                <rect key="frame" x="15" y="482" width="384" height="29.5"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
+                                <nil key="textColor"/>
+                                <nil key="highlightedColor"/>
+                                <string key="userLabel">You can always edit your health profile and answers under your Profile Settings  You are ready to begin your first “health” survey quetions that will help determine This and That</string>
+                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9K-JU-FGj" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="639" width="414" height="174"/>
+                                <rect key="frame" x="0.0" y="722" width="414" height="174"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ9-EH-Y8r" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
                                         <rect key="frame" x="15" y="24" width="384" height="48"/>
@@ -902,25 +801,27 @@ up your health profile.</string>
                                     <constraint firstAttribute="trailing" secondItem="dJ9-EH-Y8r" secondAttribute="trailing" constant="15" id="wdR-aw-VeB"/>
                                 </constraints>
                             </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="l2d-NP-9Cx" userLabel="BottomBackground">
-                                <rect key="frame" x="0.0" y="813" width="414" height="83"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                            </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are ready to begin your first COVID Check-in which will help determine your current COVID-19 infection risk and symptoms." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
+                                <rect key="frame" x="15" y="360" width="384" height="98"/>
+                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
+                                <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="gOS-uH-Kc5"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="n9K-JU-FGj" firstAttribute="top" secondItem="TtM-Tq-E1j" secondAttribute="bottom" id="176-aj-odz"/>
-                            <constraint firstItem="TtM-Tq-E1j" firstAttribute="top" secondItem="gOS-uH-Kc5" secondAttribute="top" id="9Qt-pb-iy4"/>
-                            <constraint firstItem="n9K-JU-FGj" firstAttribute="bottom" secondItem="gOS-uH-Kc5" secondAttribute="bottom" id="H9m-qW-UVJ"/>
+                            <constraint firstItem="gOS-uH-Kc5" firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" constant="15" id="1SK-2m-OY1"/>
+                            <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" constant="15" id="7Eb-2W-5Ex"/>
+                            <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="aj6-ax-2An" secondAttribute="centerX" id="8YK-6H-ElH"/>
+                            <constraint firstItem="n9K-JU-FGj" firstAttribute="bottom" secondItem="aj6-ax-2An" secondAttribute="bottom" id="H9m-qW-UVJ"/>
+                            <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="aj6-ax-2An" secondAttribute="leading" constant="15" id="HM2-f2-hlS"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" id="KJg-Vv-Dml"/>
-                            <constraint firstItem="l2d-NP-9Cx" firstAttribute="top" secondItem="n9K-JU-FGj" secondAttribute="bottom" id="Kfz-Jr-2v2"/>
-                            <constraint firstItem="l2d-NP-9Cx" firstAttribute="leading" secondItem="aj6-ax-2An" secondAttribute="leading" id="MjY-yn-nem"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="trailing" secondItem="gOS-uH-Kc5" secondAttribute="trailing" id="N7r-I8-LQb"/>
-                            <constraint firstAttribute="bottom" secondItem="l2d-NP-9Cx" secondAttribute="bottom" id="Ogl-mS-vIz"/>
-                            <constraint firstAttribute="trailing" secondItem="l2d-NP-9Cx" secondAttribute="trailing" id="bXH-1n-ugR"/>
-                            <constraint firstItem="TtM-Tq-E1j" firstAttribute="trailing" secondItem="gOS-uH-Kc5" secondAttribute="trailing" id="bjx-On-txZ"/>
-                            <constraint firstItem="TtM-Tq-E1j" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" id="lhL-uD-Bya"/>
+                            <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="24" id="OxN-zS-Q2D"/>
+                            <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="24" id="Z1r-tb-PYG"/>
+                            <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="gOS-uH-Kc5" secondAttribute="top" constant="24" id="nE5-HP-01J"/>
+                            <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="15" id="tp7-73-W9B"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="egL-Oi-kgI">
@@ -948,7 +849,7 @@ up your health profile.</string>
                         </view>
                     </navigationItem>
                     <connections>
-                        <outlet property="collectionView" destination="TtM-Tq-E1j" id="b3D-XO-cQB"/>
+                        <outlet property="noteLabel" destination="K85-ba-4vg" id="kVC-uo-Aiw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACL-Si-545" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -1010,39 +911,27 @@ up your health profile.</string>
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="YF2-08-RFx" userLabel="Footer">
-                                <rect key="frame" x="0.0" y="766" width="414" height="96"/>
-                                <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
-                                        <rect key="frame" x="15" y="28" width="384" height="48"/>
-                                        <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                        <constraints>
-                                            <constraint firstAttribute="height" constant="48" id="iSF-Gp-Sk9"/>
-                                        </constraints>
-                                        <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="17"/>
-                                        <state key="normal" title="Continue">
-                                            <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
-                                        </state>
-                                        <connections>
-                                            <action selector="handleAcceptTerms:" destination="Zqc-mS-75O" eventType="touchUpInside" id="rux-a7-ORa"/>
-                                        </connections>
-                                    </button>
-                                </subviews>
-                                <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                <rect key="frame" x="15" y="799" width="384" height="48"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstItem="e95-nv-52a" firstAttribute="leading" secondItem="YF2-08-RFx" secondAttribute="leading" constant="15" id="Gn1-0h-q6v"/>
-                                    <constraint firstItem="e95-nv-52a" firstAttribute="top" secondItem="YF2-08-RFx" secondAttribute="top" constant="28" id="HLa-az-Gb5"/>
-                                    <constraint firstAttribute="height" constant="96" id="aDc-TP-CGT"/>
-                                    <constraint firstAttribute="trailing" secondItem="e95-nv-52a" secondAttribute="trailing" constant="15" id="pU0-ot-lc1"/>
+                                    <constraint firstAttribute="height" constant="48" id="iSF-Gp-Sk9"/>
                                 </constraints>
-                            </view>
+                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="17"/>
+                                <state key="normal" title="Continue">
+                                    <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="handleAcceptTerms:" destination="Zqc-mS-75O" eventType="touchUpInside" id="rux-a7-ORa"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <viewLayoutGuide key="safeArea" id="D0D-7s-sN3"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="YF2-08-RFx" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" id="Urs-uj-4Uf"/>
-                            <constraint firstItem="D0D-7s-sN3" firstAttribute="bottom" secondItem="YF2-08-RFx" secondAttribute="bottom" id="WsP-e1-Kqv"/>
-                            <constraint firstItem="YF2-08-RFx" firstAttribute="trailing" secondItem="D0D-7s-sN3" secondAttribute="trailing" id="eNP-3Z-GLk"/>
+                            <constraint firstItem="D0D-7s-sN3" firstAttribute="trailing" secondItem="e95-nv-52a" secondAttribute="trailing" constant="15" id="NFM-15-ADm"/>
+                            <constraint firstItem="D0D-7s-sN3" firstAttribute="bottom" secondItem="e95-nv-52a" secondAttribute="bottom" constant="15" id="Qbq-4a-p6p"/>
+                            <constraint firstItem="e95-nv-52a" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" constant="15" id="suv-60-ggV"/>
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" id="xL7-d0-VmB">
@@ -1053,7 +942,6 @@ up your health profile.</string>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
                         <outlet property="continueButton" destination="e95-nv-52a" id="HGu-Gj-Vu2"/>
-                        <outlet property="footer" destination="YF2-08-RFx" id="Unm-Qw-cly"/>
                         <outlet property="viewNavigationItem" destination="xL7-d0-VmB" id="oq6-rD-ufw"/>
                         <segue destination="9q7-ow-baX" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="vcb-Ui-ASK"/>
                         <segue destination="Zin-rP-KGp" kind="show" identifier="TOSToProfileSetup" id="ExJ-ON-yDI"/>

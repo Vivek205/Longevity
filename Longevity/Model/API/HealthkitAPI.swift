@@ -25,14 +25,13 @@ class HealthkitAPI: BaseAuthAPI {
             }
             
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/application/\(deviceName)/synchronize", headers: headers, queryParameters: nil, body: bodyData)
+            
             Amplify.API.post(request: request) { (result) in
                 switch result {
                 case .success(let data):
                     do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode(String.self, from: data)
-                        print(value)
+                        let reponse = try JSONSerialization.jsonObject(with: data, options: [.allowFragments]) as? String
+                        print(reponse)
                     }
                     catch let error {
                         print("HEALTHKIT/synchronize JSON error: ", error.localizedDescription)

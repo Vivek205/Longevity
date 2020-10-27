@@ -26,16 +26,11 @@ class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
 
         self.removeBackButtonNavigation()
         self.addProgressbar(progress: 20.0)
-        let width = self.view.frame.width
-        NSLayoutConstraint.activate([
-            infoLabel.widthAnchor.constraint(equalToConstant: (width - 30)),
-            disclaimer.widthAnchor.constraint(equalToConstant: (width - 30))
-        ])
     }
 
     func customizeDisclaimerLabel() {
         let headingAttributes:[NSAttributedString.Key:Any] =
-            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor(hexString: "#4E4E4E")]
+            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor.sectionHeaderColor]
         let heading = NSMutableAttributedString(string: "Disclaimer: ", attributes: headingAttributes)
 
         let detailsAttributes:[NSAttributedString.Key:Any] =

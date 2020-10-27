@@ -19,9 +19,10 @@ class BaseProfileSetupViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.navigationController?.navigationBar.barTintColor = UIColor(hexString: "#F5F6FA")
+        self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
         self.navigationController?.navigationBar.titleTextAttributes = [NSAttributedString.Key.font: UIFont(name: "Montserrat-SemiBold", size: 24.0)!,
-                                                                        NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                                                                        NSAttributedString.Key.foregroundColor: UIColor.sectionHeaderColor]
+        self.view.backgroundColor = .appBackgroundColor
     }
 
     override func viewDidLayoutSubviews() {

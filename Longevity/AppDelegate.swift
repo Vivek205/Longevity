@@ -70,11 +70,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
         
-//        let fitbitModel = FitbitModel()
-//        fitbitModel.refreshTheToken()
-        
-//        checkARNStatus()
-        
         if HKHealthStore.isHealthDataAvailable() {
             HealthStore.shared.getHealthStore()
             HealthStore.shared.startObserving(device: .applehealth)
@@ -100,18 +95,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {
-//        if HKHealthStore.isHealthDataAvailable() {
-//            if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
-//                HealthStore.shared.getHealthStore()
-//                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.healthkit]?["connected"] == 1 {
-//                    HealthStore.shared.startObserving(device: .applehealth)
-//                }
-//                if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.watch]?["connected"] == 1 {
-//                    HealthStore.shared.startObserving(device: .applewatch)
-//                }
-//            }
-//        }
-        
         if #available(iOS 13.0, *) {
             if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.fitbit]?["connected"] == 1 {
                 self.scheduleBackgroundFetch()
@@ -137,7 +120,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func application(_ application: UIApplication, handleEventsForBackgroundURLSession identifier: String, completionHandler: @escaping () -> Void) {
-        
+        if identifier == FitbitFetchBackground.identifier {
+            FitbitFetchBackground.shared.savedCompletionHandler = completionHandler
+        } else if identifier == FitbitPublishBackground.identifier {
+            FitbitPublishBackground.shared.publishedCompletionHandler = completionHandler
+        }
     }
 
     func configureCognito() {
@@ -145,7 +132,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                                                                 identityPoolId:"us-west-2:71e6c80c-3543-4a1c-b149-1dbfa77f0d40")
 
         let configuration = AWSServiceConfiguration(region:.USWest2, credentialsProvider:credentialsProvider)
-
         AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
 
@@ -293,7 +279,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     fileprivate func checkIfAppUpdated() {
-
         let previousBuild = UserDefaults.standard.string(forKey: "build")
         let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         UserDefaults.standard.set(currentBuild, forKey: "build")
@@ -316,7 +301,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @available(iOS 13.0, *)
     func appHandleRefreshTask(task: BGAppRefreshTask) {
         scheduleBackgroundFetch()
+        Logger.log("BG Task Started")
         task.expirationHandler = {
+            Logger.log("BG Task Expired")
             task.setTaskCompleted(success: false)
         }
         
@@ -325,6 +312,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         queue.addOperations(FitbitModel.getOperationsToRefreshFitbitToken(), waitUntilFinished: false)
         
         queue.operations.last?.completionBlock = {
+            Logger.log("BG Task Completed")
             task.setTaskCompleted(success: !(queue.operations.last?.isCancelled ?? false))
         }
     }
