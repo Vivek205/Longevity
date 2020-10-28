@@ -302,19 +302,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func appHandleRefreshTask(task: BGAppRefreshTask) {
         scheduleBackgroundFetch()
         Logger.log("BG Task Started")
+        
+        let queue = OperationQueue()
+        queue.maxConcurrentOperationCount = 1
+        let operations = FitbitModel.getOperationsToRefreshFitbitToken()
+        
         task.expirationHandler = {
             Logger.log("BG Task Expired")
             task.setTaskCompleted(success: false)
         }
         
-        let queue = OperationQueue()
-        queue.maxConcurrentOperationCount = 1
-        queue.addOperations(FitbitModel.getOperationsToRefreshFitbitToken(), waitUntilFinished: false)
-        
-        queue.operations.last?.completionBlock = {
+        operations.last?.completionBlock = {
             Logger.log("BG Task Completed")
             task.setTaskCompleted(success: !(queue.operations.last?.isCancelled ?? false))
         }
+        queue.addOperations(operations, waitUntilFinished: true)
     }
     
     @available(iOS 13.0, *)
@@ -327,7 +329,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch let error {
             print(error.localizedDescription)
         }
-    }
+     }
     
     func updateARNToken() {
         let defaults = UserDefaults.standard
