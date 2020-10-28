@@ -36,6 +36,7 @@ class OnboardingVC: UIViewController {
         collectionView.backgroundColor = .clear
         collectionView.isPagingEnabled = true
         collectionView.showsHorizontalScrollIndicator = false
+        collectionView.decelerationRate = .fast
         return collectionView
     }()
 
@@ -58,8 +59,9 @@ class OnboardingVC: UIViewController {
         return button
     }()
 
-    lazy var loginButtonLocal: CustomButtonOutlined = {
-        let button = CustomButtonOutlined()
+    lazy var loginButtonLocal: UIButton = {
+        let button = UIButton()
+        button.setTitleColor(.themeColor, for: .normal)
         button.translatesAutoresizingMaskIntoConstraints = false
         button.setTitle("Got account? Login here.", for: .normal)
         button.layer.borderColor = UIColor.clear.cgColor
