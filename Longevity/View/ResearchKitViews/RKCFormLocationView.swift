@@ -16,6 +16,8 @@ class RKCFormLocationView: UICollectionViewCell {
         label.font = UIFont(name: AppFontName.medium, size: 18)
         label.numberOfLines = 0
         label.translatesAutoresizingMaskIntoConstraints = false
+        label.sizeToFit()
+        label.textAlignment = .left
         return label
     }()
 
@@ -27,7 +29,9 @@ class RKCFormLocationView: UICollectionViewCell {
     }()
 
     lazy var locationLabel: UILabel = {
-        let label = UILabel(text: nil, font: UIFont(name: AppFontName.medium, size: 18), textColor: .themeColor, textAlignment: .right, numberOfLines: 1)
+        let label = UILabel(text: nil, font: UIFont(name: AppFontName.medium, size: 18), textColor: .themeColor, textAlignment: .right, numberOfLines: 2)
+        label.lineBreakMode = .byWordWrapping
+        label.sizeToFit()
         return label
     }()
 
@@ -40,7 +44,7 @@ class RKCFormLocationView: UICollectionViewCell {
             locationString = "\(city), \(state)"
         }
         if  let postalCode = location.zipcode {
-            locationString = "\(locationString) \(postalCode)"
+            locationString = "\(locationString)\n\(postalCode)"
         }
 
         locationSelectorButton.removeFromSuperview()
