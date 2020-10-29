@@ -55,13 +55,14 @@ class TextAnswerVC: ORKStepViewController {
         return textView
     }()
 
-    lazy var clearButton: CustomButtonOutlined = {
-        let button = CustomButtonOutlined()
+    lazy var clearButton: UIButton = {
+        let button = UIButton()
         button.translatesAutoresizingMaskIntoConstraints = false
-        button.setTitle("clear", for: .normal)
+        button.setTitle("Clear", for: .normal)
         button.layer.borderColor = UIColor.clear.cgColor
         button.addTarget(self, action: #selector(handleClear(sender:)), for: .touchUpInside)
-        
+        button.setTitleColor(.themeColor, for: .normal)
+        button.titleLabel?.font = UIFont(name: AppFontName.regular, size: 20)
         return button
     }()
 
@@ -69,6 +70,11 @@ class TextAnswerVC: ORKStepViewController {
         super.viewDidLoad()
         self.setKeyboardTypeOfTextView()
         self.presentViews()
+    }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        self.answerTextView.contentInset = .init(top: 0, left: 14, bottom: 0, right: 14)
     }
 
     func presentViews() {

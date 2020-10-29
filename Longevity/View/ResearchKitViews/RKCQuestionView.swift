@@ -14,21 +14,18 @@ class RKCQuestionView: UICollectionReusableView {
         let labelView = QuestionHeaderLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
+        labelView.numberOfLines = 0
+        labelView.lineBreakMode = .byWordWrapping
         return labelView
     }()
 
-//    let subHeaderLabel: UILabel = {
-//        let labelView = QuestionSubheaderLabel()
-//        labelView.translatesAutoresizingMaskIntoConstraints = false
-//        labelView.textAlignment = .center
-//        return labelView
-//    }()
 
     let questionLabel: UILabel = {
         let labelView = QuestionQuestionLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
         labelView.numberOfLines = 0
+        labelView.lineBreakMode = .byWordWrapping
         return labelView
     }()
 
@@ -36,7 +33,7 @@ class RKCQuestionView: UICollectionReusableView {
         let labelView = QuestionExtraInfoLabel()
         labelView.translatesAutoresizingMaskIntoConstraints = false
         labelView.textAlignment = .center
-        labelView.numberOfLines = 2
+        labelView.numberOfLines = 0
         return labelView
     }()
 
@@ -63,40 +60,20 @@ class RKCQuestionView: UICollectionReusableView {
     func initalizeLabels() {
         backgroundColor = .white
 
-        let headerView = UIView()
-        headerView.translatesAutoresizingMaskIntoConstraints = false
-        self.addSubview(headerView)
+        self.addSubview(headerLabel)
 
         NSLayoutConstraint.activate([
-            headerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            headerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            headerView.topAnchor.constraint(equalTo: self.topAnchor),
+            headerLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            headerLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            headerLabel.topAnchor.constraint(equalTo: self.topAnchor)
         ])
-
-        //            headerLabel.text = header
-        headerView.addSubview(headerLabel)
-
-        NSLayoutConstraint.activate([
-            headerLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-            headerLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-            headerLabel.topAnchor.constraint(equalTo: headerView.topAnchor),
-        ])
-
-//        headerView.addSubview(subHeaderLabel)
-
-//        NSLayoutConstraint.activate([
-//            subHeaderLabel.leadingAnchor.constraint(equalTo: headerView.leadingAnchor),
-//            subHeaderLabel.trailingAnchor.constraint(equalTo: headerView.trailingAnchor),
-//            subHeaderLabel.topAnchor.constraint(equalTo: headerLabel.bottomAnchor),
-//            subHeaderLabel.bottomAnchor.constraint(equalTo: headerView.bottomAnchor)
-//        ])
 
         self.addSubview(questionLabel)
 
         NSLayoutConstraint.activate([
             questionLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15),
             questionLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15),
-            questionLabel.topAnchor.constraint(equalTo:headerView.bottomAnchor)
+            questionLabel.topAnchor.constraint(equalTo:headerLabel.bottomAnchor)
         ])
 
         let bottomAnchorQuestionLabel = questionLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -30)
@@ -114,10 +91,16 @@ class RKCQuestionView: UICollectionReusableView {
     func createLayout(header: String, question:String, extraInfo: String?) {
 
         headerLabel.text = SurveyTaskUtility.shared.getCurrentSurveyName()
-
-//        subHeaderLabel.text = subHeader
-
         questionLabel.text = question
+
+        print("self.bounds.size.width",self.bounds.size.width)
+        print("self.bounds.size.width",self.frame.size.width)
+
+        let headerLabelHeight: CGFloat = headerLabel.text?.height(withConstrainedWidth: self.bounds.size.width, font: headerLabel.font) ?? 0
+        let questionLabelHeight: CGFloat = question.height(withConstrainedWidth: self.bounds.size.width, font: questionLabel.font) ?? 0
+
+        headerLabel.anchor(.height(headerLabelHeight))
+        questionLabel.anchor(.height(89))
 
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo

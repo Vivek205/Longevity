@@ -195,14 +195,13 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         var height = CGFloat(100.0)
-        let width = self.view.bounds.width
-
+        let width = self.view.bounds.width - 30
+        
             if let step = self.step as? ORKQuestionStep {
                 let questionCell = RKCQuestionView()
-                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+                height = SurveyTaskUtility.shared.getCurrentSurveyName()!
+                    .height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
                 height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
                 if step.text != nil {
                     height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
