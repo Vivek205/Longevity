@@ -38,7 +38,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             self.navigationItem.hidesBackButton = true
         }
         
-        self.view.backgroundColor = .white
+        self.view.backgroundColor = .appBackgroundColor
     }
     
     func taskViewController(_ taskViewController: ORKTaskViewController,

@@ -21,10 +21,14 @@ class RKCFormLocationView: UICollectionViewCell {
         return label
     }()
 
-    lazy var locationSelectorButton: CustomButtonOutlined = {
-        let button = CustomButtonOutlined()
+    lazy var locationSelectorButton: UIButton = {
+        let button = UIButton()
         button.setTitle("Enter", for: .normal)
         button.addTarget(self, action: #selector(getCurrentLocation), for: .touchUpInside)
+        button.layer.borderColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
+        button.layer.cornerRadius = CGFloat(10)
+        button.layer.borderWidth = 2
+        button.setTitleColor(#colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1), for: .normal)
         return button
     }()
 

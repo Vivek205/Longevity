@@ -13,7 +13,7 @@ extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.customizeStyle()
+//        self.customizeStyle()
         self.customizeNavbarButtons()
 
         if !(step is ORKInstructionStep) {

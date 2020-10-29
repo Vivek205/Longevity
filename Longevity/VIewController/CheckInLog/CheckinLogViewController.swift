@@ -96,6 +96,9 @@ class CheckinLogViewController: BaseViewController {
             DispatchQueue.main.async {
                 self.removeSpinner()
                 if task != nil {
+                    self.navigationController?.navigationBar.barTintColor = .orange
+                    self.navigationController?.navigationBar.backgroundColor = .black
+//                    self.navigationItem.ba
                     self.dismiss(animated: false) { [weak self] in
                         let taskViewController = SurveyViewController(task: task, isFirstTask: true)
                         NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
