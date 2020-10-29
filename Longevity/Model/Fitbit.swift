@@ -10,6 +10,8 @@ import Foundation
 import CommonCrypto
 import Amplify
 import SwiftyJSON
+import Amplify
+import AWSPluginsCore
 
 
 // MARK: - AWSAmplifyConfig
@@ -391,43 +393,23 @@ class FitbitModel: AuthHandlerType {
                urlRequest.httpMethod = "POST"
                urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
                urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-
-//        let configuration = URLSessionConfiguration.background(withIdentifier: "come.rejuve.fitbitrefresh")
-
-//        let bgSession = URLSession(configuration: configuration) //URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-
-//        bgSession.dataTask(with: <#T##URLRequest#>, completionHandler: <#T##(Data?, URLResponse?, Error?) -> Void#>)
-//        BackgroundSession.shared.start(urlRequest) //.startdataTask(urlRequest)
-//        BackgroundSession.shared.delegate = self
-
-//        let dataTask
-//        let dataTask = URLSession.shared.dataTask(with: urlRequest){data, response,_   in
-//            guard let httpResponse = response as? HTTPURLResponse,
-//                httpResponse.statusCode == 200,
-//                data != nil else { return }
-//            do {
-//                if let jsonData: [String:Any] =
-//                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-//                    let accessToken = jsonData["access_token"] as! String
-//                    let refreshToken = jsonData["refresh_token"] as! String
-//                    let userId = jsonData["user_id"] as! String
-//                    Logger.log("fitbit token refreshed")
-//                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
-//                    self.publishData(accessToken: accessToken, userId: userId)
-//                }
-//            } catch {}
-//        }
-//        dataTask.resume()
     }
     
     static func getOperationsToRefreshFitbitToken() -> [Operation] {
         let fetchFitbitToken = FetchFitbitTokenOperation()
         let publishToServer = PublishFitbitTokenOperation()
         let refreshFitbitToken = BlockOperation { [unowned fetchFitbitToken, unowned publishToServer] in
-            guard let accessToken = fetchFitbitToken.accessToken, let userID = fetchFitbitToken.userID, let refreshToken = fetchFitbitToken.refreshToken else {
+            guard let accessToken = fetchFitbitToken.accessToken,
+                  let userID = fetchFitbitToken.userID,
+                  let refreshToken = fetchFitbitToken.refreshToken else {
                 publishToServer.cancel()
                 return
             }
+            
+            if fetchFitbitToken.isCancelled {
+                publishToServer.cancel()
+            }
+            
             publishToServer.accessToken = accessToken
             publishToServer.refreshToken = refreshToken
             publishToServer.userID = userID
@@ -489,7 +471,7 @@ class FitbitFetchBackground: NSObject {
         session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
 
-    func start(refreshToken: String) {
+    func start(refreshToken: String) -> URLSessionDownloadTask {
         let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
         var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
         urlComponents?.queryItems = [
@@ -502,7 +484,9 @@ class FitbitFetchBackground: NSObject {
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
-        session.downloadTask(with: urlRequest).resume()
+        let downloadTask = session.downloadTask(with: urlRequest)
+        downloadTask.resume()
+        return downloadTask
     }
 }
 
@@ -589,6 +573,8 @@ class FitbitPublishBackground: NSObject {
     var receivedData: Data?
     
     private var session: URLSession!
+    
+    var uploadTask: URLSessionUploadTask?
 
     #if !os(macOS)
     var publishedCompletionHandler: (() -> Void)?
@@ -607,20 +593,20 @@ class FitbitPublishBackground: NSObject {
         session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
 
-    func start(accessToken: String, userID: String, userToken: String) {
+    func start(accessToken: String, userID: String, userToken: String) -> URLSessionUploadTask? {
         
         guard let path = Bundle.main.path(forResource: "amplifyconfiguration", ofType: "json"),
               let fileURL = URL(fileURLWithPath: path) as? URL,
               let fileData = try? String(contentsOf: fileURL).data(using: .utf8) else {
             self.delegate?.published(success: false)
-            return
+            return nil
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         guard let configData = try? decoder.decode(AWSAmplifyConfig.self, from: fileData) as? AWSAmplifyConfig,
               let apiURL = URL(string: "\(configData.api.plugins.awsAPIPlugin.rejuveDevelopmentAPI.endpoint)/health/application/FITBIT/synchronize") else {
             self.delegate?.published(success: false)
-            return
+            return nil
         }
         
         var urlRequest = URLRequest(url: apiURL)
@@ -632,10 +618,12 @@ class FitbitPublishBackground: NSObject {
         } catch let error {
             print(error.localizedDescription)
             self.delegate?.published(success: false)
-            return
+            return nil
         }
         
-        session.uploadTask(withStreamedRequest: urlRequest).resume()
+        let uploadTask = session.uploadTask(withStreamedRequest: urlRequest)
+        uploadTask.resume()
+        return uploadTask
     }
 }
 
@@ -672,9 +660,7 @@ class FetchFitbitTokenOperation: Operation, BackgroundSessionDelegate {
     var accessToken: String?
     var userID: String?
     
-    override var isAsynchronous: Bool {
-        return true
-    }
+    var downLoadTask : URLSessionDownloadTask?
     
     override var isExecuting: Bool {
         return downloading
@@ -686,9 +672,16 @@ class FetchFitbitTokenOperation: Operation, BackgroundSessionDelegate {
     
     override func cancel() {
         super.cancel()
+        self.downLoadTask?.cancel()
     }
     
     private var downloading = false
+    
+    override init() {
+        super.init()
+        
+        self.name = "FetchFitbitToken"
+    }
     
     func finish() {
         guard downloading else { return }
@@ -707,12 +700,13 @@ class FetchFitbitTokenOperation: Operation, BackgroundSessionDelegate {
         downloading = true
         didChangeValue(forKey: #keyPath(isExecuting))
         
-        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else {
+        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName,
+                                               account: KeychainKeys.FitbitRefreshToken).readItem() else {
             self.cancel()
             return
         }
         
-        FitbitFetchBackground.shared.start(refreshToken: refreshToken)
+        self.downLoadTask = FitbitFetchBackground.shared.start(refreshToken: refreshToken)
         FitbitFetchBackground.shared.delegate = self
     }
     
@@ -730,11 +724,19 @@ class FetchFitbitTokenOperation: Operation, BackgroundSessionDelegate {
 
 class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
     
+    override init() {
+        super.init()
+        
+        self.name = "PublishFitbitToken"
+    }
+    
     var refreshToken: String?
     var accessToken: String?
     var userID: String?
+   
+    var succeeded: Bool = false
     
-    var responseString: String?
+    var uploadTask: URLSessionUploadTask?
     
     override var isAsynchronous: Bool {
         return true
@@ -745,11 +747,12 @@ class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
     }
     
     override var isFinished: Bool {
-        return responseString != nil
+        return self.succeeded
     }
     
     override func cancel() {
         super.cancel()
+        self.uploadTask?.cancel()
     }
     
     private var downloading = false
@@ -776,22 +779,53 @@ class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
             return
         }
         
-        func onGettingCredentials(_ credentials: Credentials){
-            FitbitPublishBackground.shared.start(accessToken: accessToken, userID: userID,
-                                                 userToken: credentials.idToken)
-            FitbitPublishBackground.shared.delegate = self
+        _ = Amplify.Auth.fetchAuthSession { [weak self] result in
+            do {
+                let session = try result.get()
+
+                var credentials = Credentials()
+                
+                if let identityProvider = session as? AuthCognitoIdentityProvider {
+                    credentials.usersub = try identityProvider.getUserSub().get()
+                    credentials.identityId = try identityProvider.getIdentityId().get()
+                }
+
+                // Get aws credentials
+                if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
+                    let awsCredentials = try awsCredentialsProvider.getAWSCredentials().get()
+                    credentials.accessKey = awsCredentials.accessKey
+                }
+
+                // Get cognito user pool token
+                if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
+                    let tokens = try cognitoTokenProvider.getCognitoTokens().get()
+                    credentials.idToken = tokens.idToken
+
+                    let secondsOffset50Mins = Double(50 * 60)
+                    let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
+                    let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
+
+                    try? KeyChain(service: KeychainConfiguration.serviceName,
+                                  account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                    try? KeyChain(service: KeychainConfiguration.serviceName,
+                                  account: KeychainKeys.idTokenExp).saveItem(dateString50MinFuture)
+                    
+                    self?.uploadTask = FitbitPublishBackground.shared.start(accessToken: accessToken,
+                                                                            userID: userID,
+                                                                            userToken: credentials.idToken)
+                    FitbitPublishBackground.shared.delegate = self
+                }
+            } catch {
+                print("Fetch auth session failed with error - \(error)")
+                self?.cancel()
+            }
         }
-        
-        func onFailureCredentials(_ error: Error?) {
-            print("publishData failed to fetch credentials \(error?.localizedDescription)")
-            self.cancel()
-        }
-        
-        _ = getCredentials(completion: onGettingCredentials(_:),
-                           onFailure: onFailureCredentials(_:))
     }
     
     func published(success: Bool) {
+        self.succeeded = success
         if success {
             self.finish()
         } else {

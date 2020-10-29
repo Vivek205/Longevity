@@ -22,6 +22,7 @@ class CarouselCollectionCell: UICollectionViewCell {
     lazy var backgroundImage:UIImageView = {
         let view = UIImageView()
         view.contentMode = .scaleAspectFill
+        view.clipsToBounds = true
         view.translatesAutoresizingMaskIntoConstraints = false
         return view
     }()

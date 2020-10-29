@@ -28,14 +28,11 @@ class BaseProfileSetupViewController: UIViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
 
-        let progressViewHeight = progressView.frame.size.height
-        progressView.layer.cornerRadius = progressViewHeight / 2
+        let progressViewHeight = progressView.frame.size.height / 2
+        progressView.layer.cornerRadius = progressViewHeight
         progressView.clipsToBounds = true
-        progressView.subviews.forEach { (subview) in
-            subview.layer.masksToBounds = true
-            subview.layer.cornerRadius = progressViewHeight / 2.0
-            subview.clipsToBounds = true
-        }
+        progressView.layer.sublayers![1].cornerRadius = progressViewHeight
+        progressView.subviews[1].clipsToBounds = true
     }
     
     func addProgressbar(progress: Float) {
