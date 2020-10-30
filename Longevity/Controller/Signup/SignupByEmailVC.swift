@@ -143,7 +143,7 @@ class SignupByEmailVC: UIViewController {
         formEmail.delegate = self
         formPhone.delegate = self
         formPassword.delegate = self
-
+            
         self.rollbackYOrigin = self.view.frame.origin.y
 
         self.view.addSubview(namelabelView)

@@ -7,12 +7,24 @@
 //
 
 import UIKit
+import PhoneNumberKit
+import CountryPickerView
 
 fileprivate let appSyncManager:AppSyncManager = AppSyncManager.instance
 
 class EditAccountViewController: UIViewController {
     var modalPresentation = false
     var changesSaved = true
+    var savedCountryCode:String?
+
+    lazy var countryPickerView: CountryPickerView = {
+        let cpv = CountryPickerView(frame: .init(x: 8, y: 0, width: 120, height: 120))
+        cpv.dataSource = self
+        cpv.font = UIFont(name: AppFontName.semibold, size: 16) ?? UIFont()
+        cpv.textColor = .themeColor
+        cpv.accessibilityViewIsModal = true
+        return cpv
+    }()
     
     lazy var nameLabel: UILabel = {
         let name = UILabel()
@@ -99,6 +111,14 @@ class EditAccountViewController: UIViewController {
         mobile.returnKeyType = .done
         mobile.borderStyle = .roundedRect
         mobile.translatesAutoresizingMaskIntoConstraints = false
+
+        let padding = 8
+        let size = 120
+        let leftView = UIView(frame: CGRect(x: 0, y: 0, width: size+padding, height: size) )
+        leftView.addSubview(countryPickerView)
+        countryPickerView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
+        mobile.leftView = leftView
+        mobile.leftViewMode = .always
         return mobile
     }()
     
@@ -164,9 +184,18 @@ class EditAccountViewController: UIViewController {
                 [weak self] in
                 self?.fullName.text = userProfile.name
                 self?.emailText.text = userProfile.email
-                self?.mobilePhone.text = userProfile.phone
-            }
 
+                let phoneNumber = userProfile.phone
+                let phoneNumberKit = PhoneNumberKit()
+                let parsedPhoneNumber = try? phoneNumberKit.parse(phoneNumber)
+
+                if let countryCode = parsedPhoneNumber?.regionID,
+                   let number = parsedPhoneNumber?.nationalNumber{
+                    self?.countryPickerView.setCountryByCode(countryCode)
+                    self?.mobilePhone.text = "\(number)"
+                    self?.savedCountryCode = self?.countryPickerView.selectedCountry.phoneCode
+                }
+            }
         }
 
         if self.modalPresentation {
@@ -181,7 +210,10 @@ class EditAccountViewController: UIViewController {
     }
     
     @objc func closeView() {
-        if changesSaved {
+        print(self.savedCountryCode)
+        print(self.countryPickerView.selectedCountry.phoneCode)
+        print(self.savedCountryCode == self.countryPickerView.selectedCountry.phoneCode)
+        if changesSaved && self.savedCountryCode == self.countryPickerView.selectedCountry.phoneCode {
             self.dismiss(animated: true, completion: nil)
             return
         }
@@ -207,7 +239,7 @@ class EditAccountViewController: UIViewController {
             appSyncManager.userProfile.value?.name = name
         }
         if let phone = mobilePhone.text {
-            appSyncManager.userProfile.value?.phone = phone
+            appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
         }
         updateProfile()
         self.dismiss(animated: true, completion: nil)
@@ -232,3 +264,18 @@ extension EditAccountViewController: UIAdaptivePresentationControllerDelegate {
         return true
     }
 }
+
+extension EditAccountViewController: CountryPickerViewDataSource {
+    func showPhoneCodeInList(in countryPickerView: CountryPickerView) -> Bool {
+        return true
+    }
+
+    func navigationTitle(in countryPickerView: CountryPickerView) -> String? {
+        return "Select Country"
+    }
+
+    func searchBarPosition(in countryPickerView: CountryPickerView) -> SearchBarPosition {
+        return .hidden
+    }
+}
+
