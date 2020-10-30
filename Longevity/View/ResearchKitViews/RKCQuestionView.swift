@@ -100,7 +100,7 @@ class RKCQuestionView: UICollectionReusableView {
         let questionLabelHeight: CGFloat = question.height(withConstrainedWidth: self.bounds.size.width, font: questionLabel.font) ?? 0
 
         headerLabel.anchor(.height(headerLabelHeight))
-        questionLabel.anchor(.height(89))
+        questionLabel.anchor(.height(questionLabelHeight))
 
         if extraInfo != nil {
             extraInfoLabel.text = extraInfo

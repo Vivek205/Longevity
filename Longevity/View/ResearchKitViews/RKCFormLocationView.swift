@@ -105,6 +105,11 @@ class RKCFormLocationView: UICollectionViewCell {
         if let location = LocationUtil.shared.currentLocation.value as? LocationDetails {
             self.updateLocationLabel(location: location)
         }
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(getCurrentLocation))
+        tapGesture.numberOfTapsRequired = 1
+        locationLabel.addGestureRecognizer(tapGesture)
+        locationLabel.isUserInteractionEnabled = true
     }
 }
 
