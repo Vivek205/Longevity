@@ -49,9 +49,16 @@ class SignupByEmailVC: UIViewController {
             formEmail.backgroundColor = .white
         }
     }
+    @IBOutlet weak var formPassword: UITextField! {
+        didSet {
+            formPassword.tag = 2
+            formPassword.inputAccessoryView = keyboardToolbar
+            formPassword.backgroundColor = .white
+        }
+    }
     @IBOutlet weak var formPhone: UITextField! {
         didSet {
-            formPhone.tag = 2
+            formPhone.tag = 3
             formPhone.inputAccessoryView = keyboardToolbar
 
 
@@ -65,17 +72,9 @@ class SignupByEmailVC: UIViewController {
 
             formPhone.leftViewMode = .always
             formPhone.backgroundColor = .white
+        }
+    }
 
-//            formPhone.lef
-        }
-    }
-    @IBOutlet weak var formPassword: UITextField! {
-        didSet {
-            formPassword.tag = 3
-            formPassword.inputAccessoryView = keyboardToolbar
-            formPassword.backgroundColor = .white
-        }
-    }
     @IBOutlet weak var submitButton: UIButton!
 
 
@@ -144,7 +143,7 @@ class SignupByEmailVC: UIViewController {
         formEmail.delegate = self
         formPhone.delegate = self
         formPassword.delegate = self
-        self.addKeyboardObservers()
+
         self.rollbackYOrigin = self.view.frame.origin.y
 
         self.view.addSubview(namelabelView)
@@ -174,6 +173,7 @@ class SignupByEmailVC: UIViewController {
         super.viewDidAppear(animated)
         print("self.view.frame.origin.y", self.view.frame.origin.y)
         self.rollbackYOrigin = self.view.frame.origin.y
+        self.addKeyboardObservers()
     }
 
     override func viewDidDisappear(_ animated: Bool) {

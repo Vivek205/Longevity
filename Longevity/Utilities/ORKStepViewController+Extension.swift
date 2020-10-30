@@ -87,7 +87,7 @@ extension ORKStepViewController {
 //        navigationController?.navigationBar.barTintColor = .blue
 //        self.navigationBar
 //        navigationController?.navigationBar.tintColor = .orange
-        UINavigationBar.appearance().barTintColor = .systemPink
+//        UINavigationBar.appearance().barTintColor = .systemPink
 //        self.navigationItem.backgr
         self.cancelButtonItem?.title = "Exit"
     }
