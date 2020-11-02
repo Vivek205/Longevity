@@ -144,7 +144,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height = CGFloat(100.0)
-        let width = self.view.bounds.width
+        let width = collectionView.bounds.width - 30.0
 //        if indexPath.item == 0 {
 //            if let step = self.step as? ORKQuestionStep {
 //                let questionCell = RKCQuestionView()
@@ -165,19 +165,35 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                 let choice = answerFormat.textChoices[indexPath.item]
-                let answerCell = TextChoiceAnswerViewCell()
-                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
-                if choice.detailText != nil {
-                    height += choice.detailText!
-                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
-                }
+                
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18), .foregroundColor: UIColor.black]
+                let attributedoptionData = NSMutableAttributedString(string: choice.text, attributes: attributes)
 
-                height += 30
+                if choice.detailText != nil {
+                    let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0), .foregroundColor: UIColor(hexString: "#666666")]
+                    let extraInfoAttributedText = NSMutableAttributedString(string: "\n\n\(choice.detailText ?? "")", attributes: extraInfoAttributes)
+                    attributedoptionData.append(extraInfoAttributedText)
+                }
+                
+                attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
+                
+                
+                
+                
+//                let answerCell = TextChoiceAnswerViewCell()
+//                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
+//                if choice.detailText != nil {
+//                    height += choice.detailText!
+//                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
+//                }
+
+                height = attributedoptionData.height(containerWidth: width - 64.0) + 30.0
+//                height += 30
             }
         }
 
 
-        return CGSize(width: width - CGFloat(40), height: height)
+        return CGSize(width: width, height: height)
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
@@ -195,21 +211,42 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         var height = CGFloat(100.0)
-        let width = self.view.bounds.width - 30
+        let width = collectionView.bounds.width
         
-            if let step = self.step as? ORKQuestionStep {
-                let questionCell = RKCQuestionView()
-                height = SurveyTaskUtility.shared.getCurrentSurveyName()!
-                    .height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+        if let step = self.step as? ORKQuestionStep {
+            let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""
+            let textColor = UIColor(hexString: "#4E4E4E")
+            
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0), .foregroundColor: textColor]
+            let attributedoptionData = NSMutableAttributedString(string: surveyName, attributes: attributes)
+            let paragraphStyle = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 1.8
+            attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
 
-                height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
-                if step.text != nil {
-                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
-                }
-                // INSETS
-                height += 30.0
-            }
-            return CGSize(width: width, height: height)
+            let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0)]
+
+            let dateformatter = DateFormatter()
+            dateformatter.dateFormat = "EEE.MMM.dd"
+            let surveyDate = dateformatter.string(from: Date())
+
+            let extraInfoAttributedText = NSMutableAttributedString(string: "\n\(surveyDate)", attributes: extraInfoAttributes)
+
+            attributedoptionData.append(extraInfoAttributedText)
+
+            let questionAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 24.0)]
+            let attributedquestionText = NSMutableAttributedString(string: "\n\n\(step.question ?? "")", attributes: questionAttributes)
+
+            let paragraphStyle2 = NSMutableParagraphStyle()
+            paragraphStyle.lineSpacing = 2.4
+            attributedquestionText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedquestionText.length))
+
+
+            attributedoptionData.append(attributedquestionText)
+            attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
+            
+            height = attributedoptionData.height(containerWidth: width - 30.0) + 20.0
+        }
+        return CGSize(width: width, height: height)
     }
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         guard let cell = collectionView.cellForItem(at: indexPath) as? TextChoiceAnswerViewCell

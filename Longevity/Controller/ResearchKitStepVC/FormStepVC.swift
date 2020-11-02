@@ -236,19 +236,59 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         var height = CGFloat(38)
-        let width = self.view.bounds.width
+        let width = collectionView.bounds.width
         
             if let step = self.step as? ORKFormStep {
-                let questionCell = RKCQuestionView()
-                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
+                let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""
+                let textColor = UIColor(hexString: "#4E4E4E")
+                
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0), .foregroundColor: textColor]
+                let attributedoptionData = NSMutableAttributedString(string: surveyName, attributes: attributes)
+                let paragraphStyle = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 1.8
+                attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
+
+                let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0)]
+
+                let dateformatter = DateFormatter()
+                dateformatter.dateFormat = "EEE.MMM.dd"
+                let surveyDate = dateformatter.string(from: Date())
+
+                let extraInfoAttributedText = NSMutableAttributedString(string: "\n\(surveyDate)", attributes: extraInfoAttributes)
+
+                attributedoptionData.append(extraInfoAttributedText)
+
+                let questionAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 24.0)]
+                let attributedquestionText = NSMutableAttributedString(string: "\n\n\(step.text ?? "")", attributes: questionAttributes)
+
+                let paragraphStyle2 = NSMutableParagraphStyle()
+                paragraphStyle.lineSpacing = 2.4
+                attributedquestionText.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedquestionText.length))
+
+
+                attributedoptionData.append(attributedquestionText)
+                attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
+                
+                
+                let alignParagraphStyle = NSMutableParagraphStyle()
+                alignParagraphStyle.alignment = .center
+                
+                attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: alignParagraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
+                
+                
+                let containerWidth = width - 30.0
+                
+                height = attributedoptionData.height(containerWidth: containerWidth) + 30.0
+                
+//                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
 
 //                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
 //                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
-                if step.text != nil {
-                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
-                }
+//                if step.text != nil {
+//                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
+//                }
                 // INSETS
-                height += 30.0
+//                height += 30.0
             }
             return CGSize(width: width, height: height)
     }

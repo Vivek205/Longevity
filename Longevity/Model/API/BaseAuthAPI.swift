@@ -64,6 +64,7 @@ class BaseAuthAPI {
 
                     let secondsOffset50Mins = Double(50 * 60)
                     let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
                     let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
 
                     guard let idTokenData = tokens.idToken.data(using: .utf8),
