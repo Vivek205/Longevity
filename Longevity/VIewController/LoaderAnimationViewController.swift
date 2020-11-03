@@ -88,10 +88,18 @@ class LoaderAnimationViewController: UIViewController {
             spinner.topAnchor.constraint(equalTo:singularityStudioLogo.bottomAnchor, constant: 20)
             
         ])
-        
-        
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        
+
+        checkIfAppUpdated{
+            [weak self] signedOut in
+            if !signedOut {
+                self?.fetchCurrentSession()
+            }
+        }
+    }
+
+    func fetchCurrentSession() {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
             case .success(let session):
@@ -119,8 +127,32 @@ class LoaderAnimationViewController: UIViewController {
         }
     }
 
-//    override func viewWillDisappear(_ animated: Bool) {
-//        super.viewWillDisappear(animated)
-//        ConnectionManager.instance.addConnectionObserver()
-//    }
+    func checkIfAppUpdated(completion:((_ signedOut: Bool)->Void)? = nil) {
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+
+        let previousBuild = UserDefaults.standard.string(forKey: "build")
+        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        UserDefaults.standard.set(currentBuild, forKey: "build")
+        if previousBuild == nil {
+            // MARK: Fresh install
+            _ = Amplify.Auth.signOut() { [weak self] (result) in
+                switch result {
+                case .success:
+                    print("Successfully signed out")
+                    completion?(true)
+                    DispatchQueue.main.async {
+                        let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+                        let onBoardingViewController = storyboard.instantiateInitialViewController()
+                        appDelegate.window?.rootViewController = onBoardingViewController
+                    }
+
+                case .failure(let error):
+                    print("Sign out failed with error \(error)")
+                    completion?(false)
+                }
+            }
+        } else {
+            completion?(false)
+        }
+    }
 }

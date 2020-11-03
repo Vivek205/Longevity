@@ -278,26 +278,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         self.window?.rootViewController = onBoardingViewController
     }
     
-    fileprivate func checkIfAppUpdated() {
-        let previousBuild = UserDefaults.standard.string(forKey: "build")
-        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
-        UserDefaults.standard.set(currentBuild, forKey: "build")
-        if previousBuild == nil {
-            //fresh install
-            _ = Amplify.Auth.signOut() { [weak self] (result) in
-                switch result {
-                case .success:
-                    print("Successfully signed out")
-                    DispatchQueue.main.async {
-                        self?.gotoLogin()
-                    }
-                case .failure(let error):
-                    print("Sign out failed with error \(error)")
-                }
-            }
-        }
-    }
-    
     @available(iOS 13.0, *)
     func appHandleRefreshTask(task: BGAppRefreshTask) {
         scheduleBackgroundFetch()

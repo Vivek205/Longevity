@@ -493,8 +493,8 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                                 print("Auth flow finished with error \(String(describing: error))")
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                             } else {
-                                
-                                fitbitModel.token(authCode: authCode!)
+                                guard let authCode = authCode else {return}
+                                fitbitModel.token(authCode: authCode)
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                             }
                         }
