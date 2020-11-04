@@ -95,8 +95,6 @@ extension CheckInStatus {
 class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
 
-    var isRepetitiveSurveyList: Bool = false
-
     var status: CheckInStatus = .notstarted
     
     var surveyResponse: SurveyListItem! {

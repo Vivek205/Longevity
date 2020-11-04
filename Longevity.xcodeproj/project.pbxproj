@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		48EF3ECD9418B7F2B78F5D85 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */; };
+		5E74678A7875C968E8459DA5 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
@@ -238,9 +238,9 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
-		484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
-		BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
+		9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
@@ -451,7 +451,7 @@
 				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
-				48EF3ECD9418B7F2B78F5D85 /* Pods_Longevity.framework in Frameworks */,
+				5E74678A7875C968E8459DA5 /* Pods_Longevity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,8 +461,8 @@
 		04C2A7532EFF18097D0A9CCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */,
-				484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */,
+				9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */,
+				9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -472,7 +472,7 @@
 			children = (
 				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				BB38D1770CDA9BACCE12EA5F /* Pods_Longevity.framework */,
+				8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -987,14 +987,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
 			buildPhases = (
-				18D6ADED2C2E1C5A50E731F6 /* [CP] Check Pods Manifest.lock */,
+				8E61F0A39CDE305F8719697A /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
 				C198758224DAE80700477185 /* Embed Frameworks */,
-				F4A7A653857492847233B7B1 /* [CP] Embed Pods Frameworks */,
+				6EF5EFB8F05E5C11881A0DE7 /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1088,7 +1088,24 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		18D6ADED2C2E1C5A50E731F6 /* [CP] Check Pods Manifest.lock */ = {
+		6EF5EFB8F05E5C11881A0DE7 /* [CP] Embed Pods Frameworks */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+			);
+			name = "[CP] Embed Pods Frameworks";
+			outputFileListPaths = (
+				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
+			showEnvVarsInLog = 0;
+		};
+		8E61F0A39CDE305F8719697A /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1146,23 +1163,6 @@
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
 			shellScript = "# Type a script or drag a script file from your workspace to insert its path.\nif which sentry-cli >/dev/null; then\nexport SENTRY_ORG=rejuve\nexport SENTRY_PROJECT=rejuve\nexport SENTRY_AUTH_TOKEN=f61c5bbd1ee24dd99d2f45fa189a29fe5af2fbcaa7e14c8891e046897b3f2665\nERROR=$(sentry-cli upload-dif \"$DWARF_DSYM_FOLDER_PATH\" 2>&1 >/dev/null)\nif [ ! $? -eq 0 ]; then\necho \"warning: sentry-cli - $ERROR\"\nfi\nelse\necho \"warning: sentry-cli not installed, download from https://github.com/getsentry/sentry-cli/releases\"\nfi\n";
-		};
-		F4A7A653857492847233B7B1 /* [CP] Embed Pods Frameworks */ = {
-			isa = PBXShellScriptBuildPhase;
-			buildActionMask = 2147483647;
-			files = (
-			);
-			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-input-files.xcfilelist",
-			);
-			name = "[CP] Embed Pods Frameworks";
-			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-output-files.xcfilelist",
-			);
-			runOnlyForDeploymentPostprocessing = 0;
-			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
-			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
 
@@ -1492,13 +1492,13 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 1D4D995D18E9AD7A31DCF574 /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = 9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1517,13 +1517,13 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 484A107390F42B3AC4D78F60 /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = 9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 50;
+				CURRENT_PROJECT_VERSION = 52;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

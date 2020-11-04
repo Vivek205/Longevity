@@ -10,7 +10,8 @@ import UIKit
 
 protocol SetupProfileOtherOptionCellDelegate {
     func updateCurrentText(text: String?)
-    func animateKeyboard(show: Bool)
+    func textViewDidEndEditing(_ textView: UITextView)
+    func textViewDidBeginEditing(_ textView: UITextView)
 }
 
 class SetupProfileOtherOptionCell: UICollectionViewCell {
@@ -69,7 +70,7 @@ extension SetupProfileOtherOptionCell: UITextViewDelegate {
     func textViewDidBeginEditing(_ textView: UITextView) {
         self.otherOptionTextView.layer.borderWidth = 2.0
         self.otherOptionTextView.layer.borderColor = UIColor.themeColor.cgColor
-        self.delegate?.animateKeyboard(show: true)
+        self.delegate?.textViewDidBeginEditing(textView)
     }
     
     func textViewDidChange(_ textView: UITextView) {
@@ -81,7 +82,7 @@ extension SetupProfileOtherOptionCell: UITextViewDelegate {
         self.otherOptionTextView.layer.borderWidth = 1.0
         self.otherOptionTextView.layer.borderColor = UIColor(hexString: "#C8C8CC").cgColor
         self.clearDescriptionButton.isHidden =  textView.text.isEmpty
-        self.delegate?.animateKeyboard(show: false)
+        self.delegate?.textViewDidEndEditing(textView)
     }
     
     func textView(_ textView: UITextView,

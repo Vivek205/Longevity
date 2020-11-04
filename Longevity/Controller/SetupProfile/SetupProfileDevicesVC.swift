@@ -55,10 +55,6 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
 
 extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
     func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
-
-        UNUserNotificationCenter.current().getNotificationSettings {
-            (settings) in
-            if settings.authorizationStatus == .authorized {
                 DispatchQueue.main.async {
                     switch cell.titleLabel.text {
                     case "Fitbit":
@@ -71,8 +67,9 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                                 print("Auth flow finished with error \(String(describing: error))")
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                             } else {
-                                print("Your auth code is \(String(describing: authCode))")
-                                self.fitbitModel.token(authCode: authCode!)
+                                guard let authCode = authCode else {return}
+                                print("Your auth code is \(authCode)")
+                                self.fitbitModel.token(authCode: authCode)
                                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                                 DispatchQueue.main.async {
                                     setupProfileConnectDeviceOptionList[2]?.isConnected = true
@@ -90,14 +87,6 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                         }
                     }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    Alert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
-                }
-            }
-        }
-
-
     }
 }
 

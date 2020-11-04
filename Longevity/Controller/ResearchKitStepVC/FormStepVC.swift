@@ -54,7 +54,6 @@ class FormStepVC: ORKStepViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("self.view.frame.origin.y", self.view.frame.origin.y)
         self.rollbackYOrigin = self.view.frame.origin.y
     }
 
