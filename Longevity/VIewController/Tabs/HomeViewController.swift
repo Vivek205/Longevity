@@ -111,7 +111,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 preconditionFailure("Invalid device cell")
             }
             checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
-            checkinCell.isRepetitiveSurveyList = true
             return checkinCell
         }
         else if indexPath.section == 1 {

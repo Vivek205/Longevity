@@ -478,44 +478,31 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
     }
     
     func handleFitbitSwitch(newState isOn: Bool) {
-        let connected = isOn ? 1 : 0
         let fitbitModel = FitbitModel()
         
         if isOn  {
-            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                if settings.authorizationStatus == .authorized {
-                    DispatchQueue.main.async {
-                        if let context = UIApplication.shared.keyWindow {
-                            fitbitModel.contextProvider = AuthContextProvider(context)
-                        }
-                        fitbitModel.auth { authCode, error in
-                            if error != nil {
-                                print("Auth flow finished with error \(String(describing: error))")
-                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
-                            } else {
-                                guard let authCode = authCode else {return}
-                                fitbitModel.token(authCode: authCode)
-                                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
-                            }
-                        }
-                    }
-                    
-                    return
-                } else {
-                    DispatchQueue.main.async {
-                        let action = UIAlertAction(title: "Ok", style: .default, handler: self.openSettings(_:))
-                        Alert(title: "Enable Notification",
-                                       message: "Please enable notification to connect the fitbit device", action: action)
+            DispatchQueue.main.async {
+                if let context = UIApplication.shared.keyWindow {
+                    fitbitModel.contextProvider = AuthContextProvider(context)
+                }
+                fitbitModel.auth { authCode, error in
+                    if error != nil {
+                        print("Auth flow finished with error \(String(describing: error))")
                         AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                    } else {
+                        guard let authCode = authCode else {return}
+                        fitbitModel.token(authCode: authCode)
+                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                     }
                 }
             }
-            
+            return
+
         } else {
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
         }
     }
-    
+
     func handleNotificationSwitch(newState isOn: Bool) {
         func registerForPushNotifications() {
             UNUserNotificationCenter.current() // 1
