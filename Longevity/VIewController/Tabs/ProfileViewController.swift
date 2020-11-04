@@ -447,7 +447,7 @@ extension ProfileViewController: UserProfileHeaderDelegate {
         self.currentProfileView = profileView
     }
     
-    func openSettings() {
+    func openSettings(_ sender: Any? = nil) {
         if let appSettings = NSURL(string: UIApplication.openSettingsURLString) {
             UIApplication.shared.open(appSettings as URL, options: [:], completionHandler: nil)
         }
@@ -503,8 +503,9 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
                     return
                 } else {
                     DispatchQueue.main.async {
+                        let action = UIAlertAction(title: "Ok", style: .default, handler: self.openSettings(_:))
                         Alert(title: "Enable Notification",
-                                       message: "Please enable notification to connect the fitbit device")
+                                       message: "Please enable notification to connect the fitbit device", action: action)
                         AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
                     }
                 }

@@ -11,6 +11,7 @@ import PhoneNumberKit
 import CountryPickerView
 
 fileprivate let appSyncManager:AppSyncManager = AppSyncManager.instance
+fileprivate let phoneNumberKit = PhoneNumberKit()
 
 class EditAccountViewController: UIViewController {
     var modalPresentation = false
@@ -186,7 +187,7 @@ class EditAccountViewController: UIViewController {
                 self?.emailText.text = userProfile.email
 
                 let phoneNumber = userProfile.phone
-                let phoneNumberKit = PhoneNumberKit()
+
                 let parsedPhoneNumber = try? phoneNumberKit.parse(phoneNumber)
 
                 if let countryCode = parsedPhoneNumber?.regionID,
@@ -217,6 +218,14 @@ class EditAccountViewController: UIViewController {
             self.dismiss(animated: true, completion: nil)
             return
         }
+
+//        do {
+//            guard let phone = mobilePhone.text else { }
+//            try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
+//        } catch  {
+//            <#statements#>
+//        }
+
         let alertVC = UIAlertController(title: nil, message: "You have unsaved changes", preferredStyle: .actionSheet)
         let saveChanges = UIAlertAction(title: "Save Changes", style: .default) { [weak self] (action) in
             self?.doneUpdate()
@@ -239,8 +248,17 @@ class EditAccountViewController: UIViewController {
             appSyncManager.userProfile.value?.name = name
         }
         if let phone = mobilePhone.text {
-            appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
+            do {
+                try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
+                appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
+            } catch  {
+                print("phone number error", error)
+                Alert(title: "Invalid Phone Number", message: "The phone number you have entered is not valid. Please enter a valid phone number")
+                return
+            }
+
         }
+
         updateProfile()
         self.dismiss(animated: true, completion: nil)
     }
