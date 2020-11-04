@@ -11,7 +11,7 @@ import Amplify
 import HealthKit
 
 class LNTabBarViewController: UITabBarController {
-    
+    var presentingTosVC: Bool = false
     var currentTabIndex: Int = 0
     
     init() {
@@ -85,12 +85,14 @@ class LNTabBarViewController: UITabBarController {
         
         AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
 
+
             DispatchQueue.main.async {
-                if !(AppSyncManager.instance.isTermsAccepted.value ?? false) {
+                if (!(AppSyncManager.instance.isTermsAccepted.value ?? false) && !self.presentingTosVC) {
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
                     let navigationController = UINavigationController(rootViewController: tosViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController, style: .overCurrentContext)
+                    self.presentingTosVC = true
                 }
             }
         }
