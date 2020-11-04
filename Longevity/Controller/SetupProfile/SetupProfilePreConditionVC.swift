@@ -13,6 +13,8 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
     @IBOutlet weak var viewProgressBar: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
     @IBOutlet weak var footerView: UIView!
+    var activeTextView:UITextView?
+    var rollbackYOrigin: CGFloat?
 
     var modalPresentation = false
     var changesSaved = true
@@ -73,23 +75,21 @@ class SetupProfilePreConditionVC: BaseProfileSetupViewController {
                 // Fallback on earlier versions
             }
         }
+
+        self.rollbackYOrigin = self.view.frame.origin.y
     }
 
-    deinit {
-        removeKeyboardObservers()
+    override func viewDidAppear(_ animated: Bool) {
+        super.viewDidAppear(animated)
+        self.rollbackYOrigin = self.view.frame.origin.y
+        self.addKeyboardObservers()
     }
 
-    func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillChange(notification:)), name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
+    override func viewDidDisappear(_ animated: Bool) {
+        super.viewDidDisappear(animated)
+        self.removeKeyboardObservers()
     }
 
-    func removeKeyboardObservers(){
-        NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
-        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillChangeFrameNotification, object: nil)
-    }
 
     func initializeCollectionViewData() {
         let conditionsCount = currentPreExistingMedicalConditions?.count ?? 0
@@ -120,35 +120,16 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
 }
 
 extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
-    func animateKeyboard(show: Bool) {
-        if !show {
-            if self.currentEditedText != preExistingMedicalCondtionOtherText {
-                self.changesSaved = false
-            }
-        }
-        
-        animateTextView(showKeyboard: show)
+    func textViewDidEndEditing(_ textView: UITextView) {
+        activeTextView = textView
+    }
+
+    func textViewDidBeginEditing(_ textView: UITextView) {
+        activeTextView = textView
     }
     
     func updateCurrentText(text: String?) {
         self.currentEditedText = text ?? ""
-    }
-    
-    func animateTextView(showKeyboard: Bool) {
-        print("animate text view", self.keyboardHeight)
-        let movementDistance = self.keyboardHeight ?? CGFloat(200)
-        let movementDuration = CGFloat(0.3)
-        let movement = showKeyboard ? -movementDistance : 0
-        view.frame.origin.y = movement
-    }
-
-    @objc func keyboardWillChange(notification: Notification) {
-        print("keyboard notification \(notification.name.rawValue)")
-        if let keyboardFrame: NSValue = notification.userInfo?[UIResponder.keyboardFrameEndUserInfoKey] as? NSValue {
-               let keyboardRectangle = keyboardFrame.cgRectValue
-                self.keyboardHeight = keyboardRectangle.height
-                print("keyboard height", self.keyboardHeight)
-           }
     }
     
     @objc func closeView() {
@@ -210,7 +191,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                     withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
             cell.configureTextView(text: preExistingMedicalCondtionOtherText)
             cell.delegate = self
-            
+            self.activeTextView = cell.otherOptionTextView
             return cell
         }
 
@@ -296,6 +277,40 @@ extension SetupProfilePreConditionVC: UIAdaptivePresentationControllerDelegate {
 
     func presentationControllerShouldDismiss(_ presentationController: UIPresentationController) -> Bool {
         return true
+    }
+}
+
+// MARK: - KEYBOARD observers
+extension SetupProfilePreConditionVC {
+    func addKeyboardObservers() {
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    func removeKeyboardObservers() {
+        NotificationCenter.default.removeObserver(self,  name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.removeObserver(self, name: UIResponder.keyboardWillHideNotification, object: nil)
+    }
+
+    @objc func keyboardWasShown(notification: NSNotification){
+        guard let info = notification.userInfo else {return}
+        let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
+        let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
+        guard let keyboardHeight = keyboardSize?.height ,
+            let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
+            let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
+        else {return}
+        let topPadding:CGFloat = 20.0
+        let viewYPadding = navbarHeight + topPadding
+        var visibleScreen : CGRect = self.view.frame
+        visibleScreen.size.height -= (keyboardHeight + viewYPadding)
+
+        self.view.frame.origin.y = -(keyboardHeight - inputAccessoryHeight - viewYPadding)
+    }
+
+    @objc func keyboardWillBeHidden(notification: NSNotification){
+        guard let rollbackYOrigin = self.rollbackYOrigin else {return}
+        self.view.frame.origin.y = rollbackYOrigin
     }
 }
 

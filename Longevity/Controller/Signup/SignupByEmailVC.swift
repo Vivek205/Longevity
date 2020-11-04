@@ -171,7 +171,6 @@ class SignupByEmailVC: UIViewController {
 
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
-        print("self.view.frame.origin.y", self.view.frame.origin.y)
         self.rollbackYOrigin = self.view.frame.origin.y
         self.addKeyboardObservers()
     }
@@ -349,7 +348,6 @@ extension SignupByEmailVC {
         if (!visibleScreen.contains(activeFieldBottom)){
             self.view.frame.origin.y = -(keyboardHeight - inputAccessoryHeight - viewYPadding)
         } else {
-            print("self.view.frame.origin.y", self.view.frame.origin.y)
             if let rollbackYOrigin = self.rollbackYOrigin, self.view.frame.origin.y != rollbackYOrigin {
                 self.view.frame.origin.y = rollbackYOrigin
             }

@@ -55,10 +55,6 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
 
 extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
     func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
-
-        UNUserNotificationCenter.current().getNotificationSettings {
-            (settings) in
-            if settings.authorizationStatus == .authorized {
                 DispatchQueue.main.async {
                     switch cell.titleLabel.text {
                     case "Fitbit":
@@ -91,14 +87,6 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                         }
                     }
                 }
-            } else {
-                DispatchQueue.main.async {
-                    Alert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
-                }
-            }
-        }
-
-
     }
 }
 
