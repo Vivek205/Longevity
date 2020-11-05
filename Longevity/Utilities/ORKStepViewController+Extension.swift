@@ -13,8 +13,8 @@ extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-//        self.customizeStyle()
-        self.customizeNavbarButtons()
+        self.view.backgroundColor = .appBackgroundColor
+        self.cancelButtonItem?.title = "Exit"
 
         if !(step is ORKInstructionStep) {
             self.customizeBackButton()
@@ -29,10 +29,6 @@ extension ORKStepViewController {
             self.backButtonItem = UIBarButtonItem(image: UIImage(named: "icon: arrow-left"), style: .plain,
                                                   target: self, action: #selector(goBackward))
         }
-    }
-
-    func customizeStyle() {
-        self.view.backgroundColor = .appBackgroundColor
     }
 
     func addProgressBar() {
@@ -80,15 +76,5 @@ extension ORKStepViewController {
         }else {
             updateProgress(progress: 0)
         }
-    }
-
-    func customizeNavbarButtons() {
-//        navigationController?.navigationBar.backgroundColor = .yellow
-//        navigationController?.navigationBar.barTintColor = .blue
-//        self.navigationBar
-//        navigationController?.navigationBar.tintColor = .orange
-//        UINavigationBar.appearance().barTintColor = .systemPink
-//        self.navigationItem.backgr
-        self.cancelButtonItem?.title = "Exit"
     }
 }
