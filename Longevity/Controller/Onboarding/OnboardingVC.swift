@@ -69,15 +69,32 @@ class OnboardingVC: UIViewController {
         button.addTarget(self, action: #selector(handleLogin(_:)), for: .touchUpInside)
         return button
     }()
+    
+    lazy var backgroundImage1: UIImageView = {
+        let bgImageView1 = UIImageView()
+        bgImageView1.contentMode = .scaleAspectFill
+        bgImageView1.translatesAutoresizingMaskIntoConstraints = false
+        return bgImageView1
+    }()
+    
+    lazy var backgroundImage2: UIImageView = {
+        let bgImageView2 = UIImageView()
+        bgImageView2.contentMode = .scaleAspectFill
+        bgImageView2.translatesAutoresizingMaskIntoConstraints = false
+        return bgImageView2
+    }()
 
     let onboardingContent = OnboardingContent()
 
     var frame = CGRect(x: 0, y: 0, width: 0, height: 0)
+    var currentPhotoIndex: Int = -1
 
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = .appBackgroundColor
         
+        self.view.addSubview(backgroundImage1)
+        self.view.addSubview(backgroundImage2)
         self.view.addSubview(carouselCollection)
         self.view.addSubview(pageControl)
         self.view.addSubview(getStartedButton)
@@ -107,7 +124,16 @@ class OnboardingVC: UIViewController {
             loginButtonLocal.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             loginButtonLocal.bottomAnchor.constraint(equalTo: view.bottomAnchor,
                                                      constant: -CGFloat(loginButtonBottomMargin)),
-            loginButtonLocal.heightAnchor.constraint(equalToConstant: 30)
+            loginButtonLocal.heightAnchor.constraint(equalToConstant: 30),
+            
+            self.backgroundImage2.leadingAnchor.constraint(equalTo: self.carouselCollection.leadingAnchor),
+            self.backgroundImage2.trailingAnchor.constraint(equalTo: self.carouselCollection.trailingAnchor),
+            self.backgroundImage2.topAnchor.constraint(equalTo: self.carouselCollection.topAnchor),
+            self.backgroundImage2.bottomAnchor.constraint(equalTo: self.carouselCollection.bottomAnchor),
+            self.backgroundImage1.leadingAnchor.constraint(equalTo: self.carouselCollection.leadingAnchor),
+            self.backgroundImage1.trailingAnchor.constraint(equalTo: self.carouselCollection.trailingAnchor),
+            self.backgroundImage1.topAnchor.constraint(equalTo: self.carouselCollection.topAnchor),
+            self.backgroundImage1.bottomAnchor.constraint(equalTo: self.carouselCollection.bottomAnchor)
         ])
 
         //        self.carouselCollection.contentInset.top = -UIApplication.shared.statusBarFrame.height
@@ -128,8 +154,8 @@ class OnboardingVC: UIViewController {
         if let token = UserDefaults.standard.value(forKey: "deviceTokenForSNS") {
             print("device token ====   \(token)")
         }
-
-
+        
+        self.initView(offsetX: 0.0)
     }
     override func viewWillAppear(_ animated: Bool) {
         hideNavigationBar()
@@ -223,7 +249,44 @@ class OnboardingVC: UIViewController {
         } catch  {
             print("error", error)
         }
+    }
+    
+    fileprivate func initView(offsetX: CGFloat) {
+        let scrollImageNum = max(0, min(self.pageControl.numberOfPages - 1, Int(offsetX / self.view.bounds.width)))
+        
+        if scrollImageNum != currentPhotoIndex {
+            self.currentPhotoIndex = scrollImageNum
+            if let bgImageName1 = self.currentPhotoIndex != 0 ? carouselData[self.currentPhotoIndex - 1].bgImageName : nil {
+                self.backgroundImage1.image = UIImage(named: bgImageName1)
+            } else {
+                self.backgroundImage1.image = nil
+            }
+            self.backgroundImage1.image = UIImage(named: carouselData[self.currentPhotoIndex].bgImageName)
 
+            if let bgImageName2 = self.currentPhotoIndex != (self.pageControl.numberOfPages - 1) ? carouselData[self.currentPhotoIndex + 1].bgImageName : nil {
+                self.backgroundImage2.image = UIImage(named: bgImageName2)
+            } else {
+                self.backgroundImage2.image = nil
+            }
+        }
+
+        var offset = offsetX - (CGFloat(self.currentPhotoIndex) * self.view.bounds.width)
+
+        if offset < 0 {
+            offset = self.view.bounds.width - min(-offset, self.view.bounds.width)
+            backgroundImage2.alpha = 0
+            backgroundImage1.alpha = (offset / self.view.bounds.width)
+        } else if offset != 0 {
+            if self.currentPhotoIndex == self.pageControl.numberOfPages - 1 {
+                backgroundImage1.alpha = 1.0 - (offset / self.view.bounds.width)
+            } else {
+                backgroundImage2.alpha = offset / self.view.bounds.width
+                backgroundImage1.alpha = 1 - backgroundImage2.alpha
+            }
+        } else {
+            backgroundImage1.alpha = 1
+            backgroundImage2.alpha = 0
+        }
     }
 
 }
@@ -274,39 +337,6 @@ extension UIAlertType {
     }
 }
 
-// MARK: Alert
-//extension UIViewController {
-//    func showAlert(title: String, message: String) {
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
-//        self.present(alert, animated: true)
-//    }
-//
-//    func showAlert(title: String, message: String, action: UIAlertAction) {
-//        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
-//        alert.addAction(action)
-//        self.present(alert, animated: true)
-//    }
-//
-//    func showAlert(type: UIAlertType) {
-//        let alert = UIAlertController(title: type.title, message: type.message, preferredStyle: .alert)
-//
-//        alert.addAction(UIAlertAction(title: "OK", style: .default, handler: handleUIAlertAction(_:) ))
-//        if let subview = alert.view.subviews.first?.subviews.first?.subviews.first {
-//            subview.backgroundColor = type.color
-//        }
-//
-//        self.present(alert, animated: true)
-//    }
-//    
-//
-//    @objc func handleUIAlertAction(_ action: UIAlertAction) {
-//
-//    }
-//}
-
-
 extension OnboardingVC:UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         return 3
@@ -331,5 +361,11 @@ extension OnboardingVC:UICollectionViewDataSource, UICollectionViewDelegate, UIC
 
     func collectionView(_ collectionView: UICollectionView, willDisplay cell: UICollectionViewCell, forItemAt indexPath: IndexPath) {
         self.pageControl.currentPage = indexPath.item
+    }
+}
+
+extension OnboardingVC: UIScrollViewDelegate {
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        self.initView(offsetX: scrollView.contentOffset.x)
     }
 }

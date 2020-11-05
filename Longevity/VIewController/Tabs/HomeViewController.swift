@@ -23,6 +23,35 @@ class HomeViewController: BaseViewController {
         return table
     }()
     
+    lazy var aiProcessingBand: UIView = {
+        let processingband = UIView()
+        processingband.backgroundColor = UIColor(hexString: "#FDF3E5")
+        
+        let processingImage = UIImageView(image: UIImage(named: "hourglass"))
+        processingImage.contentMode = .scaleAspectFit
+        processingImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        let processingLabel = UILabel(text: "AI processing your updates…", font: UIFont(name: "Montserrat-Regular", size: 14.2), textColor: .black, textAlignment: .left, numberOfLines: 0)
+        processingLabel.sizeToFit()
+        processingLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        processingband.addSubview(processingImage)
+        processingband.addSubview(processingLabel)
+        
+        processingband.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            processingLabel.centerXAnchor.constraint(equalTo: processingband.centerXAnchor),
+            processingLabel.centerYAnchor.constraint(equalTo: processingband.centerYAnchor),
+            processingImage.trailingAnchor.constraint(equalTo: processingLabel.leadingAnchor, constant: 12.0),
+            processingImage.topAnchor.constraint(equalTo: processingband.topAnchor, constant: 8.0),
+            processingImage.bottomAnchor.constraint(equalTo: processingband.bottomAnchor, constant: -8.0),
+            processingImage.widthAnchor.constraint(equalTo: processingImage.heightAnchor)
+        ])
+        
+        return processingband
+    }()
+    
     init() {
         super.init(viewTab: .home)
     }
@@ -35,6 +64,7 @@ class HomeViewController: BaseViewController {
         super.viewDidLoad()
         self.getSurveyList()
         self.view.addSubview(tableView)
+        self.titleView.addSubview(aiProcessingBand)
         
         tableView.tableHeaderView = nil
         tableView.delegate = self
@@ -48,8 +78,14 @@ class HomeViewController: BaseViewController {
                                            constant: -UIApplication.shared.statusBarFrame.height * 2),
             tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
+            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            aiProcessingBand.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor),
+            aiProcessingBand.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor),
+            aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
+            aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
+        
+        self.aiProcessingBand.isHidden = true
         
         SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
@@ -112,8 +148,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
             checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
             return checkinCell
-        }
-        else if indexPath.section == 1 {
+        } else if indexPath.section == 1 {
             guard let devicesCell = tableView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
                 preconditionFailure("Invalid device cell")
             }

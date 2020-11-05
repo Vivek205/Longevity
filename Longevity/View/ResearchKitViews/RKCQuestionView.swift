@@ -54,7 +54,6 @@ class RKCQuestionView: UICollectionReusableView {
 
 
     func createLayout(header: String, question:String, extraInfo: String?) {
-
         let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""
         let textColor = UIColor(hexString: "#4E4E4E")
         
