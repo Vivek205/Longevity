@@ -87,6 +87,16 @@ class TextAnswerVC: ORKStepViewController {
         let answerTextViewHeight = CGFloat(200)
         var questionViewHeight = CGFloat(0)
 
+
+
+        if let step = self.step as? ORKQuestionStep,
+           let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName(),
+           let question = step.question{
+            questionView.createLayout(header: surveyName, question: question, extraInfo: step.text)
+            questionViewHeight += "\n\n\n\(surveyName)".height(withConstrainedWidth: self.view.bounds.width, font: questionView.headerLabel.font)
+            questionViewHeight += "\n\(question)".height(withConstrainedWidth: self.view.bounds.width, font: UIFont(name: AppFontName.regular, size: 24.0) ?? .init())
+        }
+
 //        if let step = self.step as? ORKQuestionStep {
 //            if let title = step.title {
 //                questionViewHeight += title.height(withConstrainedWidth: self.view.bounds.width - 40, font: questionView.headerLabel.font)
@@ -149,7 +159,7 @@ class TextAnswerVC: ORKStepViewController {
 //                height += 30.0
         }
 
-        NSLayoutConstraint.activate([
+            NSLayoutConstraint.activate([
             questionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             questionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             questionView.topAnchor.constraint(equalTo: self.view.topAnchor),

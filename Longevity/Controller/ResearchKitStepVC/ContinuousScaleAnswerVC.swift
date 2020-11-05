@@ -88,12 +88,21 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
         self.view.addSubview(slider)
         self.view.addSubview(footerView)
         footerView.addSubview(continueButton)
+        var questionViewHeight = CGFloat(0)
+
+        if let step = self.step as? ORKQuestionStep,
+           let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName(),
+           let question = step.question{
+
+            questionViewHeight += "\n\n\n\(surveyName)".height(withConstrainedWidth: self.view.bounds.width, font: questionView.headerLabel.font)
+            questionViewHeight += "\n\(question)".height(withConstrainedWidth: self.view.bounds.width, font: UIFont(name: AppFontName.regular, size: 24.0) ?? .init())
+        }
 
         NSLayoutConstraint.activate([
             questionView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             questionView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             questionView.topAnchor.constraint(equalTo: view.topAnchor),
-            questionView.heightAnchor.constraint(equalToConstant: 150),
+            questionView.heightAnchor.constraint(equalToConstant: questionViewHeight),
 
             sliderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             sliderLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor),

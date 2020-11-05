@@ -13,12 +13,15 @@ extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
 
-        self.view.backgroundColor = .appBackgroundColor
+
         self.cancelButtonItem?.title = "Exit"
 
         if !(step is ORKInstructionStep) {
+            self.view.backgroundColor = .appBackgroundColor
             self.customizeBackButton()
             self.addProgressBar()
+        } else {
+            self.view.backgroundColor = .white
         }
     }
 
