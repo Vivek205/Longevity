@@ -14,25 +14,28 @@ enum CheckInStatus: Int {
     case notstarted
     case completedToday
     case completed
+    case pending
 }
 
 extension CheckInStatus {
-    func status(lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) -> String {
+    func statusTitle(lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) -> String? {
         switch self {
         case .notstarted:
             return "Get started today"
-        case .completedToday:
-            guard let noOfTimesSurveyTaken = noOfTimesSurveyTaken else {return ""}
-            return "\(noOfTimesSurveyTaken) days logged"
+        //        case .completedToday:
+        //            guard let noOfTimesSurveyTaken = noOfTimesSurveyTaken else {return ""}
+        //            return "\(noOfTimesSurveyTaken) days logged"
         case .completed:
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = dateFormat
             dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
             if let lastSubmissionDate = dateFormatter.date(from: lastSubmissionDateString ?? "") {
                 let timeAgo = lastSubmissionDate.timeAgoDisplay()
-                return "last tracked: \(timeAgo)"
+                return "Last tracked: \(timeAgo)"
             }
             return ""
+        default:
+            return nil
         }
     }
     
@@ -44,50 +47,63 @@ extension CheckInStatus {
             return UIImage(named: "checkindone")
         case .completed:
             return UIImage(named: "checkinnotdone")
+        case .pending:
+            return UIImage(named: "checkinpending")
         }
     }
-
-    var titleText: String? {
+    
+    var titleText: String {
         switch self {
         case .notstarted:
             return "COVID Check-in"
         case .completedToday:
-            return "Check-in Complete"
+            return "View Today’s Results"
         case .completed:
             return "COVID Check-in"
+        case .pending:
+            return "Processing…"
         }
     }
     
     var titleColor: UIColor {
         switch self {
-        case .notstarted:
-            return .checkinNotCompleted
-        case .completedToday:
-            return .checkinCompleted
-        case .completed:
-            return .checkinNotCompleted
+        case .pending:
+            return .checkinpending
+        default:
+            return .themeColor
         }
     }
-
+    
     var subtitleText: String {
         switch self {
-        case .notstarted:
-            return "How are you feeling today?"
         case .completedToday:
-            return "View your check-in log"
-        case .completed:
+            return "You can view results here or in your Check-in Log"
+        case .pending:
+            return "Your check-in results will be avaliable soon"
+        default:
             return "How are you feeling today?"
         }
     }
-
+    
     var subtitleColor: UIColor {
         switch self {
-        case .notstarted:
-            return .checkinCompleted
         case .completedToday:
-            return .checkinNotCompleted
-        case .completed:
+            return .statusColor
+        case .pending:
+            return .statusColor
+        default:
             return .checkinCompleted
+        }
+    }
+    
+    var subtitleFont: UIFont {
+        switch self {
+        case .completedToday:
+            return UIFont(name: "Montserrat-Regular", size: 16.0)!
+        case .pending:
+            return UIFont(name: "Montserrat-Regular", size: 16.0)!
+        default:
+            return UIFont(name: "Montserrat-SemiBold", size: 16.0)!
         }
     }
 }
@@ -114,6 +130,7 @@ class DashboardCheckInCell: UITableViewCell {
                     }
                 }
             }
+            
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
                            noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
@@ -129,7 +146,8 @@ class DashboardCheckInCell: UITableViewCell {
     
     lazy var checkInTitle: UILabel = {
         let title = UILabel()
-        title.font = UIFont(name: "Montserrat-Medium", size: 20.0)
+        title.numberOfLines = 0
+        title.lineBreakMode = .byWordWrapping
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
@@ -175,7 +193,7 @@ class DashboardCheckInCell: UITableViewCell {
         
         self.addSubview(bgView)
         bgView.addSubview(checkInIcon)
-        bgView.addSubview(verticleStack)
+        bgView.addSubview(checkInTitle)
         
         NSLayoutConstraint.activate([
             bgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
@@ -186,10 +204,10 @@ class DashboardCheckInCell: UITableViewCell {
             checkInIcon.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -10.0),
             checkInIcon.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 10.0),
             checkInIcon.widthAnchor.constraint(equalTo: checkInIcon.heightAnchor),
-            verticleStack.leadingAnchor.constraint(equalTo: checkInIcon.trailingAnchor, constant: 10.0),
-            verticleStack.topAnchor.constraint(equalTo: checkInIcon.topAnchor),
-            verticleStack.bottomAnchor.constraint(equalTo: checkInIcon.bottomAnchor),
-            verticleStack.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
+            checkInTitle.leadingAnchor.constraint(equalTo: checkInIcon.trailingAnchor, constant: 10.0),
+            checkInTitle.topAnchor.constraint(equalTo: checkInIcon.topAnchor),
+            checkInTitle.bottomAnchor.constraint(equalTo: checkInIcon.bottomAnchor),
+            checkInTitle.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
         ])
         
         self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil, noOfTimesSurveyTaken: nil)
@@ -202,18 +220,57 @@ class DashboardCheckInCell: UITableViewCell {
     
     func setupCell(title: String, lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) {
         self.checkInIcon.image = status.statusIcon
-        self.checkInTitle.text = status.titleText
-        self.checkInTitle.textColor = status.titleColor
-        self.checkInTitle2.text = status.subtitleText
-        self.checkInTitle2.textColor = status.subtitleColor
-        self.checkInTitle2.font = UIFont(name: AppFontName.semibold, size: 16.0)
-        self.lastUpdated.text = status.status(lastSubmissionDateString: lastSubmissionDateString,
-                                              noOfTimesSurveyTaken: noOfTimesSurveyTaken)
-        self.lastUpdated.textColor = .statusColor
-
-        if status == .completedToday {
-            self.checkInTitle2.font = UIFont(name: AppFontName.regular, size: 16.0)
+        
+        let checkinTitle = "\(status.titleText)\n"
+        
+        let titlefont = UIFont(name: "Montserrat-Medium", size: 20.0)!
+        let paragraphStyle1 = NSMutableParagraphStyle()
+        paragraphStyle1.lineSpacing = 5
+        let attributes: [NSAttributedString.Key: Any] = [.font: titlefont,
+                                                         .foregroundColor: status.titleColor,
+                                                         .paragraphStyle: paragraphStyle1]
+        let attributedcheckinTitle = NSMutableAttributedString(string: checkinTitle, attributes: attributes)
+        
+        let checkinSubTitle = status.subtitleText
+        let paragraphStyle2 = NSMutableParagraphStyle()
+        paragraphStyle2.lineSpacing = 5
+        let subTitleAttributes: [NSAttributedString.Key: Any] = [.font: status.subtitleFont,
+                                                                 .foregroundColor: status.subtitleColor,
+                                                                 .paragraphStyle: paragraphStyle2]
+        let attributedcheckinSubTitle = NSMutableAttributedString(string: checkinSubTitle,
+                                                                  attributes: subTitleAttributes)
+        attributedcheckinTitle.append(attributedcheckinSubTitle)
+        
+        if status == .notstarted || status == .completed {
+            if let statusText = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString,
+                                                   noOfTimesSurveyTaken: noOfTimesSurveyTaken) {
+                let statusFont = UIFont(name: "Montserrat-Regular", size: 14.0)!
+                let paragraphStyle3 = NSMutableParagraphStyle()
+                paragraphStyle3.lineSpacing = 2.5
+                let statusTextAttributes: [NSAttributedString.Key: Any] =
+                                                                            [.font: statusFont,
+                                                                           .foregroundColor: UIColor.statusColor,
+                                                                           .paragraphStyle: paragraphStyle3]
+                let attributedstatusText = NSMutableAttributedString(string: "\n\(statusText)",
+                                                                     attributes: statusTextAttributes)
+                attributedcheckinTitle.append(attributedstatusText)
+            }
         }
+        
+        self.checkInTitle.attributedText = attributedcheckinTitle
+        
+//        self.checkInTitle.text = status.titleText
+//        self.checkInTitle.textColor = status.titleColor
+//        self.checkInTitle2.text = status.subtitleText
+//        self.checkInTitle2.textColor = status.subtitleColor
+//        self.checkInTitle2.font = UIFont(name: AppFontName.semibold, size: 16.0)
+//        self.lastUpdated.text = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString,
+//                                              noOfTimesSurveyTaken: noOfTimesSurveyTaken)
+//        self.lastUpdated.textColor = .statusColor
+
+//        if status == .completedToday {
+//            self.checkInTitle2.font = UIFont(name: AppFontName.regular, size: 16.0)
+//        }
     }
     
     override func layoutSubviews() {

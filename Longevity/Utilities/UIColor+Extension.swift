@@ -58,6 +58,10 @@ extension UIColor {
         return UIColor(hexString: "#4A4A4A")
     }
     
+    @nonobjc class var checkinpending: UIColor {
+        return UIColor(hexString: "#4A4A4A")
+    }
+    
     @nonobjc class var statusColor: UIColor {
         return UIColor(hexString: "#9B9B9B")
     }
