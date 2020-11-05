@@ -39,6 +39,37 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
         return dashboardTiles
     }()
     
+    lazy var aiProcessingBand: UIView = {
+        let processingband = UIView()
+        processingband.backgroundColor = UIColor(hexString: "#FDF3E5")
+        
+        let processingImage = UIImageView(image: UIImage(named: "hourglass"))
+        processingImage.contentMode = .scaleAspectFit
+        processingImage.translatesAutoresizingMaskIntoConstraints = false
+        
+        let processingLabel = UILabel(text: "AI processing your updates…",
+                                      font: UIFont(name: "Montserrat-Regular", size: 14.2),
+                                      textColor: .black, textAlignment: .left, numberOfLines: 0)
+        processingLabel.sizeToFit()
+        processingLabel.translatesAutoresizingMaskIntoConstraints = false
+        
+        processingband.addSubview(processingImage)
+        processingband.addSubview(processingLabel)
+        
+        processingband.translatesAutoresizingMaskIntoConstraints = false
+        
+        NSLayoutConstraint.activate([
+            processingLabel.centerXAnchor.constraint(equalTo: processingband.centerXAnchor),
+            processingLabel.centerYAnchor.constraint(equalTo: processingband.centerYAnchor),
+            processingImage.trailingAnchor.constraint(equalTo: processingLabel.leadingAnchor, constant: 12.0),
+            processingImage.topAnchor.constraint(equalTo: processingband.topAnchor, constant: 8.0),
+            processingImage.bottomAnchor.constraint(equalTo: processingband.bottomAnchor, constant: -8.0),
+            processingImage.widthAnchor.constraint(equalTo: processingImage.heightAnchor)
+        ])
+        
+        return processingband
+    }()
+    
     let topMargin = 10.0
     let bottomMargin = 10.0
     
@@ -46,28 +77,36 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
         super.init(reuseIdentifier: reuseIdentifier)
         
         self.addSubview(bgImageView)
-              self.addSubview(dashboardTilesCollection)
-              NSLayoutConstraint.activate([
-                  bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                  bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                  bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-                  bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
-                  dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                  dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                  dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
-                  dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-              ])
-              
-              guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
-                  return
-              }
-              
-              layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
-              layout.scrollDirection = .horizontal
+        self.addSubview(dashboardTilesCollection)
+        self.bgImageView.addSubview(aiProcessingBand)
         
-              AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-                  self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
-              }
+        NSLayoutConstraint.activate([
+            bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
+            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            dashboardTilesCollection.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            dashboardTilesCollection.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            dashboardTilesCollection.topAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop)),
+            dashboardTilesCollection.bottomAnchor.constraint(equalTo: self.bottomAnchor),
+            aiProcessingBand.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            aiProcessingBand.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+            aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
+            aiProcessingBand.bottomAnchor.constraint(equalTo: self.topAnchor, constant: CGFloat(vTop))
+        ])
+        
+//        self.bgImageView.bringSubviewToFront(aiProcessingBand)
+        
+        guard let layout = dashboardTilesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
+        layout.scrollDirection = .horizontal
+        
+        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
+            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
+        }
     }
     
     required init?(coder: NSCoder) {
