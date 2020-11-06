@@ -44,7 +44,7 @@ class SetupCompleteVC: BaseProfileSetupViewController {
     }
     
     @IBAction func onShowDashboard(_ sender: Any) {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
         appDelegate.setRootViewController()
     }
 
@@ -97,7 +97,6 @@ extension SetupCompleteVC: ORKTaskViewControllerDelegate {
         switch reason {
         case .completed:
             print("completed")
-//            self.getSurveyList()
         case .discarded:
             print("discarded")
         case .failed:
