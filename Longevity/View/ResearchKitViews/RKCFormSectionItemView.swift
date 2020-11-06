@@ -62,6 +62,8 @@ class RKCFormSectionItemView: UICollectionViewCell {
 
         ])
         
+        self.verticalLine.removeFromSuperview()
+        
         if cellPosition != .none {
             self.addSubview(verticalLine)
             self.sendSubviewToBack(verticalLine)
