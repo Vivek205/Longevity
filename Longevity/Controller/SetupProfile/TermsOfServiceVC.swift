@@ -16,19 +16,18 @@ fileprivate let tosWebViewURL = "https://rejuve-public.s3-us-west-2.amazonaws.co
 
 class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDelegate {
     // MARK: Outlets
-    @IBOutlet weak var footer: UIView!
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
-    @IBOutlet weak var continueButton: CustomButtonFill!
-    
-    lazy var titleLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Terms of Service & Data Privacy"
-        label.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
-        label.textColor = UIColor(hexString: "#4E4E4E")
-        label.numberOfLines = 2
-        label.textAlignment = .center
-        return label
+
+    lazy var footerView: UIView = {
+        let uiView = UIView(backgroundColor: .white)
+        uiView.translatesAutoresizingMaskIntoConstraints = false
+        return uiView
+    }()
+
+    lazy var continueButton: CustomButtonFill = {
+        let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleAcceptTerms(_:)))
+        button.translatesAutoresizingMaskIntoConstraints = false
+        return button
     }()
     
     lazy var acceptCard: CardView = {
@@ -72,7 +71,8 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         let view = WKWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
         view.navigationDelegate = self
-//        view.scrollView.delegate = self
+        view.scrollView.isScrollEnabled = false
+        view.isUserInteractionEnabled = false
         return view
     }()
     
@@ -95,14 +95,17 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
+//        NOTE: - keep the styleNavigationBar on the top
+        styleNavigationBar()
+
         self.continueButton.isEnabled = false
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
         navigationController?.delegate = self
         self.navigationItem.setHidesBackButton(true, animated: true)
         self.removeBackButtonNavigation()
         self.view.backgroundColor = .appBackgroundColor
-        
-        self.view.addSubview(titleLabel)
+        self.title = "Terms of Service"
+        self.navigationController?.navigationBar.isTranslucent = true
         
         self.view.addSubview(contentContainer)
         contentContainer.addSubview(webView)
@@ -113,26 +116,31 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         acceptCard.addSubview(acceptCheckbox)
 //        acceptCard.isHidden = true
 
+        self.view.addSubview(footerView)
+        self.footerView.addSubview(continueButton)
+
         webView.load(URLRequest(url: URL(string: tosWebViewURL)!))
         
         webView.addSubview(spinner)
         spinner.hidesWhenStopped = true
+
+        let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
+                (navigationController?.navigationBar.frame.height ?? 0.0)
+
+        let shieldImageHeight: CGFloat = 64.0
+        let containerTopPadding = navBarHeight + (shieldImageHeight / 2)
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
-            titleLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            titleLabel.topAnchor.constraint(equalTo: view.topAnchor),
-            titleLabel.heightAnchor.constraint(equalToConstant: 64.0),
             
             shieldImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             shieldImage.centerYAnchor.constraint(equalTo: contentContainer.topAnchor),
             shieldImage.widthAnchor.constraint(equalToConstant: 55.0),
-            shieldImage.heightAnchor.constraint(equalToConstant: 64.0),
+            shieldImage.heightAnchor.constraint(equalToConstant: shieldImageHeight),
             
             contentContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             contentContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            contentContainer.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: 36.5),
-            contentContainer.bottomAnchor.constraint(equalTo: acceptCard.topAnchor, constant: -36.0),
+            contentContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: containerTopPadding),
+            contentContainer.heightAnchor.constraint(equalToConstant: 350.0),
             
             webView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 10.0),
             webView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -10.0),
@@ -144,7 +152,8 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             
             acceptCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             acceptCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            acceptCard.bottomAnchor.constraint(equalTo: self.continueButton.topAnchor, constant: -50.0),
+
+            acceptCard.topAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: 24),
             acceptCard.heightAnchor.constraint(equalToConstant: 74.0),
             
             acceptCheckbox.centerYAnchor.constraint(equalTo: acceptCard.centerYAnchor),
@@ -155,41 +164,30 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             acceptLabel.leadingAnchor.constraint(equalTo: acceptCard.leadingAnchor, constant: 15.0),
             acceptLabel.trailingAnchor.constraint(equalTo: acceptCheckbox.leadingAnchor, constant: 14.0),
             acceptLabel.topAnchor.constraint(equalTo: acceptCard.topAnchor, constant: 15.0),
-            acceptLabel.bottomAnchor.constraint(equalTo: acceptCard.bottomAnchor, constant: -15.0)
+            acceptLabel.bottomAnchor.constraint(equalTo: acceptCard.bottomAnchor, constant: -15.0),
+
+            footerView.heightAnchor.constraint(equalToConstant: 130),
+            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
+            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+
+            continueButton.heightAnchor.constraint(equalToConstant: 48),
+            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 33)
         ])
-        
-        styleNavigationBar()
-        
-        if self.isFromSettings {
-            let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
-            leftbutton.tintColor = .themeColor
-            self.viewNavigationItem.leftBarButtonItem = leftbutton
-            self.viewNavigationItem.rightBarButtonItems = nil
-            let titleLabel = UILabel()
-            titleLabel.text = "Terms of Service"
-            titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
-            titleLabel.textColor = UIColor(hexString: "#4E4E4E")
-            titleLabel.translatesAutoresizingMaskIntoConstraints = false
-            
-            self.viewNavigationItem.titleView = titleLabel
-            self.footer.isHidden = true
-            self.acceptCard.isHidden = true
-            self.acceptLabel.isHidden = true
-            self.acceptCheckbox.isHidden = true
-        }
+
+
+        let tapGesture = UITapGestureRecognizer(target: self, action: #selector(handleWebviewTap(_:)))
+        contentContainer.addGestureRecognizer(tapGesture)
     }
-    
-    func customizeFooter(footer: UIView){
-        footer.layer.shadowPath = UIBezierPath(rect: footer.bounds).cgPath
-        footer.layer.shadowRadius = 5
-        footer.layer.shadowOffset = .zero
-        footer.layer.shadowOpacity = 1
-        footer.layer.shadowColor = UIColor.black.cgColor
-        footer.layer.masksToBounds = false
-        footer.clipsToBounds = false
-        footer.backgroundColor = UIColor.black
+
+    override func viewDidLayoutSubviews() {
+        contentContainer.layer.borderWidth = 2
+        contentContainer.layer.borderColor = UIColor.themeColor.cgColor
+        contentContainer.layer.cornerRadius = 10
     }
-    
+
     @objc func handleAcceptCheckboxTap(_ sender: CardView) {
         acceptCheckbox.isSelected = !acceptCheckbox.isSelected
         acceptCard.layer.cornerRadius = 4.0
@@ -202,12 +200,20 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         }
         continueButton.isEnabled = acceptCheckbox.isSelected
     }
-    
-    // MARK: Actions
-    @IBAction func handleAcceptTerms(_ sender: Any) {
+
+    @objc func handleAcceptTerms(_ sender: Any) {
         print("Terms Accepted")
         acceptTNC(value: true)
         performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
+    }
+
+    @objc func handleWebviewTap(_ sender: Any) {
+//        Alert(title: "handle Web view tap", message: "webview tap")
+        let termsOfServiceContextVC = TermsOfServiceContextVC()
+        termsOfServiceContextVC.title = "Terms of Service Details"
+        let navigationController = UINavigationController(rootViewController: termsOfServiceContextVC)
+
+        NavigationUtility.presentOverCurrentContext(destination: navigationController)
     }
     
     
@@ -247,12 +253,3 @@ extension TermsOfServiceVC:  WKNavigationDelegate {
     }
 }
 
-//extension TermsOfServiceVC: UIScrollViewDelegate {
-//    func scrollViewDidScroll(_ scrollView: UIScrollView) {
-//        if termsOfServiceURLLoaded {
-//            if scrollView.contentOffset.y >= (scrollView.contentSize.height - scrollView.frame.size.height) {
-//                acceptCard.isHidden = false
-//            }
-//        }
-//    }
-//}

@@ -3,7 +3,7 @@
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17126"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -910,38 +910,12 @@
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CgP-to-171">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="e95-nv-52a" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
-                                <rect key="frame" x="15" y="799" width="384" height="48"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="48" id="iSF-Gp-Sk9"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="Montserrat-Medium" family="Montserrat" pointSize="17"/>
-                                <state key="normal" title="Continue">
-                                    <color key="titleColor" red="0.96078431369999995" green="0.96862745100000003" blue="0.97254901959999995" alpha="1" colorSpace="calibratedRGB"/>
-                                </state>
-                                <connections>
-                                    <action selector="handleAcceptTerms:" destination="Zqc-mS-75O" eventType="touchUpInside" id="rux-a7-ORa"/>
-                                </connections>
-                            </button>
-                        </subviews>
                         <viewLayoutGuide key="safeArea" id="D0D-7s-sN3"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
-                        <constraints>
-                            <constraint firstItem="D0D-7s-sN3" firstAttribute="trailing" secondItem="e95-nv-52a" secondAttribute="trailing" constant="15" id="NFM-15-ADm"/>
-                            <constraint firstItem="D0D-7s-sN3" firstAttribute="bottom" secondItem="e95-nv-52a" secondAttribute="bottom" constant="15" id="Qbq-4a-p6p"/>
-                            <constraint firstItem="e95-nv-52a" firstAttribute="leading" secondItem="D0D-7s-sN3" secondAttribute="leading" constant="15" id="suv-60-ggV"/>
-                        </constraints>
                     </view>
-                    <navigationItem key="navigationItem" id="xL7-d0-VmB">
-                        <barButtonItem key="rightBarButtonItem" title="Decline" id="osr-Q9-gqR">
-                            <color key="tintColor" red="0.3529411764705882" green="0.65490196078431373" blue="0.65490196078431373" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                        </barButtonItem>
-                    </navigationItem>
+                    <navigationItem key="navigationItem" id="xL7-d0-VmB"/>
                     <simulatedNavigationBarMetrics key="simulatedTopBarMetrics" prompted="NO"/>
                     <connections>
-                        <outlet property="continueButton" destination="e95-nv-52a" id="HGu-Gj-Vu2"/>
                         <outlet property="viewNavigationItem" destination="xL7-d0-VmB" id="oq6-rD-ufw"/>
                         <segue destination="9q7-ow-baX" kind="unwind" identifier="unwindTOCToOnboarding" unwindAction="unwindToOnboarding:" id="vcb-Ui-ASK"/>
                         <segue destination="Zin-rP-KGp" kind="show" identifier="TOSToProfileSetup" id="ExJ-ON-yDI"/>

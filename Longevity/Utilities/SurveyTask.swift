@@ -71,7 +71,7 @@ final class SurveyTaskUtility: NSObject {
             
             let instructionStep = ORKInstructionStep(identifier: "IntroStep")
             instructionStep.title = surveyDetails?.name
-            instructionStep.text = surveyDetails?.description
+            instructionStep.text = surveyDetails?.description.longDescription   
             steps += [instructionStep]
 
             let categories = surveyDetails!.displaySettings.categories

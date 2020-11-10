@@ -16,10 +16,15 @@ struct SurveyLastResponseData: Decodable {
     let submissionId: String
 }
 
+struct SurveyDescription: Decodable {
+    let shortDescription: String
+    let longDescription: String
+}
+
 struct SurveyListItem: Decodable {
     let surveyId: String
     let name: String
-    let description: String
+    let description: SurveyDescription
     let imageUrl: String?
     let lastSubmission: String?
     let lastSubmissionId: String?
@@ -160,7 +165,7 @@ struct DisplaySettings: Decodable {
 struct SurveyDetails: Decodable {
     let surveyId: String
     let name: String
-    let description: String
+    let description: SurveyDescription
     let displaySettings: DisplaySettings
     let questions: [Question]
     let lastSubmission: String?

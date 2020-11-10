@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		5E74678A7875C968E8459DA5 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */; };
+		81E1C5347ADE112C9A0039C7 /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 24BD20B7B452BBEAE65532F7 /* Pods_Longevity.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
@@ -96,6 +96,7 @@
 		E20CD88E253738A600ADADB4 /* ForgotPasswordCaptureEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */; };
 		E20CD890253738DA00ADADB4 /* ForgotPasswordOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */; };
 		E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */; };
+		E210A11E255AC52E0074226A /* TermsOfServiceContextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210A11D255AC52E0074226A /* TermsOfServiceContextVC.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -238,9 +239,7 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
-		9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		24BD20B7B452BBEAE65532F7 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
@@ -322,6 +321,8 @@
 		C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		D78D77D213BD2337A968CE81 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		D9DB6AA1E7764417087A9D19 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
 		E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormSectionItemView.swift; sourceTree = "<group>"; };
 		E20256E124E2ACB800896F2C /* RKCFormItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormItemView.swift; sourceTree = "<group>"; };
@@ -329,6 +330,7 @@
 		E20CD88D253738A500ADADB4 /* ForgotPasswordCaptureEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordCaptureEmailVC.swift; sourceTree = "<group>"; };
 		E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordOtpVC.swift; sourceTree = "<group>"; };
 		E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
+		E210A11D255AC52E0074226A /* TermsOfServiceContextVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContextVC.swift; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
 		E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalHistoryAPI.swift; sourceTree = "<group>"; };
@@ -451,7 +453,7 @@
 				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
-				5E74678A7875C968E8459DA5 /* Pods_Longevity.framework in Frameworks */,
+				81E1C5347ADE112C9A0039C7 /* Pods_Longevity.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -461,8 +463,8 @@
 		04C2A7532EFF18097D0A9CCF /* Pods */ = {
 			isa = PBXGroup;
 			children = (
-				9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */,
-				9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */,
+				D9DB6AA1E7764417087A9D19 /* Pods-Longevity.debug.xcconfig */,
+				D78D77D213BD2337A968CE81 /* Pods-Longevity.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -472,7 +474,7 @@
 			children = (
 				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				8847057F936A7BFCF755F1CD /* Pods_Longevity.framework */,
+				24BD20B7B452BBEAE65532F7 /* Pods_Longevity.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -657,6 +659,7 @@
 			isa = PBXGroup;
 			children = (
 				E2386A332487B7A40068030E /* TermsOfServiceVC.swift */,
+				E210A11D255AC52E0074226A /* TermsOfServiceContextVC.swift */,
 				E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */,
 				E2C59E012498F50500842105 /* SetupProfileBioDataVC.swift */,
 				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
@@ -987,14 +990,14 @@
 			isa = PBXNativeTarget;
 			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
 			buildPhases = (
-				8E61F0A39CDE305F8719697A /* [CP] Check Pods Manifest.lock */,
+				D9E4C923316BC51AE5875418 /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
 				E2ECB8B8247FE2BA0020A27E /* Frameworks */,
 				E2ECB8B9247FE2BA0020A27E /* Resources */,
 				E23A2CC72480EFC30051EE7A /* SwiftLint */,
 				E2CD373224A31F0C002ABBEC /* Sentry */,
 				C198758224DAE80700477185 /* Embed Frameworks */,
-				6EF5EFB8F05E5C11881A0DE7 /* [CP] Embed Pods Frameworks */,
+				166D066FA8A19E7F2884CCBA /* [CP] Embed Pods Frameworks */,
 			);
 			buildRules = (
 			);
@@ -1088,7 +1091,7 @@
 /* End PBXResourcesBuildPhase section */
 
 /* Begin PBXShellScriptBuildPhase section */
-		6EF5EFB8F05E5C11881A0DE7 /* [CP] Embed Pods Frameworks */ = {
+		166D066FA8A19E7F2884CCBA /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1105,7 +1108,7 @@
 			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
-		8E61F0A39CDE305F8719697A /* [CP] Check Pods Manifest.lock */ = {
+		D9E4C923316BC51AE5875418 /* [CP] Check Pods Manifest.lock */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
@@ -1319,6 +1322,7 @@
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
 				E2E14BF924AF0BFC007C0470 /* User.swift in Sources */,
 				C12F09C324F800EA00623CC3 /* AppleHealthConnectionViewController.swift in Sources */,
+				E210A11E255AC52E0074226A /* TermsOfServiceContextVC.swift in Sources */,
 				C19875C524DC926D00477185 /* TitleView.swift in Sources */,
 				C14DBC03250557FE004D5180 /* CheckInResultViewController.swift in Sources */,
 				E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */,
@@ -1492,13 +1496,13 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9A7ADEAA1B63EFDE5B8C0500 /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = D9DB6AA1E7764417087A9D19 /* Pods-Longevity.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1517,13 +1521,13 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 9AB420FDA6B02A214E6D4CA1 /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = D78D77D213BD2337A968CE81 /* Pods-Longevity.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 53;
+				CURRENT_PROJECT_VERSION = 54;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

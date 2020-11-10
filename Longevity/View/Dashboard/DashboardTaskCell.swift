@@ -43,7 +43,7 @@ class DashboardTaskCell: UITableViewCell {
                 }
             }
             taskTitle.text = surveyDetails?.name
-            taskDescription.text = surveyDetails?.description
+            taskDescription.text = surveyDetails?.description.shortDescription
         }
     }
     
