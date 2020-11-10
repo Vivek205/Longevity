@@ -13,6 +13,12 @@ class HomeViewController: BaseViewController {
     var surveyId: String?
     var currentTask: ORKOrderedTask?
     
+    var isAIProcessPending: Bool {
+        didSet {
+            self.aiProcessingBand.isHidden = !isAIProcessPending
+        }
+    }
+    
     lazy var tableView: UITableView = {
         let table = UITableView(frame: CGRect.zero, style: .grouped)
         table.showsVerticalScrollIndicator = false
@@ -23,36 +29,14 @@ class HomeViewController: BaseViewController {
         return table
     }()
     
-    lazy var aiProcessingBand: UIView = {
-        let processingband = UIView()
-        processingband.backgroundColor = UIColor(hexString: "#FDF3E5")
-        
-        let processingImage = UIImageView(image: UIImage(named: "hourglass"))
-        processingImage.contentMode = .scaleAspectFit
-        processingImage.translatesAutoresizingMaskIntoConstraints = false
-        
-        let processingLabel = UILabel(text: "AI processing your updates…", font: UIFont(name: "Montserrat-Regular", size: 14.2), textColor: .black, textAlignment: .left, numberOfLines: 0)
-        processingLabel.sizeToFit()
-        processingLabel.translatesAutoresizingMaskIntoConstraints = false
-        
-        processingband.addSubview(processingImage)
-        processingband.addSubview(processingLabel)
-        
+    lazy var aiProcessingBand: AIProgressBandView = {
+        let processingband = AIProgressBandView()
         processingband.translatesAutoresizingMaskIntoConstraints = false
-        
-        NSLayoutConstraint.activate([
-            processingLabel.centerXAnchor.constraint(equalTo: processingband.centerXAnchor),
-            processingLabel.centerYAnchor.constraint(equalTo: processingband.centerYAnchor),
-            processingImage.trailingAnchor.constraint(equalTo: processingLabel.leadingAnchor, constant: 12.0),
-            processingImage.topAnchor.constraint(equalTo: processingband.topAnchor, constant: 8.0),
-            processingImage.bottomAnchor.constraint(equalTo: processingband.bottomAnchor, constant: -8.0),
-            processingImage.widthAnchor.constraint(equalTo: processingImage.heightAnchor)
-        ])
-        
         return processingband
     }()
     
     init() {
+        self.isAIProcessPending = false
         super.init(viewTab: .home)
     }
 
@@ -84,8 +68,6 @@ class HomeViewController: BaseViewController {
             aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
             aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
-        
-        self.aiProcessingBand.isHidden = true
         
         SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
@@ -146,7 +128,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-            checkinCell.surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
+            let surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
+            
+            if surveyResponse?.lastSurveyStatus == .pending {
+                self.isAIProcessPending = true
+            }
+            checkinCell.surveyResponse = surveyResponse
             return checkinCell
         } else if indexPath.section == 1 {
             guard let devicesCell = tableView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
@@ -164,8 +151,13 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let taskCell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
                 preconditionFailure("Invalid device cell")
             }
-            taskCell.surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
-
+            let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
+            
+            if surveyDetails?.lastSurveyStatus == .pending {
+                self.isAIProcessPending = true
+            }
+            
+            taskCell.surveyDetails = surveyDetails
             return taskCell
         }
     }

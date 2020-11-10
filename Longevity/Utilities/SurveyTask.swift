@@ -295,7 +295,27 @@ final class SurveyTaskUtility: NSObject {
 
     func setSurveyList(list:[SurveyListItem]) {
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
-        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true && $0.lastSubmission == nil })
+        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true &&
+                                                        ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
+    }
+    
+    fileprivate func isTaskCompletedToday(task: SurveyListItem) -> Bool {
+        if let lastSubmission = task.lastSubmission, !lastSubmission.isEmpty {
+            let dateFormatter = DateFormatter()
+            dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+
+            if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
+                var calendar = Calendar.current
+                calendar.timeZone = TimeZone(abbreviation: "UTC")!
+                if calendar.isDateInToday(lastSubmissionDate) {
+                    return true
+                } else {
+                    return false
+                }
+            }
+        }
+        return false
     }
 
     func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {

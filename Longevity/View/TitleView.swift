@@ -16,6 +16,7 @@ class TitleView: UIView {
         let bgImage = UIImageView()
         bgImage.image = UIImage(named: "home-bg")
         bgImage.contentMode = .scaleAspectFill
+        bgImage.clipsToBounds = true
         bgImage.translatesAutoresizingMaskIntoConstraints = false
         return bgImage
     }()
@@ -43,12 +44,14 @@ class TitleView: UIView {
         
         let vTop: CGFloat = UIDevice.hasNotch ? 60.0 : 20.0
         
+        let imageBottom : CGFloat = viewTab == .home ? -10.0 : 0.0
+        
         self.addSubview(bgImageView)
         NSLayoutConstraint.activate([
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: imageBottom)
         ])
         
         if viewTab == .home {
@@ -57,7 +60,6 @@ class TitleView: UIView {
                 titleImageView.heightAnchor.constraint(equalToConstant: 34.0),
                 titleImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                 titleImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//                titleImageView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
                 titleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
             ])
         } else {
@@ -66,7 +68,6 @@ class TitleView: UIView {
             NSLayoutConstraint.activate([
                 titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
                 titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//                titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
                 titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
             ])
         }

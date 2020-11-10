@@ -10,6 +10,12 @@ import Foundation
 import Amplify
 import SwiftyJSON
 
+enum SurveyStatus: String, Codable {
+    case notstarted = "NOT_STARTED"
+    case started = "STARTED"
+    case unknown = "UNKNOWN"
+}
+
 struct SurveyLastResponseData: Decodable {
     let quesId: String
     let answer: String
@@ -31,6 +37,7 @@ struct SurveyListItem: Decodable {
     let response: [SurveyLastResponseData]?
     let isRepetitive: Bool?
     let noOfTimesSurveyTaken: Int?
+    let lastSurveyStatus: CheckInStatus
 }
 
 func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
