@@ -89,6 +89,7 @@
 		C1C8220624EB4EAB0074AF11 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */; };
 		C1C8220824EB54A50074AF11 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220724EB54A50074AF11 /* UIView+Extension.swift */; };
 		C1C8220A24EB570C0074AF11 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */; };
+		C1EC3E15255B1C4F007B4650 /* AIProgressBandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */; };
 		E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DD24E29DA000896F2C /* FormStepVC.swift */; };
 		E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */; };
 		E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256E124E2ACB800896F2C /* RKCFormItemView.swift */; };
@@ -321,6 +322,7 @@
 		C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProgressBandView.swift; sourceTree = "<group>"; };
 		D78D77D213BD2337A968CE81 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
 		D9DB6AA1E7764417087A9D19 /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
@@ -618,6 +620,7 @@
 				C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */,
 				C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */,
 				E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */,
+				C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */,
 			);
 			path = Dashboard;
 			sourceTree = "<group>";
@@ -1308,6 +1311,7 @@
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */,
 				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,
+				C1EC3E15255B1C4F007B4650 /* AIProgressBandView.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */,
 				C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */,

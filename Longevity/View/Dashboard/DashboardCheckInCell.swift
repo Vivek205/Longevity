@@ -10,11 +10,11 @@ import UIKit
 
 fileprivate let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
-enum CheckInStatus: Int {
-    case notstarted
-    case completedToday
-    case completed
-    case pending
+enum CheckInStatus: String, Decodable {
+    case notstarted = "NOT_STARTED"
+    case completedToday = "COMPLETED_TODAY"
+    case completed = "COMPLETED"
+    case pending = "PENDING"
 }
 
 extension CheckInStatus {
@@ -130,7 +130,7 @@ class DashboardCheckInCell: UITableViewCell {
                     }
                 }
             }
-            
+            self.status = surveyResponse.lastSurveyStatus
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
                            noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
@@ -150,33 +150,6 @@ class DashboardCheckInCell: UITableViewCell {
         title.lineBreakMode = .byWordWrapping
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
-    }()
-    
-    lazy var checkInTitle2: UILabel = {
-        let title2 = UILabel()
-        title2.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
-        title2.translatesAutoresizingMaskIntoConstraints = false
-        title2.textColor = .checkinCompleted
-        return title2
-    }()
-    
-    lazy var lastUpdated: UILabel = {
-        let lastupdated = UILabel()
-        lastupdated.font = UIFont(name: "Montserrat-Regular", size: 14.0)
-        lastupdated.translatesAutoresizingMaskIntoConstraints = false
-        return lastupdated
-    }()
-    
-    lazy var verticleStack : UIStackView = {
-        let vStack = UIStackView()
-        vStack.axis = .vertical
-        vStack.distribution = .equalSpacing
-        vStack.alignment = .fill
-        vStack.addArrangedSubview(checkInTitle)
-        vStack.addArrangedSubview(checkInTitle2)
-        vStack.addArrangedSubview(lastUpdated)
-        vStack.translatesAutoresizingMaskIntoConstraints = false
-        return vStack
     }()
     
     lazy var bgView: UIView = {
@@ -258,19 +231,6 @@ class DashboardCheckInCell: UITableViewCell {
         }
         
         self.checkInTitle.attributedText = attributedcheckinTitle
-        
-//        self.checkInTitle.text = status.titleText
-//        self.checkInTitle.textColor = status.titleColor
-//        self.checkInTitle2.text = status.subtitleText
-//        self.checkInTitle2.textColor = status.subtitleColor
-//        self.checkInTitle2.font = UIFont(name: AppFontName.semibold, size: 16.0)
-//        self.lastUpdated.text = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString,
-//                                              noOfTimesSurveyTaken: noOfTimesSurveyTaken)
-//        self.lastUpdated.textColor = .statusColor
-
-//        if status == .completedToday {
-//            self.checkInTitle2.font = UIFont(name: AppFontName.regular, size: 16.0)
-//        }
     }
     
     override func layoutSubviews() {
