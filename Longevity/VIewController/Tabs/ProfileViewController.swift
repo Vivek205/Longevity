@@ -398,8 +398,9 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     return
                 case .termsofservice:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
-                    tosViewController.isFromSettings = true
+//                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
+//                    tosViewController.isFromSettings = true
+                    let tosViewController = TermsOfServiceContextVC()
                     let navigationController = UINavigationController(rootViewController: tosViewController)
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                     
