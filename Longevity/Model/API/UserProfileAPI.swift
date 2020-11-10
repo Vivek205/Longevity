@@ -149,34 +149,57 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
-    func getUserAttributes(completion: @escaping ((Bool?)-> Void)) {
+    func getUserAttributes(completion: @escaping ((TOCStatus)-> Void)) {
         let keys = UserDefaultsKeys()
         _ = Amplify.Auth.fetchUserAttributes() { result in
             switch result {
             case .success(let attributes):
-                for attribute in attributes {
-                    let name = attribute.key
-                    let value = attribute.value
-                    if name.rawValue == CustomCognitoAttributes.longevityTNC {
-                        guard let data = value.data(using: .utf8) as? Data else {
-                            completion(nil)
-                            return
-                        }
-                        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                            completion(nil)
-                            return
-                        }
-
-                        if json["isAccepted"] as! NSNumber == 1 {
-                            completion(true)
-                        } else {
-                            completion(false)
-                        }
-                    }
+                
+                if !(attributes.contains { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }) {
+                    completion(.notaccepted)
+                    return
                 }
+                
+                let tncattribute = attributes.first { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }
+                
+                guard let data = tncattribute?.value.data(using: .utf8) as? Data else {
+                    completion(.unknown)
+                    return
+                }
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    completion(.unknown)
+                    return
+                }
+
+                if json["isAccepted"] as! NSNumber == 1 {
+                    completion(.accepted)
+                } else {
+                    completion(.notaccepted)
+                }
+                
+//                for attribute in attributes {
+//                    let name = attribute.key
+//                    let value = attribute.value
+//                    if name.rawValue == CustomCognitoAttributes.longevityTNC {
+//                        guard let data = value.data(using: .utf8) as? Data else {
+//                            completion(nil)
+//                            return
+//                        }
+//                        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+//                            completion(nil)
+//                            return
+//                        }
+//
+//                        if json["isAccepted"] as! NSNumber == 1 {
+//                            completion(true)
+//                        } else {
+//                            completion(false)
+//                        }
+//                    }
+//                }
             case .failure(let error):
                 print("Fetching user attributes failed with error \(error)")
-                completion(nil)
+                completion(.unknown)
             }
         }
     }
