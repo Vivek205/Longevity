@@ -8,18 +8,23 @@
 
 import Foundation
 
+enum TOCStatus {
+    case unknown
+    case accepted
+    case notaccepted
+}
+
 class AppSyncManager  {
     static let instance = AppSyncManager()
 
     var userProfile: DynamicValue<UserProfile>
     var healthProfile: DynamicValue<UserHealthProfile>
-    var isTermsAccepted: DynamicValue<Bool> = DynamicValue(true)
+    var isTermsAccepted: DynamicValue<TOCStatus> = DynamicValue(.unknown)
     var appShareLink: DynamicValue<String>
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<Bool> = DynamicValue(true)
-//    var userActivity: DynamicValue<UserActivity>?
     
     fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
@@ -128,8 +133,8 @@ class AppSyncManager  {
     func checkTermsAccepted() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
-            guard let termsAccepted = termsAccepted else {return}
-            self?.isTermsAccepted.value = termsAccepted
+//            guard let termsAccepted = termsAccepted else {return}
+            self?.isTermsAccepted.value = termsAccepted //? .accepted : .notaccepted
         }
     }
     

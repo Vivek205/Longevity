@@ -84,10 +84,8 @@ class LNTabBarViewController: UITabBarController {
         super.viewDidAppear(animated)
         
         AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
-
-
             DispatchQueue.main.async {
-                if (!(AppSyncManager.instance.isTermsAccepted.value ?? false) && !self.presentingTosVC) {
+                if (AppSyncManager.instance.isTermsAccepted.value == .notaccepted && !self.presentingTosVC) {
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                     guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
                     let navigationController = UINavigationController(rootViewController: tosViewController)

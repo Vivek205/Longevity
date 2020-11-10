@@ -107,35 +107,15 @@ extension AppleWatchConnectViewController: UITableViewDataSource, UITableViewDel
     }
     
     @objc func connectDevice() {
-
-
         var connected = self.isDeviceConnected ? 0 : 1
 
         if connected == 0 { // To be disconnected
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
         } else {
-            
             HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
-                if authorized {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
-                } else {
-                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
-                }
+                connected = authorized ? 0 : 1
+                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
             }
-            
-//            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-//                if settings.authorizationStatus == .authorized {
-//                    DispatchQueue.main.async {
-//                        AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
-//                    }
-//                    return
-//                } else {
-//                    DispatchQueue.main.async {
-//                        self.showAlert(title: "Enable Notification",
-//                        message: "Please enable device notification to connect the external devices")
-//                    }
-//                }
-//            }
         }
     }
 }

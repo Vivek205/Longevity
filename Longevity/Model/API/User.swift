@@ -215,7 +215,7 @@ func acceptTNC(value: Bool) {
                 print("Confirm the attribute with details send to - \(deliveryDetails) \(info)")
             case .done:
                 print("Update completed")
-                AppSyncManager.instance.isTermsAccepted.value = true
+                AppSyncManager.instance.isTermsAccepted.value = .accepted
             }
         } catch {
             print("Update attribute failed with error \(error)")
