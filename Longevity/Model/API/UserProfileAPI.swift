@@ -326,11 +326,14 @@ class UserProfileAPI: BaseAuthAPI {
                 keys.weight: healthProfile.weight,
                 keys.height: healthProfile.height,
                 keys.gender: healthProfile.gender,
-                keys.birthday: healthProfile.birthday,
                 keys.unit: healthProfile.unit.rawValue,
                 "devices": healthProfile.devices,
                 "location": healthProfile.location
                 ] as [String : Any]
+
+            if !healthProfile.birthday.isEmpty {
+                bodyDict[keys.birthday] = healthProfile.birthday
+            }
 
             
             var bodyData:Data = Data()

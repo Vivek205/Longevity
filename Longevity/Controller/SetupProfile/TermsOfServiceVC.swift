@@ -18,12 +18,6 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     // MARK: Outlets
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
 
-    lazy var footerView: UIView = {
-        let uiView = UIView(backgroundColor: .white)
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        return uiView
-    }()
-
     lazy var continueButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleAcceptTerms(_:)))
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -95,7 +89,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     
     override func viewDidLoad() {
         super.viewDidLoad()
-//        NOTE: - keep the styleNavigationBar on the top
+        //        NOTE: - keep the styleNavigationBar on the top
         styleNavigationBar()
 
         self.continueButton.isEnabled = false
@@ -114,10 +108,8 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         self.view.addSubview(acceptCard)
         acceptCard.addSubview(acceptLabel)
         acceptCard.addSubview(acceptCheckbox)
-//        acceptCard.isHidden = true
 
-        self.view.addSubview(footerView)
-        self.footerView.addSubview(continueButton)
+        self.view.addSubview(continueButton)
 
         webView.load(URLRequest(url: URL(string: tosWebViewURL)!))
         
@@ -125,7 +117,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         spinner.hidesWhenStopped = true
 
         let navBarHeight = UIApplication.shared.statusBarFrame.size.height +
-                (navigationController?.navigationBar.frame.height ?? 0.0)
+            (navigationController?.navigationBar.frame.height ?? 0.0)
 
         let shieldImageHeight: CGFloat = 64.0
         let containerTopPadding = navBarHeight + (shieldImageHeight / 2)
@@ -140,7 +132,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             contentContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             contentContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
             contentContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: containerTopPadding),
-            contentContainer.heightAnchor.constraint(equalToConstant: 350.0),
+            contentContainer.bottomAnchor.constraint(equalTo: acceptCard.topAnchor, constant: -38),
             
             webView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 10.0),
             webView.trailingAnchor.constraint(equalTo: contentContainer.trailingAnchor, constant: -10.0),
@@ -152,10 +144,9 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             
             acceptCard.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             acceptCard.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-
-            acceptCard.topAnchor.constraint(equalTo: contentContainer.bottomAnchor, constant: 24),
             acceptCard.heightAnchor.constraint(equalToConstant: 74.0),
-            
+            acceptCard.bottomAnchor.constraint(equalTo: continueButton.topAnchor, constant: -36),
+
             acceptCheckbox.centerYAnchor.constraint(equalTo: acceptCard.centerYAnchor),
             acceptCheckbox.trailingAnchor.constraint(equalTo: acceptCard.trailingAnchor, constant: -12.0),
             acceptCheckbox.widthAnchor.constraint(equalToConstant: 24.0),
@@ -166,15 +157,10 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             acceptLabel.topAnchor.constraint(equalTo: acceptCard.topAnchor, constant: 15.0),
             acceptLabel.bottomAnchor.constraint(equalTo: acceptCard.bottomAnchor, constant: -15.0),
 
-            footerView.heightAnchor.constraint(equalToConstant: 130),
-            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
             continueButton.heightAnchor.constraint(equalToConstant: 48),
-            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 33)
+            continueButton.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15),
+            continueButton.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15),
+            continueButton.bottomAnchor.constraint(equalTo: view.safeAreaLayoutGuide.bottomAnchor, constant: -15)
         ])
 
 
@@ -196,7 +182,6 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             acceptCard.layer.borderColor = UIColor.themeColor.cgColor
         } else {
             acceptCard.layer.borderWidth = 0
-//            acceptCard.layer.borderColor = UIColor.themeColor.cgColor
         }
         continueButton.isEnabled = acceptCheckbox.isSelected
     }
@@ -208,7 +193,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
     }
 
     @objc func handleWebviewTap(_ sender: Any) {
-//        Alert(title: "handle Web view tap", message: "webview tap")
+        //        Alert(title: "handle Web view tap", message: "webview tap")
         let termsOfServiceContextVC = TermsOfServiceContextVC()
         termsOfServiceContextVC.title = "Terms of Service Details"
         let navigationController = UINavigationController(rootViewController: termsOfServiceContextVC)
@@ -244,7 +229,6 @@ extension UIViewController {
 
 extension TermsOfServiceVC:  WKNavigationDelegate {
     func webView(_ webView: WKWebView, didFinish navigation: WKNavigation!) {
-//        termsOfServiceURLLoaded = true
         spinner.stopAnimating()
     }
 

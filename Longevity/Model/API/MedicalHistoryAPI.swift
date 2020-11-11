@@ -74,10 +74,13 @@ func updateHealthProfile() {
             keys.weight:AppSyncManager.instance.healthProfile.value?.weight,
             keys.height: AppSyncManager.instance.healthProfile.value?.height,
             keys.gender: AppSyncManager.instance.healthProfile.value?.gender,
-            keys.birthday: AppSyncManager.instance.healthProfile.value?.birthday,
             keys.unit: AppSyncManager.instance.healthProfile.value?.unit.rawValue,
             keys.devices: AppSyncManager.instance.healthProfile.value?.devices
         ]
+
+        if let birthday = AppSyncManager.instance.healthProfile.value?.birthday, !birthday.isEmpty {
+            bodyDict[keys.birthday] = birthday
+        }
 
         let body = JSON(bodyDict)
 
