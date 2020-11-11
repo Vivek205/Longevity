@@ -13,6 +13,8 @@ class HomeViewController: BaseViewController {
     var surveyId: String?
     var currentTask: ORKOrderedTask?
     
+    var timer: DispatchSourceTimer?
+    
     var isAIProcessPending: Bool = false {
         didSet {
             self.aiProcessingBand.isHidden = !isAIProcessPending
@@ -46,13 +48,16 @@ class HomeViewController: BaseViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.getSurveyList()
+        
         self.view.addSubview(tableView)
         self.titleView.addSubview(aiProcessingBand)
+        
+        self.titleView.bgImageView.alpha = 0.0
         
         tableView.tableHeaderView = nil
         tableView.delegate = self
         tableView.dataSource = self
+        self.tableView.bounces = false
         tableView.tableFooterView = UIView()
 
         self.navigationController?.navigationBar.barTintColor = .orange
@@ -72,23 +77,26 @@ class HomeViewController: BaseViewController {
         SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadData()
+                self?.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
             }
         }
         
         SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadData()
+                self?.tableView.reloadSections(IndexSet(integer: 2), with: .fade)
             }
         }
 
         self.aiProcessingBand.isHidden = !isAIProcessPending
+        self.getSurveyList()
     }
 
     func getSurveyList() {
-        self.showSpinner()
-
+        DispatchQueue.main.async {
+            self.showSpinner()
+        }
+        
         func completion(_ surveys:[SurveyListItem]) {
             DispatchQueue.main.async {
                 self.tableView.reloadData()
@@ -134,6 +142,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if surveyResponse?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
+                self.startpollingSurveys()
             }
             checkinCell.surveyResponse = surveyResponse
             return checkinCell
@@ -157,6 +166,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if surveyDetails?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
+                self.startpollingSurveys()
             }
             
             taskCell.surveyDetails = surveyDetails
@@ -231,6 +241,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             self.showSurvey(surveyId)
             return
         }
+    }
+    
+    fileprivate func startpollingSurveys() {
+        let queue = DispatchQueue.global(qos: .background)
+        self.timer?.cancel()
+        self.timer = DispatchSource.makeTimerSource(queue: queue) //else { return }
+        timer?.schedule(deadline: .now() + 60)
+        timer?.setEventHandler(handler: {
+            self.getSurveyList()
+        })
+        timer?.resume()
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let topGap = 44.0 + scrollView.contentOffset.y
+        self.titleView.bgImageView.alpha = topGap > 1 ? 1 : topGap
     }
 }
 
