@@ -201,28 +201,16 @@ class ProfileSettingsCell: UITableViewCell {
     
     func fitbitSwitchPreselect() {
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) { [weak self] in
-            UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-                       if settings.authorizationStatus == .authorized {
-                          DispatchQueue.main.async {
-                               let profile = AppSyncManager.instance.healthProfile.value
-                               if let device = profile?.devices?[ExternalDevices.fitbit], device["connected"] == 1 {
-                                   self?.settingsSwitch.isOn = true
-                               } else {
-                                   self?.settingsSwitch.isOn = false
-                               }
-                           }
-                           return
-                       } else {
-                        DispatchQueue.main.async {
-                            self?.settingsSwitch.isOn = false
-                        }
-//                           self.showAlert(title: "Enable Notification",
-//                                          message: "Please enable notification to connect the fitbit device")
-                       }
-                   }
-
-
-
+            DispatchQueue.main.async {
+                let profile = AppSyncManager.instance.healthProfile.value
+                if let device = profile?.devices?[ExternalDevices.fitbit]  {
+                    let connected = device["connected"] == 1
+                    self?.settingsSwitch.isOn = connected
+                } else {
+                    self?.settingsSwitch.isOn = false
+                }
+            }
+            return
         }
     }
     

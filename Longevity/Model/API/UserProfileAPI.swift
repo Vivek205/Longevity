@@ -330,9 +330,12 @@ class UserProfileAPI: BaseAuthAPI {
                 "devices": healthProfile.devices,
                 "location": healthProfile.location
                 ] as [String : Any]
+            guard var enhancedHealthProfile = healthProfile.dictionary else {
+                return
+            }
 
-            if !healthProfile.birthday.isEmpty {
-                bodyDict[keys.birthday] = healthProfile.birthday
+            if healthProfile.birthday.isEmpty {
+                enhancedHealthProfile.removeValue(forKey: keys.birthday)
             }
 
             
@@ -340,7 +343,7 @@ class UserProfileAPI: BaseAuthAPI {
             do {
                 let jsonEncoder = JSONEncoder()
                 jsonEncoder.keyEncodingStrategy = .convertToSnakeCase
-                bodyData = try jsonEncoder.encode(healthProfile)
+                bodyData = try JSONSerialization.data(withJSONObject: enhancedHealthProfile)
                 print(String(data: bodyData, encoding: .utf8))
             } catch  {
                 print(error)

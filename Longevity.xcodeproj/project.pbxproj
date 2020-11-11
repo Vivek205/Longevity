@@ -173,6 +173,7 @@
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
 		E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */; };
 		E2B0337C24AB33FE00929D39 /* Fitbit.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0337B24AB33FE00929D39 /* Fitbit.swift */; };
+		E2B40BFF255C591000CCC644 /* Struct+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B40BFE255C590F00CCC644 /* Struct+Extension.swift */; };
 		E2B467A12505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */; };
 		E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */; };
 		E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */; };
@@ -409,6 +410,7 @@
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
 		E2B0337424AB32EA00929D39 /* AuthHandlerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AuthHandlerType.swift; sourceTree = "<group>"; };
 		E2B0337B24AB33FE00929D39 /* Fitbit.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Fitbit.swift; sourceTree = "<group>"; };
+		E2B40BFE255C590F00CCC644 /* Struct+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Struct+Extension.swift"; sourceTree = "<group>"; };
 		E2B467A02505F77F00D8C733 /* DeviceConnectionsPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionsPopupViewController.swift; sourceTree = "<group>"; };
 		E2B467A22505F85B00D8C733 /* DeviceConnectionPopupCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceConnectionPopupCell.swift; sourceTree = "<group>"; };
 		E2B467A425061BBC00D8C733 /* MyTasksInfoPopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyTasksInfoPopupViewController.swift; sourceTree = "<group>"; };
@@ -578,6 +580,7 @@
 				E25E8C95253756C400502F86 /* UIButton+Extension.swift */,
 				E280BAD62538868600E1ED12 /* ConnectionManager.swift */,
 				E2E5EFD82542A259003ADAEC /* Alert.swift */,
+				E2B40BFE255C590F00CCC644 /* Struct+Extension.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1353,6 +1356,7 @@
 				E274F08A24C5AAEC00969CD8 /* CovidCheckinSurvey.swift in Sources */,
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 				C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */,
+				E2B40BFF255C591000CCC644 /* Struct+Extension.swift in Sources */,
 				C16AD1E1252276FB007AF0D4 /* AppleWatchConnectViewController.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
 			);

@@ -241,6 +241,7 @@ let codeChallengeString = generateCodeChallenge(codeVerifier: codeVerifierString
 struct Constants {
     static let authUrl = URL(string: "https://www.fitbit.com/oauth2/authorize")
     static let tokenUrl = URL(string:"https://api.fitbit.com/oauth2/token")
+    static let revokeTokenUrl = URL(string: "https://api.fitbit.com/oauth2/revoke")
     static let responseType = "code"
     static let codeVerifier = codeVerifierString
     static let codeChallenge = codeChallengeString
@@ -372,9 +373,7 @@ class FitbitModel: AuthHandlerType {
 
         try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitAccessToken).saveItem(accessToken)
         try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).saveItem(refreshToken)
-        
-//        KeyChain.save(name: KeychainKeys.FitbitAccessToken, data: accessTokenData)
-//        KeyChain.save(name: KeychainKeys.FitbitRefreshToken ,data: refreshTokenData)
+
         Logger.log("fitbit token saved in keychain")
     }
 
@@ -421,6 +420,48 @@ class FitbitModel: AuthHandlerType {
                 refreshFitbitToken,
                 publishToServer]
     }
+
+    func revokeToken() {
+        guard let accessToken = try? KeyChain(service: KeychainConfiguration.serviceName,
+                                              account: KeychainKeys.FitbitAccessToken).readItem() else {return}
+        guard let revokeTokenUrl = Constants.revokeTokenUrl as? URL else {return}
+        let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
+        var urlComponents = URLComponents(url: revokeTokenUrl, resolvingAgainstBaseURL: false)
+        urlComponents?.queryItems = [
+            URLQueryItem(name: "token", value: accessToken)
+        ]
+
+        var urlRequest = URLRequest(url: (urlComponents?.url)!)
+        urlRequest.httpMethod = "POST"
+        urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+//        urlRequest.httpBody = formValue.data(using: .utf8)
+
+        let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response,_   in
+            print("data", String(data:data!, encoding: .utf8))
+//            print("response", String(data:response!, encoding: .utf8))
+            guard let httpResponse = response as? HTTPURLResponse,
+                httpResponse.statusCode == 200 else {
+                print("error")
+                return }
+            print("token revoked")
+//            do {
+//
+//                if let jsonData: [String:Any] =
+//                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
+//                    let accessToken = jsonData["access_token"] as! String
+//                    let refreshToken = jsonData["refresh_token"] as! String
+//                    let userId = jsonData["user_id"] as! String
+//
+//                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
+//                    self.publishData(accessToken: accessToken, userId: userId)
+//                }
+//            } catch {
+//                print("fitbit token error", error)
+//            }
+        }
+        dataTask.resume()
+    }
 }
 
 extension FitbitModel {
@@ -441,6 +482,7 @@ extension FitbitModel {
 
 protocol BackgroundSessionDelegate {
     func receivedtoken(refreshToken: String?, accessToken: String?, userID: String?)
+
 }
 
 class FitbitFetchBackground: NSObject {

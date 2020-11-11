@@ -501,6 +501,7 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
 
         } else {
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+            fitbitModel.revokeToken()
         }
     }
 
