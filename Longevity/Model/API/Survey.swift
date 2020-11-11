@@ -201,6 +201,7 @@ func getSurveyDetails(surveyId: String,
                 } catch {
                     SurveyTaskUtility.shared.currentSurveyId = nil
                     SurveyTaskUtility.shared.setSurveyDetails(for:surveyId, details: nil)
+                    onFailure(error)
                     print("json error", error)
                 }
 

@@ -200,42 +200,35 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
     
     func selectCell() {
         if connectionStatus == .notConnected {
-            UNUserNotificationCenter.current().getNotificationSettings {
-                (settings) in
-                if settings.authorizationStatus == .authorized {
-                    DispatchQueue.main.async {
-                        var connected = 0
-                        if self.device == .applehealth {
-                            let appleHealthViewController = AppleHealthConnectionViewController()
-                            let navigationController = UINavigationController(rootViewController: appleHealthViewController)
-                            NavigationUtility.presentOverCurrentContext(destination: navigationController)
-                        } else if self.device == .fitbit {
-                            let fitbitModel = FitbitModel()
-                            if let context = UIApplication.shared.keyWindow {
-                                fitbitModel.contextProvider = AuthContextProvider(context)
-                            }
-                            fitbitModel.auth { authCode, error in
-                                if error != nil {
-                                    print("Auth flow finished with error \(String(describing: error))")
-                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
-                                } else {
-                                    guard let authCode = authCode else {return}
-                                    print("Your auth code is \(authCode)")
-                                    fitbitModel.token(authCode: authCode)
-                                    AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
-                                }
-                            }
-                        } else if self.device == .applewatch {
-                            let applewatchViewController = AppleWatchConnectViewController()
-                            let navigationController = UINavigationController(rootViewController: applewatchViewController)
-                            NavigationUtility.presentOverCurrentContext(destination: navigationController)
+            DispatchQueue.main.async {
+                var connected = 0
+                if self.device == .applehealth {
+                    let appleHealthViewController = AppleHealthConnectionViewController()
+                    let navigationController = UINavigationController(rootViewController: appleHealthViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
+                } else if self.device == .fitbit {
+                    let fitbitModel = FitbitModel()
+                    if let context = UIApplication.shared.keyWindow {
+                        fitbitModel.contextProvider = AuthContextProvider(context)
+                    }
+                    fitbitModel.auth { authCode, error in
+                        if error != nil {
+                            print("Auth flow finished with error \(String(describing: error))")
+                            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 0)
+                        } else {
+                            guard let authCode = authCode else {return}
+                            print("Your auth code is \(authCode)")
+                            fitbitModel.token(authCode: authCode)
+                            AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.fitbit, connected: 1)
                         }
                     }
-                    return
-                } else {
-                    self.delegate?.showNotificationError(forCell: self)
+                } else if self.device == .applewatch {
+                    let applewatchViewController = AppleWatchConnectViewController()
+                    let navigationController = UINavigationController(rootViewController: applewatchViewController)
+                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
                 }
             }
+            return
         } else {
             if self.device == .applehealth {
                 let appleHealthViewController = AppleHealthConnectionViewController()
@@ -252,7 +245,7 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
                 }
                 viewController.currentProfileView = .settings
                 viewController.profileTableView.scrollToRow(at: IndexPath(row: 0, section: 0), at: .top, animated: true)
-//                viewController.expandItemfor(insightType: self.insightData.name)
+                //                viewController.expandItemfor(insightType: self.insightData.name)
             } else if self.device == .applewatch {
                 let applewatchViewController = AppleWatchConnectViewController()
                 let navigationController = UINavigationController(rootViewController: applewatchViewController)

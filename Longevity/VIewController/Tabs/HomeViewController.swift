@@ -13,7 +13,7 @@ class HomeViewController: BaseViewController {
     var surveyId: String?
     var currentTask: ORKOrderedTask?
     
-    var isAIProcessPending: Bool {
+    var isAIProcessPending: Bool = false {
         didSet {
             self.aiProcessingBand.isHidden = !isAIProcessPending
         }
@@ -82,6 +82,8 @@ class HomeViewController: BaseViewController {
                 self?.tableView.reloadData()
             }
         }
+
+        self.aiProcessingBand.isHidden = !isAIProcessPending
     }
 
     func getSurveyList() {

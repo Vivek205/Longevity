@@ -58,8 +58,9 @@ class AppleHealthConnectionViewController: UIViewController {
             } else {
                 self?.isDeviceConnected = false
             }
-            
-            self?.connectionTableView.reloadData()
+            DispatchQueue.main.async {
+                self?.connectionTableView.reloadData()
+            }
         }
     }
     
