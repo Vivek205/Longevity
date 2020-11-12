@@ -100,7 +100,7 @@ class ForgotPasswordCaptureEmailVC: UIViewController {
             } catch {
                 print("Reset password failed with error \(error)")
                 DispatchQueue.main.async {
-                    Alert(title: "Error", message: "\(error)")
+                    Alert(title: "Account email does not exist", message: "\(username) is not a registered account. Please check your email address. If you have used social login for your account, please use that to sign in.")
                     self?.removeSpinner()
                 }
             }

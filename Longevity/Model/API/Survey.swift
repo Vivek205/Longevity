@@ -87,6 +87,7 @@ enum QuestionTypes:String, Decodable {
     case continuousScale = "CONTINUOUS_SCALE"
     case temperatureScale = "TEMPERATURE_SCALE"
     case location = "LOCATION"
+    case valuePicker = "VALUE_PICKER"
 }
 
 struct Question:Decodable {

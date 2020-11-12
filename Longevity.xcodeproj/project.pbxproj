@@ -98,6 +98,8 @@
 		E20CD890253738DA00ADADB4 /* ForgotPasswordOtpVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */; };
 		E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */; };
 		E210A11E255AC52E0074226A /* TermsOfServiceContextVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210A11D255AC52E0074226A /* TermsOfServiceContextVC.swift */; };
+		E210AAC1255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AAC0255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift */; };
+		E210AAC3255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */; };
 		E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */; };
 		E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */; };
 		E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */; };
@@ -334,6 +336,8 @@
 		E20CD88F253738DA00ADADB4 /* ForgotPasswordOtpVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ForgotPasswordOtpVC.swift; sourceTree = "<group>"; };
 		E20CD8932537403B00ADADB4 /* UILabel+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UILabel+Extension.swift"; sourceTree = "<group>"; };
 		E210A11D255AC52E0074226A /* TermsOfServiceContextVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContextVC.swift; sourceTree = "<group>"; };
+		E210AAC0255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePickerAnswerVC.swift; sourceTree = "<group>"; };
+		E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ValuePickerAnswerViewCell.swift; sourceTree = "<group>"; };
 		E216EFBD24BE2CDA00B57A7F /* SetupCompleteVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupCompleteVC.swift; sourceTree = "<group>"; };
 		E216EFC224BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileOtherOptionCell.swift; sourceTree = "<group>"; };
 		E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MedicalHistoryAPI.swift; sourceTree = "<group>"; };
@@ -745,6 +749,8 @@
 				E258E66124ED0B3500676056 /* ContinuousScaleAnswerVC.swift */,
 				E27C4F6724FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift */,
 				C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */,
+				E210AAC0255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift */,
+				E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -1256,6 +1262,7 @@
 				E27C4F6D2500CBC50070A2D3 /* LoaderAnimationViewController.swift in Sources */,
 				C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */,
 				E290B60624BC75D500C51655 /* String.swift in Sources */,
+				E210AAC3255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift in Sources */,
 				E2BC505D24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift in Sources */,
 				E251EFEC248F9E6F0012F1C6 /* SignupConfirmVC.swift in Sources */,
 				E242A6692530701200AC6152 /* Array+Extension.swift in Sources */,
@@ -1268,6 +1275,7 @@
 				E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
+				E210AAC1255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift in Sources */,
 				C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */,
 				C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */,
 				E25E8C96253756C400502F86 /* UIButton+Extension.swift in Sources */,
@@ -1510,7 +1518,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1535,7 +1543,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 57;
+				CURRENT_PROJECT_VERSION = 58;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

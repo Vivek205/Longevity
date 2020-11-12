@@ -202,7 +202,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         }
         
         if let step = self.step as? ORKQuestionStep {
-//            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
+
             headerView.createLayout(header: step.title ?? "", question: step.question!, extraInfo: step.text)
         }
         

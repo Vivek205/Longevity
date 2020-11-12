@@ -156,6 +156,12 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 stepVC.step = step
                 return stepVC
             }
+
+            if questionStep.answerFormat is ORKValuePickerAnswerFormat {
+                let stepVC = ValuePickerAnswerVC()
+                stepVC.step = step
+                return stepVC
+            }
         }
         return nil
     }
