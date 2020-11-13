@@ -115,6 +115,7 @@ class DashboardCheckInCell: UITableViewCell {
     
     var surveyResponse: SurveyListItem! {
         didSet {
+            self.status = surveyResponse.lastSurveyStatus
             if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = dateFormat
@@ -130,7 +131,6 @@ class DashboardCheckInCell: UITableViewCell {
                     }
                 }
             }
-            self.status = surveyResponse.lastSurveyStatus
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
                            noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
