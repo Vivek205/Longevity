@@ -322,14 +322,7 @@ class UserProfileAPI: BaseAuthAPI {
         self.getCredentials(completion: { (credentials) in
             let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let keys = UserDefaultsKeys()
-            var bodyDict = [
-                keys.weight: healthProfile.weight,
-                keys.height: healthProfile.height,
-                keys.gender: healthProfile.gender,
-                keys.unit: healthProfile.unit.rawValue,
-                "devices": healthProfile.devices,
-                "location": healthProfile.location
-                ] as [String : Any]
+
             guard var enhancedHealthProfile = healthProfile.dictionary else {
                 return
             }
@@ -338,7 +331,6 @@ class UserProfileAPI: BaseAuthAPI {
                 enhancedHealthProfile.removeValue(forKey: keys.birthday)
             }
 
-            
             var bodyData:Data = Data()
             do {
                 let jsonEncoder = JSONEncoder()
@@ -355,6 +347,7 @@ class UserProfileAPI: BaseAuthAPI {
                 case .success(let data):
                     let responseString = String(data: data, encoding: .utf8)
                     print("sucess \(responseString)")
+                    completion()
                 case .failure(let error):
                     print(error.localizedDescription)
                     onFailure(error)

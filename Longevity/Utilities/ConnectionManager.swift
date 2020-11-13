@@ -52,12 +52,12 @@ final class ConnectionManager: NSObject {
         guard  let reachability = note.object as? Reachability else { return }
         if reachability.connection != .unavailable {
             print("connected")
-            AppSyncManager.instance.internetConnectionAvailable.value = true
+            AppSyncManager.instance.internetConnectionAvailable.value = .connected
             self.showNotification(false)
             self.stopTimer()
         } else {
             print("not connected")
-            AppSyncManager.instance.internetConnectionAvailable.value = false
+            AppSyncManager.instance.internetConnectionAvailable.value = .notconnected
             self.showNotification(true)
             self.startTimer()
         }
@@ -71,12 +71,12 @@ final class ConnectionManager: NSObject {
 
             if path.status == .satisfied {
                 print("connected")
-                AppSyncManager.instance.internetConnectionAvailable.value = true
+                AppSyncManager.instance.internetConnectionAvailable.value = .connected
                 self.showNotification(false)
                 self.stopTimer()
             } else {
                 print("not connected")
-                AppSyncManager.instance.internetConnectionAvailable.value = false
+                AppSyncManager.instance.internetConnectionAvailable.value = .notconnected
                 self.showNotification(true)
                 self.startTimer()
             }

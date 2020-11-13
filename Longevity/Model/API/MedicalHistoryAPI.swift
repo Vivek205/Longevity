@@ -98,7 +98,6 @@ func updateHealthProfile() {
             case .success(let data):
                 let responseString = String(data: data, encoding: .utf8)
                 print("sucess \(responseString)")
-                AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: 1)
             case .failure(let apiError):
                 print("updateHealthProfile failed \(apiError)")
             }

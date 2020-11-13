@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol AppleHealthConnectionDelegate {
+    func device(connected: Bool)
+}
+
 class AppleHealthConnectionViewController: UIViewController {
+    
+    var delegate: AppleHealthConnectionDelegate?
     
     var isDeviceConnected: Bool = false
     
@@ -111,10 +117,12 @@ extension AppleHealthConnectionViewController: UITableViewDataSource, UITableVie
 
         if connected == 0 { // To be disconnected
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+            self.delegate?.device(connected: false)
         } else {
             HealthStore.shared.getHealthKitAuthorization(device: .applehealth) { (authorized) in
-                connected = authorized ? 0 : 1
+                connected = authorized ? 1 : 0
                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.healthkit, connected: connected)
+                self.delegate?.device(connected: authorized)
             }
         }
     }

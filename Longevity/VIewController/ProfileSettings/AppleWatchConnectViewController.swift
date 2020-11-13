@@ -113,7 +113,7 @@ extension AppleWatchConnectViewController: UITableViewDataSource, UITableViewDel
             AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
         } else {
             HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
-                connected = authorized ? 0 : 1
+                connected = authorized ? 1 : 0
                 AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: connected)
             }
         }
