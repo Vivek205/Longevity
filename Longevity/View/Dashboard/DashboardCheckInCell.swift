@@ -116,7 +116,7 @@ class DashboardCheckInCell: UITableViewCell {
     var surveyResponse: SurveyListItem! {
         didSet {
             self.status = surveyResponse.lastSurveyStatus
-            if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty {
+            if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty, self.status != .pending {
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = dateFormat
                 dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
