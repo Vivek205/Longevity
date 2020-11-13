@@ -98,14 +98,14 @@ class LNTabBarViewController: UITabBarController {
 
     func handleNetworkConnectionChange() {
         AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) {
-            if AppSyncManager.instance.internetConnectionAvailable.value == false {
+            if AppSyncManager.instance.internetConnectionAvailable.value == .notconnected {
                 DispatchQueue.main.async {
                     self.tabBarController?.selectedIndex = 0
                     if let items = self.tabBarController?.tabBar.items {
                         items.forEach{$0.isEnabled = false}
                     }
                 }
-            } else {
+            } else if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
                 DispatchQueue.main.async {
                     AppSyncManager.instance.syncUserProfile()
                     if let items = self.tabBarController?.tabBar.items {

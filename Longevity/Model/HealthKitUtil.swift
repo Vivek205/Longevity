@@ -122,35 +122,7 @@ final class HealthKitUtil {
     var latestHeightSample: HKQuantitySample?
     var latestWeightSample: HKQuantitySample?
 
-    func authorize(completion: ((_ success: Bool,_ error: Error?) -> Void)?) {
-        guard let dateOfBirth = HKObjectType.characteristicType(forIdentifier: .dateOfBirth),
-            let biologicalSex = HKObjectType.characteristicType(forIdentifier: .biologicalSex),
-            let bloodType = HKObjectType.characteristicType(forIdentifier: .bloodType),
-            let bodyMass = HKObjectType.quantityType(forIdentifier: .bodyMass),
-            let height = HKSampleType.quantityType(forIdentifier: .height)
-            else {
-                print("error", "data not available")
-                return 
-        }
-
-        let healthKitTypesToWrite: Set<HKSampleType> = []
-        let healthKitTypesToRead:Set<HKObjectType> = [dateOfBirth, biologicalSex,bloodType, bodyMass, height]
-
-        
-        healthKitStore.requestAuthorization(toShare: healthKitTypesToWrite,
-                                            read: healthKitTypesToRead)
-        { (success, error) in
-            if !success {
-                print("error in health kit", error)
-
-            } else {
-                UserDefaults.standard.set(true, forKey: UserDefaultsKeys().healthkitBioConnected)
-            }
-            completion?(success, error)
-        }
-    }
-
-    func getMostRecentSample(for sampleType: HKSampleType,
+    fileprivate func getMostRecentSample(for sampleType: HKSampleType,
                              completion: @escaping (HKQuantitySample?, Error?) -> Swift.Void) {
         //1. Use HKQuery to load the most recent samples.
         let mostRecentPredicate = HKQuery.predicateForSamples(withStart: Date.distantPast,
@@ -204,7 +176,7 @@ final class HealthKitUtil {
             AppSyncManager.instance.healthProfile.value?.birthday = birthDateString
         }
         if let gender = self.userCharacteristicData?.biologicalSex?.string {
-            if let localGender = AppSyncManager.instance.healthProfile.value?.gender {
+            if let localGender = AppSyncManager.instance.healthProfile.value?.gender, !localGender.isEmpty {
                 print("local gender", localGender)
             }else {
                 AppSyncManager.instance.healthProfile.value?.gender = gender
@@ -234,7 +206,7 @@ final class HealthKitUtil {
     }
 
     func getHeightStringInImperial() -> String? {
-        guard let height = AppSyncManager.instance.healthProfile.value?.height else { return nil}
+        guard let height = AppSyncManager.instance.healthProfile.value?.height, !height.isEmpty else { return nil}
         let heightInCenti = Measurement(value: (height as NSString).doubleValue, unit: UnitLength.centimeters)
         let heightInFeet = heightInCenti.converted(to: .feet)
         let feetInches = convertFeetToFeetInches(feet: heightInFeet.value)
@@ -352,7 +324,7 @@ final class HealthKitUtil {
     }
 
     func getWeightStringInImperial() -> String? {
-        guard let weight = AppSyncManager.instance.healthProfile.value?.weight else { return nil}
+        guard let weight = AppSyncManager.instance.healthProfile.value?.weight, !weight.isEmpty else { return nil}
         let weightInKilo = Measurement(value: (weight as NSString).doubleValue, unit: UnitMass.kilograms)
         let weightInPounds = weightInKilo.converted(to: .pounds)
         return String(format: "%.0f", weightInPounds.value)

@@ -47,7 +47,7 @@ final class HealthStore {
         return Set([
             HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!,
             HKObjectType.characteristicType(forIdentifier: .biologicalSex)!,
-            HKObjectType.characteristicType(forIdentifier: .bloodType)!,
+//            HKObjectType.characteristicType(forIdentifier: .bloodType)!,
             HKObjectType.quantityType(forIdentifier: .bodyMass)!,
             HKSampleType.quantityType(forIdentifier: .height)!,
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
