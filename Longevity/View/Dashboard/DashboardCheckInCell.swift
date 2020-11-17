@@ -116,26 +116,15 @@ class DashboardCheckInCell: UITableViewCell {
     
     var surveyResponse: SurveyListItem! {
         didSet {
+            self.isSurveySubmittedToday = checkIsSurveySubmittedToday(lastSubmissionDate: surveyResponse.lastSubmission)
             self.status = surveyResponse.lastSurveyStatus
-            if let lastSubmission = surveyResponse.lastSubmission,
-               !lastSubmission.isEmpty,
-               surveyResponse.lastSurveyStatus != .pending,
-               surveyResponse.lastSurveyStatus != .notstarted{
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = dateFormat
-                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
-                var calendar = Calendar.current
 
-                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
-                   let timezone = TimeZone(abbreviation: "UTC"){
-                    calendar.timeZone = timezone
-                    if calendar.isDateInToday(lastSubmissionDate) {
-                        self.isSurveySubmittedToday = true
-                        status = .completedToday
-                    } else {
-                        self.isSurveySubmittedToday = false
-                        status = .completed
-                    }
+            if surveyResponse.lastSurveyStatus != .pending &&
+                surveyResponse.lastSurveyStatus != .notstarted {
+                if self.isSurveySubmittedToday {
+                    status = .completedToday
+                } else {
+                    status = .completed
                 }
             }
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
@@ -250,5 +239,24 @@ class DashboardCheckInCell: UITableViewCell {
         bgView.layer.shadowOpacity = 0.25
         bgView.layer.masksToBounds = false
         bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds, cornerRadius: bgView.layer.cornerRadius).cgPath
+    }
+
+    func checkIsSurveySubmittedToday(lastSubmissionDate: String?) -> Bool {
+        guard let lastSubmission = surveyResponse.lastSubmission,
+              !lastSubmission.isEmpty else {
+            return false
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        var calendar = Calendar.current
+        if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
+           let timezone = TimeZone(abbreviation: "UTC"){
+            calendar.timeZone = timezone
+            if calendar.isDateInToday(lastSubmissionDate) {
+                return true
+            }
+        }
+        return false
     }
 }
