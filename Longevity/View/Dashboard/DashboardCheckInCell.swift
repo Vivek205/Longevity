@@ -112,6 +112,7 @@ class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
 
     var status: CheckInStatus = .notstarted
+    var isSurveySubmittedToday:Bool = false
     
     var surveyResponse: SurveyListItem! {
         didSet {
@@ -129,8 +130,10 @@ class DashboardCheckInCell: UITableViewCell {
                    let timezone = TimeZone(abbreviation: "UTC"){
                     calendar.timeZone = timezone
                     if calendar.isDateInToday(lastSubmissionDate) {
+                        self.isSurveySubmittedToday = true
                         status = .completedToday
                     } else {
+                        self.isSurveySubmittedToday = false
                         status = .completed
                     }
                 }
