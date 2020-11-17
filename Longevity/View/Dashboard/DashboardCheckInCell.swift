@@ -116,14 +116,18 @@ class DashboardCheckInCell: UITableViewCell {
     var surveyResponse: SurveyListItem! {
         didSet {
             self.status = surveyResponse.lastSurveyStatus
-            if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty {
+            if let lastSubmission = surveyResponse.lastSubmission,
+               !lastSubmission.isEmpty,
+               surveyResponse.lastSurveyStatus != .pending,
+               surveyResponse.lastSurveyStatus != .notstarted{
                 let dateFormatter = DateFormatter()
                 dateFormatter.dateFormat = dateFormat
                 dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                var calendar = Calendar.current
 
-                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
-                    var calendar = Calendar.current
-                    calendar.timeZone = TimeZone(abbreviation: "UTC")!
+                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
+                   let timezone = TimeZone(abbreviation: "UTC"){
+                    calendar.timeZone = timezone
                     if calendar.isDateInToday(lastSubmissionDate) {
                         status = .completedToday
                     } else {
@@ -221,9 +225,9 @@ class DashboardCheckInCell: UITableViewCell {
                 let paragraphStyle3 = NSMutableParagraphStyle()
                 paragraphStyle3.lineSpacing = 2.5
                 let statusTextAttributes: [NSAttributedString.Key: Any] =
-                                                                            [.font: statusFont,
-                                                                           .foregroundColor: UIColor.statusColor,
-                                                                           .paragraphStyle: paragraphStyle3]
+                    [.font: statusFont,
+                     .foregroundColor: UIColor.statusColor,
+                     .paragraphStyle: paragraphStyle3]
                 let attributedstatusText = NSMutableAttributedString(string: "\n\(statusText)",
                                                                      attributes: statusTextAttributes)
                 attributedcheckinTitle.append(attributedstatusText)

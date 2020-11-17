@@ -221,6 +221,22 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
+
+            if selectedCell.status == .pending,
+               let lastSubmission = selectedCell.surveyResponse.lastSubmission {
+                let dateFormat = "yyyy-MM-dd HH:mm:ss"
+                let dateFormatter = DateFormatter()
+                dateFormatter.dateFormat = dateFormat
+                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                var calendar = Calendar.current
+                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
+                   let timezone = TimeZone(abbreviation: "UTC"){
+                    calendar.timeZone = timezone
+                    if calendar.isDateInToday(lastSubmissionDate){
+                        return
+                    }
+                }
+            }
             if selectedCell.status != .completedToday {
                 self.showSurvey(surveyId)
                 return
