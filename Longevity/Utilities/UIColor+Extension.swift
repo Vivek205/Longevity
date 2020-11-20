@@ -101,4 +101,12 @@ extension UIColor {
     @nonobjc class var facebook: UIColor {
         return UIColor(hexString: "#25479B")
     }
+
+    @nonobjc class var pickerLabel: UIColor {
+        return UIColor(hexString: "#333333")
+    }
+
+    @nonobjc class var divider: UIColor {
+        return UIColor(hexString: "#CECECE")
+    }
 }

@@ -112,23 +112,19 @@ class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
 
     var status: CheckInStatus = .notstarted
+    var isSurveySubmittedToday:Bool = false
     
     var surveyResponse: SurveyListItem! {
         didSet {
+            self.isSurveySubmittedToday = checkIsSurveySubmittedToday(lastSubmissionDate: surveyResponse.lastSubmission)
             self.status = surveyResponse.lastSurveyStatus
-            if let lastSubmission = surveyResponse.lastSubmission, !lastSubmission.isEmpty, self.status != .pending {
-                let dateFormatter = DateFormatter()
-                dateFormatter.dateFormat = dateFormat
-                dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
 
-                if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
-                    var calendar = Calendar.current
-                    calendar.timeZone = TimeZone(abbreviation: "UTC")!
-                    if calendar.isDateInToday(lastSubmissionDate) {
-                        status = .completedToday
-                    } else {
-                        status = .completed
-                    }
+            if surveyResponse.lastSurveyStatus != .pending &&
+                surveyResponse.lastSurveyStatus != .notstarted {
+                if self.isSurveySubmittedToday {
+                    status = .completedToday
+                } else {
+                    status = .completed
                 }
             }
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
@@ -221,9 +217,9 @@ class DashboardCheckInCell: UITableViewCell {
                 let paragraphStyle3 = NSMutableParagraphStyle()
                 paragraphStyle3.lineSpacing = 2.5
                 let statusTextAttributes: [NSAttributedString.Key: Any] =
-                                                                            [.font: statusFont,
-                                                                           .foregroundColor: UIColor.statusColor,
-                                                                           .paragraphStyle: paragraphStyle3]
+                    [.font: statusFont,
+                     .foregroundColor: UIColor.statusColor,
+                     .paragraphStyle: paragraphStyle3]
                 let attributedstatusText = NSMutableAttributedString(string: "\n\(statusText)",
                                                                      attributes: statusTextAttributes)
                 attributedcheckinTitle.append(attributedstatusText)
@@ -243,5 +239,24 @@ class DashboardCheckInCell: UITableViewCell {
         bgView.layer.shadowOpacity = 0.25
         bgView.layer.masksToBounds = false
         bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds, cornerRadius: bgView.layer.cornerRadius).cgPath
+    }
+
+    func checkIsSurveySubmittedToday(lastSubmissionDate: String?) -> Bool {
+        guard let lastSubmission = surveyResponse.lastSubmission,
+              !lastSubmission.isEmpty else {
+            return false
+        }
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        var calendar = Calendar.current
+        if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
+           let timezone = TimeZone(abbreviation: "UTC"){
+            calendar.timeZone = timezone
+            if calendar.isDateInToday(lastSubmissionDate) {
+                return true
+            }
+        }
+        return false
     }
 }

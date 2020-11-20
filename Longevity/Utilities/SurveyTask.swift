@@ -104,7 +104,7 @@ final class SurveyTaskUtility: NSObject {
 
                                         if filteredQuestion.quesType == .text {
                                             answerFormat = ORKTextAnswerFormat()
-                                        }else if filteredQuestion.quesType == .location {
+                                        } else if filteredQuestion.quesType == .location {
                                             answerFormat = ORKLocationAnswerFormat()
                                         }
 
@@ -142,6 +142,20 @@ final class SurveyTaskUtility: NSObject {
 
                                         if filteredQuestion.quesType == .text {
                                             let answerFormat = ORKAnswerFormat.textAnswerFormat()
+                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
+                                            steps += [questionStep]
+                                            continue
+                                        }
+
+                                        if filteredQuestion.quesType == .valuePicker {
+                                            let textChoices: [ORKTextChoice] = filteredQuestion.options.map{
+//                                                (text, value) in
+
+
+                                                return ORKTextChoice(text: $0.text ?? "", value: NSString(string: $0.value ?? "") )
+                                            }
+//                                            let textChoices: [ORKTextChoice] = [ORKTextChoice(text: "1 day", value: 0 as NSNumber), ORKTextChoice(text: "2 days", value: 0 as NSNumber)]
+                                            let answerFormat = ORKValuePickerAnswerFormat(textChoices: textChoices)
                                             let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
                                             steps += [questionStep]
                                             continue

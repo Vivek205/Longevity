@@ -221,6 +221,10 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
+
+            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
+                return
+            }
             if selectedCell.status != .completedToday {
                 self.showSurvey(surveyId)
                 return
