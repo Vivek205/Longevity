@@ -11,9 +11,9 @@ import UIKit
 fileprivate let dateFormat = "yyyy-MM-dd HH:mm:ss"
 
 enum CheckInStatus: String, Decodable {
-    case notstarted = "NOT_STARTED"
+    case notstarted = "NOT_SUBMITTED"
     case completedToday = "COMPLETED_TODAY"
-    case completed = "COMPLETED"
+    case completed = "PROCESSED"
     case pending = "PENDING"
 }
 
@@ -22,9 +22,6 @@ extension CheckInStatus {
         switch self {
         case .notstarted:
             return "Get started today"
-        //        case .completedToday:
-        //            guard let noOfTimesSurveyTaken = noOfTimesSurveyTaken else {return ""}
-        //            return "\(noOfTimesSurveyTaken) days logged"
         case .completed:
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = dateFormat

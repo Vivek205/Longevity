@@ -65,88 +65,154 @@ struct UserProfilePartial: Decodable {
     var phone: String?
 }
 
+struct HealthProfileResponse:Decodable {
+    let data: UserHealthProfile
+}
 
 class UserProfileAPI: BaseAuthAPI {
     
+    static var instance = UserProfileAPI()
+    
     func getProfile(completion: @escaping ((UserProfile?)-> Void)) {
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
-            _ = Amplify.API.get(request: request, listener: { (result) in
-                switch result {
-                case .success(let data):
-                        do {
-                            let jsonDecoder = JSONDecoder()
-                            print("user profile string", String(data: data, encoding: .utf8))
-                            let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
-                            guard let email = userProfileResponse.data.email else {completion(nil);return}
-                            var userProfile = UserProfile(name: "User", email: email, phone: "")
-                            if let name = userProfileResponse.data.name, !name.isEmpty {
-                                userProfile.name = name
-                            }
-                            if let phone = userProfileResponse.data.phone, !phone.isEmpty {
-                                userProfile.phone = phone
-                            }
-                            completion(userProfile)
-                        } catch {
-                            print("json decode error", error)
-                        }
-                case .failure(let apiError):
-                    print("getProfile failed \(apiError.localizedDescription)")
-                    completion(nil)
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+//            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
+//            _ = Amplify.API.get(request: request, listener: { (result) in
+//                switch result {
+//                case .success(let data):
+//                        do {
+//                            let jsonDecoder = JSONDecoder()
+//                            print("user profile string", String(data: data, encoding: .utf8))
+//                            let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
+//                            guard let email = userProfileResponse.data.email else {completion(nil);return}
+//                            var userProfile = UserProfile(name: "User", email: email, phone: "")
+//                            if let name = userProfileResponse.data.name, !name.isEmpty {
+//                                userProfile.name = name
+//                            }
+//                            if let phone = userProfileResponse.data.phone, !phone.isEmpty {
+//                                userProfile.phone = phone
+//                            }
+//                            completion(userProfile)
+//                        } catch {
+//                            print("json decode error", error)
+//                        }
+//                case .failure(let apiError):
+//                    print("getProfile failed \(apiError.localizedDescription)")
+//                    completion(nil)
+//                }
+//            })
+//        }) { (error) in
+//            print("getProfile failed \(error.localizedDescription)")
+//            completion(nil)
+//        }
+        
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
+        
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+            if error != nil {
+                print("getProfile failed \(error!.localizedDescription)")
+                completion(nil)
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let jsonDecoder = JSONDecoder()
+                print("user profile string", String(data: data, encoding: .utf8))
+                let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
+                guard let email = userProfileResponse.data.email else {completion(nil);return}
+                var userProfile = UserProfile(name: "User", email: email, phone: "")
+                if let name = userProfileResponse.data.name, !name.isEmpty {
+                    userProfile.name = name
                 }
-            })
-        }) { (error) in
-            print("getProfile failed \(error.localizedDescription)")
-            completion(nil)
+                if let phone = userProfileResponse.data.phone, !phone.isEmpty {
+                    userProfile.phone = phone
+                }
+                completion(userProfile)
+            } catch {
+                print("json decode error", error)
+                completion(nil)
+            }
         }
-    }
-
-    struct HealthProfileResponse:Decodable {
-        let data: UserHealthProfile
     }
     
     func getHealthProfile(completion: @escaping ((UserHealthProfile?)-> Void)) {
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
-            _ = Amplify.API.get(request: request, listener: { (result) in
-                switch result {
-                case .success(let data):
-                    do {
-//                        let jsonData = try JSON(data: data)
+        
+        let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
+        
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+            if error != nil {
+                print("get Health Profile failed \(error!.localizedDescription)")
+                completion(nil)
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let jsonDecoder = JSONDecoder()
+                jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+                let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
+                print(decodedData)
 
-                        let jsonDecoder = JSONDecoder()
-                        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
-                        print(decodedData)
-
-                        if let preExistingConditions = decodedData.data.preExistingConditions {
-                            preExistingConditions.forEach({ (condition) in
-                                if condition["type"] == "OTHER" {
-                                    preExistingMedicalCondtionOtherText = condition["condition"]
-                                    return
-                                }
-                                guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
-                                    return element.id.rawValue == condition["condition"]
-                                }) else { return }
-                                preExistingMedicalConditionData[optionIndex].selected = true
-                            })
+                if let preExistingConditions = decodedData.data.preExistingConditions {
+                    preExistingConditions.forEach({ (condition) in
+                        if condition["type"] == "OTHER" {
+                            preExistingMedicalCondtionOtherText = condition["condition"]
+                            return
                         }
-
-
-                        completion(decodedData.data)
-                    } catch {
-                        print("json parse error", error)
-                    }
-                case .failure(let apiError):
-                    print("getHealthProfile failed \(apiError)")
+                        guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
+                            return element.id.rawValue == condition["condition"]
+                        }) else { return }
+                        preExistingMedicalConditionData[optionIndex].selected = true
+                    })
                 }
-            })
-        }) { (error) in
-            print("getProfile failed \(error.localizedDescription)")
-            completion(nil)
+                completion(decodedData.data)
+            } catch {
+                print("json parse error", error)
+            }
         }
+        
+        
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
+//            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
+//            _ = Amplify.API.get(request: request, listener: { (result) in
+//                switch result {
+//                case .success(let data):
+//                    do {
+////                        let jsonData = try JSON(data: data)
+//
+//                        let jsonDecoder = JSONDecoder()
+//                        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
+//                        print(decodedData)
+//
+//                        if let preExistingConditions = decodedData.data.preExistingConditions {
+//                            preExistingConditions.forEach({ (condition) in
+//                                if condition["type"] == "OTHER" {
+//                                    preExistingMedicalCondtionOtherText = condition["condition"]
+//                                    return
+//                                }
+//                                guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
+//                                    return element.id.rawValue == condition["condition"]
+//                                }) else { return }
+//                                preExistingMedicalConditionData[optionIndex].selected = true
+//                            })
+//                        }
+//
+//
+//                        completion(decodedData.data)
+//                    } catch {
+//                        print("json parse error", error)
+//                    }
+//                case .failure(let apiError):
+//                    print("getHealthProfile failed \(apiError)")
+//                }
+//            })
+//        }) { (error) in
+//            print("getProfile failed \(error.localizedDescription)")
+//            completion(nil)
+//        }
     }
     
     func getUserAttributes(completion: @escaping ((TOCStatus)-> Void)) {
@@ -176,27 +242,6 @@ class UserProfileAPI: BaseAuthAPI {
                 } else {
                     completion(.notaccepted)
                 }
-                
-//                for attribute in attributes {
-//                    let name = attribute.key
-//                    let value = attribute.value
-//                    if name.rawValue == CustomCognitoAttributes.longevityTNC {
-//                        guard let data = value.data(using: .utf8) as? Data else {
-//                            completion(nil)
-//                            return
-//                        }
-//                        guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-//                            completion(nil)
-//                            return
-//                        }
-//
-//                        if json["isAccepted"] as! NSNumber == 1 {
-//                            completion(true)
-//                        } else {
-//                            completion(false)
-//                        }
-//                    }
-//                }
             case .failure(let error):
                 print("Fetching user attributes failed with error \(error)")
                 completion(.unknown)
@@ -207,33 +252,56 @@ class UserProfileAPI: BaseAuthAPI {
     func getUserActivities(offset:Int = 0 ,limit:Int = 10 ,completion: @escaping (_ userActivities:UserActivity)-> Void,
                            onFailure: @escaping (_ error: Error)-> Void) {
 
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
-            let queryParams = ["offset":"\(offset)", "limit":"\(limit)"]
-            let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/activities", headers: headers,
-                                      queryParameters: queryParams, body: nil)
-            Amplify.API.get(request: request) { (result) in
-                switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode(UserActivity.self, from: data)
-                        completion(value)
-                    }
-                    catch {
-                        print("JSON error", error)
-                        onFailure(error)
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    onFailure(error)
-                    break
-                }
-            }           
-        }) { (error) in
-            onFailure(error)
+        let queryParams = ["offset":"\(offset)", "limit":"\(limit)"]
+        let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/activities", headers: headers,
+                                  queryParameters: queryParams, body: nil)
+        
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                onFailure(error!)
+            }
+            
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let value = try decoder.decode(UserActivity.self, from: data)
+                completion(value)
+            }
+            catch {
+                print("JSON error", error)
+                onFailure(error)
+            }
         }
+        
+        
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+//
+//            Amplify.API.get(request: request) { (result) in
+//                switch result {
+//                case .success(let data):
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        let value = try decoder.decode(UserActivity.self, from: data)
+//                        completion(value)
+//                    }
+//                    catch {
+//                        print("JSON error", error)
+//                        onFailure(error)
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    onFailure(error)
+//                    break
+//                }
+//            }
+//        }) { (error) in
+//            onFailure(error)
+//        }
     }
     
     func getAppLink(completion: @escaping((String?) -> Void)) {
@@ -255,37 +323,51 @@ class UserProfileAPI: BaseAuthAPI {
     
     func getUserAvatar(completion: @escaping (_ userActivities:String?)-> Void,
                        onFailure: @escaping (_ error: Error)-> Void) {
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers,
                                       queryParameters: nil, body: nil)
 
-            Amplify.API.get(request: request) { (result) in
-                switch result {
-                case .success(let data):
-                    do {
-                        let profileURL = String(data: data, encoding: .utf8)
-                        completion(profileURL)
-                    }
-                    catch {
-                        print("JSON error", error)
-                        onFailure(error)
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    onFailure(error)
-                    break
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+            if error != nil {
+                print(error!.localizedDescription)
+                onFailure(error!)
+            } else {
+                guard  let data = data else {
+                    return
                 }
+                
+                let profileURL = String(data: data, encoding: .utf8)
+                completion(profileURL)
             }
-            
-        }) { (error) in
-            onFailure(error)
         }
+        
+//            Amplify.API.get(request: request) { (result) in
+//                switch result {
+//                case .success(let data):
+//                    do {
+//                        let profileURL = String(data: data, encoding: .utf8)
+//                        completion(profileURL)
+//                    }
+//                    catch {
+//                        print("JSON error", error)
+//                        onFailure(error)
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    onFailure(error)
+//                    break
+//                }
+//            }
+            
+//        }) { (error) in
+//            onFailure(error)
+//        }
     }
     
     func saveUserAvatar (profilePic: String,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             
             let parameters: [String: String] = [
                 "image": profilePic
@@ -294,33 +376,54 @@ class UserProfileAPI: BaseAuthAPI {
             guard let bodyData:Data = profilePic.data(using: .utf8, allowLossyConversion: false) else { return }
             
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/user/profile/picture", headers: headers, queryParameters: nil, body: bodyData)
-            Amplify.API.post(request: request) { (result) in
-                switch result {
-                case .success(let data):
-                    do {
-                        let decoder = JSONDecoder()
-                        decoder.keyDecodingStrategy = .convertFromSnakeCase
-                        let value = try decoder.decode(String.self, from: data)
-                        print(value)
-                    }
-                    catch let error {
-                        print("JSON error: ", error.localizedDescription)
-                        onFailure(error)
-                    }
-                case .failure(let error):
-                    print(error.localizedDescription)
-                    onFailure(error)
-                    break
-                }
+        
+        self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+            if let error = error {
+                print("JSON error: ", error.localizedDescription)
+                onFailure(error)
             }
-        }) { (error) in
-            onFailure(error)
+            
+            guard let data = data else { return }
+            
+            do {
+                let decoder = JSONDecoder()
+                decoder.keyDecodingStrategy = .convertFromSnakeCase
+                let value = try decoder.decode(String.self, from: data)
+                print(value)
+            }
+            catch let error {
+                print("JSON error: ", error.localizedDescription)
+                onFailure(error)
+            }
         }
+//
+//            Amplify.API.post(request: request) { (result) in
+//                switch result {
+//                case .success(let data):
+//                    do {
+//                        let decoder = JSONDecoder()
+//                        decoder.keyDecodingStrategy = .convertFromSnakeCase
+//                        let value = try decoder.decode(String.self, from: data)
+//                        print(value)
+//                    }
+//                    catch let error {
+//                        print("JSON error: ", error.localizedDescription)
+//                        onFailure(error)
+//                    }
+//                case .failure(let error):
+//                    print(error.localizedDescription)
+//                    onFailure(error)
+//                    break
+//                }
+//            }
+//        }) { (error) in
+//            onFailure(error)
+//        }
     }
     
     func saveUserHealthProfile(healthProfile: UserHealthProfile,completion: @escaping (()-> Void), onFailure: @escaping (_ error: Error)-> Void) {
-        self.getCredentials(completion: { (credentials) in
-            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
+//        self.getCredentials(completion: { (credentials) in
+//            let headers = ["token":credentials.idToken, "login_type":Logintype.personal.rawValue]
             let keys = UserDefaultsKeys()
 
             guard var enhancedHealthProfile = healthProfile.dictionary else {
@@ -342,6 +445,10 @@ class UserProfileAPI: BaseAuthAPI {
             }
             
             let request = RESTRequest(apiName: "rejuveDevelopmentAPI", path: "/health/profile", headers: headers, body: bodyData)
+        
+        self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+            
+        }
             Amplify.API.post(request: request) { (result) in
                 switch result {
                 case .success(let data):
@@ -354,8 +461,8 @@ class UserProfileAPI: BaseAuthAPI {
                     break
                 }
             }
-        }) { (error) in
-            onFailure(error)
-        }
+//        }) { (error) in
+//            onFailure(error)
+//        }
     }
 }

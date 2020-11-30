@@ -216,7 +216,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     
     // MARK: Actions
     @IBAction func handleContinue(_ sender: Any) {
-        updateHealthProfile()
+        MedicalHistoryAPI.instance.updateHealthProfile()
         performSegue(withIdentifier: "SetupProfileBioDataToNotification", sender: self)
     }
     
@@ -330,7 +330,7 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     }
     
     @objc func doneUpdate() {
-        updateHealthProfile()
+        MedicalHistoryAPI.instance.updateHealthProfile()
         self.dismiss(animated: true, completion: nil)
     }
 }

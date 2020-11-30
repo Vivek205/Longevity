@@ -8,6 +8,8 @@
 
 import UIKit
 import Amplify
+import AWSPluginsCore
+import SwiftyJSON
 
 class LoaderAnimationViewController: UIViewController {
     
@@ -86,11 +88,9 @@ class LoaderAnimationViewController: UIViewController {
             //
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             spinner.topAnchor.constraint(equalTo:singularityStudioLogo.bottomAnchor, constant: 20)
-            
         ])
 
-        checkIfAppUpdated{
-            [weak self] signedOut in
+        checkIfAppUpdated { [weak self] signedOut in
             if !signedOut {
                 self?.fetchCurrentSession()
             }
@@ -104,6 +104,13 @@ class LoaderAnimationViewController: UIViewController {
             switch result {
             case .success(let session):
                 if session.isSignedIn {
+                    guard let session = try? result.get() as? AuthCognitoTokensProvider,
+                          let tokens = try? session.getCognitoTokens().get() else {
+                        return
+                    }
+
+                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                                        
                     DispatchQueue.main.async {
                         let tabbarViewController = LNTabBarViewController()
                         tabbarViewController.modalPresentationStyle = .fullScreen
@@ -127,7 +134,7 @@ class LoaderAnimationViewController: UIViewController {
         }
     }
 
-    func checkIfAppUpdated(completion:((_ signedOut: Bool)->Void)? = nil) {
+    func checkIfAppUpdated(completion: @escaping(_ signedOut: Bool) -> Void) {
         guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
 
         let previousBuild = UserDefaults.standard.string(forKey: "build")
@@ -138,21 +145,22 @@ class LoaderAnimationViewController: UIViewController {
             _ = Amplify.Auth.signOut() { [weak self] (result) in
                 switch result {
                 case .success:
+                    try? KeyChain(service: KeychainConfiguration.serviceName,
+                                  account: KeychainKeys.idToken).deleteItem()
                     print("Successfully signed out")
-                    completion?(true)
+                    completion(true)
                     DispatchQueue.main.async {
                         let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
                         let onBoardingViewController = storyboard.instantiateInitialViewController()
                         appDelegate.window?.rootViewController = onBoardingViewController
                     }
-
                 case .failure(let error):
                     print("Sign out failed with error \(error)")
-                    completion?(false)
+                    completion(false)
                 }
             }
         } else {
-            completion?(false)
+            completion(false)
         }
     }
 }

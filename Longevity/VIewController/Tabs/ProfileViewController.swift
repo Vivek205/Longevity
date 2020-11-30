@@ -160,8 +160,6 @@ class ProfileViewController: BaseViewController {
             profileTableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
 
-
-
         self.currentProfileView = .activity
         getProfileData()
     }
@@ -171,9 +169,8 @@ class ProfileViewController: BaseViewController {
             return
         }
         self.isFetchInProgress = true
-        let userProfileAPI = UserProfileAPI()
-
-        userProfileAPI.getUserActivities(offset: currentOffset, limit: currentLimit) { (userActivity) in
+        
+        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { (userActivity) in
             self.isFetchInProgress = false
             self.currentOffset += self.currentLimit
             self.currentPage = (userActivity.offset / userActivity.limit) + 1
@@ -184,10 +181,9 @@ class ProfileViewController: BaseViewController {
             if self.currentPage > 1 {
                 let newIndexPathsToReload = self.calculateIndexPathsToReload(from: userActivity)
                 self.onGetProfileCompleted(with: newIndexPathsToReload)
-            }else {
+            } else {
                 self.onGetProfileCompleted(with: .none)
             }
-
         } onFailure: { (error) in
             self.isFetchInProgress = false
             print("failure")
@@ -475,7 +471,7 @@ extension ProfileViewController: ProfileSettingsCellDelegate {
     
     func handleMetricSystemSwitch() {
         HealthKitUtil.shared.toggleSelectedUnit()
-        updateHealthProfile()
+        MedicalHistoryAPI.instance.updateHealthProfile()
     }
     
     func handleFitbitSwitch(newState isOn: Bool) {

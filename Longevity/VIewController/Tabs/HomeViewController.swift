@@ -13,8 +13,6 @@ class HomeViewController: BaseViewController {
     var surveyId: String?
     var currentTask: ORKOrderedTask?
     
-    var timer: DispatchSourceTimer?
-    
     var isAIProcessPending: Bool = false {
         didSet {
             self.aiProcessingBand.isHidden = !isAIProcessPending
@@ -89,28 +87,14 @@ class HomeViewController: BaseViewController {
         }
 
         self.aiProcessingBand.isHidden = !isAIProcessPending
-        self.getSurveyList()
-    }
-
-    func getSurveyList() {
-        DispatchQueue.main.async {
-            self.showSpinner()
+        
+        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) {
+            DispatchQueue.main.async {
+                self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+            }
         }
         
-        func completion(_ surveys:[SurveyListItem]) {
-            DispatchQueue.main.async {
-                self.tableView.reloadData()
-                self.removeSpinner()
-            }
-        }
-
-        func onFailure(_ error:Error) {
-            DispatchQueue.main.async {
-                print(error)
-                self.removeSpinner()
-            }
-        }
-        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        AppSyncManager.instance.syncSurveyList()
     }
 }
 
@@ -142,7 +126,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if surveyResponse?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
-                self.startpollingSurveys()
             }
             checkinCell.surveyResponse = surveyResponse
             return checkinCell
@@ -166,7 +149,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             
             if surveyDetails?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
-                self.startpollingSurveys()
             }
             
             taskCell.surveyDetails = surveyDetails
@@ -221,22 +203,25 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
-
-            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
-                return
-            }
-            if selectedCell.status != .completedToday {
+            //If Survey is submitted today and is under processing
+//            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
+//                return
+//            } else if selectedCell.status == .completedToday { //If survey is completed today
+//                let checkInResultViewController = CheckInResultViewController()
+//                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
+//                return
+//            } else if selectedCell.status != .completedToday { //If not submitted today / ever
                 self.showSurvey(surveyId)
-                return
-            }
-            if let userInsights = AppSyncManager.instance.userInsights.value {
-                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-                print(userInsights)
-                if let history = userInsights.last?.details?.history {
-                    checkinLogViewController.history = history
-                }
-                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-            }
+//                return
+//            }
+//            if let userInsights = AppSyncManager.instance.userInsights.value {
+//                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+//                print(userInsights)
+//                if let history = userInsights.last?.details?.history {
+//                    checkinLogViewController.history = history
+//                }
+//                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+//            }
         }
 
         if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
@@ -247,16 +232,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
-    fileprivate func startpollingSurveys() {
-        let queue = DispatchQueue.global(qos: .background)
-        self.timer?.cancel()
-        self.timer = DispatchSource.makeTimerSource(queue: queue) //else { return }
-        timer?.schedule(deadline: .now() + 60)
-        timer?.setEventHandler(handler: {
-            self.getSurveyList()
-        })
-        timer?.resume()
-    }
+    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let topGap = 44.0 + scrollView.contentOffset.y

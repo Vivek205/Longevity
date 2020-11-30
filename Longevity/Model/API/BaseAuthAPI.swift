@@ -25,14 +25,13 @@ enum APICallType {
 
 class BaseAuthAPI {
     
-    var headers: [String: String] {
-        return ["token": self.getUserToken() ?? "", "content-type":"application/json", "login_type":LoginType.PERSONAL]
+    var userToken: String? {
+        return try? KeyChain(service: KeychainConfiguration.serviceName,
+                             account: KeychainKeys.idToken).readItem()
     }
     
-    fileprivate func getUserToken() -> String? {
-        let token = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem()
-        print("Id token - \(token) ")
-        return token
+    var headers: [String: String] {
+        return ["token": self.userToken ?? "", "content-type":"application/json", "login_type":LoginType.PERSONAL]
     }
     
     fileprivate func fetchUserToken(isSuccess: @escaping(Bool) -> Void) {
@@ -42,9 +41,7 @@ class BaseAuthAPI {
                 isSuccess(false)
                 return
             }
-            
             do{
-                print("Id token - \(tokens.idToken) ")
                 try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
                 isSuccess(true)
             } catch {
@@ -53,99 +50,61 @@ class BaseAuthAPI {
         }
     }
     
-    func getCredentials(completion: @escaping (_ credentials: Credentials)-> Void,
-                        onFailure: @escaping (_ error: Error)-> Void) {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-        
-        if let idTokenExp = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).readItem() {
-            if let expDate = dateFormatter.date(from: idTokenExp) {
-                let currentDate = Date()
-                if currentDate < expDate {
-
-                    if let idToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem() {
-                        return completion(  Credentials(usersub: "", identityId: "", accessKey: "", idToken: idToken))
-                    }
-
-                }
-            }
-        }
-
-
-
-        var usersub = "", identityId = "", accessKey = "", idToken = ""
-        var credentials = Credentials()
-        _ = Amplify.Auth.fetchAuthSession { result in
-            do {
-                let session = try result.get()
-
-                if let identityProvider = session as? AuthCognitoIdentityProvider {
-                    credentials.usersub = try identityProvider.getUserSub().get()
-                    credentials.identityId = try identityProvider.getIdentityId().get()
-                }
-
-                // Get aws credentials
-                if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
-
-                    let awsCredentials = try awsCredentialsProvider.getAWSCredentials().get()
-                    //                print("expiry", awsCredentials.expiration)
-                    credentials.accessKey = awsCredentials.accessKey
-                }
-
-                // Get cognito user pool token
-                if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
-                    let tokens = try cognitoTokenProvider.getCognitoTokens().get()
-                    credentials.idToken = tokens.idToken
-
-                    let secondsOffset50Mins = Double(50 * 60)
-                    let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-                    let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
-
-                    guard let idTokenData = tokens.idToken.data(using: .utf8),
-                          let idTokenExpData = dateString50MinFuture.data(using: .utf8) else {
-                        return completion(credentials)
-                    }
-
-                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
-                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp).saveItem(dateString50MinFuture)
-                    
-                    //                    KeyChain.save(name: KeychainKeys.idToken, data: idTokenData)
-                    //                    KeyChain.save(name: KeychainKeys.idTokenExp, data: idTokenExpData)
-                    //                print(tokens.idToken)
-                }
-
-                completion(credentials)
-            } catch {
-                print("Fetch auth session failed with error - \(error)")
-                onFailure(error)
-            }
-        }
-    }
-    
-    
-    
     func makeAPICall(callType: APICallType, request: RESTRequest, completion: @escaping(Data?, Error?) -> Void) {
         if callType == .apiGET {
             self.getRequest(request: request, completion: completion)
         } else if callType == .apiPOST {
             self.postRequest(request: request, completion: completion)
+        } else if callType == .apiDELETE {
+            self.deleteRequest(request: request, completion: completion)
         }
     }
     
-    fileprivate func getRequest(request: RESTRequest, isRetry: Bool = false, completion: @escaping(Data?, Error?) -> Void) {
-        let newRequest = RESTRequest(apiName: request.apiName, path: request.path, headers: self.headers, queryParameters: request.queryParameters, body: request.body)
-        _ = Amplify.API.get(request: request, listener: { (result) in
+    fileprivate func getRequest(request: RESTRequest, isRetry: Bool = false,
+                                completion: @escaping(Data?, Error?) -> Void) {
+        let newRequest = RESTRequest(apiName: request.apiName,
+                                     path: request.path,
+                                     headers: self.headers,
+                                     queryParameters: request.queryParameters,
+                                     body: request.body)
+        _ = Amplify.API.get(request: newRequest, listener: { (result) in
+            switch result{
+            case .success(let data):
+                completion(data, nil)
+            case .failure(let error):
+                print(error.errorDescription)
+                if error.errorDescription.contains("403") && !isRetry {
+                    self.fetchUserToken { (success) in
+                        if success {
+                            self.getRequest(request: request, isRetry: true, completion: completion)
+                        }
+                    }
+                } else {
+                    completion(nil, error)
+                }
+            }
+        })
+    }
+    
+    fileprivate func postRequest(request: RESTRequest, isRetry: Bool = false,
+                                 completion: @escaping(Data?, Error?) -> Void) {
+        let newRequest = RESTRequest(apiName: request.apiName,
+                                     path: request.path,
+                                     headers: self.headers,
+                                     queryParameters: request.queryParameters,
+                                     body: request.body)
+        _ = Amplify.API.post(request: newRequest, listener: { (result) in
             switch result{
             case .success(let data):
                 completion(data, nil)
             case .failure(let apiError):
-                if !isRetry {
-                self.fetchUserToken { (success) in
-                    if success {
-                        self.getRequest(request: request, isRetry: true, completion: completion)
+                print(apiError.errorDescription)
+                if apiError.errorDescription.contains("403") && !isRetry {
+                    self.fetchUserToken { (success) in
+                        if success {
+                            self.postRequest(request: request, isRetry: true, completion: completion)
+                        }
                     }
-                }
                 } else {
                     completion(nil, apiError)
                 }
@@ -153,19 +112,25 @@ class BaseAuthAPI {
         })
     }
     
-    fileprivate func postRequest(request: RESTRequest, isRetry: Bool = false, completion: @escaping(Data?, Error?) -> Void) {
-        let newRequest = RESTRequest(apiName: request.apiName, path: request.path, headers: self.headers, queryParameters: request.queryParameters, body: request.body)
-        _ = Amplify.API.post(request: request, listener: { (result) in
+    fileprivate func deleteRequest(request: RESTRequest, isRetry: Bool = false,
+                                   completion: @escaping(Data?, Error?) -> Void) {
+        let newRequest = RESTRequest(apiName: request.apiName,
+                                     path: request.path,
+                                     headers: self.headers,
+                                     queryParameters: request.queryParameters,
+                                     body: request.body)
+        _ = Amplify.API.delete(request: newRequest, listener: { (result) in
             switch result{
             case .success(let data):
                 completion(data, nil)
             case .failure(let apiError):
-                if !isRetry {
-                self.fetchUserToken { (success) in
-                    if success {
-                        self.postRequest(request: request, isRetry: true, completion: completion)
+                print(apiError.errorDescription)
+                if apiError.errorDescription.contains("403") && !isRetry {
+                    self.fetchUserToken { (success) in
+                        if success {
+                            self.deleteRequest(request: request, isRetry: true, completion: completion)
+                        }
                     }
-                }
                 } else {
                     completion(nil, apiError)
                 }

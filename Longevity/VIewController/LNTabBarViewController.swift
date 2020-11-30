@@ -57,10 +57,7 @@ class LNTabBarViewController: UITabBarController {
                                 profileViewController, shareAppViewController]
         #endif
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
-//        let bgImageView2 = UIImageView(image: UIImage.imageWithColor(color: .black, size: tabBar.frame.size))
-
         tabBar.insertSubview(bgImageView, at: 0)
-//        tabBar.addSubview(bgImageView2)
         
         AppSyncManager.instance.syncUserProfile()
 

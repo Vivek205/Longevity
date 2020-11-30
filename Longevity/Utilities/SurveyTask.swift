@@ -13,13 +13,22 @@ fileprivate let defaultModuleIconName:String = "icon : GI"
 
 fileprivate let appSyncmanager:AppSyncManager = AppSyncManager.instance
 
+enum SurveyStatus {
+    case unknown
+    case pending
+    case processed
+}
+
 final class SurveyTaskUtility: NSObject {
     static let shared = SurveyTaskUtility()
     private var surveyList:[SurveyListItem]?
     var repetitiveSurveyList: DynamicValue<[SurveyListItem]>
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
     
+    var surveyInProgress: DynamicValue<SurveyStatus>
+    
     private override init() {
+        self.surveyInProgress = DynamicValue(.unknown)
         self.repetitiveSurveyList = DynamicValue([SurveyListItem]())
         self.oneTimeSurveyList = DynamicValue([SurveyListItem]())
     }
@@ -197,8 +206,12 @@ final class SurveyTaskUtility: NSObject {
             onFailure(error)
         }
 
-        getSurveyDetails(surveyId: surveyId, completion: onGetQuestionCompletion(_:),
-                         onFailure: onGetQuestionFailure(_:))
+        SurveysAPI.instance.get(surveyId: surveyId) { (surveyDetails) in
+            guard let surveyDetails = surveyDetails else {
+                return
+            }
+            onGetQuestionCompletion(surveyDetails)
+        }
     }
 
     func completeSurvey(completion: @escaping () -> Void, onFailure: @escaping (_ error: Error) -> Void) {
@@ -210,7 +223,7 @@ final class SurveyTaskUtility: NSObject {
         }
         func onSubmitCompletion() {
             print("survey submitted successfully")
-            getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
+//            SurveysAPI.instance.getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
             self.clearSurvey()
         }
         func onSubmitFailure(_ error: Error) {
@@ -219,7 +232,7 @@ final class SurveyTaskUtility: NSObject {
         }
         func onSaveCompletion() {
             print("survey saved successfully")
-            submitSurvey(surveyId: SurveyTaskUtility.shared.currentSurveyId,
+            SurveysAPI.instance.submitSurvey(surveyId: SurveyTaskUtility.shared.currentSurveyId,
                          completion: onSubmitCompletion, onFailure: onSubmitFailure(_:))
         }
         func onSaveFailure(_ error: Error) {
@@ -251,7 +264,7 @@ final class SurveyTaskUtility: NSObject {
                                        answer: answer,
                                        quesId: questionId)
         }
-        saveSurveyAnswers(surveyId: SurveyTaskUtility.shared.currentSurveyId, answers: payload,
+        SurveysAPI.instance.saveSurveyAnswers(surveyId: SurveyTaskUtility.shared.currentSurveyId, answers: payload,
                           completion: completion, onFailure: onFailure)
     }
 
@@ -308,6 +321,14 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
+        if list.contains(where: { return $0.lastSurveyStatus == .pending }) {
+            self.surveyInProgress.value = .pending
+        }
+        else
+        {
+            self.surveyInProgress.value = .processed
+        }
+        
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
         self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true &&
                                                         ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
@@ -428,17 +449,6 @@ final class SurveyTaskUtility: NSObject {
         let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
         else {return nil}
         return currentSurveyTraversedQuestions.last
-    }
-    
-    func reloadSurveys() {
-        func completion(_ surveys:[SurveyListItem]) {
-            
-        }
-
-        func onFailure(_ error:Error) {
-            
-        }
-        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 
     func isFirstStep(stepId: String?) -> Bool {

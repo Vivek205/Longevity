@@ -53,7 +53,7 @@ class BranchingOrderedTask: ORKOrderedTask {
 
             return nextStep
         }
-        if let nextStepIdentifier = findNextQuestion(moduleId: Int(moduleId ?? ""), questionId: identifier,
+        if let nextStepIdentifier = SurveysAPI.instance.findNextQuestion(moduleId: Int(moduleId ?? ""), questionId: identifier,
                                                      answerValue: answer!) {
             if let nextDynamicStep = self.steps.first(where: { $0.identifier == nextStepIdentifier }) {
                 nextStep = nextDynamicStep
@@ -65,10 +65,12 @@ class BranchingOrderedTask: ORKOrderedTask {
 
     override func step(before step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
         super.step(before: step, with: result)
-        guard let currentStep = step, let currentStepIndex: Int = Int(self.index(of: currentStep)) else {
+        guard let currentStep = step else {
             if steps.isEmpty { return nil }
             return steps[0]
         }
+        
+        let currentStepIndex: Int = Int(self.index(of: currentStep))
 
         if currentStep is ORKInstructionStep {
                return step
@@ -78,6 +80,5 @@ class BranchingOrderedTask: ORKOrderedTask {
             return self.steps[currentStepIndex - 1]
         }
         return self.steps.first(where: { $0.identifier == locallyTraversedPrevStepIdentifier })
-
     }
 }

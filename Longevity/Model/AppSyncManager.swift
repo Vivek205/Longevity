@@ -20,6 +20,13 @@ enum InternetConnectionState {
     case none
 }
 
+enum SurveySyncStatus {
+    case notstarted
+    case inprogress
+    case completed
+    case failed
+}
+
 class AppSyncManager  {
     static let instance = AppSyncManager()
 
@@ -31,6 +38,9 @@ class AppSyncManager  {
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<InternetConnectionState> = DynamicValue(.none)
+    var surveysSyncStatus: DynamicValue<SurveySyncStatus> = DynamicValue(.notstarted)
+    
+    var timer: DispatchSourceTimer?
     
     fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
@@ -70,14 +80,12 @@ class AppSyncManager  {
         self.appShareLink = DynamicValue("")
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
-//        self.userActivity = DynamicValue(UserActivity(offset: 0, limit: 50, totalActivitiesCount: 0, activities: [UserActivityDetails(title: "", username: "", activityType: .ACCOUNTCREATED, description: "", loggedAt: "", isLast: nil)]))
         self.userInsights = DynamicValue(self.defaultInsights)
     }
     //User Attributes
     
     func fetchUserProfile() {
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getProfile { [weak self] (profile) in
+        UserProfileAPI.instance.getProfile { [weak self] (profile) in
             self?.userProfile.value = profile
         }
     }
@@ -132,15 +140,13 @@ class AppSyncManager  {
     }
 
     func fetchUserSubscriptions() {
-        let userPreferenceAPI = UserSubscriptionAPI()
-        userPreferenceAPI.getUserSubscriptions()
+        UserSubscriptionAPI.instance.getUserSubscriptions()
     }
     
     func checkTermsAccepted() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
-//            guard let termsAccepted = termsAccepted else {return}
-            self?.isTermsAccepted.value = termsAccepted //? .accepted : .notaccepted
+            self?.isTermsAccepted.value = termsAccepted
         }
     }
     
@@ -196,19 +202,6 @@ class AppSyncManager  {
         }
     }
 
-//    @objc  func notificationCenterObserser(){
-//        UNUserNotificationCenter.current().getNotificationSettings { (settings) in
-//               switch settings.authorizationStatus {
-//               case .authorized :
-//                   print("Do something according to status")
-//                   self.userNotification.value?.enabled = true
-//               case .denied, .provisional, .notDetermined:
-//                    self.userNotification.value?.enabled = false
-//               }
-//
-//           }
-//    }
-
     func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool, completion: @escaping(() -> Void)){
         if let index = self.userSubscriptions.value?.firstIndex(where: { (subscription) -> Bool in
             return subscription.subscriptionType == subscriptionType && subscription.communicationType == communicationType
@@ -217,8 +210,8 @@ class AppSyncManager  {
         }else {
             self.userSubscriptions.value?.append(UserSubscription(subscriptionType: subscriptionType, communicationType: communicationType, status: status))
         }
-        let userPreferenceAPI = UserSubscriptionAPI()
-        userPreferenceAPI.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
+        
+        UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
     }
 
     fileprivate func getAppLink() {
@@ -229,22 +222,26 @@ class AppSyncManager  {
             }
         }
     }
+    
+    func syncSurveyList() {
+        func completion(_ surveys:[SurveyListItem]) {
+            self.surveysSyncStatus.value = .completed
+            
+            if SurveyTaskUtility.shared.surveyInProgress.value == .pending {
+                self.startpollingSurveys()
+            } else {
+                self.clearPollingTimer()
+            }
+        }
 
-//    func fetchUserActivity(offset:Int = 0, limit:Int = 10, completion:((Error?) -> Void)? = nil) {
-//        let userProfileAPI = UserProfileAPI()
-//        userProfileAPI.getUserActivities(offset:offset, limit: limit) { (userActivity) in
-//            var enhancedUserActivity = userActivity
-//            if offset > 0, let currentActvities = self.userActivity?.value?.activities {
-//                enhancedUserActivity.activities = currentActvities + enhancedUserActivity.activities 
-//            }
-//            self.userActivity?.value = enhancedUserActivity
-//            completion?(nil)
-//        } onFailure: { (error) in
-//            print("fetchUserActivity error: - ", error)
-//            completion?(error)
-//        }
-//
-//    }
+        func onFailure(_ error:Error) {
+            self.surveysSyncStatus.value = .failed
+            self.clearPollingTimer()
+        }
+        
+        self.surveysSyncStatus.value = .inprogress
+        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+    }
 
     func syncUserProfile() {
         self.fetchUserProfile()
@@ -254,5 +251,21 @@ class AppSyncManager  {
         self.fetchUserNotification()
         self.fetchUserSubscriptions()
         AppSyncManager.instance.syncUserInsights()
+    }
+    
+    fileprivate func startpollingSurveys() {
+        let queue = DispatchQueue.global(qos: .background)
+        self.timer?.cancel()
+        self.timer = DispatchSource.makeTimerSource(queue: queue) //else { return }
+        timer?.schedule(deadline: .now() + 60)
+        timer?.setEventHandler(handler: {
+            self.syncSurveyList()
+        })
+        timer?.resume()
+    }
+    
+    fileprivate func clearPollingTimer() {
+        self.timer?.cancel()
+        self.timer = nil
     }
 }
