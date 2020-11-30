@@ -10,14 +10,25 @@ import UIKit
 import ResearchKit
 
 class CompletionStepVC: ORKStepViewController {
-    lazy var completedMessage: DashboardTaskCompletedCell = {
-        let view = DashboardTaskCompletedCell()
-        view.translatesAutoresizingMaskIntoConstraints = false
-        view.titleLabel.text = "All questions are completed"
-        view.info.text = "Great, you have answered all the questions! Enjoy your day. We will analyze the response and notify you once the report is ready"
-        return view
+    
+    lazy var iconView:UIImageView = {
+        let imageView = UIImageView()
+        imageView.translatesAutoresizingMaskIntoConstraints = false
+        imageView.image = UIImage(named: "SetupComplete")
+        imageView.contentMode = .scaleAspectFit
+        return imageView
     }()
-
+    
+    lazy var infoLabel: UILabel = {
+        let label = UILabel()
+        label.translatesAutoresizingMaskIntoConstraints = false
+        label.font = UIFont(name: "Montserrat-Regular", size: 20.0)
+        label.textColor = UIColor(hexString: "#4E4E4E")
+        label.text = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""). Your results are being processed by our AI analyzer.\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
+        label.numberOfLines = 0
+        return label
+    }()
+    
     lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
@@ -39,31 +50,33 @@ class CompletionStepVC: ORKStepViewController {
         return viewresults
     }()
 
-    lazy var infoLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "Thank you for completing COVID Risk Assessment. Your results are being processed by our AI analyzer.\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
-        label.numberOfLines = 0
-        return label
-    }()
-
     override func viewDidLoad() {
+        self.view.backgroundColor = .appBackgroundColor
         self.backButtonItem = nil
         self.presentViews()
         self.navigationItem.hidesBackButton = true
         
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending &&
+                    SurveyTaskUtility.shared.surveyInProgress.value != .unknown
             }
         }
         self.completeSurvey()
+        
+        self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
+                                                                 style: .plain, target: self, action: #selector(handleContinue(sender:)))
+        self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
+        
+        let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(hexString: "#4E4E4E"),
+                              .font: UIFont(name: "Montserrat-SemiBold", size: 22.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
     }
 
     func completeSurvey() {
         func completion() {
             print("survey completed")
-            AppSyncManager.instance.syncSurveyList()
         }
         func onFailure(_ error: Error) {
             print("failed to complete the survey")
@@ -73,16 +86,26 @@ class CompletionStepVC: ORKStepViewController {
     }
 
     func presentViews() {
+        
+        self.view.addSubview(iconView)
+        self.view.addSubview(infoLabel)
         self.view.addSubview(footerView)
-        self.view.addSubview(completedMessage)
         footerView.addSubview(continueButton)
         footerView.addSubview(viewResultsButton)
-
+           
+        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
+        
         NSLayoutConstraint.activate([
-            completedMessage.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            completedMessage.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            completedMessage.topAnchor.constraint(equalTo: view.topAnchor, constant: 20),
-//            completedMessage.heightAnchor.constraint(equalToConstant: 200),
+            
+            iconView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24.0),
+            iconView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            iconView.heightAnchor.constraint(equalToConstant: 200.0),
+            iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
+            
+            infoLabel.topAnchor.constraint(equalTo: iconView.bottomAnchor, constant: 24.0),
+            infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15.0),
+            infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15.0),
+            infoLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerView.topAnchor, constant: 20.0),
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -96,7 +119,7 @@ class CompletionStepVC: ORKStepViewController {
             viewResultsButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
             viewResultsButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 24),
             viewResultsButton.heightAnchor.constraint(equalToConstant: 48),
-            viewResultsButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: -30.0)
+            viewResultsButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: bottomMargin)
         ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
@@ -109,6 +132,7 @@ class CompletionStepVC: ORKStepViewController {
     
     @objc func doViewResults() {
         let checkInResultViewController = CheckInResultViewController()
-        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
+        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                    style: .overCurrentContext)
     }
 }

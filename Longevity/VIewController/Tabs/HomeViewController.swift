@@ -208,19 +208,12 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
 //                return
 //            } else if selectedCell.status == .completedToday { //If survey is completed today
 //                let checkInResultViewController = CheckInResultViewController()
-//                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
+//                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+//                                                            style: .overCurrentContext)
 //                return
 //            } else if selectedCell.status != .completedToday { //If not submitted today / ever
                 self.showSurvey(surveyId)
 //                return
-//            }
-//            if let userInsights = AppSyncManager.instance.userInsights.value {
-//                let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-//                print(userInsights)
-//                if let history = userInsights.last?.details?.history {
-//                    checkinLogViewController.history = history
-//                }
-//                NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
 //            }
         }
 

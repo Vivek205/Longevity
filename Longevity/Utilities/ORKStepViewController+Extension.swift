@@ -12,8 +12,7 @@ import ResearchKit
 extension ORKStepViewController {
     open override func viewDidLoad() {
         super.viewDidLoad()
-
-
+        
         self.cancelButtonItem?.title = "Exit"
 
         if !(step is ORKInstructionStep) {

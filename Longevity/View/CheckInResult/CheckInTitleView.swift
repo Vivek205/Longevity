@@ -57,6 +57,8 @@ class CheckInTitleView: UIView {
             closeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20.0),
             closeButton.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor)
         ])
+        
+        self.closeButton.tintColor = .white
     }
     
     required init?(coder: NSCoder) {

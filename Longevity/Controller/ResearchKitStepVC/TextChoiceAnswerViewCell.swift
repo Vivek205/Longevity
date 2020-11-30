@@ -25,14 +25,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         }
     }
 
-//    lazy var cardView: CardView = {
-//        let cardView = CardView()
-//        cardView.backgroundColor = .white
-//        cardView.translatesAutoresizingMaskIntoConstraints = false
-//        cardView.layer.cornerRadius = 5.0
-//        return cardView
-//    }()
-
     lazy var titleLabel: UILabel = {
         let label = UILabel()//AnswerTitleLabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -40,14 +32,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         label.lineBreakMode = .byWordWrapping
         return label
     }()
-
-//    lazy var extraInfoLabel: AnswerDescriptionLabel = {
-//        let label = AnswerDescriptionLabel()
-//        label.translatesAutoresizingMaskIntoConstraints = false
-//        label.numberOfLines = 0
-//        return label
-//    }()
-
 
     let checkbox: CheckboxButton = {
         let checkbox = CheckboxButton()
@@ -66,26 +50,15 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
 
     func createLayout(text: String, extraInfo:String?) {
         self.backgroundColor = .white
-//        self.addSubview(cardView)
         self.addSubview(titleLabel)
         self.addSubview(checkbox)
 
-//        NSLayoutConstraint.activate([
-//            cardView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-//            cardView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-//            cardView.topAnchor.constraint(equalTo: self.topAnchor),
-//            cardView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-//        ])
-
-//        titleLabel.text = text
         NSLayoutConstraint.activate([
             titleLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
             titleLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
             titleLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15),
             titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
         ])
-
-//        let titleLabelBottomAnchor =  titleLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10)
 
         NSLayoutConstraint.activate([
             checkbox.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -20),
@@ -98,9 +71,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18), .foregroundColor: UIColor.black]
         let attributedoptionData = NSMutableAttributedString(string: text, attributes: attributes)
-//        let paragraphStyle = NSMutableParagraphStyle()
-//        paragraphStyle.lineSpacing = 1.8
-//        attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: paragraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
 
         if let extraInfo = extraInfo, !extraInfo.isEmpty  {
             let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0), .foregroundColor: UIColor(hexString: "#666666")]
@@ -111,20 +81,6 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
         attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
         
         titleLabel.attributedText = attributedoptionData
-
-//        if extraInfo != nil {
-//            self.addSubview(extraInfoLabel)
-//            extraInfoLabel.text = extraInfo
-//            NSLayoutConstraint.activate([
-//                extraInfoLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20),
-//                extraInfoLabel.trailingAnchor.constraint(equalTo: checkbox.leadingAnchor),
-//                extraInfoLabel.topAnchor.constraint(equalTo: titleLabel.bottomAnchor),
-//                extraInfoLabel.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -15)
-//            ])
-//
-//        } else {
-//            titleLabelBottomAnchor.isActive = true
-//        }
     }
 
     func toggleIsChosenOption() {

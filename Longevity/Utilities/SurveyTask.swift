@@ -225,6 +225,8 @@ final class SurveyTaskUtility: NSObject {
             print("survey submitted successfully")
 //            SurveysAPI.instance.getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
             self.clearSurvey()
+            AppSyncManager.instance.syncSurveyList()
+            completion()
         }
         func onSubmitFailure(_ error: Error) {
             print("submit survey error", error)

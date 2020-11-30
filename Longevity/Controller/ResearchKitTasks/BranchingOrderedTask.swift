@@ -33,7 +33,6 @@ class BranchingOrderedTask: ORKOrderedTask {
             return steps[1]
         }
 
-
         guard let currentStepIndex = Int(self.index(of: currentStep)) as? Int else { return nil }
         var nextStep = self.steps[currentStepIndex + 1]
 
@@ -43,18 +42,18 @@ class BranchingOrderedTask: ORKOrderedTask {
         guard let identifier = step?.identifier else {return nextStep}
         let isDynamicQuestion = SurveyTaskUtility.shared.findIsQuestionDynamic(questionId: identifier)
         guard isDynamicQuestion else {
-
             return nextStep
         }
 
         let moduleId = step?.title
         let answer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier)
         guard answer != nil, moduleId != nil else {
-
             return nextStep
         }
-        if let nextStepIdentifier = SurveysAPI.instance.findNextQuestion(moduleId: Int(moduleId ?? ""), questionId: identifier,
-                                                     answerValue: answer!) {
+        
+        if let nextStepIdentifier = SurveysAPI.instance.findNextQuestion(moduleId: Int(moduleId ?? ""),
+                                                                         questionId: identifier,
+                                                                         answerValue: answer!) {
             if let nextDynamicStep = self.steps.first(where: { $0.identifier == nextStepIdentifier }) {
                 nextStep = nextDynamicStep
             }
