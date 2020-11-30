@@ -42,10 +42,8 @@ class SignOutCell: UITableViewCell {
     @objc func doSignout() {
         func onSuccess(isSignedOut: Bool) {
             clearUserDefaults()
-            try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken, accessGroup: nil).deleteItem()
-            try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idTokenExp, accessGroup: nil).deleteItem()
-//            KeyChain.remove(name: KeychainKeys.idToken)
-//            KeyChain.remove(name: KeychainKeys.idTokenExp)
+            try? KeyChain(service: KeychainConfiguration.serviceName,
+                          account: KeychainKeys.idToken, accessGroup: nil).deleteItem()
             DispatchQueue.main.async {
                 
                 if var topController = UIApplication.shared.keyWindow?.rootViewController {
@@ -56,7 +54,7 @@ class SignOutCell: UITableViewCell {
                     topController.removeSpinner()
                 }
                 
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 appDelegate.setRootViewController()
             }
         }

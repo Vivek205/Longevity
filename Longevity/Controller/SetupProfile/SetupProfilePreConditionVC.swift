@@ -165,7 +165,7 @@ extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
         if let updatedConditions = self.currentPreExistingMedicalConditions {
             preExistingMedicalConditionData = updatedConditions
         }
-        updateMedicalConditions()
+        MedicalHistoryAPI.instance.updateMedicalConditions()
     }
 }
 

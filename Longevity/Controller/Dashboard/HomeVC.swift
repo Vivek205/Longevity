@@ -36,6 +36,7 @@ class HomeVC: UIViewController {
             }
 
         }
-        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+//        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 }

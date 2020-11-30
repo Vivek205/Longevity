@@ -13,6 +13,7 @@ enum RiskLevel: String, Codable {
     case lowLevel = "LOW"
     case medium = "MEDIUM"
     case none = "More data needed"
+    case zero = "ZERO"
 }
 
 extension RiskLevel {
@@ -32,6 +33,8 @@ extension RiskLevel {
     var textFont: UIFont? {
         switch self {
         case .none:
+            return UIFont(name: "Montserrat-Regular", size: 12.0)
+        case .zero:
             return UIFont(name: "Montserrat-Regular", size: 12.0)
         default:
             return UIFont(name: "Montserrat-SemiBold", size: 18.0)

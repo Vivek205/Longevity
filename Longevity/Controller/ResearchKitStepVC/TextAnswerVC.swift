@@ -87,8 +87,6 @@ class TextAnswerVC: ORKStepViewController {
         let answerTextViewHeight = CGFloat(200)
         var questionViewHeight = CGFloat(0)
 
-
-
         if let step = self.step as? ORKQuestionStep,
            let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName(),
            let question = step.question{
@@ -96,23 +94,6 @@ class TextAnswerVC: ORKStepViewController {
             questionViewHeight += "\n\n\n\(surveyName)".height(withConstrainedWidth: self.view.bounds.width, font: questionView.headerLabel.font)
             questionViewHeight += "\n\(question)".height(withConstrainedWidth: self.view.bounds.width, font: UIFont(name: AppFontName.regular, size: 24.0) ?? .init())
         }
-
-//        if let step = self.step as? ORKQuestionStep {
-//            if let title = step.title {
-//                questionViewHeight += title.height(withConstrainedWidth: self.view.bounds.width - 40, font: questionView.headerLabel.font)
-//            }
-////            let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-////            questionViewHeight += questionSubheader.height(withConstrainedWidth: self.view.bounds.width - 40 ,
-////                                                           font: questionView.subHeaderLabel.font)
-//            questionViewHeight += step.question!.height(withConstrainedWidth: self.view.bounds.width - 40,
-//                                                        font: questionView.questionLabel.font)
-//            if let extraInfo = step.text {
-//                questionViewHeight += extraInfo.height(withConstrainedWidth: self.view.bounds.width - 40,
-//                                                       font: questionView.extraInfoLabel.font)
-//            }
-//            // INSETS
-//            questionViewHeight += 30.0
-//        }
         
         if let step = self.step as? ORKFormStep {
             let questionCell = RKCQuestionView()
@@ -145,18 +126,7 @@ class TextAnswerVC: ORKStepViewController {
             
             
             let containerWidth = self.view.bounds.width - 40
-            
             questionViewHeight = attributedoptionData.height(containerWidth: containerWidth) + 30.0
-            
-//                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
-
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
-//                if step.text != nil {
-//                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
-//                }
-            // INSETS
-//                height += 30.0
         }
 
             NSLayoutConstraint.activate([

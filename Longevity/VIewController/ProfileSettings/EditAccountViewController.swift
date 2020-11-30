@@ -259,7 +259,7 @@ class EditAccountViewController: UIViewController {
 
         }
 
-        updateProfile()
+        UserAPI.instance.updateProfile()
         self.dismiss(animated: true, completion: nil)
     }
 }

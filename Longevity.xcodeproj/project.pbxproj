@@ -52,6 +52,9 @@
 		C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */; };
 		C16AD1DC251FA30E007AF0D4 /* BaseProfileSetupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1DB251FA30E007AF0D4 /* BaseProfileSetupViewController.swift */; };
 		C16AD1E1252276FB007AF0D4 /* AppleWatchConnectViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C16AD1E0252276FB007AF0D4 /* AppleWatchConnectViewController.swift */; };
+		C17F08102574BE2700D9955E /* FitbitFetchBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */; };
+		C17F08152574BE7E00D9955E /* FitbitPublishBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */; };
+		C17F08172574C08400D9955E /* FitbitRefreshOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -288,6 +291,9 @@
 		C16AD1D7251E73F3007AF0D4 /* SurveyViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyViewController.swift; sourceTree = "<group>"; };
 		C16AD1DB251FA30E007AF0D4 /* BaseProfileSetupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseProfileSetupViewController.swift; sourceTree = "<group>"; };
 		C16AD1E0252276FB007AF0D4 /* AppleWatchConnectViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleWatchConnectViewController.swift; sourceTree = "<group>"; };
+		C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitFetchBackground.swift; sourceTree = "<group>"; };
+		C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitPublishBackground.swift; sourceTree = "<group>"; };
+		C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitRefreshOperations.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -585,6 +591,9 @@
 				E280BAD62538868600E1ED12 /* ConnectionManager.swift */,
 				E2E5EFD82542A259003ADAEC /* Alert.swift */,
 				E2B40BFE255C590F00CCC644 /* Struct+Extension.swift */,
+				C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */,
+				C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */,
+				C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -740,7 +749,6 @@
 		E274F08F24C9667000969CD8 /* ResearchKitStepVC */ = {
 			isa = PBXGroup;
 			children = (
-				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E274F09024C9671B00969CD8 /* TextChoiceAnswerVC.swift */,
 				E27E294A24F789EC00244CF7 /* TextAnswerVC.swift */,
 				E25D398324E140DE0052B513 /* TextChoiceAnswerViewCell.swift */,
@@ -953,6 +961,7 @@
 		E2ECB8D3247FE3950020A27E /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				E274F08424C57C5A00969CD8 /* Dashboard */,
 				E216EFC524BEEE7A00B57A7F /* Signup */,
 				E28653C324A3958F00403729 /* Login */,
 				E20CD88C2537384800ADADB4 /* ForgotPassword */,
@@ -1192,12 +1201,14 @@
 				C16AD1D8251E73F3007AF0D4 /* SurveyViewController.swift in Sources */,
 				C14ABA4D24E318C500C81580 /* InsightGuageView.swift in Sources */,
 				C16AD1DC251FA30E007AF0D4 /* BaseProfileSetupViewController.swift in Sources */,
+				C17F08102574BE2700D9955E /* FitbitFetchBackground.swift in Sources */,
 				E20CD890253738DA00ADADB4 /* ForgotPasswordOtpVC.swift in Sources */,
 				E252C4A0252C315200B0E34F /* LocationUtil.swift in Sources */,
 				E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */,
 				E274F09824C9BC9100969CD8 /* RKCTextChoiceAnswerView.swift in Sources */,
 				E2B0337524AB32EA00929D39 /* AuthHandlerType.swift in Sources */,
 				E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */,
+				C17F08172574C08400D9955E /* FitbitRefreshOperations.swift in Sources */,
 				C14DBC2425101197004D5180 /* CheckinLogSymptomsCell.swift in Sources */,
 				C1C8220624EB4EAB0074AF11 /* ActivityCard.swift in Sources */,
 				C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */,
@@ -1317,6 +1328,7 @@
 				E258E66624EE247100676056 /* UserProfileAPI.swift in Sources */,
 				E28653C224A3950000403729 /* ClinicalLoginVC.swift in Sources */,
 				C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */,
+				C17F08152574BE7E00D9955E /* FitbitPublishBackground.swift in Sources */,
 				E24826E524E5326D0083EFAC /* CompletionStepVC.swift in Sources */,
 				C12F09F124FE56E200623CC3 /* DashboardCollectionEmptyCell.swift in Sources */,
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
@@ -1520,13 +1532,13 @@
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 60;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
@@ -1544,13 +1556,13 @@
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 60;
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

@@ -10,11 +10,6 @@ import UIKit
 import ResearchKit
 
 class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate {
-
-    func reloadSurveys() {
-
-    }
-
     
     var isFirstTask: Bool = false
     
@@ -30,9 +25,6 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-//        self.navigationBar.backgroundColor = .white
-//        self.navigationBar.barTintColor = .blue
         if self.isFirstTask {
             self.navigationItem.backBarButtonItem = nil
             self.navigationItem.hidesBackButton = true
@@ -75,7 +67,8 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             print("unknown reason")
         }
         taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-        getSurveys{ (_) in
+        
+        SurveysAPI.instance.getSurveys { (_) in
             DispatchQueue.main.async {
                 self.removeSpinner()
                 taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
@@ -86,8 +79,6 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
             }
         }
-
-
     }
     
     func getSurveyList() {
@@ -105,7 +96,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 self.removeSpinner()
             }
         }
-        getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,

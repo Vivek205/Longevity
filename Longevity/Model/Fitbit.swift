@@ -198,8 +198,6 @@ struct IdentityManager: Codable {
 struct IdentityManagerDefault: Codable {
 }
 
-
-
 func generateCodeVerifier() -> String {
     var buffer = [UInt8](repeating: 0, count: 32)
     _ = SecRandomCopyBytes(kSecRandomDefault, buffer.count, &buffer)
@@ -326,43 +324,13 @@ class FitbitModel: AuthHandlerType {
                     let userId = jsonData["user_id"] as! String
 
                     self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
-                    self.publishData(accessToken: accessToken, userId: userId)
+                    FitbitAPI.instance.publishData(accessToken: accessToken, userId: userId)
                 }
             } catch {
                 print("fitbit token error", error)
             }
         }
         dataTask.resume()
-    }
-
-    func publishData(accessToken: String, userId: String) {
-        func onGettingCredentials(_ credentials: Credentials){
-            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-                   let body = JSON(["access_token":accessToken, "user_id":userId])
-                   var bodyData:Data = Data()
-                   do {
-                       bodyData = try body.rawData()
-                   } catch  {
-                       print(error)
-                   }
-                   let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
-                           _ = Amplify.API.post(request: request, listener: { (result) in
-                       switch result{
-                       case .success(let data):
-                           let responseString = String(data: data, encoding: .utf8)
-                           Logger.log("Fitbit data published")
-                       case .failure(let apiError):
-                           print(" publish data error \(apiError)")
-                           Logger.log("Fitbit publish failure \(apiError)")
-                       }
-                   })
-        }
-
-        func onFailureCredentials(_ error: Error?) {
-              print("publishData failed to fetch credentials \(error)")
-          }
-
-        _ = getCredentials(completion: onGettingCredentials(_:), onFailure: onFailureCredentials(_:))
     }
 
     func saveToken(accessToken: String, refreshToken: String) {
@@ -379,7 +347,7 @@ class FitbitModel: AuthHandlerType {
 
     func refreshTheToken() {
         guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.FitbitRefreshToken).readItem() else { return }
-//        let refreshToken = String(data: refreshTokenData, encoding: .utf8)
+
 
         let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
                var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
@@ -435,443 +403,40 @@ class FitbitModel: AuthHandlerType {
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
         urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-//        urlRequest.httpBody = formValue.data(using: .utf8)
 
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response,_   in
             print("data", String(data:data!, encoding: .utf8))
-//            print("response", String(data:response!, encoding: .utf8))
             guard let httpResponse = response as? HTTPURLResponse,
                 httpResponse.statusCode == 200 else {
                 print("error")
                 return }
             print("token revoked")
-//            do {
-//
-//                if let jsonData: [String:Any] =
-//                    try JSONSerialization.jsonObject(with: data!, options: []) as? [String:Any] {
-//                    let accessToken = jsonData["access_token"] as! String
-//                    let refreshToken = jsonData["refresh_token"] as! String
-//                    let userId = jsonData["user_id"] as! String
-//
-//                    self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
-//                    self.publishData(accessToken: accessToken, userId: userId)
-//                }
-//            } catch {
-//                print("fitbit token error", error)
-//            }
         }
         dataTask.resume()
     }
 }
 
-extension FitbitModel {
-//    func receivedtoken() {
-//        do {
-//            if let jsonData: [String:Any] =
-//                try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] {
-//                let accessToken = jsonData["access_token"] as! String
-//                let refreshToken = jsonData["refresh_token"] as! String
-//                let userId = jsonData["user_id"] as! String
-//                Logger.log("fitbit token refreshed")
-//                self.saveToken(accessToken: accessToken, refreshToken: refreshToken)
-//                self.publishData(accessToken: accessToken, userId: userId)
-//            }
-//        } catch {}
-//    }
-}
-
-protocol BackgroundSessionDelegate {
-    func receivedtoken(refreshToken: String?, accessToken: String?, userID: String?)
-
-}
-
-class FitbitFetchBackground: NSObject {
-    static let shared = FitbitFetchBackground()
-
-    static let identifier = "com.rejuve.fitbitrefresh"
-
-    var delegate: BackgroundSessionDelegate?
-
-    var receivedData: Data?
+class FitbitAPI: BaseAuthAPI {
     
-    private var session: URLSession!
-
-    #if !os(macOS)
-    var savedCompletionHandler: (() -> Void)?
-    #endif
-
-    private override init() {
-        super.init()
-
-        let configuration = URLSessionConfiguration.background(withIdentifier: FitbitFetchBackground.identifier)
-        if #available(iOS 13.0, *) {
-            configuration.allowsConstrainedNetworkAccess = true
-        }
-        configuration.allowsCellularAccess = true
-        configuration.isDiscretionary = true
-        configuration.sessionSendsLaunchEvents = true
-        session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }
-
-    func start(refreshToken: String) -> URLSessionDownloadTask {
-        let encodedBasicAuth = base64StringEncode("\(Constants.clientId):\(Constants.clientSecret)")
-        var urlComponents = URLComponents(url: Constants.tokenUrl!, resolvingAgainstBaseURL: false)
-        urlComponents?.queryItems = [
-            URLQueryItem(name: "grant_type", value: "refresh_token"),
-            URLQueryItem(name: "refresh_token", value:refreshToken)
-        ]
-        
-        var urlRequest = URLRequest(url: (urlComponents?.url)!)
-        urlRequest.httpMethod = "POST"
-        urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
-        
-        let downloadTask = session.downloadTask(with: urlRequest)
-        downloadTask.resume()
-        return downloadTask
-    }
-}
-
-extension FitbitFetchBackground: URLSessionDelegate {
-    #if !os(macOS)
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            self.savedCompletionHandler?()
-            self.savedCompletionHandler = nil
-        }
-    }
-    #endif
-}
-
-extension FitbitFetchBackground: URLSessionTaskDelegate {
-
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive response: URLResponse,
-                    completionHandler: @escaping (URLSession.ResponseDisposition) -> Void) {
-        guard let response = response as? HTTPURLResponse,
-            (200...299).contains(response.statusCode),
-            let mimeType = response.mimeType,
-            mimeType == "text/html" else {
-            completionHandler(.cancel)
-            return
-        }
-        completionHandler(.allow)
-    }
-
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        //self.delegate?.receivedtoken(data: data)
-        self.receivedData?.append(data)
-    }
-
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            print("\(error.localizedDescription)")
-        } else if let receivedData = self.receivedData,
-                  let string = String(data: receivedData, encoding: .utf8) {
-            print(string)
-        }
-    }
-}
-
-extension FitbitFetchBackground: URLSessionDownloadDelegate {
-    func urlSession(_ session: URLSession, downloadTask: URLSessionDownloadTask, didFinishDownloadingTo location: URL) {
-        do {
-            let data = try Data(contentsOf: location)
-            guard let jsonData: [String:Any] = try JSONSerialization.jsonObject(with: data, options: []) as? [String:Any] else {
-                self.delegate?.receivedtoken(refreshToken: nil, accessToken: nil, userID: nil)
-                return
+    static var instance = FitbitAPI()
+    
+    func publishData(accessToken: String, userId: String) {
+                   let body = JSON(["access_token":accessToken, "user_id":userId])
+                   var bodyData:Data = Data()
+                   do {
+                       bodyData = try body.rawData()
+                   } catch  {
+                       print(error)
+                   }
+                   let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/application/FITBIT/synchronize" , headers: headers, body: bodyData)
+        self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+            if let error = error {
+                print(" publish data error \(error)")
+                Logger.log("Fitbit publish failure \(error)")
             }
-            guard let accessToken = jsonData["access_token"] as? String,
-                  let refreshToken = jsonData["refresh_token"] as? String,
-                  let userId = jsonData["user_id"] as? String else {
-                self.delegate?.receivedtoken(refreshToken: nil, accessToken: nil, userID: nil)
-                return
-            }
-            
-            try? KeyChain(service: KeychainConfiguration.serviceName,
-                          account: KeychainKeys.FitbitAccessToken).saveItem(accessToken)
-            try? KeyChain(service: KeychainConfiguration.serviceName,
-                          account: KeychainKeys.FitbitRefreshToken).saveItem(refreshToken)
-            self.delegate?.receivedtoken(refreshToken: refreshToken, accessToken: accessToken, userID: userId)
-            Logger.log("fitbit token saved in keychain")
-        } catch {
-            print("\(error.localizedDescription)")
-            self.delegate?.receivedtoken(refreshToken: nil, accessToken: nil, userID: nil)
-        }
-    }
-}
-
-protocol FitbitPublishBackgroundDelegate {
-    func published(success: Bool)
-}
-
-
-class FitbitPublishBackground: NSObject {
-    static let shared = FitbitPublishBackground()
-
-    static let identifier = "com.rejuve.fitbitpublish"
-
-    var delegate: FitbitPublishBackgroundDelegate?
-
-    var receivedData: Data?
-    
-    private var session: URLSession!
-    
-    var uploadTask: URLSessionUploadTask?
-
-    #if !os(macOS)
-    var publishedCompletionHandler: (() -> Void)?
-    #endif
-
-    private override init() {
-        super.init()
-
-        let configuration = URLSessionConfiguration.background(withIdentifier: FitbitPublishBackground.identifier)
-        if #available(iOS 13.0, *) {
-            configuration.allowsConstrainedNetworkAccess = true
-        }
-        configuration.allowsCellularAccess = true
-        configuration.isDiscretionary = true
-        configuration.sessionSendsLaunchEvents = true
-        session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
-    }
-
-    func start(accessToken: String, userID: String, userToken: String) -> URLSessionUploadTask? {
-        
-        guard let path = Bundle.main.path(forResource: "amplifyconfiguration", ofType: "json"),
-              let fileURL = URL(fileURLWithPath: path) as? URL,
-              let fileData = try? String(contentsOf: fileURL).data(using: .utf8) else {
-            self.delegate?.published(success: false)
-            return nil
-        }
-        let decoder = JSONDecoder()
-        decoder.keyDecodingStrategy = .convertFromSnakeCase
-        guard let configData = try? decoder.decode(AWSAmplifyConfig.self, from: fileData) as? AWSAmplifyConfig,
-              let apiURL = URL(string: "\(configData.api.plugins.awsAPIPlugin.rejuveDevelopmentAPI.endpoint)/health/application/FITBIT/synchronize") else {
-            self.delegate?.published(success: false)
-            return nil
-        }
-        
-        var urlRequest = URLRequest(url: apiURL)
-        urlRequest.httpMethod = "POST"
-        urlRequest.allHTTPHeaderFields = ["token":userToken, "login_type":LoginType.PERSONAL]
-        
-        do {
-            urlRequest.httpBody = try JSONSerialization.data(withJSONObject: ["access_token": accessToken, "user_id": userID], options: [])
-        } catch let error {
-            print(error.localizedDescription)
-            self.delegate?.published(success: false)
-            return nil
-        }
-        
-        let uploadTask = session.uploadTask(withStreamedRequest: urlRequest)
-        uploadTask.resume()
-        return uploadTask
-    }
-}
-
-extension FitbitPublishBackground: URLSessionDelegate {
-    #if !os(macOS)
-    func urlSessionDidFinishEvents(forBackgroundURLSession session: URLSession) {
-        DispatchQueue.main.async {
-            self.publishedCompletionHandler?()
-            self.publishedCompletionHandler = nil
-        }
-    }
-    #endif
-}
-
-extension FitbitPublishBackground: URLSessionTaskDelegate {
-    func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        self.delegate?.published(success: true)
-        print("uploaded")
-    }
-
-    func urlSession(_ session: URLSession, task: URLSessionTask, didCompleteWithError error: Error?) {
-        if let error = error {
-            print("\(error.localizedDescription)")
-            self.delegate?.published(success: false)
-        } else {
-            self.delegate?.published(success: true)
-        }
-    }
-}
-
-class FetchFitbitTokenOperation: Operation, BackgroundSessionDelegate {
-    
-    var refreshToken: String?
-    var accessToken: String?
-    var userID: String?
-    
-    var downLoadTask : URLSessionDownloadTask?
-    
-    override var isExecuting: Bool {
-        return downloading
-    }
-    
-    override var isFinished: Bool {
-        return refreshToken != nil && accessToken != nil
-    }
-    
-    override func cancel() {
-        super.cancel()
-        self.downLoadTask?.cancel()
-    }
-    
-    private var downloading = false
-    
-    override init() {
-        super.init()
-        
-        self.name = "FetchFitbitToken"
-    }
-    
-    func finish() {
-        guard downloading else { return }
-        
-        willChangeValue(forKey: #keyPath(isExecuting))
-        willChangeValue(forKey: #keyPath(isFinished))
-        
-        downloading = false
-        
-        didChangeValue(forKey: #keyPath(isFinished))
-        didChangeValue(forKey: #keyPath(isExecuting))
-    }
-    
-    override func start() {
-        willChangeValue(forKey: #keyPath(isExecuting))
-        downloading = true
-        didChangeValue(forKey: #keyPath(isExecuting))
-        
-        guard let refreshToken = try? KeyChain(service: KeychainConfiguration.serviceName,
-                                               account: KeychainKeys.FitbitRefreshToken).readItem() else {
-            self.cancel()
-            return
-        }
-        
-        self.downLoadTask = FitbitFetchBackground.shared.start(refreshToken: refreshToken)
-        FitbitFetchBackground.shared.delegate = self
-    }
-    
-    func receivedtoken(refreshToken: String?, accessToken: String?, userID: String?) {
-        if accessToken == nil {
-            self.cancel()
-            return
-        }
-        self.refreshToken = refreshToken
-        self.accessToken = accessToken
-        self.userID = userID
-        self.finish()
-    }
-}
-
-class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
-    
-    override init() {
-        super.init()
-        
-        self.name = "PublishFitbitToken"
-    }
-    
-    var refreshToken: String?
-    var accessToken: String?
-    var userID: String?
-   
-    var succeeded: Bool = false
-    
-    var uploadTask: URLSessionUploadTask?
-    
-    override var isAsynchronous: Bool {
-        return true
-    }
-    
-    override var isExecuting: Bool {
-        return downloading
-    }
-    
-    override var isFinished: Bool {
-        return self.succeeded
-    }
-    
-    override func cancel() {
-        super.cancel()
-        self.uploadTask?.cancel()
-    }
-    
-    private var downloading = false
-    
-    func finish() {
-        guard downloading else { return }
-        
-        willChangeValue(forKey: #keyPath(isExecuting))
-        willChangeValue(forKey: #keyPath(isFinished))
-        
-        downloading = false
-        
-        didChangeValue(forKey: #keyPath(isFinished))
-        didChangeValue(forKey: #keyPath(isExecuting))
-    }
-    
-    override func start() {
-        willChangeValue(forKey: #keyPath(isExecuting))
-        downloading = true
-        didChangeValue(forKey: #keyPath(isExecuting))
-        
-        guard let accessToken = self.accessToken, let userID = self.userID else {
-            self.cancel()
-            return
-        }
-        
-        _ = Amplify.Auth.fetchAuthSession { [weak self] result in
-            do {
-                let session = try result.get()
-
-                var credentials = Credentials()
-                
-                if let identityProvider = session as? AuthCognitoIdentityProvider {
-                    credentials.usersub = try identityProvider.getUserSub().get()
-                    credentials.identityId = try identityProvider.getIdentityId().get()
-                }
-
-                // Get aws credentials
-                if let awsCredentialsProvider = session as? AuthAWSCredentialsProvider {
-                    let awsCredentials = try awsCredentialsProvider.getAWSCredentials().get()
-                    credentials.accessKey = awsCredentials.accessKey
-                }
-
-                // Get cognito user pool token
-                if let cognitoTokenProvider = session as? AuthCognitoTokensProvider {
-                    let tokens = try cognitoTokenProvider.getCognitoTokens().get()
-                    credentials.idToken = tokens.idToken
-
-                    let secondsOffset50Mins = Double(50 * 60)
-                    let date50MinFuture = Date().addingTimeInterval(secondsOffset50Mins)
-                    let dateFormatter = DateFormatter()
-                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss Z"
-                    let dateString50MinFuture = dateFormatter.string(from: date50MinFuture)
-
-                    try? KeyChain(service: KeychainConfiguration.serviceName,
-                                  account: KeychainKeys.idToken).saveItem(tokens.idToken)
-                    try? KeyChain(service: KeychainConfiguration.serviceName,
-                                  account: KeychainKeys.idTokenExp).saveItem(dateString50MinFuture)
-                    
-                    self?.uploadTask = FitbitPublishBackground.shared.start(accessToken: accessToken,
-                                                                            userID: userID,
-                                                                            userToken: credentials.idToken)
-                    FitbitPublishBackground.shared.delegate = self
-                }
-            } catch {
-                print("Fetch auth session failed with error - \(error)")
-                self?.cancel()
-            }
-        }
-    }
-    
-    func published(success: Bool) {
-        self.succeeded = success
-        if success {
-            self.finish()
-        } else {
-            self.cancel()
+            guard let data = data else { return }
+            let responseString = String(data: data, encoding: .utf8)
+            Logger.log("Fitbit data published")
         }
     }
 }

@@ -188,7 +188,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
 
     @objc func handleAcceptTerms(_ sender: Any) {
         print("Terms Accepted")
-        acceptTNC(value: true)
+        UserAPI.instance.acceptTNC(value: true)
         performSegue(withIdentifier: "TOSToProfileSetup", sender: self)
     }
 

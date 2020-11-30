@@ -145,50 +145,27 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                         sizeForItemAt indexPath: IndexPath) -> CGSize {
         var height = CGFloat(100.0)
         let width = collectionView.bounds.width - 30.0
-//        if indexPath.item == 0 {
-//            if let step = self.step as? ORKQuestionStep {
-//                let questionCell = RKCQuestionView()
-//                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
-//
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
-//                height += step.question!.height(withConstrainedWidth: width, font: questionCell.questionLabel.font)
-//                if step.text != nil {
-//                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
-//                }
-//                // INSETS
-//                height += 60.0
-//            }
-//            return CGSize(width: width, height: height)
-//        }
 
         if let step = self.step as? ORKQuestionStep {
             if let answerFormat = step.answerFormat as? ORKTextChoiceAnswerFormat {
                 let choice = answerFormat.textChoices[indexPath.item]
                 
-                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18), .foregroundColor: UIColor.black]
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 18),
+                                                                 .foregroundColor: UIColor.black]
                 let attributedoptionData = NSMutableAttributedString(string: choice.text, attributes: attributes)
 
-                if choice.detailText != nil {
-                    let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0), .foregroundColor: UIColor(hexString: "#666666")]
-                    let extraInfoAttributedText = NSMutableAttributedString(string: "\n\n\(choice.detailText ?? "")", attributes: extraInfoAttributes)
+                if let extraInfoText = choice.detailText, !extraInfoText.isEmpty {
+                    let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0),
+                                                                              .foregroundColor: UIColor(hexString: "#666666")]
+                    let extraInfoAttributedText = NSMutableAttributedString(string: "\n\n\(extraInfoText)",
+                                                                            attributes: extraInfoAttributes)
                     attributedoptionData.append(extraInfoAttributedText)
                 }
                 
-                attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
-                
-                
-                
-                
-//                let answerCell = TextChoiceAnswerViewCell()
-//                height = choice.text.height(withConstrainedWidth: width - 80.0, font: answerCell.titleLabel.font)
-//                if choice.detailText != nil {
-//                    height += choice.detailText!
-//                        .height(withConstrainedWidth: width - 80.0, font: answerCell.extraInfoLabel.font)
-//                }
+                attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4),
+                                                  range: NSRange(location: 0, length: attributedoptionData.length))
 
                 height = attributedoptionData.height(containerWidth: width - 64.0) + 30.0
-//                height += 30
             }
         }
 
@@ -197,12 +174,12 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? RKCQuestionView else {
+        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self,
+                                                                   viewForSupplementaryElementOfKind: kind, at: indexPath) as? RKCQuestionView else {
             preconditionFailure("Invalid cell type")
         }
         
         if let step = self.step as? ORKQuestionStep {
-
             headerView.createLayout(header: step.title ?? "", question: step.question!, extraInfo: step.text)
         }
         

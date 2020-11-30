@@ -196,10 +196,6 @@ class OnboardingVC: UIViewController {
     func getCurrentUser() {
         func onSuccess(userSignedIn: Bool, idToken: String) {
             if userSignedIn {
-                DispatchQueue.main.async {
-                    //                    self.navigateToTheNextScreen()
-//                    retrieveARN()
-                }
             }
         }
 
