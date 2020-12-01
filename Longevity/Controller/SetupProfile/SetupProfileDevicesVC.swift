@@ -116,16 +116,8 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let height = view.frame.size.height
         let width = view.frame.size.width
-//        switch indexPath.row {
-//        case 0:
-//            return CGSize(width: width - 30, height: CGFloat(270))
-//        case 1:
-//            return CGSize(width: width - 30, height: CGFloat(150))
-//        default:
             return CGSize(width: width - 30, height: CGFloat(80))
-//        }
     }
 }
 

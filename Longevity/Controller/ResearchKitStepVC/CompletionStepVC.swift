@@ -62,6 +62,7 @@ class CompletionStepVC: ORKStepViewController {
                     SurveyTaskUtility.shared.surveyInProgress.value != .unknown
             }
         }
+        SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         self.completeSurvey()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
