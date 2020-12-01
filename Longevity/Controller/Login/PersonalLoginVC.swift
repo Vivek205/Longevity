@@ -8,6 +8,8 @@
 
 import UIKit
 import Amplify
+import AWSPluginsCore
+import SwiftyJSON
 
 class PersonalLoginVC: UIViewController {
     var hideBackButton:Bool? {
@@ -77,30 +79,17 @@ class PersonalLoginVC: UIViewController {
         button.layer.shadowRadius = 1.0
         button.layer.shadowOpacity = 1.0
         button.layer.masksToBounds = false
-        button.layer.shadowPath = UIBezierPath(roundedRect: button.bounds, cornerRadius: button.layer.cornerRadius).cgPath
+        button.layer.shadowPath = UIBezierPath(roundedRect: button.bounds,
+                                               cornerRadius: button.layer.cornerRadius).cgPath
     }
 
     // MARK: Actions
     @IBAction func handleLogin(_ sender: Any) {
-
-
         self.closeKeyboard()
         if let email = self.formEmail.text?.trimmingCharacters(in: .whitespacesAndNewlines),
            let password = self.formPassword.text?.trimmingCharacters(in: .whitespacesAndNewlines) {
 
-            func validate() -> Bool {
-                if email.isEmpty || !(email.isValidEmail){
-                    Alert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
-                    return false
-                }
-                if password.isEmpty{
-                    Alert(title: "Error - Invalid Password", message: "Password cannot be empty.")
-                    return false
-                }
-                return true
-            }
-
-            guard validate() else {
+            guard validate(email: email, password: password) else {
                 return
             }
 
@@ -113,29 +102,9 @@ class PersonalLoginVC: UIViewController {
                     print("success data", success.nextStep)
                     if case let .confirmSignUp(deliveryDetails) = success.nextStep {
                         print("Delivery details \(String(describing: deliveryDetails))")
-                        Amplify.Auth.resendSignUpCode(for: email) { (result) in
-                            switch result {
-                            case .success(let success):
-                                DispatchQueue.main.async {
-                                    
-                                    self?.removeSpinner()
-                                    let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-                                    guard let signupConfirmVC = storyboard.instantiateViewController(withIdentifier: "SignupConfirmVC") as? SignupConfirmVC else {return}
-                                    signupConfirmVC.userEmail = email
-                                    self?.navigationController?.pushViewController(signupConfirmVC, animated: true)
-                                }
-                                print("success", success)
-                                return
-                            case .failure(let error):
-                                DispatchQueue.main.async {
-                                    self?.removeSpinner()
-                                }
-                                return
-                            }
-                        }
+                        self?.sendSignUpCode(email: email)
                     } else {
-                        self?.doLogin()
-                        return
+                        self?.fetchUserToken()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -146,6 +115,41 @@ class PersonalLoginVC: UIViewController {
             }
         }
     }
+    
+    fileprivate func sendSignUpCode(email: String) {
+        Amplify.Auth.resendSignUpCode(for: email) { (result) in
+            switch result {
+            case .success(let success):
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+                    guard let signupConfirmVC = storyboard.instantiateViewController(withIdentifier: "SignupConfirmVC") as? SignupConfirmVC else {return}
+                    signupConfirmVC.userEmail = email
+                    self.navigationController?.pushViewController(signupConfirmVC, animated: true)
+                }
+                print("success", success)
+                return
+            case .failure(let error):
+                print("Login failed, ", error.localizedDescription)
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                }
+                return
+            }
+        }
+    }
+    
+    fileprivate func validate(email: String, password: String) -> Bool {
+        if email.isEmpty || !(email.isValidEmail){
+            Alert(title: "Error - Invalid Email", message: "Please provide a valid email address.")
+            return false
+        }
+        if password.isEmpty{
+            Alert(title: "Error - Invalid Password", message: "Password cannot be empty.")
+            return false
+        }
+        return true
+    }
 
     @IBAction func handleAccountTypeChange(_ sender: UITapGestureRecognizer) {
         self.closeKeyboard()
@@ -154,72 +158,19 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        func onSuccess() {
-            self.doLogin()
-        }
-
-        func onFailure(error: AuthError) {
-            print("Sign in failed \(error)")
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Login Failed" , message: error.errorDescription)
-            }
-        }
-
-        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(let session):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
+        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        func onSuccess() {
-            self.doLogin()
-        }
-
-        func onFailure(error: AuthError) {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Login Failed" , message: error.errorDescription)
-            }
-        }
-        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(_):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
-
+        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @IBAction func handleSigninWithApple(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        func onSuccess() {
-            self.doLogin()
-        }
-        func onFailure(error: AuthError) {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Login Failed" , message: error.errorDescription)
-            }
-        }
-        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(_):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
+        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){
@@ -233,12 +184,41 @@ class PersonalLoginVC: UIViewController {
         self.navigationController?.pushViewController(destinationVC, animated: true)
     }
 
+    func authHandler(result :
+                        AmplifyOperation<AuthWebUISignInRequest, AuthSignInResult, AuthError>.OperationResult) -> Void {
+        switch result {
+        case .success( _ ):
+              DispatchQueue.main.async {
+                self.removeSpinner()
+              }
+            self.fetchUserToken()
+        case .failure(let error):
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                Alert(title: "Login Failed" , message: error.errorDescription)
+            }
+        }
+    }
     
-    fileprivate func doLogin() {
-        DispatchQueue.main.async {
-            self.removeSpinner()
-            let appDelegate = UIApplication.shared.delegate as! AppDelegate
-            appDelegate.setRootViewController()
+    fileprivate func fetchUserToken() {
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            switch result {
+            case .success(let session):
+                if session.isSignedIn {
+                    guard let session = try? result.get() as? AuthCognitoTokensProvider,
+                          let tokens = try? session.getCognitoTokens().get() else {
+                        return
+                    }
+                    
+                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                    DispatchQueue.main.async {
+                        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                        appDelegate.setRootViewController()
+                    }
+                }
+            case .failure(let error):
+                print(error.localizedDescription)
+            }
         }
     }
 }

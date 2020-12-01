@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "rejuveNamedLogo.png",
+      "filename" : "rejuveIconWBg.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "rejuveNamedLogo@2x.png",
+      "filename" : "rejuveIconWBg@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "rejuveNamedLogo@3x.png",
+      "filename" : "rejuveIconWBg@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }

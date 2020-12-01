@@ -23,7 +23,7 @@ class TitleView: UIView {
     
     lazy var titleImageView: UIImageView = {
         let titleImage = UIImageView()
-        titleImage.image = UIImage(named: "home-title")
+        titleImage.image = UIImage(named: "rejuveIconWBg")
         titleImage.contentMode = .scaleAspectFit
         titleImage.translatesAutoresizingMaskIntoConstraints = false
         return titleImage
@@ -47,30 +47,40 @@ class TitleView: UIView {
         let imageBottom : CGFloat = viewTab == .home ? -10.0 : 0.0
         
         self.addSubview(bgImageView)
+        self.addSubview(titleImageView)
+        self.addSubview(titleLabel)
+        
+        let centerConstant: CGFloat = viewTab == .home ? 17.0 : 0.0
+        
         NSLayoutConstraint.activate([
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: imageBottom)
+            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: imageBottom),
+            titleImageView.heightAnchor.constraint(equalToConstant: 34.0),
+            titleImageView.widthAnchor.constraint(equalTo: titleImageView.heightAnchor),
+            titleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),
+            titleImageView.trailingAnchor.constraint(equalTo: titleLabel.leadingAnchor, constant: -6.0),
+            titleLabel.centerXAnchor.constraint(equalTo: centerXAnchor, constant: centerConstant),
+            titleLabel.centerYAnchor.constraint(equalTo: titleImageView.centerYAnchor)
         ])
         
         if viewTab == .home {
-            self.addSubview(titleImageView)
-            NSLayoutConstraint.activate([
-                titleImageView.heightAnchor.constraint(equalToConstant: 34.0),
-                titleImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                titleImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                titleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
-            ])
+            let covid = "COVID"
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 24.0)!,.foregroundColor: UIColor.white]
+            let attributedTitle = NSMutableAttributedString(string: covid, attributes: attributes)
+            
+            let signals = " SIGNALS"
+            let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 24.0)!,.foregroundColor: UIColor.white]
+            let attributedTitle2 = NSMutableAttributedString(string: signals, attributes: attributes2)
+            
+            attributedTitle.append(attributedTitle2)
+            self.titleLabel.attributedText = attributedTitle
         } else {
-            self.addSubview(titleLabel)
             self.titleLabel.text = self.viewTab?.tabViewTitle
-            NSLayoutConstraint.activate([
-                titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-                titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-                titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
-            ])
         }
+        
+        self.titleImageView.isHidden = viewTab != .home
     }
     
     required init?(coder: NSCoder) {
