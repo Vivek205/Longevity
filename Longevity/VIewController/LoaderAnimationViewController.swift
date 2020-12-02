@@ -92,43 +92,9 @@ class LoaderAnimationViewController: UIViewController {
 
         checkIfAppUpdated { [weak self] signedOut in
             if !signedOut {
-                self?.fetchCurrentSession()
-            }
-        }
-    }
-
-    func fetchCurrentSession() {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                if session.isSignedIn {
-                    guard let session = try? result.get() as? AuthCognitoTokensProvider,
-                          let tokens = try? session.getCognitoTokens().get() else {
-                        return
-                    }
-
-                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
-                                        
-                    DispatchQueue.main.async {
-                        let tabbarViewController = LNTabBarViewController()
-                        tabbarViewController.modalPresentationStyle = .fullScreen
-                        appDelegate.window?.rootViewController = tabbarViewController
-                    }
-                } else {
-                    DispatchQueue.main.async {
-                        let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-                        let onBoardingViewController = storyboard.instantiateInitialViewController()
-                        appDelegate.window?.rootViewController = onBoardingViewController
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
                 DispatchQueue.main.async {
-                    let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-                    let onBoardingViewController = storyboard.instantiateInitialViewController()
-                    appDelegate.window?.rootViewController = onBoardingViewController
+                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+                    appDelegate.setRootViewController()
                 }
             }
         }

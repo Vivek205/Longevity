@@ -150,7 +150,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if surveyDetails?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
             }
-            
             taskCell.surveyDetails = surveyDetails
             return taskCell
         }
@@ -216,16 +215,24 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
                 return
             }
         }
-
+        
         if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
            let surveyId = taskCell.surveyDetails?.surveyId
         {
-            self.showSurvey(surveyId)
-            return
+            guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
+            if surveyDetails.lastSurveyStatus == .pending {
+                return
+            } else if SurveyTaskUtility.shared.isTaskCompletedToday(task: surveyDetails) {
+                let checkInResultViewController = CheckInResultViewController()
+                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                            style: .overCurrentContext)
+                return
+            } else {
+                self.showSurvey(surveyId)
+                return
+            }
         }
     }
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let topGap = 44.0 + scrollView.contentOffset.y

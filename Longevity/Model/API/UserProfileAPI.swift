@@ -74,37 +74,6 @@ class UserProfileAPI: BaseAuthAPI {
     static var instance = UserProfileAPI()
     
     func getProfile(completion: @escaping ((UserProfile?)-> Void)) {
-//        self.getCredentials(completion: { (credentials) in
-//            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-//            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
-//            _ = Amplify.API.get(request: request, listener: { (result) in
-//                switch result {
-//                case .success(let data):
-//                        do {
-//                            let jsonDecoder = JSONDecoder()
-//                            print("user profile string", String(data: data, encoding: .utf8))
-//                            let userProfileResponse = try jsonDecoder.decode(UserProfileResponse.self, from: data)
-//                            guard let email = userProfileResponse.data.email else {completion(nil);return}
-//                            var userProfile = UserProfile(name: "User", email: email, phone: "")
-//                            if let name = userProfileResponse.data.name, !name.isEmpty {
-//                                userProfile.name = name
-//                            }
-//                            if let phone = userProfileResponse.data.phone, !phone.isEmpty {
-//                                userProfile.phone = phone
-//                            }
-//                            completion(userProfile)
-//                        } catch {
-//                            print("json decode error", error)
-//                        }
-//                case .failure(let apiError):
-//                    print("getProfile failed \(apiError.localizedDescription)")
-//                    completion(nil)
-//                }
-//            })
-//        }) { (error) in
-//            print("getProfile failed \(error.localizedDescription)")
-//            completion(nil)
-//        }
         
         let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/profile" , headers: headers)
         
@@ -171,83 +140,41 @@ class UserProfileAPI: BaseAuthAPI {
                 print("json parse error", error)
             }
         }
-        
-        
-//        self.getCredentials(completion: { (credentials) in
-//            let headers = ["token":credentials.idToken, "login_type":LoginType.PERSONAL]
-//            let request = RESTRequest(apiName:"rejuveDevelopmentAPI", path: "/health/profile" , headers: headers)
-//            _ = Amplify.API.get(request: request, listener: { (result) in
-//                switch result {
-//                case .success(let data):
-//                    do {
-////                        let jsonData = try JSON(data: data)
-//
-//                        let jsonDecoder = JSONDecoder()
-//                        jsonDecoder.keyDecodingStrategy = .convertFromSnakeCase
-//                        let decodedData = try jsonDecoder.decode(HealthProfileResponse.self, from: data)
-//                        print(decodedData)
-//
-//                        if let preExistingConditions = decodedData.data.preExistingConditions {
-//                            preExistingConditions.forEach({ (condition) in
-//                                if condition["type"] == "OTHER" {
-//                                    preExistingMedicalCondtionOtherText = condition["condition"]
-//                                    return
-//                                }
-//                                guard let optionIndex = preExistingMedicalConditionData.firstIndex(where: { (element) -> Bool in
-//                                    return element.id.rawValue == condition["condition"]
-//                                }) else { return }
-//                                preExistingMedicalConditionData[optionIndex].selected = true
-//                            })
-//                        }
-//
-//
-//                        completion(decodedData.data)
-//                    } catch {
-//                        print("json parse error", error)
-//                    }
-//                case .failure(let apiError):
-//                    print("getHealthProfile failed \(apiError)")
-//                }
-//            })
-//        }) { (error) in
-//            print("getProfile failed \(error.localizedDescription)")
-//            completion(nil)
-//        }
     }
     
-    func getUserAttributes(completion: @escaping ((TOCStatus)-> Void)) {
-        let keys = UserDefaultsKeys()
-        _ = Amplify.Auth.fetchUserAttributes() { result in
-            switch result {
-            case .success(let attributes):
-                
-                if !(attributes.contains { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }) {
-                    completion(.notaccepted)
-                    return
-                }
-                
-                let tncattribute = attributes.first { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }
-                
-                guard let data = tncattribute?.value.data(using: .utf8) as? Data else {
-                    completion(.unknown)
-                    return
-                }
-                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
-                    completion(.unknown)
-                    return
-                }
-
-                if json["isAccepted"] as! NSNumber == 1 {
-                    completion(.accepted)
-                } else {
-                    completion(.notaccepted)
-                }
-            case .failure(let error):
-                print("Fetching user attributes failed with error \(error)")
-                completion(.unknown)
-            }
-        }
-    }
+//    func getUserAttributes(completion: @escaping ((TOCStatus)-> Void)) {
+//        let keys = UserDefaultsKeys()
+//        _ = Amplify.Auth.fetchUserAttributes() { result in
+//            switch result {
+//            case .success(let attributes):
+//
+//                if !(attributes.contains { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }) {
+//                    completion(.notaccepted)
+//                    return
+//                }
+//
+//                let tncattribute = attributes.first { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }
+//
+//                guard let data = tncattribute?.value.data(using: .utf8) as? Data else {
+//                    completion(.unknown)
+//                    return
+//                }
+//                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+//                    completion(.unknown)
+//                    return
+//                }
+//
+//                if json["isAccepted"] as! NSNumber == 1 {
+//                    completion(.accepted)
+//                } else {
+//                    completion(.notaccepted)
+//                }
+//            case .failure(let error):
+//                print("Fetching user attributes failed with error \(error)")
+//                completion(.unknown)
+//            }
+//        }
+//    }
     
     func getUserActivities(offset:Int = 0 ,limit:Int = 10 ,completion: @escaping (_ userActivities:UserActivity)-> Void,
                            onFailure: @escaping (_ error: Error)-> Void) {
