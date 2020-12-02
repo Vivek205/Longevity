@@ -223,7 +223,6 @@ final class SurveyTaskUtility: NSObject {
         }
         func onSubmitCompletion() {
             print("survey submitted successfully")
-//            SurveysAPI.instance.getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
             self.clearSurvey()
             AppSyncManager.instance.syncSurveyList()
             completion()
@@ -283,7 +282,7 @@ final class SurveyTaskUtility: NSObject {
         if self.localSavedAnswers[currentSurveyId] == nil {
             return self.localSavedAnswers[currentSurveyId] = [questionIdentifier: answer]
         }
-        self.localSavedAnswers[currentSurveyId]![questionIdentifier] = answer
+        self.localSavedAnswers[currentSurveyId]?[questionIdentifier] = answer
     }
 
     func getCurrentSurveyServerAnswer(questionIdentifier:String) -> String? {

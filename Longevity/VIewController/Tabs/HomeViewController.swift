@@ -203,29 +203,33 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
-            //If Survey is submitted today and is under processing
-            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
+//            //If Survey is submitted today and is under processing
+//            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
+//                return
+//            } else if selectedCell.status == .completedToday { //If survey is completed today
+//                let checkInResultViewController = CheckInResultViewController()
+//                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+//                                                            style: .overCurrentContext)
+//                return
+//            } else if selectedCell.status != .completedToday { //If not submitted today / ever
+                self.showSurvey(surveyId)
+//                return
+//            }
+        }
+//
+        if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
+           let surveyId = taskCell.surveyDetails?.surveyId
+        {
+            let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
+            if surveyDetails?.lastSurveyStatus == .pending {
                 return
-            } else if selectedCell.status == .completedToday { //If survey is completed today
-                let checkInResultViewController = CheckInResultViewController()
-                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                            style: .overCurrentContext)
-                return
-            } else if selectedCell.status != .completedToday { //If not submitted today / ever
+            }
+            else {
                 self.showSurvey(surveyId)
                 return
             }
         }
-
-        if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
-           let surveyId = taskCell.surveyDetails?.surveyId
-        {
-            self.showSurvey(surveyId)
-            return
-        }
     }
-    
-    
     
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
         let topGap = 44.0 + scrollView.contentOffset.y

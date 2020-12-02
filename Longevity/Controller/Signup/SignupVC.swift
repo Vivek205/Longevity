@@ -9,6 +9,7 @@
 import UIKit
 import Amplify
 import AmplifyPlugins
+import AWSPluginsCore
 
 class SignupVC: UIViewController {
 
@@ -121,89 +122,43 @@ class SignupVC: UIViewController {
 
     @objc func handleSigninWithGoogle(_ sender: Any) {
         self.showSpinner()
-        func onSuccess() {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.enterTheApp()
-            }
-        }
-
-        func onFailure(error: AuthError) {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Signup Failed" , message: error.errorDescription)
-            }
-        }
-        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(let session):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
+        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @objc func handleSigninWithFacebook(_ sender: Any) {
         self.showSpinner()
-        func onSuccess() {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.enterTheApp()
-            }
-        }
-
-        func onFailure(error: AuthError) {
-            print("Sign in failed \(error)")
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Signup Failed" , message: error.errorDescription)
-            }
-        }
-
-        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(let session):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
+        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @objc func handleSigninWithApple(_ sender: Any) {
         self.showSpinner()
-        func onSuccess() {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                self.enterTheApp()
-            }
-        }
-
-        func onFailure(error: AuthError) {
-            print("Sign in failed \(error)")
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                Alert(title: "Signup Failed" , message: error.errorDescription)
-            }
-        }
-
-        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!) { result in
-            switch result {
-            case .success(let session):
-                onSuccess()
-            case .failure(let error):
-                onFailure(error: error)
-            }
-        }
+        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!, listener: authHandler)
     }
 
     @objc func redirectToLoginPage() {
         self.performSegue(withIdentifier: "SignupToLogin", sender: self)
     }
+    
+    func authHandler(result :
+                        AmplifyOperation<AuthWebUISignInRequest, AuthSignInResult, AuthError>.OperationResult) -> Void {
+        switch result {
+        case .success( _ ):
+              DispatchQueue.main.async {
+                self.removeSpinner()
+              }
+            self.loginToHome()
+        case .failure(let error):
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                Alert(title: "Login Failed" , message: error.errorDescription)
+            }
+        }
+    }
 
-    func enterTheApp() {
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        appDelegate.setRootViewController()
+    fileprivate func loginToHome() {
+        DispatchQueue.main.async {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.setRootViewController()
+        }
     }
 }

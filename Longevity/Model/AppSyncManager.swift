@@ -82,6 +82,16 @@ class AppSyncManager  {
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
     }
+    
+    func cleardata() {
+        self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
+        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
+        self.appShareLink = DynamicValue("")
+        self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
+        self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
+        self.userInsights = DynamicValue(self.defaultInsights)
+    }
+    
     //User Attributes
     
     func fetchUserProfile() {
@@ -118,7 +128,9 @@ class AppSyncManager  {
     func fetchUserHealthProfile() {
         let userProfileAPI = UserProfileAPI()
         userProfileAPI.getHealthProfile { [weak self] (healthProfile) in
-            self?.healthProfile.value = healthProfile
+            if healthProfile != nil {
+                self?.healthProfile.value = healthProfile
+            }
             self?.checkIsDeviceConnected()
         }
     }
@@ -143,12 +155,12 @@ class AppSyncManager  {
         UserSubscriptionAPI.instance.getUserSubscriptions()
     }
     
-    func checkTermsAccepted() {
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
-            self?.isTermsAccepted.value = termsAccepted
-        }
-    }
+//    func checkTermsAccepted() {
+//        let userProfileAPI = UserProfileAPI()
+//        userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
+//            self?.isTermsAccepted.value = termsAccepted
+//        }
+//    }
     
     func syncUserInsights() {
         UserInsightsAPI.instance.get { [weak self] (userinsights) in
@@ -247,7 +259,6 @@ class AppSyncManager  {
         self.fetchUserProfile()
         self.getAppLink()
         self.fetchUserHealthProfile()
-        self.checkTermsAccepted()
         self.fetchUserNotification()
         self.fetchUserSubscriptions()
         AppSyncManager.instance.syncUserInsights()

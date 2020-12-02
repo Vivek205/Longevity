@@ -58,6 +58,8 @@ struct UserDefaultsKeys: PropertyLoopable {
 func clearUserDefaults() {
     AppSyncManager.instance.userNotification.value?.endpointArn = nil
     AppSyncManager.instance.userNotification.value?.isEnabled = false
+    AppSyncManager.instance.cleardata()
+    
     do {
         let allProperties = try UserDefaultsKeys.instance.allProperties()
         allProperties.forEach { (property) in

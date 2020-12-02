@@ -59,8 +59,6 @@ class LNTabBarViewController: UITabBarController {
         let bgImageView = UIImageView(image: UIImage.imageWithColor(color: .white, size: tabBar.frame.size))
         tabBar.insertSubview(bgImageView, at: 0)
         
-        AppSyncManager.instance.syncUserProfile()
-
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self, completionHandler: {
             if HKHealthStore.isHealthDataAvailable() {
                 if !(AppSyncManager.instance.healthProfile.value?.devices?.isEmpty ?? true) {
@@ -74,23 +72,23 @@ class LNTabBarViewController: UITabBarController {
                 }
             }
         })
-        self.handleNetworkConnectionChange()
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
-        super.viewDidAppear(animated)
         
-        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
-            DispatchQueue.main.async {
-                if (AppSyncManager.instance.isTermsAccepted.value == .notaccepted && !self.presentingTosVC) {
-                    let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
-                    let navigationController = UINavigationController(rootViewController: tosViewController)
-                    NavigationUtility.presentOverCurrentContext(destination: navigationController, style: .overCurrentContext)
-                    self.presentingTosVC = true
-                }
-            }
-        }
+//        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
+//            DispatchQueue.main.async {
+//                if (AppSyncManager.instance.isTermsAccepted.value == .notaccepted && !self.presentingTosVC) {
+//                    let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+//                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
+//                    let navigationController = UINavigationController(rootViewController: tosViewController)
+//                    NavigationUtility.presentOverCurrentContext(destination: navigationController, style: .overCurrentContext)
+//                    self.presentingTosVC = true
+//                } else if AppSyncManager.instance.isTermsAccepted.value == .accepted {
+//                    AppSyncManager.instance.syncUserProfile()
+//                }
+//            }
+//        }
+//        AppSyncManager.instance.checkTermsAccepted()
+        AppSyncManager.instance.syncUserProfile()
+        self.handleNetworkConnectionChange()
     }
 
     func handleNetworkConnectionChange() {
