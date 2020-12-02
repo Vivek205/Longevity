@@ -39,9 +39,11 @@ class UserAuthAPI {
     func signout(completion: ((Error?) -> Void)?) {
         func signoutFromAws() {
             _ = Amplify.Auth.signOut(listener: { (result) in
-                print(try? result.get())
                 switch result {
                 case .success():
+                    try? KeyChain(service: KeychainConfiguration.serviceName,
+                                  account: KeychainKeys.idToken).deleteItem()
+                    AppSyncManager.instance.cleardata()
                     completion?(nil)
                 case .failure(let error):
                     completion?(error)

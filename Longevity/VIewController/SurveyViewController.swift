@@ -12,10 +12,12 @@ import ResearchKit
 class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate {
     
     var isFirstTask: Bool = false
+    var isFirstCheckIn: Bool = false
     
-    init(task: ORKOrderedTask?, isFirstTask: Bool = false) {
+    init(task: ORKOrderedTask?, isFirstTask: Bool = false, isFirstCheckin: Bool = false) {
         super.init(task: task, taskRun: nil)
         self.isFirstTask = isFirstTask
+        self.isFirstCheckIn = isFirstCheckin
         self.delegate = self
     }
     
@@ -53,30 +55,38 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
         
-        switch reason {
-        case .completed:
-            print("completed")
-            self.getSurveyList()
-        case .discarded:
-            print("discarded")
-        case .failed:
-            print("failed")
-        case .saved:
-            print("saved")
-        @unknown default:
-            print("unknown reason")
-        }
-        taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+//        switch reason {
+//        case .completed:
+//            print("completed")
+//            self.getSurveyList()
+//        case .discarded:
+//            print("discarded")
+//        case .failed:
+//            print("failed")
+//        case .saved:
+//            print("saved")
+//        @unknown default:
+//            print("unknown reason")
+//        }
+//        taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
         
-        SurveysAPI.instance.getSurveys { (_) in
+        if self.isFirstCheckIn {
             DispatchQueue.main.async {
-                self.removeSpinner()
-                taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+                let tabbarViewController = LNTabBarViewController()
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+                appDelegate.window?.rootViewController = tabbarViewController
             }
-        } onFailure: { (_) in
-            DispatchQueue.main.async {
-                self.removeSpinner()
-                taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+        } else {
+            SurveysAPI.instance.getSurveys { (_) in
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+                }
+            } onFailure: { (_) in
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
+                }
             }
         }
     }

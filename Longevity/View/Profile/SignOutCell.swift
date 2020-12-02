@@ -41,7 +41,6 @@ class SignOutCell: UITableViewCell {
     
     @objc func doSignout() {
         func onSuccess(isSignedOut: Bool) {
-            clearUserDefaults()
             try? KeyChain(service: KeychainConfiguration.serviceName,
                           account: KeychainKeys.idToken, accessGroup: nil).deleteItem()
             DispatchQueue.main.async {
@@ -66,8 +65,8 @@ class SignOutCell: UITableViewCell {
             
             topController.showSpinner()
         }
-        let userAuthAPI = UserAuthAPI()
-        userAuthAPI.signout { (error) in
+        
+        UserAuthAPI.shared.signout { (error) in
             guard error == nil else {
                 print("Sign out failed with error \(error)")
                 Logger.log("\(error)")
