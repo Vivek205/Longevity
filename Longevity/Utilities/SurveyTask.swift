@@ -335,7 +335,7 @@ final class SurveyTaskUtility: NSObject {
                                                         ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
     }
     
-    fileprivate func isTaskCompletedToday(task: SurveyListItem) -> Bool {
+    func isTaskCompletedToday(task: SurveyListItem) -> Bool {
         if let lastSubmission = task.lastSubmission, !lastSubmission.isEmpty {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

@@ -37,14 +37,10 @@ class TextChoiceAnswerVC: ORKStepViewController {
         return buttonView
     }()
 
-//    var choiceViews: [RKCTextChoiceAnswerView] = [RKCTextChoiceAnswerView]()
-
     override func viewDidLoad() {
         super.viewDidLoad()
         self.navigationController?.navigationBar.barTintColor = .white
         presentViews()
-
-//        questionAnswerCollection.register(RKCQuestionView.self, forCellWithReuseIdentifier: "question")
     }
 
     func presentViews() {
@@ -231,8 +227,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         print(cell.titleLabel.text)
         cell.toggleIsChosenOption()
         checkboxButton(wasPressedOnCell: cell)
-//        collectionView.reloadItems(at: [indexPath])
-//        collectionView.reloadData()
     }
     
 }

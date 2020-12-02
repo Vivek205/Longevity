@@ -150,7 +150,6 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if surveyDetails?.lastSurveyStatus == .pending {
                 self.isAIProcessPending = true
             }
-            
             taskCell.surveyDetails = surveyDetails
             return taskCell
         }
@@ -203,28 +202,32 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
-//            //If Survey is submitted today and is under processing
-//            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
-//                return
-//            } else if selectedCell.status == .completedToday { //If survey is completed today
-//                let checkInResultViewController = CheckInResultViewController()
-//                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-//                                                            style: .overCurrentContext)
-//                return
-//            } else if selectedCell.status != .completedToday { //If not submitted today / ever
+            //If Survey is submitted today and is under processing
+            if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
+                return
+            } else if selectedCell.status == .completedToday { //If survey is completed today
+                let checkInResultViewController = CheckInResultViewController()
+                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                            style: .overCurrentContext)
+                return
+            } else if selectedCell.status != .completedToday { //If not submitted today / ever
                 self.showSurvey(surveyId)
-//                return
-//            }
+                return
+            }
         }
-//
+        
         if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
            let surveyId = taskCell.surveyDetails?.surveyId
         {
-            let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
-            if surveyDetails?.lastSurveyStatus == .pending {
+            guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
+            if surveyDetails.lastSurveyStatus == .pending {
                 return
-            }
-            else {
+            } else if SurveyTaskUtility.shared.isTaskCompletedToday(task: surveyDetails) {
+                let checkInResultViewController = CheckInResultViewController()
+                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                            style: .overCurrentContext)
+                return
+            } else {
                 self.showSurvey(surveyId)
                 return
             }

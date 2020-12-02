@@ -22,6 +22,9 @@ class DashboardTaskCell: UITableViewCell {
                     self.progressView.heightAnchor.constraint(equalToConstant: 0.0)
                 ])
             } else {
+                self.setupCell(title: surveyDetails?.name ?? "",
+                               taskDescription: surveyDetails?.description.shortDescription ?? "")
+                
                 if let surveyId = surveyDetails?.surveyId {
                     taskIcon.image = UIImage(named: "icon: \(surveyId)")
 
@@ -52,8 +55,6 @@ class DashboardTaskCell: UITableViewCell {
                         self.setDefaultProgressBar()
                     }
                 }
-                self.setupCell(title: surveyDetails?.name ?? "",
-                               taskDescription: surveyDetails?.description.shortDescription ?? "")
                 NSLayoutConstraint.activate([
                     self.progressView.heightAnchor.constraint(equalToConstant: 30.0)
                 ])
