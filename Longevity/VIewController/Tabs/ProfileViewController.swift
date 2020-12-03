@@ -163,7 +163,9 @@ class ProfileViewController: BaseViewController {
         getProfileData()
         
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
-            self?.getProfileData()
+            if SurveyTaskUtility.shared.surveyInProgress.value == .processed {
+                self?.getProfileData()
+            }
         }
     }
     
