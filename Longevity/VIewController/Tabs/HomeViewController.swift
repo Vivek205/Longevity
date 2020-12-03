@@ -184,12 +184,14 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         if section == 0 {
-            guard let headerView = tableView.getHeader(with: DashboardHeaderView.self, index: section) as? DashboardHeaderView else {
+            guard let headerView = tableView.getHeader(with: DashboardHeaderView.self,
+                                                       index: section) as? DashboardHeaderView else {
                 preconditionFailure("Invalid header view")
             }
             return headerView
         } else {
-            guard let headerView = tableView.getHeader(with: DashboardSectionHeader.self, index: section) as? DashboardSectionHeader else {
+            guard let headerView = tableView.getHeader(with: DashboardSectionHeader.self,
+                                                       index: section) as? DashboardSectionHeader else {
                 preconditionFailure("Invalid header view")
             }
             headerView.headerType = HeaderType(rawValue: section) ?? .devices
@@ -206,7 +208,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
                 return
             } else if selectedCell.status == .completedToday { //If survey is completed today
-                let checkInResultViewController = CheckInResultViewController(surveyDetails: selectedCell.surveyResponse)
+                let checkInResultViewController = CheckInResultViewController(submissionID: surveyId)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
@@ -223,7 +225,9 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if surveyDetails.lastSurveyStatus == .pending {
                 return
             } else if surveyDetails.lastSurveyStatus == .completed {
-                let checkInResultViewController = CheckInResultViewController(surveyDetails: surveyDetails, isCheckIn: false)
+                let checkInResultViewController = CheckInResultViewController(submissionID: surveyDetails.surveyId,
+                                                                              surveyName: surveyDetails.name,
+                                                                              isCheckIn: false)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
