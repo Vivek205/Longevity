@@ -155,13 +155,6 @@ class AppSyncManager  {
         UserSubscriptionAPI.instance.getUserSubscriptions()
     }
     
-//    func checkTermsAccepted() {
-//        let userProfileAPI = UserProfileAPI()
-//        userProfileAPI.getUserAttributes { [weak self] (termsAccepted) in
-//            self?.isTermsAccepted.value = termsAccepted
-//        }
-//    }
-    
     func syncUserInsights() {
         UserInsightsAPI.instance.get { [weak self] (userinsights) in
             if let insights = userinsights {

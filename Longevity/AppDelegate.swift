@@ -224,22 +224,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if let type =  apsData["type"] as? String {
                 if let notificationType = PushNotificationType(rawValue: type) {
                     completionHandler(.alert)
-//                    switch notificationType {
-//                    case .syncFitbit:
-//                        let fitbitModel = FitbitModel()
-//                        fitbitModel.refreshTheToken()
-//                        completionHandler(.alert)
-//                        return
-//                    case .covidReportProcessed:
-//                          let checkInResultViewController = CheckInResultViewController()
-//                                              NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
-//                        completionHandler(.alert)
-//                        return
-//                    default:
-//                        return
-//                    }
                 }
-
             }
             if let alert = apsData["alert"] as? [String: Any] {
                 if let alertBody = alert["body"] as? String {

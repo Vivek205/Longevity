@@ -107,6 +107,7 @@ extension CheckInStatus {
 
 class DashboardCheckInCell: UITableViewCell {
     var surveyId: String?
+    var submissionID: String?
 
     var status: CheckInStatus = .notstarted
     var isSurveySubmittedToday:Bool = false
@@ -127,6 +128,7 @@ class DashboardCheckInCell: UITableViewCell {
             self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
                            noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
+            self.submissionID = surveyResponse.lastSubmissionId
         }
     }
     
