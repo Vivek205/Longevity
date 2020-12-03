@@ -222,7 +222,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
             if surveyDetails.lastSurveyStatus == .pending {
                 return
-            } else if SurveyTaskUtility.shared.isTaskCompletedToday(task: surveyDetails) {
+            } else if surveyDetails.lastSurveyStatus == .completed {
                 let checkInResultViewController = CheckInResultViewController()
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)

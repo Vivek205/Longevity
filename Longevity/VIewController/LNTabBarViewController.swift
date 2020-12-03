@@ -73,20 +73,6 @@ class LNTabBarViewController: UITabBarController {
             }
         })
         
-//        AppSyncManager.instance.isTermsAccepted.addAndNotify(observer: self) {
-//            DispatchQueue.main.async {
-//                if (AppSyncManager.instance.isTermsAccepted.value == .notaccepted && !self.presentingTosVC) {
-//                    let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
-//                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
-//                    let navigationController = UINavigationController(rootViewController: tosViewController)
-//                    NavigationUtility.presentOverCurrentContext(destination: navigationController, style: .overCurrentContext)
-//                    self.presentingTosVC = true
-//                } else if AppSyncManager.instance.isTermsAccepted.value == .accepted {
-//                    AppSyncManager.instance.syncUserProfile()
-//                }
-//            }
-//        }
-//        AppSyncManager.instance.checkTermsAccepted()
         AppSyncManager.instance.syncUserProfile()
         self.handleNetworkConnectionChange()
     }
@@ -113,7 +99,6 @@ class LNTabBarViewController: UITabBarController {
 }
 
 extension LNTabBarViewController: UITabBarControllerDelegate {
-    
     func tabBarController(_ tabBarController: UITabBarController, didSelect viewController: UIViewController) {
         if viewController is ShareAppViewController {
             tabBarController.selectedViewController = self.viewControllers?[self.currentTabIndex]
