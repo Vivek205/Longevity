@@ -86,12 +86,27 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func setRootViewController() {
-        if UserAuthAPI.shared.checkUserSignedIn() {
-            let tabbarViewController = LNTabBarViewController()
-            self.window?.rootViewController = tabbarViewController
-        } else {
-            gotoLogin()
-        }
+        UserAuthAPI.shared.checkUserSignedIn(completion: { [weak self] (signedIn) in
+            if signedIn {
+                UserAuthAPI.shared.getUserAttributes { [weak self] (tocStatus) in
+                    DispatchQueue.main.async {
+                        if tocStatus == .accepted {
+                            let tabbarViewController = LNTabBarViewController()
+                            self?.window?.rootViewController = tabbarViewController
+                        } else {
+                            let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
+                            guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
+                            let navigationController = UINavigationController(rootViewController: tosViewController)
+                            self?.window?.rootViewController = navigationController
+                        }
+                    }
+                }
+            } else {
+                DispatchQueue.main.async {
+                    self?.gotoLogin()
+                }
+            }
+        })
     }
     
     func applicationDidEnterBackground(_ application: UIApplication) {

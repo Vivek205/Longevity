@@ -9,35 +9,41 @@
 import Foundation
 import Amplify
 import AWSSNS
+import AWSPluginsCore
 
 class UserAuthAPI {
     
     static let shared = UserAuthAPI()
     
-    func checkUserSignedIn() -> Bool {
-        var isSignedIn: Bool = false
-        let semaphore = DispatchSemaphore(value: 0)
+    func checkUserSignedIn(completion: @escaping(Bool)-> Void) {
         _ = Amplify.Auth.fetchAuthSession { (result) in
-                   switch result {
-                   case .success(let session):
-                        isSignedIn = session.isSignedIn
-                        semaphore.signal()
-                   case .failure(let error):
-                        print(error.localizedDescription)
-                        isSignedIn = false
-                        semaphore.signal()
-                   }
+            switch result {
+            case .success(let loginSession):
+                guard let session = try? result.get() as? AuthCognitoTokensProvider,
+                      let tokens = try? session.getCognitoTokens().get() else {
+                    completion(false)
+                    return
+                }
+                
+                try? KeyChain(service: KeychainConfiguration.serviceName,
+                              account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                
+                completion(loginSession.isSignedIn)
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false)
+            }
         }
-        _ = semaphore.wait(timeout: .distantFuture)
-        return isSignedIn
     }
 
     func signout(completion: ((Error?) -> Void)?) {
         func signoutFromAws() {
             _ = Amplify.Auth.signOut(listener: { (result) in
-                print(try? result.get())
                 switch result {
                 case .success():
+                    try? KeyChain(service: KeychainConfiguration.serviceName,
+                                  account: KeychainKeys.idToken).deleteItem()
+                    AppSyncManager.instance.cleardata()
                     completion?(nil)
                 case .failure(let error):
                     completion?(error)
@@ -69,5 +75,38 @@ class UserAuthAPI {
             }
         }
     }
+    
+    func getUserAttributes(completion: @escaping ((TOCStatus)-> Void)) {
+        let keys = UserDefaultsKeys()
+        _ = Amplify.Auth.fetchUserAttributes() { result in
+            switch result {
+            case .success(let attributes):
+                
+                if !(attributes.contains { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }) {
+                    completion(.notaccepted)
+                    return
+                }
+                
+                let tncattribute = attributes.first { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }
+                
+                guard let data = tncattribute?.value.data(using: .utf8) as? Data else {
+                    completion(.unknown)
+                    return
+                }
+                guard let json = try? JSONSerialization.jsonObject(with: data, options: []) as? [String: Any] else {
+                    completion(.unknown)
+                    return
+                }
 
+                if json["isAccepted"] as! NSNumber == 1 {
+                    completion(.accepted)
+                } else {
+                    completion(.notaccepted)
+                }
+            case .failure(let error):
+                print("Fetching user attributes failed with error \(error)")
+                completion(.unknown)
+            }
+        }
+    }
 }

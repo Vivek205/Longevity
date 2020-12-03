@@ -223,7 +223,6 @@ final class SurveyTaskUtility: NSObject {
         }
         func onSubmitCompletion() {
             print("survey submitted successfully")
-//            SurveysAPI.instance.getSurveys(completion: getSurveysCompletion(_:), onFailure: onGetSurveysFailure(_:))
             self.clearSurvey()
             AppSyncManager.instance.syncSurveyList()
             completion()
@@ -283,7 +282,7 @@ final class SurveyTaskUtility: NSObject {
         if self.localSavedAnswers[currentSurveyId] == nil {
             return self.localSavedAnswers[currentSurveyId] = [questionIdentifier: answer]
         }
-        self.localSavedAnswers[currentSurveyId]![questionIdentifier] = answer
+        self.localSavedAnswers[currentSurveyId]?[questionIdentifier] = answer
     }
 
     func getCurrentSurveyServerAnswer(questionIdentifier:String) -> String? {
@@ -336,7 +335,7 @@ final class SurveyTaskUtility: NSObject {
                                                         ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
     }
     
-    fileprivate func isTaskCompletedToday(task: SurveyListItem) -> Bool {
+    func isTaskCompletedToday(task: SurveyListItem) -> Bool {
         if let lastSubmission = task.lastSubmission, !lastSubmission.isEmpty {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"

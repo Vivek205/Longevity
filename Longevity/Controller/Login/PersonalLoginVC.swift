@@ -104,7 +104,7 @@ class PersonalLoginVC: UIViewController {
                         print("Delivery details \(String(describing: deliveryDetails))")
                         self?.sendSignUpCode(email: email)
                     } else {
-                        self?.fetchUserToken()
+                        self?.loginToHome()
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {
@@ -187,11 +187,11 @@ class PersonalLoginVC: UIViewController {
     func authHandler(result :
                         AmplifyOperation<AuthWebUISignInRequest, AuthSignInResult, AuthError>.OperationResult) -> Void {
         switch result {
-        case .success( _ ):
+        case .success( _):
               DispatchQueue.main.async {
                 self.removeSpinner()
               }
-            self.fetchUserToken()
+            self.loginToHome()
         case .failure(let error):
             DispatchQueue.main.async {
                 self.removeSpinner()
@@ -200,25 +200,10 @@ class PersonalLoginVC: UIViewController {
         }
     }
     
-    fileprivate func fetchUserToken() {
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let session):
-                if session.isSignedIn {
-                    guard let session = try? result.get() as? AuthCognitoTokensProvider,
-                          let tokens = try? session.getCognitoTokens().get() else {
-                        return
-                    }
-                    
-                    try? KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
-                    DispatchQueue.main.async {
-                        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                        appDelegate.setRootViewController()
-                    }
-                }
-            case .failure(let error):
-                print(error.localizedDescription)
-            }
+    fileprivate func loginToHome() {
+        DispatchQueue.main.async {
+            guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
+            appDelegate.setRootViewController()
         }
     }
 }

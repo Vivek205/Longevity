@@ -55,7 +55,7 @@ class SetupCompleteVC: BaseProfileSetupViewController {
                 self.removeSpinner()
                 if task != nil {
                     self.dismiss(animated: false) { [weak self] in
-                        let taskViewController = SurveyViewController(task: task, isFirstTask: true)
+                        let taskViewController = SurveyViewController(task: task, isFirstTask: true, isFirstCheckin: true)
                         NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
                     }
                 } else {
