@@ -151,7 +151,6 @@ class ProfileViewController: BaseViewController {
         super.viewDidLoad()
         
         self.view.addSubview(profileTableView)
-        //        self.view.addSubview(seeMoreButton)
         
         NSLayoutConstraint.activate([
             profileTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -162,6 +161,10 @@ class ProfileViewController: BaseViewController {
 
         self.currentProfileView = .activity
         getProfileData()
+        
+        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
+            self?.getProfileData()
+        }
     }
     
     func getProfileData() {
