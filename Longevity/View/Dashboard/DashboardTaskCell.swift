@@ -13,7 +13,7 @@ class DashboardTaskCell: UITableViewCell {
     var surveyDetails: SurveyListItem? {
         didSet {
             if let status = surveyDetails?.lastSurveyStatus, status == .pending {
-                taskIcon.image = status.statusIcon
+                taskIcon.image = UIImage(named: "taskprocessing")
                 let descriptionText = "Your \(surveyDetails?.name ?? "") results will be avaliable soon"
                 self.setupCell(title: status.titleText, taskDescription: descriptionText)
                 self.progressLabel.isHidden = true
