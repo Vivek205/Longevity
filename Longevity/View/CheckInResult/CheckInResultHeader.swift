@@ -107,8 +107,13 @@ class CheckInResultHeader: UICollectionReusableView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setup(comletedDate: String) {
-        self.titleLabel.text = "Completed \(comletedDate) for \(AppSyncManager.instance.userProfile.value?.name ?? "")"
+    func setup(comletedDate: String, surveyName: String, isCheckIn: Bool) {
+        if isCheckIn {
+            self.titleLabel.text = "Completed \(comletedDate)\n for \(AppSyncManager.instance.userProfile.value?.name ?? "")"
+        } else {
+            self.titleLabel.text = "\(surveyName)\n completed \(comletedDate)"
+        }
+        
     }
     
     override func layoutSubviews() {

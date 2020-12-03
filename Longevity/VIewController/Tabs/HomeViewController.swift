@@ -206,7 +206,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
                 return
             } else if selectedCell.status == .completedToday { //If survey is completed today
-                let checkInResultViewController = CheckInResultViewController()
+                let checkInResultViewController = CheckInResultViewController(surveyDetails: selectedCell.surveyResponse)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
@@ -222,8 +222,8 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
             if surveyDetails.lastSurveyStatus == .pending {
                 return
-            } else if SurveyTaskUtility.shared.isTaskCompletedToday(task: surveyDetails) {
-                let checkInResultViewController = CheckInResultViewController()
+            } else if surveyDetails.lastSurveyStatus == .completed {
+                let checkInResultViewController = CheckInResultViewController(surveyDetails: surveyDetails, isCheckIn: false)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return

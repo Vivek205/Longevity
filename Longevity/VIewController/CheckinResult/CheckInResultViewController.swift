@@ -9,6 +9,11 @@
 import UIKit
 
 class CheckInResultViewController: UIViewController {
+    
+    var submissionID: String = ""
+    var isCheckInResult: Bool = true
+    var surveyDetails: SurveyListItem?
+    
     var isCellExpanded: [Int:Bool] = [Int:Bool]()
     
     var userInsights: [UserInsight]? {
@@ -23,6 +28,7 @@ class CheckInResultViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.checkInResultCollection.reloadData()
+                self.removeSpinner()
             }
         }
     }
@@ -76,6 +82,9 @@ class CheckInResultViewController: UIViewController {
         closePanel.addSubview(closeButton)
         closePanel.addSubview(logButton)
         
+        let checkInLogHeight: CGFloat = self.isCheckInResult ? 48.0 : 0.0
+        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
+        
         NSLayoutConstraint.activate([
             closeButton.topAnchor.constraint(equalTo: closePanel.topAnchor, constant: 22.0),
             closeButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
@@ -84,7 +93,8 @@ class CheckInResultViewController: UIViewController {
             logButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 24.0),
             logButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
             logButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
-            logButton.heightAnchor.constraint(equalToConstant: 48.0)
+            logButton.heightAnchor.constraint(equalToConstant: checkInLogHeight),
+            logButton.bottomAnchor.constraint(equalTo: closePanel.bottomAnchor, constant: bottomMargin)
         ])
         
         closeButton.layer.cornerRadius = 10.0
@@ -97,6 +107,27 @@ class CheckInResultViewController: UIViewController {
         
         return closePanel
     }()
+    
+    init() {
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    init(submissionID: String, isCheckIn: Bool = true) {
+        super.init(nibName: nil, bundle: nil)
+        self.submissionID = submissionID
+        self.isCheckInResult = isCheckIn
+    }
+    
+    init(surveyDetails: SurveyListItem, isCheckIn: Bool = true) {
+        super.init(nibName: nil, bundle: nil)
+        self.surveyDetails = surveyDetails
+        self.submissionID = self.surveyDetails?.lastSubmissionId ?? ""
+        self.isCheckInResult = isCheckIn
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -115,11 +146,10 @@ class CheckInResultViewController: UIViewController {
                                      checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
                                      checkInResultCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      checkInResultCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                    closeViewPanel.topAnchor.constraint(equalTo: checkInResultCollection.bottomAnchor),
+                                     closeViewPanel.topAnchor.constraint(equalTo: checkInResultCollection.bottomAnchor),
                                      closeViewPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      closeViewPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                     closeViewPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-                                     closeViewPanel.heightAnchor.constraint(equalToConstant: 200.0)
+                                     closeViewPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
         ])
         
         guard let layout = checkInResultCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -133,14 +163,16 @@ class CheckInResultViewController: UIViewController {
         layout.invalidateLayout()
         
         self.currentResultView = .analysis
-        
-        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
-            if  let result  = AppSyncManager.instance.userInsights.value?.filter({ $0.name == .logs }), !result.isEmpty {
+
+        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
+            self?.userInsights = insights?.filter({ $0.name != .logs })
+            if  let result  = insights?.filter({ $0.name == .logs }), !result.isEmpty {
                 self?.checkinResult = result[0].details?.history?[0]
             }
         }
-        AppSyncManager.instance.syncUserInsights()
+        
+        self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
+        self.showSpinner()
     }
     
     @objc func closeView() {
@@ -256,7 +288,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 dateformatter.dateFormat = "EEE.MMM.dd"
                 recoredDate = dateformatter.string(from: date)
             }
-            headerView.setup(comletedDate: recoredDate)
+            headerView.setup(comletedDate: recoredDate, surveyName: self.surveyDetails?.name ?? "", isCheckIn: self.isCheckInResult)
             headerView.currentView = self.currentResultView
             headerView.delegate = self
             return headerView

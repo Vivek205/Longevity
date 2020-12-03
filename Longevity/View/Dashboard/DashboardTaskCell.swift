@@ -14,7 +14,31 @@ class DashboardTaskCell: UITableViewCell {
         didSet {
             if let status = surveyDetails?.lastSurveyStatus, status == .pending {
                 taskIcon.image = status.statusIcon
-                self.setupCell(title: status.titleText, taskDescription: status.subtitleText)
+                let descriptionText = "Your \(surveyDetails?.name ?? "") results will be avaliable soon"
+                self.setupCell(title: status.titleText, taskDescription: descriptionText)
+                self.progressLabel.isHidden = true
+                self.progressBar.isHidden = true
+                
+                NSLayoutConstraint.activate([
+                    self.progressView.heightAnchor.constraint(equalToConstant: 0.0)
+                ])
+            } else if let status = surveyDetails?.lastSurveyStatus, status == .completed {
+                taskIcon.image = UIImage(named: "taskCompleted")
+                
+                var resultDateString = ""
+                
+                if let lastSubmission = surveyDetails?.lastSubmission, !lastSubmission.isEmpty {
+                    let dateFormatter = DateFormatter()
+                    dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+                    if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
+                        dateFormatter.dateFormat = "MMM dd yyyy"
+                        resultDateString = dateFormatter.string(from: lastSubmissionDate)
+                    }
+                }
+                                
+                let descriptionText = "\(surveyDetails?.name ?? "") results completed \(resultDateString)"
+                self.setupCell(title: "View Results", taskDescription: descriptionText, titleColor: .themeColor)
                 self.progressLabel.isHidden = true
                 self.progressBar.isHidden = true
                 
@@ -154,12 +178,12 @@ class DashboardTaskCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
-    fileprivate func setupCell(title: String, taskDescription: String) {
+    fileprivate func setupCell(title: String, taskDescription: String, titleColor: UIColor = UIColor.black.withAlphaComponent(0.87)) {
         let titlefont = UIFont(name: "Montserrat-Medium", size: 20.0)!
         let paragraphStyle1 = NSMutableParagraphStyle()
         paragraphStyle1.lineSpacing = 5
         let attributes: [NSAttributedString.Key: Any] = [.font: titlefont,
-                                                         .foregroundColor: UIColor.black.withAlphaComponent(0.87),
+                                                         .foregroundColor: titleColor,
                                                          .paragraphStyle: paragraphStyle1]
         let attributedcheckinTitle = NSMutableAttributedString(string: "\(title)\n", attributes: attributes)
         
