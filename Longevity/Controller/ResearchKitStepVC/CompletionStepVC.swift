@@ -139,7 +139,12 @@ class CompletionStepVC: ORKStepViewController {
     }
     
     @objc func doViewResults() {
-        let checkInResultViewController = CheckInResultViewController()
+        guard let surveyId = self.currentSurveyId,
+              let surveyName = self.currentSurveyName,
+              let isCheckIn = self.isCurrentSurveyRepetitive,
+              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
+
+        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
         NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                     style: .overCurrentContext)
     }

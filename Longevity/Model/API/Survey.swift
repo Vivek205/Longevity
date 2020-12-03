@@ -31,7 +31,7 @@ struct SurveyListItem: Decodable {
     let response: [SurveyLastResponseData]?
     let isRepetitive: Bool?
     let noOfTimesSurveyTaken: Int?
-    let lastSurveyStatus: CheckInStatus
+    var lastSurveyStatus: CheckInStatus
 }
 
 enum QuestionAction:String, Codable {
