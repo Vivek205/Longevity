@@ -25,7 +25,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     var changesSaved = true
     
     let healthKitUtil: HealthKitUtil = HealthKitUtil.shared
-//    let locationManager = CLLocationManager()
     
     var toolBar = UIToolbar()
     var picker  = UIPickerView()
@@ -36,18 +35,13 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     
     var isFromSettings: Bool = false
     
-//    var isHealthDataSynced: Bool = false
-    
     override func viewDidLoad() {
         super.viewDidLoad()
         self.removeBackButtonNavigation()
         collectionView.delegate = self
         collectionView.dataSource = self
-        //        self.locationManager.delegate = self
         
         createPickersAndToolbar()
-        
-//        checkIfHealthKitSyncedAlready()
         
         if self.isFromSettings {
             let leftbutton = UIBarButtonItem(title:"Cancel", style: .plain, target: self, action: #selector(closeView))
@@ -168,13 +162,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         }
     }
     
-//    func checkIfHealthKitSyncedAlready() {
-//        if healthKitUtil.isHealthkitSynced {
-//            self.readHealthData()
-//            continueButton.isEnabled = true
-//        }
-//    }
-    
     func createPickersAndToolbar() {
         // Picker
         picker.delegate = self
@@ -223,9 +210,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     @IBAction func handleMetricTogglePress(_ sender: Any) {
         self.removePickers()
         healthKitUtil.toggleSelectedUnit()
-//        if !healthKitUtil.isHealthkitSynced {
-//            healthKitUtil.authorize(completion: nil)
-//            }
         switch healthKitUtil.selectedUnit {
         case .metric:
             if let height = AppSyncManager.instance.healthProfile.value?.height, !height.isEmpty {
@@ -261,16 +245,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
     
     func readHealthData() {
         if let characteristicData = healthKitUtil.readCharacteristicData() {
-//            if let currentAge = characteristicData.currentAge {
-//                setupProfileOptionList[4]?.isSynced = true
-//                setupProfileOptionList[4]?.buttonText = "\(currentAge) years"
-//            }
-//            if let biologicalSex = characteristicData.biologicalSex {
-//                setupProfileOptionList[3]?.isSynced = true
-//                setupProfileOptionList[3]?.buttonText = biologicalSex.string
-//            }
-//            self.collectionView.reloadData()
-            
         }
         
         healthKitUtil.readHeightData {
@@ -280,12 +254,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             DispatchQueue.main.async {
                 self.continueButton.isEnabled = true
             }
-//            DispatchQueue.main.async {
-//                setupProfileOptionList[5]?.buttonText = heightString ?? ""
-//                setupProfileOptionList[5]?.isSynced = true
-//                self.continueButton.isEnabled = true
-//                self.collectionView.reloadData()
-//            }
         }
         
         healthKitUtil.readWeightData {
@@ -298,12 +266,6 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
             DispatchQueue.main.async {
                 self.continueButton.isEnabled = true
             }
-//            DispatchQueue.main.async {
-//                setupProfileOptionList[6]?.buttonText = weightString ?? ""
-//                setupProfileOptionList[6]?.isSynced = true
-//                self.continueButton.isEnabled = true
-//                self.collectionView.reloadData()
-//            }
         }
     }
     
@@ -488,8 +450,6 @@ extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {
             showHeightPicker()
         case "Weight":
             showWeightPicker()
-//        case "Location":
-//            getCurrentLocation()
         default:
             print("do nothing")
         }
@@ -585,20 +545,6 @@ extension SetupProfileBioDataVC: UIAdaptivePresentationControllerDelegate {
         return true
     }
 }
-
-//extension SetupProfileBioDataVC: CLLocationManagerDelegate {
-//    func getCurrentLocation() {
-//
-//    }
-//
-//    func locationManagerDidChangeAuthorization(_ manager: CLLocationManager) {
-//        let authorizationStatus = CLLocationManager.authorizationStatus()
-//        if(authorizationStatus == .authorizedWhenInUse ||
-//            authorizationStatus == .authorizedAlways) {
-//            LocationUtil.shared.updateLocation()
-//        }
-//    }
-//}
 
 extension SetupProfileBioDataVC: AppleHealthConnectionDelegate {
     func device(connected: Bool) {
