@@ -12,7 +12,7 @@ class CheckInResultViewController: UIViewController {
     
     var submissionID: String = ""
     var isCheckInResult: Bool = true
-    var surveyDetails: SurveyListItem?
+    var surveyName: String = ""
     
     var isCellExpanded: [Int:Bool] = [Int:Bool]()
     
@@ -111,17 +111,11 @@ class CheckInResultViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-    
-    init(submissionID: String, isCheckIn: Bool = true) {
+        
+    init(submissionID: String, surveyName: String = "", isCheckIn: Bool = true) {
         super.init(nibName: nil, bundle: nil)
         self.submissionID = submissionID
-        self.isCheckInResult = isCheckIn
-    }
-    
-    init(surveyDetails: SurveyListItem, isCheckIn: Bool = true) {
-        super.init(nibName: nil, bundle: nil)
-        self.surveyDetails = surveyDetails
-        self.submissionID = self.surveyDetails?.lastSubmissionId ?? ""
+        self.surveyName = surveyName
         self.isCheckInResult = isCheckIn
     }
     
@@ -288,7 +282,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 dateformatter.dateFormat = "EEE.MMM.dd"
                 recoredDate = dateformatter.string(from: date)
             }
-            headerView.setup(comletedDate: recoredDate, surveyName: self.surveyDetails?.name ?? "", isCheckIn: self.isCheckInResult)
+            headerView.setup(comletedDate: recoredDate, surveyName: self.surveyName, isCheckIn: self.isCheckInResult)
             headerView.currentView = self.currentResultView
             headerView.delegate = self
             return headerView
