@@ -321,6 +321,11 @@ final class SurveyTaskUtility: NSObject {
         return currentSurveyDetails.name
     }
 
+    func isCurrentSurveyRepetitive() -> Bool? {
+        guard let currentSurveyDetails = self.getCurrentSurveyDetails() else {return nil}
+        return currentSurveyDetails.isRepetitive
+    }
+
     func setSurveyList(list:[SurveyListItem]) {
         if list.contains(where: { return $0.lastSurveyStatus == .pending }) {
             self.surveyInProgress.value = .pending

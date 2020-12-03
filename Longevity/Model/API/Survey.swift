@@ -164,6 +164,7 @@ struct SurveyDetails: Decodable {
     let questions: [Question]
     let lastSubmission: String?
     let lastSubmissionId: String?
+    let isRepetitive: Bool?
 }
 
 class SurveysAPI : BaseAuthAPI {
