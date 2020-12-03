@@ -42,7 +42,6 @@ class CheckInTitleView: UIView {
         self.addSubview(bgImageView)
         self.addSubview(titleLabel)
         self.addSubview(closeButton)
-        self.titleLabel.text = "Check-in Results"
         
         NSLayoutConstraint.activate([
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
