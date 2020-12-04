@@ -354,8 +354,7 @@ final class SurveyTaskUtility: NSObject {
         }
         
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
-        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true &&
-                                                        ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
+        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true })
     }
     
     func isTaskCompletedToday(task: SurveyListItem) -> Bool {
