@@ -75,14 +75,14 @@ class HomeViewController: BaseViewController {
         SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadSections(IndexSet(integer: 0), with: .fade)
+                self?.tableView.reloadSections([0], with: .fade)
             }
         }
         
         SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadSections(IndexSet(integer: 2), with: .fade)
+                self?.tableView.reloadSections([2], with: .fade)
             }
         }
 

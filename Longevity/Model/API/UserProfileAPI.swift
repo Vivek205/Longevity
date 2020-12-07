@@ -170,11 +170,14 @@ class UserProfileAPI: BaseAuthAPI {
         }
     }
     
-    func getAppLink(completion: @escaping((String?) -> Void)) {
-        guard let appurl = URL(string: "https://rejuve-public.s3-us-west-2.amazonaws.com/app-location") else { return }
+    func getAppLink(completion: @escaping(String?) -> Void) {
+        guard let appurl = URL(string: "https://rejuve-public.s3-us-west-2.amazonaws.com/app-location") else {
+            completion(nil)
+            return
+        }
+        
         URLSession.shared.dataTask(with: appurl) { (data, response, error) in
             if error != nil {
-                print(error?.localizedDescription)
                 completion(nil)
             } else {
                 guard let data = data else {
@@ -184,7 +187,7 @@ class UserProfileAPI: BaseAuthAPI {
                 let urlString = String(data: data, encoding: .utf8)
                 completion(urlString)
             }
-        }
+        }.resume()
     }
     
     func getUserAvatar(completion: @escaping (_ userActivities:String?)-> Void,
