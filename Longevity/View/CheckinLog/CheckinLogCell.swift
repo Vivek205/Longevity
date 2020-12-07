@@ -32,6 +32,7 @@ class CheckinLogCell: UICollectionViewCell {
                 noofSymptoms.isHidden = true
                 symptomsCircle.isHidden = true
                 logIcon.isHidden = false
+                
             } else {
                 symptomsLabel.isHidden = false
                 noofSymptoms.isHidden = false
@@ -88,6 +89,7 @@ class CheckinLogCell: UICollectionViewCell {
     lazy var logIcon: UIImageView = {
         let icon = UIImageView()
         icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.image = UIImage(named: "logIcon:COVID Risk Assessment")
         return icon
     }()
 
@@ -105,7 +107,7 @@ class CheckinLogCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             symptomsCircle.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
-            symptomsCircle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+            symptomsCircle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             symptomsCircle.heightAnchor.constraint(equalToConstant: 46.0),
             symptomsCircle.widthAnchor.constraint(equalTo: symptomsCircle.heightAnchor),
             noofSymptoms.centerXAnchor.constraint(equalTo: symptomsCircle.centerXAnchor),
@@ -117,9 +119,9 @@ class CheckinLogCell: UICollectionViewCell {
             logName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
             logDate.leadingAnchor.constraint(equalTo: logName.leadingAnchor),
             logDate.topAnchor.constraint(equalTo: logName.bottomAnchor, constant: 12.0),
-            logIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+            logIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             logIcon.widthAnchor.constraint(equalToConstant: 57.0),
-            logIcon.heightAnchor.constraint(equalTo: logIcon.widthAnchor),
+            logIcon.heightAnchor.constraint(equalToConstant: 52.0),
             logIcon.topAnchor.constraint(equalTo: topAnchor, constant: 15.0)
         ])
 

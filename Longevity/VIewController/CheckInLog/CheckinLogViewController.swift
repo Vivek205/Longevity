@@ -13,8 +13,9 @@ class CheckinLogViewController: BaseViewController {
     
     var history: [History]! {
         didSet {
-            DispatchQueue.main.async {self.updateLogDetails()}
-            self.logsCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.logsCollectionView.reloadData()
+            }
         }
     }
     
@@ -46,7 +47,7 @@ class CheckinLogViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleView.titleLabel.text = "Check-in Log"
+        self.titleView.titleLabel.text = "Results Data Log"
         
         self.titleView.addSubview(closeButton)
         self.view.addSubview(logsCollectionView)
@@ -76,6 +77,11 @@ class CheckinLogViewController: BaseViewController {
         layout.scrollDirection = .vertical
         
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
+    }
+
+    override func viewDidAppear(_ animated: Bool) {
+        print("checkin log did appear")
+        self.updateLogDetails()
     }
 
     init() {
