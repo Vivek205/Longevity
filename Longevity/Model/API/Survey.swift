@@ -31,7 +31,7 @@ struct SurveyListItem: Decodable {
     let response: [SurveyLastResponseData]?
     let isRepetitive: Bool?
     let noOfTimesSurveyTaken: Int?
-    let lastSurveyStatus: CheckInStatus
+    var lastSurveyStatus: CheckInStatus
 }
 
 enum QuestionAction:String, Codable {
@@ -164,6 +164,7 @@ struct SurveyDetails: Decodable {
     let questions: [Question]
     let lastSubmission: String?
     let lastSubmissionId: String?
+    let isRepetitive: Bool?
 }
 
 class SurveysAPI : BaseAuthAPI {

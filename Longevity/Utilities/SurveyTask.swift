@@ -223,6 +223,24 @@ final class SurveyTaskUtility: NSObject {
         }
         func onSubmitCompletion() {
             print("survey submitted successfully")
+            if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive(),
+               let currentSurveyId = self.currentSurveyId,
+               let repetitiveList = self.repetitiveSurveyList.value,
+               let oneTimeSurveyList = self.oneTimeSurveyList.value{
+                if isCurrentSurveyRepetitive {
+                    for index in 0..<repetitiveList.count {
+                        if repetitiveList[index].surveyId == currentSurveyId {
+                            self.repetitiveSurveyList.value?[index].lastSurveyStatus = .pending
+                        }
+                    }
+                }else {
+                    for index in 0..<oneTimeSurveyList.count {
+                        if oneTimeSurveyList[index].surveyId == currentSurveyId {
+                            self.oneTimeSurveyList.value?[index].lastSurveyStatus = .pending
+                        }
+                    }
+                }
+            }
             self.clearSurvey()
             AppSyncManager.instance.syncSurveyList()
             completion()
@@ -321,6 +339,11 @@ final class SurveyTaskUtility: NSObject {
         return currentSurveyDetails.name
     }
 
+    func isCurrentSurveyRepetitive() -> Bool? {
+        guard let currentSurveyDetails = self.getCurrentSurveyDetails() else {return nil}
+        return currentSurveyDetails.isRepetitive
+    }
+
     func setSurveyList(list:[SurveyListItem]) {
         if list.contains(where: { return $0.lastSurveyStatus == .pending }) {
             self.surveyInProgress.value = .pending
@@ -331,8 +354,7 @@ final class SurveyTaskUtility: NSObject {
         }
         
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
-        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true &&
-                                                        ($0.lastSubmission == nil || self.isTaskCompletedToday(task: $0)) })
+        self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true })
     }
     
     func isTaskCompletedToday(task: SurveyListItem) -> Bool {
@@ -478,5 +500,14 @@ final class SurveyTaskUtility: NSObject {
             }
         }
         return stepId == firstStepId
+    }
+
+    func getLastSubmissionID(for surveyId: String) -> String?  {
+        guard let surveyItem = self.surveyList?.first(where: { (item) -> Bool in
+            return item.surveyId == surveyId
+        }) else {
+            return nil
+        }
+        return surveyItem.lastSubmissionId
     }
 }

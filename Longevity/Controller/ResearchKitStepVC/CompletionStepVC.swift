@@ -10,6 +10,9 @@ import UIKit
 import ResearchKit
 
 class CompletionStepVC: ORKStepViewController {
+    var currentSurveyId: String?
+    var currentSurveyName: String?
+    var isCurrentSurveyRepetitive: Bool?
     
     lazy var iconView:UIImageView = {
         let imageView = UIImageView()
@@ -55,6 +58,10 @@ class CompletionStepVC: ORKStepViewController {
         self.backButtonItem = nil
         self.presentViews()
         self.navigationItem.hidesBackButton = true
+
+        self.currentSurveyId = SurveyTaskUtility.shared.currentSurveyId
+        self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
+        self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
         
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
@@ -132,7 +139,12 @@ class CompletionStepVC: ORKStepViewController {
     }
     
     @objc func doViewResults() {
-        let checkInResultViewController = CheckInResultViewController()
+        guard let surveyId = self.currentSurveyId,
+              let surveyName = self.currentSurveyName,
+              let isCheckIn = self.isCurrentSurveyRepetitive,
+              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
+
+        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
         NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                     style: .overCurrentContext)
     }
