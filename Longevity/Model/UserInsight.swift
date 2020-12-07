@@ -182,6 +182,7 @@ struct History: Codable {
     let recordDate, submissionID: String
     let symptoms: [String]
     let insights, goals: [Goal]
+    var surveyName: String? // key for local use
 
     enum CodingKeys: String, CodingKey {
         case recordDate = "record_date"

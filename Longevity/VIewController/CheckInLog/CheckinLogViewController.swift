@@ -13,6 +13,7 @@ class CheckinLogViewController: BaseViewController {
     
     var history: [History]! {
         didSet {
+            DispatchQueue.main.async {self.updateLogDetails()}
             self.logsCollectionView.reloadData()
         }
     }
@@ -83,6 +84,26 @@ class CheckinLogViewController: BaseViewController {
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateLogDetails() {
+        self.showSpinner()
+        let submissionIdList = history.map{$0.submissionID}
+        print("submissionIdList", submissionIdList)
+        SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
+            [weak self] (response) in
+            DispatchQueue.main.async {self?.removeSpinner()}
+            guard let response = response,let history = self?.history else {return}
+            for index in 0..<history.count {
+                if let surveyName = response[history[index].submissionID]?.surveyName {
+                    self?.history[index].surveyName = surveyName
+                }
+            }
+            print("submissionIdList response",response)
+        } onFailure: { (error) in
+            print("error", error)
+        }
+
     }
     
     @objc func closeView() {

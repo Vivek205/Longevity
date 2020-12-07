@@ -167,6 +167,17 @@ struct SurveyDetails: Decodable {
     let isRepetitive: Bool?
 }
 
+struct SurveySubmissionDetailsResponseValue: Codable {
+    let surveyID, surveyName: String
+
+    enum CodingKeys: String, CodingKey {
+        case surveyID = "survey_id"
+        case surveyName = "survey_name"
+    }
+}
+
+typealias SurveySubmissionDetailsResponse = [String: SurveySubmissionDetailsResponseValue]
+
 class SurveysAPI : BaseAuthAPI {
     
     static var instance: SurveysAPI = SurveysAPI()
@@ -316,7 +327,7 @@ class SurveysAPI : BaseAuthAPI {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
-            print(String(data:data, encoding: .utf8)!)
+            print(String(data:data, encoding: .utf8))
             
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)
@@ -350,6 +361,38 @@ class SurveysAPI : BaseAuthAPI {
             }
             completion()
         }
+    }
+
+
+
+    func surveySubmissionDetails(submissionIdList:[String],completion:@escaping (SurveySubmissionDetailsResponse?) -> Void,
+                                 onFailure: @escaping (_ error: Error) -> Void) {
+        enum SurveySubmissionDetailsError: Error {
+            case unknownError
+        }
+        do {
+            let jsonEncoder = JSONEncoder()
+            let data = try jsonEncoder.encode(submissionIdList)
+            let request = RESTRequest(apiName: "surveyAPI", path: "/survey/submissions/details", headers:headers , queryParameters: nil, body: data)
+            self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+                if error != nil {
+                    onFailure(error ?? SurveySubmissionDetailsError.unknownError)
+                }
+                guard let data = data else {
+                    completion(nil)
+                    return
+                }
+                let jsonDecoder = JSONDecoder()
+                if let value = try? jsonDecoder.decode(SurveySubmissionDetailsResponse.self, from: data) {
+                    completion(value)
+                }
+                completion(nil)
+            }
+        } catch  {
+            print("surveySubmissionDetails error", error)
+            onFailure(error)
+        }
+
     }
 }
 
