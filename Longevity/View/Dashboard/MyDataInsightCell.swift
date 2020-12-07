@@ -38,9 +38,12 @@ class MyDataInsightCell: UICollectionViewCell {
                     self.trendImage.tintColor = details.sentiment?.tintColor
                     self.trendDirection.isHidden = false
                     self.trendImage.isHidden = details.trending == .same
+                    let trendHeight: CGFloat = details.trending == .same ? 12.5 : 30.0
+                    NSLayoutConstraint.activate([self.trendImage.heightAnchor.constraint(equalToConstant: trendHeight)])
                 } else {
                     self.trendImage.isHidden = true
                     self.trendDirection.isHidden = true
+                    NSLayoutConstraint.activate([self.trendImage.heightAnchor.constraint(equalToConstant: 0.0)])
                 }
             } else {
                 self.riskType.isHidden = true
@@ -168,12 +171,13 @@ class MyDataInsightCell: UICollectionViewCell {
             self.riskType.widthAnchor.constraint(equalToConstant: 80.0),
             
             self.trendImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
-            self.trendImage.heightAnchor.constraint(equalToConstant: 30.0),
+//            self.trendImage.heightAnchor.constraint(equalToConstant: 30.0),
             self.trendImage.widthAnchor.constraint(equalTo: self.trendImage.heightAnchor),
+            self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor),
             self.trendDirection.topAnchor.constraint(equalTo: self.trendImage.bottomAnchor),
             self.trendDirection.leadingAnchor.constraint(equalTo: self.riskType.trailingAnchor, constant: 10.0),
             self.trendDirection.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
-            self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor),
+            
             
             self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 60.0),
             self.detailsView.leadingAnchor.constraint(equalTo: self.tileTitle.leadingAnchor),
