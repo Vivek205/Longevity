@@ -90,36 +90,35 @@ class LoaderAnimationViewController: UIViewController {
             spinner.topAnchor.constraint(equalTo:singularityStudioLogo.bottomAnchor, constant: 20)
         ])
 
-        checkIfAppUpdated { [weak self] signedOut in
+        checkIfAppUpdated { signedOut in
             if !signedOut {
                 DispatchQueue.main.async {
                     guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                     appDelegate.setRootViewController()
+                }
+            } else {
+                DispatchQueue.main.async {
+                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
+                    let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
+                    let onBoardingViewController = storyboard.instantiateInitialViewController()
+                    appDelegate.window?.rootViewController = onBoardingViewController
                 }
             }
         }
     }
 
     func checkIfAppUpdated(completion: @escaping(_ signedOut: Bool) -> Void) {
-        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else {return}
-
         let previousBuild = UserDefaults.standard.string(forKey: "build")
         let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
         UserDefaults.standard.set(currentBuild, forKey: "build")
         if previousBuild == nil {
             // MARK: Fresh install
-            _ = Amplify.Auth.signOut() { [weak self] (result) in
+            _ = Amplify.Auth.signOut() { (result) in
                 switch result {
                 case .success:
                     try? KeyChain(service: KeychainConfiguration.serviceName,
                                   account: KeychainKeys.idToken).deleteItem()
-                    print("Successfully signed out")
                     completion(true)
-                    DispatchQueue.main.async {
-                        let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
-                        let onBoardingViewController = storyboard.instantiateInitialViewController()
-                        appDelegate.window?.rootViewController = onBoardingViewController
-                    }
                 case .failure(let error):
                     print("Sign out failed with error \(error)")
                     completion(false)
