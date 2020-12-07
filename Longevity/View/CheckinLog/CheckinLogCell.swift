@@ -26,7 +26,7 @@ class CheckinLogCell: UICollectionViewCell {
                 dateformatter.dateFormat = "EEE | MMM dd, yyyy"
                 self.logDate.text = dateformatter.string(from: date)
             }
-            self.logName.text = self.history.surveyName ?? "Default Name"
+            self.logName.text = self.history.surveyName ?? "COVID Check-in"
             if self.history.surveyName == "COVID Risk Assessment" {
                 symptomsLabel.isHidden = true
                 noofSymptoms.isHidden = true

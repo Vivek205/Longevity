@@ -95,8 +95,11 @@ class CheckinLogViewController: BaseViewController {
             DispatchQueue.main.async {self?.removeSpinner()}
             guard let response = response,let history = self?.history else {return}
             for index in 0..<history.count {
+                print("submissionId", history[index].submissionID)
+                print("surveyName", response[history[index].submissionID])
                 if let surveyName = response[history[index].submissionID]?.surveyName {
                     self?.history[index].surveyName = surveyName
+                    print("self?.history[index].surveyName", surveyName)
                 }
             }
             print("submissionIdList response",response)

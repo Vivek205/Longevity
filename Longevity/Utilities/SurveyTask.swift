@@ -352,7 +352,7 @@ final class SurveyTaskUtility: NSObject {
         {
             self.surveyInProgress.value = .processed
         }
-        
+        self.surveyList = list
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
         self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true })
     }
