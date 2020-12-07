@@ -41,13 +41,20 @@ final class HealthStore {
     
     private var healthStore : HKHealthStore?
     
+    private var operationQueue: OperationQueue?
+    
     var healthReadings: [HealthReading] = [HealthReading]()
+    
+    var todaysDate: String {
+        let dateformatter = DateFormatter()
+        dateformatter.dateFormat = "yyyy-MM-dd"
+        return dateformatter.string(from: Date())
+    }
     
     private var healthDataTypes: Set<HKObjectType> {
         return Set([
             HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!,
             HKObjectType.characteristicType(forIdentifier: .biologicalSex)!,
-//            HKObjectType.characteristicType(forIdentifier: .bloodType)!,
             HKObjectType.quantityType(forIdentifier: .bodyMass)!,
             HKSampleType.quantityType(forIdentifier: .height)!,
             HKObjectType.quantityType(forIdentifier: .stepCount)!,
@@ -67,7 +74,8 @@ final class HealthStore {
             HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
             HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
             HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
-            HKObjectType.categoryType(forIdentifier: .handwashingEvent)!
+            HKObjectType.categoryType(forIdentifier: .handwashingEvent)!,
+            HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
         ]) } else {
             return Set([
                 HKObjectType.quantityType(forIdentifier: .distanceCycling)!,
@@ -77,7 +85,8 @@ final class HealthStore {
                 HKObjectType.quantityType(forIdentifier: .restingHeartRate)!,
                 HKObjectType.quantityType(forIdentifier: .activeEnergyBurned)!,
                 HKObjectType.quantityType(forIdentifier: .appleExerciseTime)!,
-                HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!
+                HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!,
+                HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!
             ])
         }
     }
@@ -134,7 +143,9 @@ final class HealthStore {
         let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
         
         //  Perform the Query
-        let query = HKStatisticsQuery(quantityType: stepsCount!, quantitySamplePredicate: today, options: [.cumulativeSum]) { (query, statistics, error) in
+        let query = HKStatisticsQuery(quantityType: stepsCount!,
+                                      quantitySamplePredicate: today,
+                                      options: [.cumulativeSum]) { [weak self] (query, statistics, error) in
             if error != nil {
                 completion()
                 return
@@ -148,7 +159,7 @@ final class HealthStore {
                 
                 healthReadings.append(HealthReading(value: steps.rounded(), unit: "steps",
                                                     readingDate: dateformatter.string(from: Date())))
-                self.saveHealthData(deviceType: .applehealth, healthType: .steps, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applehealth, healthType: .steps, healthReadings: healthReadings)
             }
             completion()
         }
@@ -166,7 +177,9 @@ final class HealthStore {
         let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
         
         //  Perform the Query
-        let query = HKStatisticsQuery(quantityType: flightsClimbed!, quantitySamplePredicate: today, options: [.cumulativeSum]) { (query, statistics, error) in
+        let query = HKStatisticsQuery(quantityType: flightsClimbed!,
+                                      quantitySamplePredicate: today,
+                                      options: [.cumulativeSum]) { [weak self] (query, statistics, error) in
             if error != nil {
                 completion()
                 return
@@ -181,7 +194,7 @@ final class HealthStore {
                 
                 healthReadings.append(HealthReading(value: flights.rounded(), unit: "floors",
                                                     readingDate: dateformatter.string(from: Date())))
-                self.saveHealthData(deviceType: .applehealth,
+                self?.saveHealthData(deviceType: .applehealth,
                                     healthType: .flights, healthReadings: healthReadings)
             }
             completion()
@@ -201,8 +214,9 @@ final class HealthStore {
         
         let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
         
-        let query = HKStatisticsQuery(quantityType: caloriesBurned!, quantitySamplePredicate: today,
-                                      options: [.cumulativeSum]) { (query, statistics, error) in
+        let query = HKStatisticsQuery(quantityType: caloriesBurned!,
+                                      quantitySamplePredicate: today,
+                                      options: [.cumulativeSum]) { [weak self] (query, statistics, error) in
             if error != nil {
                 completion()
                 return
@@ -216,7 +230,7 @@ final class HealthStore {
                 
                 healthReadings.append(HealthReading(value: calories, unit: "kCal",
                                                     readingDate: dateformatter.string(from: Date())))
-                self.saveHealthData(deviceType: .applewatch,healthType: .caloriesBurned, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applewatch,healthType: .caloriesBurned, healthReadings: healthReadings)
             }
             completion()
         }
@@ -237,7 +251,7 @@ final class HealthStore {
         let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
         
         let query = HKStatisticsQuery(quantityType: queryDistance!, quantitySamplePredicate: today,
-                                      options: [.cumulativeSum]) { (query, statistics, error) in
+                                      options: [.cumulativeSum]) { [weak self] (query, statistics, error) in
             if error != nil {
                 completion()
                 return
@@ -253,7 +267,7 @@ final class HealthStore {
                                healthReadings.append(HealthReading(value: distance, unit: "km",
                                                                    readingDate: dateformatter.string(from: Date())))
                 let devicetype = healthType == .walking ? HealthDevices.applehealth : HealthDevices.applewatch
-                self.saveHealthData(deviceType: devicetype, healthType: healthType, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: devicetype, healthType: healthType, healthReadings: healthReadings)
             }
             completion()
         }
@@ -271,8 +285,9 @@ final class HealthStore {
         
         let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
         
-        let query = HKStatisticsQuery(quantityType: exerciseTime!, quantitySamplePredicate: today,
-                                      options: [.cumulativeSum]) { (query, statistics, error) in
+        let query = HKStatisticsQuery(quantityType: exerciseTime!,
+                                      quantitySamplePredicate: today,
+                                      options: [.cumulativeSum]) { [weak self] (query, statistics, error) in
             if error != nil {
                 completion()
                 return
@@ -286,7 +301,7 @@ final class HealthStore {
                 
                 healthReadings.append(HealthReading(value: excerciseTime, unit: "min",
                                                     readingDate: dateformatter.string(from: Date())))
-                self.saveHealthData(deviceType: .applewatch, healthType: .exercise, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applewatch, healthType: .exercise, healthReadings: healthReadings)
             }
             completion()
         }
@@ -314,7 +329,7 @@ final class HealthStore {
         /// Create the query
         let query = HKSampleQuery( sampleType: heartRate!, predicate: predicate,
                                    limit: Int(HKObjectQueryNoLimit),
-                                   sortDescriptors: [sortDescriptor]) { (_, results, error) in
+                                   sortDescriptors: [sortDescriptor]) { [weak self] (_, results, error) in
             guard error == nil else {
                 print("Error: \(error!.localizedDescription)")
                 completion()
@@ -333,11 +348,84 @@ final class HealthStore {
                     healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm", readingDate:
                                                             dateformatter.string(from: result.startDate)))
                 }
-                self.saveHealthData(deviceType: .applewatch, healthType: .heartRate, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applewatch, healthType: .heartRate, healthReadings: healthReadings)
             }
             completion()
         }
         healthStore?.execute(query)
+    }
+    
+    //Get Heart Rate Variability
+    func retrieveHeartRateVariability(completion: @escaping(() -> Void)) {
+        
+        guard let heartRateVariability = HKQuantityType.quantityType(forIdentifier: .heartRateVariabilitySDNN) else { return }
+        
+        //  Set the Predicates & Interval
+        var interval = DateComponents()
+        interval.minute = 1
+        
+        let calendar = Calendar.current
+        let anchorDate = calendar.startOfDay(for: Date())
+        
+        let today = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
+        
+//        let query = HKStatisticsQuery(quantityType: heartRateVariability,
+//                                      quantitySamplePredicate: today,
+//                                      options: [.discreteMin, .discreteMax, .discreteAverage]) { [weak self] (query, statistics, error) in
+//            if error != nil {
+//                completion()
+//                return
+//            }
+//
+//            if let quantity = statistics?. {
+//                let excerciseTime = quantity.doubleValue(for: HKUnit.minute())
+//                var healthReadings = [HealthReading]()
+//                let dateformatter = DateFormatter()
+//                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//
+//                healthReadings.append(HealthReading(value: excerciseTime, unit: "min",
+//                                                    readingDate: dateformatter.string(from: Date())))
+//                self?.saveHealthData(deviceType: .applewatch, healthType: .exercise, healthReadings: healthReadings)
+//            }
+//            completion()
+//        }
+        
+        
+//        let calendar = Calendar.current
+//        let anchorDate = calendar.startOfDay(for: Date())
+//
+//        let predicate = HKQuery.predicateForSamples(withStart: anchorDate, end: Date(), options: [])
+//
+//        /// Set sorting by date.
+//        let sortDescriptor = NSSortDescriptor(key: HKSampleSortIdentifierStartDate, ascending: false)
+//
+//        /// Create the query
+//        let query = HKSampleQuery( sampleType: heartRateVariability, predicate: predicate,
+//                                   limit: Int(HKObjectQueryNoLimit),
+//                                   sortDescriptors: [sortDescriptor]) { (_, results, error) in
+//            guard error == nil else {
+//                print("Error: \(error!.localizedDescription)")
+//                completion()
+//                return
+//            }
+//
+//            if let resultArray = results, !resultArray.isEmpty {
+//
+//                var healthReadings = [HealthReading]()
+//
+//                for result in resultArray {
+//                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for:
+//                                                                                                            HKUnit(from: "count/min")) else { continue }
+//                    let dateformatter = DateFormatter()
+//                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+//                    healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm", readingDate:
+//                                                            dateformatter.string(from: result.startDate)))
+//                }
+//                self.saveHealthData(deviceType: .applewatch, healthType: .heartRate, healthReadings: healthReadings)
+//            }
+//            completion()
+//        }
+//        healthStore?.execute(query)
     }
     
     func retrieveRestingHeartRate(completion: @escaping(() -> Void)) {
@@ -362,7 +450,7 @@ final class HealthStore {
         let query = HKSampleQuery( sampleType: heartRate!,
                                    predicate: predicate,
                                    limit: Int(HKObjectQueryNoLimit),
-                                   sortDescriptors: [sortDescriptor]) { (_, results, error) in
+                                   sortDescriptors: [sortDescriptor]) { [weak self] (_, results, error) in
             guard error == nil else {
                 print("Error: \(error!.localizedDescription)")
                 completion()
@@ -372,14 +460,14 @@ final class HealthStore {
             if let resultArray = results, !resultArray.isEmpty {
                 var healthReadings = [HealthReading]()
                 for result in resultArray {
-                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for:
-                                                                                                            HKUnit(from: "count/min")) else { continue }
+                    guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { continue }
                     let dateformatter = DateFormatter()
                     dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
+                    let dateString = dateformatter.string(from: result.startDate)
                     healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm",
-                                                        readingDate: dateformatter.string(from: result.startDate)))
+                                                        readingDate: dateString))
                 }
-                self.saveHealthData(deviceType: .applewatch, healthType: .restingHeartRate,
+                self?.saveHealthData(deviceType: .applewatch, healthType: .restingHeartRate,
                                     healthReadings: healthReadings)
             }
             completion()
@@ -410,7 +498,7 @@ final class HealthStore {
         let query = HKSampleQuery( sampleType: oxygenSaturation!,
                                    predicate: predicate,
                                    limit: Int(HKObjectQueryNoLimit),
-                                   sortDescriptors: [sortDescriptor]) { (_, results, error) in
+                                   sortDescriptors: [sortDescriptor]) { [weak self] (_, results, error) in
             guard error == nil else {
                 print("Error: \(error!.localizedDescription)")
                 completion()
@@ -428,7 +516,7 @@ final class HealthStore {
                                                             dateformatter.string(from: result.startDate)))
                 }
                 
-                self.saveHealthData(deviceType: .applewatch, healthType: .oxygenlevel, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applewatch, healthType: .oxygenlevel, healthReadings: healthReadings)
                 completion()
             }
         }
@@ -458,7 +546,7 @@ final class HealthStore {
         /// Create the query
         let query = HKSampleQuery( sampleType: handwashingEvents!,
                                    predicate: predicate, limit: Int(HKObjectQueryNoLimit),
-                                   sortDescriptors: [sortDescriptor]) { (_, results, error) in
+                                   sortDescriptors: [sortDescriptor]) { [weak self] (_, results, error) in
             guard error == nil else {
                 print("Error: \(error!.localizedDescription)")
                 completion()
@@ -478,7 +566,7 @@ final class HealthStore {
                                                         readingDate: dateformatter.string(from: result.startDate)))
                 }
                 
-                self.saveHealthData(deviceType: .applewatch, healthType: .handwashing, healthReadings: healthReadings)
+                self?.saveHealthData(deviceType: .applewatch, healthType: .handwashing, healthReadings: healthReadings)
                 completion()
             }
         }
@@ -554,6 +642,8 @@ final class HealthStore {
                 retrieveExerciseTime(completion: completion)
             case HKObjectType.quantityType(forIdentifier: .oxygenSaturation)!:
                 retrieveOxygenSaturation(completion: completion)
+            case HKObjectType.quantityType(forIdentifier: .heartRateVariabilitySDNN)!:
+                retrieveHeartRateVariability(completion: completion)
             default:
                 break
             }
@@ -569,20 +659,17 @@ final class HealthStore {
     }
     
     fileprivate func saveHealthData(deviceType: HealthDevices,healthType: HealthType, healthReadings: [HealthReading]) {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-MM-dd"
-        let date: String = dateformatter.string(from: Date())
-        let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: date)
-        let healthKit = HealthkitAPI()
-        
-        healthKit.synchronizeHealthkit(deviceName: deviceType.deviceType, healthData: healthData, completion: {
-            Logger.log("HealthSync Success:\(healthType.rawValue), \(Date())")
-        }) { (error) in
-//            print(error.localizedDescription)
-//            let dateformatter = DateFormatter()
-//            dateformatter.dateFormat = "yyyy-MM-dd"
-//            let date: String = dateformatter.string(from: Date())
-            Logger.log("HealthSync Failed:\(healthType.rawValue), \(Date())")
+        if self.operationQueue == nil {
+            self.operationQueue = OperationQueue()
+            self.operationQueue?.maxConcurrentOperationCount = 3
         }
+        self.operationQueue?.addOperation({
+            let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: self.todaysDate)
+            HealthkitAPI.instance.synchronizeHealthkit(deviceName: deviceType.deviceType, healthData: healthData, completion: {
+                
+            }) { (error) in
+                
+            }
+        })
     }
 }

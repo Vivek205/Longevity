@@ -112,7 +112,7 @@ extension Sentiment {
             case .negative:
                 return UIColor(hexString: "#E67381")
             case .neutral:
-                return UIColor(hexString: "#59BB6E")
+                return UIColor(hexString: "#9B9B9B")
         }
     }
 }

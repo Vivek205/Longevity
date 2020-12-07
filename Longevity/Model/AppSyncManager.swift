@@ -29,18 +29,17 @@ enum SurveySyncStatus {
 
 class AppSyncManager  {
     static let instance = AppSyncManager()
-
     var userProfile: DynamicValue<UserProfile>
     var healthProfile: DynamicValue<UserHealthProfile>
     var isTermsAccepted: DynamicValue<TOCStatus> = DynamicValue(.unknown)
-    var appShareLink: DynamicValue<String>
+    var appShareLink: String
     var userInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<InternetConnectionState> = DynamicValue(.none)
     var surveysSyncStatus: DynamicValue<SurveySyncStatus> = DynamicValue(.notstarted)
     
-    var timer: DispatchSourceTimer?
+    var pollingTimer: DispatchSourceTimer?
     
     fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
@@ -77,7 +76,7 @@ class AppSyncManager  {
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
-        self.appShareLink = DynamicValue("")
+        self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
@@ -86,7 +85,7 @@ class AppSyncManager  {
     func cleardata() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
-        self.appShareLink = DynamicValue("")
+        self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
@@ -219,11 +218,10 @@ class AppSyncManager  {
         UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
     }
 
-    fileprivate func getAppLink() {
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getAppLink { [weak self] (appURL) in
+    func getAppLink() {
+        UserProfileAPI.instance.getAppLink { [weak self] (appURL) in
             if let urlstring = appURL, !urlstring.isEmpty {
-                self?.appShareLink.value = urlstring
+                self?.appShareLink = urlstring
             }
         }
     }
@@ -247,29 +245,45 @@ class AppSyncManager  {
         self.surveysSyncStatus.value = .inprogress
         SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
     }
+    
+    var opeartionqueue: OperationQueue?
 
     func syncUserProfile() {
-        self.fetchUserProfile()
-        self.getAppLink()
-        self.fetchUserHealthProfile()
-        self.fetchUserNotification()
-        self.fetchUserSubscriptions()
-        AppSyncManager.instance.syncUserInsights()
+        if opeartionqueue == nil {
+            opeartionqueue = OperationQueue()
+        } else {
+            opeartionqueue?.cancelAllOperations()
+        }
+        opeartionqueue?.addOperation {
+            self.fetchUserProfile()
+        }
+        opeartionqueue?.addOperation {
+            self.fetchUserHealthProfile()
+        }
+        opeartionqueue?.addOperation {
+            self.fetchUserNotification()
+        }
+        opeartionqueue?.addOperation {
+            self.fetchUserSubscriptions()
+        }
+        opeartionqueue?.addOperation {
+            self.syncUserInsights()
+        }
     }
     
     fileprivate func startpollingSurveys() {
         let queue = DispatchQueue.global(qos: .background)
-        self.timer?.cancel()
-        self.timer = DispatchSource.makeTimerSource(queue: queue) //else { return }
-        timer?.schedule(deadline: .now() + 60)
-        timer?.setEventHandler(handler: {
+        self.pollingTimer?.cancel()
+        self.pollingTimer = DispatchSource.makeTimerSource(queue: queue)
+        pollingTimer?.schedule(deadline: .now() + 60)
+        pollingTimer?.setEventHandler(handler: {
             self.syncSurveyList()
         })
-        timer?.resume()
+        pollingTimer?.resume()
     }
     
     fileprivate func clearPollingTimer() {
-        self.timer?.cancel()
-        self.timer = nil
+        self.pollingTimer?.cancel()
+        self.pollingTimer = nil
     }
 }

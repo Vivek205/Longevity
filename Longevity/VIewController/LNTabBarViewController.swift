@@ -74,6 +74,7 @@ class LNTabBarViewController: UITabBarController {
         })
         
         AppSyncManager.instance.syncUserProfile()
+        AppSyncManager.instance.getAppLink()
         self.handleNetworkConnectionChange()
     }
 
@@ -87,8 +88,9 @@ class LNTabBarViewController: UITabBarController {
                     }
                 }
             } else if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
+                AppSyncManager.instance.syncUserProfile()
+                AppSyncManager.instance.getAppLink()
                 DispatchQueue.main.async {
-                    AppSyncManager.instance.syncUserProfile()
                     if let items = self.tabBarController?.tabBar.items {
                         items.forEach{$0.isEnabled = true}
                     }
@@ -114,12 +116,10 @@ extension LNTabBarViewController: UITabBarControllerDelegate {
     
     func showShareApp() {
         var sharemessage = [Any]()
-        sharemessage.append("Hey, you should download Rejuve.  It's great companion in protecting yourself from COVID-19 and improving health safety.")
-        if let applink = AppSyncManager.instance.appShareLink.value, !applink.isEmpty {
-            sharemessage.append(applink)
-        }
+        sharemessage.append("Hey, you should download COVID Signals.  It's great companion in protecting yourself from COVID-19 and improving health safety.")
+        sharemessage.append(AppSyncManager.instance.appShareLink)
         let activityVC = UIActivityViewController(activityItems: sharemessage, applicationActivities: nil)
-        activityVC.title = "Share Rejuve"
+        activityVC.title = "Share COVID Signals"
         //        activityVC.excludedActivityTypes = [.print, .airDrop, .assignToContact, .copyToPasteboard, .postToVimeo, .addToReadingList, .message, .postToWeibo]
         activityVC.popoverPresentationController?.sourceView = self.selectedViewController?.view
         self.selectedViewController?.present(activityVC, animated: true, completion: nil)

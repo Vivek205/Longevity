@@ -35,17 +35,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try Amplify.configure()
             configureCognito()
             print("Amplify configured with auth plugin")
-            Logger.log("App Launched")
-            ConnectionManager.instance.addConnectionObserver()
+//            Logger.log("App Launched")
+//            ConnectionManager.instance.addConnectionObserver()
             print("arn value", AppSyncManager.instance.userNotification.value?.endpointArn)
         } catch {
             print("An error occurred setting up Amplify: \(error)")
         }
         
-        SentrySDK.start(options: [
-            "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
-            "enableAutoSessionTracking": true
-        ])
+//        SentrySDK.start(options: [
+//            "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
+//            "enableAutoSessionTracking": true
+//        ])
         
         UNUserNotificationCenter.current().delegate = self
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -114,6 +114,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             if AppSyncManager.instance.healthProfile.value?.devices?[ExternalDevices.fitbit]?["connected"] == 1 {
                 self.scheduleBackgroundFetch()
             }
+        }
+        
+        if AppSyncManager.instance.pollingTimer != nil {
+            AppSyncManager.instance.pollingTimer?.cancel()
+        }
+    }
+    
+    func applicationWillEnterForeground(_ application: UIApplication) {
+        if AppSyncManager.instance.pollingTimer != nil {
+            AppSyncManager.instance.syncSurveyList()
         }
     }
 
@@ -343,11 +353,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if let endpointArnForSNS = createEndpointResponse.endpointArn {
                     print("endpointArn: \(endpointArnForSNS)")
                     Logger.log("ARN endpoint created")
-//                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
                     AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
-
                     notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
-                    
                 }
             }
             return nil
@@ -381,13 +388,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         self?.setSNSEndpointAttributes(endpointArn: endpointARN)
                     }
                 }
-
-//                let notificationAPI = NotificationAPI()
-//                notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointARN)
-
-//                if let endpointARN = AppSyncManager.instance.userNotification.value?.endpointArn {
-
-//                }
             }
         }
     }
