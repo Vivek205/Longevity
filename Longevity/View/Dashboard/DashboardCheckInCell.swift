@@ -105,7 +105,7 @@ extension CheckInStatus {
     }
 }
 
-class DashboardCheckInCell: UITableViewCell {
+class DashboardCheckInCell: UICollectionViewCell {
     var surveyId: String?
     var submissionID: String?
 
@@ -154,32 +154,24 @@ class DashboardCheckInCell: UITableViewCell {
         return bgview
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.backgroundColor = .clear
-        
-        self.addSubview(bgView)
-        bgView.addSubview(checkInIcon)
-        bgView.addSubview(checkInTitle)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        self.backgroundColor = .white
+        self.contentView.addSubview(checkInIcon)
+        self.contentView.addSubview(checkInTitle)
         
         NSLayoutConstraint.activate([
-            bgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
-            bgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            bgView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-            bgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0),
-            checkInIcon.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 10.0),
-            checkInIcon.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -10.0),
-            checkInIcon.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 10.0),
+            checkInIcon.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10.0),
+            checkInIcon.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10.0),
+            checkInIcon.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10.0),
             checkInIcon.widthAnchor.constraint(equalTo: checkInIcon.heightAnchor),
             checkInTitle.leadingAnchor.constraint(equalTo: checkInIcon.trailingAnchor, constant: 10.0),
             checkInTitle.topAnchor.constraint(equalTo: checkInIcon.topAnchor),
             checkInTitle.bottomAnchor.constraint(equalTo: checkInIcon.bottomAnchor),
-            checkInTitle.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0)
+            checkInTitle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10.0)
         ])
         
         self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil, noOfTimesSurveyTaken: nil)
-        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -229,14 +221,18 @@ class DashboardCheckInCell: UITableViewCell {
     
     override func layoutSubviews() {
         super.layoutSubviews()
-        bgView.layer.masksToBounds = true
-        bgView.layer.shadowColor = UIColor.black.cgColor
-        bgView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        bgView.layer.cornerRadius = 5.0
-        bgView.layer.shadowRadius = 2.0
-        bgView.layer.shadowOpacity = 0.25
-        bgView.layer.masksToBounds = false
-        bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds, cornerRadius: bgView.layer.cornerRadius).cgPath
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.borderWidth = 1.0
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.cornerRadius = 5.0
+        layer.shadowRadius = 1.0
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
 
     func checkIsSurveySubmittedToday(lastSubmissionDate: String?) -> Bool {

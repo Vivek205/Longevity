@@ -71,6 +71,12 @@ class AppSyncManager  {
                                 userInsightDescription: "COVID Check-in Log",
                                 defaultOrder: 3,
                                 details: nil,
+                                isExpanded: false),
+                    UserInsight(name: .coughlogs,
+                                text: "Cough Test Log",
+                                userInsightDescription: "Cough Test Log",
+                                defaultOrder: 3,
+                                details: nil,
                                 isExpanded: false)]
     
     fileprivate init() {

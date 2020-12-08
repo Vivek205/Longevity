@@ -118,6 +118,7 @@ extension Sentiment {
 }
 
 enum CardType: String, Codable {
+    case coughlogs = "COUGH_LOGS"
     case logs = "COVID_LOGS"
     case exposure = "COVID_EXPOSURE"
     case risk = "COVID_RISK"

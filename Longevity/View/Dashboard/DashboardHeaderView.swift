@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DashboardHeaderView: UITableViewHeaderFooterView {
+class DashboardHeaderView: UICollectionReusableView {
     
-    let vTop = UIDevice.hasNotch ? 100.0 : 60.0
+    let vTop = UIDevice.hasNotch ? 85.0 : 45.0
     
     var userInsights: [UserInsight]? {
         didSet {
@@ -42,8 +42,8 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
     let topMargin = 10.0
     let bottomMargin = 10.0
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         self.addSubview(bgImageView)
         self.addSubview(dashboardTilesCollection)
@@ -63,7 +63,7 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: 0.0, right: 0.0)
         layout.scrollDirection = .horizontal
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
@@ -91,7 +91,7 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
         layerGradient.name = "gradLayer"
         layerGradient.frame = CGRect(x: 0, y: 0, width: bgImageView.bounds.width, height: bgImageView.bounds.height)
         layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
-        layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
+        layerGradient.startPoint = CGPoint(x: 0, y: 0.75)
         layerGradient.endPoint = CGPoint(x: 0, y: 1.0)
 
         bgImageView.layer.insertSublayer(layerGradient, at: 0)
