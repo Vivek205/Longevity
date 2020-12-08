@@ -191,7 +191,7 @@ class DashboardCheckInCell: UITableViewCell {
         
         let checkinTitle = "\(status.titleText)\n"
         
-        let titlefont = UIFont(name: "Montserrat-Medium", size: 20.0)!
+        let titlefont = UIFont(name: AppFontName.medium, size: 20.0)!
         let paragraphStyle1 = NSMutableParagraphStyle()
         paragraphStyle1.lineSpacing = 5
         let attributes: [NSAttributedString.Key: Any] = [.font: titlefont,
@@ -212,7 +212,7 @@ class DashboardCheckInCell: UITableViewCell {
         if status == .notstarted || status == .completed {
             if let statusText = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString,
                                                    noOfTimesSurveyTaken: noOfTimesSurveyTaken) {
-                let statusFont = UIFont(name: "Montserrat-Regular", size: 14.0)!
+                let statusFont = UIFont(name: AppFontName.regular, size: 14.0)!
                 let paragraphStyle3 = NSMutableParagraphStyle()
                 paragraphStyle3.lineSpacing = 2.5
                 let statusTextAttributes: [NSAttributedString.Key: Any] =
