@@ -93,6 +93,7 @@ class CheckinLogViewController: BaseViewController {
     }
 
     func updateLogDetails() {
+        if history == nil {return}
         self.showSpinner()
         let submissionIdList = history.map{$0.submissionID}
         print("submissionIdList", submissionIdList)

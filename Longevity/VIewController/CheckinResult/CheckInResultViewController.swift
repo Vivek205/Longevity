@@ -72,7 +72,7 @@ class CheckInResultViewController: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
         let logButton = UIButton()
-        logButton.setTitle("Check-in Log", for: .normal)
+        logButton.setTitle("Results Data Log", for: .normal)
         logButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
         logButton.setTitleColor(.themeColor, for: .normal)
         logButton.backgroundColor = .clear
