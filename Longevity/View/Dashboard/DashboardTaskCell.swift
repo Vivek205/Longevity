@@ -15,7 +15,7 @@ class DashboardTaskCell: UITableViewCell {
             if let status = surveyDetails?.lastSurveyStatus, status == .pending {
                 taskIcon.image = UIImage(named: "taskprocessing")
                 let descriptionText = "Your \(surveyDetails?.name ?? "") results will be avaliable soon"
-                self.setupCell(title: status.titleText, taskDescription: descriptionText)
+                self.setupCell(title: status.titleText(surveyName: surveyDetails?.name ?? ""), taskDescription: descriptionText)
                 self.progressLabel.isHidden = true
                 self.progressBar.isHidden = true
                 

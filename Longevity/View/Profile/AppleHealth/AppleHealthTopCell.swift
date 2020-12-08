@@ -37,7 +37,7 @@ class AppleHealthTopCell: UITableViewCell {
     lazy var deviceStatus: UILabel = {
         let status = UILabel()
         status.text = "Connected"
-        status.font = UIFont(name: "Montserrat-Medium", size: 12.0)
+        status.font = UIFont(name: AppFontName.medium, size: 12.0)
         status.textColor = UIColor(hexString: "#5AA7A7")
         status.textAlignment = .center
         status.translatesAutoresizingMaskIntoConstraints = false
@@ -47,7 +47,7 @@ class AppleHealthTopCell: UITableViewCell {
     lazy var healthkitName: UILabel = {
         let healthkitname = UILabel()
         healthkitname.text = "Apple Health"
-        healthkitname.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        healthkitname.font = UIFont(name: AppFontName.medium, size: 14.0)
         healthkitname.textColor = UIColor(hexString: "#4E4E4E")
         healthkitname.textAlignment = .center
         return healthkitname
@@ -56,7 +56,7 @@ class AppleHealthTopCell: UITableViewCell {
     lazy var appName: UILabel = {
         let appname = UILabel()
         appname.text = "Rejuve"
-        appname.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        appname.font = UIFont(name: AppFontName.medium, size: 14.0)
         appname.textColor = UIColor(hexString: "#4E4E4E")
         appname.textAlignment = .center
         return appname

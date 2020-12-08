@@ -18,7 +18,7 @@ enum CheckInStatus: String, Decodable {
 }
 
 extension CheckInStatus {
-    func statusTitle(lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) -> String? {
+    func statusTitle(lastSubmissionDateString: String?) -> String? {
         switch self {
         case .notstarted:
             return "Get started today"
@@ -49,14 +49,14 @@ extension CheckInStatus {
         }
     }
     
-    var titleText: String {
+    func titleText(surveyName: String) -> String {
         switch self {
         case .notstarted:
-            return "COVID Check-in"
+            return surveyName
         case .completedToday:
             return "View Today’s Results"
         case .completed:
-            return "COVID Check-in"
+            return surveyName
         case .pending:
             return "Processing…"
         }
@@ -96,11 +96,11 @@ extension CheckInStatus {
     var subtitleFont: UIFont {
         switch self {
         case .completedToday:
-            return UIFont(name: "Montserrat-Regular", size: 16.0)!
+            return UIFont(name: AppFontName.regular, size: 16.0)!
         case .pending:
-            return UIFont(name: "Montserrat-Regular", size: 16.0)!
+            return UIFont(name: AppFontName.regular, size: 16.0)!
         default:
-            return UIFont(name: "Montserrat-SemiBold", size: 16.0)!
+            return UIFont(name: AppFontName.semibold, size: 16.0)!
         }
     }
 }
@@ -189,7 +189,7 @@ class DashboardCheckInCell: UITableViewCell {
     func setupCell(title: String, lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) {
         self.checkInIcon.image = status.statusIcon
         
-        let checkinTitle = "\(status.titleText)\n"
+        let checkinTitle = "\(status.titleText(surveyName: title))\n"
         
         let titlefont = UIFont(name: AppFontName.medium, size: 20.0)!
         let paragraphStyle1 = NSMutableParagraphStyle()
@@ -210,8 +210,7 @@ class DashboardCheckInCell: UITableViewCell {
         attributedcheckinTitle.append(attributedcheckinSubTitle)
         
         if status == .notstarted || status == .completed {
-            if let statusText = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString,
-                                                   noOfTimesSurveyTaken: noOfTimesSurveyTaken) {
+            if let statusText = status.statusTitle(lastSubmissionDateString: lastSubmissionDateString) {
                 let statusFont = UIFont(name: AppFontName.regular, size: 14.0)!
                 let paragraphStyle3 = NSMutableParagraphStyle()
                 paragraphStyle3.lineSpacing = 2.5
