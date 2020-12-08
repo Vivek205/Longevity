@@ -8,14 +8,14 @@
 
 import UIKit
 
-class DashboardTaskCell: UITableViewCell {
+class DashboardTaskCell: UICollectionViewCell {
 
     var surveyDetails: SurveyListItem? {
         didSet {
             if let status = surveyDetails?.lastSurveyStatus, status == .pending {
                 taskIcon.image = UIImage(named: "taskprocessing")
                 let descriptionText = "Your \(surveyDetails?.name ?? "") results will be avaliable soon"
-                self.setupCell(title: status.titleText, taskDescription: descriptionText)
+                self.setupCell(title: status.titleText(surveyName: surveyDetails?.name ?? ""), taskDescription: descriptionText)
                 self.progressLabel.isHidden = true
                 self.progressBar.isHidden = true
                 
@@ -145,33 +145,27 @@ class DashboardTaskCell: UITableViewCell {
         return bgview
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        self.backgroundColor = .clear
-        self.addSubview(bgView)
-        bgView.addSubview(taskIcon)
-        bgView.addSubview(taskTitle)
-        bgView.addSubview(progressView)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    
+        self.backgroundColor = .white
+        self.contentView.addSubview(taskIcon)
+        self.contentView.addSubview(taskTitle)
+        self.contentView.addSubview(progressView)
         
         NSLayoutConstraint.activate([
-            bgView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
-            bgView.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            bgView.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
-            bgView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0),
             taskIcon.centerYAnchor.constraint(equalTo: taskTitle.centerYAnchor),
-            taskIcon.leadingAnchor.constraint(equalTo: bgView.leadingAnchor, constant: 10.0),
+            taskIcon.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 10.0),
             taskIcon.heightAnchor.constraint(equalToConstant: 52.0),
             taskIcon.widthAnchor.constraint(equalTo: taskIcon.heightAnchor),
             taskTitle.leadingAnchor.constraint(equalTo: taskIcon.trailingAnchor, constant: 10.0),
-            taskTitle.trailingAnchor.constraint(equalTo: bgView.trailingAnchor, constant: -10.0),
-            taskTitle.topAnchor.constraint(equalTo: bgView.topAnchor, constant: 10.0),
+            taskTitle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10.0),
+            taskTitle.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 10.0),
             taskTitle.bottomAnchor.constraint(equalTo: progressView.topAnchor),
-            progressView.leadingAnchor.constraint(equalTo: bgView.leadingAnchor),
-            progressView.trailingAnchor.constraint(equalTo: bgView.trailingAnchor),
-            progressView.bottomAnchor.constraint(equalTo: bgView.bottomAnchor, constant: -10.0)
+            progressView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor),
+            progressView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor),
+            progressView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -10.0)
         ])
-        self.selectionStyle = .none
     }
     
     required init?(coder: NSCoder) {
@@ -211,14 +205,17 @@ class DashboardTaskCell: UITableViewCell {
     override func layoutSubviews() {
         super.layoutSubviews()
         
-        bgView.layer.masksToBounds = true
-        bgView.layer.shadowColor = UIColor.black.cgColor
-        bgView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
-        bgView.layer.cornerRadius = 5.0
-        bgView.layer.shadowRadius = 2.0
-        bgView.layer.shadowOpacity = 0.25
-        bgView.layer.masksToBounds = false
-        bgView.layer.shadowPath = UIBezierPath(roundedRect: bgView.bounds,
-                                               cornerRadius: bgView.layer.cornerRadius).cgPath
+        contentView.layer.cornerRadius = 5.0
+        contentView.layer.borderWidth = 1.0
+        contentView.layer.borderColor = UIColor.clear.cgColor
+        contentView.layer.masksToBounds = true
+        
+        layer.shadowColor = UIColor.black.cgColor
+        layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        layer.cornerRadius = 5.0
+        layer.shadowRadius = 1.0
+        layer.shadowOpacity = 0.25
+        layer.masksToBounds = false
+        layer.shadowPath = UIBezierPath(roundedRect: bounds, cornerRadius: contentView.layer.cornerRadius).cgPath
     }
 }

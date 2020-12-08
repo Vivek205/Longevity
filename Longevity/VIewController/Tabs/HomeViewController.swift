@@ -10,9 +10,7 @@ import UIKit
 import ResearchKit
 
 class HomeViewController: BaseViewController {
-    var surveyId: String?
-    var currentTask: ORKOrderedTask?
-    
+
     var isAIProcessPending: Bool = false {
         didSet {
             self.aiProcessingBand.isHidden = !isAIProcessPending
@@ -27,6 +25,19 @@ class HomeViewController: BaseViewController {
         table.separatorStyle = .none
         table.translatesAutoresizingMaskIntoConstraints = false
         return table
+    }()
+    
+    lazy var collectionView: UICollectionView = {
+        let collectionview = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
+        collectionview.alwaysBounceVertical = false
+        collectionview.showsVerticalScrollIndicator = false
+        collectionview.showsHorizontalScrollIndicator = false
+        collectionview.backgroundColor = UIColor(hexString: "#F5F6FA")
+        collectionview.translatesAutoresizingMaskIntoConstraints = false
+        collectionview.delegate = self
+        collectionview.dataSource = self
+        collectionview.isScrollEnabled = true
+        return collectionview
     }()
     
     lazy var aiProcessingBand: AIProgressBandView = {
@@ -47,25 +58,19 @@ class HomeViewController: BaseViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.addSubview(tableView)
+        self.view.addSubview(collectionView)
         self.titleView.addSubview(aiProcessingBand)
         
         self.titleView.bgImageView.alpha = 0.0
-        
-        tableView.tableHeaderView = nil
-        tableView.delegate = self
-        tableView.dataSource = self
-        self.tableView.bounces = false
-        tableView.tableFooterView = UIView()
 
         self.navigationController?.navigationBar.barTintColor = .orange
         
         NSLayoutConstraint.activate([
-            tableView.topAnchor.constraint(equalTo: self.view.topAnchor,
-                                           constant: -UIApplication.shared.statusBarFrame.height * 2),
-            tableView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            tableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            tableView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            collectionView.topAnchor.constraint(equalTo: self.view.topAnchor,
+                                           constant: -UIApplication.shared.statusBarFrame.height),
+            collectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            collectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            collectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             aiProcessingBand.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor),
             aiProcessingBand.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor),
             aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
@@ -75,14 +80,14 @@ class HomeViewController: BaseViewController {
         SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadSections([0], with: .fade)
+                self?.collectionView.reloadSections([0])
             }
         }
         
         SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.removeSpinner()
-                self?.tableView.reloadSections([2], with: .fade)
+                self?.collectionView.reloadSections([2])
             }
         }
 
@@ -95,113 +100,64 @@ class HomeViewController: BaseViewController {
         }
         
         AppSyncManager.instance.syncSurveyList()
+        
+        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        
+        layout.itemSize = CGSize(width: Double(self.view.bounds.width) - 20.0, height: 75.0)
+        layout.sectionInset = UIEdgeInsets(top: 2.0, left: 0.0, bottom: 10.0, right: 0.0)
+        layout.minimumInteritemSpacing = 10
+        layout.scrollDirection = .vertical
+        layout.invalidateLayout()
     }
 }
 
-extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
-    func numberOfSections(in tableView: UITableView) -> Int {
+extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+    func numberOfSections(in collectionView: UICollectionView) -> Int {
         return 3
     }
     
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if section == 0 {
-            return SurveyTaskUtility.shared.repetitiveSurveyList.value?.count ?? 0
+            let count = SurveyTaskUtility.shared.repetitiveSurveyList.value?.count ?? 0
+            return count
         } else if section == 1 {
             return 1
         } else {
-            if SurveyTaskUtility.shared.oneTimeSurveyList.value?.isEmpty ?? true {
-                return 1
-            } else {
-                return SurveyTaskUtility.shared.oneTimeSurveyList.value?.count ?? 1
-            }
+            let count = SurveyTaskUtility.shared.oneTimeSurveyList.value?.count ?? 0
+            return count
         }
     }
     
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            guard let checkinCell = tableView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+            guard let checkinCell = collectionView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
-            let surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row]
-            
-            if surveyResponse?.lastSurveyStatus == .pending {
-                self.isAIProcessPending = true
+            if let surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row] {
+                checkinCell.surveyResponse = surveyResponse
             }
-            checkinCell.surveyResponse = surveyResponse
             return checkinCell
         } else if indexPath.section == 1 {
-            guard let devicesCell = tableView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
+            guard let devicesCell = collectionView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
                 preconditionFailure("Invalid device cell")
             }
             devicesCell.delegate = self
             return devicesCell
         } else {
-            if SurveyTaskUtility.shared.oneTimeSurveyList.value?.isEmpty ?? true {
-                guard let completionCell = tableView.getCell(with: DashboardTaskCompletedCell.self, at: indexPath) as? DashboardTaskCompletedCell else {
-                    preconditionFailure("Invalid completion cell")
-                }
-                return completionCell
-            }
-            guard let taskCell = tableView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
+            guard let taskCell = collectionView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
                 preconditionFailure("Invalid device cell")
             }
-            let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row]
-            
-            if surveyDetails?.lastSurveyStatus == .pending {
-                self.isAIProcessPending = true
+            if let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] {
+                taskCell.surveyDetails = surveyDetails
             }
-            taskCell.surveyDetails = surveyDetails
             return taskCell
         }
     }
     
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        if section == 0 {
-            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.50 : 0.60
-            let height = tableView.bounds.height * heightFactor
-            return height
-        } else {
-            return 40.0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, heightForFooterInSection section: Int) -> CGFloat {
-        return 0.0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section == 0 {
-            return 120.0
-        } else if indexPath.section == 1 {
-            return 170.0
-        } else {
-            if SurveyTaskUtility.shared.oneTimeSurveyList.value?.isEmpty ?? true {
-                return 100
-            }
-            return 140.0
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        if section == 0 {
-            guard let headerView = tableView.getHeader(with: DashboardHeaderView.self,
-                                                       index: section) as? DashboardHeaderView else {
-                preconditionFailure("Invalid header view")
-            }
-            return headerView
-        } else {
-            guard let headerView = tableView.getHeader(with: DashboardSectionHeader.self,
-                                                       index: section) as? DashboardSectionHeader else {
-                preconditionFailure("Invalid header view")
-            }
-            headerView.headerType = HeaderType(rawValue: section) ?? .devices
-            return headerView
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        tableView.deselectRow(at: indexPath, animated: true)
-        if let selectedCell = tableView.cellForRow(at: indexPath) as? DashboardCheckInCell,
+    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? DashboardCheckInCell,
            let surveyId = selectedCell.surveyId
         {
             //If Survey is submitted today and is under processing
@@ -218,7 +174,7 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
             }
         }
         
-        if let taskCell = tableView.cellForRow(at: indexPath) as? DashboardTaskCell,
+        if let taskCell = collectionView.cellForItem(at: indexPath) as? DashboardTaskCell,
            let surveyId = taskCell.surveyDetails?.surveyId
         {
             guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
@@ -238,7 +194,50 @@ extension HomeViewController: UITableViewDataSource, UITableViewDelegate {
         }
     }
     
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        if indexPath.section == 0 {
+            return CGSize(width: collectionView.bounds.width - 20.0, height: 100.0)
+        } else if indexPath.section == 1 {
+            return CGSize(width: collectionView.bounds.width, height: 170.0)
+        } else {
+            return CGSize(width: collectionView.bounds.width - 20.0, height: 120.0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+        if section == 0 {
+            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.50 : 0.60
+            let height = collectionView.bounds.height * heightFactor
+            return CGSize(width: collectionView.bounds.width, height: height)
+        } else {
+            return CGSize(width: collectionView.bounds.width, height: 40.0)
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+        return CGSize(width: collectionView.bounds.width, height: 0.0)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        if indexPath.section == 0 {
+            guard let headerView = collectionView.getSupplementaryView(with: DashboardHeaderView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? DashboardHeaderView else {
+                preconditionFailure("Invalid header view")
+            }
+            return headerView
+        } else {
+            guard let headerView = collectionView.getSupplementaryView(with: DashboardSectionHeader.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? DashboardSectionHeader else {
+                preconditionFailure("Invalid header view")
+            }
+            headerView.headerType = HeaderType(rawValue: indexPath.section) ?? .devices
+            return headerView
+        }
+    }
+    
     func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let topY = -UIApplication.shared.statusBarFrame.height
+        if scrollView.contentOffset.y < topY {
+            scrollView.contentOffset.y = topY
+        }
         let topGap = 44.0 + scrollView.contentOffset.y
         self.titleView.bgImageView.alpha = topGap > 1 ? 1 : topGap
     }
@@ -267,29 +266,6 @@ extension HomeViewController {
         }
         SurveyTaskUtility.shared.createSurvey(surveyId: surveyId, completion: onCreateSurveyCompletion(_:),
                                               onFailure: onCreateSurveyFailure(_:))
-    }
-}
-
-class HomeViewHeader: UITableViewHeaderFooterView {
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        
-        let view = UIView()
-        view.backgroundColor = UIColor(hexString: "#F5F6FA")
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(view)
-        
-        NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            view.topAnchor.constraint(equalTo: topAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
 

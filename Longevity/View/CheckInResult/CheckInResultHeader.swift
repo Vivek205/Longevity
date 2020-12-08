@@ -40,7 +40,7 @@ class CheckInResultHeader: UICollectionReusableView {
     
     lazy var titleLabel: UILabel = {
         let title = UILabel()
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.numberOfLines = 0
         title.textColor = .white
         title.textAlignment = .center
@@ -68,7 +68,7 @@ class CheckInResultHeader: UICollectionReusableView {
     lazy var headerTitle: UILabel = {
         let title = UILabel()
         title.text = "According to our analysis you should:"
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false

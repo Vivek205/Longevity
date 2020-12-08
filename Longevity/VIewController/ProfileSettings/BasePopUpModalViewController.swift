@@ -41,7 +41,7 @@ class BasePopUpModalViewController: UIViewController {
     lazy var titleLabel: UILabel = {
         let title = UILabel()
         title.text = ""
-        title.font = UIFont(name: "Montserrat-Medium", size: 24.0)
+        title.font = UIFont(name: AppFontName.medium, size: 24.0)
         title.textAlignment = .center
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -61,7 +61,7 @@ class BasePopUpModalViewController: UIViewController {
         let export = CustomButtonFill()
         export.setTitle("Export Now", for: .normal)
         export.setTitleColor(.white, for: .normal)
-        export.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
+        export.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
         export.backgroundColor = .themeColor
         export.translatesAutoresizingMaskIntoConstraints = false
         export.addTarget(self, action: #selector(primaryButtonPressed(_:)), for: .touchUpInside)

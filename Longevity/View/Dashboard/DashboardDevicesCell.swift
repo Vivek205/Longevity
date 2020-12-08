@@ -64,7 +64,7 @@ protocol DashboardDevicesCellDelegate {
     func showError(forDeviceCollectionCell cell:DashboardDeviceCollectionCell)
 }
 
-class DashboardDevicesCell: UITableViewCell {
+class DashboardDevicesCell: UICollectionViewCell {
     var delegate:DashboardDevicesCellDelegate?
     
     lazy var devicesCollection: UICollectionView = {
@@ -79,8 +79,8 @@ class DashboardDevicesCell: UITableViewCell {
         return devices
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: CGRect.zero)
         
         self.contentView.addSubview(devicesCollection)
         self.backgroundColor = UIColor(hexString: "#F5F6FA")
