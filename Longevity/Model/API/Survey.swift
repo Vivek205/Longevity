@@ -46,6 +46,7 @@ enum QuestionTypes:String, Decodable {
     case temperatureScale = "TEMPERATURE_SCALE"
     case location = "LOCATION"
     case valuePicker = "VALUE_PICKER"
+    case speechRecognition = "SPEECH_RECOGNITION"
 }
 
 struct Question:Decodable {
