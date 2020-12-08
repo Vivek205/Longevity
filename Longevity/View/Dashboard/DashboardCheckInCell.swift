@@ -114,21 +114,26 @@ class DashboardCheckInCell: UICollectionViewCell {
     
     var surveyResponse: SurveyListItem! {
         didSet {
-            self.isSurveySubmittedToday = checkIsSurveySubmittedToday(lastSubmissionDate: surveyResponse.lastSubmission)
-            self.status = surveyResponse.lastSurveyStatus
-
-            if surveyResponse.lastSurveyStatus != .pending &&
-                surveyResponse.lastSurveyStatus != .notstarted {
-                if self.isSurveySubmittedToday {
-                    status = .completedToday
-                } else {
-                    status = .completed
-                }
-            }
-            self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission,
-                           noOfTimesSurveyTaken: surveyResponse.noOfTimesSurveyTaken)
             self.surveyId = surveyResponse.surveyId
             self.submissionID = surveyResponse.lastSubmissionId
+                        
+            if surveyResponse.name == "Cough Test" {
+                self.setupCoughTestCell(title: surveyResponse.name, subtext: surveyResponse.description.shortDescription)
+            }
+            else {
+                self.isSurveySubmittedToday = checkIsSurveySubmittedToday(lastSubmissionDate: surveyResponse.lastSubmission)
+                self.status = surveyResponse.lastSurveyStatus
+
+                if surveyResponse.lastSurveyStatus != .pending &&
+                    surveyResponse.lastSurveyStatus != .notstarted {
+                    if self.isSurveySubmittedToday {
+                        status = .completedToday
+                    } else {
+                        status = .completed
+                    }
+                }
+                self.setupCell(title: surveyResponse.name, lastSubmissionDateString:surveyResponse.lastSubmission)
+            }
         }
     }
     
@@ -170,15 +175,13 @@ class DashboardCheckInCell: UICollectionViewCell {
             checkInTitle.bottomAnchor.constraint(equalTo: checkInIcon.bottomAnchor),
             checkInTitle.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -10.0)
         ])
-        
-        self.setupCell(title: "COVID Check-in", lastSubmissionDateString: nil, noOfTimesSurveyTaken: nil)
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func setupCell(title: String, lastSubmissionDateString: String?, noOfTimesSurveyTaken: Int?) {
+    func setupCell(title: String, lastSubmissionDateString: String?) {
         self.checkInIcon.image = status.statusIcon
         
         let checkinTitle = "\(status.titleText(surveyName: title))\n"
@@ -215,6 +218,32 @@ class DashboardCheckInCell: UICollectionViewCell {
                 attributedcheckinTitle.append(attributedstatusText)
             }
         }
+        
+        self.checkInTitle.attributedText = attributedcheckinTitle
+    }
+    
+    func setupCoughTestCell(title: String, subtext: String) {
+        self.checkInIcon.image = UIImage(named: "coughtest")
+        
+        let checkinTitle = "\(status.titleText(surveyName: title))\n"
+        
+        let titlefont = UIFont(name: AppFontName.medium, size: 20.0)!
+        let paragraphStyle1 = NSMutableParagraphStyle()
+        paragraphStyle1.lineSpacing = 5
+        let attributes: [NSAttributedString.Key: Any] = [.font: titlefont,
+                                                         .foregroundColor: status.titleColor,
+                                                         .paragraphStyle: paragraphStyle1]
+        let attributedcheckinTitle = NSMutableAttributedString(string: checkinTitle, attributes: attributes)
+        
+        let checkinSubTitle = subtext
+        let paragraphStyle2 = NSMutableParagraphStyle()
+        paragraphStyle2.lineSpacing = 5
+        let subTitleAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 16.0)!,
+                                                                 .foregroundColor: UIColor.statusColor,
+                                                                 .paragraphStyle: paragraphStyle2]
+        let attributedcheckinSubTitle = NSMutableAttributedString(string: checkinSubTitle,
+                                                                  attributes: subTitleAttributes)
+        attributedcheckinTitle.append(attributedcheckinSubTitle)
         
         self.checkInTitle.attributedText = attributedcheckinTitle
     }

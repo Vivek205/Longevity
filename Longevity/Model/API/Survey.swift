@@ -197,7 +197,11 @@ class SurveysAPI : BaseAuthAPI {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                let value = try decoder.decode([SurveyListItem].self, from: data)
+                var value = try decoder.decode([SurveyListItem].self, from: data)
+
+                //TODO: This logic to be removed upon new survey is populated
+                value.append(SurveyListItem(surveyId: "COUGH_TEST_SURVEY_01", name: "Cough Test", description: SurveyDescription(shortDescription: "Test your cough for early detection of COVID.", longDescription: "You will be asked detailed questions that cover COVID symptoms, exposure, and your social distancing practices.\n\nFor best results, please complete your COVID Check-in daily."), imageUrl: nil, lastSubmission: nil, lastSubmissionId: nil, response: nil, isRepetitive: true, noOfTimesSurveyTaken: nil, lastSurveyStatus: .notstarted))
+                
                 SurveyTaskUtility.shared.setSurveyList(list: value)
                 if !value.isEmpty {
                     value.forEach {
