@@ -1,17 +1,17 @@
 {
   "images" : [
     {
-      "filename" : "setupProfileDevices@1x.png",
+      "filename" : "Header illustraiton@1x.png",
       "idiom" : "universal",
       "scale" : "1x"
     },
     {
-      "filename" : "setupProfileDevices@2x.png",
+      "filename" : "Header illustraiton@2x.png",
       "idiom" : "universal",
       "scale" : "2x"
     },
     {
-      "filename" : "setupProfileDevices@3x.png",
+      "filename" : "Header illustraiton@3x.png",
       "idiom" : "universal",
       "scale" : "3x"
     }
