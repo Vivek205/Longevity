@@ -62,9 +62,12 @@ class FormStepVC: ORKStepViewController {
     }
 
     func prefillForm(questionId: String) -> String? {
-        let feelingTodayQuestionId = "8020"
+        let feelingTodayQuestionId = "3010"
         guard let feelingTodayAnswer =
             SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: feelingTodayQuestionId) else {return nil}
+        if feelingTodayAnswer == "0" {
+            self.goForward()
+        }
         let prefillSymptomsOption = "2"
         if feelingTodayAnswer == prefillSymptomsOption {
             guard let lastResponse =
