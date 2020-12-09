@@ -71,7 +71,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     }()
 
     lazy var sliderLabel: UILabel = {
-        let label = UILabel()
+        let label = UILabel(text: nil, font: UIFont(name: AppFontName.medium, size: 28), textColor: .themeColor, textAlignment: .center, numberOfLines: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
@@ -105,12 +105,12 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
             questionView.heightAnchor.constraint(equalToConstant: questionViewHeight),
 
             sliderLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            sliderLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor),
+            sliderLabel.topAnchor.constraint(equalTo: questionView.bottomAnchor, constant: 6),
             sliderLabel.heightAnchor.constraint(equalToConstant: 50),
 
             slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            slider.topAnchor.constraint(equalTo: sliderLabel.bottomAnchor, constant: 30),
+            slider.topAnchor.constraint(equalTo: sliderLabel.bottomAnchor, constant: 12),
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
@@ -130,8 +130,8 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
 
     @objc func handleSliderValueChanged(_ sender: UISlider) {
         guard let identifer = step?.identifier else { return }
-        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.2f", sender.value))
-        sliderLabel.text = String(format: "%.2f", sender.value)
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifer, answer: String(format: "%.1f", sender.value))
+        sliderLabel.text = String(format: "%.1f", sender.value)
         continueButton.isEnabled = true
     }
 
