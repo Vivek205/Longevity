@@ -40,6 +40,15 @@ class BranchingOrderedTask: ORKOrderedTask {
             return nextStep
         }
         guard let identifier = step?.identifier else {return nextStep}
+//        MARK :- START Skip Symptoms If user selects `No Symptoms`
+        if identifier == SurveyTaskUtility.shared.feelingTodayQuestionId {
+            guard let feelingTodayAnswer =
+                SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: SurveyTaskUtility.shared.feelingTodayQuestionId) else {return nil}
+                    if feelingTodayAnswer == "0" {
+                        return self.steps[currentStepIndex + 2	]
+                    }
+        }
+//        MARK :- END Skip Symptoms If user selects `No Symptoms`
         let isDynamicQuestion = SurveyTaskUtility.shared.findIsQuestionDynamic(questionId: identifier)
         guard isDynamicQuestion else {
             return nextStep

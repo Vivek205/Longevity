@@ -24,8 +24,8 @@ final class SurveyTaskUtility: NSObject {
     private var surveyList:[SurveyListItem]?
     var repetitiveSurveyList: DynamicValue<[SurveyListItem]>
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
-    
     var surveyInProgress: DynamicValue<SurveyStatus>
+    let feelingTodayQuestionId = "3010"
     
     private override init() {
         self.surveyInProgress = DynamicValue(.unknown)
