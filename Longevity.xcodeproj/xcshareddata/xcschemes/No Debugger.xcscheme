@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-               BuildableName = "Longevity.app"
-               BlueprintName = "Longevity"
+               BuildableName = "COVID Signals.app"
+               BlueprintName = "COVID Signals"
                ReferencedContainer = "container:Longevity.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,8 +45,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-            BuildableName = "Longevity.app"
-            BlueprintName = "Longevity"
+            BuildableName = "COVID Signals.app"
+            BlueprintName = "COVID Signals"
             ReferencedContainer = "container:Longevity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
@@ -62,8 +62,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-            BuildableName = "Longevity.app"
-            BlueprintName = "Longevity"
+            BuildableName = "COVID Signals.app"
+            BlueprintName = "COVID Signals"
             ReferencedContainer = "container:Longevity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

@@ -451,7 +451,7 @@
 		E2E5EFD82542A259003ADAEC /* Alert.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Alert.swift; sourceTree = "<group>"; };
 		E2E5EFDA2542E0FB003ADAEC /* OfflineNotificationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OfflineNotificationView.swift; sourceTree = "<group>"; };
 		E2E8F93D24F94E7F003827CC /* FAQViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FAQViewController.swift; sourceTree = "<group>"; };
-		E2ECB8BB247FE2BA0020A27E /* Longevity.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Longevity.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		E2ECB8BB247FE2BA0020A27E /* COVID Signals.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = "COVID Signals.app"; sourceTree = BUILT_PRODUCTS_DIR; };
 		E2ECB8BE247FE2BA0020A27E /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingVC.swift; sourceTree = "<group>"; };
 		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserLogin.storyboard; sourceTree = "<group>"; };
@@ -912,7 +912,7 @@
 		E2ECB8BC247FE2BA0020A27E /* Products */ = {
 			isa = PBXGroup;
 			children = (
-				E2ECB8BB247FE2BA0020A27E /* Longevity.app */,
+				E2ECB8BB247FE2BA0020A27E /* COVID Signals.app */,
 			);
 			name = Products;
 			sourceTree = "<group>";
@@ -1007,9 +1007,9 @@
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
-		E2ECB8BA247FE2BA0020A27E /* Longevity */ = {
+		E2ECB8BA247FE2BA0020A27E /* COVID Signals */ = {
 			isa = PBXNativeTarget;
-			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */;
+			buildConfigurationList = E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "COVID Signals" */;
 			buildPhases = (
 				AC8298514C222AB3CB3A2A16 /* [CP] Check Pods Manifest.lock */,
 				E2ECB8B7247FE2BA0020A27E /* Sources */,
@@ -1024,9 +1024,9 @@
 			);
 			dependencies = (
 			);
-			name = Longevity;
+			name = "COVID Signals";
 			productName = Longevity;
-			productReference = E2ECB8BB247FE2BA0020A27E /* Longevity.app */;
+			productReference = E2ECB8BB247FE2BA0020A27E /* COVID Signals.app */;
 			productType = "com.apple.product-type.application";
 		};
 /* End PBXNativeTarget section */
@@ -1063,7 +1063,7 @@
 			);
 			projectRoot = "";
 			targets = (
-				E2ECB8BA247FE2BA0020A27E /* Longevity */,
+				E2ECB8BA247FE2BA0020A27E /* COVID Signals */,
 			);
 		};
 /* End PBXProject section */
@@ -1583,7 +1583,7 @@
 			defaultConfigurationIsVisible = 0;
 			defaultConfigurationName = Release;
 		};
-		E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "Longevity" */ = {
+		E2ECB8CF247FE2BE0020A27E /* Build configuration list for PBXNativeTarget "COVID Signals" */ = {
 			isa = XCConfigurationList;
 			buildConfigurations = (
 				E2ECB8D0247FE2BE0020A27E /* Debug */,
