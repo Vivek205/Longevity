@@ -46,6 +46,7 @@ enum QuestionTypes:String, Decodable {
     case temperatureScale = "TEMPERATURE_SCALE"
     case location = "LOCATION"
     case valuePicker = "VALUE_PICKER"
+    case speechRecognition = "SPEECH_RECOGNITION"
 }
 
 struct Question:Decodable {
@@ -331,7 +332,7 @@ class SurveysAPI : BaseAuthAPI {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
-            print(String(data:data, encoding: .utf8))
+            print("save survey payload",String(data:data, encoding: .utf8))
             
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)

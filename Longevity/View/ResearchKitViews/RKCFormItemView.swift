@@ -48,15 +48,16 @@ class RKCFormItemView: UICollectionViewCell {
         var answerView:UIView
         switch answerFormat.questionType {
         case .boolean:
-            if let serverAnswerToPreselect = lastResponseAnswer {
-                if let localAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) {
-                    let currentResultSelectedSegmentIndex = Int(localAnswer)
-                    booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
-                } else {
+            if let serverAnswerToPreselect = lastResponseAnswer,
+               let currentResultSelectedSegmentIndex = Int(serverAnswerToPreselect) {
+                booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex)
+                if SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier) == nil {
                     SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: identifier, answer: serverAnswerToPreselect)
-                    let currentResultSelectedSegmentIndex = Int(serverAnswerToPreselect)
-                    booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex!)
                 }
+            }
+            if let localAnswer = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: identifier),
+               let currentResultSelectedSegmentIndex = Int(localAnswer){
+                booleanAnswerView.preSelectOption(index: currentResultSelectedSegmentIndex)
             }
             answerView = booleanAnswerView
         default:

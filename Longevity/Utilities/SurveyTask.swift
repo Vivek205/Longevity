@@ -24,8 +24,8 @@ final class SurveyTaskUtility: NSObject {
     private var surveyList:[SurveyListItem]?
     var repetitiveSurveyList: DynamicValue<[SurveyListItem]>
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
-    
     var surveyInProgress: DynamicValue<SurveyStatus>
+    let feelingTodayQuestionId = "3010"
     
     private override init() {
         self.surveyInProgress = DynamicValue(.unknown)
@@ -81,8 +81,8 @@ final class SurveyTaskUtility: NSObject {
 
                     if(categoryValue.view == SurveyCategoryViewTypes.oneCategoryPerPage) {
                         let step = ORKFormStep(identifier: "\(categoryValue.id)",
-                            title:surveyDetails?.name ?? "Survey",
-                            text: categoryValue.description)
+                                               title:surveyDetails?.name ?? "Survey",
+                                               text: categoryValue.description)
                         var items = [ORKFormItem]()
 
                         for module in categoryValue.modules {
@@ -97,7 +97,7 @@ final class SurveyTaskUtility: NSObject {
                                 }
 
                                 if  let filteredQuestions = surveyDetails?.questions
-                                    .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
+                                        .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
                                     for filteredQuestion in filteredQuestions {
 
                                         var answerFormat: ORKAnswerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
@@ -109,7 +109,7 @@ final class SurveyTaskUtility: NSObject {
                                         }
 
                                         let item = ORKFormItem(identifier: "\(filteredQuestion.quesId)",
-                                            text: "\(filteredQuestion.text)", answerFormat: answerFormat)
+                                                               text: "\(filteredQuestion.text)", answerFormat: answerFormat)
 
                                         items += [item]
                                     }
@@ -122,56 +122,11 @@ final class SurveyTaskUtility: NSObject {
                         for module in categoryValue.modules {
                             for (moduleName, moduleValue) in module {
                                 if let filteredQuestions = surveyDetails?.questions.filter
-                                    { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
+                                { $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id} as? [Question] {
                                     for filteredQuestion in filteredQuestions {
-
-                                        if filteredQuestion.quesType == .continuousScale ||
-                                            filteredQuestion.quesType == .temperatureScale {
-                                            let answerFormat = ORKAnswerFormat.continuousScale(
-                                                withMaximumValue: 150,minimumValue: 60, defaultValue: 98,
-                                                maximumFractionDigits: 1, vertical: true,
-                                                maximumValueDescription: "",
-                                                minimumValueDescription: "")
-                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId,
-                                                                               title: "\(moduleValue.id)",
-                                                                               question: filteredQuestion.text,
-                                                                               answer: answerFormat)
+                                        if let questionStep = self.createQuestionStep(moduleId: "\(moduleValue.id)", question: filteredQuestion) {
                                             steps += [questionStep]
-                                            continue
                                         }
-
-                                        if filteredQuestion.quesType == .text {
-                                            let answerFormat = ORKAnswerFormat.textAnswerFormat()
-                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
-                                            steps += [questionStep]
-                                            continue
-                                        }
-
-                                        if filteredQuestion.quesType == .valuePicker {
-                                            let textChoices: [ORKTextChoice] = filteredQuestion.options.map{
-//                                                (text, value) in
-
-
-                                                return ORKTextChoice(text: $0.text ?? "", value: NSString(string: $0.value ?? "") )
-                                            }
-//                                            let textChoices: [ORKTextChoice] = [ORKTextChoice(text: "1 day", value: 0 as NSNumber), ORKTextChoice(text: "2 days", value: 0 as NSNumber)]
-                                            let answerFormat = ORKValuePickerAnswerFormat(textChoices: textChoices)
-                                            let questionStep = ORKQuestionStep(identifier: filteredQuestion.quesId, title: "\(moduleValue.id)", question: filteredQuestion.text, answer: answerFormat)
-                                            steps += [questionStep]
-                                            continue
-                                        }
-
-                                        let step = createSingleChoiceQuestionStep(
-                                            identifier: filteredQuestion.quesId,
-                                            title: "\(moduleValue.id)",
-                                            question: filteredQuestion.text,
-                                            additionalText: nil,
-                                            choices: filteredQuestion.options.map {
-                                                ORKTextChoice(text:$0.text ?? "",detailText:$0.description ,
-                                                              value:NSString(string:  $0.value ?? ""), exclusive: false)
-                                            }
-                                        )
-                                        steps += [step]
                                     }
                                 }
 
@@ -204,6 +159,51 @@ final class SurveyTaskUtility: NSObject {
             onGetQuestionCompletion(surveyDetails)
         }
     }
+
+    func createQuestionStep(moduleId: String, question:Question) -> ORKQuestionStep? {
+        switch question.quesType {
+        case .continuousScale, .temperatureScale:
+            let answerFormat = ORKAnswerFormat.continuousScale(
+                withMaximumValue: 150,minimumValue: 60, defaultValue: 98,
+                maximumFractionDigits: 1, vertical: true,
+                maximumValueDescription: "",
+                minimumValueDescription: "")
+            let questionStep = ORKQuestionStep(identifier: question.quesId,
+                                               title: moduleId,
+                                               question: question.text,
+                                               answer: answerFormat)
+            return questionStep
+        case .text:
+            let answerFormat = ORKAnswerFormat.textAnswerFormat()
+            let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId,
+                                               question: question.text, answer: answerFormat)
+            return questionStep
+        case .valuePicker:
+            let textChoices: [ORKTextChoice] = question.options.map{
+                return ORKTextChoice(text: $0.text ?? "", value: NSString(string: $0.value ?? "") )
+            }
+
+            let answerFormat = ORKValuePickerAnswerFormat(textChoices: textChoices)
+            let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
+            return questionStep
+        case .speechRecognition:
+            //            TODO: prepare speech recognition step
+            return nil
+        default:
+            let questionStep = createSingleChoiceQuestionStep(
+                identifier: question.quesId,
+                title: moduleId,
+                question: question.text,
+                additionalText: nil,
+                choices: question.options.map {
+                    ORKTextChoice(text:$0.text ?? "",detailText:$0.description ,
+                                  value:NSString(string:  $0.value ?? ""), exclusive: false)
+                }
+            )
+            return questionStep
+        }
+    }
+
 
     func completeSurvey(completion: @escaping () -> Void, onFailure: @escaping (_ error: Error) -> Void) {
         func getSurveysCompletion(_ surveys:[SurveyListItem]) {
@@ -243,7 +243,7 @@ final class SurveyTaskUtility: NSObject {
         func onSaveCompletion() {
             print("survey saved successfully")
             SurveysAPI.instance.submitSurvey(surveyId: SurveyTaskUtility.shared.currentSurveyId,
-                         completion: onSubmitCompletion, onFailure: onSubmitFailure(_:))
+                                             completion: onSubmitCompletion, onFailure: onSubmitFailure(_:))
         }
         func onSaveFailure(_ error: Error) {
             print("save survey error", error)
@@ -275,7 +275,7 @@ final class SurveyTaskUtility: NSObject {
                                        quesId: questionId)
         }
         SurveysAPI.instance.saveSurveyAnswers(surveyId: SurveyTaskUtility.shared.currentSurveyId, answers: payload,
-                          completion: completion, onFailure: onFailure)
+                                              completion: completion, onFailure: onFailure)
     }
 
     func getCurrentSurveyLocalAnswer(questionIdentifier:String) -> String? {
@@ -401,7 +401,7 @@ final class SurveyTaskUtility: NSObject {
         default:
             return false
         }
-//        return question.action == QuestionAction.dynamic
+        //        return question.action == QuestionAction.dynamic
     }
 
     func createSingleChoiceQuestionStep(identifier: String,title:String,
@@ -425,8 +425,8 @@ final class SurveyTaskUtility: NSObject {
 
     func addTraversedQuestion(questionId: String?) {
         guard let currentSurveyId = self.currentSurveyId,
-            let questionId = questionId
-            else { return }
+              let questionId = questionId
+        else { return }
 
         guard let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId] else {
             self.traversedQuestions[currentSurveyId] = [questionId]
@@ -437,8 +437,8 @@ final class SurveyTaskUtility: NSObject {
             self.traversedQuestions[currentSurveyId]?.append(questionId)
         } else {
             guard let currentQuestionIndex = currentSurveyTraversedQuestions.firstIndex(of: questionId),
-                currentQuestionIndex+1 < self.traversedQuestions.count
-                else {return}
+                  currentQuestionIndex+1 < self.traversedQuestions.count
+            else {return}
             let slicedArray = Array(currentSurveyTraversedQuestions.prefix(upTo:(currentQuestionIndex+1)))
             print("slicedArray", slicedArray)
             self.traversedQuestions[currentSurveyId] = slicedArray
@@ -448,11 +448,11 @@ final class SurveyTaskUtility: NSObject {
     
     func findPrevQuestion(currentQuestionId: String) -> String?{
         guard let currentSurveyId = self.currentSurveyId,
-        let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
+              let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
         else {return nil}
         if let currentQuestionIndex = currentSurveyTraversedQuestions.firstIndex(of: currentQuestionId),
-            currentQuestionIndex != 0
-             {
+           currentQuestionIndex != 0
+        {
             return currentSurveyTraversedQuestions[currentQuestionIndex - 1]
         }
         return currentSurveyTraversedQuestions.last
@@ -460,7 +460,7 @@ final class SurveyTaskUtility: NSObject {
 
     func resumeTaskWithLastQuestion() -> String? {
         guard let currentSurveyId = self.currentSurveyId,
-        let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
+              let currentSurveyTraversedQuestions = self.traversedQuestions[currentSurveyId]
         else {return nil}
         return currentSurveyTraversedQuestions.last
     }
@@ -484,7 +484,7 @@ final class SurveyTaskUtility: NSObject {
                     guard let filteredQuestions =
                             surveyDetails.questions.filter({ $0.categoryId == categoryValue.id
                                                             && $0.moduleId == moduleValue.id}) as? [Question],
-                    let firstQuestion = filteredQuestions.first
+                          let firstQuestion = filteredQuestions.first
                     else { return false }
                     firstStepId = firstQuestion.quesId
                 }

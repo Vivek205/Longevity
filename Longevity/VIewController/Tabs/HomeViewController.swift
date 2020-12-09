@@ -97,8 +97,8 @@ class HomeViewController: BaseViewController {
             DispatchQueue.main.async {
                 self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
                 if SurveyTaskUtility.shared.surveyInProgress.value != .pending {
-                    AppSyncManager.instance.syncUserInsights()
-                }
+                          AppSyncManager.instance.syncUserInsights()
+                        }
             }
         }
         
