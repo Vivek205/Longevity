@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -27,7 +27,7 @@
         <!--Setup Profile DisclaimerVC-->
         <scene sceneID="Thj-ee-KuB">
             <objects>
-                <viewController storyboardIdentifier="SetupProfileDisclaimerVC" id="Zin-rP-KGp" customClass="SetupProfileDisclaimerVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupProfileDisclaimerVC" id="Zin-rP-KGp" customClass="SetupProfileDisclaimerVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="A99-0r-8zI">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -60,7 +60,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTi-dJ-ldN" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="766" width="414" height="130"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="8hx-MJ-xaj"/>
@@ -120,7 +120,7 @@
         <!--Setup Profile Bio DataVC-->
         <scene sceneID="Wfe-TF-4uK">
             <objects>
-                <viewController storyboardIdentifier="SetupProfileBioDataVC" id="YhE-Gr-gSC" customClass="SetupProfileBioDataVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupProfileBioDataVC" id="YhE-Gr-gSC" customClass="SetupProfileBioDataVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="K84-UL-axb">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -128,7 +128,7 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Bdi-8o-yPG" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOc-Gh-tin" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HOc-Gh-tin" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="NwO-30-YsX"/>
@@ -211,7 +211,7 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="362" height="90"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioMetric" id="WQR-t7-1eQ" customClass="SetupProfileUnitSelectionCell" customModule="Longevity" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileBioMetric" id="WQR-t7-1eQ" customClass="SetupProfileUnitSelectionCell" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="9" y="188" width="396" height="90"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="9EJ-Ej-88h">
@@ -284,7 +284,7 @@
         <!--Setup Profile NotificationVC-->
         <scene sceneID="js9-uj-F76">
             <objects>
-                <viewController storyboardIdentifier="SetupProfileNotificationVC" id="AXW-C6-PXE" customClass="SetupProfileNotificationVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupProfileNotificationVC" id="AXW-C6-PXE" customClass="SetupProfileNotificationVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="7g3-u9-RZ8">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -325,7 +325,7 @@
                                             <action selector="handleMayBeLater:" destination="AXW-C6-PXE" eventType="touchUpInside" id="24g-dk-Jwz"/>
                                         </connections>
                                     </button>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4jT-8s-mCb" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="15" y="24" width="384" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="LCS-3d-tXo"/>
@@ -382,7 +382,7 @@
         <!--Setup Profile DevicesVC-->
         <scene sceneID="Urf-v7-q9r">
             <objects>
-                <viewController storyboardIdentifier="SetupProfileDevicesVC" id="XcV-Lj-rTX" customClass="SetupProfileDevicesVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupProfileDevicesVC" id="XcV-Lj-rTX" customClass="SetupProfileDevicesVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="onI-zn-S5J">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -390,7 +390,7 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="u3N-lR-Yap" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="800" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQB-q8-o6h" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="TQB-q8-o6h" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="Bfn-A0-62t"/>
@@ -418,7 +418,7 @@
                                     <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileDevicesConnectCell" id="fDR-Fe-bHv" customClass="SetupProfileDevicesConnectCell" customModule="Longevity" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfileDevicesConnectCell" id="fDR-Fe-bHv" customClass="SetupProfileDevicesConnectCell" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="40" y="0.0" width="334" height="159"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="sTf-mj-jrF">
@@ -539,7 +539,7 @@
         <!--Setup Profile Pre ConditionVC-->
         <scene sceneID="POz-6z-Jpn">
             <objects>
-                <viewController storyboardIdentifier="SetupProfilePreExistingConditionVC" id="5Xi-7J-lk0" customClass="SetupProfilePreConditionVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupProfilePreExistingConditionVC" id="5Xi-7J-lk0" customClass="SetupProfilePreConditionVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="Ktt-2p-Fdg">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -592,7 +592,7 @@
                                         </collectionViewCellContentView>
                                         <size key="customSize" width="386" height="127"/>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOptionCell" id="EBo-6s-jNl" customClass="SetupProfilePreConditionOptionCell" customModule="Longevity" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOptionCell" id="EBo-6s-jNl" customClass="SetupProfilePreConditionOptionCell" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="14" y="152" width="386" height="127"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="Tc6-L6-apa">
@@ -633,7 +633,7 @@
                                             <outlet property="contentContainerView" destination="Tc6-L6-apa" id="gUa-pl-PfP"/>
                                         </connections>
                                     </collectionViewCell>
-                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOtherCell" id="fYh-i2-8CO" customClass="SetupProfileOtherOptionCell" customModule="Longevity" customModuleProvider="target">
+                                    <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="SetupProfilePreOtherCell" id="fYh-i2-8CO" customClass="SetupProfileOtherOptionCell" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="14" y="289" width="386" height="215"/>
                                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                         <collectionViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" insetsLayoutMarginsFromSafeArea="NO" id="OUC-Xo-tOd">
@@ -696,7 +696,7 @@
                             <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="HEU-Lb-Zsz" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="717" width="414" height="96"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKr-Jv-jeL" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKr-Jv-jeL" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="20" y="24" width="374" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="kCj-tF-vwt"/>
@@ -744,7 +744,7 @@
         <!--Setup CompleteVC-->
         <scene sceneID="e2s-Zm-FRX">
             <objects>
-                <viewController storyboardIdentifier="SetupCompleteVC" id="PS8-FZ-XHc" customClass="SetupCompleteVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SetupCompleteVC" id="PS8-FZ-XHc" customClass="SetupCompleteVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="aj6-ax-2An">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -757,7 +757,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Note" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                <rect key="frame" x="15" y="482" width="384" height="29.5"/>
+                                <rect key="frame" x="15" y="457.5" width="384" height="29.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
                                 <nil key="textColor"/>
                                 <nil key="highlightedColor"/>
@@ -766,7 +766,7 @@
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9K-JU-FGj" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="722" width="414" height="174"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ9-EH-Y8r" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                    <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="dJ9-EH-Y8r" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                         <rect key="frame" x="15" y="24" width="384" height="48"/>
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="vKH-M4-ANK"/>
@@ -801,8 +801,8 @@
                                     <constraint firstAttribute="trailing" secondItem="dJ9-EH-Y8r" secondAttribute="trailing" constant="15" id="wdR-aw-VeB"/>
                                 </constraints>
                             </view>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are ready to begin your first COVID Check-in which will help determine your current COVID-19 infection risk and symptoms." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
-                                <rect key="frame" x="15" y="360" width="384" height="98"/>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="You are ready to begin your first  Check-in to help determine any COVID infection risk and symptoms." lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Ol2-mH-c3N">
+                                <rect key="frame" x="15" y="360" width="384" height="73.5"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
@@ -837,7 +837,7 @@
                                         <constraint firstAttribute="width" constant="250" id="reK-zL-vk4"/>
                                     </constraints>
                                     <fontDescription key="fontDescription" name="Montserrat-SemiBold" family="Montserrat" pointSize="24"/>
-                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="0.84705882352941175" colorSpace="calibratedRGB"/>
+                                    <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                     <nil key="highlightedColor"/>
                                 </label>
                             </subviews>
@@ -859,12 +859,12 @@
         <!--Temp SignoutVC-->
         <scene sceneID="p2a-ya-5Et">
             <objects>
-                <viewController id="N9X-Rr-ls2" customClass="TempSignoutVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="N9X-Rr-ls2" customClass="TempSignoutVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ueo-Qh-iPM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFW-H4-3Hb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vFW-H4-3Hb" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                 <rect key="frame" x="107" y="427" width="200" height="42"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="42" id="JGY-kz-hLK"/>
@@ -906,7 +906,7 @@
         <!--Terms Of ServiceVC-->
         <scene sceneID="3bW-kz-Ev3">
             <objects>
-                <viewController storyboardIdentifier="TermsOfServiceVC" id="Zqc-mS-75O" customClass="TermsOfServiceVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="TermsOfServiceVC" id="Zqc-mS-75O" customClass="TermsOfServiceVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="CgP-to-171">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
