@@ -137,14 +137,7 @@ class DashboardTaskCell: UICollectionViewCell {
         
         return progressview
     }()
-    
-    lazy var bgView: UIView = {
-        let bgview = UIView()
-        bgview.backgroundColor = .white
-        bgview.translatesAutoresizingMaskIntoConstraints = false
-        return bgview
-    }()
-    
+       
     override init(frame: CGRect) {
         super.init(frame: frame)
     

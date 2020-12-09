@@ -75,7 +75,7 @@ class AppSyncManager  {
                     UserInsight(name: .coughlogs,
                                 text: "Cough Test Log",
                                 userInsightDescription: "Cough Test Log",
-                                defaultOrder: 3,
+                                defaultOrder: 4,
                                 details: nil,
                                 isExpanded: false)]
     

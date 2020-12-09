@@ -116,14 +116,14 @@ class DashboardCheckInCell: UICollectionViewCell {
         didSet {
             self.surveyId = surveyResponse.surveyId
             self.submissionID = surveyResponse.lastSubmissionId
-                        
-            if surveyResponse.name == "Cough Test" {
-                self.setupCoughTestCell(title: surveyResponse.name, subtext: surveyResponse.description.shortDescription)
-            }
-            else {
+            
+            if surveyResponse.surveyId.starts(with: "COUGH_TEST") {
+                self.setupCoughTestCell(title: surveyResponse.name,
+                                        subtext: surveyResponse.description.shortDescription)
+            } else {
                 self.isSurveySubmittedToday = checkIsSurveySubmittedToday(lastSubmissionDate: surveyResponse.lastSubmission)
                 self.status = surveyResponse.lastSurveyStatus
-
+                
                 if surveyResponse.lastSurveyStatus != .pending &&
                     surveyResponse.lastSurveyStatus != .notstarted {
                     if self.isSurveySubmittedToday {
@@ -152,12 +152,12 @@ class DashboardCheckInCell: UICollectionViewCell {
         return title
     }()
     
-    lazy var bgView: UIView = {
-        let bgview = UIView()
-        bgview.backgroundColor = .white
-        bgview.translatesAutoresizingMaskIntoConstraints = false
-        return bgview
-    }()
+//    lazy var bgView: UIView = {
+//        let bgview = UIView()
+//        bgview.backgroundColor = .white
+//        bgview.translatesAutoresizingMaskIntoConstraints = false
+//        return bgview
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
