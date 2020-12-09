@@ -11,7 +11,7 @@ import UIKit
 class CheckInNextGoals: UICollectionReusableView {
     lazy var titleLabel: UILabel = {
         let title = UILabel()
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.text = "YOUR NEXT GOALS"
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.numberOfLines = 0

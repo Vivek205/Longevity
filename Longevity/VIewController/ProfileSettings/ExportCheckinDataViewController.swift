@@ -33,7 +33,7 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
             guard let email = AppSyncManager.instance.userProfile.value?.email else {return}
 
             DispatchQueue.main.async {
-                let emailAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let emailAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 16.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let emailAttributesText = NSMutableAttributedString(string: email, attributes: emailAttributes)
                 attributedInfoText.append(emailAttributesText)
                 self?.infoLabel.attributedText = attributedInfoText

@@ -65,7 +65,7 @@ class CheckInResultViewController: UIViewController {
         
         let closeButton = UIButton()
         closeButton.setTitle("Done", for: .normal)
-        closeButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
+        closeButton.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
         closeButton.setTitleColor(.white, for: .normal)
         closeButton.backgroundColor = .themeColor
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
@@ -73,7 +73,7 @@ class CheckInResultViewController: UIViewController {
         
         let logButton = UIButton()
         logButton.setTitle("Results Data Log", for: .normal)
-        logButton.titleLabel?.font = UIFont(name: "Montserrat-Medium", size: 24.0)
+        logButton.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
         logButton.setTitleColor(.themeColor, for: .normal)
         logButton.backgroundColor = .clear
         logButton.addTarget(self, action: #selector(showLogs), for: .touchUpInside)

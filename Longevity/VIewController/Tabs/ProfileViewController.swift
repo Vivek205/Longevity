@@ -316,7 +316,7 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
             
             let title = UILabel()
             title.text = self.settingsSections[section]
-            title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+            title.font = UIFont(name: AppFontName.medium, size: 14.0)
             title.textColor = UIColor(hexString: "#4E4E4E")
             title.sizeToFit()
             title.translatesAutoresizingMaskIntoConstraints = false
