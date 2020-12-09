@@ -136,7 +136,7 @@ class EditAccountViewController: UIViewController {
         self.view.addSubview(mobilePhone)
         self.view.addSubview(mobileLabel)
         
-        let vTop: CGFloat = UIDevice.hasNotch ? 100.0 : 60.0
+        let vTop: CGFloat = UIDevice.hasNotch ? 90.0 : 90.0
         
         NSLayoutConstraint.activate([
             fullName.topAnchor.constraint(equalTo: self.view.topAnchor, constant: vTop),

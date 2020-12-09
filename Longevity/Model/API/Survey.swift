@@ -328,7 +328,7 @@ class SurveysAPI : BaseAuthAPI {
             let encoder = JSONEncoder()
             encoder.keyEncodingStrategy = .convertToSnakeCase
             let data = try encoder.encode(answers)
-            print(String(data:data, encoding: .utf8))
+            print("save survey payload",String(data:data, encoding: .utf8))
             
             let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)/save", headers: headers,
                                       queryParameters: nil, body: data)
