@@ -74,7 +74,8 @@ class MyDataViewController: BaseViewController {
 
 extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.userInsights?.count ?? 0
+        let count = self.userInsights?.count ?? 0
+        return count
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
@@ -82,17 +83,17 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
             return collectionView.getCell(with: UICollectionViewCell.self, at: indexPath)
         }
         
-        if insightData.name != .logs {
+        if insightData.name == .logs || insightData.name == .coughlogs {
+                guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
+                    preconditionFailure("Invalid insight cell")
+                }
+                cell.logData = insightData
+                return cell
+        } else {
             guard let cell = collectionView.getCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
                 preconditionFailure("Invalid insight cell")
             }
             cell.insightData = insightData
-            return cell
-        } else {
-            guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
-                preconditionFailure("Invalid insight cell")
-            }
-            cell.logData = insightData
             return cell
         }
     }
@@ -117,7 +118,7 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
 
         guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
 
-        if insightData.name != .logs && (insightData.isExpanded ?? false) {
+        if insightData.name != .logs && insightData.name != .coughlogs && (insightData.isExpanded ?? false) {
             height = 430.0
         }
 

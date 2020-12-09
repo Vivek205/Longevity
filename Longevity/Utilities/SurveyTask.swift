@@ -186,9 +186,9 @@ final class SurveyTaskUtility: NSObject {
             let answerFormat = ORKValuePickerAnswerFormat(textChoices: textChoices)
             let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
             return questionStep
-        case .speechRecognition:
-            //            TODO: prepare speech recognition step
-            return nil
+//        case .speechRecognition:
+//            let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
+//            return questionStep
         default:
             let questionStep = createSingleChoiceQuestionStep(
                 identifier: question.quesId,

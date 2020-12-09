@@ -217,6 +217,28 @@ class SurveysAPI : BaseAuthAPI {
     }
     
     func get(surveyId: String, completion: @escaping(SurveyDetails?) -> Void) {
+        
+        if surveyId.contains("COUGH") {
+            
+            let surveyText = """
+{\"survey_id\":\"COUGH_TEST_SURVEY_01\",\"name\":\"Cough Test\",\"description\":{\"long_description\":\"You will be asked detailed questions that cover COVID symptoms, exposure, and your social distancing practices.\\n\\nFor best results, please complete your COVID Check-in daily.\",\"short_description\":\"Test your cough for early detection of COVID.\"},\"display_settings\":{\"categories\":[{\"cough\":{\"id\":2000,\"view\":\"MODULE_LEVEL\",\"modules\":[{\"cough\":{\"id\":2000}}]}}]},\"is_repetitive\":true,\"questions\":[{\"module_id\":2000,\"ques_id\":\"4000\",\"short_name\":\"cough_recorder\",\"heading\":\"\",\"text\":\"Start recording and cough into your phone's mic\",\"ques_type\":\"SPEECH_RECOGNITION\",\"options\":[],\"validations\":{\"valid\":[]},\"dependents\":{},\"other_details\":{},\"category_id\":2000,\"next\":\"8001\",\"action\":\"STATIC\"}]}
+"""
+            let decoder = JSONDecoder()
+            decoder.keyDecodingStrategy = .convertFromSnakeCase
+            guard let data = surveyText.data(using: .utf8) else {
+                return
+            }
+            do {
+                let value = try decoder.decode(SurveyDetails.self, from: data)
+                completion(value)
+            } catch {
+                print(error)
+            }
+            
+            return
+        }
+        
+        
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)", headers: headers, queryParameters: nil, body: nil)
         
         self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
