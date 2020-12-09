@@ -67,7 +67,7 @@ class DashboardHeaderView: UICollectionReusableView {
         layout.scrollDirection = .horizontal
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
+            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs && $0.name != .coughlogs })
         }
     }
     
