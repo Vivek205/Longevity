@@ -126,23 +126,19 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             return nil
         } else if step is ORKFormStep {
             let formStepVC = FormStepVC()
-//            formStepVC.isFirstQuestion = isFirstQuestion
             formStepVC.step = step
             return formStepVC
         } else if step is ORKQuestionStep {
             guard let questionStep = step as? ORKQuestionStep else {return nil}
             if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
                 let stepVC = TextChoiceAnswerVC()
-//                stepVC.isFirstQuestion = isFirstQuestion
                 stepVC.step = step
                 return stepVC
-            }
-            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
+            } else if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
                 let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
                 switch questionDetails?.quesType {
                 case .temperatureScale:
                     let stepVC = TemperatureScaleAnswerVC()
-//                    stepVC.isFirstQuestion = isFirstQuestion
                     stepVC.step = step
                     return stepVC
                 default:
@@ -150,15 +146,11 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                     stepVC.step = step
                     return stepVC
                 }
-            }
-
-            if questionStep.answerFormat is ORKTextAnswerFormat {
+            } else if questionStep.answerFormat is ORKTextAnswerFormat {
                 let stepVC = TextAnswerVC()
                 stepVC.step = step
                 return stepVC
-            }
-
-            if questionStep.answerFormat is ORKValuePickerAnswerFormat {
+            } else if questionStep.answerFormat is ORKValuePickerAnswerFormat {
                 let stepVC = ValuePickerAnswerVC()
                 stepVC.step = step
                 return stepVC

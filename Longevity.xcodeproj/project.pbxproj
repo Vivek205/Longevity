@@ -55,6 +55,8 @@
 		C17F08102574BE2700D9955E /* FitbitFetchBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */; };
 		C17F08152574BE7E00D9955E /* FitbitPublishBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */; };
 		C17F08172574C08400D9955E /* FitbitRefreshOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */; };
+		C192369B2582144800AA5A92 /* CoughRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */; };
+		C19236A02582170500AA5A92 /* SurveysAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C192369F2582170500AA5A92 /* SurveysAPI.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -297,6 +299,8 @@
 		C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitFetchBackground.swift; sourceTree = "<group>"; };
 		C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitPublishBackground.swift; sourceTree = "<group>"; };
 		C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitRefreshOperations.swift; sourceTree = "<group>"; };
+		C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughRecorderViewController.swift; sourceTree = "<group>"; };
+		C192369F2582170500AA5A92 /* SurveysAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysAPI.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -538,6 +542,14 @@
 			path = CheckInResult;
 			sourceTree = "<group>";
 		};
+		C19236A12582174B00AA5A92 /* Entities */ = {
+			isa = PBXGroup;
+			children = (
+				E25185EB24CF042000F3068C /* Survey.swift */,
+			);
+			path = Entities;
+			sourceTree = "<group>";
+		};
 		C193942D24EF037700BDB3BD /* ProfileSettings */ = {
 			isa = PBXGroup;
 			children = (
@@ -762,6 +774,7 @@
 				C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */,
 				E210AAC0255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift */,
 				E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */,
+				C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -889,13 +902,13 @@
 				E2E14BF824AF0BFC007C0470 /* User.swift */,
 				E2CFD96A24B9D3D8009FE288 /* NotificationAPI.swift */,
 				E216EFC624BEF58300B57A7F /* MedicalHistoryAPI.swift */,
-				E25185EB24CF042000F3068C /* Survey.swift */,
 				C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */,
 				C14ABA4224E2384F00C81580 /* BaseAuthAPI.swift */,
 				E258E66524EE247100676056 /* UserProfileAPI.swift */,
 				C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */,
 				C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */,
 				E25074312512216E00CB171E /* UserSubscriptionAPI.swift */,
+				C192369F2582170500AA5A92 /* SurveysAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -985,6 +998,7 @@
 		E2ECB8D4247FE3AE0020A27E /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				C19236A12582174B00AA5A92 /* Entities */,
 				E290B60124BC75B700C51655 /* Utils */,
 				E2E14BF424AF0B5C007C0470 /* API */,
 				E2B0337324AB327D00929D39 /* Protocols */,
@@ -1359,6 +1373,8 @@
 				E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */,
 				E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */,
 				E2CFD96B24B9D3D8009FE288 /* NotificationAPI.swift in Sources */,
+				C19236A02582170500AA5A92 /* SurveysAPI.swift in Sources */,
+				C192369B2582144800AA5A92 /* CoughRecorderViewController.swift in Sources */,
 				C19875CB24DD5ECB00477185 /* UITableView+Extension.swift in Sources */,
 				E2E5EFD92542A25C003ADAEC /* Alert.swift in Sources */,
 				E216EFC324BEE7B900B57A7F /* SetupProfileOtherOptionCell.swift in Sources */,
