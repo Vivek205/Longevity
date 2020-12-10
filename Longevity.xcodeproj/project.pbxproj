@@ -57,6 +57,8 @@
 		C17F08172574C08400D9955E /* FitbitRefreshOperations.swift in Sources */ = {isa = PBXBuildFile; fileRef = C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */; };
 		C192369B2582144800AA5A92 /* CoughRecorderViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */; };
 		C19236A02582170500AA5A92 /* SurveysAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C192369F2582170500AA5A92 /* SurveysAPI.swift */; };
+		C19236A3258218AE00AA5A92 /* AWSAmplifyConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */; };
+		C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A42582193B00AA5A92 /* FitbitAPI.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -301,6 +303,8 @@
 		C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitRefreshOperations.swift; sourceTree = "<group>"; };
 		C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughRecorderViewController.swift; sourceTree = "<group>"; };
 		C192369F2582170500AA5A92 /* SurveysAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysAPI.swift; sourceTree = "<group>"; };
+		C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSAmplifyConfig.swift; sourceTree = "<group>"; };
+		C19236A42582193B00AA5A92 /* FitbitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -545,7 +549,11 @@
 		C19236A12582174B00AA5A92 /* Entities */ = {
 			isa = PBXGroup;
 			children = (
+				E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */,
+				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
+				C14ABA4624E3039900C81580 /* UserInsight.swift */,
 				E25185EB24CF042000F3068C /* Survey.swift */,
+				C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -909,6 +917,7 @@
 				C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */,
 				E25074312512216E00CB171E /* UserSubscriptionAPI.swift */,
 				C192369F2582170500AA5A92 /* SurveysAPI.swift */,
+				C19236A42582193B00AA5A92 /* FitbitAPI.swift */,
 			);
 			path = API;
 			sourceTree = "<group>";
@@ -1009,9 +1018,6 @@
 				E2B0337B24AB33FE00929D39 /* Fitbit.swift */,
 				E24DED0F24B30B1500A61892 /* UserDefaults.swift */,
 				E2CFD96C24BB5202009FE288 /* Keychain.swift */,
-				E21BD6AE24BE13930001B90D /* PreExistingCondition.swift */,
-				C14ABA4624E3039900C81580 /* UserInsight.swift */,
-				C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */,
 				E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */,
 				E23634F624F4EACB00B93490 /* Logger.swift */,
 				C12F09E724FD4BF300623CC3 /* AppSyncManager.swift */,
@@ -1264,6 +1270,7 @@
 				E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */,
 				C14DBC0825056583004D5180 /* CheckInResultHeader.swift in Sources */,
 				E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */,
+				C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */,
 				C14DBC1025080152004D5180 /* CheckInNextGoals.swift in Sources */,
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
@@ -1312,6 +1319,7 @@
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E2E5EFDB2542E0FD003ADAEC /* OfflineNotificationView.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
+				C19236A3258218AE00AA5A92 /* AWSAmplifyConfig.swift in Sources */,
 				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
 				C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */,
 				E288BB2B24D7D7AF001F093F /* CardView.swift in Sources */,
