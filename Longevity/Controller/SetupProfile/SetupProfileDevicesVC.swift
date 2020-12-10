@@ -8,12 +8,12 @@
 
 import UIKit
 
-fileprivate enum ExternalDevice {
+enum SetupProfileExternalDevice:Int {
     case fitbit
     case appleWatch
 }
 
-extension ExternalDevice {
+extension SetupProfileExternalDevice {
     var title:String {
         switch self {
         case .fitbit:
@@ -42,7 +42,7 @@ extension ExternalDevice {
     }
 }
 
-fileprivate let devicesList: [ExternalDevice] = [.fitbit, .appleWatch]
+fileprivate let devicesList: [SetupProfileExternalDevice] = [.fitbit, .appleWatch]
 
 class SetupProfileDevicesVC: BaseProfileSetupViewController {
     // MARK: Outlets
@@ -79,34 +79,30 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
     }
 
     func checkIfDevicesAreConnectedAlready() {
+        let indexPaths = [IndexPath(row: 0, section: 0),IndexPath(row: 1, section: 0)]
         AppSyncManager.instance.healthProfile.addAndNotify(observer: self) {
             [weak self] in
             if let devices = AppSyncManager.instance.healthProfile.value?.devices {
-                if let fitbit = devices[ExternalDevices.fitbit] {
-                    setupProfileConnectDeviceOptionList[2]?.isConnected = fitbit["connected"] == 1
+                if devices[ExternalDevices.fitbit] != nil {
+                    DispatchQueue.main.async {
+                        self?.devicesCollection.reloadItems(at: indexPaths)
+                    }
                 }
-                if let watch = devices[ExternalDevices.watch] {
-                    setupProfileConnectDeviceOptionList[3]?.isConnected = watch["connected"] == 1
-                }
-                DispatchQueue.main.async {
-                    self?.devicesCollection.reloadData()
+                if devices[ExternalDevices.watch] != nil {
+                    DispatchQueue.main.async {
+                        self?.devicesCollection.reloadItems(at: indexPaths)
+                    }
                 }
             }
         }
     }
-
-//    // MARK: Actions
-//    @IBAction func handleContinue(_ sender: Any) {
-//        performSegue(withIdentifier: "SetupProfileDevicesToPreExistingConditions", sender: self)
-//    }
 }
 
 extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
     func connectBtn(wasPressedOnCell cell: SetupProfileDevicesConnectCell) {
-        DispatchQueue.main.async {
-            switch cell.titleLabel.text {
-            case "Fitbit":
-                print("connected fitbit data")
+        if let device = cell.deviceEnum {
+            switch device {
+            case .fitbit:
                 if let context = UIApplication.shared.keyWindow {
                     self.fitbitModel.contextProvider = AuthContextProvider(context)
                 }
@@ -125,7 +121,7 @@ extension SetupProfileDevicesVC: SetupProfileDevicesConnectCellDelegate {
                         }
                     }
                 }
-            default:
+            case .appleWatch:
                 HealthStore.shared.getHealthKitAuthorization(device: .applewatch) { (authorized) in
                     if authorized {
                         AppSyncManager.instance.updateHealthProfile(deviceName: ExternalDevices.watch, connected: 1)
@@ -165,7 +161,7 @@ extension SetupProfileDevicesVC: UICollectionViewDelegate, UICollectionViewDataS
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getCell(with: SetupProfileDevicesConnectCell.self, at: indexPath) as? SetupProfileDevicesConnectCell else {preconditionFailure("invalid cell")}
         let device = devicesList[indexPath.row]
-        cell.setupCell(title: device.title, description: device.description, image: device.image)
+        cell.deviceEnum = device
         cell.delegate = self
         return cell
     }
@@ -219,38 +215,9 @@ extension UIButton {
 }
 
 extension SetupProfileDevicesVC: SetupProfileDevicesFooterViewCellDelegate {
-    fileprivate func continueButton(wasPressedOnCell cell: SetupProfileDevicesFooterView) {
+    func continueButton(wasPressedOnCell cell: SetupProfileDevicesFooterView) {
         let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
         guard let preconditionsViewController = storyboard.instantiateViewController(withIdentifier: "SetupProfilePreExistingConditionVC") as? SetupProfilePreConditionVC else { return }
         self.navigationController?.pushViewController(preconditionsViewController, animated: true)
-    }
-}
-
-fileprivate protocol SetupProfileDevicesFooterViewCellDelegate {
-    func continueButton(wasPressedOnCell cell:SetupProfileDevicesFooterView)
-}
-
-fileprivate class SetupProfileDevicesFooterView: UICollectionViewCell {
-    var delegate: SetupProfileDevicesFooterViewCellDelegate?
-    
-    lazy var continueButton: CustomButtonFill = {
-        let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleContinue(_:)))
-        return button
-    }()
-
-    @objc func handleContinue(_ sender: UIButton){
-        delegate?.continueButton(wasPressedOnCell: self)
-    }
-
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.addSubview(continueButton)
-
-        continueButton.anchor(.leading(leadingAnchor, constant: 15), .trailing(trailingAnchor, constant: 15),
-                              .top(topAnchor, constant: 15), .height(48))
-    }
-
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
     }
 }
