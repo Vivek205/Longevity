@@ -10,6 +10,9 @@ import Foundation
 import Amplify
 
 class CoughRecordUploader {
+    
+    //Test commit
+    
     func uploadVoiceData(fileKey: String, coughData: Data, completion: @escaping(Bool)-> Void) {
          Amplify.Storage.uploadData(key: fileKey, data: coughData) { (progress) in
             print("Progress: \(progress)")
