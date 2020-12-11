@@ -60,7 +60,6 @@
 		C19236A3258218AE00AA5A92 /* AWSAmplifyConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */; };
 		C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A42582193B00AA5A92 /* FitbitAPI.swift */; };
 		C19236A7258221D400AA5A92 /* BaseStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A6258221D400AA5A92 /* BaseStepViewController.swift */; };
-		C19237042582318C00AA5A92 /* CoughRecordUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19237032582318C00AA5A92 /* CoughRecordUploader.swift */; };
 		C19237092582B19600AA5A92 /* AudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19237082582B19500AA5A92 /* AudioVisualizerView.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
@@ -1609,7 +1608,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";
