@@ -121,7 +121,7 @@ extension ValuePickerAnswerVC: UICollectionViewDelegate,
             preconditionFailure("Invalid cell type")
         }
 
-        headerView.createLayout(header: step.title ?? "", question: step.question ?? "", extraInfo: step.text)
+        headerView.createLayout(question: step.question ?? "")
         return headerView
     }
 

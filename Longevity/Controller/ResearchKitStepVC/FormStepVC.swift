@@ -223,8 +223,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             preconditionFailure("Invalid cell type")
         }
         
-        if let formStep = self.step as? ORKFormStep {
-            headerView.createLayout(header: formStep.title ?? "", question: formStep.text ?? "", extraInfo: nil)
+        if let formStep = self.step as? ORKFormStep, let question = formStep.text {
+            headerView.createLayout(question: question)
         }
         
         return headerView

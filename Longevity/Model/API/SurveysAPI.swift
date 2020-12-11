@@ -1,183 +1,14 @@
 //
-//  Questions.swift
-//  Longevity
+//  SurveysAPI.swift
+//  COVID Signals
 //
-//  Created by vivek on 27/07/20.
+//  Created by Jagan Kumar Mudila on 10/12/2020.
 //  Copyright © 2020 vivek. All rights reserved.
 //
 
 import Foundation
 import Amplify
 import SwiftyJSON
-
-struct SurveyLastResponseData: Decodable {
-    let quesId: String
-    let answer: String
-    let submissionId: String
-}
-
-struct SurveyDescription: Decodable {
-    let shortDescription: String
-    let longDescription: String
-}
-
-struct SurveyListItem: Decodable {
-    let surveyId: String
-    let name: String
-    let description: SurveyDescription
-    let imageUrl: String?
-    let lastSubmission: String?
-    let lastSubmissionId: String?
-    let response: [SurveyLastResponseData]?
-    let isRepetitive: Bool?
-    let noOfTimesSurveyTaken: Int?
-    var lastSurveyStatus: CheckInStatus
-}
-
-enum QuestionAction:String, Codable {
-    case staticQuestion = "STATIC"
-    case dynamic = "DYNAMIC"
-}
-
-enum QuestionTypes:String, Decodable {
-    case text = "TEXT"
-    case singleSelect = "SINGLE_SELECT"
-    case continuousScale = "CONTINUOUS_SCALE"
-    case temperatureScale = "TEMPERATURE_SCALE"
-    case location = "LOCATION"
-    case valuePicker = "VALUE_PICKER"
-    case speechRecognition = "SPEECH_RECOGNITION"
-}
-
-struct Question:Decodable {
-    let categoryId: Int
-    let moduleId: Int
-    let quesId: String
-    let text: String
-    let quesType: QuestionTypes
-    let options: [QuestionOption]
-    let nextQuestion: String?
-    let validation: QuestionResponseValidation?
-    let otherDetails: QuestionOtherDetails?
-    let action: QuestionAction
-}
-
-struct QuestionResponseValidation:Decodable {
-    let regex: String?
-}
-
-struct QuestionOtherDetails: Decodable {
-    let scale: Scale?
-    let TEXT: QuestionOtherDetailsText?
-}
-
-enum QuestionOtherDetailsTextType:String,Decodable {
-    case numeric = "NUMERIC"
-    case alphanumeric = "ALPHANUMERIC"
-}
-
-extension QuestionOtherDetailsTextType {
-    var keyboardType: UIKeyboardType {
-        switch self {
-        case .numeric:
-            return .numberPad
-        case .alphanumeric:
-            return .alphabet
-        default:
-            return .alphabet
-        }
-    }
-}
-
-struct QuestionOtherDetailsText:Decodable {
-    let type: QuestionOtherDetailsTextType
-}
-
-struct Scale: Decodable {
-    let min: String
-    let max: String
-}
-
-struct QuestionOption: Decodable {
-    let text: String?
-    let description: String?
-    let value: String?
-    
-    private enum CodingKeys: String, CodingKey {
-        case text = "text", description = "description", value = "value"
-    }
-    
-    init(text: String? = nil, description: String? = nil, value: String? = nil) {
-        self.text = text
-        self.description = description
-        self.value = value
-    }
-    
-    init(from decoder: Decoder) throws {
-        let container = try decoder.container(keyedBy: CodingKeys.self)
-        text = try? container.decode(String.self, forKey: .text)
-        description = try? container.decode(String.self, forKey: .description)
-        do {
-            value = try String(container.decode(Int.self, forKey: .value))
-        } catch DecodingError.typeMismatch {
-            do {
-                value = try container.decode(String.self, forKey: .value)
-            } catch DecodingError.typeMismatch {
-                value = try String(container.decode(Double.self, forKey: .value))
-            }
-        } catch {
-            value = nil
-            print(error)
-        }
-    }
-}
-
-enum ModuleViewType: String, Decodable {
-    case oneModulePerPage, oneQuestionPerPage
-}
-
-enum CategoryViewType: String, Decodable {
-    case moduleLevel, oneCategoryPerPage
-}
-
-struct Module: Decodable {
-    let view: String?
-    let id: Int
-    let iconName: String?
-}
-
-struct Category: Decodable {
-    let id: Int
-    let view: String
-    let modules: Array<[String: Module]>
-    let description: String?
-}
-
-struct DisplaySettings: Decodable {
-    let categories: [[String:Category]]
-}
-
-struct SurveyDetails: Decodable {
-    let surveyId: String
-    let name: String
-    let description: SurveyDescription
-    let displaySettings: DisplaySettings
-    let questions: [Question]
-    let lastSubmission: String?
-    let lastSubmissionId: String?
-    let isRepetitive: Bool?
-}
-
-struct SurveySubmissionDetailsResponseValue: Codable {
-    let surveyID, surveyName: String
-
-    enum CodingKeys: String, CodingKey {
-        case surveyID = "survey_id"
-        case surveyName = "survey_name"
-    }
-}
-
-typealias SurveySubmissionDetailsResponse = [String: SurveySubmissionDetailsResponseValue]
 
 class SurveysAPI : BaseAuthAPI {
     
@@ -198,11 +29,7 @@ class SurveysAPI : BaseAuthAPI {
             do {
                 let decoder = JSONDecoder()
                 decoder.keyDecodingStrategy = .convertFromSnakeCase
-                var value = try decoder.decode([SurveyListItem].self, from: data)
-
-                //TODO: This logic to be removed upon new survey is populated
-                value.append(SurveyListItem(surveyId: "COUGH_TEST_SURVEY_01", name: "Cough Test", description: SurveyDescription(shortDescription: "Test your cough for early detection of COVID.", longDescription: "You will be asked detailed questions that cover COVID symptoms, exposure, and your social distancing practices.\n\nFor best results, please complete your COVID Check-in daily."), imageUrl: nil, lastSubmission: nil, lastSubmissionId: nil, response: nil, isRepetitive: true, noOfTimesSurveyTaken: nil, lastSurveyStatus: .notstarted))
-                
+                let value = try decoder.decode([SurveyListItem].self, from: data)
                 SurveyTaskUtility.shared.setSurveyList(list: value)
                 if !value.isEmpty {
                     value.forEach {
@@ -218,25 +45,25 @@ class SurveysAPI : BaseAuthAPI {
     
     func get(surveyId: String, completion: @escaping(SurveyDetails?) -> Void) {
         
-        if surveyId.contains("COUGH") {
-            
-            let surveyText = """
-{\"survey_id\":\"COUGH_TEST_SURVEY_01\",\"name\":\"Cough Test\",\"description\":{\"long_description\":\"You will be asked detailed questions that cover COVID symptoms, exposure, and your social distancing practices.\\n\\nFor best results, please complete your COVID Check-in daily.\",\"short_description\":\"Test your cough for early detection of COVID.\"},\"display_settings\":{\"categories\":[{\"cough\":{\"id\":2000,\"view\":\"MODULE_LEVEL\",\"modules\":[{\"cough\":{\"id\":2000}}]}}]},\"is_repetitive\":true,\"questions\":[{\"module_id\":2000,\"ques_id\":\"4000\",\"short_name\":\"cough_recorder\",\"heading\":\"\",\"text\":\"Start recording and cough into your phone's mic\",\"ques_type\":\"SPEECH_RECOGNITION\",\"options\":[],\"validations\":{\"valid\":[]},\"dependents\":{},\"other_details\":{},\"category_id\":2000,\"next\":\"8001\",\"action\":\"STATIC\"}]}
-"""
-            let decoder = JSONDecoder()
-            decoder.keyDecodingStrategy = .convertFromSnakeCase
-            guard let data = surveyText.data(using: .utf8) else {
-                return
-            }
-            do {
-                let value = try decoder.decode(SurveyDetails.self, from: data)
-                completion(value)
-            } catch {
-                print(error)
-            }
-            
-            return
-        }
+//        if surveyId.contains("COUGH") {
+//
+//            let surveyText = """
+//{\"survey_id\":\"COUGH_TEST_SURVEY_01\",\"name\":\"Cough Test\",\"description\":{\"long_description\":\"Your phone’s microphone will be enabled for this test.\\n\\nFor best results, please complete your cough test daily.\",\"short_description\":\"Test your cough for early detection of COVID.\"},\"display_settings\":{\"categories\":[{\"cough\":{\"id\":2000,\"view\":\"MODULE_LEVEL\",\"modules\":[{\"cough\":{\"id\":2000}}]}}]},\"is_repetitive\":true,\"questions\":[{\"module_id\":2000,\"ques_id\":\"4000\",\"short_name\":\"cough_recorder\",\"heading\":\"\",\"text\":\"Start recording and cough into your phone's mic\",\"ques_type\":\"SPEECH_RECOGNITION\",\"options\":[],\"validations\":{\"valid\":[]},\"dependents\":{},\"other_details\":{},\"category_id\":2000,\"next\":\"8001\",\"action\":\"STATIC\"}]}
+//"""
+//            let decoder = JSONDecoder()
+//            decoder.keyDecodingStrategy = .convertFromSnakeCase
+//            guard let data = surveyText.data(using: .utf8) else {
+//                return
+//            }
+//            do {
+//                let value = try decoder.decode(SurveyDetails.self, from: data)
+//                completion(value)
+//            } catch {
+//                print(error)
+//            }
+//
+//            return
+//        }
         
         
         let request = RESTRequest(apiName: "surveyAPI", path: "/survey/\(surveyId)", headers: headers, queryParameters: nil, body: nil)
@@ -421,30 +248,4 @@ class SurveysAPI : BaseAuthAPI {
         }
 
     }
-}
-
-
-
-struct FindNextQuestionPayload: Codable {
-    let moduleId: Int
-    let quesId: String
-    let answer: String
-}
-
-struct NextQuestion: Decodable {
-    let quesId: String
-}
-
-
-
-struct SubmitAnswerPayload: Codable {
-    let categoryId: Int
-    let moduleId: Int
-    let answer: String
-    let quesId: String
-}
-
-struct SurveyCategoryViewTypes {
-    static let oneCategoryPerPage = "ONE_CATEGORY_PER_PAGE"
-    static let moduleLevel = "MODULE_LEVEL"
 }

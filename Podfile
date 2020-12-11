@@ -1,11 +1,12 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '11.0'
 
-target 'Longevity' do
+target 'COVID Signals' do
   use_frameworks!
 #  Pods for Longevity
 #  MARK: AWS Amplify
   pod 'Amplify'
+  pod 'AmplifyPlugins/AWSS3StoragePlugin'
   pod 'AmplifyPlugins/AWSCognitoAuthPlugin'
   pod 'AmplifyPlugins/AWSAPIPlugin'
   pod 'AWSPinpoint'

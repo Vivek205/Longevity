@@ -14,10 +14,9 @@ class TextAnswerVC: ORKStepViewController {
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
         questionView.translatesAutoresizingMaskIntoConstraints = false
-//        let subheader = SurveyTaskUtility.shared.surveyTagline
-        let questionStep = self.step as? ORKQuestionStep
-        let question = questionStep?.question
-        questionView.createLayout(header: "", question: question ?? "", extraInfo: nil)
+        guard let questionStep = self.step as? ORKQuestionStep,
+              let question = questionStep.question else { return questionView }
+        questionView.createLayout(question: question)
         return questionView
     }()
 
@@ -89,8 +88,8 @@ class TextAnswerVC: ORKStepViewController {
 
         if let step = self.step as? ORKQuestionStep,
            let surveyName = SurveyTaskUtility.shared.getCurrentSurveyName(),
-           let question = step.question{
-            questionView.createLayout(header: surveyName, question: question, extraInfo: step.text)
+           let question = step.question {
+            questionView.createLayout(question: question)
             questionViewHeight += "\n\n\n\(surveyName)".height(withConstrainedWidth: self.view.bounds.width, font: questionView.headerLabel.font)
             questionViewHeight += "\n\(question)".height(withConstrainedWidth: self.view.bounds.width, font: UIFont(name: AppFontName.regular, size: 24.0) ?? .init())
         }

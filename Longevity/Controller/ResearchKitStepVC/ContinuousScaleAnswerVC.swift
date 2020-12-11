@@ -14,11 +14,7 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     override var step: ORKStep? {
         didSet {
             if let step = self.step as? ORKQuestionStep {
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-                questionView.createLayout(header: step.title ?? "",
-//                                          subHeader: questionSubheader,
-                                          question: step.question ?? "",
-                                          extraInfo: step.text)
+                questionView.createLayout(question: step.question ?? "")
 
                 if let answerFormat = step.answerFormat as? ORKContinuousScaleAnswerFormat {
                     print(answerFormat)
