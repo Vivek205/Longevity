@@ -10,10 +10,11 @@ import Foundation
 import Amplify
 
 class CoughRecordUploader {
+    
+    //Test commit
+    
     func uploadVoiceData(fileKey: String, coughData: Data, completion: @escaping(Bool)-> Void) {
-        let options = StorageUploadDataRequest.Options(accessLevel: .protected)
-        
-        Amplify.Storage.uploadData(key: fileKey, data: coughData, options: options) { (progress) in
+         Amplify.Storage.uploadData(key: fileKey, data: coughData) { (progress) in
             print("Progress: \(progress)")
         } resultListener: { (event) in
             switch event {
