@@ -8,6 +8,7 @@
 
 import Foundation
 import Amplify
+import SwiftyJSON
 
 class HealthkitAPI: BaseAuthAPI {
     
@@ -22,7 +23,6 @@ class HealthkitAPI: BaseAuthAPI {
                 let encoder = JSONEncoder()
                 encoder.keyEncodingStrategy = .convertToSnakeCase
                 bodyData = try encoder.encode([healthData])
-                
             } catch let error {
                 print("body data error",error.localizedDescription)
             }
@@ -39,7 +39,7 @@ class HealthkitAPI: BaseAuthAPI {
             
             guard let data = data else { return }
             let response = String(data: data, encoding: .utf8)
-            print(response)
+            completion()
         }
     }
 }

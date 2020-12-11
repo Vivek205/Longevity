@@ -78,7 +78,6 @@ final class SurveyTaskUtility: NSObject {
             for category in categories {
 
                 for (categoryName, categoryValue) in category {
-
                     if(categoryValue.view == SurveyCategoryViewTypes.oneCategoryPerPage) {
                         let step = ORKFormStep(identifier: "\(categoryValue.id)",
                                                title:surveyDetails?.name ?? "Survey",
@@ -89,8 +88,7 @@ final class SurveyTaskUtility: NSObject {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
                                 SurveyTaskUtility.shared.setIconName(for: moduleName, iconName: moduleValue.iconName)
-
-
+                                
                                 if moduleValue.iconName != nil {
                                     sectionItem.placeholder = moduleValue.iconName
                                     items += [sectionItem]
@@ -186,9 +184,10 @@ final class SurveyTaskUtility: NSObject {
             let answerFormat = ORKValuePickerAnswerFormat(textChoices: textChoices)
             let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
             return questionStep
-//        case .speechRecognition:
-//            let questionStep = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
-//            return questionStep
+        case .speechRecognition:
+            let answerFormat = ORKLocationAnswerFormat()
+            let speechQuestion = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
+            return speechQuestion
         default:
             let questionStep = createSingleChoiceQuestionStep(
                 identifier: question.quesId,
