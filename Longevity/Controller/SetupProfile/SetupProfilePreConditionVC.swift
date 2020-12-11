@@ -126,6 +126,7 @@ extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         activeTextView = textView
+        changesSaved = false
     }
     
     func updateCurrentText(text: String?) {

@@ -263,7 +263,14 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 }
             } else {
                 if isSymptomsExpanded {
-                    height = 430.0
+                    if let symptoms = self.checkinResult?.symptoms {
+                        let headerHeight: CGFloat = 140.0
+                        let symptomsHeight: CGFloat = 37.0 * CGFloat(symptoms.count)
+                        height = headerHeight + symptomsHeight
+                    }else {
+                        height = 430.0
+                    }
+
                 }
             }
         }
@@ -294,9 +301,9 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            return CGSize(width: collectionView.bounds.width, height: 225.0)
+            return CGSize(width: collectionView.bounds.width, height: 180.0)
         } else {
-            return CGSize(width: collectionView.bounds.width, height: 40.0)
+            return CGSize(width: collectionView.bounds.width, height: 10.0)
         }
     }
 }

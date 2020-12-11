@@ -13,7 +13,8 @@ class MyDataLogCell: UICollectionViewCell {
     var logData: UserInsight! {
         didSet {
             self.cellTitle.text = logData?.text
-            var durationtext = "\(logData?.details?.history?.count ?? 0) Days"
+//            var durationtext = "\(logData?.details?.history?.count ?? 0) Days"
+            var durationtext: String?
             if logData.name == .coughlogs {
                 durationtext = "\(logData?.details?.history?.count ?? 0) entries"
             }

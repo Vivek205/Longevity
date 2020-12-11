@@ -75,7 +75,8 @@ class RKCFormBooleanAnswerView: UIView {
         delegate?.segmentedControl(wasChangedOnCell: self)
     }
 
-    func preSelectOption(index: Int) {
+    func preSelectOption(answer: Int) {
+        let index = answer == 0 ? 1 : 0
         self.segmentedControl.selectedSegmentIndex = index
     }
 }

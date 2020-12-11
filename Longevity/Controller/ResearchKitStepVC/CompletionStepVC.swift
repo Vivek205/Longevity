@@ -35,7 +35,7 @@ class CompletionStepVC: ORKStepViewController {
     lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
+        uiView.backgroundColor = .clear
         return uiView
     }()
 
@@ -51,6 +51,13 @@ class CompletionStepVC: ORKStepViewController {
         viewresults.translatesAutoresizingMaskIntoConstraints = false
         viewresults.setTitle("View Results", for: .normal)
         return viewresults
+    }()
+
+    lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.showsVerticalScrollIndicator = false
+        return scroll
     }()
 
     override func viewDidLoad() {
@@ -94,18 +101,23 @@ class CompletionStepVC: ORKStepViewController {
     }
 
     func presentViews() {
-        
-        self.view.addSubview(iconView)
-        self.view.addSubview(infoLabel)
-        self.view.addSubview(footerView)
-        footerView.addSubview(continueButton)
-        footerView.addSubview(viewResultsButton)
-           
+
+        self.view.addSubview(scrollView)
+        self.scrollView.addSubview(iconView)
+        self.scrollView.addSubview(infoLabel)
+        self.scrollView.addSubview(footerView)
+        self.footerView.addSubview(continueButton)
+        self.footerView.addSubview(viewResultsButton)
+
         let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
         
         NSLayoutConstraint.activate([
-            
-            iconView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24.0),
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 10),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor,constant: 10),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
+
+            iconView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 24.0),
             iconView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             iconView.heightAnchor.constraint(equalToConstant: 200.0),
             iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
@@ -117,11 +129,12 @@ class CompletionStepVC: ORKStepViewController {
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
+            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant:30),
+            footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 22),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 40),
             continueButton.heightAnchor.constraint(equalToConstant: 48),
             viewResultsButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             viewResultsButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),

@@ -67,7 +67,7 @@ class AppSyncManager  {
                                                  histogram: Histogram(histogramDescription: "Your social distancing over the time of your check-ins."), submissions: nil),
                                 isExpanded: false),
                     UserInsight(name: .logs,
-                                text: "COVID Check-in Log",
+                                text: "Results Data Log",
                                 userInsightDescription: "COVID Check-in Log",
                                 defaultOrder: 3,
                                 details: nil,

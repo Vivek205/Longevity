@@ -27,6 +27,11 @@ class CheckInResultHeader: UICollectionReusableView {
             self.segmentedControl.selectedSegmentIndex = currentView.rawValue
             self.segmentedControl.addTarget(self, action: #selector(resultViewSelected), for: .valueChanged)
             self.headerTitle.isHidden = currentView == .analysis
+            if currentView == .analysis {
+                DispatchQueue.main.async {
+                    self.headerTitle.removeFromSuperview()
+                }
+            }
         }
     }
     
@@ -109,7 +114,7 @@ class CheckInResultHeader: UICollectionReusableView {
     
     func setup(comletedDate: String, surveyName: String, isCheckIn: Bool) {
         if isCheckIn {
-            self.titleLabel.text = "Completed \(comletedDate)\n for \(AppSyncManager.instance.userProfile.value?.name ?? "")"
+            self.titleLabel.text = "Completed \(comletedDate)"
         } else {
             self.titleLabel.text = "\(surveyName)\n completed \(comletedDate)"
         }

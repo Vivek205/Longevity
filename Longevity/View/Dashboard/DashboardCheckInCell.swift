@@ -74,7 +74,7 @@ extension CheckInStatus {
     var subtitleText: String {
         switch self {
         case .completedToday:
-            return "You can view results here or in your Check-in Log"
+            return "You can view results here or in My Data"
         case .pending:
             return "Your check-in results will be avaliable soon"
         default:
