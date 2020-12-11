@@ -7,7 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		19C22BE09EF556220818193A /* Pods_Longevity.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 1BBACA4760F160C58D9F8077 /* Pods_Longevity.framework */; };
+		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
 		C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */; };
@@ -59,6 +59,9 @@
 		C19236A02582170500AA5A92 /* SurveysAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C192369F2582170500AA5A92 /* SurveysAPI.swift */; };
 		C19236A3258218AE00AA5A92 /* AWSAmplifyConfig.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */; };
 		C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A42582193B00AA5A92 /* FitbitAPI.swift */; };
+		C19236A7258221D400AA5A92 /* BaseStepViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19236A6258221D400AA5A92 /* BaseStepViewController.swift */; };
+		C19237042582318C00AA5A92 /* CoughRecordUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19237032582318C00AA5A92 /* CoughRecordUploader.swift */; };
+		C19237092582B19600AA5A92 /* AudioVisualizerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19237082582B19500AA5A92 /* AudioVisualizerView.swift */; };
 		C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */; };
 		C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942624EEDD9000BDB3BD /* AppVersionCell.swift */; };
 		C193942C24EEE3D700BDB3BD /* SignOutCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C193942B24EEE3D700BDB3BD /* SignOutCell.swift */; };
@@ -251,9 +254,10 @@
 /* End PBXCopyFilesBuildPhase section */
 
 /* Begin PBXFileReference section */
-		1BBACA4760F160C58D9F8077 /* Pods_Longevity.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_Longevity.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		2E5CCE2351F0884266C17993 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
+		A08C2A2315AB4A804CAA10F9 /* Pods-COVID Signals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.debug.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.debug.xcconfig"; sourceTree = "<group>"; };
 		C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveyIntroViewController.swift; sourceTree = "<group>"; };
 		C12F09AA24F4943800623CC3 /* HealthStore.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HealthStore.swift; sourceTree = "<group>"; };
 		C12F09AF24F49AD500623CC3 /* HealthkitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthkitAPI.swift; sourceTree = "<group>"; };
@@ -305,6 +309,9 @@
 		C192369F2582170500AA5A92 /* SurveysAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SurveysAPI.swift; sourceTree = "<group>"; };
 		C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AWSAmplifyConfig.swift; sourceTree = "<group>"; };
 		C19236A42582193B00AA5A92 /* FitbitAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FitbitAPI.swift; sourceTree = "<group>"; };
+		C19236A6258221D400AA5A92 /* BaseStepViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseStepViewController.swift; sourceTree = "<group>"; };
+		C19237032582318C00AA5A92 /* CoughRecordUploader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughRecordUploader.swift; sourceTree = "<group>"; };
+		C19237082582B19500AA5A92 /* AudioVisualizerView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioVisualizerView.swift; sourceTree = "<group>"; };
 		C193941C24EDDEB700BDB3BD /* ProfileSettingsCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ProfileSettingsCell.swift; sourceTree = "<group>"; };
 		C193942624EEDD9000BDB3BD /* AppVersionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppVersionCell.swift; sourceTree = "<group>"; };
 		C193942B24EEE3D700BDB3BD /* SignOutCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SignOutCell.swift; sourceTree = "<group>"; };
@@ -467,6 +474,7 @@
 		E2ECB8C5247FE2BA0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/UserLogin.storyboard; sourceTree = "<group>"; };
 		E2ECB8CA247FE2BE0020A27E /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		E2ECB8CC247FE2BE0020A27E /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_COVID_Signals.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -477,7 +485,7 @@
 				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
-				19C22BE09EF556220818193A /* Pods_Longevity.framework in Frameworks */,
+				723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -489,6 +497,8 @@
 			children = (
 				87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */,
 				2E5CCE2351F0884266C17993 /* Pods-Longevity.release.xcconfig */,
+				A08C2A2315AB4A804CAA10F9 /* Pods-COVID Signals.debug.xcconfig */,
+				74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */,
 			);
 			path = Pods;
 			sourceTree = "<group>";
@@ -498,7 +508,7 @@
 			children = (
 				C12F09DC24F9E7FE00623CC3 /* Charts.framework */,
 				E2C59DFC2498DE8C00842105 /* HealthKit.framework */,
-				1BBACA4760F160C58D9F8077 /* Pods_Longevity.framework */,
+				FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */,
 			);
 			name = Frameworks;
 			sourceTree = "<group>";
@@ -616,6 +626,7 @@
 				C17F080F2574BE2700D9955E /* FitbitFetchBackground.swift */,
 				C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */,
 				C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */,
+				C19237032582318C00AA5A92 /* CoughRecordUploader.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -783,6 +794,7 @@
 				E210AAC0255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift */,
 				E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */,
 				C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */,
+				C19236A6258221D400AA5A92 /* BaseStepViewController.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -979,6 +991,7 @@
 				E274F07D24C55DA600969CD8 /* Dashboard.storyboard */,
 				E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */,
 				C19875C424DC926D00477185 /* TitleView.swift */,
+				C19237082582B19500AA5A92 /* AudioVisualizerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1150,7 +1163,7 @@
 			outputFileListPaths = (
 			);
 			outputPaths = (
-				"$(DERIVED_FILE_DIR)/Pods-Longevity-checkManifestLockResult.txt",
+				"$(DERIVED_FILE_DIR)/Pods-COVID Signals-checkManifestLockResult.txt",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -1200,15 +1213,15 @@
 			files = (
 			);
 			inputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-input-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-COVID Signals/Pods-COVID Signals-frameworks-${CONFIGURATION}-input-files.xcfilelist",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputFileListPaths = (
-				"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks-${CONFIGURATION}-output-files.xcfilelist",
+				"${PODS_ROOT}/Target Support Files/Pods-COVID Signals/Pods-COVID Signals-frameworks-${CONFIGURATION}-output-files.xcfilelist",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-Longevity/Pods-Longevity-frameworks.sh\"\n";
+			shellScript = "\"${PODS_ROOT}/Target Support Files/Pods-COVID Signals/Pods-COVID Signals-frameworks.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
 /* End PBXShellScriptBuildPhase section */
@@ -1329,6 +1342,7 @@
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				C19875B324DC6D1600477185 /* UIColor+Extension.swift in Sources */,
+				C19237092582B19600AA5A92 /* AudioVisualizerView.swift in Sources */,
 				C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */,
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */,
@@ -1347,6 +1361,7 @@
 				C1C8220824EB54A50074AF11 /* UIView+Extension.swift in Sources */,
 				C19875C924DC9F7A00477185 /* UIDevice+Extension.swift in Sources */,
 				C1C8220A24EB570C0074AF11 /* UserProfileHeader.swift in Sources */,
+				C19237042582318C00AA5A92 /* CoughRecordUploader.swift in Sources */,
 				C19875D224DEB0D200477185 /* DashboardCollectionTileCell.swift in Sources */,
 				C19875C724DC9E3000477185 /* CurvedView.swift in Sources */,
 				E27E294B24F789ED00244CF7 /* TextAnswerVC.swift in Sources */,
@@ -1375,6 +1390,7 @@
 				E251EFEE248FB9390012F1C6 /* CustomUnwindSegue.swift in Sources */,
 				E2E14BF924AF0BFC007C0470 /* User.swift in Sources */,
 				C12F09C324F800EA00623CC3 /* AppleHealthConnectionViewController.swift in Sources */,
+				C19236A7258221D400AA5A92 /* BaseStepViewController.swift in Sources */,
 				E210A11E255AC52E0074226A /* TermsOfServiceContextVC.swift in Sources */,
 				C19875C524DC926D00477185 /* TitleView.swift in Sources */,
 				C14DBC03250557FE004D5180 /* CheckInResultViewController.swift in Sources */,
@@ -1552,7 +1568,7 @@
 		};
 		E2ECB8D0247FE2BE0020A27E /* Debug */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */;
+			baseConfigurationReference = A08C2A2315AB4A804CAA10F9 /* Pods-COVID Signals.debug.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
@@ -1577,20 +1593,20 @@
 		};
 		E2ECB8D1247FE2BE0020A27E /* Release */ = {
 			isa = XCBuildConfiguration;
-			baseConfigurationReference = 2E5CCE2351F0884266C17993 /* Pods-Longevity.release.xcconfig */;
+			baseConfigurationReference = 74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */;
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
 				CURRENT_PROJECT_VERSION = 72;
-				DEVELOPMENT_TEAM = LXR24SP9HV;
+				DEVELOPMENT_TEAM = H6A3R6WG95;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity;
+				PRODUCT_BUNDLE_IDENTIFIER = io.rejuve.Longevity1;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE_SPECIFIER = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "$(SRCROOT)/Longevity/Longevity-Bridging-Header.h";

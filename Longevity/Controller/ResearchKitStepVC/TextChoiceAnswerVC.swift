@@ -9,9 +9,8 @@
 import UIKit
 import ResearchKit
 
-class TextChoiceAnswerVC: ORKStepViewController {
+class TextChoiceAnswerVC: BaseStepViewController {
     var chosenCells: [TextChoiceAnswerViewCell]?
-
 
     lazy var questionAnswerCollection: UICollectionView = {
         let collection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -23,23 +22,8 @@ class TextChoiceAnswerVC: ORKStepViewController {
         return collection
     }()
 
-    lazy var footerView:UIView = {
-        let uiView = UIView()
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
-        return uiView
-    }()
-
-    lazy var continueButton: CustomButtonFill = {
-        let buttonView = CustomButtonFill()
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Continue", for: .normal)
-        return buttonView
-    }()
-
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.navigationController?.navigationBar.barTintColor = .white
         presentViews()
     }
 
@@ -47,32 +31,13 @@ class TextChoiceAnswerVC: ORKStepViewController {
         self.view.addSubview(questionAnswerCollection)
         self.view.addSubview(footerView)
         footerView.addSubview(continueButton)
-        let footerViewHeight = CGFloat(130)
-
+        
         NSLayoutConstraint.activate([
             questionAnswerCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             questionAnswerCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             questionAnswerCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
-            questionAnswerCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
-                                                             constant: -footerViewHeight)
+            questionAnswerCollection.bottomAnchor.constraint(equalTo: self.footerView.topAnchor)
         ])
-
-        NSLayoutConstraint.activate([
-            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
-        ])
-
-        NSLayoutConstraint.activate([
-            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
-            continueButton.heightAnchor.constraint(equalToConstant: 48)
-        ])
-
-        continueButton.isEnabled = false
-        continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
         guard let layout = questionAnswerCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
@@ -81,10 +46,6 @@ class TextChoiceAnswerVC: ORKStepViewController {
         layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
         layout.scrollDirection = .vertical
         layout.minimumInteritemSpacing = 20.0
-    }
-
-    @objc func handleContinue(sender: UIButton) {
-        self.goForward()
     }
 
     func addResult(value:String) {
@@ -175,8 +136,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             preconditionFailure("Invalid cell type")
         }
         
-        if let step = self.step as? ORKQuestionStep {
-            headerView.createLayout(header: step.title ?? "", question: step.question!, extraInfo: step.text)
+        if let step = self.step as? ORKQuestionStep, let question = step.question {
+            headerView.createLayout(question: question)
         }
         
         return headerView

@@ -53,23 +53,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
-                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
-        
-//        switch reason {
-//        case .completed:
-//            print("completed")
-//            self.getSurveyList()
-//        case .discarded:
-//            print("discarded")
-//        case .failed:
-//            print("failed")
-//        case .saved:
-//            print("saved")
-//        @unknown default:
-//            print("unknown reason")
-//        }
-//        taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-        
+                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {        
         if self.isFirstCheckIn {
             DispatchQueue.main.async {
                 let tabbarViewController = LNTabBarViewController()
@@ -154,6 +138,10 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 let stepVC = ValuePickerAnswerVC()
                 stepVC.step = step
                 return stepVC
+            } else if questionStep.answerFormat is ORKLocationAnswerFormat {
+                let stepViewController = CoughRecorderViewController()
+                stepViewController.step = step
+                return stepViewController
             }
         }
         return nil
