@@ -152,6 +152,7 @@
 		E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = E26661F224EA64980049ED5E /* ResearchKit.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		E2726F8024FA1F0C0029277D /* ContactSupportViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */; };
 		E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */; };
+		E274B38C25877CBD00D616BC /* SetupProfileMicVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274B38B25877CBC00D616BC /* SetupProfileMicVC.swift */; };
 		E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E274F07D24C55DA600969CD8 /* Dashboard.storyboard */; };
 		E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08524C57C7A00969CD8 /* HomeVC.swift */; };
 		E274F08824C597C000969CD8 /* CovidCheckinVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E274F08724C597C000969CD8 /* CovidCheckinVC.swift */; };
@@ -405,6 +406,7 @@
 		E26661EB24EA64980049ED5E /* ResearchKit.xcodeproj */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.pb-project"; name = ResearchKit.xcodeproj; path = "ResearchKit-master/ResearchKit.xcodeproj"; sourceTree = "<group>"; };
 		E2726F7F24FA1F0C0029277D /* ContactSupportViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContactSupportViewController.swift; sourceTree = "<group>"; };
 		E2726F8524FA30F00029277D /* DashboardTaskCompletedCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCompletedCell.swift; sourceTree = "<group>"; };
+		E274B38B25877CBC00D616BC /* SetupProfileMicVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileMicVC.swift; sourceTree = "<group>"; };
 		E274F07D24C55DA600969CD8 /* Dashboard.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = Dashboard.storyboard; sourceTree = "<group>"; };
 		E274F08524C57C7A00969CD8 /* HomeVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeVC.swift; sourceTree = "<group>"; };
 		E274F08724C597C000969CD8 /* CovidCheckinVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CovidCheckinVC.swift; sourceTree = "<group>"; };
@@ -719,6 +721,7 @@
 				E2D9973624A4FC00006CFA1F /* SetupProfileBioOptionCell.swift */,
 				E2CFD96824B9853F009FE288 /* SetupProfileUnitSelectionCell.swift */,
 				E2BC505524A5E05E009E9818 /* SetupProfileNotificationVC.swift */,
+				E274B38B25877CBC00D616BC /* SetupProfileMicVC.swift */,
 				E2BC505A24A5F5CF009E9818 /* SetupProfileDevicesVC.swift */,
 				E2BC505C24A5FF94009E9818 /* SetupProfileDevicesConnectCell.swift */,
 				E2D6864F2581002000186AE9 /* SetupProfileDevicesHeaderView.swift */,
@@ -1326,6 +1329,7 @@
 				E22DCFCE250F1F6C001E6891 /* SetupProfileCompleteCell.swift in Sources */,
 				E2ECB8BF247FE2BA0020A27E /* AppDelegate.swift in Sources */,
 				E2E8F93E24F94E7F003827CC /* FAQViewController.swift in Sources */,
+				E274B38C25877CBD00D616BC /* SetupProfileMicVC.swift in Sources */,
 				E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */,
 				E24DED1024B30B1500A61892 /* UserDefaults.swift in Sources */,
 				E210AAC1255D18EB00EEEEB3 /* ValuePickerAnswerVC.swift in Sources */,

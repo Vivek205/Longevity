@@ -35,7 +35,7 @@ class SetupProfileNotificationVC: BaseProfileSetupViewController {
 
             guard granted else {
                 DispatchQueue.main.async {
-                    self?.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
+                    self?.performSegue(withIdentifier: "SetupNotificationsToMic", sender: self)
                 }
                 return
             }
@@ -49,14 +49,14 @@ class SetupProfileNotificationVC: BaseProfileSetupViewController {
             }
 
             DispatchQueue.main.async {
-                self?.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
+                self?.performSegue(withIdentifier: "SetupNotificationsToMic", sender: self)
             }
         }
 //        }
     }
     
     @IBAction func handleMayBeLater(_ sender: Any) {
-        self.performSegue(withIdentifier: "SetupNotificationsToDevices", sender: self)
+        self.performSegue(withIdentifier: "SetupNotificationsToMic", sender: self)
     }
 
 }

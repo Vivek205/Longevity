@@ -372,7 +372,7 @@
                     </navigationItem>
                     <connections>
                         <outlet property="descriptionLabel" destination="8lQ-x2-dP5" id="Gfn-Kt-ktp"/>
-                        <segue destination="XcV-Lj-rTX" kind="show" identifier="SetupNotificationsToDevices" id="15S-WO-TRn"/>
+                        <segue destination="k8p-8a-iRo" kind="show" identifier="SetupNotificationsToMic" id="O21-Mm-8Ml"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FNH-L0-sGz" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -398,7 +398,26 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="a4m-Ps-g0S" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="6868.115942028986" y="855.80357142857144"/>
+            <point key="canvasLocation" x="7857" y="856"/>
+        </scene>
+        <!--Setup Profile MicVC-->
+        <scene sceneID="1bO-rh-Yn6">
+            <objects>
+                <viewController id="k8p-8a-iRo" customClass="SetupProfileMicVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
+                    <view key="view" contentMode="scaleToFill" id="28h-fK-XMc">
+                        <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <viewLayoutGuide key="safeArea" id="wiF-bP-B0Q"/>
+                        <color key="backgroundColor" systemColor="systemBackgroundColor"/>
+                    </view>
+                    <navigationItem key="navigationItem" id="Z9z-4G-Zoq"/>
+                    <connections>
+                        <segue destination="XcV-Lj-rTX" kind="show" identifier="SetupProfileMicToDevices" id="mVN-3F-Cfj"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="6LD-Jp-bYu" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="6984" y="854"/>
         </scene>
         <!--Setup Profile Pre ConditionVC-->
         <scene sceneID="POz-6z-Jpn">
@@ -603,7 +622,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zLk-Fd-pvo" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="7626.0869565217399" y="855.80357142857144"/>
+            <point key="canvasLocation" x="8687" y="856"/>
         </scene>
         <!--Setup CompleteVC-->
         <scene sceneID="e2s-Zm-FRX">
@@ -718,7 +737,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACL-Si-545" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="8405.7971014492759" y="855.80357142857144"/>
+            <point key="canvasLocation" x="9567" y="856"/>
         </scene>
         <!--Temp SignoutVC-->
         <scene sceneID="p2a-ya-5Et">
@@ -755,7 +774,7 @@
                 <placeholder placeholderIdentifier="IBFirstResponder" id="h6p-QN-KbZ" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
                 <exit id="KgS-UN-brR" userLabel="Exit" sceneMemberID="exit"/>
             </objects>
-            <point key="canvasLocation" x="9197.1014492753638" y="855.80357142857144"/>
+            <point key="canvasLocation" x="10522" y="854"/>
         </scene>
         <!--Dashboard-->
         <scene sceneID="LMn-M1-LIA">
@@ -765,7 +784,7 @@
                 </viewControllerPlaceholder>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Vg1-cP-tBc" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="10110.144927536232" y="832.36607142857144"/>
+            <point key="canvasLocation" x="11783" y="854"/>
         </scene>
         <!--Terms Of ServiceVC-->
         <scene sceneID="3bW-kz-Ev3">
