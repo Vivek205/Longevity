@@ -51,7 +51,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="4Dk-Is-KK1"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="COVID_Signals" id="EyO-Hz-vMi"/>
                         <segue destination="RlX-kq-iGh" kind="show" identifier="SignupToProfileSetup" id="Z1Q-xo-ocY"/>
                         <segue destination="Gsb-QW-NL5" kind="show" identifier="SignupToEmailSignup" id="6Km-OS-NmJ"/>
                     </connections>
@@ -188,7 +188,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Verify Account" id="Bsw-ad-XvU"/>
                     <connections>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="ppv-oQ-y3h"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="COVID_Signals" id="ppv-oQ-y3h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aNc-jZ-0pa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
