@@ -26,6 +26,17 @@ final class Alert {
         self.present(alert: alert, animated: true)
     }
     
+    @discardableResult
+    convenience init(title: String, message: String, actions: UIAlertAction...) {
+        self.init()
+        let alert = UIAlertController(title: title, message: message, preferredStyle: .alert)
+        
+        for action in actions {
+            alert.addAction(action)
+        }
+        self.present(alert: alert, animated: true)
+    }
+    
 //    @discardableResult
 //    convenience init(type: UIAlertType) {
 //        self.init()
