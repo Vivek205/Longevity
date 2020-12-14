@@ -110,9 +110,9 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
     func checkBoxButton(wasPressedOnCell cell: SetupProfilePreConditionOptionCell) {
         changesSaved = false
         guard let optionIndex = preExistingMedicalConditionData.firstIndex(where:
-            { (element) -> Bool in
-            return element.id == cell.optionId
-        }) else {
+                                                                            { (element) -> Bool in
+                                                                                return element.id == cell.optionId
+                                                                            }) else {
             return
         }
         updateitemSelection(optionIndex:optionIndex)
@@ -171,7 +171,7 @@ extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
 }
 
 extension SetupProfilePreConditionVC: UICollectionViewDelegate,
-UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+                                      UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -187,18 +187,21 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return cell
         }
         if indexPath.row == textAreaRowIndex {
-            let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
-            cell.configureTextView(text: preExistingMedicalCondtionOtherText)
+            guard let cell =
+                    collectionView.dequeueReusableCell(
+                        withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as? SetupProfileOtherOptionCell else { preconditionFailure("invalid cell")}
+            var text = ""
+            if let savedCondition = preExistingMedicalCondtionOtherText { text = savedCondition }
+            if !currentEditedText.isEmpty { text = currentEditedText }
+            cell.configureTextView(text: text)
             cell.delegate = self
             self.activeTextView = cell.otherOptionTextView
             return cell
         }
 
-        let cell =
+        guard let cell =
             collectionView.dequeueReusableCell(
-                withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as! SetupProfilePreConditionOptionCell
+                withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as? SetupProfilePreConditionOptionCell else { preconditionFailure("invalid cell")}
         cell.optionData = self.currentPreExistingMedicalConditions?[indexPath.row - 1]
         cell.delegate = self
         return cell
@@ -298,8 +301,8 @@ extension SetupProfilePreConditionVC {
         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
         let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
         guard let keyboardHeight = keyboardSize?.height ,
-            let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
-            let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
+              let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
+              let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
         else {return}
         let topPadding:CGFloat = 20.0
         let viewYPadding = navbarHeight + topPadding
