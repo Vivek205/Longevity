@@ -80,7 +80,7 @@ class ActivityCard : UIView {
             activityTitle.topAnchor.constraint(equalTo: topAnchor, constant: 7.0),
             activitySubTitle.topAnchor.constraint(equalTo: activityTitle.topAnchor, constant: 10.0),
             activitySubTitle.leadingAnchor.constraint(equalTo: activityTitle.leadingAnchor),
-            activitySubTitle.trailingAnchor.constraint(equalTo: activityTitle.trailingAnchor, constant: -10.0),
+            activitySubTitle.trailingAnchor.constraint(equalTo: activityTitle.trailingAnchor),
             activitySubTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -7.0),
             activityDate.centerYAnchor.constraint(equalTo: activityTitle.centerYAnchor),
             activityDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -8.0),

@@ -220,6 +220,7 @@
 		E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2ECB8C2247FE2BA0020A27E /* OnboardingVC.swift */; };
 		E2ECB8C6247FE2BA0020A27E /* UserLogin.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C4247FE2BA0020A27E /* UserLogin.storyboard */; };
 		E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = E2ECB8C9247FE2BE0020A27E /* LaunchScreen.storyboard */; };
+		E2F5E90825839A720049847D /* CoughRecordUploader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19237032582318C00AA5A92 /* CoughRecordUploader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -1233,6 +1234,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E2F5E90825839A720049847D /* CoughRecordUploader.swift in Sources */,
 				E217022A253EFA2B006985C4 /* RKCFormLocationView.swift in Sources */,
 				E25E8C91253754AF00502F86 /* UITextField+Extension.swift in Sources */,
 				E2C86D5624A5CE66005CE57E /* CustomButtonOutlined.swift in Sources */,

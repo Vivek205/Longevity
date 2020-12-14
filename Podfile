@@ -1,5 +1,7 @@
 # Uncomment the next line to define a global platform for your project
 platform :ios, '11.0'
+# ignore all warnings from all external pods
+inhibit_all_warnings!
 
 target 'COVID Signals' do
   use_frameworks!
