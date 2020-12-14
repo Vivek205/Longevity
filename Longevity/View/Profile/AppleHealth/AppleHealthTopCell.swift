@@ -20,7 +20,7 @@ class AppleHealthTopCell: UITableViewCell {
     
     lazy var appLogoImage: UIImageView = {
         let logoImage = UIImageView()
-        logoImage.image = UIImage(named: "rejuveIcon")
+        logoImage.image = UIImage(named: "App Icon - COVID Signals")
         logoImage.contentMode = .scaleAspectFit
         logoImage.translatesAutoresizingMaskIntoConstraints = false
         return logoImage
@@ -55,7 +55,7 @@ class AppleHealthTopCell: UITableViewCell {
     
     lazy var appName: UILabel = {
         let appname = UILabel()
-        appname.text = "Rejuve"
+        appname.text = "COVID Signals"
         appname.font = UIFont(name: AppFontName.medium, size: 14.0)
         appname.textColor = UIColor(hexString: "#4E4E4E")
         appname.textAlignment = .center

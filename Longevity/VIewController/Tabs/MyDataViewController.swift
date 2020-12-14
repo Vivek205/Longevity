@@ -27,6 +27,12 @@ class MyDataViewController: BaseViewController {
         mydataCollection.translatesAutoresizingMaskIntoConstraints = false
         return mydataCollection
     }()
+
+    lazy var aiProcessingBand: AIProgressBandView = {
+        let processingband = AIProgressBandView()
+        processingband.translatesAutoresizingMaskIntoConstraints = false
+        return processingband
+    }()
     
     init() {
         super.init(viewTab: .myData)
@@ -40,13 +46,25 @@ class MyDataViewController: BaseViewController {
         super.viewDidLoad()
         
         self.view.addSubview(myDataCollectionView)
+        self.titleView.addSubview(aiProcessingBand)
         
         NSLayoutConstraint.activate([
             myDataCollectionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             myDataCollectionView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             myDataCollectionView.topAnchor.constraint(equalTo: self.view.topAnchor),
-            myDataCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+            myDataCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+            
+            aiProcessingBand.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor),
+            aiProcessingBand.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor),
+            aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
+            aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
+
+        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) {
+            DispatchQueue.main.async {
+                self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+            }
+        }
         
         guard let layout = myDataCollectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
