@@ -102,11 +102,11 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         }
         
         if insightData.name == .logs || insightData.name == .coughlogs {
-                guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
-                    preconditionFailure("Invalid insight cell")
-                }
-                cell.logData = insightData
-                return cell
+            guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
+                preconditionFailure("Invalid insight cell")
+            }
+            cell.logData = insightData
+            return cell
         } else {
             guard let cell = collectionView.getCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
                 preconditionFailure("Invalid insight cell")
@@ -137,7 +137,12 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
         guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
 
         if insightData.name != .logs && insightData.name != .coughlogs && (insightData.isExpanded ?? false) {
-            height = 430.0
+            let descriptionHeight:CGFloat = insightData.userInsightDescription.height(withConstrainedWidth: width, font: UIFont(name: "Montserrat-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0))
+            let histogramHeight:CGFloat = 207
+            let histogramDescriptionHeight: CGFloat = insightData.details?.histogram?.histogramDescription.height(withConstrainedWidth: width, font: UIFont(name: "Montserrat-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)) ?? 0
+
+            let headerHeight:CGFloat = 60.0
+            height = descriptionHeight + histogramHeight + headerHeight + histogramDescriptionHeight
         }
 
         return CGSize(width: width, height: height)

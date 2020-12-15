@@ -16,15 +16,15 @@ class MyDataInsightDetailView: UIView {
             if let details = insightData?.details {
                 
                 if let confidencevalue = details.confidence?.value, !confidencevalue.isEmpty {
-                    self.confidenceValue.text = confidencevalue
-                    self.confidenceNoValue.isHidden = true
-                    self.confidenceValue.isHidden = false
+//                    self.confidenceValue.text = confidencevalue
+//                    self.confidenceNoValue.isHidden = true
+//                    self.confidenceValue.isHidden = false
                 } else {
-                    self.confidenceNoValue.isHidden = false
-                    self.confidenceValue.isHidden = true
+//                    self.confidenceNoValue.isHidden = false
+//                    self.confidenceValue.isHidden = true
                 }
                 
-                self.confidenceDescription.text = details.confidence?.confidenceDescription
+//                self.confidenceDescription.text = details.confidence?.confidenceDescription
                 self.histogramDescription.text = details.histogram?.histogramDescription
                 self.createHistogramData()
             }
@@ -48,50 +48,50 @@ class MyDataInsightDetailView: UIView {
         return divider
     }()
     
-    lazy var confidence: UILabel = {
-        let confidence = UILabel()
-        confidence.text = "Confidence"
-        confidence.font = UIFont(name: "Montserrat-Medium", size: 16.0)
-        confidence.textColor = UIColor(hexString: "#4E4E4E")
-        confidence.translatesAutoresizingMaskIntoConstraints = false
-        return confidence
-    }()
+//    lazy var confidence: UILabel = {
+//        let confidence = UILabel()
+//        confidence.text = "Confidence"
+//        confidence.font = UIFont(name: "Montserrat-Medium", size: 16.0)
+//        confidence.textColor = UIColor(hexString: "#4E4E4E")
+//        confidence.translatesAutoresizingMaskIntoConstraints = false
+//        return confidence
+//    }()
     
-    lazy var confidenceValue: UILabel = {
-        let confidence = UILabel()
-        confidence.text = ""
-        confidence.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
-        confidence.textColor = .themeColor
-        confidence.translatesAutoresizingMaskIntoConstraints = false
-        return confidence
-    }()
+//    lazy var confidenceValue: UILabel = {
+//        let confidence = UILabel()
+//        confidence.text = ""
+//        confidence.font = UIFont(name: "Montserrat-SemiBold", size: 16.0)
+//        confidence.textColor = .themeColor
+//        confidence.translatesAutoresizingMaskIntoConstraints = false
+//        return confidence
+//    }()
     
-    lazy var confidenceNoValue: UILabel = {
-        let confidencenovalue = UILabel()
-        confidencenovalue.text = "More data needed"
-        confidencenovalue.font = UIFont(name: "Montserrat-Regular", size: 12.0)
-        confidencenovalue.textColor = UIColor(hexString: "#9B9B9B")
-        confidencenovalue.textAlignment = .right
-        confidencenovalue.translatesAutoresizingMaskIntoConstraints = false
-        return confidencenovalue
-    }()
+//    lazy var confidenceNoValue: UILabel = {
+//        let confidencenovalue = UILabel()
+//        confidencenovalue.text = "More data needed"
+//        confidencenovalue.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+//        confidencenovalue.textColor = UIColor(hexString: "#9B9B9B")
+//        confidencenovalue.textAlignment = .right
+//        confidencenovalue.translatesAutoresizingMaskIntoConstraints = false
+//        return confidencenovalue
+//    }()
+//
+//    lazy var confidenceDescription: UILabel = {
+//        let confidenceDesc = UILabel()
+//        confidenceDesc.numberOfLines = 0
+//        confidenceDesc.lineBreakMode = .byWordWrapping
+//        confidenceDesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
+//        confidenceDesc.textColor = UIColor(hexString: "#9B9B9B")
+//        confidenceDesc.translatesAutoresizingMaskIntoConstraints = false
+//        return confidenceDesc
+//    }()
     
-    lazy var confidenceDescription: UILabel = {
-        let confidenceDesc = UILabel()
-        confidenceDesc.numberOfLines = 0
-        confidenceDesc.lineBreakMode = .byWordWrapping
-        confidenceDesc.font = UIFont(name: "Montserrat-Regular", size: 14.0)
-        confidenceDesc.textColor = UIColor(hexString: "#9B9B9B")
-        confidenceDesc.translatesAutoresizingMaskIntoConstraints = false
-        return confidenceDesc
-    }()
-    
-    lazy var divider2: UIView = {
-        let divider = UIView()
-        divider.backgroundColor = UIColor(hexString: "#CECECE")
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        return divider
-    }()
+//    lazy var divider2: UIView = {
+//        let divider = UIView()
+//        divider.backgroundColor = UIColor(hexString: "#CECECE")
+//        divider.translatesAutoresizingMaskIntoConstraints = false
+//        return divider
+//    }()
     
     lazy var trendHistogram: UILabel = {
         let histogram = UILabel()
@@ -159,11 +159,11 @@ class MyDataInsightDetailView: UIView {
         
         self.addSubview(insightDescription)
         self.addSubview(divider1)
-        self.addSubview(confidence)
-        self.addSubview(confidenceNoValue)
-        self.addSubview(confidenceValue)
-        self.addSubview(confidenceDescription)
-        self.addSubview(divider2)
+//        self.addSubview(confidence)
+//        self.addSubview(confidenceNoValue)
+//        self.addSubview(confidenceValue)
+//        self.addSubview(confidenceDescription)
+//        self.addSubview(divider2)
         self.addSubview(trendHistogram)
 //        self.addSubview(histogramDay)
         self.addSubview(histogramView)
@@ -178,25 +178,26 @@ class MyDataInsightDetailView: UIView {
             divider1.leadingAnchor.constraint(equalTo: leadingAnchor),
             divider1.heightAnchor.constraint(equalToConstant: 1.0),
             divider1.trailingAnchor.constraint(equalTo: trailingAnchor),
-            confidence.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
-            confidence.leadingAnchor.constraint(equalTo: leadingAnchor),
-            confidence.widthAnchor.constraint(equalToConstant: 100.0),
-            confidenceValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
-            confidenceValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            confidenceValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
-            confidenceNoValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
-            confidenceNoValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0),
-            confidenceNoValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
-            
-            confidenceDescription.topAnchor.constraint(equalTo: confidence.bottomAnchor, constant: 8.0),
-            confidenceDescription.leadingAnchor.constraint(equalTo: leadingAnchor),
-            confidenceDescription.trailingAnchor.constraint(equalTo: trailingAnchor),
-            divider2.topAnchor.constraint(equalTo: confidenceDescription.bottomAnchor, constant: 14.0),
-            divider2.leadingAnchor.constraint(equalTo: leadingAnchor),
-            divider2.heightAnchor.constraint(equalToConstant: 1.0),
-            divider2.trailingAnchor.constraint(equalTo: trailingAnchor),
+//            confidence.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
+//            confidence.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            confidence.widthAnchor.constraint(equalToConstant: 100.0),
+//            confidenceValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
+//            confidenceValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+//            confidenceValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
+//            confidenceNoValue.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
+//            confidenceNoValue.trailingAnchor.constraint(equalTo: trailingAnchor, constant: 0.0),
+//            confidenceNoValue.leadingAnchor.constraint(greaterThanOrEqualTo: confidence.trailingAnchor, constant: 10.0),
+//
+//            confidenceDescription.topAnchor.constraint(equalTo: confidence.bottomAnchor, constant: 8.0),
+//            confidenceDescription.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            confidenceDescription.trailingAnchor.constraint(equalTo: trailingAnchor),
+
+//            divider2.topAnchor.constraint(equalTo: confidenceDescription.bottomAnchor, constant: 14.0),
+//            divider2.leadingAnchor.constraint(equalTo: leadingAnchor),
+//            divider2.heightAnchor.constraint(equalToConstant: 1.0),
+//            divider2.trailingAnchor.constraint(equalTo: trailingAnchor),
             trendHistogram.leadingAnchor.constraint(equalTo: leadingAnchor),
-            trendHistogram.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 8.0),
+            trendHistogram.topAnchor.constraint(equalTo: divider1.bottomAnchor, constant: 8.0),
 //            histogramDay.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
 //            histogramDay.topAnchor.constraint(equalTo: divider2.bottomAnchor, constant: 8.0),
 //            histogramDay.leadingAnchor.constraint(greaterThanOrEqualTo: trendHistogram.trailingAnchor, constant: 10.0),
@@ -213,9 +214,9 @@ class MyDataInsightDetailView: UIView {
             histogramDescription.bottomAnchor.constraint(equalTo: bottomAnchor)
         ])
         
-        self.confidenceNoValue.isHidden = false
+//        self.confidenceNoValue.isHidden = false
         self.chartNoDataLabel.isHidden = false
-        self.confidenceValue.isHidden = true
+//        self.confidenceValue.isHidden = true
     }
     
     required init?(coder: NSCoder) {

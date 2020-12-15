@@ -32,7 +32,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="PersonalSetupOne" translatesAutoresizingMaskIntoConstraints="NO" id="G2z-bX-NAL">
+                            <imageView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="SetupProfileDisclaimer" translatesAutoresizingMaskIntoConstraints="NO" id="G2z-bX-NAL">
                                 <rect key="frame" x="77" y="112" width="260" height="224"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="224" id="JOf-Kg-u9v"/>
@@ -829,8 +829,8 @@
         </scene>
     </scenes>
     <resources>
-        <image name="PersonalSetupOne" width="261" height="224"/>
         <image name="SetupComplete" width="224" height="224"/>
+        <image name="SetupProfileDisclaimer" width="261" height="224"/>
         <image name="dataPrivacyLogo" width="31" height="36"/>
         <image name="setupProfileNotification" width="234" height="224"/>
         <systemColor name="labelColor">
