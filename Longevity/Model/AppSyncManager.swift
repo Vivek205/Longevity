@@ -41,26 +41,35 @@ class AppSyncManager  {
     
     var pollingTimer: DispatchSourceTimer?
     
-    fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
+    fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "Severity Infection",
                                 userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
-                                defaultOrder: 0,
+                                defaultOrder: 1,
                                 details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
                                                  confidence: Confidence(value: "",
                                                                         confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
                                                  histogram: Histogram(histogramDescription: "Your COVID-19 exposure risk over the time of your check-ins."), submissions: nil),
                                 isExpanded: false),
-                    UserInsight(name: .risk, text: "COVID-19 Infection",
+                    UserInsight(name: .risk, text: "Life Style Infection",
                                 userInsightDescription: "Infection risk estimates your chance of having COVID-19 based on your symptoms and exposure history.",
-                                defaultOrder: 1,
+                                defaultOrder: 3,
                                 details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
                                                  confidence: Confidence(value: "",
                                                                         confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
                                                  histogram: Histogram(histogramDescription: "Your COVID-19 Infection risk over the time of your check-ins."), submissions: nil),
                                 isExpanded: false),
                     UserInsight(name: .distancing,
-                                text: "Social Distancing",
+                                text: "Biosignal Detection",
                                 userInsightDescription: "Your Social Distancing Score demonstrates whether you have practiced social distancing guidelines, wore a mask, and self-quarantined according to your local government’s instructions.",
                                 defaultOrder: 2,
+                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                 confidence: Confidence(value: "",
+                                                                        confidenceDescription: "How well the AI can assess your social distancing situation. More check-ins and health data improves the accuracy."),
+                                                 histogram: Histogram(histogramDescription: "Your social distancing over the time of your check-ins."), submissions: nil),
+                                isExpanded: false),
+                    UserInsight(name: .overallInfection,
+                                text: "Overall Infection",
+                                userInsightDescription: "Your Social Distancing Score demonstrates whether you have practiced social distancing guidelines, wore a mask, and self-quarantined according to your local government’s instructions.",
+                                defaultOrder: 0,
                                 details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
                                                  confidence: Confidence(value: "",
                                                                         confidenceDescription: "How well the AI can assess your social distancing situation. More check-ins and health data improves the accuracy."),
@@ -69,13 +78,13 @@ class AppSyncManager  {
                     UserInsight(name: .logs,
                                 text: "Results Data Log",
                                 userInsightDescription: "COVID Check-in Log",
-                                defaultOrder: 3,
+                                defaultOrder: 4,
                                 details: nil,
                                 isExpanded: false),
                     UserInsight(name: .coughlogs,
                                 text: "Cough Test Log",
                                 userInsightDescription: "Cough Test Log",
-                                defaultOrder: 4,
+                                defaultOrder: 5,
                                 details: nil,
                                 isExpanded: false)]
     
@@ -165,7 +174,7 @@ class AppSyncManager  {
             if let insights = userinsights {
                 self?.userInsights.value = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
             } else {
-                self?.userInsights.value = self?.defaultInsights
+                self?.userInsights.value = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
             }
         }
     }
