@@ -19,7 +19,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
             if let details = insightData?.details {
                 if let risklevel = details.riskLevel {
                     self.riskType.isHidden = false
-                    self.riskType.text = risklevel.text
+                    self.riskType.text = risklevel.hexagontext
                     self.riskType.font = risklevel.textFont
                     self.riskType.textColor = .themeColor
                     self.guageView.image = risklevel.riskIcon

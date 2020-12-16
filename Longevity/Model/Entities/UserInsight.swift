@@ -20,6 +20,19 @@ extension RiskLevel {
     var text: String {
         switch self {
             case .high:
+                return "High Risk"
+            case .medium:
+                return "Medium Risk"
+            case .lowLevel:
+                return "Low Risk"
+        default:
+                return "More data needed"
+        }
+    }
+    
+    var hexagontext: String {
+        switch self {
+            case .high:
                 return "High"
             case .medium:
                 return "Medium"
