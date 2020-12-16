@@ -209,7 +209,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 {
-            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.50 : 0.60
+            let heightFactor: CGFloat = UIDevice.hasNotch ? 0.50 : 0.58
             let height = collectionView.bounds.height * heightFactor
             return CGSize(width: collectionView.bounds.width, height: height)
         } else {

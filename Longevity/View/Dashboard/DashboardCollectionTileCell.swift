@@ -12,7 +12,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
     
     var insightData: UserInsight! {
         didSet {
-            self.tileTitle.text = insightData?.text
+            self.tileTitle.text = insightData.name.hexagonTitle
             self.trendDirection.isHidden = false
             self.trendImage.isHidden = false
             
@@ -51,18 +51,11 @@ class DashboardCollectionTileCell: CommonHexagonCell {
         }
     }
     
-//    lazy var hexagonView : HexagonView = {
-//        let hexagon = HexagonView()
-//        hexagon.backgroundColor = .hexagonColor
-//        hexagon.translatesAutoresizingMaskIntoConstraints = false
-//        return hexagon
-//    }()
-    
     lazy var tileTitle: UILabel = {
         let title = UILabel()
         title.textAlignment = .center
-        title.text = "COVID-19 Infection"
-        title.font = UIFont(name: "Montserrat-Medium", size: 14)
+        title.text = ""
+        title.font = UIFont(name: AppFontName.medium, size: 14)
         title.textColor = .checkinCompleted
         title.numberOfLines = 0
         title.lineBreakMode = .byWordWrapping
@@ -83,7 +76,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
         let risk = UILabel()
         risk.textAlignment = .center
         risk.text = "Medium Risk"
-        risk.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+        risk.font = UIFont(name: AppFontName.semibold, size: 18)
         risk.textColor = .themeColor
         risk.numberOfLines = 0
         risk.lineBreakMode = .byWordWrapping
@@ -99,7 +92,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
         trend.numberOfLines = 0
         trend.lineBreakMode = .byWordWrapping
         trend.isUserInteractionEnabled = false
-        trend.font = UIFont(name: "Montserrat-Medium", size: 10)
+        trend.font = UIFont(name: AppFontName.medium, size: 10)
         trend.translatesAutoresizingMaskIntoConstraints = false
         return trend
     }()
@@ -115,41 +108,34 @@ class DashboardCollectionTileCell: CommonHexagonCell {
     
     override init(frame: CGRect) {
         super.init(frame: frame)
-        
         self.hexagonView.backgroundColor = .hexagonColor
-        
-//        self.contentView.addSubview(hexagonView)
     }
     
     func setupCell(index: Int) {
-        let isEvenCell = index % 2 == 0
-        let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
-        
         self.backgroundColor = .clear
         self.contentView.backgroundColor = .clear
-        
-        self.contentView.addSubview(tileTitle)
-        
-        NSLayoutConstraint.activate([
-            hexagonView.topAnchor.constraint(equalTo: topAnchor, constant: vTop),
-            tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
-            tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0)
-        ])
-        
         self.tileTitle.textColor = .checkinCompleted
         self.hexagonView.backgroundColor = .hexagonColor
         self.hexagonView.borderColor = .borderColor
         self.hexagonView.isEmptyCell = false
-
-        self.contentView.addSubview(guageView)
-        self.contentView.addSubview(riskType)
-        self.contentView.addSubview(trendDirection)
-        self.contentView.addSubview(trendImage)
+        
+        self.hexagonView.addSubview(tileTitle)
+        self.hexagonView.addSubview(guageView)
+        self.hexagonView.addSubview(riskType)
+        self.hexagonView.addSubview(trendDirection)
+        self.hexagonView.addSubview(trendImage)
+        
+        let isEvenCell = index % 2 == 0
+        let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
         
         NSLayoutConstraint.activate([
-            guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 5.0),
+            hexagonView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
+            tileTitle.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 15.0),
+            tileTitle.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -15.0),
+            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
+            guageView.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 6.0),
             guageView.widthAnchor.constraint(equalTo: widthAnchor, multiplier: 0.25),
+            guageView.heightAnchor.constraint(equalTo: guageView.widthAnchor),
             guageView.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 22.0),
             riskType.topAnchor.constraint(equalTo: guageView.topAnchor),
             riskType.leadingAnchor.constraint(equalTo: guageView.trailingAnchor),

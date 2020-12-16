@@ -20,11 +20,11 @@ extension RiskLevel {
     var text: String {
         switch self {
             case .high:
-                return "High Risk"
+                return "High"
             case .medium:
-                return "Medium Risk"
+                return "Medium"
             case .lowLevel:
-                return "Low Risk"
+                return "Low"
         default:
                 return "More data needed"
         }
@@ -82,7 +82,7 @@ extension TrendDirection {
             case .down:
                 return "TRENDING DOWN"
             case .same:
-                return "NO TREND CHANGE"
+                return ""
         }
     }
     
@@ -124,6 +124,38 @@ enum CardType: String, Codable {
     case risk = "COVID_RISK"
     case distancing = "SOCIAL_DISTANCING"
     case overallInfection = "OVER_ALL_INFECTION_RISK"
+}
+
+extension CardType {
+    var hexagonOrder: Int {
+        switch self {
+            case .exposure:
+                return 0
+            case .overallInfection:
+                return 1
+            case .distancing:
+                return 2
+            case .risk:
+                return 3
+            default:
+                return -1
+        }
+    }
+    
+    var hexagonTitle: String {
+        switch self {
+        case .exposure:
+            return "Severity\nInfection Risk"
+        case .overallInfection:
+            return "Overall\nInfection Risk"
+        case .distancing:
+            return "Biosignal\nDetection Status"
+        case .risk:
+            return "Life Style\nInfection Risk"
+        default:
+            return ""
+        }
+    }
 }
 
 struct UserInsight: Codable {
