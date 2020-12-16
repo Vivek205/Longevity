@@ -161,7 +161,7 @@ class MyDataInsightCell: UICollectionViewCell {
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
             self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
             
-            self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor),
+            self.guageView.leadingAnchor.constraint(equalTo: self.tileTitle.trailingAnchor, constant: 10.0),
             self.guageView.centerYAnchor.constraint(equalTo: self.tileTitle.centerYAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 48.0),
             self.guageView.heightAnchor.constraint(equalTo: self.guageView.widthAnchor),
