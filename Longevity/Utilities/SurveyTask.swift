@@ -58,8 +58,8 @@ final class SurveyTaskUtility: NSObject {
         
         var surveyid: String?
         
-        if surveyId == nil && !(self.repetitiveSurveyList.value?.isEmpty ?? true) {
-            surveyid = self.repetitiveSurveyList.value?[0].surveyId
+        if surveyId == nil && !(self.oneTimeSurveyList.value?.isEmpty ?? true) {
+            surveyid = self.oneTimeSurveyList.value?[0].surveyId
         } else {
             surveyid = surveyId
         }
