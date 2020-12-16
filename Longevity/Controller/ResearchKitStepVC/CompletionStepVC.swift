@@ -69,13 +69,23 @@ class CompletionStepVC: ORKStepViewController {
         self.currentSurveyId = SurveyTaskUtility.shared.currentSurveyId
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
-        
-        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
-            DispatchQueue.main.async {
-                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending &&
-                    SurveyTaskUtility.shared.surveyInProgress.value != .unknown
+
+        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
+            if isCurrentSurveyRepetitive {
+                viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
+            }else {
+                viewResultsButton.setTitle("Start Your Check-in", for: .normal)
             }
         }
+
+
+        shouldViewResultButtonBeEnabled()
+//        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
+//            DispatchQueue.main.async {
+//                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending &&
+//                    SurveyTaskUtility.shared.surveyInProgress.value != .unknown
+//            }
+//        }
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         self.completeSurvey()
         
@@ -89,6 +99,36 @@ class CompletionStepVC: ORKStepViewController {
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
     }
 
+    func isDateToday(date: String?) -> Bool {
+        guard let date = date else {return false}
+        let dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        var calendar = Calendar.current
+        if let lastSubmissionDate = dateFormatter.date(from: date),
+           let timezone = TimeZone(abbreviation: "UTC"){
+            calendar.timeZone = timezone
+            if calendar.isDateInToday(lastSubmissionDate) {
+                return true
+            }
+        }
+        return false
+    }
+
+    func shouldViewResultButtonBeEnabled() {
+        viewResultsButton.isEnabled = false
+        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
+            if isCurrentSurveyRepetitive {
+                let lastSubmissionId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.lastSubmissionId
+                viewResultsButton.isEnabled = lastSubmissionId == nil
+            }else {
+                let lastSubmissionDate = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.lastSubmission
+                viewResultsButton.isEnabled = !isDateToday(date: lastSubmissionDate)
+            }
+        }
+    }
+
     func completeSurvey() {
         func completion() {
             print("survey completed")
@@ -96,7 +136,6 @@ class CompletionStepVC: ORKStepViewController {
         func onFailure(_ error: Error) {
             print("failed to complete the survey")
         }
-        self.viewResultsButton.isEnabled = false
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
 
@@ -152,13 +191,38 @@ class CompletionStepVC: ORKStepViewController {
     }
     
     @objc func doViewResults() {
-        guard let surveyId = self.currentSurveyId,
-              let surveyName = self.currentSurveyName,
-              let isCheckIn = self.isCurrentSurveyRepetitive,
-              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
+        self.showSpinner()
+        guard let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive else {return self.removeSpinner()}
+        var surveyId: String?
+        if isCurrentSurveyRepetitive {
+            surveyId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.surveyId
+        }else {
+            surveyId = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.surveyId
+        }
+        if surveyId == nil {return self.removeSpinner()}
+        SurveyTaskUtility.shared.createSurvey(surveyId: surveyId) { (task) in
+            DispatchQueue.main.async {
+                let taskViewController = SurveyViewController(task: task, isFirstTask: true, isFirstCheckin: true)
+                self.removeSpinner()
+                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+            }
+        } onFailure: { (error) in
+            DispatchQueue.main.async {
+                Alert(title: "Survey Unavailable",
+                               message: "Unable to open the survey. Please try again later.")
+                self.removeSpinner()
+            }
 
-        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
-        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                    style: .overCurrentContext)
+        }
+
+
+//        guard let surveyId = self.currentSurveyId,
+//              let surveyName = self.currentSurveyName,
+//              let isCheckIn = self.isCurrentSurveyRepetitive,
+//              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
+//
+//        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
+//        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+//                                                    style: .overCurrentContext)
     }
 }
