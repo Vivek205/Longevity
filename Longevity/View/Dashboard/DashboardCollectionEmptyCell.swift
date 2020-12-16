@@ -61,7 +61,6 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
         self.contentView.addSubview(infoButton)
         
         NSLayoutConstraint.activate([
-            hexagonView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vTop),
             tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
             tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
@@ -72,6 +71,14 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
             infoButton.centerXAnchor.constraint(equalTo: emptyCellMessage.centerXAnchor),
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
+        ])
+    }
+    
+    func setupcell(index: Int) {
+        let isEvenCell = index % 2 == 0
+        let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
+        NSLayoutConstraint.activate([
+            hexagonView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
         ])
     }
     

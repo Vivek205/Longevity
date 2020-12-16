@@ -168,22 +168,39 @@ class SurveyIntroViewController: ORKInstructionStepViewController {
 
     @objc func handleContinue(sender: UIButton) {
         if self.isCoughTest {
-           let recordingSession = AVAudioSession.sharedInstance()
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-                        self.goForward()
-                    } else {
-                        Alert(title: "Microphone Permission", message: "Microphone access is required to record the cough. Please allow in app settings", actions: UIAlertAction(title: "No Thanks", style: .destructive, handler: { (action) in
+            let permission = AVAudioSession.sharedInstance().recordPermission
+            switch permission {
+            case .undetermined:
+                    AVAudioSession.sharedInstance().requestRecordPermission() { [unowned self] allowed in
+                     DispatchQueue.main.async {
+                         if allowed {
+                             self.goForward()
+                         } else {
+                             Alert(title: "Microphone Permission", message: "Microphone access is required to record the cough. Please allow in app settings", actions: UIAlertAction(title: "No Thanks", style: .destructive, handler: { (action) in
 
-                        }), UIAlertAction(title: "Go to Settings", style: .default, handler: { (action) in
-                            if let settingsURL = URL(string: UIApplication.openSettingsURLString),
-                               UIApplication.shared.canOpenURL(settingsURL) {
-                                UIApplication.shared.openURL(settingsURL)
-                            }
-                        }))
+                             }), UIAlertAction(title: "Go to Settings", style: .default, handler: { (action) in
+                                 if let settingsURL = URL(string: UIApplication.openSettingsURLString),
+                                    UIApplication.shared.canOpenURL(settingsURL) {
+                                     UIApplication.shared.openURL(settingsURL)
+                                 }
+                             }))
+                         }
+                     }
+                 }
+                break
+            case .granted:
+                self.goForward()
+                break
+            case .denied:
+                Alert(title: "Microphone Permission", message: "Microphone access is required to record the cough. Please allow in app settings", actions: UIAlertAction(title: "No Thanks", style: .destructive, handler: { (action) in
+
+                }), UIAlertAction(title: "Go to Settings", style: .default, handler: { (action) in
+                    if let settingsURL = URL(string: UIApplication.openSettingsURLString),
+                       UIApplication.shared.canOpenURL(settingsURL) {
+                        UIApplication.shared.openURL(settingsURL)
                     }
-                }
+                }))
+                break
             }
         } else {
             self.goForward()
