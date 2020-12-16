@@ -654,7 +654,7 @@
                                         <constraints>
                                             <constraint firstAttribute="height" constant="48" id="vKH-M4-ANK"/>
                                         </constraints>
-                                        <state key="normal" title="Start Check-in"/>
+                                        <state key="normal" title="Start Risk Assessment"/>
                                         <connections>
                                             <action selector="handleBeginSurvey:" destination="PS8-FZ-XHc" eventType="touchUpInside" id="dRw-KE-cAt"/>
                                         </connections>

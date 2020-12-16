@@ -123,6 +123,7 @@ enum CardType: String, Codable {
     case exposure = "COVID_EXPOSURE"
     case risk = "COVID_RISK"
     case distancing = "SOCIAL_DISTANCING"
+    case overallInfection = "OVER_ALL_INFECTION_RISK"
 }
 
 struct UserInsight: Codable {

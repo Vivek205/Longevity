@@ -110,7 +110,7 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.item < 3 {
+        if indexPath.item < (userInsights?.count ?? 0) {
             guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
                 preconditionFailure("Invalid tile cell type")
             }

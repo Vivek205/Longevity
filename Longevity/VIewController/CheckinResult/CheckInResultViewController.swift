@@ -71,16 +71,16 @@ class CheckInResultViewController: UIViewController {
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         
-        let logButton = UIButton()
-        logButton.setTitle("Results Data Log", for: .normal)
-        logButton.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
-        logButton.setTitleColor(.themeColor, for: .normal)
-        logButton.backgroundColor = .clear
-        logButton.addTarget(self, action: #selector(showLogs), for: .touchUpInside)
-        logButton.translatesAutoresizingMaskIntoConstraints = false
+//        let logButton = UIButton()
+//        logButton.setTitle("Results Data Log", for: .normal)
+//        logButton.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
+//        logButton.setTitleColor(.themeColor, for: .normal)
+//        logButton.backgroundColor = .clear
+//        logButton.addTarget(self, action: #selector(showLogs), for: .touchUpInside)
+//        logButton.translatesAutoresizingMaskIntoConstraints = false
         
         closePanel.addSubview(closeButton)
-        closePanel.addSubview(logButton)
+//        closePanel.addSubview(logButton)
         
         let checkInLogHeight: CGFloat = self.isCheckInResult ? 48.0 : 0.0
         let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
@@ -90,20 +90,20 @@ class CheckInResultViewController: UIViewController {
             closeButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
             closeButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
             closeButton.heightAnchor.constraint(equalToConstant: 48.0),
-            logButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 24.0),
-            logButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
-            logButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
-            logButton.heightAnchor.constraint(equalToConstant: checkInLogHeight),
-            logButton.bottomAnchor.constraint(equalTo: closePanel.bottomAnchor, constant: bottomMargin)
+//            logButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 24.0),
+//            logButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
+//            logButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
+//            logButton.heightAnchor.constraint(equalToConstant: checkInLogHeight),
+//            logButton.bottomAnchor.constraint(equalTo: closePanel.bottomAnchor, constant: bottomMargin)
         ])
         
         closeButton.layer.cornerRadius = 10.0
         closeButton.layer.masksToBounds = true
         
-        logButton.layer.cornerRadius = 10.0
-        logButton.layer.borderWidth = 1.5
-        logButton.layer.borderColor = UIColor.themeColor.cgColor
-        logButton.layer.masksToBounds = true
+//        logButton.layer.cornerRadius = 10.0
+//        logButton.layer.borderWidth = 1.5
+//        logButton.layer.borderColor = UIColor.themeColor.cgColor
+//        logButton.layer.masksToBounds = true
         
         return closePanel
     }()
@@ -132,6 +132,11 @@ class CheckInResultViewController: UIViewController {
         self.view.addSubview(checkInResultCollection)
         self.view.addSubview(titleView)
         self.view.addSubview(closeViewPanel)
+
+        let window = UIApplication.shared.keyWindow
+        let safeAreaBottomInset = window?.safeAreaInsets.bottom ?? 0
+        print("safeAreaBottomInset", safeAreaBottomInset)
+        let closeViewPanelHeight = 100 + safeAreaBottomInset
         
         NSLayoutConstraint.activate([titleView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
@@ -140,10 +145,12 @@ class CheckInResultViewController: UIViewController {
                                      checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
                                      checkInResultCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      checkInResultCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                     closeViewPanel.topAnchor.constraint(equalTo: checkInResultCollection.bottomAnchor),
+                                     checkInResultCollection.bottomAnchor.constraint(equalTo: closeViewPanel.topAnchor),
+
                                      closeViewPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      closeViewPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-                                     closeViewPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor)
+                                     closeViewPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
+                                     closeViewPanel.heightAnchor.constraint(equalToConstant: closeViewPanelHeight)
         ])
         
         guard let layout = checkInResultCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
@@ -173,13 +180,13 @@ class CheckInResultViewController: UIViewController {
         self.dismiss(animated: true, completion: nil)
     }
     
-    @objc func showLogs() {
-        if let history = AppSyncManager.instance.userInsights.value?.first(where: { $0.name == .logs })?.details?.history {
-            let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-            checkinLogViewController.history = history
-            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-        }
-    }
+//    @objc func showLogs() {
+//        if let history = AppSyncManager.instance.userInsights.value?.first(where: { $0.name == .logs })?.details?.history {
+//            let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
+//            checkinLogViewController.history = history
+//            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+//        }
+//    }
 }
 
 extension CheckInResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
