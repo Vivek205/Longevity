@@ -12,27 +12,26 @@ import Accelerate
 
 class CoughRecorderViewController: BaseStepViewController {
     
-    var recordingSession: AVAudioSession!
-    var audioRecorder: AVAudioRecorder?
-    var audioPlayer: AVAudioPlayer?
+    private var audioSession: AVAudioSession!
+    private var audioRecorder: AVAudioRecorder?
+    private var audioPlayer: AVAudioPlayer?
+    
+    private var renderTs: Double = 0
+    private var recordingTs: Double = 0
+    private var silenceTs: Double = 0
+    private var audioFile: AVAudioFile?
+    private let audioEngine = AVAudioEngine()
     
     var recordingStartTimer: Timer?
     
     var fileKey: String = ""
     var coughData: Data?
     
-    let settings = [
-        AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-        AVSampleRateKey: 12000,
-        AVNumberOfChannelsKey: 1,
-        AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-    ]
-    let audioEngine = AVAudioEngine()
-    
-    private var renderTs: Double = 0
-    private var recordingTs: Double = 0
-    private var silenceTs: Double = 0
-    private var audioFile: AVAudioFile?
+    let settings = [AVFormatIDKey: kAudioFormatLinearPCM,
+                    AVLinearPCMBitDepthKey: 16,
+                    AVLinearPCMIsFloatKey: true,
+                    AVSampleRateKey: Float64(44100),
+                    AVNumberOfChannelsKey: 1] as [String : Any]
     
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
@@ -123,22 +122,25 @@ class CoughRecorderViewController: BaseStepViewController {
         
         self.statusLabel.text = "Tap and hold to record"
         
-        recordingSession = AVAudioSession.sharedInstance()
         
-        do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
-        } catch {
-            // failed to record!
-        }
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        super.viewWillAppear(animated)
+        
+        let notificationName = AVAudioSession.interruptionNotification
+        NotificationCenter.default.addObserver(self, selector: #selector(recordPushed), name: notificationName, object: nil)
+    }
+    
+    override func viewWillDisappear(_ animated: Bool) {
+            super.viewWillDisappear(animated)
+            NotificationCenter.default.removeObserver(self)
+        }
+    
     func startRecording() {
-        recordingSession.requestRecordPermission() { [unowned self] allowed in
+        audioSession.requestRecordPermission() { [unowned self] allowed in
             if allowed {
-                DispatchQueue.main.async {
-                    
-                }
+                
             } else {
                 DispatchQueue.main.async {
                     Alert(title: "Microphone Permission", message: "Microphone access is required to record the cough. Please allow in app settings", actions: UIAlertAction(title: "No Thanks", style: .destructive, handler: { (action) in
@@ -166,42 +168,119 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     @objc func recordTapped() {
-        if self.audioRecorder?.isRecording ?? false {
-//            finishRecording(success: true)
-        } else {
-//            startRecording()
-        }
-        self.updatebuttonStates()
+//        if self.audioRecorder?.isRecording ?? false {
+//        } else {
+//        }
+//        self.updatebuttonStates()
     }
     
     @objc func recordPushed() {
-        if self.audioRecorder?.isRecording ?? false {
-            finishRecording(success: true)
-            self.recordingStartTimer?.invalidate()
-        } else {
-            let format = DateFormatter()
-            format.dateFormat="yyyyMMddHHmmssSSS"
-            self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
-            let audioFilename = getDocumentsDirectory().appendingPathComponent(self.fileKey + ".m4a")
-            
-            let settings = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 12000,
-                AVNumberOfChannelsKey: 1,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-            
-            do {
-                audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
-                audioRecorder?.delegate = self
-                audioRecorder?.isMeteringEnabled = true
-                let startInterval: TimeInterval = (self.audioRecorder?.deviceCurrentTime ?? 0.0) + 0.2
-                audioRecorder?.record(atTime: startInterval, forDuration: 0.5)
-                self.recordingStartTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(keeppressing), userInfo: nil, repeats: true)
-            } catch {
-                finishRecording(success: false)
-            }
+        
+        if self.isRecording() {
+            self.stopRecording()
+            return
         }
+        
+//        if self.audioRecorder?.isRecording ?? false {
+//            finishRecording(success: true)
+//            self.recordingStartTimer?.invalidate()
+//        } else {
+//            let seconds = 1.0
+//            DispatchQueue.main.asyncAfter(deadline: .now() + seconds) {
+//                let format = DateFormatter()
+//                format.dateFormat="yyyyMMddHHmmssSSS"
+//                self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
+//                let audioFilename = self.getDocumentsDirectory().appendingPathComponent(self.fileKey + ".m4a")
+                
+               
+                
+                do {
+                    self.recordingTs = NSDate().timeIntervalSince1970
+                    self.silenceTs = 0
+                    
+                    do {
+                        self.audioSession = AVAudioSession.sharedInstance()
+                        try self.audioSession.setCategory(.playAndRecord, mode: .default)
+                        try self.audioSession.setActive(true)
+                    } catch {
+                        // failed to record!
+                    }
+                    
+                    let inputNode = self.audioEngine.inputNode
+                    let format = inputNode.outputFormat(forBus: 0)
+//                            guard let format = self.format() else {
+//                                return
+//                            }
+                    
+                    inputNode.installTap(onBus: 0, bufferSize: 1024, format: format) { (buffer, time) in
+                                let level: Float = -50
+                                let length: UInt32 = 1024
+                                buffer.frameLength = length
+                                let channels = UnsafeBufferPointer(start: buffer.floatChannelData, count: Int(buffer.format.channelCount))
+                                var value: Float = 0
+                                vDSP_meamgv(channels[0], 1, &value, vDSP_Length(length))
+                                var average: Float = ((value == 0) ? -100 : 20.0 * log10f(value))
+                                if average > 0 {
+                                    average = 0
+                                } else if average < -100 {
+                                    average = -100
+                                }
+                                let silent = average < level
+                                let timesince = NSDate().timeIntervalSince1970
+                                if timesince - self.renderTs > 0.1 {
+                                    let floats = UnsafeBufferPointer(start: channels[0], count: Int(buffer.frameLength))
+                                    let frame = floats.map({ (float) -> Int in
+                                        return Int(float * Float(Int16.max))
+                                    })
+                                    DispatchQueue.main.async {
+                                        let seconds = (timesince - self.recordingTs)
+                                        self.statusLabel.text = seconds.toTimeString
+                                        self.renderTs = timesince
+                                        let len = self.audioVisualizer.waveforms.count
+                                        for index in 0 ..< len {
+                                            let idx = ((frame.count - 1) * index) / len
+                                            let float: Float = sqrt(1.5 * abs(Float(frame[idx])) / Float(Int16.max))
+                                            self.audioVisualizer.waveforms[index] = min(49, Int(float * 50))
+                                        }
+                                        self.audioVisualizer.active = !silent
+                                        self.audioVisualizer.setNeedsDisplay()
+                                    }
+                                }
+                                
+                                let write = true
+                                if write {
+                                    if self.audioFile == nil {
+                                        self.audioFile = self.createAudioRecordFile()
+                                    }
+                                    if let file = self.audioFile {
+                                        do {
+                                            try file.write(from: buffer)
+                                        } catch let error as NSError {
+                                            print(error.localizedDescription)
+                                        }
+                                    }
+                                }
+                            }
+                            do {
+                                self.audioEngine.prepare()
+                                try self.audioEngine.start()
+                            } catch {
+                                print(error.localizedDescription)
+                                return
+                            }
+                    
+                    
+//                    self.audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
+//                    self.audioRecorder?.delegate = self
+//                    self.audioRecorder?.isMeteringEnabled = true
+//                    let startInterval: TimeInterval = (self.audioRecorder?.deviceCurrentTime ?? 0.0) + 0.2
+//                    self.audioRecorder?.record(forDuration: 0.5)
+//                    self.recordingStartTimer = Timer.scheduledTimer(timeInterval: 0.1, target: self, selector: #selector(self.keeppressing), userInfo: nil, repeats: true)
+                } catch {
+//                    self.finishRecording(success: false)
+                }
+//            }
+//        }
     }
     
     private func format() -> AVAudioFormat? {
@@ -257,6 +336,8 @@ class CoughRecorderViewController: BaseStepViewController {
         self.audioRecorder?.deleteRecording()
         self.continueButton.isEnabled = false
         self.updatebuttonStates()
+        self.playpauseButton.isEnabled = false
+        self.deleteButton.isEnabled = false
     }
     
     fileprivate func updatebuttonStates() {
@@ -270,7 +351,7 @@ class CoughRecorderViewController: BaseStepViewController {
             self.continueButton.isEnabled = false
         } else {
             self.recorderButton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
-            if self.audioRecorder?.url != nil {
+            if self.audioRecorder?.url != nil  {
                 self.playpauseButton.isEnabled = true
                 self.deleteButton.isEnabled = true
                 self.playpauseButton.tintColor = .themeColor
@@ -319,6 +400,37 @@ class CoughRecorderViewController: BaseStepViewController {
                 }
             }
         })
+    }
+}
+
+extension CoughRecorderViewController {
+    
+    fileprivate func isPlaying() -> Bool {
+        return self.audioPlayer?.isPlaying ?? false
+    }
+    
+    fileprivate func stopRecording() {
+        self.audioFile = nil
+        self.audioEngine.inputNode.removeTap(onBus: 0)
+        self.audioEngine.stop()
+        do {
+            try AVAudioSession.sharedInstance().setActive(false)
+        } catch  let error as NSError {
+            print(error.localizedDescription)
+            return
+        }
+    }
+    
+    fileprivate func stopPlaying() {
+        self.audioPlayer?.pause()
+        try? AVAudioSession.sharedInstance().setActive(false)
+    }
+    
+    private func isRecording() -> Bool {
+        if self.audioEngine.isRunning {
+            return true
+        }
+        return false
     }
 }
 
