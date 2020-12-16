@@ -89,7 +89,7 @@ extension AppleWatchConnectViewController: UITableViewDataSource, UITableViewDel
             return cell
         } else {
             guard let cell = tableView.getCell(with: HowItWorksCell.self, at: indexPath) as? HowItWorksCell else { preconditionFailure("Invalid cell type") }
-            cell.setupCell(howitworksDescription: "\n\nUse Apple Watch to import data into Rejuve.  This will help improve AI accuracy for your health analysis and insights.\n\n", importedDescription: "\n\nActive Energy, Cycling Distance, Exercise Minutes, Heart Rate, Oxygen Saturation, Resting Heart Rate, Swimming Distance, and Wheelchair Distance.\n\n")
+            cell.setupCell(howitworksDescription: "\n\nUse Apple Watch to import data into COVID Signals .  This will also enable the Biosignals Detection Status to be included in your health analysis and insights.\n\n", importedDescription: "\n\nActive Energy, Cycling Distance, Exercise Minutes, Heart Rate, Oxygen Saturation, Resting Heart Rate, Swimming Distance, and Wheelchair Distance.\n\n")
             return cell
         }
     }
