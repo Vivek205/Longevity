@@ -27,7 +27,7 @@ class UserInsightsAPI: BaseAuthAPI {
                 value.append(UserInsight(name: .coughlogs,
                                          text: "Cough Test Log",
                                          userInsightDescription: "Cough Test Log",
-                                         defaultOrder: 4,
+                                         defaultOrder: value.count,
                                          details: nil,
                                          isExpanded: false))
                  completion(value)
