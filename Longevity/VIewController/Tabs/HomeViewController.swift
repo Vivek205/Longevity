@@ -135,7 +135,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            guard let checkinCell = collectionView.getCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+            guard let checkinCell = collectionView.getUniqueCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
             if let surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row] {
