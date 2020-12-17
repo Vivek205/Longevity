@@ -72,7 +72,7 @@ class BaseAuthAPI {
             case .success(let data):
                 completion(data, nil)
             case .failure(let error):
-                print(error.errorDescription)
+                print("GET",request.path as Any,error.errorDescription)
                 if error.errorDescription.contains("403") && !isRetry {
                     self.fetchUserToken { (success) in
                         if success {

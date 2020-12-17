@@ -80,12 +80,6 @@ class CompletionStepVC: ORKStepViewController {
 
 
         shouldViewResultButtonBeEnabled()
-//        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
-//            DispatchQueue.main.async {
-//                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending &&
-//                    SurveyTaskUtility.shared.surveyInProgress.value != .unknown
-//            }
-//        }
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         self.completeSurvey()
         
@@ -168,7 +162,7 @@ class CompletionStepVC: ORKStepViewController {
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant:30),
+            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant:54),
             footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
