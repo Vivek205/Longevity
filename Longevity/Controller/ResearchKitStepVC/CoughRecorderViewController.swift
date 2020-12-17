@@ -17,17 +17,6 @@ enum ControlState {
     case playing
 }
 
-extension ControlState {
-//    var playImage: UIImage {
-//        switch self {
-//        case .norecording:
-//        case .recording:
-//        case .recorded:
-//        case .playing:
-//        }
-//    }
-}
-
 class CoughRecorderViewController: BaseStepViewController {
     
     var sessionState: ControlState! {
@@ -59,18 +48,7 @@ class CoughRecorderViewController: BaseStepViewController {
     var fileKey: String = ""
     var coughData: Data?
     
-    let settings = [
-                AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
-                AVSampleRateKey: 12000,
-                AVNumberOfChannelsKey: 1,
-                AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
-            ]
-        let audioEngine = AVAudioEngine()
-    
-    private var renderTs: Double = 0
-        private var recordingTs: Double = 0
-        private var silenceTs: Double = 0
-        private var audioFile: AVAudioFile?
+    private var observingTimer: Timer?
     
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
@@ -129,7 +107,7 @@ class CoughRecorderViewController: BaseStepViewController {
         self.view.addSubview(self.deleteButton)
         self.view.addSubview(self.statusLabel)
         
-        var questionViewHeight = questionView.headerAttributedString.height(containerWidth: self.view.bounds.width - 30.0) + 40.0
+        let questionViewHeight = questionView.headerAttributedString.height(containerWidth: self.view.bounds.width - 30.0) + 40.0
         
         NSLayoutConstraint.activate([
             questionView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -140,11 +118,14 @@ class CoughRecorderViewController: BaseStepViewController {
             self.audioVisualizer.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             self.audioVisualizer.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             self.audioVisualizer.topAnchor.constraint(equalTo: self.questionView.bottomAnchor, constant: 23.0),
-            self.audioVisualizer.bottomAnchor.constraint(equalTo: self.recorderButton.topAnchor, constant: -23.0),
+            self.audioVisualizer.heightAnchor.constraint(equalToConstant: 110.0),
+            self.statusLabel.topAnchor.constraint(equalTo: self.audioVisualizer.bottomAnchor, constant: 10.0),
+            self.statusLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10.0),
+            self.statusLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10.0),
+            self.recorderButton.topAnchor.constraint(equalTo: self.statusLabel.bottomAnchor, constant: 23.0),
             self.recorderButton.widthAnchor.constraint(equalToConstant: 120.0),
             self.recorderButton.heightAnchor.constraint(equalTo: self.recorderButton.widthAnchor),
             self.recorderButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
-            self.recorderButton.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
             self.playpauseButton.widthAnchor.constraint(equalToConstant: 28.0),
             self.playpauseButton.heightAnchor.constraint(equalTo: self.playpauseButton.widthAnchor),
             self.playpauseButton.centerYAnchor.constraint(equalTo: self.recorderButton.centerYAnchor),
@@ -153,30 +134,9 @@ class CoughRecorderViewController: BaseStepViewController {
             self.deleteButton.heightAnchor.constraint(equalTo: self.deleteButton.widthAnchor),
             self.deleteButton.centerYAnchor.constraint(equalTo: self.recorderButton.centerYAnchor),
             self.deleteButton.leadingAnchor.constraint(equalTo: self.recorderButton.trailingAnchor, constant: 25.0),
-            self.statusLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 10.0),
-            self.statusLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -10.0),
-            self.statusLabel.bottomAnchor.constraint(equalTo: self.recorderButton.topAnchor, constant: -25.0)
         ])
         
         self.statusLabel.text = "Tap and hold to record"
-        
-        recordingSession = AVAudioSession.sharedInstance()
-
-        do {
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
-            try recordingSession.setActive(true)
-            recordingSession.requestRecordPermission() { [unowned self] allowed in
-                DispatchQueue.main.async {
-                    if allowed {
-
-                    } else {
-                        // failed to record!
-                    }
-                }
-            }
-        } catch {
-            // failed to record!
-        }
     }
     
     func startRecording() {
@@ -193,13 +153,31 @@ class CoughRecorderViewController: BaseStepViewController {
         ]
 
         do {
+            recordingSession = AVAudioSession.sharedInstance()
+            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setActive(true)
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.isMeteringEnabled = true
+            self.audioVisualizer.resetWaves()
             audioRecorder?.record(forDuration: 5.0)
+            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
+                let wave = self?.averagePowerFromAllChannels() ?? 0
+                self?.audioVisualizer.updateWave(length: wave)
+                self?.audioVisualizer.setNeedsDisplay()
+            })
         } catch {
             finishRecording(success: false)
         }
+    }
+    
+    // Calculate average power from all channels
+    private func averagePowerFromAllChannels() -> Int {
+        self.audioRecorder?.updateMeters()
+        guard let audiopower = self.audioRecorder?.averagePower(forChannel: 0) else { return 0 }
+        guard let peakPower = self.audioRecorder?.peakPower(forChannel: 0) else { return 0 }
+        let power = ((audiopower / peakPower) * 100) - 100
+        return Int(power) == 0 ? 2 : Int(power)
     }
     
     func getDocumentsDirectory() -> URL {
@@ -208,7 +186,14 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     func finishRecording(success: Bool) {
+        self.observingTimer?.invalidate()
         audioRecorder?.stop()
+        
+        do {
+            try recordingSession.setActive(false)
+        } catch {
+            
+        }
     }
     
     @objc func recordTapped() {
@@ -219,34 +204,6 @@ class CoughRecorderViewController: BaseStepViewController {
         }
         self.updatebuttonStates()
     }
-    
-    private func format() -> AVAudioFormat? {
-        let format = AVAudioFormat(settings: self.settings)
-            return format
-        }
-    
-    //MARK:- Paths and files
-        private func createAudioRecordPath() -> URL? {
-            let format = DateFormatter()
-            format.dateFormat="yyyy-MM-dd-HH-mm-ss-SSS"
-            let currentFileName = "recording-\(format.string(from: Date()))" + ".m4a"
-            let documentsDirectory = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)[0]
-            let url = documentsDirectory.appendingPathComponent(currentFileName)
-            return url
-        }
-        
-        private func createAudioRecordFile() -> AVAudioFile? {
-            guard let path = self.createAudioRecordPath() else {
-                return nil
-            }
-            do {
-                let file = try AVAudioFile(forWriting: path, settings: self.settings, commonFormat: .pcmFormatFloat32, interleaved: true)
-                return file
-            } catch let error as NSError {
-                print(error.localizedDescription)
-                return nil
-            }
-        }
     
     @objc func playPauseAudio() {
         if self.audioPlayer?.isPlaying ?? false {
@@ -336,6 +293,8 @@ extension CoughRecorderViewController: AVAudioRecorderDelegate, AVAudioPlayerDel
         if !flag {
             finishRecording(success: false)
         }
+        self.observingTimer?.invalidate()
+        self.observingTimer = nil
         self.updatebuttonStates()
     }
     

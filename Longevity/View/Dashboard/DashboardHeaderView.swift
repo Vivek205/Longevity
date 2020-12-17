@@ -65,6 +65,7 @@ class DashboardHeaderView: UICollectionReusableView {
         
         layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: 0.0, right: 0.0)
         layout.scrollDirection = .horizontal
+        layout.invalidateLayout()
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
             let insights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs && $0.name != .coughlogs })
