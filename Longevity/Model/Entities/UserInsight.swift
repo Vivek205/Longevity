@@ -201,7 +201,7 @@ struct Details: Codable {
         case lastLogged = "last_logged"
         case history
         case riskLevel = "risk_level"
-        case trending, sentiment, confidence, histogram, submissions
+        case trending,  sentiment, confidence, histogram, submissions
     }
 }
 

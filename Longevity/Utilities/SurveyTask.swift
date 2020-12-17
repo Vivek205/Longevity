@@ -205,12 +205,6 @@ final class SurveyTaskUtility: NSObject {
 
 
     func completeSurvey(completion: @escaping () -> Void, onFailure: @escaping (_ error: Error) -> Void) {
-        func getSurveysCompletion(_ surveys:[SurveyListItem]) {
-            completion()
-        }
-        func onGetSurveysFailure(_ error:Error) {
-            onFailure(error)
-        }
         func onSubmitCompletion() {
             print("survey submitted successfully")
             if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive(),

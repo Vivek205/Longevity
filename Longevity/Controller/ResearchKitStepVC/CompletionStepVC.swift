@@ -79,8 +79,9 @@ class CompletionStepVC: ORKStepViewController {
         }
 
 
-        shouldViewResultButtonBeEnabled()
+
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
+        viewResultsButton.isEnabled = false
         self.completeSurvey()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
@@ -111,14 +112,15 @@ class CompletionStepVC: ORKStepViewController {
     }
 
     func shouldViewResultButtonBeEnabled() {
-        viewResultsButton.isEnabled = false
+        DispatchQueue.main.async {self.viewResultsButton.isEnabled = false}
         if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
             if isCurrentSurveyRepetitive {
                 let lastSubmissionId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.lastSubmissionId
-                viewResultsButton.isEnabled = lastSubmissionId == nil
+                DispatchQueue.main.async {self.viewResultsButton.isEnabled = lastSubmissionId == nil}
+
             }else {
                 let lastSubmissionDate = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.lastSubmission
-                viewResultsButton.isEnabled = !isDateToday(date: lastSubmissionDate)
+                DispatchQueue.main.async {self.viewResultsButton.isEnabled = !self.isDateToday(date: lastSubmissionDate)}
             }
         }
     }
@@ -126,6 +128,7 @@ class CompletionStepVC: ORKStepViewController {
     func completeSurvey() {
         func completion() {
             print("survey completed")
+            shouldViewResultButtonBeEnabled()
         }
         func onFailure(_ error: Error) {
             print("failed to complete the survey")
