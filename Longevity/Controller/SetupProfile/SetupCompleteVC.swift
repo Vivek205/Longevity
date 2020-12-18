@@ -61,14 +61,14 @@ class SetupCompleteVC: BaseProfileSetupViewController {
                 } else {
                     Alert(title: "Survey Not available",
                                    message: "No questions are found for the survey. Please try after sometime")
-                    self.navigateForward()
                 }
             }
         }
         func onCreateSurveyFailure(_ error: Error) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.navigateForward()
+                Alert(title: "Survey Not available",
+                               message: "No questions are found for the survey. Please try after sometime")
             }
         }
         

@@ -92,6 +92,10 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         //        NOTE: - keep the styleNavigationBar on the top
         styleNavigationBar()
 
+        if !isFromSettings {
+            AppSyncManager.instance.syncSurveyList()
+        }
+
         self.continueButton.isEnabled = false
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
         navigationController?.delegate = self
