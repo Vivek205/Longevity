@@ -29,6 +29,8 @@
 		C12F09EC24FD4CE600623CC3 /* UserProfile.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09EB24FD4CE600623CC3 /* UserProfile.swift */; };
 		C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */; };
 		C12F09F124FE56E200623CC3 /* DashboardCollectionEmptyCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */; };
+		C14457A0258C8D97007093F2 /* AudioWaveCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C144579F258C8D97007093F2 /* AudioWaveCell.swift */; };
+		C14457A2258C8DC1007093F2 /* ShortRecordErrorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14457A1258C8DC1007093F2 /* ShortRecordErrorView.swift */; };
 		C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */; };
 		C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */; };
 		C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */; };
@@ -281,6 +283,8 @@
 		C12F09EB24FD4CE600623CC3 /* UserProfile.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfile.swift; sourceTree = "<group>"; };
 		C12F09ED24FD9A5900623CC3 /* AppleHealthConnectCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppleHealthConnectCell.swift; sourceTree = "<group>"; };
 		C12F09F024FE56E200623CC3 /* DashboardCollectionEmptyCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCollectionEmptyCell.swift; sourceTree = "<group>"; };
+		C144579F258C8D97007093F2 /* AudioWaveCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AudioWaveCell.swift; sourceTree = "<group>"; };
+		C14457A1258C8DC1007093F2 /* ShortRecordErrorView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ShortRecordErrorView.swift; sourceTree = "<group>"; };
 		C14ABA3524E0A21400C81580 /* DashboardTaskCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardTaskCell.swift; sourceTree = "<group>"; };
 		C14ABA3A24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDeviceCollectionCell.swift; sourceTree = "<group>"; };
 		C14ABA3D24E2378E00C81580 /* UserInsightsAPI.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserInsightsAPI.swift; sourceTree = "<group>"; };
@@ -535,6 +539,16 @@
 				C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */,
 			);
 			path = CheckInLog;
+			sourceTree = "<group>";
+		};
+		C144579E258C8D86007093F2 /* CoughTest */ = {
+			isa = PBXGroup;
+			children = (
+				C19237082582B19500AA5A92 /* AudioVisualizerView.swift */,
+				C144579F258C8D97007093F2 /* AudioWaveCell.swift */,
+				C14457A1258C8DC1007093F2 /* ShortRecordErrorView.swift */,
+			);
+			path = CoughTest;
 			sourceTree = "<group>";
 		};
 		C14DBBFE250557E1004D5180 /* CheckinResult */ = {
@@ -983,6 +997,7 @@
 		E2ECB8D2247FE3760020A27E /* View */ = {
 			isa = PBXGroup;
 			children = (
+				C144579E258C8D86007093F2 /* CoughTest */,
 				C14DBC042505649D004D5180 /* CheckInResult */,
 				E27E295124F7A0FB00244CF7 /* CheckinLog */,
 				C1C821FF24EB49CC0074AF11 /* Profile */,
@@ -997,7 +1012,6 @@
 				E274F07D24C55DA600969CD8 /* Dashboard.storyboard */,
 				E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */,
 				C19875C424DC926D00477185 /* TitleView.swift */,
-				C19237082582B19500AA5A92 /* AudioVisualizerView.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1294,6 +1308,7 @@
 				C14DBC1025080152004D5180 /* CheckInNextGoals.swift in Sources */,
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
+				C14457A2258C8DC1007093F2 /* ShortRecordErrorView.swift in Sources */,
 				E20256E224E2ACB800896F2C /* RKCFormItemView.swift in Sources */,
 				E20256E424E2BFC900896F2C /* RKCFormBooleanAnswerView.swift in Sources */,
 				E21BD6AF24BE13930001B90D /* PreExistingCondition.swift in Sources */,
@@ -1313,6 +1328,7 @@
 				C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */,
 				E251EFEA248F8B4B0012F1C6 /* SignupByEmailVC.swift in Sources */,
 				C14ABA3624E0A21400C81580 /* DashboardTaskCell.swift in Sources */,
+				C14457A0258C8D97007093F2 /* AudioWaveCell.swift in Sources */,
 				E2ECB8C3247FE2BA0020A27E /* OnboardingVC.swift in Sources */,
 				E2C86D5B24A5D359005CE57E /* SetupProfile.swift in Sources */,
 				E27C4F6D2500CBC50070A2D3 /* LoaderAnimationViewController.swift in Sources */,
