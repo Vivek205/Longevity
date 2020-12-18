@@ -8,6 +8,12 @@
 
 import UIKit
 
+struct AudioWaveSignal {
+    let time: TimeInterval
+    var isPlaying: Bool
+    let signalLength: Int
+}
+
 class AudioVisualizerView: UIView {
     
     lazy var totalWaves: Int = {
@@ -25,25 +31,15 @@ class AudioVisualizerView: UIView {
         visualizerview.translatesAutoresizingMaskIntoConstraints = false
         return visualizerview
     }()
-    
-    
-    // Bar width
-    var barWidth: CGFloat = 4.0
-    // Indicate that waveform should draw active/inactive state
-    var active = false {
-        didSet {
-            if self.active {
-                self.color = UIColor.red.cgColor
-            }
-            else {
-                self.color = UIColor.gray.cgColor
-            }
-        }
-    }
-    // Color for bars
-    var color = UIColor.gray.cgColor
+
     // Given waveforms
     var waveforms: [Int]! {
+        didSet {
+            self.visualizerView.reloadData()
+        }
+    }
+    
+    var audioSignals: [AudioWaveSignal]! {
         didSet {
             self.visualizerView.reloadData()
         }
@@ -78,6 +74,7 @@ class AudioVisualizerView: UIView {
         layout.scrollDirection = .horizontal
         layout.invalidateLayout()
         
+        self.audioSignals = []
         self.waveforms = Array(repeating: 2, count: self.totalWaves)
     }
     
@@ -86,70 +83,37 @@ class AudioVisualizerView: UIView {
         self.backgroundColor = UIColor.clear
     }
     
-    func updateWave(length: Int) {
-        if lastIndex < (waveforms.count) {
-            self.waveforms[lastIndex] = length
-            lastIndex += 1
-        }
+    func updateWave(signal: AudioWaveSignal) {
+        self.audioSignals.append(signal)
     }
     
     func resetWaves() {
         self.lastIndex = 0
-        self.waveforms = Array(repeating: 2, count: self.totalWaves)
+        self.audioSignals = []
     }
 }
 
 extension AudioVisualizerView: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        return self.waveforms.count
+        let count = max(self.waveforms.count, self.audioSignals.count)
+        return count
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         guard let cell = collectionView.getUniqueCell(with: AudioWaveCell.self, at: indexPath) as? AudioWaveCell else { preconditionFailure("Invalid cell")}
-        cell.waveLength = self.waveforms[indexPath.item]
+        if indexPath.item < self.audioSignals.count {
+            cell.audioSignal = self.audioSignals[indexPath.item]
+        } else {
+            cell.waveLength = self.waveforms[indexPath.item]
+        }
         return cell
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        return CGSize(width: 2.0, height: collectionView.bounds.height)
+        let height = collectionView.bounds.height - 20.0
+        return CGSize(width: 2.0, height: height)
     }
 }
-
-class AudioWaveCell: UICollectionViewCell {
-    
-    var waveLength:Int! {
-        didSet {
-            //Removing all existing layers
-            if let layers = self.layer.sublayers {
-                for layer in layers {
-                        layer.removeFromSuperlayer()
-                }
-            }
-            
-            let rectBounds: CGRect = CGRect(x: bounds.origin.x, y: bounds.origin.y,
-                                            width: bounds.size.width, height: CGFloat(self.waveLength))
-            let rectPath: UIBezierPath = UIBezierPath(roundedRect: rectBounds, cornerRadius: rectBounds.width / 2.0)
-            
-            let maskLayer: CAShapeLayer = CAShapeLayer()
-            maskLayer.frame = rectBounds
-            maskLayer.path = rectPath.cgPath
-            maskLayer.fillColor = UIColor.black.cgColor
-            maskLayer.position = self.center
-            
-            self.layer.addSublayer(maskLayer)
-        }
-    }
-    
-    override init(frame: CGRect) {
-        super.init(frame: frame)
-        self.backgroundColor = .clear
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-}
-
 
 extension UIColor {
   public convenience init(redvalue: CGFloat, greenvalue: CGFloat, bluevalue: CGFloat) {

@@ -10,36 +10,7 @@ import UIKit
 import ResearchKit
 import Accelerate
 
-enum ControlState {
-    case norecording
-    case recording
-    case recorded
-    case playing
-}
-
 class CoughRecorderViewController: BaseStepViewController {
-    
-    var sessionState: ControlState! {
-        didSet {
-            if sessionState == .recorded {
-                self.playpauseButton.tintColor = .themeColor
-                self.deleteButton.tintColor = .themeColor
-                self.playpauseButton.isEnabled = true
-                self.deleteButton.isEnabled = true
-            } else {
-                self.playpauseButton.tintColor = .unselectedColor
-                self.deleteButton.tintColor = .unselectedColor
-            }
-            
-            if sessionState == .recording {
-                self.recorderButton.setImage(UIImage(named: "stoprecordingIcon"), for: .normal)
-                self.playpauseButton.isEnabled = false
-                self.deleteButton.isEnabled = false
-            } else {
-                self.recorderButton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
-            }
-        }
-    }
     
     var recordingSession: AVAudioSession!
     var audioRecorder: AVAudioRecorder?
@@ -49,6 +20,12 @@ class CoughRecorderViewController: BaseStepViewController {
     var coughData: Data?
     
     private var observingTimer: Timer?
+    private var isFileDeleted: Bool = false
+    private var isTooShort: Bool! {
+        didSet {
+            self.tooshorterrorView.isHidden = !isTooShort
+        }
+    }
     
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
@@ -97,6 +74,12 @@ class CoughRecorderViewController: BaseStepViewController {
         return deletebutton
     }()
     
+    lazy var tooshorterrorView: ShortRecordErrorView = {
+        let errorView = ShortRecordErrorView()
+        errorView.translatesAutoresizingMaskIntoConstraints = false
+        return errorView
+    }()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -106,6 +89,7 @@ class CoughRecorderViewController: BaseStepViewController {
         self.view.addSubview(self.playpauseButton)
         self.view.addSubview(self.deleteButton)
         self.view.addSubview(self.statusLabel)
+        self.view.addSubview(self.tooshorterrorView)
         
         let questionViewHeight = questionView.headerAttributedString.height(containerWidth: self.view.bounds.width - 30.0) + 40.0
         
@@ -134,12 +118,18 @@ class CoughRecorderViewController: BaseStepViewController {
             self.deleteButton.heightAnchor.constraint(equalTo: self.deleteButton.widthAnchor),
             self.deleteButton.centerYAnchor.constraint(equalTo: self.recorderButton.centerYAnchor),
             self.deleteButton.leadingAnchor.constraint(equalTo: self.recorderButton.trailingAnchor, constant: 25.0),
+            self.tooshorterrorView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 15.0),
+            self.tooshorterrorView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -15.0),
+            self.tooshorterrorView.centerYAnchor.constraint(equalTo: self.statusLabel.centerYAnchor)
         ])
         
         self.statusLabel.text = "Tap and hold to record"
+        self.isTooShort = false
+        self.updatebuttonStates()
     }
     
     func startRecording() {
+        self.isTooShort = false
         let format = DateFormatter()
         format.dateFormat="yyyyMMddHHmmssSSS"
         self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
@@ -161,10 +151,14 @@ class CoughRecorderViewController: BaseStepViewController {
             audioRecorder?.isMeteringEnabled = true
             self.audioVisualizer.resetWaves()
             audioRecorder?.record(forDuration: 5.0)
+            self.isFileDeleted = false
             self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
+                guard let time = self?.audioRecorder?.currentTime else { return }
+                guard let recordTime = Double(String(format: "%.2f", time)) else { return }
                 let wave = self?.averagePowerFromAllChannels() ?? 0
-                self?.audioVisualizer.updateWave(length: wave)
-                self?.audioVisualizer.setNeedsDisplay()
+                let signal = AudioWaveSignal(time: recordTime, isPlaying: false, signalLength: wave)
+                self?.audioVisualizer.updateWave(signal: signal)
+                self?.updateStatus(time: Int(time))
             })
         } catch {
             finishRecording(success: false)
@@ -176,8 +170,8 @@ class CoughRecorderViewController: BaseStepViewController {
         self.audioRecorder?.updateMeters()
         guard let audiopower = self.audioRecorder?.averagePower(forChannel: 0) else { return 0 }
         guard let peakPower = self.audioRecorder?.peakPower(forChannel: 0) else { return 0 }
-        let power = ((audiopower / peakPower) * 100) - 100
-        return Int(power) == 0 ? 2 : Int(power)
+        let power = (audiopower / peakPower)
+        return Int(power) == 0 ? 1 : Int(power) * 5
     }
     
     func getDocumentsDirectory() -> URL {
@@ -186,14 +180,22 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     func finishRecording(success: Bool) {
+        self.isFileDeleted = !success
         self.observingTimer?.invalidate()
-        audioRecorder?.stop()
-        
+        if let time = self.audioRecorder?.currentTime, Int(time) < 4 {
+            self.isTooShort = true
+            self.audioRecorder?.stop()
+            self.audioRecorder?.deleteRecording()
+            self.isFileDeleted = true
+        } else {
+            self.audioRecorder?.stop()
+        }
         do {
             try recordingSession.setActive(false)
         } catch {
             
         }
+        self.updatebuttonStates()
     }
     
     @objc func recordTapped() {
@@ -201,13 +203,14 @@ class CoughRecorderViewController: BaseStepViewController {
             finishRecording(success: true)
         } else {
             startRecording()
+            self.updatebuttonStates()
         }
-        self.updatebuttonStates()
     }
     
     @objc func playPauseAudio() {
         if self.audioPlayer?.isPlaying ?? false {
             self.audioPlayer?.pause()
+            self.resetAudioPlayer()
         } else {
             guard let audiourl = self.audioRecorder?.url else {
                 return
@@ -215,14 +218,23 @@ class CoughRecorderViewController: BaseStepViewController {
             self.audioPlayer = try? AVAudioPlayer(contentsOf: audiourl)
             self.audioPlayer?.delegate = self
             self.audioPlayer?.play()
+            var index = 0
+            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
+                guard let time = self?.audioPlayer?.currentTime else { return }
+                self?.audioVisualizer.audioSignals[index].isPlaying = true
+                self?.updateStatus(time: Int(time))
+                index += 1
+            })
         }
         self.updatebuttonStates()
     }
     
     @objc func deleteRecording() {
         self.audioRecorder?.deleteRecording()
-        self.continueButton.isEnabled = false
+        self.isFileDeleted = true
         self.updatebuttonStates()
+        self.updateStatus(time: 0)
+        self.audioVisualizer.resetWaves()
     }
     
     fileprivate func updatebuttonStates() {
@@ -236,7 +248,7 @@ class CoughRecorderViewController: BaseStepViewController {
             self.continueButton.isEnabled = false
         } else {
             self.recorderButton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
-            if self.audioRecorder?.url != nil {
+            if self.audioRecorder?.url != nil && !self.isFileDeleted {
                 self.playpauseButton.isEnabled = true
                 self.deleteButton.isEnabled = true
                 self.playpauseButton.tintColor = .themeColor
@@ -256,7 +268,21 @@ class CoughRecorderViewController: BaseStepViewController {
                 self.deleteButton.isEnabled = false
                 self.playpauseButton.tintColor = .lightGray
                 self.deleteButton.tintColor = .lightGray
+                self.continueButton.isEnabled = false
             }
+        }
+    }
+    
+    fileprivate func updateStatus(time: Int) {
+        if self.isFileDeleted {
+            self.statusLabel.text = "Tap and hold to record"
+        } else {
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.bold, size: 18.0), .foregroundColor: UIColor(hexString: "#4E4E4E")]
+            let attributedTime = NSMutableAttributedString(string: "00:0\(time)", attributes: attributes)
+            let totalTimeAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 18.0)]
+            let attributedTotalTime = NSMutableAttributedString(string: " / 00:05", attributes: totalTimeAttributes)
+            attributedTime.append(attributedTotalTime)
+            self.statusLabel.attributedText = attributedTime
         }
     }
     
@@ -299,6 +325,16 @@ extension CoughRecorderViewController: AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        self.resetAudioPlayer()
         self.updatebuttonStates()
+    }
+    
+    private func resetAudioPlayer() {
+        self.observingTimer?.invalidate()
+        self.observingTimer = nil
+        self.updateStatus(time: 0)
+        for index in 0..<self.audioVisualizer.audioSignals.count {
+            self.audioVisualizer.audioSignals[index].isPlaying = false
+        }
     }
 }

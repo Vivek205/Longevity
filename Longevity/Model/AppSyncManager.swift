@@ -69,7 +69,7 @@ class AppSyncManager  {
                                                                     histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
                                                    isExpanded: false),
                                        UserInsight(name: .anomalousWearables,
-                                                   text: "Life Style Infection",
+                                                   text: "Lifestyle Infection",
                                                    userInsightDescription: "How high your risk of getting or having COVID based on your lifestyle and social distancing practices.",
                                                    defaultOrder: 3,
                                                    details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
