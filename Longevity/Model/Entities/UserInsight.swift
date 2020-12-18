@@ -162,7 +162,7 @@ extension CardType {
         case .overallInfection:
             return "Overall\nInfection Risk"
         case .distancing:
-            return "Life Style\nInfection Risk"
+            return "Lifestyle\nInfection Risk"
         case .anomalousWearables:
             return "Biosignal\nDetection Status"
         default:
