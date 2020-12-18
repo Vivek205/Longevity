@@ -133,22 +133,22 @@ extension Sentiment {
 enum CardType: String, Codable {
     case coughlogs = "COUGH_LOGS"
     case logs = "COVID_LOGS"
-    case exposure = "COVID_EXPOSURE"
-    case risk = "COVID_RISK"
+    case severity = "COVID_SEVERITY"
+    case anomalousWearables = "ANOMALOUS_WEARABLES"
     case distancing = "SOCIAL_DISTANCING"
-    case overallInfection = "OVER_ALL_INFECTION_RISK"
+    case overallInfection = "COVID_RISK"
 }
 
 extension CardType {
     var hexagonOrder: Int {
         switch self {
-            case .exposure:
+            case .severity:
                 return 0
             case .overallInfection:
                 return 1
             case .distancing:
                 return 2
-            case .risk:
+            case .anomalousWearables:
                 return 3
             default:
                 return -1
@@ -157,14 +157,14 @@ extension CardType {
     
     var hexagonTitle: String {
         switch self {
-        case .exposure:
+        case .severity:
             return "Severity\nInfection Risk"
         case .overallInfection:
             return "Overall\nInfection Risk"
         case .distancing:
-            return "Biosignal\nDetection Status"
-        case .risk:
             return "Life Style\nInfection Risk"
+        case .anomalousWearables:
+            return "Biosignal\nDetection Status"
         default:
             return ""
         }

@@ -66,9 +66,7 @@ final class ConnectionManager: NSObject {
     @available(iOS 12.0, *)
     func monitorNetworkPath() {
         let monitor = NWPathMonitor()
-        monitor.pathUpdateHandler = {
-            path in
-
+        monitor.pathUpdateHandler = { path in
             if path.status == .satisfied {
                 print("connected")
                 AppSyncManager.instance.internetConnectionAvailable.value = .connected

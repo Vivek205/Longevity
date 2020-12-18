@@ -331,7 +331,7 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
-        if list.contains(where: { return $0.lastSurveyStatus == .pending }) {
+        if list.filter({$0.surveyId.starts(with: "COUGH_TEST") != true}).contains(where: { return $0.lastSurveyStatus == .pending }) {
             self.surveyInProgress.value = .pending
         }
         else

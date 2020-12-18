@@ -70,15 +70,18 @@ class CompletionStepVC: ORKStepViewController {
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
 
-        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
-            if isCurrentSurveyRepetitive {
-                viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
-            }else {
-                viewResultsButton.setTitle("Start Your Check-in", for: .normal)
+        if ((self.currentSurveyId?.starts(with: "COUGH_TEST")) != nil){
+            viewResultsButton.removeFromSuperview()
+            continueButton.anchor(.bottom(footerView.bottomAnchor))
+        }else {
+            if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
+                if isCurrentSurveyRepetitive {
+                    viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
+                }else {
+                    viewResultsButton.setTitle("Start Your Check-in", for: .normal)
+                }
             }
         }
-
-
 
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         viewResultsButton.isEnabled = false
