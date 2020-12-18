@@ -70,7 +70,7 @@ class CompletionStepVC: ORKStepViewController {
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
 
-        if ((self.currentSurveyId?.starts(with: "COUGH_TEST")) != nil){
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true){
             viewResultsButton.removeFromSuperview()
             continueButton.anchor(.bottom(footerView.bottomAnchor))
         }else {
