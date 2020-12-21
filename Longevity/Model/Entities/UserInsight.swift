@@ -142,16 +142,16 @@ enum CardType: String, Codable {
 extension CardType {
     var hexagonOrder: Int {
         switch self {
-            case .severity:
-                return 0
-            case .overallInfection:
-                return 1
-            case .distancing:
-                return 2
-            case .anomalousWearables:
-                return 3
-            default:
-                return -1
+        case .severity:
+            return 0
+        case .overallInfection:
+            return 1
+        case .anomalousWearables:
+            return 2
+        case .distancing:
+            return 3
+        default:
+            return -1
         }
     }
     
