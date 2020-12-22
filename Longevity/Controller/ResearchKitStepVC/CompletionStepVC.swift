@@ -168,12 +168,12 @@ class CompletionStepVC: ORKStepViewController {
 
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant:54),
+            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor),
             footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
 
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 40),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 60),
             continueButton.heightAnchor.constraint(equalToConstant: 48),
             viewResultsButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             viewResultsButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
