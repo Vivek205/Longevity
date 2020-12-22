@@ -175,6 +175,11 @@ class CheckInResultViewController: UIViewController {
         self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
         self.showSpinner()
     }
+
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        closeViewPanel.setupShadow(opacity: 0.12, radius: 8, offset: .init(width: 0, height: 3), color: .black)
+    }
     
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
