@@ -10,7 +10,7 @@ import UIKit
 
 class DashboardHeaderView: UICollectionReusableView {
     
-    let vTop = UIDevice.hasNotch ? 85.0 : 60.0
+    let vTop = UIDevice.hasNotch ? 95.0 : 70.0
     
     var userInsights: [UserInsight]? {
         didSet {
