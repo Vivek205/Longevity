@@ -91,9 +91,9 @@ extension TrendDirection {
     var text: String {
         switch self {
             case .uptrend:
-                return "TRENDING UP"
+                return "Trending Up"
             case .down:
-                return "TRENDING DOWN"
+                return "Trending Down"
             case .same:
                 return ""
         }

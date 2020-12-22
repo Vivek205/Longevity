@@ -216,7 +216,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 && self.currentResultView == .analysis {
             if indexPath.item < (self.userInsights?.count ?? 0) {
-                guard let cell = collectionView.getCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
+                guard let cell = collectionView.getUniqueCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
                     preconditionFailure("Invalid insight cell")
                 }
                 cell.insightData = self.userInsights?[indexPath.item]
