@@ -182,7 +182,7 @@ class CoughRecorderViewController: BaseStepViewController {
     func finishRecording(success: Bool) {
         self.isFileDeleted = !success
         self.observingTimer?.invalidate()
-        if let time = self.audioRecorder?.currentTime, Int(time) < 4 {
+        if let time = self.audioRecorder?.currentTime, Int(time) < 1 {
             self.isTooShort = true
             self.audioRecorder?.stop()
             self.audioRecorder?.deleteRecording()
@@ -217,11 +217,14 @@ class CoughRecorderViewController: BaseStepViewController {
             }
             self.audioPlayer = try? AVAudioPlayer(contentsOf: audiourl)
             self.audioPlayer?.delegate = self
+            self.audioPlayer?.volume = 1.0
             self.audioPlayer?.play()
             var index = 0
             self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
                 guard let time = self?.audioPlayer?.currentTime else { return }
-                self?.audioVisualizer.audioSignals[index].isPlaying = true
+                if index < (self?.audioVisualizer.audioSignals.count ?? 0) {
+                    self?.audioVisualizer.audioSignals[index].isPlaying = true
+                }
                 self?.updateStatus(time: Int(time))
                 index += 1
             })

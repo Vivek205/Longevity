@@ -24,32 +24,9 @@ class LoaderAnimationViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "rejuveNamedLogo")
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    lazy var poweredByLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "POWERED BY"
-        label.font = UIFont(name: "Muli-Regular", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
-    lazy var singularityLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "snetNamedLogo")
-        return imageView
-    }()
-    
-    lazy var singularityStudioLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "studioNamedLogo")
-        return imageView
-    }()
-    
     
     lazy var spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .whiteLarge)
@@ -63,9 +40,6 @@ class LoaderAnimationViewController: UIViewController {
         
         self.view.addSubview(backgroundImage)
         self.view.addSubview(rejuveLogo)
-        self.view.addSubview(poweredByLabel)
-        self.view.addSubview(singularityLogo)
-        self.view.addSubview(singularityStudioLogo)
         self.view.addSubview(spinner)
         
         NSLayoutConstraint.activate([
@@ -74,20 +48,13 @@ class LoaderAnimationViewController: UIViewController {
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            rejuveLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rejuveLogo.bottomAnchor.constraint(equalTo: view.centerYAnchor,  constant: -20),
-            
-            poweredByLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            poweredByLabel.topAnchor.constraint(equalTo: rejuveLogo.bottomAnchor, constant: 65),
-            
-            singularityLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            singularityLogo.topAnchor.constraint(equalTo: poweredByLabel.bottomAnchor, constant: 20),
-            
-            singularityStudioLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            singularityStudioLogo.topAnchor.constraint(equalTo: singularityLogo.bottomAnchor, constant: 20),
-            //
+            rejuveLogo.widthAnchor.constraint(equalToConstant: 277.0),
+            rejuveLogo.heightAnchor.constraint(equalToConstant: 379.0),
+            rejuveLogo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            rejuveLogo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinner.topAnchor.constraint(equalTo:singularityStudioLogo.bottomAnchor, constant: 20)
+            spinner.topAnchor.constraint(equalTo:rejuveLogo.bottomAnchor, constant: 20)
         ])
 
         checkIfAppUpdated { signedOut in
