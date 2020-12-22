@@ -17,16 +17,6 @@ class HomeViewController: BaseViewController {
         }
     }
     
-    lazy var tableView: UITableView = {
-        let table = UITableView(frame: CGRect.zero, style: .grouped)
-        table.showsVerticalScrollIndicator = false
-        table.alwaysBounceVertical = false
-        table.backgroundColor = UIColor(hexString: "#F5F6FA")
-        table.separatorStyle = .none
-        table.translatesAutoresizingMaskIntoConstraints = false
-        return table
-    }()
-    
     lazy var collectionView: UICollectionView = {
         let collectionview = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         collectionview.alwaysBounceVertical = false
