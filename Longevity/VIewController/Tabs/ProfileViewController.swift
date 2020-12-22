@@ -38,7 +38,7 @@ enum ProfileSetting: String {
     case notifications = "Notifications"
     case editaccount = "Edit Account Details"
     case usemetricsystem = "Use Metric System"
-    case faqs = "FAQ"
+//    case faqs = "FAQ"
     case termsofservice = "Terms of Service"
     case contactsupport = "Contact Support"
     case signout = "signout"
@@ -58,7 +58,7 @@ extension ProfileSetting {
         case .notifications: return .switchcontrol
         case .editaccount: return .navigate
         case .usemetricsystem: return .switchcontrol
-        case .faqs: return .navigate
+//        case .faqs: return .navigate
         case .termsofservice: return .navigate
         case .contactsupport: return .navigate
         default: return .none
@@ -77,7 +77,7 @@ extension ProfileSetting {
         case .notifications: return .topmost
         case .editaccount: return .center
         case .usemetricsystem: return .bottom
-        case .faqs: return .topmost
+//        case .faqs: return .topmost
         case .termsofservice: return .center
         case .contactsupport: return .bottom
         default: return .center
@@ -104,7 +104,9 @@ class ProfileViewController: BaseViewController {
     ],
     [.applehealth, .fitbit, .applewatch],
     [.notifications, .editaccount, .usemetricsystem],
-    [.faqs, .termsofservice, .contactsupport],
+    [
+//        .faqs,
+        .termsofservice, .contactsupport],
     [.signout], [.appversion]]
     var settingsSections: [String] = ["COVID DATA", "DEVICE CONNECTIONS", "ACCOUNT", "INFORMATION", "",""]
     
@@ -392,11 +394,11 @@ extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
                     NavigationUtility.presentOverCurrentContext(destination: navigationController )
                 case .usemetricsystem:
                     return
-                case .faqs:
-                    let faqViewController = FAQViewController()
-                    let navigationController = UINavigationController(rootViewController: faqViewController)
-                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
-                    return
+//                case .faqs:
+//                    let faqViewController = FAQViewController()
+//                    let navigationController = UINavigationController(rootViewController: faqViewController)
+//                    NavigationUtility.presentOverCurrentContext(destination: navigationController)
+//                    return
                 case .termsofservice:
                     let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
 //                    guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }

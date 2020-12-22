@@ -24,12 +24,13 @@ class UserInsightsAPI: BaseAuthAPI {
              do {
                  let decoder = JSONDecoder()
                  var value = try decoder.decode([UserInsight].self, from: data)
-                value.append(UserInsight(name: .coughlogs,
-                                         text: "Cough Test Log",
-                                         userInsightDescription: "Cough Test Log",
-                                         defaultOrder: value.count,
-                                         details: nil,
-                                         isExpanded: false))
+//                MARK :- Uncomment once Cough result screen is ready
+//                value.append(UserInsight(name: .coughlogs,
+//                                         text: "Cough Test Log",
+//                                         userInsightDescription: "Cough Test Log",
+//                                         defaultOrder: value.count,
+//                                         details: nil,
+//                                         isExpanded: false))
                  completion(value)
              }
              catch {
