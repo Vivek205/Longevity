@@ -44,7 +44,10 @@ class BranchingOrderedTask: ORKOrderedTask {
             guard let feelingTodayAnswer =
                 SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: SurveyTaskUtility.shared.feelingTodayQuestionId) else {return nil}
                     if feelingTodayAnswer == "0" {
-                        return self.steps[currentStepIndex + 2	]
+                        SurveyTaskUtility.shared.isSymptomsSkipped = true
+                        return self.steps[currentStepIndex + 2]
+                    } else {
+                        SurveyTaskUtility.shared.isSymptomsSkipped = false
                     }
         }
 //        MARK :- END Skip Symptoms If user selects `No Symptoms`

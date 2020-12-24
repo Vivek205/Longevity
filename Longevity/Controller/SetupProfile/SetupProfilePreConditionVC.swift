@@ -299,22 +299,28 @@ extension SetupProfilePreConditionVC {
     @objc func keyboardWasShown(notification: NSNotification){
         guard let info = notification.userInfo else {return}
         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
         guard let keyboardHeight = keyboardSize?.height ,
               let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
               let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
         else {return}
         let topPadding:CGFloat = 20.0
         let viewYPadding = navbarHeight + topPadding
-        var visibleScreen : CGRect = self.view.frame
-        visibleScreen.size.height -= (keyboardHeight + viewYPadding)
-
-        self.view.frame.origin.y = -(keyboardHeight - inputAccessoryHeight - viewYPadding)
+        
+        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: (keyboardHeight + inputAccessoryHeight + viewYPadding), right: 0.0)
+        layout.invalidateLayout()
+        let count = self.collectionView.numberOfItems(inSection: 0)
+        self.collectionView.scrollToItem(at: IndexPath(item: count - 1, section: 0), at: .top, animated: true)
     }
 
     @objc func keyboardWillBeHidden(notification: NSNotification){
-        guard let rollbackYOrigin = self.rollbackYOrigin else {return}
-        self.view.frame.origin.y = rollbackYOrigin
+        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 20.0, right: 0.0)
+        layout.invalidateLayout()
     }
 }
 

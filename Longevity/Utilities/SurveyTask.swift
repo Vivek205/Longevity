@@ -26,6 +26,7 @@ final class SurveyTaskUtility: NSObject {
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
     var surveyInProgress: DynamicValue<SurveyStatus>
     let feelingTodayQuestionId = "3010"
+    var isSymptomsSkipped: Bool = false
     
     private override init() {
         self.surveyInProgress = DynamicValue(.unknown)
@@ -254,6 +255,7 @@ final class SurveyTaskUtility: NSObject {
         self.iconNameForModuleName = [String:String]()
         self.traversedQuestions[currentSurveyId] = [String]()
         self.currentSurveyId = nil
+        self.isSymptomsSkipped = false
         print("survey data cleared successfully")
     }
 
