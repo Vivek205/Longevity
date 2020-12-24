@@ -50,6 +50,9 @@ class FormStepVC: ORKStepViewController {
         addKeyboardObservers()
         print("did load", self.view.frame.origin.y )
         self.initialYOrigin = self.view.frame.origin.y
+        if SurveyTaskUtility.shared.isSymptomsSkipped {
+            self.goBackward()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
