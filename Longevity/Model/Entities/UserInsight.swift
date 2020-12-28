@@ -241,10 +241,12 @@ struct History: Codable {
 // MARK: - Goal
 struct Goal: Codable {
     let text, goalDescription: String
+    var citation: String?
 
     enum CodingKeys: String, CodingKey {
         case text
         case goalDescription = "description"
+        case citation
     }
 }
 

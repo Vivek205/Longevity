@@ -102,7 +102,7 @@ class CheckInLogDetailsViewController: UIViewController {
             logDetailsTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15.0),
             logDetailsTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
-    
+        
         let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
         tapgesture.numberOfTouchesRequired = 1
         
@@ -115,7 +115,7 @@ class CheckInLogDetailsViewController: UIViewController {
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
-
+    
     @objc func handleExportData() {
         let userInsightAPI = UserInsightsAPI()
         self.showSpinner()
@@ -204,11 +204,11 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.getHeader(with: CommonHeader.self, index: section) as? CommonHeader else { return nil }
         if section == 0 {
-            header.setupHeaderText(font: UIFont(name: "Montserrat-Regular", size: 18.0), title: "Recorded Symptoms")
+            header.setupHeaderText(font: UIFont(name: AppFontName.regular, size: 18.0), title: "Recorded Symptoms")
         } else if section == 1 {
-            header.setupHeaderText(font: UIFont(name: "Montserrat-SemiBold", size: 24.0), title: "Insights")
+            header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 24.0), title: "Insights")
         } else {
-            header.setupHeaderText(font: UIFont(name: "Montserrat-SemiBold", size: 18.0), title: "Your next \(history.goals.count) goal(s)")
+            header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 18.0), title: "Your next \(history.goals.count) goal(s)")
         }
         return header
     }
@@ -220,8 +220,46 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
         if indexPath.section < 1 {
             return 50.0
-        } else {
+        } else if indexPath.section == 1 {
             return 110.0
+        } else {
+            let goal = history.goals[indexPath.row]
+            
+            let insightTitle = goal.text
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+            let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
+            
+            let textAreaWidth = tableView.bounds.width - 66.0
+            
+            var goalHeight = 14.0 + attributedinsightTitle.height(containerWidth: textAreaWidth)
+            
+            if !goal.goalDescription.isEmpty {
+                let insightDesc = "\n\n\(goal.goalDescription)"
+                
+                let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
+                                                                                   size: 14.0),
+                                                                     .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
+                attributedinsightTitle.append(attributedDescText)
+                
+                goalHeight += attributedinsightTitle.height(containerWidth: textAreaWidth)
+            }
+            
+            if let citation = goal.citation, !citation.isEmpty {
+                let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
+                                                                                   size: 14.0),
+                                                                     .foregroundColor: UIColor(red: 0.05,
+                                                                                               green: 0.4, blue: 0.65, alpha: 1.0),
+                                                                     .underlineStyle: NSUnderlineStyle.single]
+                let attributedCitationText = NSMutableAttributedString(string: citation,
+                                                                       attributes: linkAttributes)
+                goalHeight += attributedCitationText.height(containerWidth: textAreaWidth)
+                goalHeight += 10.0
+            }
+            
+            goalHeight += 14.0
+            
+            return goalHeight
         }
     }
 }

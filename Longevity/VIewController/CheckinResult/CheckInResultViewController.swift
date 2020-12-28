@@ -285,6 +285,44 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
 
                 }
             }
+        } else if indexPath.section == 1 { //Calculating Goal Height
+            if let goal = self.checkinResult?.goals[indexPath.item] {
+                let insightTitle = goal.text
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
+                
+                let textAreaWidth = width - 66.0
+                
+                var goalHeight = 14.0 + attributedinsightTitle.height(containerWidth: textAreaWidth)
+                
+                if !goal.goalDescription.isEmpty {
+                    let insightDesc = "\n\n\(goal.goalDescription)"
+                    
+                    let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
+                                                                                       size: 14.0),
+                                                                         .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                    let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
+                    attributedinsightTitle.append(attributedDescText)
+                    
+                    goalHeight += attributedinsightTitle.height(containerWidth: textAreaWidth)
+                }
+                
+                if let citation = goal.citation, !citation.isEmpty {
+                    let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
+                                                                                       size: 14.0),
+                                                                         .foregroundColor: UIColor(red: 0.05,
+                                                                                                   green: 0.4, blue: 0.65, alpha: 1.0),
+                                                                         .underlineStyle: NSUnderlineStyle.single]
+                    let attributedCitationText = NSMutableAttributedString(string: citation,
+                                                                           attributes: linkAttributes)
+                    goalHeight += attributedCitationText.height(containerWidth: textAreaWidth)
+                    goalHeight += 10.0
+                }
+                
+                goalHeight += 14.0
+                
+                return CGSize(width: width, height: goalHeight)
+            }
         }
         
         return CGSize(width: width, height: height)
