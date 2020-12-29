@@ -22,7 +22,7 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     
     lazy var emptyCellMessage: UILabel = {
         let emptyMessage = UILabel()
-        emptyMessage.font = UIFont(name: AppFontName.lightitalic, size: 14.0)
+        emptyMessage.font = UIFont(name: "Montserrat-LightItalic", size: 14.0)
         emptyMessage.textColor = .white
         emptyMessage.text = "Coming Soon"
         emptyMessage.textAlignment = .center
@@ -44,6 +44,7 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
         
         self.hexagonView.backgroundColor = .clear
         self.hexagonView.borderColor = .white
+        self.hexagonView.borderWidth = 3.0
         self.hexagonView.isEmptyCell = true
         
         self.contentView.addSubview(tileTitle)
@@ -57,7 +58,7 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
             emptyCellMessage.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             emptyCellMessage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
             emptyCellMessage.centerYAnchor.constraint(equalTo: hexagonView.centerYAnchor),
-            infoButton.topAnchor.constraint(equalTo: emptyCellMessage.bottomAnchor, constant: 20.0),
+            infoButton.topAnchor.constraint(equalTo: emptyCellMessage.bottomAnchor, constant: 8.0),
             infoButton.centerXAnchor.constraint(equalTo: emptyCellMessage.centerXAnchor),
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)

@@ -11,6 +11,7 @@ import UIKit
 class HexagonView: UIView {
     
     var borderColor: UIColor = .borderColor
+    var borderWidth: CGFloat = 2.0
     var isEmptyCell: Bool = false
     
     var shapePath:UIBezierPath?
@@ -28,7 +29,7 @@ class HexagonView: UIView {
         let borderLayer: CAShapeLayer = CAShapeLayer()
         borderLayer.path = shapePath!.cgPath
         borderLayer.strokeColor = self.borderColor.cgColor
-        borderLayer.lineWidth = 2.0
+        borderLayer.lineWidth = borderWidth
         borderLayer.fillColor = UIColor.clear.cgColor
         self.layer.insertSublayer(borderLayer, at: 0)
     }
