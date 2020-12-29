@@ -42,6 +42,14 @@ class CoughRecorderViewController: BaseStepViewController {
         return aVisualizer
     }()
     
+    lazy var recordThemeView: UIView = {
+        let recordTheme = UIView(frame: CGRect(x: 0.0, y: 0.0,
+                                               width: UIScreen.main.bounds.width,
+                                               height: UIScreen.main.bounds.height))
+        recordTheme.backgroundColor = .clear
+        return recordTheme
+    }()
+    
     lazy var statusLabel: UILabel = {
         let statuslabel = UILabel()
         statuslabel.textAlignment = .center
@@ -52,9 +60,11 @@ class CoughRecorderViewController: BaseStepViewController {
     lazy var recorderButton: UIButton = {
         let recorderbutton = UIButton()
         recorderbutton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
+        recorderbutton.setImage(UIImage(named: "recordbuttonIcon"), for: .highlighted)
         recorderbutton.imageView?.contentMode = .scaleAspectFit
         recorderbutton.translatesAutoresizingMaskIntoConstraints = false
-        recorderbutton.addTarget(self, action: #selector(recordTapped), for: .touchUpInside)
+        recorderbutton.addTarget(self, action: #selector(recorderPressed), for: .touchDown)
+        recorderbutton.addTarget(self, action: #selector(recorderLeave), for: .touchUpInside)
         return recorderbutton
     }()
     
@@ -90,6 +100,7 @@ class CoughRecorderViewController: BaseStepViewController {
         self.view.addSubview(self.deleteButton)
         self.view.addSubview(self.statusLabel)
         self.view.addSubview(self.tooshorterrorView)
+        self.parent?.view.addSubview(self.recordThemeView)
         
         let questionViewHeight = questionView.headerAttributedString.height(containerWidth: self.view.bounds.width - 30.0) + 40.0
         
@@ -126,6 +137,9 @@ class CoughRecorderViewController: BaseStepViewController {
         self.statusLabel.text = "Tap and hold to record"
         self.isTooShort = false
         self.updatebuttonStates()
+        self.recordThemeView.isHidden = true
+        self.recordThemeView.addShadow(to: [.left, .right, .top, .bottom],
+                                       radius: 60.0, color: UIColor(hexString: "#E67381").cgColor)
     }
     
     func startRecording() {
@@ -198,13 +212,19 @@ class CoughRecorderViewController: BaseStepViewController {
         self.updatebuttonStates()
     }
     
-    @objc func recordTapped() {
+    @objc func recorderPressed() {
+        self.recordThemeView.isHidden = false
         if self.audioRecorder?.isRecording ?? false {
             finishRecording(success: true)
         } else {
             startRecording()
             self.updatebuttonStates()
         }
+    }
+    
+    @objc func recorderLeave() {
+        self.recordThemeView.isHidden = true
+        finishRecording(success: true)
     }
     
     @objc func playPauseAudio() {
@@ -338,6 +358,41 @@ extension CoughRecorderViewController: AVAudioRecorderDelegate, AVAudioPlayerDel
         self.updateStatus(time: 0)
         for index in 0..<self.audioVisualizer.audioSignals.count {
             self.audioVisualizer.audioSignals[index].isPlaying = false
+        }
+    }
+}
+
+extension UIView {
+    func addShadow(to edges: [UIRectEdge], radius: CGFloat = 3.0, opacity: Float = 0.6, color: CGColor = UIColor.black.cgColor) {
+        let fromColor = color
+        let toColor = UIColor.white.withAlphaComponent(0.1).cgColor
+        let viewFrame = self.frame
+        for edge in edges {
+            let gradientLayer = CAGradientLayer()
+            gradientLayer.colors = [fromColor, toColor]
+            gradientLayer.opacity = opacity
+
+            switch edge {
+            case .top:
+                gradientLayer.startPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.endPoint = CGPoint(x: 0.5, y: 1.0)
+                gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: viewFrame.width, height: radius)
+            case .bottom:
+                gradientLayer.startPoint = CGPoint(x: 0.5, y: 1.0)
+                gradientLayer.endPoint = CGPoint(x: 0.5, y: 0.0)
+                gradientLayer.frame = CGRect(x: 0.0, y: viewFrame.height - radius, width: viewFrame.width, height: radius)
+            case .left:
+                gradientLayer.startPoint = CGPoint(x: 0.0, y: 0.5)
+                gradientLayer.endPoint = CGPoint(x: 1.0, y: 0.5)
+                gradientLayer.frame = CGRect(x: 0.0, y: 0.0, width: radius, height: viewFrame.height)
+            case .right:
+                gradientLayer.startPoint = CGPoint(x: 1.0, y: 0.5)
+                gradientLayer.endPoint = CGPoint(x: 0.0, y: 0.5)
+                gradientLayer.frame = CGRect(x: viewFrame.width - radius, y: 0.0, width: radius, height: viewFrame.height)
+            default:
+                break
+            }
+            self.layer.addSublayer(gradientLayer)
         }
     }
 }
