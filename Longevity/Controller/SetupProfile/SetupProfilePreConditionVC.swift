@@ -241,7 +241,7 @@ extension SetupProfilePreConditionVC: UICollectionViewDelegate,
             
             attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
             
-            let containerWidth = width - 57.0
+            let containerWidth = width - 73.0
             
             let height = attributedoptionData.height(containerWidth: containerWidth) + 32.0
             
