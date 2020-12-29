@@ -76,6 +76,7 @@ class LNTabBarViewController: UITabBarController {
         AppSyncManager.instance.syncUserProfile()
         AppSyncManager.instance.getAppLink()
         self.handleNetworkConnectionChange()
+        self.updateTabTextAttributes()
     }
 
     func handleNetworkConnectionChange() {
@@ -95,6 +96,28 @@ class LNTabBarViewController: UITabBarController {
                         items.forEach{$0.isEnabled = true}
                     }
                 }
+            }
+        }
+    }
+    
+    override var selectedViewController: UIViewController? {
+        didSet {
+            self.updateTabTextAttributes()
+        }
+    }
+    
+    fileprivate func updateTabTextAttributes() {
+        guard let viewControllers = viewControllers else {
+            return
+        }
+        
+        for viewController in viewControllers {
+            if viewController == selectedViewController {
+                let textAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#4A4A4A"), NSAttributedString.Key.font: UIFont(name: AppFontName.semibold, size: 11.0)]
+                viewController.tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
+            } else {
+                let textAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor(hexString: "#8E8E93"), NSAttributedString.Key.font: UIFont(name: AppFontName.regular, size: 11.0)]
+                viewController.tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
             }
         }
     }

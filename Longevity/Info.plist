@@ -77,6 +77,8 @@
 	<string>We are using ResearchKit which is using speech recognition for its tasks</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Montserrat-LightItalic.ttf</string>
+		<string>Montserrat-Light.ttf</string>
 		<string>Muli-Regular.ttf</string>
 		<string>Muli-Bold.ttf</string>
 		<string>Montserrat-Bold.ttf</string>

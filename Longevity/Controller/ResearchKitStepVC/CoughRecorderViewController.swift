@@ -152,13 +152,13 @@ class CoughRecorderViewController: BaseStepViewController {
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 1,
+            AVNumberOfChannelsKey: 2,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
 
         do {
             recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.playAndRecord, mode: .default)
+            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default, options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
             try recordingSession.setActive(true)
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
@@ -230,11 +230,14 @@ class CoughRecorderViewController: BaseStepViewController {
     @objc func playPauseAudio() {
         if self.audioPlayer?.isPlaying ?? false {
             self.audioPlayer?.pause()
+            try? self.recordingSession.setActive(false)
             self.resetAudioPlayer()
         } else {
             guard let audiourl = self.audioRecorder?.url else {
                 return
             }
+            
+            try? self.recordingSession.setActive(true)
             self.audioPlayer = try? AVAudioPlayer(contentsOf: audiourl)
             self.audioPlayer?.delegate = self
             self.audioPlayer?.volume = 1.0
@@ -348,6 +351,7 @@ extension CoughRecorderViewController: AVAudioRecorderDelegate, AVAudioPlayerDel
     }
     
     func audioPlayerDidFinishPlaying(_ player: AVAudioPlayer, successfully flag: Bool) {
+        try? recordingSession.setActive(false)
         self.resetAudioPlayer()
         self.updatebuttonStates()
     }
