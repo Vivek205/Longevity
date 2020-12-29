@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -495,6 +495,8 @@
                                                         <constraint firstAttribute="height" constant="30" id="kCh-sM-f6z"/>
                                                     </constraints>
                                                     <color key="tintColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                    <state key="normal" image="icon: Checkbox-unselected"/>
+                                                    <state key="selected" image="icon: checkbox-selected"/>
                                                     <connections>
                                                         <action selector="handleButtonPressed:" destination="EBo-6s-jNl" eventType="touchUpInside" id="9Jo-oK-nc0"/>
                                                     </connections>
@@ -832,6 +834,8 @@
         <image name="SetupComplete" width="224" height="224"/>
         <image name="SetupProfileDisclaimer" width="261" height="224"/>
         <image name="dataPrivacyLogo" width="31" height="36"/>
+        <image name="icon: Checkbox-unselected" width="24" height="24"/>
+        <image name="icon: checkbox-selected" width="24" height="24"/>
         <image name="setupProfileNotification" width="234" height="224"/>
         <systemColor name="labelColor">
             <color white="0.0" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
