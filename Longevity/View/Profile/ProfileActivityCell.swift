@@ -17,11 +17,11 @@ class ProfileActivityCell: UITableViewCell {
             if let activityType = activity?.activityType {
                 activityImage.image = activityType.activityIcon ?? UIImage(named: defaultActivityImageName)
             }
-            
             if activity?.title == "Cough Test" {
                 activityImage.image = UIImage(named: "activity: Cough Test")
+            } else if activity?.title == "COVID Risk Assessment" {
+                activityImage.image = UIImage(named: "activity: Covid Risk Ass")
             }
-            
             self.activityVerticalLine.isHidden = activity?.isLast ?? false
         }
     }
