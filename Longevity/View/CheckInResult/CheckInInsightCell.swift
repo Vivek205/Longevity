@@ -16,12 +16,15 @@ class CheckInInsightCell: UICollectionViewCell {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
             
-            let insightDesc = "\n\n\(inSight?.goalDescription ?? "")"
+            if inSight.goalDescription.isEmpty ?? false {
+                let insightDesc = "\n\n\(inSight?.goalDescription ?? "")"
+                
+                let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
+                
+                attributedinsightTitle.append(attributedDescText)
+            }
             
-            let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
-            let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
-            
-            attributedinsightTitle.append(attributedDescText)
             insightsLabel.attributedText = attributedinsightTitle
         }
     }
@@ -41,8 +44,8 @@ class CheckInInsightCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             insightsLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
-            insightsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 14.0),
-            insightsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -14.0),
+            insightsLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+            insightsLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             insightsLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -10.0)
         ])
     }
