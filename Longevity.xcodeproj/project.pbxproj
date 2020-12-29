@@ -100,6 +100,7 @@
 		C1C8220624EB4EAB0074AF11 /* ActivityCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */; };
 		C1C8220824EB54A50074AF11 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220724EB54A50074AF11 /* UIView+Extension.swift */; };
 		C1C8220A24EB570C0074AF11 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */; };
+		C1CE995E259B3EAD0009C47D /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1CE995A259B3EAD0009C47D /* Montserrat-LightItalic.ttf */; };
 		C1EC3E15255B1C4F007B4650 /* AIProgressBandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */; };
 		E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DD24E29DA000896F2C /* FormStepVC.swift */; };
 		E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */; };
@@ -355,6 +356,7 @@
 		C1C8220524EB4EAB0074AF11 /* ActivityCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityCard.swift; sourceTree = "<group>"; };
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
+		C1CE995A259B3EAD0009C47D /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
 		C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProgressBandView.swift; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
 		E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormSectionItemView.swift; sourceTree = "<group>"; };
@@ -774,6 +776,7 @@
 				C19875A424DAF11C00477185 /* Montserrat-Bold.ttf */,
 				C19875A224DAF11B00477185 /* Montserrat-Italic.ttf */,
 				C19875A724DAF11C00477185 /* Montserrat-Light.ttf */,
+				C1CE995A259B3EAD0009C47D /* Montserrat-LightItalic.ttf */,
 				C19875A624DAF11C00477185 /* Montserrat-Medium.ttf */,
 				C19875A324DAF11C00477185 /* Montserrat-Regular.ttf */,
 				C19875A524DAF11C00477185 /* Montserrat-SemiBold.ttf */,
@@ -1159,6 +1162,7 @@
 				E274F08E24C820C900969CD8 /* CovidCheckin.storyboard in Resources */,
 				E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */,
 				C19875AB24DAF11C00477185 /* Montserrat-SemiBold.ttf in Resources */,
+				C1CE995E259B3EAD0009C47D /* Montserrat-LightItalic.ttf in Resources */,
 				E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */,
 				E2ECB8C6247FE2BA0020A27E /* UserLogin.storyboard in Resources */,
 				E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */,
