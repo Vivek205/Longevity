@@ -25,8 +25,8 @@ class CheckInNextGoals: UICollectionReusableView {
         self.addSubview(titleLabel)
         
         NSLayoutConstraint.activate([
-            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 10.0),
-            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
+            titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15.0),
+            titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15.0),
             titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: -10.0),
             titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
         ])

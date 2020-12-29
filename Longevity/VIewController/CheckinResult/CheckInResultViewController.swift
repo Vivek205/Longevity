@@ -158,7 +158,7 @@ class CheckInResultViewController: UIViewController {
         }
         
         layout.itemSize = CGSize(width: Double(self.view.bounds.width) - 20.0, height: 75.0)
-        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 10.0, bottom: 10.0, right: 10.0)
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 15.0, bottom: 10.0, right: 15.0)
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
@@ -263,7 +263,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat(collectionView.bounds.width) - 20.0
+        let width = CGFloat(collectionView.bounds.width) - 30.0
         var height: CGFloat = 80.0
         
         if indexPath.section == 0 && self.currentResultView == .analysis {
@@ -284,6 +284,27 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                     }
 
                 }
+            }
+        } else if indexPath.section == 0 {
+            if let inSight = self.checkinResult?.insights[indexPath.row] {
+                let insightTitle = inSight.text
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
+                                                                 .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
+                
+                if !inSight.goalDescription.isEmpty {
+                    let insightDesc = "\n\n\(inSight.goalDescription)"
+                    
+                    let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0),
+                                                                         .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                    let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
+                    attributedinsightTitle.append(attributedDescText)
+                }
+                
+                let textAreaWidth = width
+                
+                let textHeight = attributedinsightTitle.height(containerWidth: textAreaWidth) + 40.0
+                return CGSize(width: width, height: textHeight)
             }
         } else if indexPath.section == 1 { //Calculating Goal Height
             if let goal = self.checkinResult?.goals[indexPath.item] {
@@ -350,8 +371,10 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 {
-            return CGSize(width: collectionView.bounds.width, height: 180.0)
+        if section == 0 && self.currentResultView == .analysis  {
+            return CGSize(width: collectionView.bounds.width, height: 160.0)
+        } else if section == 0  {
+            return CGSize(width: collectionView.bounds.width, height: 200.0)
         } else {
             return CGSize(width: collectionView.bounds.width, height: 10.0)
         }

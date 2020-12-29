@@ -27,11 +27,13 @@ class CheckInResultHeader: UICollectionReusableView {
             self.segmentedControl.selectedSegmentIndex = currentView.rawValue
             self.segmentedControl.addTarget(self, action: #selector(resultViewSelected), for: .valueChanged)
             self.headerTitle.isHidden = currentView == .analysis
-            if currentView == .analysis {
-                DispatchQueue.main.async {
-                    self.headerTitle.removeFromSuperview()
-                }
-            }
+//            if currentView == .analysis {
+//                DispatchQueue.main.async {
+//                    self.headerTitle.removeFromSuperview()
+//                }
+//            } else {
+//
+//            }
         }
     }
     
@@ -92,18 +94,18 @@ class CheckInResultHeader: UICollectionReusableView {
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.heightAnchor.constraint(equalToConstant: 125.0),
+            bgImageView.heightAnchor.constraint(equalToConstant: 100.0),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50.0),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50.0),
             titleLabel.bottomAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: -20.0),
             
+            segmentedControl.topAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: 20.0),
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30.0),
             segmentedControl.widthAnchor.constraint(equalToConstant: 230.0),
-            segmentedControl.topAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: 20.0),
             
-            headerTitle.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20.0),
-            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+            headerTitle.leadingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
     }
