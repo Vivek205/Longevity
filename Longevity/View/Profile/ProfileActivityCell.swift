@@ -18,6 +18,10 @@ class ProfileActivityCell: UITableViewCell {
                 activityImage.image = activityType.activityIcon ?? UIImage(named: defaultActivityImageName)
             }
             
+            if activity?.title == "Cough Test" {
+                activityImage.image = UIImage(named: "activity: Cough Test")
+            }
+            
             self.activityVerticalLine.isHidden = activity?.isLast ?? false
         }
     }
