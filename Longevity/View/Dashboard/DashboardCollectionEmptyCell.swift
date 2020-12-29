@@ -22,7 +22,7 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     
     lazy var emptyCellMessage: UILabel = {
         let emptyMessage = UILabel()
-        emptyMessage.font = UIFont(name: "Montserrat-LightItalic", size: 14.0)
+        emptyMessage.font = UIFont(name: AppFontName.lightitalic, size: 14.0)
         emptyMessage.textColor = .white
         emptyMessage.text = "Coming Soon"
         emptyMessage.textAlignment = .center
