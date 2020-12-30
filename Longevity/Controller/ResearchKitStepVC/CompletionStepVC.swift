@@ -73,12 +73,15 @@ class CompletionStepVC: ORKStepViewController {
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true){
             viewResultsButton.removeFromSuperview()
             continueButton.anchor(.bottom(footerView.bottomAnchor))
-        }else {
+            self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
+        } else {
             if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
                 if isCurrentSurveyRepetitive {
                     viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
+                    self.navigationItem.title = "Check-in Complete!"
                 }else {
                     viewResultsButton.setTitle("Start Your Check-in", for: .normal)
+                    self.navigationItem.title = "Survey Complete!"
                 }
             }
         }
@@ -89,11 +92,9 @@ class CompletionStepVC: ORKStepViewController {
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
                                                                  style: .plain, target: self, action: #selector(handleContinue(sender:)))
-        self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
-        
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(hexString: "#4E4E4E"),
                               .font: UIFont(name: "Montserrat-SemiBold", size: 22.0)]
-        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes as [NSAttributedString.Key : Any]
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
     }
 

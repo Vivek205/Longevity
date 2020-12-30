@@ -101,7 +101,7 @@ class SurveysAPI : BaseAuthAPI {
             request.httpBody = data
             request.allHTTPHeaderFields = self.headers
             
-            URLSession.shared.dataTask(with: request){
+            URLSession.shared.dataTask(with: request){ [weak self]
                 (data, response, error) in
                 
                 if let error = error {
@@ -114,7 +114,10 @@ class SurveysAPI : BaseAuthAPI {
                 }
                 
                 if httpResponse.statusCode == 403 && isRetry {
-                    nextQuestionIdentifier = self.findNextQuestion(moduleId: moduleId, questionId: questionId, answerValue: answerValue, isRetry: true)
+                    nextQuestionIdentifier = self?.findNextQuestion(moduleId: moduleId,
+                                                                    questionId: questionId,
+                                                                    answerValue: answerValue,
+                                                                    isRetry: true)
                     semaphore.signal()
                 }
                 
