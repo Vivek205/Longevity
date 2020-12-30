@@ -109,11 +109,11 @@ class CheckinLogViewController: BaseViewController {
                     print("self?.history[index].surveyName", surveyName)
                 }
             }
+            self?.history.removeAll(where: { $0.surveyName == "Cough Test" })
             print("submissionIdList response",response)
         } onFailure: { (error) in
             print("error", error)
         }
-
     }
     
     @objc func closeView() {
