@@ -13,7 +13,7 @@ class ContactSupportViewController: BasePopupViewController {
     lazy var webView: WKWebView = {
         let view = WKWebView()
         view.translatesAutoresizingMaskIntoConstraints = false
-        view.load(URLRequest(url: URL(string: "https://rejuve.io/contact-us/")!))
+        view.load(URLRequest(url: URL(string: "https://rejuve.io/contact/")!))
         view.navigationDelegate = self
         return view
     }()

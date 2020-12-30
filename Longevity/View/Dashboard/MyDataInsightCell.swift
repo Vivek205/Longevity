@@ -158,12 +158,12 @@ class MyDataInsightCell: UICollectionViewCell {
             self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
             
             self.guageView.leadingAnchor.constraint(equalTo: self.tileTitle.trailingAnchor, constant: 10.0),
-            self.guageView.centerYAnchor.constraint(equalTo: self.tileTitle.centerYAnchor),
+            self.guageView.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 48.0),
             self.guageView.heightAnchor.constraint(equalTo: self.guageView.widthAnchor),
             
             self.riskType.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor),
-            self.riskType.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
+            self.riskType.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.riskType.widthAnchor.constraint(equalToConstant: 80.0),
             
             self.trendImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0),

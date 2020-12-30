@@ -60,7 +60,7 @@ class CoughRecorderViewController: BaseStepViewController {
     lazy var recorderButton: UIButton = {
         let recorderbutton = UIButton()
         recorderbutton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
-        recorderbutton.setImage(UIImage(named: "recordbuttonIcon"), for: .highlighted)
+        recorderbutton.setImage(UIImage(named: "stoprecordingIcon"), for: .highlighted)
         recorderbutton.imageView?.contentMode = .scaleAspectFit
         recorderbutton.translatesAutoresizingMaskIntoConstraints = false
         recorderbutton.addTarget(self, action: #selector(recorderPressed), for: .touchDown)
