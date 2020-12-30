@@ -17,6 +17,7 @@ class LoaderAnimationViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "splashScreen")
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
