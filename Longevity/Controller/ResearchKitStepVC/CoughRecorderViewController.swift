@@ -65,6 +65,7 @@ class CoughRecorderViewController: BaseStepViewController {
         recorderbutton.translatesAutoresizingMaskIntoConstraints = false
         recorderbutton.addTarget(self, action: #selector(recorderPressed), for: .touchDown)
         recorderbutton.addTarget(self, action: #selector(recorderLeave), for: .touchUpInside)
+        recorderbutton.addTarget(self, action: #selector(recorderLeave), for: .touchDragExit)
         return recorderbutton
     }()
     
@@ -158,12 +159,15 @@ class CoughRecorderViewController: BaseStepViewController {
 
         do {
             recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default, options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
+            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default,
+                                             options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
             try recordingSession.setActive(true)
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.isMeteringEnabled = true
             self.audioVisualizer.resetWaves()
+            let generator = UIImpactFeedbackGenerator(style: .heavy)
+            generator.impactOccurred()
             audioRecorder?.record(forDuration: 5.0)
             self.isFileDeleted = false
             self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
@@ -194,15 +198,24 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     func finishRecording(success: Bool) {
+        self.recorderButton.isSelected = false
+        self.recordThemeView.isHidden = true
         self.isFileDeleted = !success
         self.observingTimer?.invalidate()
-        if let time = self.audioRecorder?.currentTime, Int(time) < 1 {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        if let time = self.audioRecorder?.currentTime,
+           Int(time) < 1,
+           (self.audioRecorder?.isRecording ?? false) {
             self.isTooShort = true
             self.audioRecorder?.stop()
             self.audioRecorder?.deleteRecording()
+            self.audioVisualizer.resetWaves()
             self.isFileDeleted = true
+            generator.notificationOccurred(.error)
         } else {
             self.audioRecorder?.stop()
+            generator.notificationOccurred(.success)
         }
         do {
             try recordingSession.setActive(false)
@@ -223,7 +236,6 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     @objc func recorderLeave() {
-        self.recordThemeView.isHidden = true
         finishRecording(success: true)
     }
     
@@ -267,13 +279,10 @@ class CoughRecorderViewController: BaseStepViewController {
         if self.audioRecorder?.isRecording ?? false {
             self.playpauseButton.isEnabled = false
             self.deleteButton.isEnabled = false
-            self.recorderButton.setImage(UIImage(named: "stoprecordingIcon"), for: .normal)
-            
             self.playpauseButton.tintColor = .lightGray
             self.deleteButton.tintColor = .lightGray
             self.continueButton.isEnabled = false
         } else {
-            self.recorderButton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
             if self.audioRecorder?.url != nil && !self.isFileDeleted {
                 self.playpauseButton.isEnabled = true
                 self.deleteButton.isEnabled = true
