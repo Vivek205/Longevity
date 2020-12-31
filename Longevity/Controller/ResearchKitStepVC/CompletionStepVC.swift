@@ -24,11 +24,11 @@ class CompletionStepVC: ORKStepViewController {
     
     lazy var infoLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Montserrat-Regular", size: 20.0)
+        label.font = UIFont(name: AppFontName.regular, size: 20.0)
         label.textColor = UIColor(hexString: "#4E4E4E")
-        label.text = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""). Your results are being processed by our AI analyzer.\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
@@ -38,7 +38,7 @@ class CompletionStepVC: ORKStepViewController {
         uiView.backgroundColor = .clear
         return uiView
     }()
-
+    
     lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
@@ -52,25 +52,28 @@ class CompletionStepVC: ORKStepViewController {
         viewresults.setTitle("View Results", for: .normal)
         return viewresults
     }()
-
+    
     lazy var scrollView: UIScrollView = {
         let scroll = UIScrollView()
         scroll.translatesAutoresizingMaskIntoConstraints = false
         scroll.showsVerticalScrollIndicator = false
         return scroll
     }()
-
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.view.backgroundColor = .appBackgroundColor
         self.backButtonItem = nil
-        self.presentViews()
-        self.navigationItem.hidesBackButton = true
-
+        
         self.currentSurveyId = SurveyTaskUtility.shared.currentSurveyId
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
-
-        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true){
+        
+        self.presentViews()
+        self.navigationItem.hidesBackButton = true
+        
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
             viewResultsButton.removeFromSuperview()
             continueButton.anchor(.bottom(footerView.bottomAnchor))
             self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
@@ -85,7 +88,7 @@ class CompletionStepVC: ORKStepViewController {
                 }
             }
         }
-
+        
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         viewResultsButton.isEnabled = false
         self.completeSurvey()
@@ -93,11 +96,11 @@ class CompletionStepVC: ORKStepViewController {
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
                                                                  style: .plain, target: self, action: #selector(handleContinue(sender:)))
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(hexString: "#4E4E4E"),
-                              .font: UIFont(name: "Montserrat-SemiBold", size: 22.0)]
+                              .font: UIFont(name: AppFontName.semibold, size: 22.0)]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes as [NSAttributedString.Key : Any]
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
     }
-
+    
     func isDateToday(date: String?) -> Bool {
         guard let date = date else {return false}
         let dateFormat = "yyyy-MM-dd HH:mm:ss"
@@ -114,21 +117,22 @@ class CompletionStepVC: ORKStepViewController {
         }
         return false
     }
-
+    
     func shouldViewResultButtonBeEnabled() {
         DispatchQueue.main.async {self.viewResultsButton.isEnabled = false}
         if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
             if isCurrentSurveyRepetitive {
                 let lastSubmissionId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.lastSubmissionId
                 DispatchQueue.main.async {self.viewResultsButton.isEnabled = lastSubmissionId == nil}
-
-            }else {
+            } else {
                 let lastSubmissionDate = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.lastSubmission
-                DispatchQueue.main.async {self.viewResultsButton.isEnabled = !self.isDateToday(date: lastSubmissionDate)}
+                DispatchQueue.main.async {
+                    self.viewResultsButton.isEnabled = !self.isDateToday(date: lastSubmissionDate)
+                }
             }
         }
     }
-
+    
     func completeSurvey() {
         func completion() {
             print("survey completed")
@@ -139,24 +143,24 @@ class CompletionStepVC: ORKStepViewController {
         }
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
-
+    
     func presentViews() {
-
+        
         self.view.addSubview(scrollView)
         self.scrollView.addSubview(iconView)
         self.scrollView.addSubview(infoLabel)
         self.scrollView.addSubview(footerView)
         self.footerView.addSubview(continueButton)
         self.footerView.addSubview(viewResultsButton)
-
-        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
         
+        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
+         
         NSLayoutConstraint.activate([
             scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 10),
             scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
             scrollView.topAnchor.constraint(equalTo: view.topAnchor,constant: 10),
             scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
-
+            
             iconView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 24.0),
             iconView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             iconView.heightAnchor.constraint(equalToConstant: 200.0),
@@ -166,12 +170,12 @@ class CompletionStepVC: ORKStepViewController {
             infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15.0),
             infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15.0),
             infoLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerView.topAnchor, constant: 20.0),
-
+            
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
             footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor),
             footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
-
+            
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 60),
@@ -185,8 +189,16 @@ class CompletionStepVC: ORKStepViewController {
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
         viewResultsButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
+        
+        let infoLabelText = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "")."
+        
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
+            self.infoLabel.text = infoLabelText
+        } else {
+            self.infoLabel.text = infoLabelText + " Your results are being processed by our AI analyzer.\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
+        }
     }
-
+    
     @objc func handleContinue(sender: UIButton) {
         self.goForward()
     }
@@ -210,20 +222,20 @@ class CompletionStepVC: ORKStepViewController {
         } onFailure: { (error) in
             DispatchQueue.main.async {
                 Alert(title: "Survey Unavailable",
-                               message: "Unable to open the survey. Please try again later.")
+                      message: "Unable to open the survey. Please try again later.")
                 self.removeSpinner()
             }
-
+            
         }
-
-
-//        guard let surveyId = self.currentSurveyId,
-//              let surveyName = self.currentSurveyName,
-//              let isCheckIn = self.isCurrentSurveyRepetitive,
-//              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
-//
-//        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
-//        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-//                                                    style: .overCurrentContext)
+        
+        
+        //        guard let surveyId = self.currentSurveyId,
+        //              let surveyName = self.currentSurveyName,
+        //              let isCheckIn = self.isCurrentSurveyRepetitive,
+        //              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
+        //
+        //        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
+        //        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+        //                                                    style: .overCurrentContext)
     }
 }
