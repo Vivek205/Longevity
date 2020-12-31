@@ -166,8 +166,6 @@ class CoughRecorderViewController: BaseStepViewController {
             audioRecorder?.delegate = self
             audioRecorder?.isMeteringEnabled = true
             self.audioVisualizer.resetWaves()
-            let generator = UIImpactFeedbackGenerator(style: .heavy)
-            generator.impactOccurred()
             audioRecorder?.record(forDuration: 5.0)
             self.isFileDeleted = false
             self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
