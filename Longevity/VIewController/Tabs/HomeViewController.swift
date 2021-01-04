@@ -192,6 +192,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             return CGSize(width: collectionView.bounds.width - 20.0, height: 100.0)
         } else if indexPath.section == 1 {
             return CGSize(width: collectionView.bounds.width, height: 170.0)
+        } else if SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row].lastSurveyStatus == .completed ||
+                    SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row].lastSurveyStatus == .pending {
+            return CGSize(width: collectionView.bounds.width - 20.0, height: 90.0)
         } else {
             return CGSize(width: collectionView.bounds.width - 20.0, height: 120.0)
         }
