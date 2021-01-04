@@ -82,7 +82,7 @@ class CompletionStepVC: ORKStepViewController {
                 if isCurrentSurveyRepetitive {
                     viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
                     self.navigationItem.title = "Check-in Complete!"
-                }else {
+                } else {
                     viewResultsButton.setTitle("Start Your Check-in", for: .normal)
                     self.navigationItem.title = "Survey Complete!"
                 }
@@ -190,12 +190,12 @@ class CompletionStepVC: ORKStepViewController {
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
         viewResultsButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
         
-        let infoLabelText = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "")."
+        let infoLabelText = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""). Your results are being processed by our AI analyzer."
         
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
-            self.infoLabel.text = infoLabelText
+            self.infoLabel.text = infoLabelText + "\n\nResults will not be avaliable at this time.  Once there is sufficent amount of data to ensure accurate results, results will be avaliable.  It is recommend to perform this test daily for optimal accuracy."
         } else {
-            self.infoLabel.text = infoLabelText + " Your results are being processed by our AI analyzer.\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
+            self.infoLabel.text = infoLabelText + "\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
         }
     }
     
