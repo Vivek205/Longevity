@@ -46,6 +46,8 @@ fileprivate let devicesList: [SetupProfileExternalDevice] = [.fitbit, .appleWatc
 
 class SetupProfileDevicesVC: BaseProfileSetupViewController {
     // MARK: Outlets
+    @IBOutlet weak var viewNavigationItem: UINavigationItem!
+
     lazy var devicesCollection: UICollectionView = {
         let devicesCollection = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
         devicesCollection.backgroundColor = .clear
@@ -64,18 +66,40 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
 
         devicesCollection.anchor(top: view.topAnchor, leading: view.leadingAnchor, bottom: view.bottomAnchor, trailing: view.trailingAnchor)
 
-        self.removeBackButtonNavigation()
+//        self.removeBackButtonNavigation()
         devicesCollection.delegate = self
         devicesCollection.dataSource = self
         checkIfDevicesAreConnectedAlready()
         self.addProgressbar(progress: 80.0)
-        
+
+//        let leftbutton = UIBarButtonItem(title:"", style: .plain, target: self, action: nil)
+//        leftbutton.tintColor = .themeColor
+//        let rightButton = UIBarButtonItem(title:"", style: .plain, target: self, action: nil)
+//        rightButton.tintColor = .themeColor
+//        self.viewNavigationItem.leftBarButtonItem = leftbutton
+//        self.viewNavigationItem.rightBarButtonItem = rightButton
+
+//        let backBarButtonItem = UIBarButtonItem(image: UIImage(named: "icon: arrow-left"), style: .plain, target: self, action: #selector(goBack))
+//        self.viewNavigationItem.leftBarButtonItem = backBarButtonItem
+
+//        self.navigationController?.view.backgroundColor = .appBackgroundColor
+        self.navigationController?.navigationBar.isTranslucent = false
+
+
         guard let deviceCollectionLayout = devicesCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
         }
         deviceCollectionLayout.minimumInteritemSpacing = 24
         deviceCollectionLayout.scrollDirection = .vertical
 
+    }
+
+//    override func viewDidDisappear(_ animated: Bool) {
+//        self.navigationController?.navigationBar.isTranslucent = true
+//    }
+
+    override func viewWillDisappear(_ animated: Bool) {
+        self.navigationController?.navigationBar.isTranslucent = true
     }
 
     func checkIfDevicesAreConnectedAlready() {
@@ -95,6 +119,11 @@ class SetupProfileDevicesVC: BaseProfileSetupViewController {
                 }
             }
         }
+    }
+
+    @objc
+    func goBack() {
+        self.navigationController?.popViewController(animated: true)
     }
 }
 
