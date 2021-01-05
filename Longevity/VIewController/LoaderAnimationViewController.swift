@@ -58,6 +58,16 @@ class LoaderAnimationViewController: UIViewController {
             spinner.topAnchor.constraint(equalTo:rejuveLogo.bottomAnchor, constant: 20)
         ])
 
+        self.checkAppUpdates()
+        
+        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [weak self] in
+            if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
+                self?.checkAppUpdates()
+            }
+        }
+    }
+    
+    func checkAppUpdates() {
         checkIfAppUpdated { signedOut in
             if !signedOut {
                 DispatchQueue.main.async {
