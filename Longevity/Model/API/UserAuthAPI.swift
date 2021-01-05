@@ -105,7 +105,7 @@ class UserAuthAPI {
                 }
             case .failure(let error):
                 print("Fetching user attributes failed with error \(error)")
-                completion(.unknown)
+                completion(.error)
             }
         }
     }

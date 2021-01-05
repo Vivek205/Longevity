@@ -12,6 +12,7 @@ enum TOCStatus {
     case unknown
     case accepted
     case notaccepted
+    case error
 }
 
 enum InternetConnectionState {

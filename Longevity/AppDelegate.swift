@@ -36,8 +36,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try Amplify.configure()
             configureCognito()
             print("Amplify configured with auth plugin")
-//            Logger.log("App Launched")
-//            ConnectionManager.instance.addConnectionObserver()
+            ConnectionManager.instance.addConnectionObserver()
             print("arn value", AppSyncManager.instance.userNotification.value?.endpointArn)
         } catch {
             print("An error occurred setting up Amplify: \(error)")
@@ -57,7 +56,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
 
         presentLoaderAnimationViewController()
-        window?.makeKeyAndVisible()
         
         if #available(iOS 13.0, *) {
             BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { (task) in
@@ -84,6 +82,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let loaderVC = LoaderAnimationViewController()
         loaderVC.modalPresentationStyle = .fullScreen
         self.window?.rootViewController = loaderVC
+        self.window?.makeKeyAndVisible()
     }
     
     func setRootViewController() {
@@ -94,11 +93,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         if tocStatus == .accepted {
                             let tabbarViewController = LNTabBarViewController()
                             self?.window?.rootViewController = tabbarViewController
-                        } else {
+                            self?.window?.makeKeyAndVisible()
+                        } else if tocStatus == .notaccepted || tocStatus == .unknown {
                             let storyboard = UIStoryboard(name: "ProfileSetup", bundle: nil)
                             guard let tosViewController = storyboard.instantiateViewController(withIdentifier: "TermsOfServiceVC") as? TermsOfServiceVC else { return }
                             let navigationController = UINavigationController(rootViewController: tosViewController)
                             self?.window?.rootViewController = navigationController
+                            self?.window?.makeKeyAndVisible()
+                        } else {
+                            
                         }
                     }
                 }
@@ -287,6 +290,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let storyboard = UIStoryboard(name: "UserLogin", bundle: nil)
         let onBoardingViewController = storyboard.instantiateInitialViewController()
         self.window?.rootViewController = onBoardingViewController
+        self.window?.makeKeyAndVisible()
     }
     
     @available(iOS 13.0, *)
