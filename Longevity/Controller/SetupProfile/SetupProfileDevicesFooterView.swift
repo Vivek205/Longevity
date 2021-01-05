@@ -29,7 +29,7 @@ class SetupProfileDevicesFooterView: UICollectionViewCell {
         self.addSubview(continueButton)
 
         continueButton.anchor(.leading(leadingAnchor, constant: 15), .trailing(trailingAnchor, constant: 15),
-                              .top(topAnchor, constant: 15), .height(48))
+                              .top(topAnchor, constant: 28), .height(48))
     }
 
     required init?(coder: NSCoder) {
