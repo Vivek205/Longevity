@@ -18,6 +18,7 @@ class CoughRecorderViewController: BaseStepViewController {
     
     var fileKey: String = ""
     var coughData: Data?
+    var recordedSeconds: Int = 5
     
     private var observingTimer: Timer?
     private var isFileDeleted: Bool = false
@@ -65,6 +66,7 @@ class CoughRecorderViewController: BaseStepViewController {
         recorderbutton.translatesAutoresizingMaskIntoConstraints = false
         recorderbutton.addTarget(self, action: #selector(recorderPressed), for: .touchDown)
         recorderbutton.addTarget(self, action: #selector(recorderLeave), for: .touchUpInside)
+        recorderbutton.addTarget(self, action: #selector(recorderLeave), for: .touchDragExit)
         return recorderbutton
     }()
     
@@ -144,6 +146,7 @@ class CoughRecorderViewController: BaseStepViewController {
     
     func startRecording() {
         self.isTooShort = false
+        self.recordedSeconds = 5
         let format = DateFormatter()
         format.dateFormat="yyyyMMddHHmmssSSS"
         self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
@@ -152,13 +155,15 @@ class CoughRecorderViewController: BaseStepViewController {
         let settings = [
             AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
             AVSampleRateKey: 12000,
-            AVNumberOfChannelsKey: 2,
+            AVNumberOfChannelsKey: 1,
+            AVEncoderBitDepthHintKey: 16,
             AVEncoderAudioQualityKey: AVAudioQuality.high.rawValue
         ]
 
         do {
             recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default, options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
+            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default,
+                                             options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
             try recordingSession.setActive(true)
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
@@ -194,15 +199,28 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     func finishRecording(success: Bool) {
+        self.recorderButton.isSelected = false
+        self.recordThemeView.isHidden = true
         self.isFileDeleted = !success
         self.observingTimer?.invalidate()
-        if let time = self.audioRecorder?.currentTime, Int(time) < 1 {
+        let generator = UINotificationFeedbackGenerator()
+        generator.prepare()
+        if let time = self.audioRecorder?.currentTime,
+           Int(time) < 1,
+           (self.audioRecorder?.isRecording ?? false) {
             self.isTooShort = true
             self.audioRecorder?.stop()
             self.audioRecorder?.deleteRecording()
+            self.audioVisualizer.resetWaves()
             self.isFileDeleted = true
+            generator.notificationOccurred(.error)
         } else {
+            self.recordedSeconds = Int(self.audioRecorder?.currentTime ?? 5)
+            if self.recordedSeconds == 0 {
+                self.recordedSeconds = 5
+            }
             self.audioRecorder?.stop()
+            generator.notificationOccurred(.success)
         }
         do {
             try recordingSession.setActive(false)
@@ -223,7 +241,6 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     @objc func recorderLeave() {
-        self.recordThemeView.isHidden = true
         finishRecording(success: true)
     }
     
@@ -243,7 +260,8 @@ class CoughRecorderViewController: BaseStepViewController {
             self.audioPlayer?.volume = 1.0
             self.audioPlayer?.play()
             var index = 0
-            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
+            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05,
+                                                       repeats: true, block: { [weak self] (timer) in
                 guard let time = self?.audioPlayer?.currentTime else { return }
                 if index < (self?.audioVisualizer.audioSignals.count ?? 0) {
                     self?.audioVisualizer.audioSignals[index].isPlaying = true
@@ -267,13 +285,10 @@ class CoughRecorderViewController: BaseStepViewController {
         if self.audioRecorder?.isRecording ?? false {
             self.playpauseButton.isEnabled = false
             self.deleteButton.isEnabled = false
-            self.recorderButton.setImage(UIImage(named: "stoprecordingIcon"), for: .normal)
-            
             self.playpauseButton.tintColor = .lightGray
             self.deleteButton.tintColor = .lightGray
             self.continueButton.isEnabled = false
         } else {
-            self.recorderButton.setImage(UIImage(named: "recordbuttonIcon"), for: .normal)
             if self.audioRecorder?.url != nil && !self.isFileDeleted {
                 self.playpauseButton.isEnabled = true
                 self.deleteButton.isEnabled = true
@@ -306,7 +321,7 @@ class CoughRecorderViewController: BaseStepViewController {
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.bold, size: 18.0), .foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedTime = NSMutableAttributedString(string: "00:0\(time)", attributes: attributes)
             let totalTimeAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 18.0)]
-            let attributedTotalTime = NSMutableAttributedString(string: " / 00:05", attributes: totalTimeAttributes)
+            let attributedTotalTime = NSMutableAttributedString(string: " / 00:0\(recordedSeconds)", attributes: totalTimeAttributes)
             attributedTime.append(attributedTotalTime)
             self.statusLabel.attributedText = attributedTime
         }
@@ -319,12 +334,15 @@ class CoughRecorderViewController: BaseStepViewController {
         }
         
         let coughRecordUploader = CoughRecordUploader()
-        coughRecordUploader.uploadVoiceData(fileKey: self.fileKey, coughData: coughData, completion: { [weak self] (success) in
+        coughRecordUploader.uploadVoiceData(fileKey: self.fileKey,
+                                            coughData: coughData,
+                                            completion: { [weak self] (success) in
             if success {
                 guard let filekey = self?.fileKey else { return }
                 coughRecordUploader.generateURL(for: filekey) { [weak self] (fileURL) in
                     if let questionId = self?.step?.identifier as? String {
-                        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: questionId, answer: fileURL)
+                        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: questionId,
+                                                                             answer: fileURL)
                     }
                     DispatchQueue.main.async {
                         self?.removeSpinner()

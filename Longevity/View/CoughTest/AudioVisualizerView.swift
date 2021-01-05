@@ -18,7 +18,7 @@ class AudioVisualizerView: UIView {
     
     lazy var totalWaves: Int = {
         let totalWidth = UIScreen.main.bounds.size.width
-        return Int (totalWidth / 2)
+        return Int (totalWidth / 3)
     }()
     
     lazy var visualizerView: UICollectionView = {
@@ -32,47 +32,53 @@ class AudioVisualizerView: UIView {
         return visualizerview
     }()
 
+    var barWidth: CGFloat = 4.0
+    
     // Given waveforms
     var waveforms: [Int]! {
         didSet {
-            self.visualizerView.reloadData()
+            self.setNeedsDisplay()
+//            DispatchQueue.main.async {
+//                self.visualizerView.reloadData()
+//            }
         }
     }
     
     var audioSignals: [AudioWaveSignal]! {
         didSet {
-            self.visualizerView.reloadData()
+            self.setNeedsDisplay()
+//            DispatchQueue.main.async {
+//                self.visualizerView.reloadData()
+//            }
         }
     }
-    
-    var lastIndex: Int = 0
     
     override init (frame : CGRect) {
         super.init(frame : frame)
         
         self.backgroundColor = UIColor.clear
         
-        self.addSubview(self.visualizerView)
-        
-        self.visualizerView.delegate = self
-        self.visualizerView.dataSource = self
-        
-        NSLayoutConstraint.activate([
-            self.visualizerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
-            self.visualizerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
-            self.visualizerView.topAnchor.constraint(equalTo: self.topAnchor),
-            self.visualizerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
-        ])
-        
-        guard let layout = visualizerView.collectionViewLayout as? UICollectionViewFlowLayout else {
-            return
-        }
-        
-        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
-        layout.itemSize = CGSize(width: 2.0, height: self.visualizerView.bounds.height)
-        layout.minimumLineSpacing = 1
-        layout.scrollDirection = .horizontal
-        layout.invalidateLayout()
+//        self.addSubview(self.visualizerView)
+//
+//        self.visualizerView.delegate = self
+//        self.visualizerView.dataSource = self
+//
+//        NSLayoutConstraint.activate([
+//            self.visualizerView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
+//            self.visualizerView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
+//            self.visualizerView.topAnchor.constraint(equalTo: self.topAnchor),
+//            self.visualizerView.bottomAnchor.constraint(equalTo: self.bottomAnchor)
+//        ])
+//
+//        guard let layout = visualizerView.collectionViewLayout as? UICollectionViewFlowLayout else {
+//            return
+//        }
+//
+//        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 10.0, right: 0.0)
+//        layout.itemSize = CGSize(width: 2.0, height: self.visualizerView.bounds.height)
+//        layout.minimumLineSpacing = 1
+//        layout.scrollDirection = .horizontal
+//        layout.invalidateLayout()
         
         self.audioSignals = []
         self.waveforms = Array(repeating: 2, count: self.totalWaves)
@@ -88,8 +94,36 @@ class AudioVisualizerView: UIView {
     }
     
     func resetWaves() {
-        self.lastIndex = 0
         self.audioSignals = []
+    }
+    
+    // MARK: - Draw bars
+    override func draw(_ rect: CGRect) {
+        guard let context = UIGraphicsGetCurrentContext() else {
+            return
+        }
+        context.clear(rect)
+        context.setFillColor(red: 0, green: 0, blue: 0, alpha: 0)
+        context.fill(rect)
+        context.setLineWidth(1)
+        
+        var xPoistion: CGFloat = rect.origin.x + 1.0
+        
+        for index in 0 ..< self.waveforms.count {
+            let signalHeight: CGFloat = index < self.audioSignals.count ? CGFloat(self.audioSignals[index].signalLength) : 2.0
+            let isPlaying = index < self.audioSignals.count && self.audioSignals[index].isPlaying
+            let middleY: CGFloat = (rect.height / 2) - (signalHeight / 2.0)
+            let maxY: CGFloat = middleY + signalHeight
+            context.move(to: CGPoint(x: xPoistion, y: middleY))
+            context.addLine(to: CGPoint(x: xPoistion, y: maxY))
+            if isPlaying {
+                context.setStrokeColor(UIColor.themeColor.cgColor)
+            } else {
+                context.setStrokeColor(UIColor(hexString: "#50555C").cgColor)
+            }
+            context.strokePath()
+            xPoistion += 3.0
+        }
     }
 }
 
@@ -100,7 +134,7 @@ extension AudioVisualizerView: UICollectionViewDelegate, UICollectionViewDataSou
     }
 
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let cell = collectionView.getUniqueCell(with: AudioWaveCell.self, at: indexPath) as? AudioWaveCell else { preconditionFailure("Invalid cell")}
+        guard let cell = collectionView.getCell(with: AudioWaveCell.self, at: indexPath) as? AudioWaveCell else { preconditionFailure("Invalid cell")}
         if indexPath.item < self.audioSignals.count {
             cell.audioSignal = self.audioSignals[indexPath.item]
         } else {
