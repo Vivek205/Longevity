@@ -49,15 +49,6 @@ class PersonalLoginVC: UIViewController {
         let backgroundTapGesture = UITapGestureRecognizer(target: self, action: #selector(handleBackgroundTap))
 
         self.view.addGestureRecognizer(backgroundTapGesture)
-        
-        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) {
-            if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
-                DispatchQueue.main.async {
-                    guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
-                    appDelegate.setRootViewController()
-                }
-            }
-        }
     }
 
     override func viewDidLayoutSubviews() {
