@@ -70,17 +70,7 @@ class CheckInResultViewController: UIViewController {
         closeButton.backgroundColor = .themeColor
         closeButton.addTarget(self, action: #selector(closeView), for: .touchUpInside)
         closeButton.translatesAutoresizingMaskIntoConstraints = false
-        
-//        let logButton = UIButton()
-//        logButton.setTitle("Results Data Log", for: .normal)
-//        logButton.titleLabel?.font = UIFont(name: AppFontName.medium, size: 24.0)
-//        logButton.setTitleColor(.themeColor, for: .normal)
-//        logButton.backgroundColor = .clear
-//        logButton.addTarget(self, action: #selector(showLogs), for: .touchUpInside)
-//        logButton.translatesAutoresizingMaskIntoConstraints = false
-        
         closePanel.addSubview(closeButton)
-//        closePanel.addSubview(logButton)
         
         let checkInLogHeight: CGFloat = self.isCheckInResult ? 48.0 : 0.0
         let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
@@ -90,20 +80,10 @@ class CheckInResultViewController: UIViewController {
             closeButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
             closeButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
             closeButton.heightAnchor.constraint(equalToConstant: 48.0),
-//            logButton.topAnchor.constraint(equalTo: closeButton.bottomAnchor, constant: 24.0),
-//            logButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
-//            logButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
-//            logButton.heightAnchor.constraint(equalToConstant: checkInLogHeight),
-//            logButton.bottomAnchor.constraint(equalTo: closePanel.bottomAnchor, constant: bottomMargin)
-        ])
+       ])
         
         closeButton.layer.cornerRadius = 10.0
         closeButton.layer.masksToBounds = true
-        
-//        logButton.layer.cornerRadius = 10.0
-//        logButton.layer.borderWidth = 1.5
-//        logButton.layer.borderColor = UIColor.themeColor.cgColor
-//        logButton.layer.masksToBounds = true
         
         return closePanel
     }()
@@ -127,6 +107,9 @@ class CheckInResultViewController: UIViewController {
         super.viewDidLoad()
         
         let headerHeight = UIDevice.hasNotch ? 100.0 : 80.0
+        
+        self.titleView.bgImageView.alpha = 0.0
+        
         self.view.backgroundColor = UIColor(hexString: "#F5F6FA")
         
         self.view.addSubview(checkInResultCollection)
@@ -135,18 +118,16 @@ class CheckInResultViewController: UIViewController {
 
         let window = UIApplication.shared.keyWindow
         let safeAreaBottomInset = window?.safeAreaInsets.bottom ?? 0
-        print("safeAreaBottomInset", safeAreaBottomInset)
         let closeViewPanelHeight = 100 + safeAreaBottomInset
         
         NSLayoutConstraint.activate([titleView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      titleView.topAnchor.constraint(equalTo: self.view.topAnchor),
                                      titleView.heightAnchor.constraint(equalToConstant: CGFloat(headerHeight)),
-                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
+                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -UIApplication.shared.statusBarFrame.height),
                                      checkInResultCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      checkInResultCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      checkInResultCollection.bottomAnchor.constraint(equalTo: closeViewPanel.topAnchor),
-
                                      closeViewPanel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      closeViewPanel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      closeViewPanel.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
@@ -184,14 +165,6 @@ class CheckInResultViewController: UIViewController {
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
-    
-//    @objc func showLogs() {
-//        if let history = AppSyncManager.instance.userInsights.value?.first(where: { $0.name == .logs })?.details?.history {
-//            let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-//            checkinLogViewController.history = history
-//            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
-//        }
-//    }
 }
 
 extension CheckInResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -372,12 +345,21 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0 && self.currentResultView == .analysis  {
-            return CGSize(width: collectionView.bounds.width, height: 160.0)
+            return CGSize(width: collectionView.bounds.width, height: 220.0)
         } else if section == 0  {
-            return CGSize(width: collectionView.bounds.width, height: 200.0)
+            return CGSize(width: collectionView.bounds.width, height: 260.0)
         } else {
             return CGSize(width: collectionView.bounds.width, height: 10.0)
         }
+    }
+    
+    func scrollViewDidScroll(_ scrollView: UIScrollView) {
+        let topY = -UIApplication.shared.statusBarFrame.height
+        if scrollView.contentOffset.y < topY {
+            scrollView.contentOffset.y = topY
+        }
+        let topGap = 44.0 + scrollView.contentOffset.y
+        self.titleView.bgImageView.alpha = topGap > 1 ? 1 : topGap
     }
 }
 
