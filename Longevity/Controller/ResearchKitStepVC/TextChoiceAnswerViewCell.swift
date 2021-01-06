@@ -74,7 +74,7 @@ class TextChoiceAnswerViewCell: UICollectionViewCell {
 
         if let extraInfo = extraInfo, !extraInfo.isEmpty  {
             let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0), .foregroundColor: UIColor(hexString: "#666666")]
-            let extraInfoAttributedText = NSMutableAttributedString(string: "\n\n\(extraInfo)", attributes: extraInfoAttributes)
+            let extraInfoAttributedText = NSMutableAttributedString(string: "\n\(extraInfo)", attributes: extraInfoAttributes)
             attributedoptionData.append(extraInfoAttributedText)
         }
         

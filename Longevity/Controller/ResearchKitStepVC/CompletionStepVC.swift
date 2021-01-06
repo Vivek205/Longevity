@@ -46,11 +46,11 @@ class CompletionStepVC: ORKStepViewController {
         return buttonView
     }()
     
-    lazy var viewResultsButton: CustomButtonFill = {
-        let viewresults = CustomButtonFill()
-        viewresults.translatesAutoresizingMaskIntoConstraints = false
-        viewresults.setTitle("View Results", for: .normal)
-        return viewresults
+    lazy var nextSurveyButton: UIButton = {
+        let nextsurvey = UIButton()
+        nextsurvey.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        nextsurvey.translatesAutoresizingMaskIntoConstraints = false
+        return nextsurvey
     }()
     
     lazy var scrollView: UIScrollView = {
@@ -69,28 +69,28 @@ class CompletionStepVC: ORKStepViewController {
         self.currentSurveyId = SurveyTaskUtility.shared.currentSurveyId
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
-        
-        self.presentViews()
         self.navigationItem.hidesBackButton = true
         
+        self.presentViews()
+        
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
-            viewResultsButton.removeFromSuperview()
-            continueButton.anchor(.bottom(footerView.bottomAnchor))
+            self.nextSurveyButton.removeFromSuperview()
+            self.continueButton.anchor(.bottom(footerView.bottomAnchor))
             self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
         } else {
             if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
                 if isCurrentSurveyRepetitive {
-                    viewResultsButton.setTitle("COVID Risk Assessment", for: .normal)
+                    self.nextSurveyButton.setTitle("COVID Risk Assessment", for: .normal)
                     self.navigationItem.title = "Check-in Complete!"
                 } else {
-                    viewResultsButton.setTitle("Start Your Check-in", for: .normal)
+                    self.nextSurveyButton.setTitle("Start Your Check-in", for: .normal)
                     self.navigationItem.title = "Survey Complete!"
                 }
             }
         }
         
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
-        viewResultsButton.isEnabled = false
+        self.nextSurveyButton.disableSecondaryButton()
         self.completeSurvey()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
@@ -119,15 +119,27 @@ class CompletionStepVC: ORKStepViewController {
     }
     
     func shouldViewResultButtonBeEnabled() {
-        DispatchQueue.main.async {self.viewResultsButton.isEnabled = false}
+        DispatchQueue.main.async {
+            self.nextSurveyButton.disableSecondaryButton()
+        }
         if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
             if isCurrentSurveyRepetitive {
                 let lastSubmissionId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.lastSubmissionId
-                DispatchQueue.main.async {self.viewResultsButton.isEnabled = lastSubmissionId == nil}
+                DispatchQueue.main.async {
+                    if lastSubmissionId == nil {
+                        self.nextSurveyButton.enableButton()
+                    } else {
+                        self.nextSurveyButton.disableSecondaryButton()
+                    }
+                }
             } else {
                 let lastSubmissionDate = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.lastSubmission
                 DispatchQueue.main.async {
-                    self.viewResultsButton.isEnabled = !self.isDateToday(date: lastSubmissionDate)
+                    if !self.isDateToday(date: lastSubmissionDate) {
+                        self.nextSurveyButton.enableButton()
+                    } else {
+                        self.nextSurveyButton.disableSecondaryButton()
+                    }
                 }
             }
         }
@@ -135,12 +147,18 @@ class CompletionStepVC: ORKStepViewController {
     
     func completeSurvey() {
         func completion() {
-            print("survey completed")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
             shouldViewResultButtonBeEnabled()
         }
         func onFailure(_ error: Error) {
-            print("failed to complete the survey")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.nextSurveyButton.disableSecondaryButton()
+            }
         }
+        self.showSpinner()
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
     
@@ -151,7 +169,7 @@ class CompletionStepVC: ORKStepViewController {
         self.scrollView.addSubview(infoLabel)
         self.scrollView.addSubview(footerView)
         self.footerView.addSubview(continueButton)
-        self.footerView.addSubview(viewResultsButton)
+        self.footerView.addSubview(nextSurveyButton)
         
         let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
          
@@ -180,22 +198,24 @@ class CompletionStepVC: ORKStepViewController {
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
             continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 60),
             continueButton.heightAnchor.constraint(equalToConstant: 48),
-            viewResultsButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            viewResultsButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            viewResultsButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 24),
-            viewResultsButton.heightAnchor.constraint(equalToConstant: 48),
-            viewResultsButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: bottomMargin)
+            nextSurveyButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            nextSurveyButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            nextSurveyButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 24),
+            nextSurveyButton.heightAnchor.constraint(equalToConstant: 48),
+            nextSurveyButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: bottomMargin)
         ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
-        viewResultsButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
-        
-        let infoLabelText = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""). Your results are being processed by our AI analyzer."
+        nextSurveyButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
         
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
-            self.infoLabel.text = infoLabelText + "\n\nResults will not be avaliable at this time.  Once there is sufficent amount of data to ensure accurate results, results will be avaliable.  It is recommend to perform this test daily for optimal accuracy."
-        } else {
-            self.infoLabel.text = infoLabelText + "\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
+            self.infoLabel.text = "Thank you for completing the cough test. Your data is being processed by our AI analyzer.\n\nResults will not be avaliable at this time. Once there is sufficent amount of data to ensure accurate results, results will be avaliable. It is recommend to perform this test daily for optimal accuracy."
+        } else if self.isCurrentSurveyRepetitive ?? false {
+            self.infoLabel.text = "Your results are being processed by our AI analyzer. This may take few seconds to process and update your personalized report.\n\nYou can continue using the app and you will be notified results are ready."
+        }
+        else
+        {
+            self.infoLabel.text = "Thank you for completing COVID Risk Assessment. Your results are being processed by our AI analyzer.\n\nThis may take few seconds to process and update.  You can continue using the app and you will be notified when your personalized report is ready."
         }
     }
     
@@ -227,15 +247,11 @@ class CompletionStepVC: ORKStepViewController {
             }
             
         }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
         
         
-        //        guard let surveyId = self.currentSurveyId,
-        //              let surveyName = self.currentSurveyName,
-        //              let isCheckIn = self.isCurrentSurveyRepetitive,
-        //              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
-        //
-        //        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
-        //        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-        //                                                    style: .overCurrentContext)
     }
 }

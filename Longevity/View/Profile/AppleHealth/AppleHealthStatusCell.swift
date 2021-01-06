@@ -25,25 +25,10 @@ class AppleHealthStatusCell: UITableViewCell {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
         
         self.backgroundColor = .clear
-        
-//        let horizontaStack = UIStackView(arrangedSubviews: [statusImage, deviceStatus])
-//        horizontaStack.alignment = .fill
-//        horizontaStack.axis = .horizontal
-//        horizontaStack.distribution = .fillProportionally
-//        horizontaStack.spacing = 10.0
-//        horizontaStack.translatesAutoresizingMaskIntoConstraints = false
-        
-//        self.addSubview(statusImage)
-//        self.addSubview(deviceStatus)
+
         self.addSubview(howitWorksLabel)
         
         NSLayoutConstraint.activate([
-//            deviceStatus.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
-//            deviceStatus.centerXAnchor.constraint(equalTo: centerXAnchor),
-//            statusImage.widthAnchor.constraint(equalToConstant: 30.0),
-//            statusImage.heightAnchor.constraint(equalTo: statusImage.widthAnchor),
-//            statusImage.centerYAnchor.constraint(equalTo: deviceStatus.centerYAnchor),
-//            statusImage.trailingAnchor.constraint(equalTo: deviceStatus.leadingAnchor, constant: 10.0),
             howitWorksLabel.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
             howitWorksLabel.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             howitWorksLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
@@ -54,8 +39,10 @@ class AppleHealthStatusCell: UITableViewCell {
         let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Italic", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedInfoText = NSMutableAttributedString(string: howitworksLabel, attributes: attributes)
         
-        let howitworksDescription = "\n\niOS Settings > Health > Data \nAccess & Devices > Rejuve"
-        let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Medium", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+        let appName = Bundle.main.infoDictionary?[kCFBundleNameKey as String] as? String
+        
+        let howitworksDescription = "\n\niOS Settings > Health > Data \nAccess & Devices > \(appName ?? "")"
+        let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
         let attributedDescription = NSMutableAttributedString(string: howitworksDescription, attributes: attributes2)
         
         attributedInfoText.append(attributedDescription)
