@@ -88,7 +88,8 @@ class LNTabBarViewController: UITabBarController {
                         items.forEach{$0.isEnabled = false}
                     }
                 }
-            } else if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
+            } else if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
+                        AppSyncManager.instance.prevInternetConnnection != .connected {
                 AppSyncManager.instance.syncUserProfile()
                 AppSyncManager.instance.getAppLink()
                 DispatchQueue.main.async {
@@ -97,6 +98,7 @@ class LNTabBarViewController: UITabBarController {
                     }
                 }
             }
+            AppSyncManager.instance.prevInternetConnnection = AppSyncManager.instance.internetConnectionAvailable.value
         }
     }
     
