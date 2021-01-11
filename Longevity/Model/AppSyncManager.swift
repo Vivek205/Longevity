@@ -270,6 +270,7 @@ class AppSyncManager  {
     func syncUserProfile() {
         if opeartionqueue == nil {
             opeartionqueue = OperationQueue()
+            opeartionqueue?.maxConcurrentOperationCount = 2
         } else {
             opeartionqueue?.cancelAllOperations()
         }
