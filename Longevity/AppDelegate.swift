@@ -50,7 +50,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         UNUserNotificationCenter.current().delegate = self
         window = UIWindow(frame: UIScreen.main.bounds)
         
-        /// To remove support for dark mode
+        // To remove support for dark mode
         if #available(iOS 13.0, *) {
             self.window?.overrideUserInterfaceStyle = .light
         }
@@ -58,8 +58,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         presentLoaderAnimationViewController()
         
         if #available(iOS 13.0, *) {
-            BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { (task) in
-                self.appHandleRefreshTask(task: task as! BGAppRefreshTask)
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { [weak self] (task) in
+                guard let task = task as? BGAppRefreshTask else { return }
+                self?.appHandleRefreshTask(task: task)
             }
         } else {
             if UIApplication.shared.backgroundRefreshStatus == .available {
@@ -70,7 +71,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         if HKHealthStore.isHealthDataAvailable() {
-            HealthStore.shared.getHealthStore()
+            _ = HealthStore.shared.getHealthStore()
             HealthStore.shared.startObserving(device: .applehealth)
             HealthStore.shared.startObserving(device: .applewatch)
         }

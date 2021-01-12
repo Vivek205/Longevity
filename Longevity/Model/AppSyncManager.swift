@@ -84,13 +84,14 @@ class AppSyncManager  {
                                                     userInsightDescription: "COVID Check-in Log",
                                                     defaultOrder: 4,
                                                     details: nil,
-                                                    isExpanded: false),
-                                       UserInsight(name: .coughlogs,
-                                                    text: "Cough Test Log",
-                                                    userInsightDescription: "Cough Test Log",
-                                                    defaultOrder: 5,
-                                                    details: nil,
-                                                    isExpanded: false)]
+                                                    isExpanded: false)
+//                                       ,UserInsight(name: .coughlogs,
+//                                                    text: "Cough Test Log",
+//                                                    userInsightDescription: "Cough Test Log",
+//                                                    defaultOrder: 5,
+//                                                    details: nil,
+//                                                    isExpanded: false)
+    ]
     
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
@@ -225,16 +226,22 @@ class AppSyncManager  {
         }
     }
 
-    func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool, completion: @escaping(() -> Void)){
+    func updateUserSubscription(subscriptionType:UserSubscriptionType,
+                                communicationType: CommunicationType,
+                                status:Bool,
+                                completion: @escaping(() -> Void)){
         if let index = self.userSubscriptions.value?.firstIndex(where: { (subscription) -> Bool in
-            return subscription.subscriptionType == subscriptionType && subscription.communicationType == communicationType
+            return subscription.subscriptionType == subscriptionType &&
+                subscription.communicationType == communicationType
         }) {
             self.userSubscriptions.value?[index].status = status
-        }else {
+        } else {
             self.userSubscriptions.value?.append(UserSubscription(subscriptionType: subscriptionType, communicationType: communicationType, status: status))
         }
         
-        UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
+        UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions:
+                                                                self.userSubscriptions.value,
+                                                             completion: completion)
     }
 
     func getAppLink() {

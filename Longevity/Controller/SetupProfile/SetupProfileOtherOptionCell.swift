@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SetupProfileOtherOptionCellDelegate {
+protocol SetupProfileOtherOptionCellDelegate: class {
     func updateCurrentText(text: String?)
     func textViewDidEndEditing(_ textView: UITextView)
     func textViewDidBeginEditing(_ textView: UITextView)
@@ -16,7 +16,7 @@ protocol SetupProfileOtherOptionCellDelegate {
 
 class SetupProfileOtherOptionCell: UICollectionViewCell {
     
-    var delegate: SetupProfileOtherOptionCellDelegate?
+    weak var delegate: SetupProfileOtherOptionCellDelegate?
     
     @IBOutlet weak var otherOptionTextView: UITextView!
     @IBOutlet weak var clearDescriptionButton: UIButton!

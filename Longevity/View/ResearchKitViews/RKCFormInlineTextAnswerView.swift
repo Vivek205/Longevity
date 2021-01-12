@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-protocol RKCFormInlineTextAnswerViewDelegate {
+protocol RKCFormInlineTextAnswerViewDelegate: class {
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     func textViewDidChange(_ textView: UITextView)
     func textViewDidEndEditing(_ textView: UITextView)
@@ -19,7 +19,7 @@ protocol RKCFormInlineTextAnswerViewDelegate {
 }
 
 class RKCFormInlineTextAnswerView: UICollectionViewCell {
-    var delegate: RKCFormInlineTextAnswerViewDelegate?
+    weak var delegate: RKCFormInlineTextAnswerViewDelegate?
     var itemIdentifier: String?
 
     lazy var keyboardToolbar:UIToolbar = {

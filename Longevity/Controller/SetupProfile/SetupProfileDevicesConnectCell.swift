@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SetupProfileDevicesConnectCellDelegate {
+protocol SetupProfileDevicesConnectCellDelegate: class {
     func connectBtn(wasPressedOnCell cell:SetupProfileDevicesConnectCell)
 }
 
@@ -49,7 +49,7 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     }()
     
     // MARK: Delegate
-    var delegate: SetupProfileDevicesConnectCellDelegate?
+    weak var delegate: SetupProfileDevicesConnectCellDelegate?
     
     // MARK: Actions
     @objc func handleConnectDevice(_ sender: Any) {

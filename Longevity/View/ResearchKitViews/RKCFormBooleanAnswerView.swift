@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol RKCFormBooleanAnswerViewDelegate {
+protocol RKCFormBooleanAnswerViewDelegate: class {
     func segmentedControl(wasChangedOnCell cell:RKCFormBooleanAnswerView)
 }
 
 class RKCFormBooleanAnswerView: UIView {
-    var delegate:RKCFormBooleanAnswerViewDelegate?
+    weak var delegate:RKCFormBooleanAnswerViewDelegate?
     var currentAnswer:Bool = false
 
     lazy var segmentedControl: UISegmentedControl = {

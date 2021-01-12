@@ -64,7 +64,8 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
     }
 
     func handleUIAlertAction(_ action: UIAlertAction) {
-        if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
+        if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
+            AppSyncManager.instance.prevInternetConnnection != .connected {
             DispatchQueue.main.async {
                 self.closeView()
             }

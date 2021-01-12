@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol SetupProfileDevicesFooterViewCellDelegate {
+protocol SetupProfileDevicesFooterViewCellDelegate: class {
     func continueButton(wasPressedOnCell cell:SetupProfileDevicesFooterView)
 }
 
 class SetupProfileDevicesFooterView: UICollectionViewCell {
-    var delegate: SetupProfileDevicesFooterViewCellDelegate?
+    weak var delegate: SetupProfileDevicesFooterViewCellDelegate?
 
     lazy var continueButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleContinue(_:)))

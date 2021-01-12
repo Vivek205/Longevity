@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-protocol ValuePickerAnswerViewCellDelegate {
+protocol ValuePickerAnswerViewCellDelegate: class {
     func pickerView(_ pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int)
 }
 
@@ -21,7 +21,7 @@ class ValuePickerAnswerViewCell: UICollectionViewCell {
         }
     }
 
-    var delegate: ValuePickerAnswerViewCellDelegate?
+    weak var delegate: ValuePickerAnswerViewCellDelegate?
 
     var questionId: String? {
         didSet {

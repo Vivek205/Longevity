@@ -15,6 +15,7 @@ struct AppFontName {
     static let medium = "Montserrat-Medium"
     static let semibold = "Montserrat-SemiBold"
     static let light = "Montserrat-Light"
+    static let italic = "Montserrat-Italic"
 }
 
 extension UIFontDescriptor.AttributeName {

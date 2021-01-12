@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SetupProfilePreConditionOptionCellDelegate {
+protocol SetupProfilePreConditionOptionCellDelegate: class {
     func checkBoxButton(wasPressedOnCell cell:SetupProfilePreConditionOptionCell)
 }
 
@@ -53,7 +53,7 @@ class SetupProfilePreConditionOptionCell: UICollectionViewCell {
 
 
     var optionId: PreExistingMedicalConditionId?
-    var delegate: SetupProfilePreConditionOptionCellDelegate?
+    weak var delegate: SetupProfilePreConditionOptionCellDelegate?
 
 
     @IBAction func handleButtonPressed(_ sender: UIButton) {
