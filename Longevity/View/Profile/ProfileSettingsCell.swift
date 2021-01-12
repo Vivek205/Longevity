@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol ProfileSettingsCellDelegate {
+protocol ProfileSettingsCellDelegate: class {
     func switchToggled(onCell cell:ProfileSettingsCell,newState isOn: Bool)
 }
 
 class ProfileSettingsCell: UITableViewCell {
     
-    var delegate:ProfileSettingsCellDelegate?
+    weak var delegate:ProfileSettingsCellDelegate?
     
     var profileSetting: ProfileSetting! {
         didSet {

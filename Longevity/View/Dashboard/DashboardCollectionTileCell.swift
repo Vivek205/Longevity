@@ -144,10 +144,11 @@ class DashboardCollectionTileCell: CommonHexagonCell {
             trendDirection.topAnchor.constraint(equalTo: riskType.bottomAnchor),
             trendDirection.leadingAnchor.constraint(equalTo: hexagonView.leadingAnchor, constant: 5.0),
             trendDirection.trailingAnchor.constraint(equalTo: hexagonView.trailingAnchor, constant: -5.0),
+            trendImage.topAnchor.constraint(lessThanOrEqualTo: trendDirection.bottomAnchor, constant: 10.0),
             trendImage.heightAnchor.constraint(equalToConstant: 30.0),
             trendImage.widthAnchor.constraint(equalTo: trendImage.heightAnchor),
             trendImage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            trendImage.bottomAnchor.constraint(equalTo: hexagonView.bottomAnchor, constant: -10.0)
+            trendImage.bottomAnchor.constraint(lessThanOrEqualTo: hexagonView.bottomAnchor, constant: -10.0)
         ])
     }
     

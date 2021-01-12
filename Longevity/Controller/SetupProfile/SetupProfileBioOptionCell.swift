@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol SetupProfileBioOptionCellDelegate {
+protocol SetupProfileBioOptionCellDelegate: class {
     func button(wasPressedOnCell cell: SetupProfileBioOptionCell)
 }
 
@@ -76,7 +76,7 @@ class SetupProfileBioOptionCell: UICollectionViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     // MARK: Delegate
-    var delegate: SetupProfileBioOptionCellDelegate?
+    weak var delegate: SetupProfileBioOptionCellDelegate?
     
     override func layoutSubviews() {
         super.layoutSubviews()

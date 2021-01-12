@@ -83,8 +83,6 @@ extension QuestionOtherDetailsTextType {
             return .numberPad
         case .alphanumeric:
             return .alphabet
-        default:
-            return .alphabet
         }
     }
 }
@@ -101,10 +99,10 @@ struct Scale: Decodable {
 struct QuestionOption: Decodable {
     let text: String?
     let description: String?
-    let value: String?
+    var value: String?
     
     private enum CodingKeys: String, CodingKey {
-        case text = "text", description = "description", value = "value"
+        case text, description, value
     }
     
     init(text: String? = nil, description: String? = nil, value: String? = nil) {
@@ -117,17 +115,12 @@ struct QuestionOption: Decodable {
         let container = try decoder.container(keyedBy: CodingKeys.self)
         text = try? container.decode(String.self, forKey: .text)
         description = try? container.decode(String.self, forKey: .description)
-        do {
-            value = try String(container.decode(Int.self, forKey: .value))
-        } catch DecodingError.typeMismatch {
-            do {
-                value = try container.decode(String.self, forKey: .value)
-            } catch DecodingError.typeMismatch {
-                value = try String(container.decode(Double.self, forKey: .value))
+        value = try? String(container.decode(Int.self, forKey: .value))
+        if value == nil {
+            value = try? container.decode(String.self, forKey: .value)
+            if value == nil {
+                value = try? String(container.decode(Double.self, forKey: .value))
             }
-        } catch {
-            value = nil
-            print(error)
         }
     }
 }

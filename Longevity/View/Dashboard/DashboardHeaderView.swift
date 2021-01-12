@@ -68,7 +68,8 @@ class DashboardHeaderView: UICollectionReusableView {
         layout.invalidateLayout()
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            let insights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs && $0.name != .coughlogs })
+            let insights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs &&
+                                                                                $0.name != .coughlogs })
             self?.userInsights = insights?.sorted(by: { $0.name.hexagonOrder <= $1.name.hexagonOrder })
         }
     }

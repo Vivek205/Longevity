@@ -123,9 +123,11 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    func collectionView(_ collectionView: UICollectionView,
+                        cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         if indexPath.section == 0 {
-            guard let checkinCell = collectionView.getUniqueCell(with: DashboardCheckInCell.self, at: indexPath) as? DashboardCheckInCell else {
+            guard let checkinCell = collectionView.getUniqueCell(with: DashboardCheckInCell.self,
+                                                                 at: indexPath) as? DashboardCheckInCell else {
                 preconditionFailure("Invalid device cell")
             }
             if let surveyResponse = SurveyTaskUtility.shared.repetitiveSurveyList.value?[indexPath.row] {
@@ -133,13 +135,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             }
             return checkinCell
         } else if indexPath.section == 1 {
-            guard let devicesCell = collectionView.getCell(with: DashboardDevicesCell.self, at: indexPath) as? DashboardDevicesCell else {
+            guard let devicesCell = collectionView.getCell(with: DashboardDevicesCell.self,
+                                                           at: indexPath) as? DashboardDevicesCell else {
                 preconditionFailure("Invalid device cell")
             }
             devicesCell.delegate = self
             return devicesCell
         } else {
-            guard let taskCell = collectionView.getCell(with: DashboardTaskCell.self, at: indexPath) as? DashboardTaskCell else {
+            guard let taskCell = collectionView.getCell(with: DashboardTaskCell.self,
+                                                        at: indexPath) as? DashboardTaskCell else {
                 preconditionFailure("Invalid device cell")
             }
             if let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] {
@@ -187,7 +191,9 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         if indexPath.section == 0 {
             return CGSize(width: collectionView.bounds.width - 20.0, height: 100.0)
         } else if indexPath.section == 1 {
@@ -210,11 +216,15 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForFooterInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForFooterInSection section: Int) -> CGSize {
         return CGSize(width: collectionView.bounds.width, height: 0.0)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String,
+                        at indexPath: IndexPath) -> UICollectionReusableView {
         if indexPath.section == 0 {
             guard let headerView = collectionView.getSupplementaryView(with: DashboardHeaderView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? DashboardHeaderView else {
                 preconditionFailure("Invalid header view")
@@ -247,7 +257,8 @@ extension HomeViewController {
             DispatchQueue.main.async {
                 if task != nil {
                     let taskViewController = SurveyViewController(task: task, isFirstTask: true)
-                    NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+                    NavigationUtility.presentOverCurrentContext(destination: taskViewController,
+                                                                style: .overCurrentContext)
                 } else {
                    Alert(title: "Survey Not available",
                                    message: "No questions are found for the survey. Please try after sometime")
@@ -268,7 +279,8 @@ extension HomeViewController {
 extension HomeViewController:DashboardDevicesCellDelegate {
     func showError(forDeviceCollectionCell cell: DashboardDeviceCollectionCell) {
         DispatchQueue.main.async {
-            Alert(title: "Enable Notification", message: "Please enable device notifications to connect external devices")
+            Alert(title: "Enable Notification",
+                  message: "Please enable device notifications to connect external devices")
         }
     }
 }

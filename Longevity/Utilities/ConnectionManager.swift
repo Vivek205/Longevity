@@ -18,8 +18,8 @@ final class ConnectionManager: NSObject {
     func startTimer() {
         guard timer == nil else {return}
         DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ (_) in
-                self.addConnectionObserver()
+            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ [weak self](_) in
+                self?.addConnectionObserver()
             }
         }
     }
@@ -30,20 +30,22 @@ final class ConnectionManager: NSObject {
     }
 
     func addConnectionObserver(){
-            if #available(iOS 12.0, *) {
-                self.monitorNetworkPath()
-            } else {
-                self.observeReachability()
-            }
+        if #available(iOS 12.0, *) {
+            self.monitorNetworkPath()
+        } else {
+            self.observeReachability()
+        }
     }
 
     func observeReachability() {
-        NotificationCenter.default.addObserver(self, selector:#selector(self.reachabilityChanged), name: NSNotification.Name.reachabilityChanged, object: nil)
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(self.reachabilityChanged),
+                                               name: NSNotification.Name.reachabilityChanged,
+                                               object: nil)
         do {
             self.reachability = try Reachability()
             try self.reachability.startNotifier()
-        }
-        catch(let error) {
+        } catch {
             print("Error occured while starting reachability notifications : \(error.localizedDescription)")
         }
     }
@@ -96,7 +98,7 @@ final class ConnectionManager: NSObject {
                     self.offlineNotificationView.fillSuperview()
                 }
             }
-        }else {
+        } else {
             DispatchQueue.main.async {
                 self.offlineNotificationView.removeFromSuperview()
             }

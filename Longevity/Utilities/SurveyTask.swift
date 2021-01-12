@@ -333,11 +333,10 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
-        if list.filter({$0.surveyId.starts(with: "COUGH_TEST") != true}).contains(where: { return $0.lastSurveyStatus == .pending }) {
+        if list.filter({$0.surveyId.starts(with: "COUGH_TEST") != true})
+            .contains(where: { return $0.lastSurveyStatus == .pending }) {
             self.surveyInProgress.value = .pending
-        }
-        else
-        {
+        } else {
             self.surveyInProgress.value = .processed
         }
         self.surveyList = list
@@ -478,12 +477,11 @@ final class SurveyTaskUtility: NSObject {
             } else {
                 guard let firstModule = categoryValue.modules.first else {return false}
                 for (_, moduleValue) in firstModule {
-                    guard let filteredQuestions =
-                            surveyDetails.questions.filter({ $0.categoryId == categoryValue.id
-                                                            && $0.moduleId == moduleValue.id}) as? [Question],
-                          let firstQuestion = filteredQuestions.first
-                    else { return false }
-                    firstStepId = firstQuestion.quesId
+                    let filteredQuestions = surveyDetails.questions.filter({ $0.categoryId == categoryValue.id
+                                                            && $0.moduleId == moduleValue.id})
+                    if let firstQuestion = filteredQuestions.first {
+                        firstStepId = firstQuestion.quesId
+                    } else { return false }
                 }
             }
         }

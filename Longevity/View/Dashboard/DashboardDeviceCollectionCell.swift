@@ -27,12 +27,12 @@ extension DeviceConnectionStatus {
     }
 }
 
-protocol DashboardDeviceCollectionCellDelegate {
+protocol DashboardDeviceCollectionCellDelegate: class {
     func showNotificationError(forCell cell: DashboardDeviceCollectionCell)
 }
 
 class DashboardDeviceCollectionCell: UICollectionViewCell {
-    var delegate:DashboardDeviceCollectionCellDelegate?
+    weak var delegate:DashboardDeviceCollectionCellDelegate?
     
     var device: HealthDevices = .applehealth
     

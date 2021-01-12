@@ -61,7 +61,8 @@ class LoaderAnimationViewController: UIViewController {
         self.checkAppUpdates()
         
         AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [weak self] in
-            if AppSyncManager.instance.internetConnectionAvailable.value == .connected {
+            if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
+                AppSyncManager.instance.prevInternetConnnection != .connected {
                 self?.checkAppUpdates()
             }
         }
@@ -87,11 +88,11 @@ class LoaderAnimationViewController: UIViewController {
 
     func checkIfAppUpdated(completion: @escaping(_ signedOut: Bool) -> Void) {
         let previousBuild = UserDefaults.standard.string(forKey: "build")
-        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         UserDefaults.standard.set(currentBuild, forKey: "build")
         if previousBuild == nil {
             // MARK: Fresh install
-            _ = Amplify.Auth.signOut() { (result) in
+            _ = Amplify.Auth.signOut { (result) in
                 switch result {
                 case .success:
                     try? KeyChain(service: KeychainConfiguration.serviceName,

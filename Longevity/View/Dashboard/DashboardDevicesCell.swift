@@ -60,12 +60,12 @@ extension HealthDevices {
     }
 }
 
-protocol DashboardDevicesCellDelegate {
+protocol DashboardDevicesCellDelegate: class {
     func showError(forDeviceCollectionCell cell:DashboardDeviceCollectionCell)
 }
 
 class DashboardDevicesCell: UICollectionViewCell {
-    var delegate:DashboardDevicesCellDelegate?
+    weak var delegate:DashboardDevicesCellDelegate?
     
     lazy var devicesCollection: UICollectionView = {
         let devices = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())

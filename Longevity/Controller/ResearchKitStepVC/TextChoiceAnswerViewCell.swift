@@ -9,13 +9,13 @@
 import UIKit
 import ResearchKit
 
-protocol TextChoiceAnswerViewChangedDelegate {
+protocol TextChoiceAnswerViewChangedDelegate: class {
     func checkboxButton(wasPressedOnCell cell:TextChoiceAnswerViewCell)
 }
 
 class TextChoiceAnswerViewCell: UICollectionViewCell {
     var isChosenOption = false
-    var delegate: TextChoiceAnswerViewChangedDelegate?
+    weak var delegate: TextChoiceAnswerViewChangedDelegate?
     var value:Int?
     var answerFormatStyle:ORKChoiceAnswerStyle? {
         didSet {
