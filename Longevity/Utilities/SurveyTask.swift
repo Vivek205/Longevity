@@ -433,7 +433,7 @@ final class SurveyTaskUtility: NSObject {
             self.traversedQuestions[currentSurveyId]?.append(questionId)
         } else {
             guard let currentQuestionIndex = currentSurveyTraversedQuestions.firstIndex(of: questionId),
-                  currentQuestionIndex+1 < self.traversedQuestions.count
+                  currentQuestionIndex+1 >= self.traversedQuestions.count
             else {return}
             let slicedArray = Array(currentSurveyTraversedQuestions.prefix(upTo:(currentQuestionIndex+1)))
             print("slicedArray", slicedArray)
