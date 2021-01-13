@@ -95,7 +95,7 @@ class AppSyncManager  {
     
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
-        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
+        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: nil))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
@@ -104,11 +104,14 @@ class AppSyncManager  {
     
     func cleardata() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
-        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
+        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: nil))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
+
+        // HACK
+        preExistingMedicalConditionData = defaultPreExistingMedicalConditionData
     }
     
     //User Attributes

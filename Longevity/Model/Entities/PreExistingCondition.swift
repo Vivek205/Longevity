@@ -27,8 +27,7 @@ struct PreExistingMedicalConditionModel {
     var touched: Bool = false
 }
 
-
-var preExistingMedicalConditionData:[PreExistingMedicalConditionModel] = [
+var defaultPreExistingMedicalConditionData:[PreExistingMedicalConditionModel]  = [
     PreExistingMedicalConditionModel(id: .cardiovascularDisease,name: "Cardiovascular Disease", description: "Examples: angina, heart attacks, heart failures, coronary heart disease, strokes, peripheral arterial disease, or aortic disease."),
     PreExistingMedicalConditionModel(id:.diabetes,name: "Diabetes", description: "Examples: Type 1 Diabetes or Type 2 Diabetes."),
     PreExistingMedicalConditionModel(id:.highBloodPressure,name: "High Blood Pressure", description: "Examples: primary hypertension (not related to another medical condition), secondary hypertension (caused by a medical condition)."),
@@ -38,5 +37,8 @@ var preExistingMedicalConditionData:[PreExistingMedicalConditionModel] = [
     PreExistingMedicalConditionModel(id:.immunocompromised,name: "Immunocompromised", description: "Examples: Your immune system has been diagnosed as being impaired. Some conditions and treatments can weaken your immune system such as cancer, post-transplant treatments, and HIV."),
     PreExistingMedicalConditionModel(id:.psychologicalDisorder,name: "Psychological Disorder(s)", description: "Examples: depression, anxiety disorders, eating disorder, PTSD, OCD, bipolar disorder, personality disorder, or schizophrenia.")
 ]
+
+
+var preExistingMedicalConditionData:[PreExistingMedicalConditionModel] = defaultPreExistingMedicalConditionData
 
 var preExistingMedicalCondtionOtherText: String?
