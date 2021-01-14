@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-class FormStepVC: ORKStepViewController {
+class FormStepVC: BaseStepViewController {
     
     var keyboardHeight: CGFloat?
     var initialYOrigin: CGFloat = CGFloat(0)
@@ -24,20 +24,6 @@ class FormStepVC: ORKStepViewController {
         collection.dataSource = self
         collection.alwaysBounceVertical = true
         return collection
-    }()
-
-    lazy var footerView:UIView = {
-        let uiView = UIView()
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
-        return uiView
-    }()
-
-    lazy var continueButton: CustomButtonFill = {
-        let buttonView = CustomButtonFill()
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Continue", for: .normal)
-        return buttonView
     }()
 
     override func viewDidLoad() {
@@ -79,9 +65,6 @@ class FormStepVC: ORKStepViewController {
 
     func presentViews() {
         self.view.addSubview(formItemsCollection)
-        self.view.addSubview(footerView)
-        footerView.addSubview(continueButton)
-        let footerViewHeight = CGFloat(130)
 
         NSLayoutConstraint.activate([
             formItemsCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
@@ -90,22 +73,6 @@ class FormStepVC: ORKStepViewController {
             formItemsCollection.bottomAnchor.constraint(equalTo: self.view.bottomAnchor,
                                                         constant: -footerViewHeight)
         ])
-
-        NSLayoutConstraint.activate([
-            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight)
-        ])
-
-        NSLayoutConstraint.activate([
-            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
-            continueButton.heightAnchor.constraint(equalToConstant: 48)
-        ])
-        continueButton.isEnabled = true
-        continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
         guard let layout = formItemsCollection.collectionViewLayout as? UICollectionViewFlowLayout else {
             return
@@ -117,14 +84,11 @@ class FormStepVC: ORKStepViewController {
         layout.minimumLineSpacing = 0.0
         layout.invalidateLayout()
     }
-
-    @objc func handleContinue(sender: UIButton) {
-        self.goForward()
-    }
 }
 
 extension FormStepVC: UICollectionViewDelegate,
-UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+                      UICollectionViewDataSource,
+                      UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         guard let formStep = self.step as? ORKFormStep else {
             return 0
@@ -208,12 +172,6 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             let answerCell = RKCFormTextAnswerView()
             let questionText = item.text ?? ""
             height = questionText.height(withConstrainedWidth: width - 30.0, font: answerCell.questionLabel.font)
-//            if answerCell.isClearButtonHidden {
-//                height += 110
-//            }else {
-//                height += 130
-//            }
-
              // height for textView & clear button
             return CGSize(width: width, height: height + 130)
         }
@@ -221,8 +179,11 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         return CGSize(width: width - CGFloat(30), height: height)
     }
     
-    func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? RKCQuestionView else {
+    func collectionView(_ collectionView: UICollectionView,
+                        viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
+        guard let headerView = collectionView.getSupplementaryView(with: RKCQuestionView.self,
+                                                                   viewForSupplementaryElementOfKind: kind,
+                                                                   at: indexPath) as? RKCQuestionView else {
             preconditionFailure("Invalid cell type")
         }
         
@@ -233,7 +194,9 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
         return headerView
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
         var height = CGFloat(38)
         let width = collectionView.bounds.width
         
@@ -274,20 +237,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 
                 attributedoptionData.addAttribute(NSAttributedString.Key.paragraphStyle, value: alignParagraphStyle, range: NSRange(location: 0, length: attributedoptionData.length))
                 
-                
                 let containerWidth = width - 30.0
-                
                 height = attributedoptionData.height(containerWidth: containerWidth) + 30.0
-                
-//                height = step.title!.height(withConstrainedWidth: width, font: questionCell.headerLabel.font)
-
-//                let questionSubheader = SurveyTaskUtility.shared.surveyTagline ?? ""
-//                height += questionSubheader.height(withConstrainedWidth: width , font: questionCell.subHeaderLabel.font)
-//                if step.text != nil {
-//                    height += step.text!.height(withConstrainedWidth: width, font: questionCell.extraInfoLabel.font)
-//                }
-                // INSETS
-//                height += 30.0
             }
             return CGSize(width: width, height: height)
     }
@@ -327,13 +278,6 @@ extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerView
     }
 
     func textViewDidChange(_ textView: UITextView) {
-//        if let formStep = self.step as? ORKFormStep ,
-//           let formItems = formStep.formItems{
-//            let textViewItemIndex = formItems.count  - 1
-//            formItemsCollection.reloadItems(at: [IndexPath(row: textViewItemIndex, section: 0)])
-//        }
-
-
     }
 
     func textView(_ textView: UITextView,
@@ -343,8 +287,10 @@ extension FormStepVC: RKCFormTextAnswerViewDelegate, RKCFormInlineTextAnswerView
     }
 
     func addKeyboardObservers() {
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)), name: UIResponder.keyboardWillShowNotification, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)), name: UIResponder.keyboardWillHideNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWasShown(notification:)),
+                                               name: UIResponder.keyboardWillShowNotification, object: nil)
+        NotificationCenter.default.addObserver(self, selector: #selector(keyboardWillBeHidden(notification:)),
+                                               name: UIResponder.keyboardWillHideNotification, object: nil)
     }
 
     func removeKeyboardObservers() {

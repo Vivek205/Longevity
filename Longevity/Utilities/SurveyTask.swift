@@ -134,7 +134,7 @@ final class SurveyTaskUtility: NSObject {
                     }
                 }
             }
-
+            
             let summaryStep = ORKCompletionStep(identifier: "SummaryStep")
             summaryStep.title = "SummaryRight. Off you go!"
             summaryStep.text = "That was easy!"

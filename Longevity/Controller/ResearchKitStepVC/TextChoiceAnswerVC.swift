@@ -114,7 +114,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                 if let extraInfoText = choice.detailText, !extraInfoText.isEmpty {
                     let extraInfoAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0),
                                                                               .foregroundColor: UIColor(hexString: "#666666")]
-                    let extraInfoAttributedText = NSMutableAttributedString(string: "\n\n\(extraInfoText)",
+                    let extraInfoAttributedText = NSMutableAttributedString(string: "\n\(extraInfoText)",
                                                                             attributes: extraInfoAttributes)
                     attributedoptionData.append(extraInfoAttributedText)
                 }
@@ -207,7 +207,7 @@ extension TextChoiceAnswerVC: TextChoiceAnswerViewChangedDelegate {
 
         if chosenCells == nil {
             chosenCells = [cell]
-        }else {
+        } else {
             chosenCells! += [cell]
         }
         self.addResult(value: "\(cell.value!)")
