@@ -490,11 +490,11 @@ extension SetupProfileBioDataVC: UICollectionViewDelegate,
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioTitleCell", for: indexPath)
             return cell
-        } else if indexPath.item == 1 {
+        } else if indexPath.item == 7 {
             let cell =
                 collectionView.dequeueReusableCell(withReuseIdentifier: "SetupProfileBioInfoCell", for: indexPath)
             return cell
-        } else if indexPath.item == 7 {
+        } else if indexPath.item == 1 {
             let cell =
                 collectionView.dequeueReusableCell(
                     withReuseIdentifier: "SetupProfileBioMetric", for: indexPath) as! SetupProfileUnitSelectionCell
