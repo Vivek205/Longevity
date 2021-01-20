@@ -39,11 +39,14 @@ extension String {
 
 //MARK: Convert Text to image
 extension String {
-    func toImage(color:UIColor = .black, backgroundColor:UIColor = .appBackgroundColor, fontSize:CGFloat = 20) -> UIImage {
+    func toImage(color:UIColor = .black,
+                 backgroundColor:UIColor = .appBackgroundColor,
+                 font:UIFont? = UIFont.systemFont(ofSize: 20)) -> UIImage {
+        guard let font = font else {return UIImage()}
         let attributes:[NSAttributedString.Key : Any] = [
             NSAttributedString.Key.foregroundColor: color,
             NSAttributedString.Key.backgroundColor: backgroundColor,
-            NSAttributedString.Key.font: UIFont.systemFont(ofSize: fontSize)
+            NSAttributedString.Key.font: font
         ]
        let attributedSize = self.size(withAttributes: attributes)
         let textSize = CGSize(width: attributedSize.width - 1, height: attributedSize.height )
@@ -51,7 +54,6 @@ extension String {
         let drawingRect = CGRect(x: 0, y: 0, width: attributedSize.width, height: attributedSize.height)
 
         UIGraphicsBeginImageContextWithOptions(textSize, true, 0)
-//        self.draw(at: CGPoint.zero, withAttributes: attributes)
         self.draw(in: drawingRect, withAttributes: attributes)
         let image = UIGraphicsGetImageFromCurrentImageContext()
         UIGraphicsEndImageContext()

@@ -17,6 +17,7 @@ class LoaderAnimationViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "splashScreen")
+        imageView.contentMode = .scaleAspectFill
         return imageView
     }()
     
@@ -24,32 +25,9 @@ class LoaderAnimationViewController: UIViewController {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
         imageView.image = UIImage(named: "rejuveNamedLogo")
+        imageView.contentMode = .scaleAspectFit
         return imageView
     }()
-    
-    lazy var poweredByLabel: UILabel = {
-        let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.text = "POWERED BY"
-        label.font = UIFont(name: "Muli-Regular", size: 14)
-        label.textColor = .white
-        return label
-    }()
-    
-    lazy var singularityLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "snetNamedLogo")
-        return imageView
-    }()
-    
-    lazy var singularityStudioLogo: UIImageView = {
-        let imageView = UIImageView()
-        imageView.translatesAutoresizingMaskIntoConstraints = false
-        imageView.image = UIImage(named: "studioNamedLogo")
-        return imageView
-    }()
-    
     
     lazy var spinner:UIActivityIndicatorView = {
         let spinner = UIActivityIndicatorView(style: .whiteLarge)
@@ -63,9 +41,6 @@ class LoaderAnimationViewController: UIViewController {
         
         self.view.addSubview(backgroundImage)
         self.view.addSubview(rejuveLogo)
-        self.view.addSubview(poweredByLabel)
-        self.view.addSubview(singularityLogo)
-        self.view.addSubview(singularityStudioLogo)
         self.view.addSubview(spinner)
         
         NSLayoutConstraint.activate([
@@ -74,22 +49,26 @@ class LoaderAnimationViewController: UIViewController {
             backgroundImage.topAnchor.constraint(equalTo: view.topAnchor),
             backgroundImage.bottomAnchor.constraint(equalTo: view.bottomAnchor),
             
-            rejuveLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            rejuveLogo.bottomAnchor.constraint(equalTo: view.centerYAnchor,  constant: -20),
-            
-            poweredByLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            poweredByLabel.topAnchor.constraint(equalTo: rejuveLogo.bottomAnchor, constant: 65),
-            
-            singularityLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            singularityLogo.topAnchor.constraint(equalTo: poweredByLabel.bottomAnchor, constant: 20),
-            
-            singularityStudioLogo.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            singularityStudioLogo.topAnchor.constraint(equalTo: singularityLogo.bottomAnchor, constant: 20),
-            //
+            rejuveLogo.widthAnchor.constraint(equalToConstant: 277.0),
+            rejuveLogo.heightAnchor.constraint(equalToConstant: 379.0),
+            rejuveLogo.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
+            rejuveLogo.centerYAnchor.constraint(equalTo: self.view.centerYAnchor),
+
             spinner.centerXAnchor.constraint(equalTo: view.centerXAnchor),
-            spinner.topAnchor.constraint(equalTo:singularityStudioLogo.bottomAnchor, constant: 20)
+            spinner.topAnchor.constraint(equalTo:rejuveLogo.bottomAnchor, constant: 20)
         ])
 
+        self.checkAppUpdates()
+        
+        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [weak self] in
+            if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
+                AppSyncManager.instance.prevInternetConnnection != .connected {
+                self?.checkAppUpdates()
+            }
+        }
+    }
+    
+    func checkAppUpdates() {
         checkIfAppUpdated { signedOut in
             if !signedOut {
                 DispatchQueue.main.async {
@@ -109,11 +88,11 @@ class LoaderAnimationViewController: UIViewController {
 
     func checkIfAppUpdated(completion: @escaping(_ signedOut: Bool) -> Void) {
         let previousBuild = UserDefaults.standard.string(forKey: "build")
-        let currentBuild = Bundle.main.infoDictionary!["CFBundleVersion"] as! String
+        let currentBuild = Bundle.main.infoDictionary?["CFBundleVersion"] as? String
         UserDefaults.standard.set(currentBuild, forKey: "build")
         if previousBuild == nil {
             // MARK: Fresh install
-            _ = Amplify.Auth.signOut() { (result) in
+            _ = Amplify.Auth.signOut { (result) in
                 switch result {
                 case .success:
                     try? KeyChain(service: KeychainConfiguration.serviceName,

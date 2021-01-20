@@ -24,7 +24,7 @@ extension HeaderType {
     }
 }
 
-class DashboardSectionHeader: UITableViewHeaderFooterView {
+class DashboardSectionHeader: UICollectionReusableView {
     
     var headerType: HeaderType! {
         didSet {
@@ -49,9 +49,9 @@ class DashboardSectionHeader: UITableViewHeaderFooterView {
         return action
     }()
        
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-         
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+    
          self.addSubview(sectionTitle)
          self.addSubview(actionButton)
         

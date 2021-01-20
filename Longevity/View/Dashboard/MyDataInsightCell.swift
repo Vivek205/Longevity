@@ -12,7 +12,6 @@ class MyDataInsightCell: UICollectionViewCell {
     
     var insightData: UserInsight! {
         didSet {
-            self.tileTitle.text = insightData?.text
             self.trendDirection.isHidden = false
             self.trendImage.isHidden = false
             self.tileTitle.text = insightData?.text
@@ -31,19 +30,16 @@ class MyDataInsightCell: UICollectionViewCell {
                     self.nodataLabel.isHidden = false
                 }
                 
-                if let trending = details.trending {
+                if let trending = details.trending, trending != .same {
                     self.trendDirection.text = trending.text
                     self.trendImage.image = trending.trendIcon
                     self.trendDirection.textColor = details.sentiment?.tintColor
                     self.trendImage.tintColor = details.sentiment?.tintColor
                     self.trendDirection.isHidden = false
-                    self.trendImage.isHidden = details.trending == .same
-                    let trendHeight: CGFloat = details.trending == .same ? 12.5 : 30.0
-                    NSLayoutConstraint.activate([self.trendImage.heightAnchor.constraint(equalToConstant: trendHeight)])
+                    self.trendImage.isHidden = false
                 } else {
                     self.trendImage.isHidden = true
                     self.trendDirection.isHidden = true
-                    NSLayoutConstraint.activate([self.trendImage.heightAnchor.constraint(equalToConstant: 0.0)])
                 }
             } else {
                 self.riskType.isHidden = true
@@ -153,7 +149,7 @@ class MyDataInsightCell: UICollectionViewCell {
         
         NSLayoutConstraint.activate([
             self.expandCollapseImage.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
-            self.expandCollapseImage.topAnchor.constraint(equalTo: topAnchor, constant: 10.0),
+            self.expandCollapseImage.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
             self.expandCollapseImage.widthAnchor.constraint(equalToConstant: 20.0),
             self.expandCollapseImage.heightAnchor.constraint(equalTo: self.expandCollapseImage.widthAnchor),
             
@@ -161,25 +157,26 @@ class MyDataInsightCell: UICollectionViewCell {
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
             self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
             
-            self.guageView.leadingAnchor.constraint(greaterThanOrEqualTo: self.tileTitle.trailingAnchor),
-            self.guageView.centerYAnchor.constraint(equalTo: self.tileTitle.centerYAnchor),
+            self.guageView.leadingAnchor.constraint(equalTo: self.tileTitle.trailingAnchor, constant: 10.0),
+            self.guageView.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 48.0),
             self.guageView.heightAnchor.constraint(equalTo: self.guageView.widthAnchor),
             
             self.riskType.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor),
-            self.riskType.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
+            self.riskType.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.riskType.widthAnchor.constraint(equalToConstant: 80.0),
             
-            self.trendImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 10.0),
-//            self.trendImage.heightAnchor.constraint(equalToConstant: 30.0),
+            self.trendImage.topAnchor.constraint(equalTo: self.topAnchor, constant: 8.0),
+            self.trendImage.heightAnchor.constraint(equalToConstant: 30.0),
             self.trendImage.widthAnchor.constraint(equalTo: self.trendImage.heightAnchor),
             self.trendImage.centerXAnchor.constraint(equalTo: self.trendDirection.centerXAnchor),
             self.trendDirection.topAnchor.constraint(equalTo: self.trendImage.bottomAnchor),
-            self.trendDirection.leadingAnchor.constraint(equalTo: self.riskType.trailingAnchor, constant: 10.0),
+            self.trendDirection.leadingAnchor.constraint(greaterThanOrEqualTo: self.riskType.trailingAnchor,
+                                                         constant: 10.0),
+            self.trendDirection.widthAnchor.constraint(equalToConstant: 60.0),
             self.trendDirection.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
             
-            
-            self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 60.0),
+            self.detailsView.topAnchor.constraint(equalTo: self.topAnchor, constant: 80.0),
             self.detailsView.leadingAnchor.constraint(equalTo: self.tileTitle.leadingAnchor),
             self.detailsView.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -10.0),
             self.detailsView.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -20.0),
@@ -199,7 +196,8 @@ class MyDataInsightCell: UICollectionViewCell {
         
         contentView.layer.cornerRadius = 5.0
         contentView.layer.borderWidth = 1.0
-        contentView.layer.borderColor = (insightData?.isExpanded ?? false) ? UIColor.themeColor.cgColor : UIColor.borderColor.cgColor
+        contentView.layer.borderColor =
+            (insightData?.isExpanded ?? false) ? UIColor.themeColor.cgColor : UIColor.borderColor.cgColor
         contentView.layer.masksToBounds = true
     }
 }

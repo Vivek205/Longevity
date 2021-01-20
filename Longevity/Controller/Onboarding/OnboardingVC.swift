@@ -164,7 +164,6 @@ class OnboardingVC: UIViewController {
     override func viewDidAppear(_ animated: Bool) {
         super.viewDidAppear(animated)
         hideNavigationBar()
-
     }
 
     override func viewWillDisappear(_ animated: Bool) {

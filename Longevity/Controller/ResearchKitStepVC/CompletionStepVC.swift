@@ -24,21 +24,21 @@ class CompletionStepVC: ORKStepViewController {
     
     lazy var infoLabel: UILabel = {
         let label = UILabel()
-        label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Montserrat-Regular", size: 20.0)
+        label.font = UIFont(name: AppFontName.regular, size: 20.0)
         label.textColor = UIColor(hexString: "#4E4E4E")
-        label.text = "Thank you for completing \(SurveyTaskUtility.shared.getCurrentSurveyName() ?? ""). Your results are being processed by our AI analyzer.\n\nThis may take 1-2 minutes to process and update. You can continue using the app and you will be notified when your personalized report is ready."
         label.numberOfLines = 0
+        label.lineBreakMode = .byWordWrapping
+        label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
     
     lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
+        uiView.backgroundColor = .clear
         return uiView
     }()
-
+    
     lazy var continueButton: CustomButtonFill = {
         let buttonView = CustomButtonFill()
         buttonView.translatesAutoresizingMaskIntoConstraints = false
@@ -46,66 +46,140 @@ class CompletionStepVC: ORKStepViewController {
         return buttonView
     }()
     
-    lazy var viewResultsButton: CustomButtonFill = {
-        let viewresults = CustomButtonFill()
-        viewresults.translatesAutoresizingMaskIntoConstraints = false
-        viewresults.setTitle("View Results", for: .normal)
-        return viewresults
+    lazy var nextSurveyButton: UIButton = {
+        let nextsurvey = UIButton()
+        nextsurvey.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        nextsurvey.translatesAutoresizingMaskIntoConstraints = false
+        return nextsurvey
     }()
-
+    
+    lazy var scrollView: UIScrollView = {
+        let scroll = UIScrollView()
+        scroll.translatesAutoresizingMaskIntoConstraints = false
+        scroll.showsVerticalScrollIndicator = false
+        return scroll
+    }()
+    
     override func viewDidLoad() {
+        super.viewDidLoad()
+        
         self.view.backgroundColor = .appBackgroundColor
         self.backButtonItem = nil
-        self.presentViews()
-        self.navigationItem.hidesBackButton = true
-
+        
         self.currentSurveyId = SurveyTaskUtility.shared.currentSurveyId
         self.currentSurveyName = SurveyTaskUtility.shared.getCurrentSurveyName()
         self.isCurrentSurveyRepetitive = SurveyTaskUtility.shared.isCurrentSurveyRepetitive()
+        self.navigationItem.hidesBackButton = true
         
-        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
-            DispatchQueue.main.async {
-                self?.viewResultsButton.isEnabled = SurveyTaskUtility.shared.surveyInProgress.value != .pending &&
-                    SurveyTaskUtility.shared.surveyInProgress.value != .unknown
+        self.presentViews()
+        
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
+            self.nextSurveyButton.removeFromSuperview()
+            self.continueButton.anchor(.bottom(footerView.bottomAnchor))
+            self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
+        } else {
+            if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
+                if isCurrentSurveyRepetitive {
+                    self.nextSurveyButton.setTitle("COVID Risk Assessment", for: .normal)
+                    self.navigationItem.title = "Check-in Complete!"
+                } else {
+                    self.nextSurveyButton.setTitle("Start Your Check-in", for: .normal)
+                    self.navigationItem.title = "Survey Complete!"
+                }
             }
         }
+        
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
+        self.nextSurveyButton.disableSecondaryButton()
         self.completeSurvey()
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
                                                                  style: .plain, target: self, action: #selector(handleContinue(sender:)))
-        self.navigationItem.title = "\(SurveyTaskUtility.shared.getCurrentSurveyName() ?? "") Complete!"
-        
         let textAttributes = [NSAttributedString.Key.foregroundColor:UIColor(hexString: "#4E4E4E"),
-                              .font: UIFont(name: "Montserrat-SemiBold", size: 22.0)]
-        self.navigationController?.navigationBar.titleTextAttributes = textAttributes
+                              .font: UIFont(name: AppFontName.semibold, size: 22.0)]
+        self.navigationController?.navigationBar.titleTextAttributes = textAttributes as [NSAttributedString.Key : Any]
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
     }
-
+    
+    func isDateToday(date: String?) -> Bool {
+        guard let date = date else {return false}
+        let dateFormat = "yyyy-MM-dd HH:mm:ss"
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = dateFormat
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        var calendar = Calendar.current
+        if let lastSubmissionDate = dateFormatter.date(from: date),
+           let timezone = TimeZone(abbreviation: "UTC"){
+            calendar.timeZone = timezone
+            if calendar.isDateInToday(lastSubmissionDate) {
+                return true
+            }
+        }
+        return false
+    }
+    
+    func shouldViewResultButtonBeEnabled() {
+        DispatchQueue.main.async {
+            self.nextSurveyButton.disableSecondaryButton()
+        }
+        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive {
+            if isCurrentSurveyRepetitive {
+                let lastSubmissionId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.lastSubmissionId
+                DispatchQueue.main.async {
+                    if lastSubmissionId == nil {
+                        self.nextSurveyButton.enableButton()
+                    } else {
+                        self.nextSurveyButton.disableSecondaryButton()
+                    }
+                }
+            } else {
+                let lastSubmissionDate = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.lastSubmission
+                DispatchQueue.main.async {
+                    if !self.isDateToday(date: lastSubmissionDate) {
+                        self.nextSurveyButton.enableButton()
+                    } else {
+                        self.nextSurveyButton.disableSecondaryButton()
+                    }
+                }
+            }
+        }
+    }
+    
     func completeSurvey() {
         func completion() {
-            print("survey completed")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+            }
+            shouldViewResultButtonBeEnabled()
         }
         func onFailure(_ error: Error) {
-            print("failed to complete the survey")
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                self.nextSurveyButton.disableSecondaryButton()
+            }
         }
-        self.viewResultsButton.isEnabled = false
+        self.showSpinner()
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
-
+    
     func presentViews() {
         
-        self.view.addSubview(iconView)
-        self.view.addSubview(infoLabel)
-        self.view.addSubview(footerView)
-        footerView.addSubview(continueButton)
-        footerView.addSubview(viewResultsButton)
-           
-        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
+        self.view.addSubview(scrollView)
+        self.scrollView.addSubview(iconView)
+        self.scrollView.addSubview(infoLabel)
+        self.scrollView.addSubview(footerView)
+        self.footerView.addSubview(continueButton)
+        self.footerView.addSubview(nextSurveyButton)
         
+        let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
+         
         NSLayoutConstraint.activate([
+            scrollView.leadingAnchor.constraint(equalTo: view.leadingAnchor,constant: 10),
+            scrollView.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -10),
+            scrollView.topAnchor.constraint(equalTo: view.topAnchor,constant: 10),
+            scrollView.bottomAnchor.constraint(equalTo: view.bottomAnchor,constant: -10),
             
-            iconView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: 24.0),
+            iconView.topAnchor.constraint(equalTo: self.scrollView.topAnchor, constant: 24.0),
             iconView.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             iconView.heightAnchor.constraint(equalToConstant: 200.0),
             iconView.widthAnchor.constraint(equalTo: iconView.heightAnchor),
@@ -114,38 +188,70 @@ class CompletionStepVC: ORKStepViewController {
             infoLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 15.0),
             infoLabel.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -15.0),
             infoLabel.bottomAnchor.constraint(greaterThanOrEqualTo: footerView.topAnchor, constant: 20.0),
-
+            
             footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
             footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
+            footerView.topAnchor.constraint(equalTo: infoLabel.bottomAnchor),
+            footerView.bottomAnchor.constraint(equalTo: scrollView.bottomAnchor),
+            
             continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
             continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 22),
+            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 60),
             continueButton.heightAnchor.constraint(equalToConstant: 48),
-            viewResultsButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            viewResultsButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            viewResultsButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 24),
-            viewResultsButton.heightAnchor.constraint(equalToConstant: 48),
-            viewResultsButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: bottomMargin)
+            nextSurveyButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
+            nextSurveyButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
+            nextSurveyButton.topAnchor.constraint(equalTo: continueButton.bottomAnchor, constant: 24),
+            nextSurveyButton.heightAnchor.constraint(equalToConstant: 48),
+            nextSurveyButton.bottomAnchor.constraint(equalTo: footerView.bottomAnchor, constant: bottomMargin)
         ])
         continueButton.isEnabled = true
         continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
-        viewResultsButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
+        nextSurveyButton.addTarget(self, action: #selector(doViewResults), for: .touchUpInside)
+        
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
+            self.infoLabel.text = "Thank you for completing the cough test. Your data is being processed by our AI analyzer.\n\nResults will not be avaliable at this time. Once there is sufficent amount of data to ensure accurate results, results will be avaliable. It is recommend to perform this test daily for optimal accuracy."
+        } else if self.isCurrentSurveyRepetitive ?? false {
+            self.infoLabel.text = "Your results are being processed by our AI analyzer. This may take few seconds to process and update your personalized report.\n\nYou can continue using the app and you will be notified results are ready."
+        }
+        else
+        {
+            self.infoLabel.text = "Thank you for completing COVID Risk Assessment. Your results are being processed by our AI analyzer.\n\nThis may take few seconds to process and update.  You can continue using the app and you will be notified when your personalized report is ready."
+        }
     }
-
+    
     @objc func handleContinue(sender: UIButton) {
         self.goForward()
     }
     
     @objc func doViewResults() {
-        guard let surveyId = self.currentSurveyId,
-              let surveyName = self.currentSurveyName,
-              let isCheckIn = self.isCurrentSurveyRepetitive,
-              let submissionId = SurveyTaskUtility.shared.getLastSubmissionID(for: surveyId) else {return}
-
-        let checkInResultViewController = CheckInResultViewController(submissionID: submissionId, surveyName: surveyName, isCheckIn: isCheckIn)
-        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                    style: .overCurrentContext)
+        self.showSpinner()
+        guard let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive else {return self.removeSpinner()}
+        var surveyId: String?
+        if isCurrentSurveyRepetitive {
+            surveyId = SurveyTaskUtility.shared.oneTimeSurveyList.value?.first?.surveyId
+        }else {
+            surveyId = SurveyTaskUtility.shared.repetitiveSurveyList.value?.first?.surveyId
+        }
+        if surveyId == nil {return self.removeSpinner()}
+        SurveyTaskUtility.shared.createSurvey(surveyId: surveyId) { (task) in
+            DispatchQueue.main.async {
+                let taskViewController = SurveyViewController(task: task, isFirstTask: true, isFirstCheckin: true)
+                self.removeSpinner()
+                NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+            }
+        } onFailure: { (error) in
+            DispatchQueue.main.async {
+                Alert(title: "Survey Unavailable",
+                      message: "Unable to open the survey. Please try again later.")
+                self.removeSpinner()
+            }
+            
+        }
+    }
+    
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        
+        
     }
 }

@@ -50,6 +50,9 @@ class FormStepVC: ORKStepViewController {
         addKeyboardObservers()
         print("did load", self.view.frame.origin.y )
         self.initialYOrigin = self.view.frame.origin.y
+        if SurveyTaskUtility.shared.isSymptomsSkipped {
+            self.goBackward()
+        }
     }
 
     override func viewDidAppear(_ animated: Bool) {
@@ -62,7 +65,7 @@ class FormStepVC: ORKStepViewController {
     }
 
     func prefillForm(questionId: String) -> String? {
-        let feelingTodayQuestionId = "8020"
+        let feelingTodayQuestionId = SurveyTaskUtility.shared.feelingTodayQuestionId
         guard let feelingTodayAnswer =
             SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: feelingTodayQuestionId) else {return nil}
         let prefillSymptomsOption = "2"
@@ -70,9 +73,6 @@ class FormStepVC: ORKStepViewController {
             guard let lastResponse =
                 SurveyTaskUtility.shared.getCurrentSurveyServerAnswer(questionIdentifier: questionId)else {return nil}
             return lastResponse
-
-            return nil
-
         }
         return nil
     }
@@ -226,8 +226,8 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             preconditionFailure("Invalid cell type")
         }
         
-        if let formStep = self.step as? ORKFormStep {
-            headerView.createLayout(header: formStep.title ?? "", question: formStep.text ?? "", extraInfo: nil)
+        if let formStep = self.step as? ORKFormStep, let question = formStep.text {
+            headerView.createLayout(question: question)
         }
         
         return headerView

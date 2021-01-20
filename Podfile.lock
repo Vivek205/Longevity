@@ -14,6 +14,10 @@ PODS:
     - AWSCore (~> 2.19.0)
     - AWSMobileClient (~> 2.19.0)
     - AWSPluginsCore (= 1.4.4)
+  - AmplifyPlugins/AWSS3StoragePlugin (1.4.4):
+    - AWSCore (~> 2.19.0)
+    - AWSPluginsCore (= 1.4.4)
+    - AWSS3 (~> 2.19.0)
   - AppSyncRealTimeClient (1.4.2):
     - Starscream (~> 3.1.0)
   - AWSAuthCore (2.19.1):
@@ -36,6 +40,8 @@ PODS:
     - Amplify (= 1.4.4)
     - AWSCore (~> 2.19.0)
     - AWSMobileClient (~> 2.19.0)
+  - AWSS3 (2.19.1):
+    - AWSCore (= 2.19.1)
   - AWSSNS (2.19.1):
     - AWSCore (= 2.19.1)
   - CGRPCZlib (1.0.0-alpha.12)
@@ -116,6 +122,7 @@ DEPENDENCIES:
   - Amplify
   - AmplifyPlugins/AWSAPIPlugin
   - AmplifyPlugins/AWSCognitoAuthPlugin
+  - AmplifyPlugins/AWSS3StoragePlugin
   - AWSCognito
   - AWSPinpoint
   - AWSSNS
@@ -140,6 +147,7 @@ SPEC REPOS:
     - AWSMobileClient
     - AWSPinpoint
     - AWSPluginsCore
+    - AWSS3
     - AWSSNS
     - CGRPCZlib
     - Charts
@@ -191,6 +199,7 @@ SPEC CHECKSUMS:
   AWSMobileClient: b908cada3c35da9cfe5b4ff9947fcf70142495e7
   AWSPinpoint: 8c07b9759eebe269a5b26d38a96f5ecd5478b1fb
   AWSPluginsCore: c42c35ecc3c6afff1e98faf0a01d0cd1a362e77c
+  AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
   AWSSNS: fb69aa977382d5bfb40072d0940ef6893abf16fb
   CGRPCZlib: a53e43fb0567e720e753dd172911b96baa3910d7
   Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
@@ -221,6 +230,6 @@ SPEC CHECKSUMS:
   SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
   SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 3e70a46bdfd71c3838efb0a301174500f94ef408
+PODFILE CHECKSUM: 2a603c6c5610c5080294eaaf5a079cd215af0750
 
 COCOAPODS: 1.9.3

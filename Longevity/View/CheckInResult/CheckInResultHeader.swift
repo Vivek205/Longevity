@@ -40,7 +40,7 @@ class CheckInResultHeader: UICollectionReusableView {
     
     lazy var titleLabel: UILabel = {
         let title = UILabel()
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.numberOfLines = 0
         title.textColor = .white
         title.textAlignment = .center
@@ -68,7 +68,7 @@ class CheckInResultHeader: UICollectionReusableView {
     lazy var headerTitle: UILabel = {
         let title = UILabel()
         title.text = "According to our analysis you should:"
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -87,18 +87,17 @@ class CheckInResultHeader: UICollectionReusableView {
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.heightAnchor.constraint(equalToConstant: 125.0),
+            titleLabel.topAnchor.constraint(equalTo: self.topAnchor, constant: 100.0),
             titleLabel.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 50.0),
             titleLabel.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -50.0),
-            titleLabel.bottomAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: -20.0),
-            
+            titleLabel.heightAnchor.constraint(equalToConstant: 45.0),
+            titleLabel.bottomAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: -10.0),
+            segmentedControl.topAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: 20.0),
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30.0),
             segmentedControl.widthAnchor.constraint(equalToConstant: 230.0),
-            segmentedControl.topAnchor.constraint(equalTo: bgImageView.bottomAnchor, constant: 20.0),
-            
-            headerTitle.topAnchor.constraint(equalTo: segmentedControl.bottomAnchor, constant: 20.0),
-            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 10.0),
+            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+            headerTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
     }
@@ -109,7 +108,7 @@ class CheckInResultHeader: UICollectionReusableView {
     
     func setup(comletedDate: String, surveyName: String, isCheckIn: Bool) {
         if isCheckIn {
-            self.titleLabel.text = "Completed \(comletedDate)\n for \(AppSyncManager.instance.userProfile.value?.name ?? "")"
+            self.titleLabel.text = "Completed \(comletedDate)"
         } else {
             self.titleLabel.text = "\(surveyName)\n completed \(comletedDate)"
         }

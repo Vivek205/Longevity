@@ -15,8 +15,8 @@
             <BuildableReference
                BuildableIdentifier = "primary"
                BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-               BuildableName = "Longevity.app"
-               BlueprintName = "Longevity"
+               BuildableName = "COVID Signals.app"
+               BlueprintName = "COVID Signals"
                ReferencedContainer = "container:Longevity.xcodeproj">
             </BuildableReference>
          </BuildActionEntry>
@@ -45,14 +45,26 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-            BuildableName = "Longevity.app"
-            BlueprintName = "Longevity"
+            BuildableName = "COVID Signals.app"
+            BlueprintName = "COVID Signals"
             ReferencedContainer = "container:Longevity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>
+      <AdditionalOptions>
+         <AdditionalOption
+            key = "NSZombieEnabled"
+            value = "YES"
+            isEnabled = "YES">
+         </AdditionalOption>
+         <AdditionalOption
+            key = "MallocGuardEdges"
+            value = ""
+            isEnabled = "YES">
+         </AdditionalOption>
+      </AdditionalOptions>
       <LocationScenarioReference
-         identifier = "../Longevity/Utilities/Coimbatore.gpx"
-         referenceType = "0">
+         identifier = "com.apple.dt.IDEFoundation.CurrentLocationScenarioIdentifier"
+         referenceType = "1">
       </LocationScenarioReference>
    </LaunchAction>
    <ProfileAction
@@ -66,8 +78,8 @@
          <BuildableReference
             BuildableIdentifier = "primary"
             BlueprintIdentifier = "E2ECB8BA247FE2BA0020A27E"
-            BuildableName = "Longevity.app"
-            BlueprintName = "Longevity"
+            BuildableName = "COVID Signals.app"
+            BlueprintName = "COVID Signals"
             ReferencedContainer = "container:Longevity.xcodeproj">
          </BuildableReference>
       </BuildableProductRunnable>

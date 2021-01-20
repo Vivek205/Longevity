@@ -18,24 +18,24 @@ class SetupCompleteVC: BaseProfileSetupViewController {
         
         let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
         
-        let headingAttributes:[NSAttributedString.Key:Any] =
-            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor.sectionHeaderColor]
-        let heading = NSMutableAttributedString(string: "Note: ", attributes: headingAttributes)
+//        let headingAttributes:[NSAttributedString.Key:Any] =
+//            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor.sectionHeaderColor]
+//        let heading = NSMutableAttributedString(string: "Note: ", attributes: headingAttributes)
+//
+//        let detailsAttributes:[NSAttributedString.Key:Any] =
+//            [.font: UIFont(name: "Montserrat-Italic", size: CGFloat(18)),
+//             .foregroundColor: UIColor.sectionHeaderColor
+//        ]
+//
+//        let details =
+//            NSMutableAttributedString(
+//                string: "You can edit your health profile any time from your Profile Settings",attributes: detailsAttributes)
 
-        let detailsAttributes:[NSAttributedString.Key:Any] =
-            [.font: UIFont(name: "Montserrat-Italic", size: CGFloat(18)),
-             .foregroundColor: UIColor.sectionHeaderColor
-        ]
+//        var noteContent: NSMutableAttributedString = NSMutableAttributedString()
+//        noteContent.append(heading)
+//        noteContent.append(details)
 
-        let details =
-            NSMutableAttributedString(
-                string: "You can edit your health profile any time from your Profile Settings",attributes: detailsAttributes)
-
-        var noteContent: NSMutableAttributedString = NSMutableAttributedString()
-        noteContent.append(heading)
-        noteContent.append(details)
-
-        noteLabel.attributedText = noteContent
+//        noteLabel.attributedText = noteContent
     }
 
     func navigateForward() {
@@ -61,14 +61,14 @@ class SetupCompleteVC: BaseProfileSetupViewController {
                 } else {
                     Alert(title: "Survey Not available",
                                    message: "No questions are found for the survey. Please try after sometime")
-                    self.navigateForward()
                 }
             }
         }
         func onCreateSurveyFailure(_ error: Error) {
             DispatchQueue.main.async {
                 self.removeSpinner()
-                self.navigateForward()
+                Alert(title: "Survey Not available",
+                               message: "No questions are found for the survey. Please try after sometime")
             }
         }
         

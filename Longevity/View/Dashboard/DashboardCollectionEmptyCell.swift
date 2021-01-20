@@ -13,20 +13,16 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     lazy var tileTitle: UILabel = {
         let title = UILabel()
         title.textAlignment = .center
-        title.text = "COVID-19 Infection"
-        title.font = UIFont(name: "Montserrat-Medium", size: 14)
-        title.textColor = .checkinCompleted
-        title.numberOfLines = 0
-        title.lineBreakMode = .byWordWrapping
+        title.text = "Longevity"
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
+        title.textColor = .white
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
     }()
     
     lazy var emptyCellMessage: UILabel = {
         let emptyMessage = UILabel()
-        emptyMessage.font = UIFont(name: "Montserrat-Medium", size: 14.0)
-        emptyMessage.numberOfLines = 0
-        emptyMessage.lineBreakMode = .byWordWrapping
+        emptyMessage.font = UIFont(name: AppFontName.lightitalic, size: 14.0)
         emptyMessage.textColor = .white
         emptyMessage.text = "Coming Soon"
         emptyMessage.textAlignment = .center
@@ -46,32 +42,34 @@ class DashboardCollectionEmptyCell: CommonHexagonCell {
     override init(frame: CGRect) {
         super.init(frame: frame)
         
-        let vTop = self.bounds.height * 0.40
-        
         self.hexagonView.backgroundColor = .clear
         self.hexagonView.borderColor = .white
+        self.hexagonView.borderWidth = 3.0
         self.hexagonView.isEmptyCell = true
-        
-        self.tileTitle.text = "Longevity"
-        self.tileTitle.textColor = .white
-        self.infoButton.tintColor = .white
         
         self.contentView.addSubview(tileTitle)
         self.contentView.addSubview(emptyCellMessage)
         self.contentView.addSubview(infoButton)
         
         NSLayoutConstraint.activate([
-            hexagonView.topAnchor.constraint(equalTo: contentView.topAnchor, constant: vTop),
             tileTitle.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             tileTitle.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            tileTitle.topAnchor.constraint(equalTo: hexagonView.topAnchor, constant: 25.0),
+            tileTitle.bottomAnchor.constraint(equalTo: emptyCellMessage.topAnchor, constant: -8.0),
             emptyCellMessage.widthAnchor.constraint(equalTo: hexagonView.widthAnchor, multiplier: 0.60),
             emptyCellMessage.centerXAnchor.constraint(equalTo: hexagonView.centerXAnchor),
-            emptyCellMessage.topAnchor.constraint(equalTo: tileTitle.bottomAnchor, constant: 25.0),
-            infoButton.topAnchor.constraint(equalTo: emptyCellMessage.bottomAnchor, constant: 20.0),
+            emptyCellMessage.centerYAnchor.constraint(equalTo: hexagonView.centerYAnchor),
+            infoButton.topAnchor.constraint(equalTo: emptyCellMessage.bottomAnchor, constant: 8.0),
             infoButton.centerXAnchor.constraint(equalTo: emptyCellMessage.centerXAnchor),
             infoButton.widthAnchor.constraint(equalToConstant: 30.0),
             infoButton.heightAnchor.constraint(equalTo: infoButton.widthAnchor)
+        ])
+    }
+    
+    func setupcell(index: Int) {
+        let isEvenCell = index % 2 == 0
+        let vTop = isEvenCell ? 0.0 : self.bounds.height * 0.40
+        NSLayoutConstraint.activate([
+            hexagonView.topAnchor.constraint(equalTo: self.topAnchor, constant: vTop),
         ])
     }
     
@@ -128,5 +126,20 @@ class CommonHexagonCell: UICollectionViewCell {
             }
         }
         return nil
+    }
+}
+
+extension UIFont {
+    func withTraits(traits:UIFontDescriptor.SymbolicTraits) -> UIFont {
+        let descriptor = fontDescriptor.withSymbolicTraits(traits)
+        return UIFont(descriptor: descriptor!, size: 0) //size 0 means keep the size as it is
+    }
+
+    func bold() -> UIFont {
+        return withTraits(traits: .traitBold)
+    }
+
+    func italic() -> UIFont {
+        return withTraits(traits: .traitItalic)
     }
 }

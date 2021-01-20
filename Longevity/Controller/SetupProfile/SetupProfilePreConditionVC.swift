@@ -110,9 +110,9 @@ extension SetupProfilePreConditionVC: SetupProfilePreConditionOptionCellDelegate
     func checkBoxButton(wasPressedOnCell cell: SetupProfilePreConditionOptionCell) {
         changesSaved = false
         guard let optionIndex = preExistingMedicalConditionData.firstIndex(where:
-            { (element) -> Bool in
-            return element.id == cell.optionId
-        }) else {
+                                                                            { (element) -> Bool in
+                                                                                return element.id == cell.optionId
+                                                                            }) else {
             return
         }
         updateitemSelection(optionIndex:optionIndex)
@@ -126,6 +126,7 @@ extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
 
     func textViewDidBeginEditing(_ textView: UITextView) {
         activeTextView = textView
+        changesSaved = false
     }
     
     func updateCurrentText(text: String?) {
@@ -170,7 +171,7 @@ extension SetupProfilePreConditionVC: SetupProfileOtherOptionCellDelegate {
 }
 
 extension SetupProfilePreConditionVC: UICollectionViewDelegate,
-UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+                                      UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
         1
     }
@@ -186,18 +187,21 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             return cell
         }
         if indexPath.row == textAreaRowIndex {
-            let cell =
-                collectionView.dequeueReusableCell(
-                    withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as! SetupProfileOtherOptionCell
-            cell.configureTextView(text: preExistingMedicalCondtionOtherText)
+            guard let cell =
+                    collectionView.dequeueReusableCell(
+                        withReuseIdentifier: "SetupProfilePreOtherCell", for: indexPath) as? SetupProfileOtherOptionCell else { preconditionFailure("invalid cell")}
+            var text = ""
+            if let savedCondition = preExistingMedicalCondtionOtherText { text = savedCondition }
+            if !currentEditedText.isEmpty { text = currentEditedText }
+            cell.configureTextView(text: text)
             cell.delegate = self
             self.activeTextView = cell.otherOptionTextView
             return cell
         }
 
-        let cell =
+        guard let cell =
             collectionView.dequeueReusableCell(
-                withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as! SetupProfilePreConditionOptionCell
+                withReuseIdentifier: "SetupProfilePreOptionCell", for: indexPath) as? SetupProfilePreConditionOptionCell else { preconditionFailure("invalid cell")}
         cell.optionData = self.currentPreExistingMedicalConditions?[indexPath.row - 1]
         cell.delegate = self
         return cell
@@ -237,7 +241,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
             
             attributedoptionData.addAttribute(NSAttributedString.Key.kern, value: CGFloat(0.4), range: NSRange(location: 0, length: attributedoptionData.length))
             
-            let containerWidth = width - 57.0
+            let containerWidth = width - 73.0
             
             let height = attributedoptionData.height(containerWidth: containerWidth) + 32.0
             
@@ -295,22 +299,28 @@ extension SetupProfilePreConditionVC {
     @objc func keyboardWasShown(notification: NSNotification){
         guard let info = notification.userInfo else {return}
         let keyboardSize = (info[UIResponder.keyboardFrameBeginUserInfoKey] as? NSValue)?.cgRectValue.size
-        let contentInsets : UIEdgeInsets = UIEdgeInsets(top: 0.0, left: 0.0, bottom: keyboardSize!.height, right: 0.0)
         guard let keyboardHeight = keyboardSize?.height ,
-            let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
-            let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
+              let navbarHeight = self.navigationController?.navigationBar.frame.size.height,
+              let inputAccessoryHeight = activeTextView?.inputAccessoryView?.frame.height
         else {return}
         let topPadding:CGFloat = 20.0
         let viewYPadding = navbarHeight + topPadding
-        var visibleScreen : CGRect = self.view.frame
-        visibleScreen.size.height -= (keyboardHeight + viewYPadding)
-
-        self.view.frame.origin.y = -(keyboardHeight - inputAccessoryHeight - viewYPadding)
+        
+        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: (keyboardHeight + inputAccessoryHeight + viewYPadding), right: 0.0)
+        layout.invalidateLayout()
+        let count = self.collectionView.numberOfItems(inSection: 0)
+        self.collectionView.scrollToItem(at: IndexPath(item: count - 1, section: 0), at: .top, animated: true)
     }
 
     @objc func keyboardWillBeHidden(notification: NSNotification){
-        guard let rollbackYOrigin = self.rollbackYOrigin else {return}
-        self.view.frame.origin.y = rollbackYOrigin
+        guard let layout = self.collectionView.collectionViewLayout as? UICollectionViewFlowLayout else {
+            return
+        }
+        layout.sectionInset = UIEdgeInsets(top: 10.0, left: 0.0, bottom: 20.0, right: 0.0)
+        layout.invalidateLayout()
     }
 }
 

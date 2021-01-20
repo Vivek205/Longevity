@@ -12,6 +12,7 @@ enum TOCStatus {
     case unknown
     case accepted
     case notaccepted
+    case error
 }
 
 enum InternetConnectionState {
@@ -37,45 +38,64 @@ class AppSyncManager  {
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<InternetConnectionState> = DynamicValue(.none)
+    var prevInternetConnnection: InternetConnectionState?
     var surveysSyncStatus: DynamicValue<SurveySyncStatus> = DynamicValue(.notstarted)
     
     var pollingTimer: DispatchSourceTimer?
     
-    fileprivate let defaultInsights = [UserInsight(name: .exposure, text: "COVID-19 Exposure",
-                                userInsightDescription: "Exposure risk is how likely you have been in contact with COVID-19 infected people.",
-                                defaultOrder: 0,
-                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
-                                                 confidence: Confidence(value: "",
-                                                                        confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
-                                                 histogram: Histogram(histogramDescription: "Your COVID-19 exposure risk over the time of your check-ins."), submissions: nil),
-                                isExpanded: false),
-                    UserInsight(name: .risk, text: "COVID-19 Infection",
-                                userInsightDescription: "Infection risk estimates your chance of having COVID-19 based on your symptoms and exposure history.",
-                                defaultOrder: 1,
-                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
-                                                 confidence: Confidence(value: "",
-                                                                        confidenceDescription: "How well the AI can assess your current risk situation. More check-ins and health data improves the accuracy."),
-                                                 histogram: Histogram(histogramDescription: "Your COVID-19 Infection risk over the time of your check-ins."), submissions: nil),
-                                isExpanded: false),
-                    UserInsight(name: .distancing,
-                                text: "Social Distancing",
-                                userInsightDescription: "Your Social Distancing Score demonstrates whether you have practiced social distancing guidelines, wore a mask, and self-quarantined according to your local government’s instructions.",
-                                defaultOrder: 2,
-                                details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
-                                                 confidence: Confidence(value: "",
-                                                                        confidenceDescription: "How well the AI can assess your social distancing situation. More check-ins and health data improves the accuracy."),
-                                                 histogram: Histogram(histogramDescription: "Your social distancing over the time of your check-ins."), submissions: nil),
-                                isExpanded: false),
-                    UserInsight(name: .logs,
-                                text: "COVID Check-in Log",
-                                userInsightDescription: "COVID Check-in Log",
-                                defaultOrder: 3,
-                                details: nil,
-                                isExpanded: false)]
+    fileprivate let defaultInsights = [UserInsight(name: .overallInfection,
+                                                   text: "Overall Infection",
+                                                   userInsightDescription: "How likely you are to have COVID right now. This factors in biosignals, lifestyle and all available data.",
+                                                   defaultOrder: 0,
+                                                   details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                                    confidence: Confidence(value: "",
+                                                                                           confidenceDescription: ""),
+                                                                    histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
+                                                   isExpanded: false),
+                                       UserInsight(name: .severity,
+                                                   text: "Severity Infection",
+                                                   userInsightDescription: "This estimates the risk you run of having a severe reaction, if you do get COVID.",
+                                                   defaultOrder: 1,
+                                                   details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                                    confidence: Confidence(value: "",
+                                                                                           confidenceDescription: ""),
+                                                                    histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
+                                                   isExpanded: false),
+                                       UserInsight(name: .distancing,
+                                                   text: "Biosignal Detection",
+                                                   userInsightDescription: "How likely you have an infection (possibly but not necessarily COVID) now based on your biosignals from connected wearable devices or health trackers.",
+                                                   defaultOrder: 2,
+                                                   details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                                    confidence: Confidence(value: "",
+                                                                                           confidenceDescription: ""),
+                                                                    histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
+                                                   isExpanded: false),
+                                       UserInsight(name: .anomalousWearables,
+                                                   text: "Lifestyle Infection",
+                                                   userInsightDescription: "How high your risk of getting or having COVID based on your lifestyle and social distancing practices.",
+                                                   defaultOrder: 3,
+                                                   details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
+                                                                    confidence: Confidence(value: "",
+                                                                        confidenceDescription: ""),
+                                                                    histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
+                                                   isExpanded: false),
+                                       UserInsight(name: .logs,
+                                                    text: "Results Data Log",
+                                                    userInsightDescription: "COVID Check-in Log",
+                                                    defaultOrder: 4,
+                                                    details: nil,
+                                                    isExpanded: false)
+//                                       ,UserInsight(name: .coughlogs,
+//                                                    text: "Cough Test Log",
+//                                                    userInsightDescription: "Cough Test Log",
+//                                                    defaultOrder: 5,
+//                                                    details: nil,
+//                                                    isExpanded: false)
+    ]
     
     fileprivate init() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
-        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
+        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
@@ -84,11 +104,14 @@ class AppSyncManager  {
     
     func cleardata() {
         self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
-        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: nil, preExistingConditions: nil))
+        self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
+
+        // HACK
+        preExistingMedicalConditionData = defaultPreExistingMedicalConditionData
     }
     
     //User Attributes
@@ -159,7 +182,7 @@ class AppSyncManager  {
             if let insights = userinsights {
                 self?.userInsights.value = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
             } else {
-                self?.userInsights.value = self?.defaultInsights
+                self?.userInsights.value = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
             }
         }
     }
@@ -206,16 +229,22 @@ class AppSyncManager  {
         }
     }
 
-    func updateUserSubscription(subscriptionType:UserSubscriptionType, communicationType: CommunicationType, status:Bool, completion: @escaping(() -> Void)){
+    func updateUserSubscription(subscriptionType:UserSubscriptionType,
+                                communicationType: CommunicationType,
+                                status:Bool,
+                                completion: @escaping(() -> Void)){
         if let index = self.userSubscriptions.value?.firstIndex(where: { (subscription) -> Bool in
-            return subscription.subscriptionType == subscriptionType && subscription.communicationType == communicationType
+            return subscription.subscriptionType == subscriptionType &&
+                subscription.communicationType == communicationType
         }) {
             self.userSubscriptions.value?[index].status = status
-        }else {
+        } else {
             self.userSubscriptions.value?.append(UserSubscription(subscriptionType: subscriptionType, communicationType: communicationType, status: status))
         }
         
-        UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions: self.userSubscriptions.value, completion: completion)
+        UserSubscriptionAPI.instance.updateUserSubscriptions(userSubscriptions:
+                                                                self.userSubscriptions.value,
+                                                             completion: completion)
     }
 
     func getAppLink() {
@@ -251,6 +280,7 @@ class AppSyncManager  {
     func syncUserProfile() {
         if opeartionqueue == nil {
             opeartionqueue = OperationQueue()
+            opeartionqueue?.maxConcurrentOperationCount = 2
         } else {
             opeartionqueue?.cancelAllOperations()
         }

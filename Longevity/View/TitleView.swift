@@ -42,10 +42,6 @@ class TitleView: UIView {
         super.init(frame: CGRect.zero)
         self.viewTab = viewTab
         
-        let vTop: CGFloat = UIDevice.hasNotch ? 60.0 : 20.0
-        
-        let imageBottom : CGFloat = viewTab == .home ? -10.0 : 0.0
-        
         self.addSubview(bgImageView)
         self.addSubview(titleImageView)
         self.addSubview(titleLabel)
@@ -56,7 +52,7 @@ class TitleView: UIView {
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
             bgImageView.trailingAnchor.constraint(equalTo: self.trailingAnchor),
             bgImageView.topAnchor.constraint(equalTo: self.topAnchor),
-            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: imageBottom),
+            bgImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor),
             titleImageView.heightAnchor.constraint(equalToConstant: 34.0),
             titleImageView.widthAnchor.constraint(equalTo: titleImageView.heightAnchor),
             titleImageView.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),

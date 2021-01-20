@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol RKCFormTextAnswerViewDelegate {
+protocol RKCFormTextAnswerViewDelegate: class {
     func textViewDidBeginEditing(_ textView: UITextView)
     func textViewShouldBeginEditing(_ textView: UITextView) -> Bool
     func textViewDidChange(_ textView: UITextView)
@@ -30,7 +30,7 @@ extension RKCFormTextAnswerViewDelegate {
 
 class RKCFormTextAnswerView: UICollectionViewCell {
     var itemIdentifier:String?
-    var delegate: RKCFormTextAnswerViewDelegate?
+    weak var delegate: RKCFormTextAnswerViewDelegate?
     var isClearButtonHidden = true
     
     lazy var questionLabel: UILabel  = {

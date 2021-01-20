@@ -60,12 +60,12 @@ extension HealthDevices {
     }
 }
 
-protocol DashboardDevicesCellDelegate {
+protocol DashboardDevicesCellDelegate: class {
     func showError(forDeviceCollectionCell cell:DashboardDeviceCollectionCell)
 }
 
-class DashboardDevicesCell: UITableViewCell {
-    var delegate:DashboardDevicesCellDelegate?
+class DashboardDevicesCell: UICollectionViewCell {
+    weak var delegate:DashboardDevicesCellDelegate?
     
     lazy var devicesCollection: UICollectionView = {
         let devices = UICollectionView(frame: CGRect.zero, collectionViewLayout: UICollectionViewFlowLayout())
@@ -79,8 +79,8 @@ class DashboardDevicesCell: UITableViewCell {
         return devices
     }()
     
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: CGRect.zero)
         
         self.contentView.addSubview(devicesCollection)
         self.backgroundColor = UIColor(hexString: "#F5F6FA")

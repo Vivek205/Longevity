@@ -13,7 +13,6 @@ class MyDataLogCell: UICollectionViewCell {
     var logData: UserInsight! {
         didSet {
             self.cellTitle.text = logData?.text
-            self.logDuration.text = "\(logData?.details?.history?.count ?? 0) Days"
         }
     }
     
@@ -26,17 +25,6 @@ class MyDataLogCell: UICollectionViewCell {
         title.lineBreakMode = .byWordWrapping
         title.translatesAutoresizingMaskIntoConstraints = false
         return title
-    }()
-    
-    lazy var logDuration: UILabel = {
-        let risk = UILabel()
-        risk.textAlignment = .center
-        risk.font = UIFont(name: "Montserrat-SemiBold", size: 18)
-        risk.textColor = .themeColor
-        risk.numberOfLines = 2
-        risk.lineBreakMode = .byWordWrapping
-        risk.translatesAutoresizingMaskIntoConstraints = false
-        return risk
     }()
     
     lazy var navigateActionImage: UIImageView = {
@@ -54,20 +42,16 @@ class MyDataLogCell: UICollectionViewCell {
         self.backgroundColor = .white
         
         self.addSubview(cellTitle)
-        self.addSubview(logDuration)
         self.addSubview(navigateActionImage)
         
         NSLayoutConstraint.activate([
             cellTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 12.5),
             cellTitle.centerYAnchor.constraint(equalTo: centerYAnchor),
+            cellTitle.trailingAnchor.constraint(lessThanOrEqualTo: navigateActionImage.leadingAnchor, constant: 10.0),
             navigateActionImage.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -12.5),
             navigateActionImage.widthAnchor.constraint(equalToConstant: 25.0),
             navigateActionImage.heightAnchor.constraint(equalTo: navigateActionImage.widthAnchor),
-            navigateActionImage.centerYAnchor.constraint(equalTo: centerYAnchor),
-            logDuration.widthAnchor.constraint(equalToConstant: 100.0),
-            logDuration.leadingAnchor.constraint(greaterThanOrEqualTo: cellTitle.trailingAnchor, constant: 10.0),
-            logDuration.centerYAnchor.constraint(equalTo: centerYAnchor),
-            logDuration.trailingAnchor.constraint(equalTo: navigateActionImage.leadingAnchor, constant: 10.0)
+            navigateActionImage.centerYAnchor.constraint(equalTo: centerYAnchor)
         ])
     }
     
@@ -84,4 +68,3 @@ class MyDataLogCell: UICollectionViewCell {
         contentView.layer.masksToBounds = true
     }
 }
-

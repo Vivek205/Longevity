@@ -62,9 +62,9 @@
 	<key>NSCameraUsageDescription</key>
 	<string>We are using ResearchKit which is using camera for its tasks</string>
 	<key>NSHealthShareUsageDescription</key>
-	<string>Rejuve will use your health information to better track your COVID-19 analysis.</string>
+	<string>COVID Signals will use your health information to better track your COVID-19 analysis.</string>
 	<key>NSHealthUpdateUsageDescription</key>
-	<string>Rejuve will use your health information to better track your COVID-19 analysis.</string>
+	<string>COVID Signals will use your health information to better track your COVID-19 analysis.</string>
 	<key>NSLocationAlwaysAndWhenInUseUsageDescription</key>
 	<string>We capture location info to improve our survey result</string>
 	<key>NSLocationWhenInUseUsageDescription</key>
@@ -77,6 +77,8 @@
 	<string>We are using ResearchKit which is using speech recognition for its tasks</string>
 	<key>UIAppFonts</key>
 	<array>
+		<string>Montserrat-LightItalic.ttf</string>
+		<string>Montserrat-Light.ttf</string>
 		<string>Muli-Regular.ttf</string>
 		<string>Muli-Bold.ttf</string>
 		<string>Montserrat-Bold.ttf</string>
@@ -90,7 +92,6 @@
 		<string>fetch</string>
 		<string>processing</string>
 		<string>remote-notification</string>
-		<string>voip</string>
 	</array>
 	<key>UILaunchStoryboardName</key>
 	<string>LaunchScreen</string>

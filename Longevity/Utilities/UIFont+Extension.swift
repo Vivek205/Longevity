@@ -11,10 +11,11 @@ import UIKit
 struct AppFontName {
     static let regular = "Montserrat-Regular"
     static let bold = "Montserrat-Bold"
-    static let italic = "Montserrat-Light"
+    static let lightitalic = "Montserrat-LightItalic"
     static let medium = "Montserrat-Medium"
     static let semibold = "Montserrat-SemiBold"
     static let light = "Montserrat-Light"
+    static let italic = "Montserrat-Italic"
 }
 
 extension UIFontDescriptor.AttributeName {
@@ -33,7 +34,7 @@ extension UIFont {
     }
     
     @objc class func myItalicSystemFont(ofSize size: CGFloat) -> UIFont {
-        return UIFont(name: AppFontName.italic, size: size)!
+        return UIFont(name: AppFontName.lightitalic, size: size)!
     }
 
     @objc convenience init(myCoder aDecoder: NSCoder) {
@@ -50,7 +51,7 @@ extension UIFont {
             case "CTFontEmphasizedUsage", "CTFontBoldUsage":
                 fontName = AppFontName.semibold
             case "CTFontObliqueUsage":
-                fontName = AppFontName.italic
+                fontName = AppFontName.lightitalic
             default:
                 fontName = AppFontName.regular
         }

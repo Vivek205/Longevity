@@ -13,7 +13,9 @@ class CheckinLogViewController: BaseViewController {
     
     var history: [History]! {
         didSet {
-            self.logsCollectionView.reloadData()
+            DispatchQueue.main.async {
+                self.logsCollectionView.reloadData()
+            }
         }
     }
     
@@ -45,7 +47,7 @@ class CheckinLogViewController: BaseViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.titleView.titleLabel.text = "Check-in Log"
+        self.titleView.titleLabel.text = "Results Data Log"
         
         self.titleView.addSubview(closeButton)
         self.view.addSubview(logsCollectionView)
@@ -77,12 +79,41 @@ class CheckinLogViewController: BaseViewController {
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
     }
 
+    override func viewDidAppear(_ animated: Bool) {
+        print("checkin log did appear")
+        self.updateLogDetails()
+    }
+
     init() {
         super.init(viewTab: .myData)
     }
 
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+
+    func updateLogDetails() {
+        if history == nil {return}
+        self.showSpinner()
+        let submissionIdList = history.map{$0.submissionID}
+        print("submissionIdList", submissionIdList)
+        SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
+            [weak self] (response) in
+            DispatchQueue.main.async {self?.removeSpinner()}
+            guard let response = response,let history = self?.history else {return}
+            for index in 0..<history.count {
+                print("submissionId", history[index].submissionID)
+                print("surveyName", response[history[index].submissionID])
+                if let surveyName = response[history[index].submissionID]?.surveyName {
+                    self?.history[index].surveyName = surveyName
+                    print("self?.history[index].surveyName", surveyName)
+                }
+            }
+            self?.history.removeAll(where: { $0.surveyName == "Cough Test" })
+            print("submissionIdList response",response)
+        } onFailure: { (error) in
+            print("error", error)
+        }
     }
     
     @objc func closeView() {

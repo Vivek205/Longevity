@@ -15,6 +15,12 @@ extension UICollectionView {
         return self.dequeueReusableCell(withReuseIdentifier: cellTypeName, for: indexPath)
     }
     
+    func getUniqueCell(with cellClass: AnyClass, at indexPath: IndexPath) -> UICollectionViewCell {
+        let cellTypeName = NSStringFromClass(cellClass) + "\(indexPath.item)"
+        self.register(cellClass, forCellWithReuseIdentifier: cellTypeName)
+        return self.dequeueReusableCell(withReuseIdentifier: cellTypeName, for: indexPath)
+    }
+    
     func getSupplementaryView(with viewClass: AnyClass, viewForSupplementaryElementOfKind kind: String,
                               at indexPath: IndexPath) -> UICollectionReusableView
     {

@@ -8,7 +8,7 @@
 
 import UIKit
 
-class DashboardTaskCompletedCell: UITableViewCell {
+class DashboardTaskCompletedCell: UICollectionViewCell {
     lazy var iconView:UIImageView = {
         let imageView = UIImageView()
         imageView.translatesAutoresizingMaskIntoConstraints = false
@@ -38,8 +38,9 @@ class DashboardTaskCompletedCell: UITableViewCell {
         return label
     }()
 
-    override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
-        super.init(style: style, reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
+        
         self.backgroundColor = .clear
         self.addSubview(iconView)
         self.addSubview(titleLabel)

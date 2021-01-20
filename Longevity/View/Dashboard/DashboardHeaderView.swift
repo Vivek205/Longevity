@@ -8,9 +8,9 @@
 
 import UIKit
 
-class DashboardHeaderView: UITableViewHeaderFooterView {
+class DashboardHeaderView: UICollectionReusableView {
     
-    let vTop = UIDevice.hasNotch ? 100.0 : 60.0
+    let vTop = UIDevice.hasNotch ? 95.0 : 70.0
     
     var userInsights: [UserInsight]? {
         didSet {
@@ -40,10 +40,10 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
     }()
     
     let topMargin = 10.0
-    let bottomMargin = 10.0
+    let bottomMargin = 0.0
     
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
+    override init(frame: CGRect) {
+        super.init(frame: frame)
         
         self.addSubview(bgImageView)
         self.addSubview(dashboardTilesCollection)
@@ -63,11 +63,14 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
             return
         }
         
-        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: CGFloat(bottomMargin), right: 0.0)
+        layout.sectionInset = UIEdgeInsets(top: CGFloat(topMargin), left: 30.0, bottom: 0.0, right: 0.0)
         layout.scrollDirection = .horizontal
+        layout.invalidateLayout()
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            self?.userInsights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs })
+            let insights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs &&
+                                                                                $0.name != .coughlogs })
+            self?.userInsights = insights?.sorted(by: { $0.name.hexagonOrder <= $1.name.hexagonOrder })
         }
     }
     
@@ -91,7 +94,7 @@ class DashboardHeaderView: UITableViewHeaderFooterView {
         layerGradient.name = "gradLayer"
         layerGradient.frame = CGRect(x: 0, y: 0, width: bgImageView.bounds.width, height: bgImageView.bounds.height)
         layerGradient.colors = [UIColor(hexString: "#F5F6FA").withAlphaComponent(0.0).cgColor, UIColor(hexString: "#F5F6FA").cgColor]
-        layerGradient.startPoint = CGPoint(x: 0, y: 0.5)
+        layerGradient.startPoint = CGPoint(x: 0, y: 0.75)
         layerGradient.endPoint = CGPoint(x: 0, y: 1.0)
 
         bgImageView.layer.insertSublayer(layerGradient, at: 0)
@@ -110,21 +113,18 @@ extension DashboardHeaderView: UICollectionViewDelegate, UICollectionViewDataSou
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         
-        if indexPath.item < 3 {
-            guard let tileCell = collectionView.getCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
+        if indexPath.item < (userInsights?.count ?? 0) {
+            guard let tileCell = collectionView.getUniqueCell(with: DashboardCollectionTileCell.self, at: indexPath) as? DashboardCollectionTileCell else {
                 preconditionFailure("Invalid tile cell type")
             }
-            
-            //Workaround for the hexagons sequence
-            let index = indexPath.item == 1 ? 2 : indexPath.item == 2 ? 1 : indexPath.item
-            
-            tileCell.insightData = self.userInsights?[index]
+            tileCell.insightData = self.userInsights?[indexPath.item]
             tileCell.setupCell(index: indexPath.item)
             return tileCell
         } else {
             guard let tileCell = collectionView.getCell(with: DashboardCollectionEmptyCell.self, at: indexPath) as? DashboardCollectionEmptyCell else {
                 preconditionFailure("Invalid tile cell type")
             }
+            tileCell.setupcell(index: indexPath.item)
             return tileCell
         }
     }

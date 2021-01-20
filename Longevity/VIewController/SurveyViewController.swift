@@ -53,23 +53,7 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
-                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {
-        
-//        switch reason {
-//        case .completed:
-//            print("completed")
-//            self.getSurveyList()
-//        case .discarded:
-//            print("discarded")
-//        case .failed:
-//            print("failed")
-//        case .saved:
-//            print("saved")
-//        @unknown default:
-//            print("unknown reason")
-//        }
-//        taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-        
+                            didFinishWith reason: ORKTaskViewControllerFinishReason, error: Error?) {        
         if self.isFirstCheckIn {
             DispatchQueue.main.async {
                 let tabbarViewController = LNTabBarViewController()
@@ -118,7 +102,8 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 stepVC.step = step
                 return stepVC
             } else if step is ORKInstructionStep {
-                let stepVC = SurveyIntroViewController()
+                let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
+                let stepVC = SurveyIntroViewController(isCoughTest: isCoughTest)
                 stepVC.step = step
                 return stepVC
             }
@@ -126,23 +111,19 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
             return nil
         } else if step is ORKFormStep {
             let formStepVC = FormStepVC()
-//            formStepVC.isFirstQuestion = isFirstQuestion
             formStepVC.step = step
             return formStepVC
         } else if step is ORKQuestionStep {
             guard let questionStep = step as? ORKQuestionStep else {return nil}
             if questionStep.answerFormat is ORKTextChoiceAnswerFormat {
                 let stepVC = TextChoiceAnswerVC()
-//                stepVC.isFirstQuestion = isFirstQuestion
                 stepVC.step = step
                 return stepVC
-            }
-            if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
+            } else if questionStep.answerFormat is ORKContinuousScaleAnswerFormat {
                 let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyQuestionDetails(questionId: step.identifier)
                 switch questionDetails?.quesType {
                 case .temperatureScale:
                     let stepVC = TemperatureScaleAnswerVC()
-//                    stepVC.isFirstQuestion = isFirstQuestion
                     stepVC.step = step
                     return stepVC
                 default:
@@ -150,18 +131,18 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                     stepVC.step = step
                     return stepVC
                 }
-            }
-
-            if questionStep.answerFormat is ORKTextAnswerFormat {
+            } else if questionStep.answerFormat is ORKTextAnswerFormat {
                 let stepVC = TextAnswerVC()
                 stepVC.step = step
                 return stepVC
-            }
-
-            if questionStep.answerFormat is ORKValuePickerAnswerFormat {
+            } else if questionStep.answerFormat is ORKValuePickerAnswerFormat {
                 let stepVC = ValuePickerAnswerVC()
                 stepVC.step = step
                 return stepVC
+            } else if questionStep.answerFormat is ORKLocationAnswerFormat {
+                let stepViewController = CoughRecorderViewController()
+                stepViewController.step = step
+                return stepViewController
             }
         }
         return nil

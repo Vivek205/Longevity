@@ -8,12 +8,12 @@
 
 import UIKit
 
-protocol RKCFormBooleanAnswerViewDelegate {
+protocol RKCFormBooleanAnswerViewDelegate: class {
     func segmentedControl(wasChangedOnCell cell:RKCFormBooleanAnswerView)
 }
 
 class RKCFormBooleanAnswerView: UIView {
-    var delegate:RKCFormBooleanAnswerViewDelegate?
+    weak var delegate:RKCFormBooleanAnswerViewDelegate?
     var currentAnswer:Bool = false
 
     lazy var segmentedControl: UISegmentedControl = {
@@ -75,7 +75,8 @@ class RKCFormBooleanAnswerView: UIView {
         delegate?.segmentedControl(wasChangedOnCell: self)
     }
 
-    func preSelectOption(index: Int) {
+    func preSelectOption(answer: Int) {
+        let index = answer == 0 ? 1 : 0
         self.segmentedControl.selectedSegmentIndex = index
     }
 }

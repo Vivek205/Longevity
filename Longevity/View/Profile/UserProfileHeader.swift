@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol UserProfileHeaderDelegate {
+protocol UserProfileHeaderDelegate: class {
     func selected(profileView: ProfileView)
 }
 
 class UserProfileHeader: UITableViewHeaderFooterView {
     
-    var delegate: UserProfileHeaderDelegate?
+    weak var delegate: UserProfileHeaderDelegate?
     
     var currentView: ProfileView! {
         didSet {

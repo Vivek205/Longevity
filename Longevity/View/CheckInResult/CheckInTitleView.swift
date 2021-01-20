@@ -53,7 +53,7 @@ class CheckInTitleView: UIView {
             titleLabel.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0),
             closeButton.widthAnchor.constraint(equalToConstant: 30.0),
             closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor),
-            closeButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 20.0),
+            closeButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -20.0),
             closeButton.centerYAnchor.constraint(equalTo: self.titleLabel.centerYAnchor)
         ])
         

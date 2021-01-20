@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17156" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dKi-Ug-slJ">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="dKi-Ug-slJ">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17125"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
@@ -20,7 +20,7 @@
         <!--Onboarding-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController storyboardIdentifier="OnboardingVC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="OnboardingVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="OnboardingVC" automaticallyAdjustsScrollViewInsets="NO" modalPresentationStyle="fullScreen" id="BYZ-38-t0r" customClass="OnboardingVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -40,7 +40,7 @@
         <!--Signup-->
         <scene sceneID="L8n-HE-6fi">
             <objects>
-                <viewController storyboardIdentifier="SignupVC" id="mT6-fh-4r1" customClass="SignupVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupVC" id="mT6-fh-4r1" customClass="SignupVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="z9F-SR-tws">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -51,7 +51,7 @@
                         <barButtonItem key="backBarButtonItem" title=" " id="4Dk-Is-KK1"/>
                     </navigationItem>
                     <connections>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="EyO-Hz-vMi"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="SignupToLogin" customClass="CustomUnwindSegue" customModule="COVID_Signals" id="EyO-Hz-vMi"/>
                         <segue destination="RlX-kq-iGh" kind="show" identifier="SignupToProfileSetup" id="Z1Q-xo-ocY"/>
                         <segue destination="Gsb-QW-NL5" kind="show" identifier="SignupToEmailSignup" id="6Km-OS-NmJ"/>
                     </connections>
@@ -73,7 +73,7 @@
         <!--Signup-->
         <scene sceneID="MKm-v7-LmT">
             <objects>
-                <viewController storyboardIdentifier="SignupByEmailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gsb-QW-NL5" customClass="SignupByEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupByEmailVC" useStoryboardIdentifierAsRestorationIdentifier="YES" id="Gsb-QW-NL5" customClass="SignupByEmailVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="YjP-6U-3tf">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -108,7 +108,7 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="phonePad" textContentType="tel"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-B2-m6A" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="b9r-B2-m6A" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                 <rect key="frame" x="20" y="432" width="374" height="48"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <constraints>
@@ -179,7 +179,7 @@
         <!--Verify Account-->
         <scene sceneID="6l3-xd-TeN">
             <objects>
-                <viewController storyboardIdentifier="SignupConfirmVC" id="3Ph-2d-HrV" customClass="SignupConfirmVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="SignupConfirmVC" id="3Ph-2d-HrV" customClass="SignupConfirmVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="scc-I3-3Fm">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -188,7 +188,7 @@
                     </view>
                     <navigationItem key="navigationItem" title="Verify Account" id="Bsw-ad-XvU"/>
                     <connections>
-                        <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="Longevity" id="ppv-oQ-y3h"/>
+                        <segue destination="DKT-YJ-RMe" kind="show" identifier="UnwindSignupConfirmToLogin" customClass="CustomUnwindSegue" customModule="COVID_Signals" id="ppv-oQ-y3h"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="aNc-jZ-0pa" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
@@ -198,7 +198,7 @@
         <!--Login-->
         <scene sceneID="BcJ-Ph-HFX">
             <objects>
-                <viewController storyboardIdentifier="PersonalLoginVC" id="DKT-YJ-RMe" customClass="PersonalLoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="PersonalLoginVC" id="DKT-YJ-RMe" customClass="PersonalLoginVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="nsU-81-HcD">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="842"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -272,7 +272,7 @@
                                     <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="MrL-Sq-rIV" userLabel="LoginButtonView">
                                         <rect key="frame" x="0.0" y="292" width="374" height="63"/>
                                         <subviews>
-                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXh-3g-ICe" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VXh-3g-ICe" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                                 <rect key="frame" x="0.0" y="7.5" width="374" height="48"/>
                                                 <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                                 <constraints>
@@ -545,7 +545,7 @@
         <!--Login-->
         <scene sceneID="js3-5l-GGr">
             <objects>
-                <viewController storyboardIdentifier="ClinicalLoginVC" hidesBottomBarWhenPushed="YES" id="ui0-Xv-jrI" customClass="ClinicalLoginVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="ClinicalLoginVC" hidesBottomBarWhenPushed="YES" id="ui0-Xv-jrI" customClass="ClinicalLoginVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="V9L-M9-TWB">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1000,7 +1000,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         <!--Confirm EmailVC-->
         <scene sceneID="Wjb-Tu-Gce">
             <objects>
-                <viewController id="mxF-6k-xVv" customClass="ConfirmEmailVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="mxF-6k-xVv" customClass="ConfirmEmailVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="ENF-RW-Peu">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1011,7 +1011,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" keyboardType="numberPad" textContentType="one-time-code"/>
                             </textField>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-K6-Bhb" customClass="CustomButtonFill" customModule="Longevity" customModuleProvider="target">
+                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="yWO-K6-Bhb" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
                                 <rect key="frame" x="131" y="248" width="153" height="48"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <color key="backgroundColor" red="0.35294117650000001" green="0.65490196079999996" blue="0.65490196079999996" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -1039,7 +1039,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         <!--change password-->
         <scene sceneID="uv0-iu-ftz">
             <objects>
-                <viewController id="Jks-3U-puK" customClass="ChangePasswordVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Jks-3U-puK" customClass="ChangePasswordVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="6kc-yb-fBO">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1095,7 +1095,7 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         <!--Reset Password-->
         <scene sceneID="tMU-qX-czS">
             <objects>
-                <viewController id="l6r-3G-Xog" customClass="ResetPasswordVC" customModule="Longevity" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="l6r-3G-Xog" customClass="ResetPasswordVC" customModule="COVID_Signals" customModuleProvider="target" sceneMemberID="viewController">
                     <view key="view" contentMode="scaleToFill" id="3ND-vC-9IM">
                         <rect key="frame" x="0.0" y="0.0" width="414" height="896"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -1186,8 +1186,8 @@ If you would like to run a clinical trial please visit www.rejuve.com to learn m
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="Z1Q-xo-ocY"/>
-        <segue reference="EyO-Hz-vMi"/>
+        <segue reference="jxn-dO-fRl"/>
+        <segue reference="ppv-oQ-y3h"/>
     </inferredMetricsTieBreakers>
     <resources>
         <image name="Apple logo" width="24" height="24"/>

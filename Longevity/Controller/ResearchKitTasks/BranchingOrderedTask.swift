@@ -13,7 +13,6 @@ class BranchingOrderedTask: ORKOrderedTask {
     public var visibilityPredicates = [String:[NSPredicate]]()
 
     override func step(after step: ORKStep?, with result: ORKTaskResult) -> ORKStep? {
-        print("after \(self.steps.count)")
         super.step(after: step, with: result)
         guard let currentStep = step else {
             if steps.isEmpty {
@@ -40,6 +39,18 @@ class BranchingOrderedTask: ORKOrderedTask {
             return nextStep
         }
         guard let identifier = step?.identifier else {return nextStep}
+//        MARK :- START Skip Symptoms If user selects `No Symptoms`
+        if identifier == SurveyTaskUtility.shared.feelingTodayQuestionId {
+            guard let feelingTodayAnswer =
+                SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: SurveyTaskUtility.shared.feelingTodayQuestionId) else {return nil}
+                    if feelingTodayAnswer == "0" {
+                        SurveyTaskUtility.shared.isSymptomsSkipped = true
+                        return self.steps[currentStepIndex + 2]
+                    } else {
+                        SurveyTaskUtility.shared.isSymptomsSkipped = false
+                    }
+        }
+//        MARK :- END Skip Symptoms If user selects `No Symptoms`
         let isDynamicQuestion = SurveyTaskUtility.shared.findIsQuestionDynamic(questionId: identifier)
         guard isDynamicQuestion else {
             return nextStep

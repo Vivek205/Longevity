@@ -8,67 +8,109 @@
 
 import UIKit
 
-protocol SetupProfileDevicesConnectCellDelegate {
+protocol SetupProfileDevicesConnectCellDelegate: class {
     func connectBtn(wasPressedOnCell cell:SetupProfileDevicesConnectCell)
 }
 
 class SetupProfileDevicesConnectCell: UICollectionViewCell {
-    // MARK: Outlets
-    @IBOutlet weak var contentContainerView: UIView!
-    @IBOutlet weak var image: UIImageView!
-    @IBOutlet weak var titleLabel: UILabel!
-    @IBOutlet weak var descriptionLabel: UILabel!
-    @IBOutlet weak var connectBtn: UIButton!
+    var deviceEnum: SetupProfileExternalDevice? {
+        didSet {
+            if let device = deviceEnum {
+                self.setupCell(title: device.title, description: device.description, image: device.image)
+            }
+        }
+    }
+    
+    lazy var deviceIcon:UIImageView = {
+        let image = UIImageView()
+        return image
+    }()
+    
+    lazy var titleLabel: UILabel = {
+        let label = UILabel(text: nil, font: UIFont(name: AppFontName.semibold, size: 20), textColor: UIColor.black.withAlphaComponent(0.87), textAlignment: .left, numberOfLines: 1)
+        return label
+    }()
+    
+    lazy var descriptionLabel:UILabel = {
+        let label = UILabel(text: nil, font: UIFont(name: AppFontName.regular, size: 14), textColor: .checkinCompleted, textAlignment: .left, numberOfLines: 0)
+        return label
+    }()
+    
+    lazy var connectImage: UIImageView = {
+        let image = UIImageView()
+        image.image = UIImage(named: "icon: add")
+        return image
+    }()
+    
+    lazy var tapGesture:UITapGestureRecognizer = {
+        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleConnectDevice(_:)))
+        gesture.numberOfTouchesRequired = 1
+        return gesture
+    }()
     
     // MARK: Delegate
-    var delegate: SetupProfileDevicesConnectCellDelegate?
-
+    weak var delegate: SetupProfileDevicesConnectCellDelegate?
+    
     // MARK: Actions
-    @IBAction func handleConnectDevice(_ sender: UIButton) {
+    @objc func handleConnectDevice(_ sender: Any) {
         delegate?.connectBtn(wasPressedOnCell: self)
     }
     
-    lazy var addedStateView: UIStackView = {
-        let addedImage = UIImageView()
-        addedImage.image = UIImage(#imageLiteral(resourceName: "icon: checked"))
-        addedImage.contentMode = .scaleAspectFit
-        addedImage.translatesAutoresizingMaskIntoConstraints = false
+    func setupCell(title:String, description:String, image: UIImage?) {
+        //        let option = setupProfileConnectDeviceOptionList[index]
+        self.backgroundColor = .white
         
-        let addTitle = UILabel()
-        addTitle.text = "ADDED"
-        addTitle.font = UIFont(name: "Montserrat-Medium", size: 14.0)
-        addTitle.textAlignment = .center
-        addTitle.textColor = .themeColor
-        addTitle.translatesAutoresizingMaskIntoConstraints = false
+        self.deviceIcon.image = image
+        self.titleLabel.text = title
+        self.descriptionLabel.text = description
         
-        let stack = UIStackView(arrangedSubviews: [addedImage, addTitle])
-        stack.axis = .vertical
-        stack.alignment = .center
-        stack.distribution = .fillProportionally
-        stack.translatesAutoresizingMaskIntoConstraints = false
+        self.contentView.addSubview(deviceIcon)
+        self.contentView.addSubview(titleLabel)
+        self.contentView.addSubview(descriptionLabel)
+        self.contentView.addSubview(connectImage)
         
-        return stack
-    }()
+        
+        deviceIcon.centerYTo(centerYAnchor)
+        deviceIcon.anchor(.leading(leadingAnchor, constant: 13),.width(46), .height(48))
+        titleLabel.anchor(.leading(deviceIcon.trailingAnchor, constant: 15.0),
+                          .top(self.topAnchor, constant: 6),
+                          .trailing(connectImage.leadingAnchor))
+        descriptionLabel.anchor(.leading(deviceIcon.trailingAnchor, constant: 15.0),
+                                .top(titleLabel.bottomAnchor, constant: 4),
+                                .trailing(connectImage.leadingAnchor),
+                                .bottom(self.bottomAnchor, constant: 9))
+        connectImage.centerYTo(centerYAnchor)
+        
+        guard let device = deviceEnum else {return}
+        var isConnected = false
+        if let devices = AppSyncManager.instance.healthProfile.value?.devices {
+            switch device {
+            case .fitbit:
+                if let fitbit = devices[ExternalDevices.fitbit], let connected = fitbit["connected"] {
+                    isConnected = connected == 1
+                }
+            case .appleWatch:
+                if let watch = devices[ExternalDevices.watch], let connected = watch["connected"] {
+                    isConnected = connected == 1
+                    
+                }
+            }
+        }
+        self.setupConnectButton(isConnected)
+        
+    }
     
-    func setupCell(index: Int) {
-        let option = setupProfileConnectDeviceOptionList[index]
-        self.image.image = option?.image
-        self.titleLabel.text = option?.title
-        self.descriptionLabel.text = option?.description
-        
-        self.addedStateView.removeFromSuperview()
-        
-        if option?.isConnected == true {
-            self.contentView.addSubview(addedStateView)
-            
-            NSLayoutConstraint.activate([
-                addedStateView.centerYAnchor.constraint(equalTo: self.contentView.centerYAnchor),
-                addedStateView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -8.0)
-            ])
-            self.connectBtn.isHidden = true
+    func setupConnectButton(_ isConnected:Bool) {
+        if isConnected {
+            connectImage.image = UIImage(named: "icon: added")
+            connectImage.anchor(.trailing(trailingAnchor, constant: 12),
+                                .width(69),.height(52))
+            connectImage.removeGestureRecognizer(tapGesture)
         } else {
-            self.connectBtn.isHidden = false
-            self.connectBtn.setImage(#imageLiteral(resourceName: "icon: add"), for: .normal)
+            connectImage.anchor(.trailing(trailingAnchor, constant: 12),
+                                .width(40),.height(40))
+            connectImage.isUserInteractionEnabled = true
+            connectImage.addGestureRecognizer(tapGesture)
         }
     }
     

@@ -12,7 +12,7 @@ class CheckinLogCell: UICollectionViewCell {
 
     var history: History! {
         didSet {
-           let symptomsCount = history.symptoms.count
+            let symptomsCount = history.symptoms.count
             if symptomsCount > 0 {
                 self.symptomsCircle.backgroundColor = UIColor(hexString: "#E1D46A")
             } else {
@@ -25,6 +25,19 @@ class CheckinLogCell: UICollectionViewCell {
             if let date = dateformatter.date(from: history.recordDate) {
                 dateformatter.dateFormat = "EEE | MMM dd, yyyy"
                 self.logDate.text = dateformatter.string(from: date)
+            }
+            self.logName.text = self.history.surveyName ?? "COVID Check-in"
+            if self.history.surveyName == "COVID Risk Assessment" {
+                symptomsLabel.isHidden = true
+                noofSymptoms.isHidden = true
+                symptomsCircle.isHidden = true
+                logIcon.isHidden = false
+                
+            } else {
+                symptomsLabel.isHidden = false
+                noofSymptoms.isHidden = false
+                symptomsCircle.isHidden = false
+                logIcon.isHidden = true
             }
         }
     }
@@ -56,23 +69,30 @@ class CheckinLogCell: UICollectionViewCell {
         return symptomslabel
     }()
     
-    lazy var logDate: UILabel = {
-        let date = UILabel()
-        date.font = UIFont(name: "Montserrat-Medium", size: 20.0)
-        date.textColor = UIColor.black.withAlphaComponent(0.87)
+    lazy var logName: UILabel = {
+        let date = UILabel(text: "Name", font: UIFont(name: AppFontName.medium, size: 20.0),
+                           textColor: UIColor.black.withAlphaComponent(0.87),
+                           textAlignment: .left, numberOfLines: 1)
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
     }()
     
-    lazy var viewDetailsLabel: UILabel = {
+    lazy var logDate: UILabel = {
         let viewdetails = UILabel()
         viewdetails.text = "View Details"
-        viewdetails.textColor = UIColor(hexString: "#5AA7A7")
-        viewdetails.font = UIFont(name: "Montserrat-Medium", size: 16.0)
+        viewdetails.textColor = .checkinCompleted
+        viewdetails.font = UIFont(name: AppFontName.regular, size: 16.0)
         viewdetails.translatesAutoresizingMaskIntoConstraints = false
         return viewdetails
     }()
-    
+
+    lazy var logIcon: UIImageView = {
+        let icon = UIImageView()
+        icon.translatesAutoresizingMaskIntoConstraints = false
+        icon.image = UIImage(named: "logIcon:COVID Risk Assessment")
+        return icon
+    }()
+
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -81,24 +101,31 @@ class CheckinLogCell: UICollectionViewCell {
         self.contentView.addSubview(symptomsCircle)
         self.symptomsCircle.addSubview(noofSymptoms)
         self.contentView.addSubview(symptomsLabel)
+        self.contentView.addSubview(logName)
         self.contentView.addSubview(logDate)
-        self.contentView.addSubview(viewDetailsLabel)
+        self.contentView.addSubview(logIcon)
         
         NSLayoutConstraint.activate([
             symptomsCircle.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
-            symptomsCircle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 20.0),
+            symptomsCircle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
             symptomsCircle.heightAnchor.constraint(equalToConstant: 46.0),
             symptomsCircle.widthAnchor.constraint(equalTo: symptomsCircle.heightAnchor),
             noofSymptoms.centerXAnchor.constraint(equalTo: symptomsCircle.centerXAnchor),
             noofSymptoms.centerYAnchor.constraint(equalTo: symptomsCircle.centerYAnchor),
             symptomsLabel.topAnchor.constraint(equalTo: symptomsCircle.bottomAnchor, constant: 3.0),
             symptomsLabel.centerXAnchor.constraint(equalTo: symptomsCircle.centerXAnchor),
-            logDate.leadingAnchor.constraint(equalTo: symptomsCircle.trailingAnchor, constant: 20.0),
-            logDate.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
-            logDate.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
-            viewDetailsLabel.leadingAnchor.constraint(equalTo: logDate.leadingAnchor),
-            viewDetailsLabel.topAnchor.constraint(equalTo: logDate.bottomAnchor, constant: 12.0)
+            logName.leadingAnchor.constraint(equalTo: symptomsCircle.trailingAnchor, constant: 20.0),
+            logName.topAnchor.constraint(equalTo: topAnchor, constant: 15.0),
+            logName.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -10.0),
+            logDate.leadingAnchor.constraint(equalTo: logName.leadingAnchor),
+            logDate.topAnchor.constraint(equalTo: logName.bottomAnchor, constant: 12.0),
+            logIcon.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+            logIcon.widthAnchor.constraint(equalToConstant: 57.0),
+            logIcon.heightAnchor.constraint(equalToConstant: 52.0),
+            logIcon.topAnchor.constraint(equalTo: topAnchor, constant: 15.0)
         ])
+
+        logIcon.isHidden = true
     }
 
     required init?(coder: NSCoder) {

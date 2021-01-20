@@ -14,7 +14,7 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
     
     lazy var emailNotification: UILabel = {
         let notification = UILabel()
-        notification.font = UIFont(name: "Montserrat-Medium", size: 16.0)
+        notification.font = UIFont(name: AppFontName.medium, size: 16.0)
         notification.text = "Send email notification when Longevity is ready"
         notification.textColor = UIColor(hexString: "#4E4E4E")
         notification.numberOfLines = 0
