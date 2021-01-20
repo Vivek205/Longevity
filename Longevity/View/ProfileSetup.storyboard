@@ -640,13 +640,6 @@
                                     <constraint firstAttribute="width" constant="260" id="ZvB-c7-Tkt"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                <rect key="frame" x="15" y="457.5" width="384" height="0.0"/>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <string key="userLabel">You can always edit your health profile and answers under your Profile Settings  You are ready to begin your first “health” survey quetions that will help determine This and That</string>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9K-JU-FGj" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="722" width="414" height="174"/>
                                 <subviews>
@@ -695,15 +688,12 @@
                         <viewLayoutGuide key="safeArea" id="gOS-uH-Kc5"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gOS-uH-Kc5" firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" constant="15" id="1SK-2m-OY1"/>
                             <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" constant="15" id="7Eb-2W-5Ex"/>
                             <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="aj6-ax-2An" secondAttribute="centerX" id="8YK-6H-ElH"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="bottom" secondItem="aj6-ax-2An" secondAttribute="bottom" id="H9m-qW-UVJ"/>
-                            <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="aj6-ax-2An" secondAttribute="leading" constant="15" id="HM2-f2-hlS"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" id="KJg-Vv-Dml"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="trailing" secondItem="gOS-uH-Kc5" secondAttribute="trailing" id="N7r-I8-LQb"/>
                             <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="24" id="OxN-zS-Q2D"/>
-                            <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="24" id="Z1r-tb-PYG"/>
                             <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="gOS-uH-Kc5" secondAttribute="top" constant="24" id="nE5-HP-01J"/>
                             <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="15" id="tp7-73-W9B"/>
                         </constraints>
@@ -732,9 +722,6 @@
                             </constraints>
                         </view>
                     </navigationItem>
-                    <connections>
-                        <outlet property="noteLabel" destination="K85-ba-4vg" id="kVC-uo-Aiw"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACL-Si-545" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>
