@@ -13,7 +13,7 @@ typealias CompletionHandler = (() -> Void)
 class DynamicValue<T> {
     var value : T? {
         didSet {
-            self.notify()
+            self.notifyAll()
         }
     }
 
@@ -29,11 +29,21 @@ class DynamicValue<T> {
 
     public func addAndNotify(observer: NSObject, completionHandler: @escaping CompletionHandler) {
         self.addObserver(observer, completionHandler: completionHandler)
-        self.notify()
+        self.notify(observer: observer)
+    }
+    
+    public func remove(observer: NSObject) {
+        observers.removeValue(forKey: observer.description)
     }
 
-    private func notify() {
+    private func notifyAll() {
         observers.forEach({ $0.value() })
+    }
+    
+    private func notify(observer: NSObject) {
+        observers.forEach { if $0.key == observer.description {
+            $0.value()
+        }}
     }
 
     deinit {

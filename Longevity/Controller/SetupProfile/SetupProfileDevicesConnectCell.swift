@@ -39,14 +39,15 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     lazy var connectImage: UIImageView = {
         let image = UIImageView()
         image.image = UIImage(named: "icon: add")
+        image.contentMode = .scaleAspectFit
         return image
     }()
     
-    lazy var tapGesture:UITapGestureRecognizer = {
-        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleConnectDevice(_:)))
-        gesture.numberOfTouchesRequired = 1
-        return gesture
-    }()
+//    lazy var tapGesture:UITapGestureRecognizer = {
+//        let gesture = UITapGestureRecognizer(target: self, action: #selector(handleConnectDevice(_:)))
+//        gesture.numberOfTouchesRequired = 1
+//        return gesture
+//    }()
     
     // MARK: Delegate
     weak var delegate: SetupProfileDevicesConnectCellDelegate?
@@ -57,7 +58,6 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
     }
     
     func setupCell(title:String, description:String, image: UIImage?) {
-        //        let option = setupProfileConnectDeviceOptionList[index]
         self.backgroundColor = .white
         
         self.deviceIcon.image = image
@@ -80,6 +80,8 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
                                 .trailing(connectImage.leadingAnchor),
                                 .bottom(self.bottomAnchor, constant: 9))
         connectImage.centerYTo(centerYAnchor)
+        connectImage.anchor(.trailing(trailingAnchor, constant: 12),
+                            .width(69),.height(52))
         
         guard let device = deviceEnum else {return}
         var isConnected = false
@@ -92,25 +94,18 @@ class SetupProfileDevicesConnectCell: UICollectionViewCell {
             case .appleWatch:
                 if let watch = devices[ExternalDevices.watch], let connected = watch["connected"] {
                     isConnected = connected == 1
-                    
                 }
             }
         }
-        self.setupConnectButton(isConnected)
         
+        connectImage.image = isConnected ? UIImage(named: "icon: added") : UIImage(named: "icon: add")
     }
     
     func setupConnectButton(_ isConnected:Bool) {
         if isConnected {
             connectImage.image = UIImage(named: "icon: added")
-            connectImage.anchor(.trailing(trailingAnchor, constant: 12),
-                                .width(69),.height(52))
-            connectImage.removeGestureRecognizer(tapGesture)
         } else {
-            connectImage.anchor(.trailing(trailingAnchor, constant: 12),
-                                .width(40),.height(40))
-            connectImage.isUserInteractionEnabled = true
-            connectImage.addGestureRecognizer(tapGesture)
+            connectImage.image = UIImage(named: "icon: add")
         }
     }
     
