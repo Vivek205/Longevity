@@ -42,19 +42,17 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
     }
 
     override func primaryButtonPressed(_ sender: UIButton) {
-        let userInsightsAPI = UserInsightsAPI()
-
         self.showSpinner()
         let action = UIAlertAction(title: "OK", style: .default, handler: self.handleUIAlertAction(_:) )
 
-        userInsightsAPI.exportUserApplicationData(completion: {
+        UserInsightsAPI.instance.exportUserApplicationData(completion: { [unowned self] in
             DispatchQueue.main.async {
                 self.removeSpinner()
                 Alert(title: "Success",
                                message: "Your data has been exported successfully. You will receive an email shortly.", action: action)
             }
 
-        }) { (error) in
+        }) { [unowned self] (error) in
             DispatchQueue.main.async {
                 self.removeSpinner()
 

@@ -114,14 +114,13 @@ class CheckInLogDetailsViewController: UIViewController {
     }
         
     @objc func handleExportData() {
-        let userInsightAPI = UserInsightsAPI()
         self.showSpinner()
-        userInsightAPI.exportUserApplicationData(completion: {
+        UserInsightsAPI.instance.exportUserApplicationData(submissionID: history?.submissionID, completion: { [unowned self] in
             DispatchQueue.main.async {
                 Alert(title: "Success", message: "Your data has been sent to your email.")
                 self.removeSpinner()
             }
-        }) { (error) in
+        }) { [unowned self] (error) in
             DispatchQueue.main.async {
                 self.removeSpinner()
                 Alert(title: "Failure", message: "Unable to export your data. Please try again later.")
