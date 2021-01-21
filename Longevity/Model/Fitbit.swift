@@ -125,7 +125,7 @@ class FitbitModel: AuthHandlerType {
         var urlRequest = URLRequest(url: (urlComponents?.url)!)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response,_   in
             guard let httpResponse = response as? HTTPURLResponse,
@@ -174,7 +174,7 @@ class FitbitModel: AuthHandlerType {
         var urlRequest = URLRequest(url: (urlComponents?.url)!)
                urlRequest.httpMethod = "POST"
                urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
-               urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+               urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
     }
     
     static func getOperationsToRefreshFitbitToken() -> [Operation] {
@@ -217,7 +217,7 @@ class FitbitModel: AuthHandlerType {
         var urlRequest = URLRequest(url: (urlComponents?.url)!)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
 
         let dataTask = URLSession.shared.dataTask(with: urlRequest) {data, response,_   in
             print("data", String(data:data!, encoding: .utf8))
