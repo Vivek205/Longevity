@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-class TextAnswerVC: ORKStepViewController {
+class TextAnswerVC: BaseStepViewController {
 
     lazy var questionView:RKCQuestionView = {
         let questionView = RKCQuestionView()
@@ -19,21 +19,7 @@ class TextAnswerVC: ORKStepViewController {
         questionView.createLayout(question: question)
         return questionView
     }()
-
-    lazy var footerView:UIView = {
-        let uiView = UIView()
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
-        return uiView
-    }()
-
-    lazy var continueButton: CustomButtonFill = {
-        let buttonView = CustomButtonFill()
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Continue", for: .normal)
-        return buttonView
-    }()
-
+    
     lazy var answerTextView: UITextView  = {
         let textView = UITextView()
         textView.translatesAutoresizingMaskIntoConstraints = false
@@ -80,9 +66,7 @@ class TextAnswerVC: ORKStepViewController {
         self.view.addSubview(questionView)
         self.view.addSubview(answerTextView)
         self.view.addSubview(clearButton)
-        self.view.addSubview(footerView)
-        footerView.addSubview(continueButton)
-        let footerViewHeight = CGFloat(130)
+       
         let answerTextViewHeight = CGFloat(200)
         var questionViewHeight = CGFloat(0)
 
@@ -141,21 +125,8 @@ class TextAnswerVC: ORKStepViewController {
 
             clearButton.centerXAnchor.constraint(equalTo: self.view.centerXAnchor),
             clearButton.topAnchor.constraint(equalTo: answerTextView.bottomAnchor, constant: 20),
-            clearButton.heightAnchor.constraint(equalToConstant: 38),
-
-            footerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            footerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: footerViewHeight),
-
-            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
-            continueButton.heightAnchor.constraint(equalToConstant: 48)
+            clearButton.heightAnchor.constraint(equalToConstant: 38)
         ])
-
-        continueButton.isEnabled = false
-        continueButton.addTarget(self, action: #selector(handleContinue(sender:)), for: .touchUpInside)
 
 
         let tapGesture = UITapGestureRecognizer(target: self, action: #selector(closeKeyboard))
@@ -175,11 +146,6 @@ class TextAnswerVC: ORKStepViewController {
             return
         }
 
-    }
-
-
-    @objc func handleContinue(sender: UIButton) {
-        self.goForward()
     }
 
     @objc func closeKeyboard() {

@@ -14,7 +14,8 @@ class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
     @IBOutlet weak var titleLabel: UILabel!
     @IBOutlet weak var disclaimer: UILabel!
     @IBOutlet weak var infoLabel: UILabel!
-
+    @IBOutlet weak var footerView: UIView!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         customizeDisclaimerLabel()
@@ -26,6 +27,12 @@ class SetupProfileDisclaimerVC: BaseProfileSetupViewController {
 
         self.removeBackButtonNavigation()
         self.addProgressbar(progress: 20.0)
+        
+        let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
+        
+        NSLayoutConstraint.activate([
+            self.footerView.heightAnchor.constraint(equalToConstant: footerheight)
+        ])
     }
 
     func customizeDisclaimerLabel() {

@@ -17,25 +17,6 @@ class SetupCompleteVC: BaseProfileSetupViewController {
         self.removeBackButtonNavigation()
         
         let footerheight: CGFloat = UIDevice.hasNotch ? 130.0 : 96.0
-        
-//        let headingAttributes:[NSAttributedString.Key:Any] =
-//            [.font: UIFont(name: "Montserrat-SemiBold", size: CGFloat(18)), .foregroundColor: UIColor.sectionHeaderColor]
-//        let heading = NSMutableAttributedString(string: "Note: ", attributes: headingAttributes)
-//
-//        let detailsAttributes:[NSAttributedString.Key:Any] =
-//            [.font: UIFont(name: "Montserrat-Italic", size: CGFloat(18)),
-//             .foregroundColor: UIColor.sectionHeaderColor
-//        ]
-//
-//        let details =
-//            NSMutableAttributedString(
-//                string: "You can edit your health profile any time from your Profile Settings",attributes: detailsAttributes)
-
-//        var noteContent: NSMutableAttributedString = NSMutableAttributedString()
-//        noteContent.append(heading)
-//        noteContent.append(details)
-
-//        noteLabel.attributedText = noteContent
     }
 
     func navigateForward() {

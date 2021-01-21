@@ -11,11 +11,16 @@ import UIKit
 fileprivate let minCelsius = Double(36)
 fileprivate let maxCelsius = Double(39)
 
-
 fileprivate func celsiusToFahrenheit(value: Double) -> Double {
     let celsius = Measurement(value: value, unit: UnitTemperature.celsius)
     let fahrenheit = celsius.converted(to: .fahrenheit)
     return fahrenheit.value
+}
+
+fileprivate func fahrenheitToCelsius(value: Double) -> Double {
+    let fahrenheit = Measurement(value: value, unit: UnitTemperature.fahrenheit)
+    let celsius = fahrenheit.converted(to: .fahrenheit)
+    return celsius.value
 }
 
 class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
@@ -33,9 +38,9 @@ class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
                     self?.slider.maximumValueImage = "\(String(format: "%.1f", maxCelsius)) \u{00B0}C".toImage(color: .black, backgroundColor: .appBackgroundColor, font: UIFont(name: AppFontName.regular, size: 18))
                     if let localSavedAnswer =
                         SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: self?.step?.identifier ?? "")  {
-                        print((localSavedAnswer as NSString).floatValue)
-                        self?.slider.setValue((localSavedAnswer as NSString).floatValue, animated: true)
-                        self?.sliderLabel.text = "\(String(format:"%.1f",localSavedAnswer)) \u{00B0}C"
+                        let localanswer = (localSavedAnswer as NSString).floatValue //print((localSavedAnswer as NSString).floatValue)
+                        self?.slider.setValue(localanswer, animated: true)
+                        self?.sliderLabel.text = "\(String(format:"%.1f",localanswer)) \u{00B0}C"
                         self?.continueButton.isEnabled = true
                     } else {
                         self?.slider.setValue(Float(minCelsius), animated: true)
@@ -51,7 +56,6 @@ class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
                     if let localSavedAnswer =
                         SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: self?.step?.identifier ?? "")  {
                         let localAnswerFahrenheit = celsiusToFahrenheit(value: (localSavedAnswer as NSString).doubleValue)
-                        print((localSavedAnswer as NSString).floatValue)
                         self?.slider.setValue(Float(localAnswerFahrenheit), animated: true)
                         self?.sliderLabel.text = "\(String(format:"%.1f",localAnswerFahrenheit)) \u{00B0}F"
                         self?.continueButton.isEnabled = true

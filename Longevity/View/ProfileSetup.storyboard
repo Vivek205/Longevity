@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17506" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="17701" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="fCl-5I-BFf">
     <device id="retina6_1" orientation="portrait" appearance="light"/>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17505"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="17703"/>
         <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="System colors in document resources" minToolsVersion="11.0"/>
         <capability name="collection view cell content view" minToolsVersion="11.0"/>
@@ -57,7 +57,7 @@
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="jTi-dJ-ldN" userLabel="Footer">
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="jTi-dJ-ldN" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="766" width="414" height="130"/>
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="a8S-60-J8A" customClass="CustomButtonFill" customModule="COVID_Signals" customModuleProvider="target">
@@ -73,7 +73,6 @@
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="9TX-Dw-XMP"/>
                                     <constraint firstItem="a8S-60-J8A" firstAttribute="leading" secondItem="jTi-dJ-ldN" secondAttribute="leading" constant="20" id="WdY-X8-Ws9"/>
                                     <constraint firstAttribute="trailing" secondItem="a8S-60-J8A" secondAttribute="trailing" constant="20" id="h5y-TK-eOT"/>
                                     <constraint firstItem="a8S-60-J8A" firstAttribute="top" secondItem="jTi-dJ-ldN" secondAttribute="top" constant="24" id="jc6-lK-MTb"/>
@@ -106,6 +105,7 @@
                     <simulatedToolbarMetrics key="simulatedBottomBarMetrics"/>
                     <connections>
                         <outlet property="disclaimer" destination="TTa-qf-JMf" id="vuh-OG-6Lf"/>
+                        <outlet property="footerView" destination="jTi-dJ-ldN" id="H3u-nP-5cL"/>
                         <outlet property="infoLabel" destination="HO4-Wh-MeV" id="QCO-Kn-Sb6"/>
                         <outlet property="titleLabel" destination="8IP-bf-WoA" id="H3T-0V-YrZ"/>
                         <segue destination="zzR-Y2-5eR" kind="unwind" identifier="unwindTOSToOnboarding" unwindAction="unwindToOnboarding:" id="MGb-Pc-TaY"/>
@@ -193,7 +193,7 @@
                                                         <constraint firstAttribute="height" constant="36" id="M1d-FB-0nC"/>
                                                     </constraints>
                                                 </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your body biometrics data is kept private and never shared." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8L-W4-7fI">
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Your body biometrics data is kept private and anonymized." textAlignment="natural" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O8L-W4-7fI">
                                                     <rect key="frame" x="59" y="0.0" width="285" height="90"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="14"/>
                                                     <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
@@ -229,11 +229,8 @@
                                                         <action selector="handleMetricTogglePress:" destination="YhE-Gr-gSC" eventType="valueChanged" id="R0r-ta-8vT"/>
                                                     </connections>
                                                 </switch>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Metric" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-e8-aR4">
-                                                    <rect key="frame" x="250" y="34" width="60" height="22"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="60" id="aXz-O9-cR3"/>
-                                                    </constraints>
+                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="display metric units" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="mY9-e8-aR4">
+                                                    <rect key="frame" x="132.5" y="34" width="177.5" height="22"/>
                                                     <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="18"/>
                                                     <nil key="textColor"/>
                                                     <nil key="highlightedColor"/>
@@ -302,7 +299,7 @@
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow us to provide you a better service.  Enable notifications to recieve scheduled reminders and updates  " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lQ-x2-dP5">
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Allow us to provide you a better service.  Enable notifications to receive scheduled reminders and updates  " lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" minimumFontSize="12" adjustsFontForContentSizeCategory="YES" translatesAutoresizingMaskIntoConstraints="NO" id="8lQ-x2-dP5">
                                 <rect key="frame" x="15" y="413.5" width="384" height="98"/>
                                 <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="20"/>
                                 <color key="textColor" red="0.30588235294117649" green="0.30588235294117649" blue="0.30588235294117649" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
@@ -643,13 +640,6 @@
                                     <constraint firstAttribute="width" constant="260" id="ZvB-c7-Tkt"/>
                                 </constraints>
                             </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="" lineBreakMode="tailTruncation" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="K85-ba-4vg">
-                                <rect key="frame" x="15" y="457.5" width="384" height="0.0"/>
-                                <fontDescription key="fontDescription" name="Montserrat-Regular" family="Montserrat" pointSize="24"/>
-                                <nil key="textColor"/>
-                                <nil key="highlightedColor"/>
-                                <string key="userLabel">You can always edit your health profile and answers under your Profile Settings  You are ready to begin your first “health” survey quetions that will help determine This and That</string>
-                            </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="n9K-JU-FGj" userLabel="Footer">
                                 <rect key="frame" x="0.0" y="722" width="414" height="174"/>
                                 <subviews>
@@ -698,15 +688,12 @@
                         <viewLayoutGuide key="safeArea" id="gOS-uH-Kc5"/>
                         <color key="backgroundColor" red="0.96078431372549022" green="0.96470588235294119" blue="0.98039215686274506" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="gOS-uH-Kc5" firstAttribute="trailing" secondItem="K85-ba-4vg" secondAttribute="trailing" constant="15" id="1SK-2m-OY1"/>
                             <constraint firstItem="Ol2-mH-c3N" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" constant="15" id="7Eb-2W-5Ex"/>
                             <constraint firstItem="PaW-c9-flq" firstAttribute="centerX" secondItem="aj6-ax-2An" secondAttribute="centerX" id="8YK-6H-ElH"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="bottom" secondItem="aj6-ax-2An" secondAttribute="bottom" id="H9m-qW-UVJ"/>
-                            <constraint firstItem="K85-ba-4vg" firstAttribute="leading" secondItem="aj6-ax-2An" secondAttribute="leading" constant="15" id="HM2-f2-hlS"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="leading" secondItem="gOS-uH-Kc5" secondAttribute="leading" id="KJg-Vv-Dml"/>
                             <constraint firstItem="n9K-JU-FGj" firstAttribute="trailing" secondItem="gOS-uH-Kc5" secondAttribute="trailing" id="N7r-I8-LQb"/>
                             <constraint firstItem="Ol2-mH-c3N" firstAttribute="top" secondItem="PaW-c9-flq" secondAttribute="bottom" constant="24" id="OxN-zS-Q2D"/>
-                            <constraint firstItem="K85-ba-4vg" firstAttribute="top" secondItem="Ol2-mH-c3N" secondAttribute="bottom" constant="24" id="Z1r-tb-PYG"/>
                             <constraint firstItem="PaW-c9-flq" firstAttribute="top" secondItem="gOS-uH-Kc5" secondAttribute="top" constant="24" id="nE5-HP-01J"/>
                             <constraint firstAttribute="trailing" secondItem="Ol2-mH-c3N" secondAttribute="trailing" constant="15" id="tp7-73-W9B"/>
                         </constraints>
@@ -735,9 +722,6 @@
                             </constraints>
                         </view>
                     </navigationItem>
-                    <connections>
-                        <outlet property="noteLabel" destination="K85-ba-4vg" id="kVC-uo-Aiw"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ACL-Si-545" userLabel="First Responder" customClass="UIResponder" sceneMemberID="firstResponder"/>
             </objects>

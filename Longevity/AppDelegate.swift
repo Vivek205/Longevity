@@ -130,6 +130,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if AppSyncManager.instance.pollingTimer != nil {
             AppSyncManager.instance.syncSurveyList()
         }
+        
+        ConnectionManager.instance.addConnectionObserver()
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

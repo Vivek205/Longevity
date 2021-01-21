@@ -9,7 +9,7 @@
 import UIKit
 import ResearchKit
 
-class ContinuousScaleAnswerVC: ORKStepViewController {
+class ContinuousScaleAnswerVC: BaseStepViewController {
     
     override var step: ORKStep? {
         didSet {
@@ -22,13 +22,12 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
                     slider.maximumValue = Float(answerFormat.maximum)
                     slider.minimumValueImage = answerFormat.minimumValueDescription?.toImage()
                     slider.maximumValueImage = answerFormat.maximumValueDescription?.toImage()
-
                 }
 
                 if let localSavedAnswer =
                     SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: step.identifier)  {
                     slider.setValue((localSavedAnswer as NSString).floatValue, animated: true)
-                    sliderLabel.text = localSavedAnswer
+                    sliderLabel.text = String(format: "%.1f", slider.value)
                     continueButton.isEnabled = true
                 }
             }
@@ -41,22 +40,6 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
         return uiView
     }()
 
-    lazy var footerView:UIView = {
-        let uiView = UIView()
-        uiView.translatesAutoresizingMaskIntoConstraints = false
-        uiView.backgroundColor = .white
-        return uiView
-    }()
-
-    lazy var continueButton: CustomButtonFill = {
-        let buttonView = CustomButtonFill()
-        buttonView.translatesAutoresizingMaskIntoConstraints = false
-        buttonView.setTitle("Continue", for: .normal)
-        buttonView.addTarget(self, action: #selector(handleContinue(_:)), for: .touchUpInside)
-        buttonView.isEnabled = false
-        return buttonView
-    }()
-
     lazy var slider:UISlider = {
         let uiSlider = UISlider()
         uiSlider.isContinuous = true
@@ -67,14 +50,14 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
     }()
 
     lazy var sliderLabel: UILabel = {
-        let label = UILabel(text: nil, font: UIFont(name: AppFontName.medium, size: 28), textColor: .themeColor, textAlignment: .center, numberOfLines: 1)
+        let label = UILabel(text: nil, font: UIFont(name: AppFontName.medium, size: 28),
+                            textColor: .themeColor, textAlignment: .center, numberOfLines: 1)
         label.translatesAutoresizingMaskIntoConstraints = false
         return label
     }()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-//        self.navigationItem.hidesBackButton = isFirstQuestion
         createLayout()
     }
 
@@ -82,8 +65,6 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
         self.view.addSubview(questionView)
         self.view.addSubview(sliderLabel)
         self.view.addSubview(slider)
-        self.view.addSubview(footerView)
-        footerView.addSubview(continueButton)
         var questionViewHeight = CGFloat(0)
 
         if let step = self.step as? ORKQuestionStep,
@@ -106,22 +87,8 @@ class ContinuousScaleAnswerVC: ORKStepViewController {
 
             slider.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20),
             slider.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20),
-            slider.topAnchor.constraint(equalTo: sliderLabel.bottomAnchor, constant: 12),
-
-            footerView.leadingAnchor.constraint(equalTo: view.leadingAnchor),
-            footerView.trailingAnchor.constraint(equalTo: view.trailingAnchor),
-            footerView.heightAnchor.constraint(equalToConstant: 130),
-            footerView.bottomAnchor.constraint(equalTo: view.bottomAnchor),
-
-            continueButton.leadingAnchor.constraint(equalTo: footerView.leadingAnchor, constant: 15),
-            continueButton.trailingAnchor.constraint(equalTo: footerView.trailingAnchor, constant: -15),
-            continueButton.topAnchor.constraint(equalTo: footerView.topAnchor, constant: 24),
-            continueButton.heightAnchor.constraint(equalToConstant: 48)
+            slider.topAnchor.constraint(equalTo: sliderLabel.bottomAnchor, constant: 12)
         ])
-    }
-
-    @objc func handleContinue(_ sender: UIButton) {
-        self.goForward()
     }
 
     @objc func handleSliderValueChanged(_ sender: UISlider) {

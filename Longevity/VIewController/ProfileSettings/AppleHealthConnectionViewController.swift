@@ -73,6 +73,10 @@ class AppleHealthConnectionViewController: UIViewController {
     @objc func closeView() {
         self.dismiss(animated: true, completion: nil)
     }
+    
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+    }
 }
 
 extension AppleHealthConnectionViewController: UITableViewDataSource, UITableViewDelegate {

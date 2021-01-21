@@ -9,6 +9,8 @@
 import UIKit
 
 class CheckInLogDetailsViewController: UIViewController {
+
+    private var dismissalDirection: ModalDismissDirection = .downwards
     
     var history: History! {
         didSet {
@@ -84,7 +86,7 @@ class CheckInLogDetailsViewController: UIViewController {
         NSLayoutConstraint.activate([
             containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
-            containerView.topAnchor.constraint(equalTo: self.view.centerYAnchor),
+            containerView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.75),
             containerView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             bezelView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 13.0),
             bezelView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
@@ -103,19 +105,14 @@ class CheckInLogDetailsViewController: UIViewController {
             logDetailsTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
-        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
-        tapgesture.numberOfTouchesRequired = 1
-        
-        self.view.addGestureRecognizer(tapgesture)
-        
         containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height,
-                                     width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+                                     width: self.view.bounds.width,
+                                     height: self.view.bounds.height * 0.75)
+        
+        let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
+        containerView.addGestureRecognizer(gesture)
     }
-    
-    @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
-    }
-    
+        
     @objc func handleExportData() {
         let userInsightAPI = UserInsightsAPI()
         self.showSpinner()
@@ -132,6 +129,34 @@ class CheckInLogDetailsViewController: UIViewController {
         }
     }
     
+    var viewTranslation = CGPoint(x: 0, y: 0)
+    
+    @objc func wasDragged(sender: UIPanGestureRecognizer) {
+        switch sender.state {
+        case .changed:
+            viewTranslation = sender.translation(in: view)
+            if viewTranslation.y < 0 {
+                return
+            }
+            UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                self.containerView.transform = CGAffineTransform(translationX: 0, y: self.viewTranslation.y)
+            })
+        case .ended:
+            if viewTranslation.y > -100 && viewTranslation.y < 200 {
+                UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 0.7, initialSpringVelocity: 1, options: .curveEaseOut, animations: {
+                    self.containerView.transform = .identity
+                })
+            } else {
+                if viewTranslation.y >= 0 {
+                    self.dismissalDirection = .downwards
+                    dismiss(animated: true, completion: nil)
+                }
+            }
+        default:
+            break
+        }
+    }
+    
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         
@@ -145,19 +170,21 @@ class CheckInLogDetailsViewController: UIViewController {
     
     override func viewWillAppear(_ animated: Bool) {
         super.viewWillAppear(animated)
-        
-        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut) {
+        UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0,
+                       initialSpringVelocity: 1.0, options: .curveEaseInOut) {
             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
-            self.containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height / 2.0, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+            self.containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height * 0.75,
+                                              width: self.view.bounds.width, height: self.view.bounds.height * 0.75)
         }
     }
     
     override func viewWillDisappear(_ animated: Bool) {
         super.viewWillDisappear(animated)
-        
         UIView.animate(withDuration: 0.5, delay: 0, usingSpringWithDamping: 1.0, initialSpringVelocity: 1.0, options: .curveEaseInOut) {
             self.view.backgroundColor = UIColor.black.withAlphaComponent(0.50)
-            self.containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height, width: self.view.bounds.width, height: self.view.bounds.height / 2.0)
+            if self.dismissalDirection == .downwards {
+                self.containerView.center = CGPoint(x: self.view.center.x, y: self.view.center.y * 2)
+            }
         }
     }
 }

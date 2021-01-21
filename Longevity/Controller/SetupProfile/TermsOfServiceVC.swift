@@ -11,13 +11,23 @@ import Amplify
 import Sentry
 import WebKit
 
-fileprivate let termsOfServiceContent = TermsOfServiceContent()
-fileprivate let tosWebViewURL = "https://rejuve-public.s3-us-west-2.amazonaws.com/Beta-TOS.html"
-
 class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDelegate {
+    
+    fileprivate let tosWebViewURL = "https://rejuve-public.s3-us-west-2.amazonaws.com/Beta-TOS.html"
+    
     // MARK: Outlets
     @IBOutlet weak var viewNavigationItem: UINavigationItem!
 
+    lazy var instructionLabel: UILabel = {
+        let instructionlabel = UILabel()
+        instructionlabel.text = "Tap to view fullscreen"
+        instructionlabel.font = UIFont(name: AppFontName.regular, size: 14)
+        instructionlabel.textColor = UIColor(hexString: "#4E4E4E")
+        instructionlabel.textAlignment = .center
+        instructionlabel.translatesAutoresizingMaskIntoConstraints = false
+        return instructionlabel
+    }()
+    
     lazy var continueButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Continue", target: self, action: #selector(handleAcceptTerms(_:)))
         button.translatesAutoresizingMaskIntoConstraints = false
@@ -105,6 +115,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
         self.title = "Terms of Service"
         self.navigationController?.navigationBar.isTranslucent = true
         
+        self.view.addSubview(instructionLabel)
         self.view.addSubview(contentContainer)
         contentContainer.addSubview(webView)
         self.view.addSubview(shieldImage)
@@ -124,9 +135,11 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             (navigationController?.navigationBar.frame.height ?? 0.0)
 
         let shieldImageHeight: CGFloat = 64.0
-        let containerTopPadding = navBarHeight + (shieldImageHeight / 2)
         
         NSLayoutConstraint.activate([
+            instructionLabel.leadingAnchor.constraint(equalTo: self.view.leadingAnchor, constant: 20.0),
+            instructionLabel.trailingAnchor.constraint(equalTo: self.view.trailingAnchor, constant: -20.0),
+            instructionLabel.topAnchor.constraint(equalTo: self.view.topAnchor, constant: navBarHeight),
             
             shieldImage.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             shieldImage.centerYAnchor.constraint(equalTo: contentContainer.topAnchor),
@@ -135,7 +148,7 @@ class TermsOfServiceVC: BaseProfileSetupViewController, UINavigationControllerDe
             
             contentContainer.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 20.0),
             contentContainer.trailingAnchor.constraint(equalTo: view.trailingAnchor, constant: -20.0),
-            contentContainer.topAnchor.constraint(equalTo: view.topAnchor, constant: containerTopPadding),
+            contentContainer.topAnchor.constraint(equalTo: instructionLabel.bottomAnchor, constant: 40.0),
             contentContainer.bottomAnchor.constraint(equalTo: acceptCard.topAnchor, constant: -38),
             
             webView.leadingAnchor.constraint(equalTo: contentContainer.leadingAnchor, constant: 10.0),

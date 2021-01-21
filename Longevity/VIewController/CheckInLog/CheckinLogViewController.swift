@@ -173,7 +173,11 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
         guard let cell = collectionView.getCell(with: CheckinLogCell.self, at: indexPath) as? CheckinLogCell else {
             preconditionFailure("Invalid log cell type")
         }
-        cell.history = self.history?[indexPath.item]
+        
+        if indexPath.item < (self.history.count ?? 0) {
+            cell.history = self.history?[indexPath.item]
+        }
+        
         return cell
     }
     
