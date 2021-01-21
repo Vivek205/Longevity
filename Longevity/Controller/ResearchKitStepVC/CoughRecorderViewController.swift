@@ -150,10 +150,10 @@ class CoughRecorderViewController: BaseStepViewController {
         let format = DateFormatter()
         format.dateFormat="yyyyMMddHHmmssSSS"
         self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
-        let audioFilename = getDocumentsDirectory().appendingPathComponent(self.fileKey + ".m4a")
+        let audioFilename = getDocumentsDirectory().appendingPathComponent(self.fileKey + ".wav")
 
         let settings = [
-            AVFormatIDKey: Int(kAudioFormatMPEG4AAC),
+            AVFormatIDKey: Int(kAudioFormatLinearPCM),
             AVSampleRateKey: 12000,
             AVNumberOfChannelsKey: 1,
             AVEncoderBitDepthHintKey: 16,
