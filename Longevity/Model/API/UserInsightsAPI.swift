@@ -58,11 +58,14 @@ class UserInsightsAPI: BaseAuthAPI {
         }
     }
 
-    func exportUserApplicationData(completion: @escaping() -> Void, onFailure: @escaping(_ error:Error) -> Void) {
+    func exportUserApplicationData(submissionID: String? = nil,
+                                   completion: @escaping() -> Void,
+                                   onFailure: @escaping(_ error:Error) -> Void) {
+        let params = (submissionID?.isEmpty ?? false) ? nil : ["submissionid": submissionID ?? ""]
         let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
                                   path: "/user/application/data/export",
                                   headers: headers,
-                                  queryParameters: nil,
+                                  queryParameters: params,
                                   body: nil)
         self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
             if error != nil {
