@@ -8,13 +8,13 @@
 
 import UIKit
 
+enum ModalDismissDirection {
+    case upwards
+    case downwards
+}
+
 class BasePopUpModalViewController: UIViewController {
     
-    private enum ModalDismissDirection {
-        case upwards
-        case downwards
-    }
-
     var showBackdrop: Bool = false {
         didSet {
 //            self.backdrop.isHidden = !self.showBackdrop
