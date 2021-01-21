@@ -53,9 +53,10 @@ class LongevityComingSoonPopupViewController: BasePopUpModalViewController {
         NSLayoutConstraint.activate([
             emailNotification.topAnchor.constraint(equalTo: infoLabel.bottomAnchor, constant: 24.0),
             emailNotification.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 18.0),
-            self.notificationSwitch.centerYAnchor.constraint(equalTo: emailNotification.centerYAnchor),
-            notificationSwitch.leadingAnchor.constraint(equalTo: emailNotification.trailingAnchor, constant: 11.0),
-            notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -30.0),
+            emailNotification.trailingAnchor.constraint(lessThanOrEqualTo: self.notificationSwitch.leadingAnchor, constant: -20.0),
+            notificationSwitch.widthAnchor.constraint(equalToConstant: 30.0),
+            notificationSwitch.centerYAnchor.constraint(equalTo: emailNotification.centerYAnchor),
+            notificationSwitch.trailingAnchor.constraint(equalTo: self.containerView.trailingAnchor, constant: -35.0),
             actionButton.topAnchor.constraint(equalTo: emailNotification.bottomAnchor, constant: 24.0),
             actionButton.centerXAnchor.constraint(equalTo: self.containerView.centerXAnchor),
             actionButton.leadingAnchor.constraint(equalTo: self.containerView.leadingAnchor, constant: 59.0),
