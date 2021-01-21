@@ -105,11 +105,6 @@ class CheckInLogDetailsViewController: UIViewController {
             logDetailsTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
-//        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
-//        tapgesture.numberOfTouchesRequired = 1
-//
-//        self.view.addGestureRecognizer(tapgesture)
-        
         containerView.frame = CGRect(x: 0.0, y: self.view.bounds.height,
                                      width: self.view.bounds.width,
                                      height: self.view.bounds.height * 0.75)
@@ -117,11 +112,7 @@ class CheckInLogDetailsViewController: UIViewController {
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
         containerView.addGestureRecognizer(gesture)
     }
-    
-//    @objc func closeView() {
-//        self.dismiss(animated: true, completion: nil)
-//    }
-    
+        
     @objc func handleExportData() {
         let userInsightAPI = UserInsightsAPI()
         self.showSpinner()
