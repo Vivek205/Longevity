@@ -67,15 +67,17 @@ class DashboardHeaderView: UICollectionReusableView {
         layout.scrollDirection = .horizontal
         layout.invalidateLayout()
         
-        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            let insights = AppSyncManager.instance.userInsights.value?.filter({ $0.name != .logs &&
-                                                                                $0.name != .coughlogs })
-            self?.userInsights = insights?.sorted(by: { $0.name.hexagonOrder <= $1.name.hexagonOrder })
+        AppSyncManager.instance.hexagonInsights.addAndNotify(observer: self) { [weak self] in
+            self?.userInsights = AppSyncManager.instance.hexagonInsights.value?.sorted(by: { $0.name.hexagonOrder <= $1.name.hexagonOrder })
         }
     }
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        AppSyncManager.instance.hexagonInsights.remove(observer: self)
     }
     
     override func layoutSubviews() {

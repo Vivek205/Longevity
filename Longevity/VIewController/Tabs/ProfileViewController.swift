@@ -120,12 +120,6 @@ class ProfileViewController: BaseViewController {
         profileTable.translatesAutoresizingMaskIntoConstraints = false
         return profileTable
     }()
-
-    lazy var seeMoreButton: CustomButtonOutlined = {
-        let button = CustomButtonOutlined(title: "See More", target: self, action: #selector(handleLoadMore))
-
-        return button
-    }()
     
     var currentProfileView: ProfileView! {
         didSet {
@@ -177,7 +171,7 @@ class ProfileViewController: BaseViewController {
         }
         self.isFetchInProgress = true
         
-        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { (userActivity) in
+        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { [unowned self] (userActivity) in
             self.isFetchInProgress = false
             self.currentOffset += self.currentLimit
             self.currentPage = (userActivity.offset / userActivity.limit) + 1
@@ -191,7 +185,7 @@ class ProfileViewController: BaseViewController {
             } else {
                 self.onGetProfileCompleted(with: .none)
             }
-        } onFailure: { (error) in
+        } onFailure: { [unowned self] (_) in
             self.isFetchInProgress = false
             print("failure")
         }
@@ -207,23 +201,6 @@ class ProfileViewController: BaseViewController {
             if !indexPathsToReload.isEmpty {
                 self.profileTableView.reloadRows(at: indexPathsToReload, with: .automatic)
             }
-        }
-    }
-
-    @objc func handleLoadMore(for index:Int) {
-        let offset = index
-        let userProfileAPI = UserProfileAPI()
-        print("fetching data for row: ", index)
-        userProfileAPI.getUserActivities(offset:offset, limit: 1) { (userActivity) in
-            var enhancedUserActivity = userActivity
-            DispatchQueue.main.async {
-                let indexPath = IndexPath(row: index, section: 0)
-                self.profileTableView.beginUpdates()
-                self.profileTableView.reloadRows(at: [indexPath], with: .fade)
-                self.profileTableView.endUpdates()
-            }
-        } onFailure: { (error) in
-            print("failed data for row:", index)
         }
     }
 }

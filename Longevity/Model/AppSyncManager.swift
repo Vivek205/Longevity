@@ -35,6 +35,7 @@ class AppSyncManager  {
     var isTermsAccepted: DynamicValue<TOCStatus> = DynamicValue(.unknown)
     var appShareLink: String
     var userInsights: DynamicValue<[UserInsight]>
+    var hexagonInsights: DynamicValue<[UserInsight]>
     var userNotification: DynamicValue<UserNotification>
     var userSubscriptions: DynamicValue<[UserSubscription]>
     var internetConnectionAvailable: DynamicValue<InternetConnectionState> = DynamicValue(.none)
@@ -100,6 +101,8 @@ class AppSyncManager  {
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
+        self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.name != .logs &&
+                                                                            $0.name != .coughlogs }))
     }
     
     func cleardata() {
@@ -109,7 +112,8 @@ class AppSyncManager  {
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
-
+        self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.name != .logs &&
+                                                                            $0.name != .coughlogs }))
         // HACK
         preExistingMedicalConditionData = defaultPreExistingMedicalConditionData
     }
@@ -179,10 +183,12 @@ class AppSyncManager  {
     
     func syncUserInsights() {
         UserInsightsAPI.instance.get { [weak self] (userinsights) in
-            if let insights = userinsights {
-                self?.userInsights.value = insights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            } else {
-                self?.userInsights.value = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            if let insights = userinsights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
+                self?.userInsights.value = insights
+                self?.hexagonInsights.value = insights.filter({ $0.name != .logs && $0.name != .coughlogs })
+            } else if let insights = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
+                self?.userInsights.value = insights
+                self?.hexagonInsights.value = insights.filter({ $0.name != .logs && $0.name != .coughlogs })
             }
         }
     }

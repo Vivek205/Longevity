@@ -11,13 +11,7 @@ import ResearchKit
 
 class CheckinLogViewController: BaseViewController {
     
-    var history: [History]! {
-        didSet {
-            DispatchQueue.main.async {
-                self.logsCollectionView.reloadData()
-            }
-        }
-    }
+    var history: [History]!
     
     lazy var checkinlognodataView: CheckInLogNoDataView = {
         let checkinlognodata = CheckInLogNoDataView()
@@ -75,13 +69,25 @@ class CheckinLogViewController: BaseViewController {
         layout.sectionInset = UIEdgeInsets(top: 20.0, left: 15.0, bottom: 20.0, right: 15.0)
         layout.minimumInteritemSpacing = 18
         layout.scrollDirection = .vertical
+        layout.invalidateLayout()
         
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
-    }
-
-    override func viewDidAppear(_ animated: Bool) {
-        print("checkin log did appear")
-        self.updateLogDetails()
+        
+        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
+            self.showSpinner()
+            if let insights = AppSyncManager.instance.userInsights.value,
+               let dataLog = insights.first(where: { $0.name == .logs }),
+               let history = dataLog.details?.history {
+                self.history = history
+                self.updateLogHistory()
+            } else {
+                self.history = nil
+                DispatchQueue.main.async {
+                    self.removeSpinner()
+                    self.logsCollectionView.reloadData()
+                }
+            }
+        }
     }
 
     init() {
@@ -91,28 +97,41 @@ class CheckinLogViewController: BaseViewController {
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        AppSyncManager.instance.userInsights.remove(observer: self)
+    }
 
-    func updateLogDetails() {
-        if history == nil {return}
-        self.showSpinner()
-        let submissionIdList = history.map{$0.submissionID}
-        print("submissionIdList", submissionIdList)
-        SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
-            [weak self] (response) in
-            DispatchQueue.main.async {self?.removeSpinner()}
-            guard let response = response,let history = self?.history else {return}
-            for index in 0..<history.count {
-                print("submissionId", history[index].submissionID)
-                print("surveyName", response[history[index].submissionID])
-                if let surveyName = response[history[index].submissionID]?.surveyName {
-                    self?.history[index].surveyName = surveyName
-                    print("self?.history[index].surveyName", surveyName)
+    func updateLogHistory() {
+        if self.history != nil {
+            let submissionIdList = history.map{ $0.submissionID }
+            SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
+                [weak self] (response) in
+                guard let response = response else {
+                    self?.reloadLogData()
+                    return
                 }
+                for index in 0..<(self?.history.count ?? 0) {
+                    if let submissionID = self?.history[index].submissionID,
+                       !submissionID.isEmpty,
+                       let surveyName = response[submissionID]?.surveyName {
+                        self?.history[index].surveyName = surveyName
+                    }
+                }
+                self?.history.removeAll(where: { $0.surveyName == "Cough Test" })
+                self?.reloadLogData()
+            } onFailure: { [weak self] (error) in
+                self?.reloadLogData()
             }
-            self?.history.removeAll(where: { $0.surveyName == "Cough Test" })
-            print("submissionIdList response",response)
-        } onFailure: { (error) in
-            print("error", error)
+        } else {
+            self.reloadLogData()
+        }
+    }
+    
+    fileprivate func reloadLogData() {
+        DispatchQueue.main.async {
+            self.removeSpinner()
+            self.logsCollectionView.reloadData()
         }
     }
     
