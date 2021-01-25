@@ -42,6 +42,7 @@ class OfflineNotificationView: UIView {
 
     lazy var ctaButton: CustomButtonFill = {
         let button = CustomButtonFill(title: "Try Again")
+        button.addTarget(self, action: #selector(doRetryConnectionCheck), for: .touchUpInside)
         return button
     }()
 
@@ -86,5 +87,9 @@ class OfflineNotificationView: UIView {
 
     deinit {
         print("offline notificitation deinti")
+    }
+    
+    @objc func doRetryConnectionCheck() {
+        ConnectionManager.instance.addConnectionObserver()
     }
 }

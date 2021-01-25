@@ -295,6 +295,10 @@ class SetupProfileBioDataVC: BaseProfileSetupViewController {
         MedicalHistoryAPI.instance.updateHealthProfile()
         self.dismiss(animated: true, completion: nil)
     }
+    
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+    }
 }
 
 extension SetupProfileBioDataVC: SetupProfileBioOptionCellDelegate {

@@ -104,6 +104,12 @@ class HomeViewController: BaseViewController {
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
     }
+    
+    deinit {
+        SurveyTaskUtility.shared.repetitiveSurveyList.remove(observer: self)
+        SurveyTaskUtility.shared.oneTimeSurveyList.remove(observer: self)
+        SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+    }
 }
 
 extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {

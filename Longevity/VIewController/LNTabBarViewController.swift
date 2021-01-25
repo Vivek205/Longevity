@@ -73,8 +73,8 @@ class LNTabBarViewController: UITabBarController {
             }
         })
         
-        AppSyncManager.instance.syncUserProfile()
-        AppSyncManager.instance.getAppLink()
+//        AppSyncManager.instance.syncUserProfile()
+//        AppSyncManager.instance.getAppLink()
         self.handleNetworkConnectionChange()
         self.updateTabTextAttributes()
     }
@@ -122,6 +122,11 @@ class LNTabBarViewController: UITabBarController {
                 viewController.tabBarItem.setTitleTextAttributes(textAttributes, for: .normal)
             }
         }
+    }
+    
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+        AppSyncManager.instance.internetConnectionAvailable.remove(observer: self)
     }
 }
 

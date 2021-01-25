@@ -262,6 +262,10 @@ class EditAccountViewController: UIViewController {
         UserAPI.instance.updateProfile()
         self.dismiss(animated: true, completion: nil)
     }
+    
+    deinit {
+        AppSyncManager.instance.userProfile.remove(observer: self)
+    }
 }
 
 extension EditAccountViewController: UITextFieldDelegate {

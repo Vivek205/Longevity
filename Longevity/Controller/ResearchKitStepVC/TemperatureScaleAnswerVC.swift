@@ -81,4 +81,8 @@ class TemperatureScaleAnswerVC: ContinuousScaleAnswerVC {
         }
 
     }
+    
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+    }
 }

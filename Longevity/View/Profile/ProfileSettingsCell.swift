@@ -162,6 +162,11 @@ class ProfileSettingsCell: UITableViewCell {
         fatalError("init(coder:) has not been implemented")
     }
     
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+        AppSyncManager.instance.userNotification.remove(observer: self)
+    }
+    
     override func layoutSubviews() {
         super.layoutSubviews()
         self.settingBGView.layer.shadowColor = UIColor.black.cgColor

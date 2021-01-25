@@ -227,6 +227,5 @@ class SurveysAPI : BaseAuthAPI {
             print("surveySubmissionDetails error", error)
             onFailure(error)
         }
-
     }
 }

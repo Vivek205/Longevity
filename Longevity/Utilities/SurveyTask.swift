@@ -364,7 +364,7 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {
-        guard (answers) != nil else {return}
+        guard answers != nil else { return }
         self.serverSubmittedAnswers[surveyId] = answers
     }
 
