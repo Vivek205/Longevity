@@ -113,6 +113,7 @@ class CheckinLogGoal: UITableViewCell {
         self.divider.isHidden = index == 0
         
         if let citation = goal.citation, !citation.isEmpty {
+            self.citationURL = citation
             let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
                                                                                size: 14.0),
                                                                  .foregroundColor: UIColor(red: 0.05,
