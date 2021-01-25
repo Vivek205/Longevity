@@ -107,4 +107,8 @@ class LoaderAnimationViewController: UIViewController {
             completion(false)
         }
     }
+    
+    deinit {
+        AppSyncManager.instance.internetConnectionAvailable.remove(observer: self)
+    }
 }

@@ -86,7 +86,13 @@ class MyDataViewController: BaseViewController {
             self.userInsights?[index].isExpanded = expandedIndex == index
         }
         self.myDataCollectionView.reloadData()
-        self.myDataCollectionView.scrollToItem(at: IndexPath(item: expandedIndex, section: 0), at: .bottom, animated: true)
+        self.myDataCollectionView.scrollToItem(at: IndexPath(item: expandedIndex, section: 0),
+                                               at: .bottom, animated: true)
+    }
+    
+    deinit {
+        SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+        AppSyncManager.instance.userInsights.remove(observer: self)
     }
 }
 

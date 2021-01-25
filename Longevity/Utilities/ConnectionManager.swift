@@ -16,12 +16,12 @@ final class ConnectionManager: NSObject {
     private var timer: Timer?
 
     func startTimer() {
-        guard timer == nil else {return}
-        DispatchQueue.main.async {
-            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ [weak self](_) in
-                self?.addConnectionObserver()
-            }
-        }
+//        guard timer == nil else {return}
+//        DispatchQueue.main.async {
+//            self.timer = Timer.scheduledTimer(withTimeInterval: 1, repeats: true){ [weak self](_) in
+                self.addConnectionObserver()
+//            }
+//    }
     }
 
     func stopTimer() {
@@ -56,12 +56,12 @@ final class ConnectionManager: NSObject {
             print("connected")
             AppSyncManager.instance.internetConnectionAvailable.value = .connected
             self.showNotification(false)
-            self.stopTimer()
+//            self.stopTimer()
         } else {
             print("not connected")
             AppSyncManager.instance.internetConnectionAvailable.value = .notconnected
             self.showNotification(true)
-            self.startTimer()
+//            self.startTimer()
         }
     }
 
@@ -73,12 +73,12 @@ final class ConnectionManager: NSObject {
                 print("connected")
                 AppSyncManager.instance.internetConnectionAvailable.value = .connected
                 self.showNotification(false)
-                self.stopTimer()
+//                self.stopTimer()
             } else {
                 print("not connected")
                 AppSyncManager.instance.internetConnectionAvailable.value = .notconnected
                 self.showNotification(true)
-                self.startTimer()
+//                self.startTimer()
             }
             print("is Expensive", path.isExpensive)
         }

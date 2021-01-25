@@ -84,6 +84,10 @@ class RKCFormLocationView: UICollectionViewCell {
         super.init(coder: coder)
         fatalError("init(coder:) has not been implemented")
     }
+    
+    deinit {
+        LocationUtil.shared.currentLocation.remove(observer: self)
+    }
 
     func setupCell(identifier:String, question:String, lastResponseAnswer: String?) {
         self.itemIdentifier = identifier

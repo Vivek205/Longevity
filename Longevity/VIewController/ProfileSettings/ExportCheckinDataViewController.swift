@@ -69,4 +69,8 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
             }
         }
     }
+    
+    deinit {
+        AppSyncManager.instance.userProfile.remove(observer: self)
+    }
 }

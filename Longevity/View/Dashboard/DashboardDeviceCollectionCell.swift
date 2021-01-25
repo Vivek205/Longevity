@@ -253,4 +253,8 @@ class DashboardDeviceCollectionCell: UICollectionViewCell {
             }
         }
     }
+    
+    deinit {
+        AppSyncManager.instance.healthProfile.remove(observer: self)
+    }
 }

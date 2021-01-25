@@ -203,6 +203,10 @@ class ProfileViewController: BaseViewController {
             }
         }
     }
+    
+    deinit {
+        SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+    }
 }
 
 extension ProfileViewController: UITableViewDelegate, UITableViewDataSource {
