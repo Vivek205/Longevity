@@ -363,9 +363,12 @@ final class SurveyTaskUtility: NSObject {
         return false
     }
 
-    func setServerSubmittedAnswers(for surveyId: String, answers:[SurveyLastResponseData]?) {
-        guard answers != nil else { return }
-        self.serverSubmittedAnswers[surveyId] = answers
+    func setServerSubmittedAnswers(list: [SurveyListItem]) {
+        self.serverSubmittedAnswers = list.filter({
+            $0.response != nil
+        }).reduce(into: [:], { (dict, listitem) in
+            dict[listitem.surveyId] = listitem.response!
+        })
     }
 
     func getCurrentSurveyDetails() -> SurveyDetails? {

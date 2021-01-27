@@ -13,13 +13,13 @@ class CheckInInsightCell: UICollectionViewCell {
     var inSight: Goal! {
         didSet {
             let insightTitle = inSight?.text ?? ""
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
             
             if inSight.goalDescription.isEmpty ?? false {
                 let insightDesc = "\n\n\(inSight?.goalDescription ?? "")"
                 
-                let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-Regular", size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
                 
                 attributedinsightTitle.append(attributedDescText)

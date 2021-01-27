@@ -171,23 +171,22 @@ class ProfileViewController: BaseViewController {
         }
         self.isFetchInProgress = true
         
-        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { [unowned self] (userActivity) in
-            self.isFetchInProgress = false
-            self.currentOffset += self.currentLimit
-            self.currentPage = (userActivity.offset / userActivity.limit) + 1
-            self.total = userActivity.totalActivitiesCount
-            self.userActivities.append(contentsOf: userActivity.activities)
-            self.currentCount = self.userActivities.count
+        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { [weak self] (userActivity) in
+            self?.isFetchInProgress = false
+            self?.currentOffset += self?.currentLimit ?? 0
+            self?.currentPage = (userActivity.offset / userActivity.limit) + 1
+            self?.total = userActivity.totalActivitiesCount
+            self?.userActivities.append(contentsOf: userActivity.activities)
+            self?.currentCount = self?.userActivities.count ?? 0
 
-            if self.currentPage > 1 {
-                let newIndexPathsToReload = self.calculateIndexPathsToReload(from: userActivity)
-                self.onGetProfileCompleted(with: newIndexPathsToReload)
+            if self?.currentPage ?? 0 > 1 {
+                let newIndexPathsToReload = self?.calculateIndexPathsToReload(from: userActivity)
+                self?.onGetProfileCompleted(with: newIndexPathsToReload)
             } else {
-                self.onGetProfileCompleted(with: .none)
+                self?.onGetProfileCompleted(with: .none)
             }
-        } onFailure: { [unowned self] (_) in
-            self.isFetchInProgress = false
-            print("failure")
+        } onFailure: { [weak self] (_) in
+            self?.isFetchInProgress = false
         }
     }
 

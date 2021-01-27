@@ -41,7 +41,6 @@ class SignOutCell: UITableViewCell {
     
     @objc func doSignout() {
         func onSuccess(isSignedOut: Bool) {
-            SurveyTaskUtility.shared.clearSurvey()
             try? KeyChain(service: KeychainConfiguration.serviceName,
                           account: KeychainKeys.idToken, accessGroup: nil).deleteItem()
             DispatchQueue.main.async {

@@ -60,9 +60,9 @@ class MyDataViewController: BaseViewController {
             aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
 
-        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) {
+        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+                self?.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
             }
         }
         
