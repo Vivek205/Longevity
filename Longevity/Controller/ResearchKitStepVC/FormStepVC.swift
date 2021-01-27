@@ -28,7 +28,7 @@ class FormStepVC: BaseStepViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.continueButton.isEnabled = true
         self.navigationController?.navigationBar.barTintColor = .white
         self.rollbackYOrigin = self.view.frame.origin.y
         
@@ -70,7 +70,7 @@ class FormStepVC: BaseStepViewController {
             formItemsCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             formItemsCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             formItemsCollection.topAnchor.constraint(equalTo: self.view.topAnchor),
-            formItemsCollection.bottomAnchor.constraint(equalTo: self.footerView.topAnchor)
+            formItemsCollection.bottomAnchor.constraint(equalTo: footerView.topAnchor)
         ])
 
         guard let layout = formItemsCollection.collectionViewLayout as? UICollectionViewFlowLayout else {

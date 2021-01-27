@@ -11,8 +11,6 @@ import ResearchKit
 
 class BaseStepViewController: ORKStepViewController {
     
-    var footerViewHeight: CGFloat = 0.0
-    
     lazy var footerView:UIView = {
         let uiView = UIView()
         uiView.translatesAutoresizingMaskIntoConstraints = false
