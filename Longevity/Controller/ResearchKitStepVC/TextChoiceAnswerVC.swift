@@ -80,7 +80,7 @@ UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
                     as! TextChoiceAnswerViewCell
                 answerViewCell.delegate = self
                 answerViewCell.createLayout(text: choice.text, extraInfo: choice.detailText)
-                answerViewCell.value = indexPath.item// - 1
+                answerViewCell.value = Int(choice.value as? String ?? "0")
                 answerViewCell.answerFormatStyle = answerFormat.style
                 if Int(currentAnswerValue ?? "") == answerViewCell.value {
                     answerViewCell.toggleIsChosenOption()
