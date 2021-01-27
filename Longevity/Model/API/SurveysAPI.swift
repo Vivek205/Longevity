@@ -32,11 +32,6 @@ class SurveysAPI : BaseAuthAPI {
                 let value = try decoder.decode([SurveyListItem].self, from: data)
                 SurveyTaskUtility.shared.setSurveyList(list: value)
                 SurveyTaskUtility.shared.setServerSubmittedAnswers(list: value)
-//                if !value.isEmpty {
-//                    value.forEach {
-//                        SurveyTaskUtility.shared.setServerSubmittedAnswers(for:$0.surveyId, answers: $0.response)
-//                    }
-//                }
                 completion(value)
             } catch  {
                 onFailure(error)

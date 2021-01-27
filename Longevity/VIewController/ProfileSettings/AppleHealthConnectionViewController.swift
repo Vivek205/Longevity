@@ -8,13 +8,13 @@
 
 import UIKit
 
-protocol AppleHealthConnectionDelegate {
+protocol AppleHealthConnectionDelegate: class {
     func device(connected: Bool)
 }
 
 class AppleHealthConnectionViewController: UIViewController {
     
-    var delegate: AppleHealthConnectionDelegate?
+    weak var delegate: AppleHealthConnectionDelegate?
     
     var isDeviceConnected: Bool = false
     
