@@ -59,7 +59,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         if #available(iOS 13.0, *) {
             BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { [weak self] (task) in
-                guard let task = task as? BGAppRefreshTask else { return }
+                guard let task = task as? BGProcessingTask else { return }
                 self?.appHandleRefreshTask(task: task)
             }
         } else {
@@ -297,7 +297,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     @available(iOS 13.0, *)
-    func appHandleRefreshTask(task: BGAppRefreshTask) {
+    func appHandleRefreshTask(task: BGProcessingTask) {
         scheduleBackgroundFetch()
         Logger.log("BG Task Started")
         
@@ -306,6 +306,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         let operations = FitbitModel.getOperationsToRefreshFitbitToken()
         
         task.expirationHandler = {
+            operations.forEach { $0.cancel() }
             Logger.log("BG Task Expired")
             task.setTaskCompleted(success: false)
         }
@@ -319,7 +320,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     
     @available(iOS 13.0, *)
     func scheduleBackgroundFetch() {
-        let rejuveFetchTask = BGAppRefreshTaskRequest(identifier: "io.rejuve.Longevity.bgFetch")
+        let rejuveFetchTask = BGProcessingTaskRequest(identifier: "io.rejuve.Longevity.bgFetch")
+        rejuveFetchTask.requiresNetworkConnectivity = true
         rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60 * 60)
         
         do {
