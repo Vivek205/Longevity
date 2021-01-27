@@ -145,6 +145,7 @@ class OnboardingVC: UIViewController {
         layout.sectionInset = UIEdgeInsets(top: 0.0, left: 0.0, bottom: 0.0, right: 0.0)
         layout.minimumLineSpacing = 0
         layout.scrollDirection = .horizontal
+        layout.invalidateLayout()
 
         styleNavigationBar()
         hideNavigationBar()
@@ -287,23 +288,27 @@ class OnboardingVC: UIViewController {
 }
 
 // MARK: Spinner
-fileprivate var spinnerView: UIView?
 extension UIViewController{
     func showSpinner() {
-        spinnerView = UIView(frame: UIScreen.main.bounds)
-        spinnerView?.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
-        let spinner = UIActivityIndicatorView(style: .whiteLarge)
-        spinner.center = spinnerView?.center as! CGPoint
-        spinner.startAnimating()
-        spinnerView?.addSubview(spinner)
-        let window = UIApplication.shared.keyWindow!
-        window.addSubview(spinnerView!)
-        window.bringSubviewToFront(spinnerView!)
+        if let window = UIApplication.shared.keyWindow, !window.subviews.contains(where: { $0.tag == 1000
+        }) {
+            let spinnerView = UIView(frame: UIScreen.main.bounds)
+            spinnerView.tag = 1000
+            spinnerView.backgroundColor = UIColor.init(red: 0.5, green: 0.5, blue: 0.5, alpha: 0.5)
+            let spinner = UIActivityIndicatorView(style: .whiteLarge)
+            spinner.center = spinnerView.center as! CGPoint
+            spinner.startAnimating()
+            spinnerView.addSubview(spinner)
+            window.addSubview(spinnerView)
+            window.bringSubviewToFront(spinnerView)
+        }
     }
 
     func removeSpinner() {
-        spinnerView?.removeFromSuperview()
-        spinnerView = nil
+        if let window = UIApplication.shared.keyWindow,
+           let spinnerView = window.subviews.first(where: { $0.tag == 1000 }) {
+            spinnerView.removeFromSuperview()
+        }
     }
 }
 

@@ -11,7 +11,8 @@ import ResearchKit
 
 class CheckinLogViewController: BaseViewController {
     
-    var history: [History]!
+    fileprivate var history: [History]!
+    fileprivate var upadtedHistory: [History]!
     
     lazy var checkinlognodataView: CheckInLogNoDataView = {
         let checkinlognodata = CheckInLogNoDataView()
@@ -74,7 +75,9 @@ class CheckinLogViewController: BaseViewController {
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
-            self.showSpinner()
+            DispatchQueue.main.async {
+                self.showSpinner()
+            }
             if let insights = AppSyncManager.instance.userInsights.value,
                let dataLog = insights.first(where: { $0.name == .logs }),
                let history = dataLog.details?.history {
@@ -111,14 +114,15 @@ class CheckinLogViewController: BaseViewController {
                     self?.reloadLogData()
                     return
                 }
-                for index in 0..<(self?.history.count ?? 0) {
-                    if let submissionID = self?.history[index].submissionID,
+                for index in 0..<(self?.history?.count ?? 0) {
+                    if let submissionID = self?.history?[index].submissionID,
                        !submissionID.isEmpty,
                        let surveyName = response[submissionID]?.surveyName {
-                        self?.history[index].surveyName = surveyName
+                        self?.history?[index].surveyName = surveyName
                     }
                 }
-                self?.history.removeAll(where: { $0.surveyName == "Cough Test" })
+                self?.history?.removeAll(where: { $0.surveyName == "Cough Test" })
+                self?.upadtedHistory = self?.history
                 self?.reloadLogData()
             } onFailure: { [weak self] (error) in
                 self?.reloadLogData()
@@ -171,7 +175,7 @@ class CheckinLogViewController: BaseViewController {
 
 extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = self.history?.count ?? 0
+        let count = self.upadtedHistory?.count ?? 0
         self.checkinlognodataView.isHidden = !(self.history?.isEmpty ?? true)
         return count
     }
@@ -184,7 +188,7 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let sectionHeight = (self.history?.count ?? 0) > 0 ? 100.0 : 0.0
+        let sectionHeight = (self.upadtedHistory?.count ?? 0) > 0 ? 100.0 : 0.0
         return CGSize(width: collectionView.bounds.width, height: CGFloat(sectionHeight))
     }
     
@@ -193,8 +197,8 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
             preconditionFailure("Invalid log cell type")
         }
         
-        if indexPath.item < (self.history.count ?? 0) {
-            cell.history = self.history?[indexPath.item]
+        if indexPath.item < (self.upadtedHistory?.count ?? 0) {
+            cell.history = self.upadtedHistory?[indexPath.item]
         }
         
         return cell

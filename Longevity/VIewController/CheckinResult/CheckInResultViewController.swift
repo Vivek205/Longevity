@@ -282,7 +282,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         } else if indexPath.section == 1 { //Calculating Goal Height
             if let goal = self.checkinResult?.goals[indexPath.item] {
                 let insightTitle = goal.text
-                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
                 
                 let textAreaWidth = width - 66.0

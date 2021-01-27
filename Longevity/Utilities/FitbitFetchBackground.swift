@@ -6,7 +6,7 @@
 //  Copyright © 2020 vivek. All rights reserved.
 //
 
-protocol BackgroundSessionDelegate {
+protocol BackgroundSessionDelegate: class {
     func receivedtoken(refreshToken: String?, accessToken: String?, userID: String?)
 }
 
@@ -15,7 +15,7 @@ class FitbitFetchBackground: NSObject {
 
     static let identifier = "com.rejuve.fitbitrefresh"
 
-    var delegate: BackgroundSessionDelegate?
+    weak var delegate: BackgroundSessionDelegate?
 
     var receivedData: Data?
     

@@ -101,6 +101,7 @@ class CheckInGoalCell: UICollectionViewCell {
         self.rowIndex.text = "\(goalIndex)"
         
         if let citation = checkIngoal.citation, !citation.isEmpty {
+            self.citationURL = citation
             let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
                                                                                size: 14.0),
                                                                  .foregroundColor: UIColor(red: 0.05,

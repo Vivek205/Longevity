@@ -8,7 +8,7 @@
 
 import UIKit
 
-protocol CheckInResultHeaderDelegate {
+protocol CheckInResultHeaderDelegate: class {
     func selected(resultView: CheckInResultView)
 }
 
@@ -19,7 +19,7 @@ enum CheckInResultView: Int {
 
 class CheckInResultHeader: UICollectionReusableView {
     
-    var delegate: CheckInResultHeaderDelegate?
+    weak var delegate: CheckInResultHeaderDelegate?
     
     var currentView: CheckInResultView! {
         didSet {
@@ -57,9 +57,9 @@ class CheckInResultHeader: UICollectionReusableView {
             segment.tintColor = .themeColor
         }
         
-        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 14.0)]
+        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: AppFontName.regular, size: 14.0)]
         segment.setTitleTextAttributes(titleAttributes, for: .normal)
-        let selectedTitleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 14.0)]
+        let selectedTitleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: AppFontName.regular, size: 14.0)]
         segment.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment

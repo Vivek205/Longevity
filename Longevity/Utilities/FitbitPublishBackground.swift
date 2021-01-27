@@ -6,7 +6,7 @@
 //  Copyright © 2020 vivek. All rights reserved.
 //
 
-protocol FitbitPublishBackgroundDelegate {
+protocol FitbitPublishBackgroundDelegate: class {
     func published(success: Bool)
 }
 
@@ -15,7 +15,7 @@ class FitbitPublishBackground: NSObject {
 
     static let identifier = "com.rejuve.fitbitpublish"
 
-    var delegate: FitbitPublishBackgroundDelegate?
+    weak var delegate: FitbitPublishBackgroundDelegate?
 
     var receivedData: Data?
     

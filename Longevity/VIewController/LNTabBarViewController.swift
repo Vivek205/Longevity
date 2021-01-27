@@ -77,10 +77,15 @@ class LNTabBarViewController: UITabBarController {
 //        AppSyncManager.instance.getAppLink()
         self.handleNetworkConnectionChange()
         self.updateTabTextAttributes()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(self.appcometoforeground),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
 
     func handleNetworkConnectionChange() {
-        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) {
+        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [unowned self] in
             if AppSyncManager.instance.internetConnectionAvailable.value == .notconnected {
                 DispatchQueue.main.async {
                     self.tabBarController?.selectedIndex = 0
@@ -127,6 +132,12 @@ class LNTabBarViewController: UITabBarController {
     deinit {
         AppSyncManager.instance.healthProfile.remove(observer: self)
         AppSyncManager.instance.internetConnectionAvailable.remove(observer: self)
+        NotificationCenter.default.removeObserver(self, name: UIApplication.willEnterForegroundNotification, object: nil)
+    }
+    
+    @objc func appcometoforeground() {
+//        AppSyncManager.instance.syncUserProfile()
+//        AppSyncManager.instance.getAppLink()
     }
 }
 

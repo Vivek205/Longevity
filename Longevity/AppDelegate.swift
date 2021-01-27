@@ -120,18 +120,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 self.scheduleBackgroundFetch()
             }
         }
-        
+    }
+    
+    func applicationWillResignActive(_ application: UIApplication) {
         if AppSyncManager.instance.pollingTimer != nil {
             AppSyncManager.instance.pollingTimer?.cancel()
         }
     }
     
-    func applicationWillEnterForeground(_ application: UIApplication) {
+    func applicationDidBecomeActive(_ application: UIApplication) {
         if AppSyncManager.instance.pollingTimer != nil {
             AppSyncManager.instance.syncSurveyList()
         }
-        
-        ConnectionManager.instance.addConnectionObserver()
     }
 
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {

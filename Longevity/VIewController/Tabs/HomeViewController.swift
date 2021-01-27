@@ -67,23 +67,23 @@ class HomeViewController: BaseViewController {
             aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
         
-        SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [weak self] in
+        SurveyTaskUtility.shared.repetitiveSurveyList.addAndNotify(observer: self) { [unowned self] in
             DispatchQueue.main.async {
-                self?.removeSpinner()
-                self?.collectionView.reloadSections([0])
+                self.removeSpinner()
+                self.collectionView.reloadSections([0])
             }
         }
         
-        SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [weak self] in
+        SurveyTaskUtility.shared.oneTimeSurveyList.addAndNotify(observer: self) { [unowned self] in
             DispatchQueue.main.async {
-                self?.removeSpinner()
-                self?.collectionView.reloadSections([2])
+                self.removeSpinner()
+                self.collectionView.reloadSections([2])
             }
         }
 
         self.aiProcessingBand.isHidden = !isAIProcessPending
         
-        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) {
+        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [unowned self] in
             DispatchQueue.main.async {
                 self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
                 if SurveyTaskUtility.shared.surveyInProgress.value != .pending {
