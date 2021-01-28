@@ -206,24 +206,24 @@ final class SurveyTaskUtility: NSObject {
 
 
     func completeSurvey(completion: @escaping () -> Void, onFailure: @escaping (_ error: Error) -> Void) {
-        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive(),
-           let currentSurveyId = self.currentSurveyId,
-           let repetitiveList = self.repetitiveSurveyList.value,
-           let oneTimeSurveyList = self.oneTimeSurveyList.value{
-            if isCurrentSurveyRepetitive {
-                for index in 0..<repetitiveList.count {
-                    if repetitiveList[index].surveyId == currentSurveyId {
-                        self.repetitiveSurveyList.value?[index].lastSurveyStatus = .pending
-                    }
-                }
-            }else {
-                for index in 0..<oneTimeSurveyList.count {
-                    if oneTimeSurveyList[index].surveyId == currentSurveyId {
-                        self.oneTimeSurveyList.value?[index].lastSurveyStatus = .pending
-                    }
-                }
-            }
-        }
+//        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive(),
+//           let currentSurveyId = self.currentSurveyId,
+//           let repetitiveList = self.repetitiveSurveyList.value,
+//           let oneTimeSurveyList = self.oneTimeSurveyList.value{
+//            if isCurrentSurveyRepetitive {
+//                for index in 0..<repetitiveList.count {
+//                    if repetitiveList[index].surveyId == currentSurveyId {
+//                        self.repetitiveSurveyList.value?[index].lastSurveyStatus = .pending
+//                    }
+//                }
+//            }else {
+//                for index in 0..<oneTimeSurveyList.count {
+//                    if oneTimeSurveyList[index].surveyId == currentSurveyId {
+//                        self.oneTimeSurveyList.value?[index].lastSurveyStatus = .pending
+//                    }
+//                }
+//            }
+//        }
         
         func onSubmitCompletion() {
             print("survey submitted successfully")
