@@ -24,6 +24,13 @@ class CheckInLogDetailsViewController: UIViewController {
         }
     }
     
+    lazy var transparentView: UIView = {
+        let transparentview = UIView()
+        transparentview.backgroundColor = .clear
+        transparentview.translatesAutoresizingMaskIntoConstraints = false
+        return transparentview
+    }()
+    
     lazy var containerView: UIView = {
         let container = UIView()
         container.backgroundColor = .white
@@ -42,7 +49,7 @@ class CheckInLogDetailsViewController: UIViewController {
     
     lazy var logDate: UILabel = {
         let date = UILabel()
-        date.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        date.font = UIFont(name: AppFontName.semibold, size: 24.0)
         date.textColor = UIColor(hexString: "#4E4E4E")
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
@@ -52,7 +59,7 @@ class CheckInLogDetailsViewController: UIViewController {
         let export = UIButton()
         export.setTitle("Export", for: .normal)
         export.setTitleColor(.themeColor, for: .normal)
-        export.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 18.0)
+        export.titleLabel?.font = UIFont(name: AppFontName.semibold, size: 18.0)
         export.backgroundColor = .clear
         export.translatesAutoresizingMaskIntoConstraints = false
         export.layer.borderWidth = 2
@@ -75,8 +82,8 @@ class CheckInLogDetailsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         self.view.backgroundColor = UIColor.black.withAlphaComponent(0.0)
+        self.view.addSubview(transparentView)
         self.view.addSubview(containerView)
         self.containerView.addSubview(bezelView)
         self.containerView.addSubview(logDate)
@@ -84,6 +91,10 @@ class CheckInLogDetailsViewController: UIViewController {
         self.containerView.addSubview(logDetailsTableView)
         
         NSLayoutConstraint.activate([
+            transparentView.topAnchor.constraint(equalTo: self.view.topAnchor),
+            transparentView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
+            transparentView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
+            containerView.topAnchor.constraint(equalTo: transparentView.bottomAnchor, constant: -20.0),
             containerView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             containerView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
             containerView.heightAnchor.constraint(equalTo: self.view.heightAnchor, multiplier: 0.75),
@@ -109,10 +120,19 @@ class CheckInLogDetailsViewController: UIViewController {
                                      width: self.view.bounds.width,
                                      height: self.view.bounds.height * 0.75)
         
+        let tapgesture = UITapGestureRecognizer(target: self, action: #selector(closeView))
+        tapgesture.numberOfTouchesRequired = 1
+
+        self.transparentView.addGestureRecognizer(tapgesture)
+        
         let gesture = UIPanGestureRecognizer(target: self, action: #selector(wasDragged))
         containerView.addGestureRecognizer(gesture)
     }
-        
+    
+    @objc func closeView() {
+        self.dismiss(animated: true, completion: nil)
+    }
+    
     @objc func handleExportData() {
         self.showSpinner()
         UserInsightsAPI.instance.exportUserApplicationData(submissionID: history?.submissionID, completion: { [unowned self] in
@@ -252,7 +272,7 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
             let goal = history.goals[indexPath.row]
             
             let insightTitle = goal.text
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: "Montserrat-SemiBold", size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
             
             let textAreaWidth = tableView.bounds.width - 66.0
@@ -289,7 +309,6 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
         }
     }
 }
-
 
 class CommonHeader: UITableViewHeaderFooterView {
     
