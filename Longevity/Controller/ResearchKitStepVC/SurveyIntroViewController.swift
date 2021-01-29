@@ -100,6 +100,14 @@ class SurveyIntroViewController: ORKInstructionStepViewController {
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
         headerView.addBottomRoundedEdge(desiredCurve: 0.5)
+        
+        self.footerView.layer.shadowColor = UIColor.black.cgColor
+        self.footerView.layer.shadowOffset = CGSize(width: 0, height: 0)
+        self.footerView.layer.shadowRadius = 3.0
+        self.footerView.layer.shadowOpacity = 0.14
+        self.footerView.layer.masksToBounds = false
+        self.footerView.layer.shadowPath = UIBezierPath(roundedRect: self.footerView.bounds,
+                                                        cornerRadius: self.footerView.layer.cornerRadius).cgPath
     }
 
     func presentViews() {

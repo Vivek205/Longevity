@@ -104,7 +104,18 @@ class PersonalLoginVC: UIViewController {
                         print("Delivery details \(String(describing: deliveryDetails))")
                         self?.sendSignUpCode(email: email)
                     } else {
-                        self?.loginToHome()
+                        _ = Amplify.Auth.fetchAuthSession { result in
+                            guard let session = try? result.get() as? AuthCognitoTokensProvider,
+                                  let tokens = try? session.getCognitoTokens().get() else {
+                                return
+                            }
+                            do{
+                                try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                                self?.loginToHome()
+                            } catch {
+                                Alert(title: "Login Failed" , message: error.localizedDescription)
+                            }
+                        }
                     }
                 case .failure(let error):
                     DispatchQueue.main.async {

@@ -16,24 +16,33 @@ class UserAuthAPI {
     static let shared = UserAuthAPI()
     
     func checkUserSignedIn(completion: @escaping(Bool)-> Void) {
-        _ = Amplify.Auth.fetchAuthSession { (result) in
-            switch result {
-            case .success(let loginSession):
-                guard let session = try? result.get() as? AuthCognitoTokensProvider,
-                      let tokens = try? session.getCognitoTokens().get() else {
-                    completion(false)
-                    return
-                }
-                
-                try? KeyChain(service: KeychainConfiguration.serviceName,
-                              account: KeychainKeys.idToken).saveItem(tokens.idToken)
-                
-                completion(loginSession.isSignedIn)
-            case .failure(let error):
-                print(error.localizedDescription)
-                completion(false)
-            }
+        if let token = try? KeyChain(service: KeychainConfiguration.serviceName,
+                                     account: KeychainKeys.idToken).readItem(),
+           !token.isEmpty {
+            completion(true)
+        } else {
+            completion(false)
         }
+        
+        
+//        _ = Amplify.Auth.fetchAuthSession { (result) in
+//            switch result {
+//            case .success(let loginSession):
+//                guard let session = try? result.get() as? AuthCognitoTokensProvider,
+//                      let tokens = try? session.getCognitoTokens().get() else {
+//                    completion(false)
+//                    return
+//                }
+//
+//                try? KeyChain(service: KeychainConfiguration.serviceName,
+//                              account: KeychainKeys.idToken).saveItem(tokens.idToken)
+//
+//                completion(loginSession.isSignedIn)
+//            case .failure(let error):
+//                print(error.localizedDescription)
+//                completion(false)
+//            }
+//        }
     }
 
     func signout(completion: ((Error?) -> Void)?) {
