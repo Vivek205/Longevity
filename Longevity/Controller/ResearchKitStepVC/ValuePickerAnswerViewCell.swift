@@ -25,7 +25,7 @@ class ValuePickerAnswerViewCell: UICollectionViewCell {
 
     var questionId: String? {
         didSet {
-            guard let questionId = questionId, let textChoices = textChoices else {return}
+            guard let questionId = questionId, let textChoices = textChoices else { return }
             if let lastLocalResponse = SurveyTaskUtility.shared.getCurrentSurveyLocalAnswer(questionIdentifier: questionId) {
                 let toBeSelectedRow = textChoices.firstIndex { (choice) -> Bool in
                     let value: String = (choice.value as? NSString ?? "") as String
@@ -47,6 +47,9 @@ class ValuePickerAnswerViewCell: UICollectionViewCell {
                     pickerView.selectRow(toBeSelectedRow!, inComponent: 0, animated: true)
                     delegate?.pickerView(pickerView, didSelectRow: toBeSelectedRow!, inComponent: 0)
                 }
+            } else {
+                pickerView.selectRow(0, inComponent: 0, animated: true)
+                self.pickerView(pickerView, didSelectRow: 0, inComponent: 0)
             }
         }
     }
@@ -56,9 +59,6 @@ class ValuePickerAnswerViewCell: UICollectionViewCell {
         picker.translatesAutoresizingMaskIntoConstraints = false
         picker.dataSource = self
         picker.delegate = self
-
-
-
         return picker
     }()
 
@@ -136,5 +136,3 @@ extension ValuePickerAnswerViewCell: UIPickerViewDataSource, UIPickerViewDelegat
         delegate?.pickerView(pickerView, didSelectRow: row, inComponent: component)
     }
 }
-
-
