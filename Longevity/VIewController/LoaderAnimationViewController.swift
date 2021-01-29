@@ -60,12 +60,12 @@ class LoaderAnimationViewController: UIViewController {
 
         self.checkAppUpdates()
         
-        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [weak self] in
-            if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
-                AppSyncManager.instance.prevInternetConnnection != .connected {
-                self?.checkAppUpdates()
-            }
-        }
+//        AppSyncManager.instance.internetConnectionAvailable.addAndNotify(observer: self) { [weak self] in
+//            if AppSyncManager.instance.internetConnectionAvailable.value == .connected &&
+//                AppSyncManager.instance.prevInternetConnnection != .connected {
+//                self?.checkAppUpdates()
+//            }
+//        }
     }
     
     func checkAppUpdates() {
@@ -108,7 +108,7 @@ class LoaderAnimationViewController: UIViewController {
         }
     }
     
-    deinit {
-        AppSyncManager.instance.internetConnectionAvailable.remove(observer: self)
-    }
+//    deinit {
+//        AppSyncManager.instance.internetConnectionAvailable.remove(observer: self)
+//    }
 }
