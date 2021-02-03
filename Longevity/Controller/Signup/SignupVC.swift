@@ -142,11 +142,21 @@ class SignupVC: UIViewController {
     func authHandler(result :
                         AmplifyOperation<AuthWebUISignInRequest, AuthSignInResult, AuthError>.OperationResult) -> Void {
         switch result {
-        case .success( _ ):
+        case .success( _):
               DispatchQueue.main.async {
                 self.removeSpinner()
               }
-            self.loginToHome()
+            UserAuthAPI.shared.fetchAuthentication { (success, error) in
+                if success {
+                    self.loginToHome()
+                } else {
+                    if let error = error {
+                        Alert(title: "Login Failed" , message: error.localizedDescription)
+                    } else {
+                        Alert(title: "Login Failed" , message: "Please reach out the support team")
+                    }
+                }
+            }
         case .failure(let error):
             DispatchQueue.main.async {
                 self.removeSpinner()

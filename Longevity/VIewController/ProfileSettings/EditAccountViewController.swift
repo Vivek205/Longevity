@@ -219,13 +219,6 @@ class EditAccountViewController: UIViewController {
             return
         }
 
-//        do {
-//            guard let phone = mobilePhone.text else { }
-//            try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
-//        } catch  {
-//            <#statements#>
-//        }
-
         let alertVC = UIAlertController(title: nil, message: "You have unsaved changes", preferredStyle: .actionSheet)
         let saveChanges = UIAlertAction(title: "Save Changes", style: .default) { [weak self] (action) in
             self?.doneUpdate()
@@ -247,7 +240,7 @@ class EditAccountViewController: UIViewController {
         if let name = fullName.text {
             appSyncManager.userProfile.value?.name = name
         }
-        if let phone = mobilePhone.text {
+        if let phone = mobilePhone.text, !phone.isEmpty {
             do {
                 try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
                 appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
@@ -256,7 +249,6 @@ class EditAccountViewController: UIViewController {
                 Alert(title: "Invalid Phone Number", message: "The phone number you have entered is not valid. Please enter a valid phone number")
                 return
             }
-
         }
 
         UserAPI.instance.updateProfile()

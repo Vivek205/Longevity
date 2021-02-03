@@ -202,7 +202,17 @@ class PersonalLoginVC: UIViewController {
               DispatchQueue.main.async {
                 self.removeSpinner()
               }
-            self.loginToHome()
+            UserAuthAPI.shared.fetchAuthentication { (success, error) in
+                if success {
+                    self.loginToHome()
+                } else {
+                    if let error = error {
+                        Alert(title: "Login Failed" , message: error.localizedDescription)
+                    } else {
+                        Alert(title: "Login Failed" , message: "Please reach out the support team")
+                    }
+                }
+            }
         case .failure(let error):
             DispatchQueue.main.async {
                 self.removeSpinner()
