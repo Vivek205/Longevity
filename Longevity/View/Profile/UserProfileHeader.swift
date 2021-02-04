@@ -43,8 +43,8 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userName: UILabel = {
         let username = UILabel()
-        username.text = "Greg Kuebler"
-        username.font = UIFont(name: "Montserrat-Medium", size: 20.0)
+        username.text = ""
+        username.font = UIFont(name: AppFontName.medium, size: 20.0)
         username.textColor = UIColor.black.withAlphaComponent(0.87)
         username.translatesAutoresizingMaskIntoConstraints = false
         return username
@@ -52,8 +52,8 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userEmail: UILabel = {
         let useremail = UILabel()
-        useremail.text = "greg.kuebler@singularitynet.io"
-        useremail.font = UIFont(name: "Montserrat-Regular", size: 14.0)
+        useremail.text = ""
+        useremail.font = UIFont(name: AppFontName.regular, size: 14.0)
         useremail.textColor = UIColor(hexString: "#9B9B9B")
         useremail.translatesAutoresizingMaskIntoConstraints = false
         return useremail
@@ -62,7 +62,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     lazy var userAccountType: UILabel = {
         let accountType = UILabel()
         accountType.text = "personal account"
-        accountType.font = UIFont(name: "Montserrat-Regular", size: 14.0)
+        accountType.font = UIFont(name: AppFontName.regular, size: 14.0)
         accountType.textColor = UIColor(hexString: "#9B9B9B")
         accountType.translatesAutoresizingMaskIntoConstraints = false
         return accountType
@@ -100,7 +100,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     lazy var headerTitle: UILabel = {
         let title = UILabel()
         title.text = "COVID DATA"
-        title.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        title.font = UIFont(name: AppFontName.medium, size: 14.0)
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.sizeToFit()
         title.translatesAutoresizingMaskIntoConstraints = false
@@ -149,6 +149,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
         
+        AppSyncManager.instance.fetchUserProfile()
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.userName.text = AppSyncManager.instance.userProfile.value?.name
@@ -156,8 +157,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             }
         }
         
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getUserAvatar(completion: { [weak self] (profileURL) in
+        UserProfileAPI.instance.getUserAvatar(completion: { [weak self] (profileURL) in
             DispatchQueue.main.async {
                 if let profileurl = profileURL {
                     self?.profileAvatar.cacheImage(urlString: profileurl)
@@ -170,6 +170,10 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        AppSyncManager.instance.userProfile.remove(observer: self)
     }
     
     override func layoutSubviews() {
@@ -222,8 +226,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         guard let imageData = image?.jpegData(compressionQuality: 0.05) else { return }
        
         //TODO: Integrate the API to save and also retrieve the profile pic
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.saveUserAvatar(profilePic: imageData.base64EncodedString(), completion: {
+        UserProfileAPI.instance.saveUserAvatar(profilePic: imageData.base64EncodedString(), completion: {
             print("Avatar is saved")
         }) { (error) in
             print(error.localizedDescription)

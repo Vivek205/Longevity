@@ -158,11 +158,18 @@ class ProfileViewController: BaseViewController {
         self.currentProfileView = .activity
         getProfileData()
         
-        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
-            if SurveyTaskUtility.shared.surveyInProgress.value == .processed {
-                self?.getProfileData()
+        AppSyncManager.instance.refreshActivites.addAndNotify(observer: self) { [weak self] in
+            if AppSyncManager.instance.refreshActivites.value ?? false {
+                self?.refreshactivities()
             }
         }
+    }
+    
+    func refreshactivities() {
+        self.currentOffset = 0
+        self.currentPage = 1
+        self.userActivities = []
+        self.getProfileData()
     }
     
     func getProfileData() {
@@ -171,7 +178,8 @@ class ProfileViewController: BaseViewController {
         }
         self.isFetchInProgress = true
         
-        UserProfileAPI.instance.getUserActivities(offset: currentOffset, limit: currentLimit) { [weak self] (userActivity) in
+        UserProfileAPI.instance.getUserActivities(offset: currentOffset,
+                                                  limit: currentLimit) { [weak self] (userActivity) in
             self?.isFetchInProgress = false
             self?.currentOffset += self?.currentLimit ?? 0
             self?.currentPage = (userActivity.offset / userActivity.limit) + 1
@@ -204,7 +212,7 @@ class ProfileViewController: BaseViewController {
     }
     
     deinit {
-        SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+        AppSyncManager.instance.refreshActivites.remove(observer: self)
     }
 }
 

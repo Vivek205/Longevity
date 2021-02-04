@@ -23,26 +23,27 @@ class UserAuthAPI {
         } else {
             completion(false)
         }
-        
-        
-//        _ = Amplify.Auth.fetchAuthSession { (result) in
-//            switch result {
-//            case .success(let loginSession):
-//                guard let session = try? result.get() as? AuthCognitoTokensProvider,
-//                      let tokens = try? session.getCognitoTokens().get() else {
-//                    completion(false)
-//                    return
-//                }
-//
-//                try? KeyChain(service: KeychainConfiguration.serviceName,
-//                              account: KeychainKeys.idToken).saveItem(tokens.idToken)
-//
-//                completion(loginSession.isSignedIn)
-//            case .failure(let error):
-//                print(error.localizedDescription)
-//                completion(false)
-//            }
-//        }
+    }
+    
+    func fetchAuthentication(completion: @escaping(Bool, Error?) -> Void) {
+        _ = Amplify.Auth.fetchAuthSession { (result) in
+            switch result {
+            case .success(let loginSession):
+                guard let session = try? result.get() as? AuthCognitoTokensProvider,
+                      let tokens = try? session.getCognitoTokens().get() else {
+                    completion(false, nil)
+                    return
+                }
+
+                try? KeyChain(service: KeychainConfiguration.serviceName,
+                              account: KeychainKeys.idToken).saveItem(tokens.idToken)
+                completion(true, nil)
+                
+            case .failure(let error):
+                print(error.localizedDescription)
+                completion(false, error)
+            }
+        }
     }
 
     func signout(completion: ((Error?) -> Void)?) {
