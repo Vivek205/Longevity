@@ -22,6 +22,8 @@ playground.xcworkspace
 
 ## User settings
 xcuserdata/
+.DS_Store
+**/*/.DS_Store
 
 ## Amplify
 amplify/\#current-cloud-backend
