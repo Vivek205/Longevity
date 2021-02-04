@@ -41,6 +41,7 @@ class AppSyncManager  {
     var internetConnectionAvailable: DynamicValue<InternetConnectionState> = DynamicValue(.none)
     var prevInternetConnnection: InternetConnectionState?
     var surveysSyncStatus: DynamicValue<SurveySyncStatus> = DynamicValue(.notstarted)
+    var refreshActivites: DynamicValue<Bool> = DynamicValue(false)
     
     var pollingTimer: DispatchSourceTimer?
     
