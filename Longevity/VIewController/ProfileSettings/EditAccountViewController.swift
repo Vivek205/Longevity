@@ -32,7 +32,7 @@ class EditAccountViewController: UIViewController {
         name.translatesAutoresizingMaskIntoConstraints = false
         name.text = "Name"
         name.textColor = UIColor(hexString: "#212121")
-        name.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        name.font = UIFont(name: AppFontName.regular, size: 12.0)
         name.backgroundColor = UIColor(hexString: "#F5F6FA")
         name.sizeToFit()
         return name
@@ -40,7 +40,7 @@ class EditAccountViewController: UIViewController {
     
     lazy var fullName: UITextField = {
         let name = UITextField()
-        name.font = UIFont(name: "Montserrat-Regular", size: 16.0)
+        name.font = UIFont(name: AppFontName.regular, size: 16.0)
         name.clearButtonMode = .whileEditing
         name.textContentType = .name
         name.tag = 1
@@ -58,7 +58,7 @@ class EditAccountViewController: UIViewController {
         email.translatesAutoresizingMaskIntoConstraints = false
         email.text = "Email"
         email.textColor = UIColor(hexString: "#212121")
-        email.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        email.font = UIFont(name: AppFontName.regular, size: 12.0)
         email.backgroundColor = UIColor(hexString: "#F5F6FA")
         email.sizeToFit()
         return email
@@ -66,7 +66,7 @@ class EditAccountViewController: UIViewController {
     
     lazy var emailText: UITextField = {
         let email = UITextField()
-        email.font = UIFont(name: "Montserrat-Regular", size: 16.0)
+        email.font = UIFont(name: AppFontName.regular, size: 16.0)
         email.clearButtonMode = .whileEditing
         email.textContentType = .emailAddress
         email.placeholder = "Email address"
@@ -83,7 +83,7 @@ class EditAccountViewController: UIViewController {
         emailInfo.translatesAutoresizingMaskIntoConstraints = false
         emailInfo.text = "Please Note:  Your email can not be edited or changed. "
         emailInfo.textColor = UIColor(hexString: "#9B9B9B")
-        emailInfo.font = UIFont(name: "Montserrat-Italic", size: 12.0)
+        emailInfo.font = UIFont(name: AppFontName.italic, size: 12.0)
         emailInfo.backgroundColor = .clear
         emailInfo.sizeToFit()
         return emailInfo
@@ -94,7 +94,7 @@ class EditAccountViewController: UIViewController {
         mobile.translatesAutoresizingMaskIntoConstraints = false
         mobile.text = "Mobile Phone"
         mobile.textColor = UIColor(hexString: "#212121")
-        mobile.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        mobile.font = UIFont(name: AppFontName.regular, size: 12.0)
         mobile.backgroundColor = UIColor(hexString: "#F5F6FA")
         mobile.sizeToFit()
         return mobile
@@ -102,8 +102,7 @@ class EditAccountViewController: UIViewController {
     
     lazy var mobilePhone: UITextField = {
         let mobile = UITextField()
-        mobile.font = UIFont(name: "Montserrat-Regular", size: 16.0)
-        mobile.textColor = UIColor(hexString: "#212121")
+        mobile.font = UIFont(name: AppFontName.regular, size: 16.0)
         mobile.clearButtonMode = .whileEditing
         mobile.textContentType = .telephoneNumber
         mobile.placeholder = "Mobile Phone"
@@ -120,6 +119,9 @@ class EditAccountViewController: UIViewController {
         countryPickerView.fillSuperview(padding: .init(top: 0, left: 10, bottom: 0, right: 0))
         mobile.leftView = leftView
         mobile.leftViewMode = .always
+        mobile.isEnabled = false
+        mobile.textColor = UIColor(hexString: "#999999")
+        mobile.backgroundColor = UIColor(hexString: "#F1F1F1")
         return mobile
     }()
     
@@ -164,7 +166,7 @@ class EditAccountViewController: UIViewController {
         
         let titleLabel = UILabel()
         titleLabel.text = "Edit Account"
-        titleLabel.font = UIFont(name: "Montserrat-SemiBold", size: 17.0)
+        titleLabel.font = UIFont(name: AppFontName.semibold, size: 17.0)
         titleLabel.textColor = UIColor(hexString: "#4E4E4E")
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
@@ -179,10 +181,9 @@ class EditAccountViewController: UIViewController {
         self.fullName.delegate = self
         self.mobilePhone.delegate = self
 
-        appSyncManager.userProfile.addAndNotify(observer: self) {
+        appSyncManager.userProfile.addAndNotify(observer: self) { [weak self] in
             guard let userProfile = appSyncManager.userProfile.value else {return}
             DispatchQueue.main.async {
-                [weak self] in
                 self?.fullName.text = userProfile.name
                 self?.emailText.text = userProfile.email
 
@@ -211,10 +212,7 @@ class EditAccountViewController: UIViewController {
     }
     
     @objc func closeView() {
-        print(self.savedCountryCode)
-        print(self.countryPickerView.selectedCountry.phoneCode)
-        print(self.savedCountryCode == self.countryPickerView.selectedCountry.phoneCode)
-        if changesSaved && self.savedCountryCode == self.countryPickerView.selectedCountry.phoneCode {
+        if changesSaved {
             self.dismiss(animated: true, completion: nil)
             return
         }
@@ -240,16 +238,16 @@ class EditAccountViewController: UIViewController {
         if let name = fullName.text {
             appSyncManager.userProfile.value?.name = name
         }
-        if let phone = mobilePhone.text, !phone.isEmpty {
-            do {
-                try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
-                appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
-            } catch  {
-                print("phone number error", error)
-                Alert(title: "Invalid Phone Number", message: "The phone number you have entered is not valid. Please enter a valid phone number")
-                return
-            }
-        }
+//        if let phone = mobilePhone.text, !phone.isEmpty {
+//            do {
+//                try phoneNumberKit.parse("\(countryPickerView.selectedCountry.phoneCode)\(phone)")
+//                appSyncManager.userProfile.value?.phone = "\(countryPickerView.selectedCountry.phoneCode)\(phone)"
+//            } catch  {
+//                print("phone number error", error)
+//                Alert(title: "Invalid Phone Number", message: "The phone number you have entered is not valid. Please enter a valid phone number")
+//                return
+//            }
+//        }
 
         UserAPI.instance.updateProfile()
         self.dismiss(animated: true, completion: nil)
