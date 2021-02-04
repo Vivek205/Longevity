@@ -227,11 +227,12 @@ final class SurveyTaskUtility: NSObject {
         
         func onSubmitCompletion() {
             print("survey submitted successfully")
-
+            AppSyncManager.instance.refreshActivites.value = true
             self.clearSurvey()
             AppSyncManager.instance.syncSurveyList()
             completion()
         }
+        
         func onSubmitFailure(_ error: Error) {
             print("submit survey error", error)
             onFailure(error)
