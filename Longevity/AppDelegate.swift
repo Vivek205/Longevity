@@ -15,7 +15,7 @@ import UserNotifications
 import BackgroundTasks
 import AWSSNS
 
-let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS_SANDBOX/RejuveDevelopment"
+let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS/RejuveProduction"
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
