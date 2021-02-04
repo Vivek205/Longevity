@@ -96,7 +96,7 @@ class AppSyncManager  {
     ]
     
     fileprivate init() {
-        self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
+        self.userProfile = DynamicValue(UserProfile(name: "User", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
@@ -107,7 +107,7 @@ class AppSyncManager  {
     }
     
     func cleardata() {
-        self.userProfile = DynamicValue(UserProfile(name: "", email: "", phone: ""))
+        self.userProfile = DynamicValue(UserProfile(name: "User", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
@@ -154,8 +154,7 @@ class AppSyncManager  {
     }
     
     func fetchUserHealthProfile() {
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getHealthProfile { [weak self] (healthProfile) in
+        UserProfileAPI.instance.getHealthProfile { [weak self] (healthProfile) in
             if healthProfile != nil {
                 self?.healthProfile.value = healthProfile
             }
@@ -207,8 +206,7 @@ class AppSyncManager  {
             self.healthProfile.value?.devices = [deviceName:["connected": connected]]
         }
         
-        let userProfile = UserProfileAPI()
-        userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!, completion: {
+        UserProfileAPI.instance.saveUserHealthProfile(healthProfile: self.healthProfile.value!, completion: {
             print("Completed")
         }) { (error) in
             print("Failed to save health profile:" + error.localizedDescription)
@@ -217,8 +215,7 @@ class AppSyncManager  {
 
     func updateHealthProfile(location:LocationDetails) {
         self.healthProfile.value?.location = location
-        let userProfile = UserProfileAPI()
-        userProfile.saveUserHealthProfile(healthProfile: self.healthProfile.value!) {
+        UserProfileAPI.instance.saveUserHealthProfile(healthProfile: self.healthProfile.value!) {
             print("updated location")
         } onFailure: { (error) in
             print("Failed to save health profile-location:" + error.localizedDescription)

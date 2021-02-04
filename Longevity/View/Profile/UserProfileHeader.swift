@@ -149,6 +149,13 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
         
+        UserProfileAPI.instance.getProfile { [weak self] (userProfile) in
+            DispatchQueue.main.async {
+                self?.userName.text = userProfile?.name
+                self?.userEmail.text = userProfile?.email
+            }
+        }
+        
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
                 self?.userName.text = AppSyncManager.instance.userProfile.value?.name
@@ -156,8 +163,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             }
         }
         
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.getUserAvatar(completion: { [weak self] (profileURL) in
+        UserProfileAPI.instance.getUserAvatar(completion: { [weak self] (profileURL) in
             DispatchQueue.main.async {
                 if let profileurl = profileURL {
                     self?.profileAvatar.cacheImage(urlString: profileurl)
@@ -170,6 +176,10 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    deinit {
+        AppSyncManager.instance.userProfile.remove(observer: self)
     }
     
     override func layoutSubviews() {
@@ -222,8 +232,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         guard let imageData = image?.jpegData(compressionQuality: 0.05) else { return }
        
         //TODO: Integrate the API to save and also retrieve the profile pic
-        let userProfileAPI = UserProfileAPI()
-        userProfileAPI.saveUserAvatar(profilePic: imageData.base64EncodedString(), completion: {
+        UserProfileAPI.instance.saveUserAvatar(profilePic: imageData.base64EncodedString(), completion: {
             print("Avatar is saved")
         }) { (error) in
             print(error.localizedDescription)
