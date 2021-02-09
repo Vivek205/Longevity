@@ -106,11 +106,11 @@ class CompletionStepVC: ORKStepViewController {
         let dateFormat = "yyyy-MM-dd HH:mm:ss"
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // referring to the timezon of the date provided for comparision
         var calendar = Calendar.current
-        if let lastSubmissionDate = dateFormatter.date(from: date),
-           let timezone = TimeZone(abbreviation: "UTC"){
-            calendar.timeZone = timezone
+        if let lastSubmissionDate = dateFormatter.date(from: date)
+        {
+            calendar.timeZone = .current // referring to the local timezone to be checked against
             if calendar.isDateInToday(lastSubmissionDate) {
                 return true
             }

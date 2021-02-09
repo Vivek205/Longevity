@@ -370,11 +370,11 @@ final class SurveyTaskUtility: NSObject {
         if let lastSubmission = task.lastSubmission, !lastSubmission.isEmpty {
             let dateFormatter = DateFormatter()
             dateFormatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-            dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+            dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // referring to the timezon of the date provided for comparision
 
             if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
                 var calendar = Calendar.current
-                calendar.timeZone = TimeZone(abbreviation: "UTC")!
+                calendar.timeZone = .current // referring to the local timezone to be checked against
                 if calendar.isDateInToday(lastSubmissionDate) {
                     return true
                 } else {
