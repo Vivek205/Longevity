@@ -26,7 +26,22 @@ final class SurveyTaskUtility: NSObject {
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
     var surveyInProgress: DynamicValue<SurveyStatus>
     let feelingTodayQuestionId = "3010"
-    var isSymptomsSkipped: Bool = false
+    let symptomsCategory = "100"
+    var isSymptomsSkipped: Bool = false {
+        didSet {
+            if self.isSymptomsSkipped {
+                guard let currentSurveyId = self.currentSurveyId,
+                      var savedAnswers = self.localSavedAnswers[currentSurveyId],
+                      let symptomsQuestions = self.formQuestions[currentSurveyId]?[symptomsCategory]
+                else {return}
+                let filteredAnswers = savedAnswers.filter({ (quesId,answer) -> Bool in
+                    return !symptomsQuestions.contains(quesId)
+                })
+                self.localSavedAnswers[currentSurveyId] = filteredAnswers
+            }
+        }
+    }
+    var formQuestions:[String:[String:[String]]] = [String:[String:[String]]]()
     
     private override init() {
         self.surveyInProgress = DynamicValue(.unknown)
@@ -76,6 +91,7 @@ final class SurveyTaskUtility: NSObject {
             steps += [instructionStep]
 
             let categories = surveyDetails!.displaySettings.categories
+            self.formQuestions[surveyId] = [String:[String]]()
             for category in categories {
 
                 for (categoryName, categoryValue) in category {
@@ -84,7 +100,7 @@ final class SurveyTaskUtility: NSObject {
                                                title:surveyDetails?.name ?? "Survey",
                                                text: categoryValue.description)
                         var items = [ORKFormItem]()
-
+                        self.formQuestions[surveyId]?["\(categoryValue.id)"] = []
                         for module in categoryValue.modules {
                             for (moduleName, moduleValue) in module {
                                 let sectionItem = ORKFormItem(sectionTitle: moduleName)
@@ -98,7 +114,7 @@ final class SurveyTaskUtility: NSObject {
                                 if  let filteredQuestions = surveyDetails?.questions
                                         .filter({ $0.categoryId == categoryValue.id && $0.moduleId == moduleValue.id}) {
                                     for filteredQuestion in filteredQuestions {
-
+                                        self.formQuestions[surveyId]?["\(categoryValue.id)"]?.append(filteredQuestion.quesId)
                                         var answerFormat: ORKAnswerFormat = ORKBooleanAnswerFormat(yesString: "Yes", noString: "No")
 
                                         if filteredQuestion.quesType == .text {
@@ -261,8 +277,9 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func saveCurrentSurvey(completion:@escaping () -> Void, onFailure:@escaping (_ error:Error)->Void) {
-        guard let currentSurveyId = self.currentSurveyId else {return}
-        guard let localSavedAnswers = self.localSavedAnswers[currentSurveyId] else {return}
+        guard let currentSurveyId = self.currentSurveyId,
+              let localSavedAnswers = self.localSavedAnswers[currentSurveyId] else {return}
+
         let payload = localSavedAnswers.map { (result) -> SubmitAnswerPayload  in
             let (questionId, answer) = result
             let questionDetails = SurveyTaskUtility.shared.getCurrentSurveyDetails()?.questions.first {$0.quesId == questionId}
@@ -272,6 +289,10 @@ final class SurveyTaskUtility: NSObject {
                                        answer: answer,
                                        quesId: questionId)
         }
+        
+        
+        
+        
         SurveysAPI.instance.saveSurveyAnswers(surveyId: SurveyTaskUtility.shared.currentSurveyId, answers: payload,
                                               completion: completion, onFailure: onFailure)
     }
