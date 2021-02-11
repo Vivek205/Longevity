@@ -90,10 +90,10 @@ final class SurveyTaskUtility: NSObject {
             guard surveyDetails != nil else { return completion(nil) }
             
             if surveyDetails!.surveyId.starts(with: "COUGH_TEST") {
-                let format = DateFormatter()
-                format.dateFormat="yyyyMMddHHmmssSSS"
-                let coughDate = format.string(from: Date())
-                SurveyTaskUtility.shared.coughTestFolderName = "COUGH_TEST_\(coughDate)"
+//                let format = DateFormatter()
+//                format.dateFormat="yyyyMMddHHmmssSSS"
+//                let coughDate = format.string(from: Date())
+                SurveyTaskUtility.shared.coughTestFolderName = "COUGH_TEST_\(UUID().uuidString)"
             }
             
             var steps = [ORKStep]()
