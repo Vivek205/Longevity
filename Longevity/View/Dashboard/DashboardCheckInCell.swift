@@ -271,11 +271,10 @@ class DashboardCheckInCell: UICollectionViewCell {
         }
         let dateFormatter = DateFormatter()
         dateFormatter.dateFormat = dateFormat
-        dateFormatter.timeZone = TimeZone(abbreviation: "UTC")
+        dateFormatter.timeZone = TimeZone(abbreviation: "UTC") // referring to the timezon of the date provided for comparision
         var calendar = Calendar.current
-        if let lastSubmissionDate = dateFormatter.date(from: lastSubmission),
-           let timezone = TimeZone(abbreviation: "UTC"){
-            calendar.timeZone = timezone
+        if let lastSubmissionDate = dateFormatter.date(from: lastSubmission){
+            calendar.timeZone = .current // referring to the local timezone to be checked against
             if calendar.isDateInToday(lastSubmissionDate) {
                 return true
             }

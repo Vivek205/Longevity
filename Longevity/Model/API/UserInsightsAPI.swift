@@ -40,7 +40,7 @@ class UserInsightsAPI: BaseAuthAPI {
         let request = RESTRequest(apiName: "insightsAPI",
                                   path: "/user/insight/cards",
                                   headers: headers,
-                                  queryParameters: ["submissionid":submissionID],
+                                  queryParameters: ["submission_id":submissionID],
                                   body: nil)
         self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
             guard let data = data else  {
@@ -61,7 +61,7 @@ class UserInsightsAPI: BaseAuthAPI {
     func exportUserApplicationData(submissionID: String? = nil,
                                    completion: @escaping() -> Void,
                                    onFailure: @escaping(_ error:Error) -> Void) {
-        let params = (submissionID?.isEmpty ?? false) ? nil : ["submissionid": submissionID ?? ""]
+        let params = (submissionID?.isEmpty ?? false) ? nil : ["submission_id": submissionID ?? ""]
         let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
                                   path: "/user/application/data/export",
                                   headers: headers,
