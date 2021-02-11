@@ -26,6 +26,7 @@ final class SurveyTaskUtility: NSObject {
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
     var surveyInProgress: DynamicValue<SurveyStatus>
     let feelingTodayQuestionId = "3010"
+    var coughTestFolderName: String = ""
     let symptomsCategory = "100"
     var isSymptomsSkipped: Bool = false {
         didSet {
@@ -66,6 +67,10 @@ final class SurveyTaskUtility: NSObject {
     private var serverSubmittedAnswers:[String:[SurveyLastResponseData]] = [String:[SurveyLastResponseData]]()
     var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
 
+    private var fileNameForModuleName: [String: String?] = [String:String?]()
+    private var recordingLengthForModuleName: [String: Int?] = [String:Int?]()
+    
+    
     func createSurvey(surveyId: String?, completion: @escaping (_ task: ORKOrderedTask?) -> Void,
                       onFailure: @escaping (_ error: Error) -> Void) {
         enum CreateSurveyError: Error {
@@ -83,6 +88,14 @@ final class SurveyTaskUtility: NSObject {
         guard let surveyId = surveyid else {return onFailure(CreateSurveyError.surveyIdNotFound)}
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else { return completion(nil) }
+            
+            if surveyDetails!.surveyId.starts(with: "COUGH_TEST") {
+                let format = DateFormatter()
+                format.dateFormat="yyyyMMddHHmmssSSS"
+                let coughDate = format.string(from: Date())
+                SurveyTaskUtility.shared.coughTestFolderName = "COUGH_TEST_\(coughDate)"
+            }
+            
             var steps = [ORKStep]()
             
             let instructionStep = ORKInstructionStep(identifier: "IntroStep")
@@ -204,6 +217,8 @@ final class SurveyTaskUtility: NSObject {
         case .speechRecognition:
             let answerFormat = ORKLocationAnswerFormat()
             let speechQuestion = ORKQuestionStep(identifier: question.quesId, title: moduleId, question: question.text, answer: answerFormat)
+            speechQuestion.text = question.otherDetails?.fileName
+            speechQuestion.tagText = String(question.otherDetails?.recordingLength ?? 0.0)
             return speechQuestion
         default:
             let questionStep = createSingleChoiceQuestionStep(

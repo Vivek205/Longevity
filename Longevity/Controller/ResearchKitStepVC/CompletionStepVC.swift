@@ -91,7 +91,18 @@ class CompletionStepVC: ORKStepViewController {
         
         SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         self.nextSurveyButton.disableSecondaryButton()
-        self.completeSurvey()
+        
+        if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
+            self.showSpinner()
+            let coughRecordUploader = CoughRecordUploader()
+            coughRecordUploader.uploadCoughTestFiles { [unowned self] in
+                self.completeSurvey()
+            } failure: { [unowned self] (message) in
+                print(message)
+            }
+        } else {
+            self.completeSurvey()
+        }
         
         self.navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(named: "closex"),
                                                                  style: .plain, target: self, action: #selector(handleContinue(sender:)))
@@ -158,7 +169,9 @@ class CompletionStepVC: ORKStepViewController {
                 self.nextSurveyButton.disableSecondaryButton()
             }
         }
-        self.showSpinner()
+        DispatchQueue.main.async {
+            self.showSpinner()
+        }
         SurveyTaskUtility.shared.completeSurvey(completion: completion, onFailure: onFailure(_:))
     }
     
