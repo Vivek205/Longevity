@@ -69,6 +69,8 @@ struct QuestionResponseValidation:Decodable {
 struct QuestionOtherDetails: Decodable {
     let scale: Scale?
     let TEXT: QuestionOtherDetailsText?
+    let fileName: String?
+    let recordingLength: Double?
 }
 
 enum QuestionOtherDetailsTextType:String,Decodable {

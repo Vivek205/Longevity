@@ -16,9 +16,10 @@ class CoughRecorderViewController: BaseStepViewController {
     var audioRecorder: AVAudioRecorder?
     var audioPlayer: AVAudioPlayer?
     
-    var fileKey: String = ""
+    fileprivate var fileName: String = ""
     var coughData: Data?
-    var recordedSeconds: Int = 5
+    var recordedSeconds: Int = 0
+    var recordingLength: Double = 0.0
     
     private var observingTimer: Timer?
     private var isFileDeleted: Bool = false
@@ -95,6 +96,10 @@ class CoughRecorderViewController: BaseStepViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.navigationController?.navigationBar.barTintColor = .white
+        self.navigationItem.hidesBackButton = true
+        self.backButtonItem = nil
+        
         self.view.addSubview(self.questionView)
         self.view.addSubview(audioVisualizer)
         self.view.addSubview(self.recorderButton)
@@ -142,15 +147,24 @@ class CoughRecorderViewController: BaseStepViewController {
         self.recordThemeView.isHidden = true
         self.recordThemeView.addShadow(to: [.left, .right, .top, .bottom],
                                        radius: 60.0, color: UIColor(hexString: "#E67381").cgColor)
+        
+        if let step = self.step as? ORKQuestionStep,
+           let fileName = step.text,
+           let recordingLength = step.tagText {
+            self.fileName = fileName + ".wav"
+            self.recordingLength = Double(recordingLength) ?? 0.0
+        }
     }
     
     func startRecording() {
         self.isTooShort = false
-        self.recordedSeconds = 5
-        let format = DateFormatter()
-        format.dateFormat="yyyyMMddHHmmssSSS"
-        self.fileKey = "COUGH_TEST_\(format.string(from: Date()))"
-        let audioFilename = getDocumentsDirectory().appendingPathComponent(self.fileKey + ".wav")
+        self.recordedSeconds = Int(self.recordingLength)
+        guard let voicerecordDirectory = self.getDocumentsDirectory() else {
+            finishRecording(success: false)
+            return
+        }
+        
+        let audioFilename = voicerecordDirectory.appendingPathComponent(self.fileName)
 
         let settings = [
             AVFormatIDKey: Int(kAudioFormatLinearPCM),
@@ -162,16 +176,20 @@ class CoughRecorderViewController: BaseStepViewController {
 
         do {
             recordingSession = AVAudioSession.sharedInstance()
-            try recordingSession.setCategory(.playAndRecord, mode: .default, policy: .default,
+            try recordingSession.setCategory(.playAndRecord,
+                                             mode: .default,
+                                             policy: .default,
                                              options: [.allowBluetooth, .allowBluetoothA2DP, .allowAirPlay, .defaultToSpeaker])
             try recordingSession.setActive(true)
             audioRecorder = try AVAudioRecorder(url: audioFilename, settings: settings)
             audioRecorder?.delegate = self
             audioRecorder?.isMeteringEnabled = true
             self.audioVisualizer.resetWaves()
-            audioRecorder?.record(forDuration: 5.0)
+            audioRecorder?.record(forDuration: self.recordingLength)
             self.isFileDeleted = false
-            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05, repeats: true, block: { [weak self] (timer) in
+            self.observingTimer = Timer.scheduledTimer(withTimeInterval: 0.05,
+                                                       repeats: true,
+                                                       block: { [weak self] (timer) in
                 guard let time = self?.audioRecorder?.currentTime else { return }
                 guard let recordTime = Double(String(format: "%.2f", time)) else { return }
                 let wave = self?.averagePowerFromAllChannels() ?? 0
@@ -193,9 +211,22 @@ class CoughRecorderViewController: BaseStepViewController {
         return Int(power) == 0 ? 1 : Int(power) * 5
     }
     
-    func getDocumentsDirectory() -> URL {
-        let paths = FileManager.default.urls(for: .documentDirectory, in: .userDomainMask)
-        return paths[0]
+    func getDocumentsDirectory() -> URL? {
+        let documentDirectory = NSURL(fileURLWithPath: NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true)[0])
+        guard let directoryPath = documentDirectory.appendingPathComponent(SurveyTaskUtility.shared.coughTestFolderName)
+                                    else { return nil }
+        do
+        {
+            if !FileManager.default.fileExists(atPath: directoryPath.path) {
+                try FileManager.default.createDirectory(atPath: directoryPath.path, withIntermediateDirectories: true, attributes: nil)
+            }
+            return directoryPath
+        }
+        catch let error as NSError
+        {
+            print("Unable to create directory \(error.debugDescription)")
+        }
+        return nil
     }
     
     func finishRecording(success: Bool) {
@@ -328,33 +359,10 @@ class CoughRecorderViewController: BaseStepViewController {
     }
     
     override func handleContinue() {
-        self.showSpinner()
-        guard let url = self.audioRecorder?.url, let coughData = try? Data(contentsOf: url) else {
-            return
-        }
-        
-        let coughRecordUploader = CoughRecordUploader()
-        coughRecordUploader.uploadVoiceData(fileKey: self.fileKey,
-                                            coughData: coughData,
-                                            completion: { [weak self] (success) in
-            if success {
-                guard let filekey = self?.fileKey else { return }
-                coughRecordUploader.generateURL(for: filekey) { [weak self] (fileURL) in
-                    if let questionId = self?.step?.identifier as? String {
-                        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: questionId,
-                                                                             answer: fileURL)
-                    }
-                    DispatchQueue.main.async {
-                        self?.removeSpinner()
-                        self?.goForward()
-                    }
-                }
-            } else {
-                DispatchQueue.main.async {
-                    self?.removeSpinner()
-                }
-            }
-        })
+        guard let questionStep = self.step as? ORKQuestionStep, !self.fileName.isEmpty else { return }
+        SurveyTaskUtility.shared.setCurrentSurveyLocalAnswer(questionIdentifier: questionStep.identifier,
+                                                             answer: SurveyTaskUtility.shared.coughTestFolderName + "/" + self.fileName)
+        super.handleContinue()
     }
 }
 

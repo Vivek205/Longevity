@@ -58,7 +58,7 @@ class FitbitPublishBackground: NSObject {
         
         var urlRequest = URLRequest(url: apiURL)
         urlRequest.httpMethod = "POST"
-        urlRequest.allHTTPHeaderFields = ["token":userToken, "login_type":LoginType.PERSONAL]
+        urlRequest.allHTTPHeaderFields = ["token":userToken, "Content-Type": "application/json", "login_type":LoginType.PERSONAL]
         
         do {
             urlRequest.httpBody = try JSONSerialization.data(withJSONObject:
@@ -87,8 +87,6 @@ extension FitbitPublishBackground: URLSessionDelegate {
 }
 
 extension FitbitPublishBackground: URLSessionTaskDelegate {
-    
-    
     
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
         self.delegate?.published(success: true)
