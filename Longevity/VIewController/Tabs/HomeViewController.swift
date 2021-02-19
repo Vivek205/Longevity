@@ -167,7 +167,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
                 return
             } else if selectedCell.status == .completedToday { //If survey is completed today
-                let checkInResultViewController = CheckInResultViewController(submissionID: surveyId)
+                let checkInResultViewController = CheckInResultViewController(submissionID: selectedCell.submissionID ?? "")
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
@@ -184,7 +184,7 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
             if surveyDetails.lastSurveyStatus == .pending {
                 return
             } else if surveyDetails.lastSurveyStatus == .completed {
-                let checkInResultViewController = CheckInResultViewController(submissionID: surveyDetails.surveyId,
+                let checkInResultViewController = CheckInResultViewController(submissionID: surveyDetails.lastSubmissionId ?? "",
                                                                               surveyName: surveyDetails.name,
                                                                               isCheckIn: false)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
