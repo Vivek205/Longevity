@@ -33,7 +33,7 @@ class CheckinLogCell: UICollectionViewCell {
                 symptomsCircle.isHidden = true
                 logIcon.isHidden = false
                 if self.history.surveyID == "COUGH_TEST_001" {
-                    if self.history.coughResult?.result ?? false {
+                    if self.history.result == .positive {
                         logIcon.image = UIImage(named: "cough-positive")
                     } else {
                         logIcon.image = UIImage(named: "cough-negative")
@@ -158,7 +158,7 @@ class CheckinLogCell: UICollectionViewCell {
     
     func onViewDetails() {
         let detailsViewController = CheckInLogDetailsViewController()
-        detailsViewController.history = self.history
+        detailsViewController.logItem = self.history
         NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .crossDissolve)
     }
 }

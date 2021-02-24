@@ -77,4 +77,26 @@ class UserInsightsAPI: BaseAuthAPI {
             completion()
         }
     }
+    
+    func getLog(completion: @escaping(UserInsight?) -> Void) {
+        let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
+                                  path: "/insights/log",
+                                  headers: headers,
+                                  queryParameters: nil,
+                                  body: nil)
+        self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+            guard let data = data else  {
+                completion(nil)
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                let value = try decoder.decode(UserInsight.self, from: data)
+                completion(value)
+            } catch {
+                print("JSON error", error)
+                completion(nil)
+            }
+        }
+    }
 }

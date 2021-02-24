@@ -93,6 +93,7 @@
 		C19875D424DEBA4300477185 /* DashboardSectionHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */; };
 		C19875D624DF1E8300477185 /* DashboardDevicesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */; };
 		C19875D924E04DD000477185 /* DashboardCheckInCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C19875D824E04DD000477185 /* DashboardCheckInCell.swift */; };
+		C1B3732C25D14C0C00A6108A /* HealthKitBackgroundSync.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B3732B25D14C0C00A6108A /* HealthKitBackgroundSync.swift */; };
 		C1B399FA24E3457A00D3991E /* MyDataInsightCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */; };
 		C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */; };
 		C1B39A0124E4A78F00D3991E /* DeviceInfo.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */; };
@@ -101,6 +102,10 @@
 		C1C8220824EB54A50074AF11 /* UIView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220724EB54A50074AF11 /* UIView+Extension.swift */; };
 		C1C8220A24EB570C0074AF11 /* UserProfileHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */; };
 		C1CE995E259B3EAD0009C47D /* Montserrat-LightItalic.ttf in Resources */ = {isa = PBXBuildFile; fileRef = C1CE995A259B3EAD0009C47D /* Montserrat-LightItalic.ttf */; };
+		C1D672C125DF7B900000812F /* CoughTestResultViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D672C025DF7B900000812F /* CoughTestResultViewController.swift */; };
+		C1D6734B25E66D990000812F /* CoughLogResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D6734A25E66D990000812F /* CoughLogResultCell.swift */; };
+		C1D6735025E675F40000812F /* CommonHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D6734F25E675F40000812F /* CommonHeader.swift */; };
+		C1D6735225E688DF0000812F /* CheckInLogBaseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1D6735125E688DF0000812F /* CheckInLogBaseCell.swift */; };
 		C1EC3E15255B1C4F007B4650 /* AIProgressBandView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */; };
 		E20256DE24E29DA000896F2C /* FormStepVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DD24E29DA000896F2C /* FormStepVC.swift */; };
 		E20256E024E29DF000896F2C /* RKCFormSectionItemView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */; };
@@ -349,6 +354,7 @@
 		C19875D324DEBA4300477185 /* DashboardSectionHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardSectionHeader.swift; sourceTree = "<group>"; };
 		C19875D524DF1E8300477185 /* DashboardDevicesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardDevicesCell.swift; sourceTree = "<group>"; };
 		C19875D824E04DD000477185 /* DashboardCheckInCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DashboardCheckInCell.swift; sourceTree = "<group>"; };
+		C1B3732B25D14C0C00A6108A /* HealthKitBackgroundSync.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitBackgroundSync.swift; sourceTree = "<group>"; };
 		C1B399F924E3457A00D3991E /* MyDataInsightCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MyDataInsightCell.swift; sourceTree = "<group>"; };
 		C1B399FE24E49B7E00D3991E /* BasePopupViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BasePopupViewController.swift; sourceTree = "<group>"; };
 		C1B39A0024E4A78F00D3991E /* DeviceInfo.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceInfo.swift; sourceTree = "<group>"; };
@@ -357,6 +363,10 @@
 		C1C8220724EB54A50074AF11 /* UIView+Extension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "UIView+Extension.swift"; sourceTree = "<group>"; };
 		C1C8220924EB570C0074AF11 /* UserProfileHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserProfileHeader.swift; sourceTree = "<group>"; };
 		C1CE995A259B3EAD0009C47D /* Montserrat-LightItalic.ttf */ = {isa = PBXFileReference; lastKnownFileType = file; path = "Montserrat-LightItalic.ttf"; sourceTree = "<group>"; };
+		C1D672C025DF7B900000812F /* CoughTestResultViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultViewController.swift; sourceTree = "<group>"; };
+		C1D6734A25E66D990000812F /* CoughLogResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughLogResultCell.swift; sourceTree = "<group>"; };
+		C1D6734F25E675F40000812F /* CommonHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CommonHeader.swift; sourceTree = "<group>"; };
+		C1D6735125E688DF0000812F /* CheckInLogBaseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CheckInLogBaseCell.swift; sourceTree = "<group>"; };
 		C1EC3E14255B1C4F007B4650 /* AIProgressBandView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AIProgressBandView.swift; sourceTree = "<group>"; };
 		E20256DD24E29DA000896F2C /* FormStepVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FormStepVC.swift; sourceTree = "<group>"; };
 		E20256DF24E29DF000896F2C /* RKCFormSectionItemView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RKCFormSectionItemView.swift; sourceTree = "<group>"; };
@@ -606,6 +616,7 @@
 		C19875AE24DC6A0800477185 /* VIewController */ = {
 			isa = PBXGroup;
 			children = (
+				C1D672BC25DF7B6F0000812F /* CoughTestResult */,
 				C14DBBFE250557E1004D5180 /* CheckinResult */,
 				E2B4679C2505F73E00D8C733 /* Dashboard */,
 				C12F09D324F87D1E00623CC3 /* CheckInLog */,
@@ -647,6 +658,7 @@
 				C17F08142574BE7E00D9955E /* FitbitPublishBackground.swift */,
 				C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */,
 				C19237032582318C00AA5A92 /* CoughRecordUploader.swift */,
+				C1B3732B25D14C0C00A6108A /* HealthKitBackgroundSync.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -706,6 +718,14 @@
 				C193942B24EEE3D700BDB3BD /* SignOutCell.swift */,
 			);
 			path = Profile;
+			sourceTree = "<group>";
+		};
+		C1D672BC25DF7B6F0000812F /* CoughTestResult */ = {
+			isa = PBXGroup;
+			children = (
+				C1D672C025DF7B900000812F /* CoughTestResultViewController.swift */,
+			);
+			path = CoughTestResult;
 			sourceTree = "<group>";
 		};
 		E20CD88C2537384800ADADB4 /* ForgotPassword */ = {
@@ -856,6 +876,9 @@
 				C14DBC28251013DF004D5180 /* CheckinLogInsightCell.swift */,
 				C14DBC2A25101833004D5180 /* CheckinLogGoal.swift */,
 				C16AD1D2251E6859007AF0D4 /* CheckInLogNoDataView.swift */,
+				C1D6734A25E66D990000812F /* CoughLogResultCell.swift */,
+				C1D6734F25E675F40000812F /* CommonHeader.swift */,
+				C1D6735125E688DF0000812F /* CheckInLogBaseCell.swift */,
 			);
 			path = CheckinLog;
 			sourceTree = "<group>";
@@ -1306,6 +1329,7 @@
 				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
 				C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */,
 				E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */,
+				C1B3732C25D14C0C00A6108A /* HealthKitBackgroundSync.swift in Sources */,
 				C14DBC0825056583004D5180 /* CheckInResultHeader.swift in Sources */,
 				E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */,
 				C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */,
@@ -1319,6 +1343,7 @@
 				E27E295324F7A11700244CF7 /* CheckinLogHeader.swift in Sources */,
 				E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
+				C1D6734B25E66D990000812F /* CoughLogResultCell.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
@@ -1359,6 +1384,7 @@
 				E23634F724F4EACB00B93490 /* Logger.swift in Sources */,
 				E274F09424C9982500969CD8 /* RKCQuestionView.swift in Sources */,
 				E2E5EFDB2542E0FD003ADAEC /* OfflineNotificationView.swift in Sources */,
+				C1D6735225E688DF0000812F /* CheckInLogBaseCell.swift in Sources */,
 				E274F09624C9B75000969CD8 /* RKCLabels.swift in Sources */,
 				C19236A3258218AE00AA5A92 /* AWSAmplifyConfig.swift in Sources */,
 				C12F09B724F6F94D00623CC3 /* ResetCheckInDataViewController.swift in Sources */,
@@ -1374,6 +1400,7 @@
 				C193942724EEDD9000BDB3BD /* AppVersionCell.swift in Sources */,
 				C14ABA3B24E0AC3400C81580 /* DashboardDeviceCollectionCell.swift in Sources */,
 				E20CD8942537403B00ADADB4 /* UILabel+Extension.swift in Sources */,
+				C1D672C125DF7B900000812F /* CoughTestResultViewController.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */,
@@ -1403,6 +1430,7 @@
 				E25185EC24CF042000F3068C /* Survey.swift in Sources */,
 				C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */,
 				C193942F24EF039E00BDB3BD /* ExportCheckinDataViewController.swift in Sources */,
+				C1D6735025E675F40000812F /* CommonHeader.swift in Sources */,
 				C1EC3E15255B1C4F007B4650 /* AIProgressBandView.swift in Sources */,
 				E2C59E002498E37600842105 /* CustomButtonFill.swift in Sources */,
 				C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */,
