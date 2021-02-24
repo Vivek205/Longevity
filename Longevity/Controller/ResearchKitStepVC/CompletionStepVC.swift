@@ -88,8 +88,8 @@ class CompletionStepVC: ORKStepViewController {
                 }
             }
         }
+        SurveyTaskUtility.shared.setStatus(surveyId: self.currentSurveyId!)
         
-        SurveyTaskUtility.shared.surveyInProgress.value = .unknown
         self.nextSurveyButton.disableSecondaryButton()
         
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {

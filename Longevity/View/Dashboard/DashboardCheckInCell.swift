@@ -15,6 +15,7 @@ enum CheckInStatus: String, Decodable {
     case completedToday = "COMPLETED_TODAY"
     case completed = "PROCESSED"
     case pending = "PENDING"
+    case unknown = "UNKNOWN"
 }
 
 extension CheckInStatus {
@@ -46,6 +47,8 @@ extension CheckInStatus {
             return UIImage(named: "checkinnotdone")
         case .pending:
             return UIImage(named: "checkinpending")
+        case .unknown:
+            return UIImage(named: "checkinpending")
         }
     }
     
@@ -59,6 +62,8 @@ extension CheckInStatus {
             return surveyName
         case .pending:
             return "Processing…"
+        case .unknown:
+            return "Unknown"
         }
     }
     

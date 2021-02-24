@@ -28,7 +28,7 @@ enum CellPosition {
 }
 
 enum ProfileSetting: String {
-    case exportcheckin = "Export Check-in Data"
+    case exportcheckin = "Export Your Data"
     case updatebiometrics = "Update Biometrics"
     case updatepreconditions = "Update Pre-conditions"
     //    case resetcheckin = "Reset Check-in Data"
