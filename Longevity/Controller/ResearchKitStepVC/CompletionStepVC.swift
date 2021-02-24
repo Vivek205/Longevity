@@ -93,12 +93,10 @@ class CompletionStepVC: ORKStepViewController {
         self.nextSurveyButton.disableSecondaryButton()
         
         if (self.currentSurveyId?.starts(with: "COUGH_TEST") == true) {
-            self.showSpinner()
-            let coughRecordUploader = CoughRecordUploader()
-            coughRecordUploader.uploadCoughTestFiles { [unowned self] in
+            self.uploadFiles { [unowned self] in
                 self.completeSurvey()
-            } failure: { [unowned self] (message) in
-                print(message)
+            } failure: { [unowned self] in
+                self.goForward()
             }
         } else {
             self.completeSurvey()
@@ -110,6 +108,27 @@ class CompletionStepVC: ORKStepViewController {
                               .font: UIFont(name: AppFontName.semibold, size: 22.0)]
         self.navigationController?.navigationBar.titleTextAttributes = textAttributes as [NSAttributedString.Key : Any]
         self.navigationController?.navigationBar.barTintColor = .appBackgroundColor
+    }
+    
+    fileprivate func uploadFiles(success: @escaping() -> Void, failure: @escaping() -> Void) {
+        self.showSpinner()
+        let coughRecordUploader = CoughRecordUploader()
+        coughRecordUploader.uploadCoughTestFiles {
+            success()
+            coughRecordUploader.removeDirectory()
+        } failure: { [unowned self] (message) in
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                let tryAction = UIAlertAction(title: "Try Again", style: .default) { [unowned self] (_) in
+                    self.uploadFiles(success: success, failure: failure)
+                }
+                let cancelAction = UIAlertAction(title: "Cancel", style: .destructive) { (_) in
+                    coughRecordUploader.removeDirectory()
+                    failure()
+                }
+                Alert(title: "Upload Error", message: "Unable to upload cough recordings. Would you like to try again?", actions: tryAction, cancelAction)
+            }
+        }
     }
     
     func isDateToday(date: String?) -> Bool {
