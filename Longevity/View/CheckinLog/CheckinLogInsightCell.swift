@@ -8,7 +8,7 @@
 
 import UIKit
 
-class CheckinLogInsightCell: UITableViewCell {
+class CheckinLogInsightCell: CheckInLogBaseCell {
     
     var insight: Goal! {
         didSet {
@@ -55,7 +55,6 @@ class CheckinLogInsightCell: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
         self.addSubview(insightsLabel)
         self.contentView.addSubview(citationLabel)
         

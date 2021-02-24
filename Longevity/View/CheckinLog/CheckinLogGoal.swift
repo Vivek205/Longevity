@@ -8,15 +8,15 @@
 
 import UIKit
 
-class CheckinLogGoal: UITableViewCell {
+class CheckinLogGoal: CheckInLogBaseCell {
     
     var citationURL: String = ""
     
-    lazy var divider: UIView = {
-        let divider = UIView()
-        divider.translatesAutoresizingMaskIntoConstraints = false
-        divider.backgroundColor = UIColor(hexString: "#CECECE")
-        return divider
+    lazy var containerView: UIView = {
+        let container = UIView()
+        container.translatesAutoresizingMaskIntoConstraints = false
+        container.backgroundColor = .white
+        return container
     }()
     
     lazy var goalsView: UIView = {
@@ -57,31 +57,30 @@ class CheckinLogGoal: UITableViewCell {
     
     override init(style: UITableViewCell.CellStyle, reuseIdentifier: String?) {
         super.init(style: style, reuseIdentifier: reuseIdentifier)
-        
-        addSubview(divider)
-        addSubview(goalsView)
+        self.contentView.addSubview(containerView)
+        containerView.addSubview(goalsView)
         goalsView.addSubview(rowIndex)
-        addSubview(goalsLabel)
-        self.contentView.addSubview(citationLabel)
+        containerView.addSubview(goalsLabel)
+        containerView.addSubview(citationLabel)
         
         NSLayoutConstraint.activate([
-            divider.leadingAnchor.constraint(equalTo: leadingAnchor),
-            divider.trailingAnchor.constraint(equalTo: trailingAnchor),
-            divider.heightAnchor.constraint(equalToConstant: 1.0),
-            divider.topAnchor.constraint(equalTo: topAnchor),
-            goalsView.topAnchor.constraint(equalTo: topAnchor, constant: 14.0),
-            goalsView.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 14.0),
+            containerView.leadingAnchor.constraint(equalTo: self.contentView.leadingAnchor, constant: 15.0),
+            containerView.trailingAnchor.constraint(equalTo: self.contentView.trailingAnchor, constant: -15.0),
+            containerView.topAnchor.constraint(equalTo: self.contentView.topAnchor, constant: 5.0),
+            containerView.bottomAnchor.constraint(equalTo: self.contentView.bottomAnchor, constant: -5.0),
+            goalsView.topAnchor.constraint(equalTo: containerView.topAnchor, constant: 14.0),
+            goalsView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 14.0),
             goalsView.heightAnchor.constraint(equalToConstant: 24.0),
             goalsView.widthAnchor.constraint(equalTo: goalsView.heightAnchor),
             rowIndex.centerXAnchor.constraint(equalTo: goalsView.centerXAnchor),
             rowIndex.centerYAnchor.constraint(equalTo: goalsView.centerYAnchor),
             goalsLabel.topAnchor.constraint(equalTo: goalsView.topAnchor),
             goalsLabel.leadingAnchor.constraint(equalTo: goalsView.trailingAnchor, constant: 14.0),
-            goalsLabel.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -14.0),
+            goalsLabel.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -14.0),
             citationLabel.topAnchor.constraint(equalTo: goalsLabel.bottomAnchor, constant: 10.0),
             citationLabel.leadingAnchor.constraint(equalTo: goalsLabel.leadingAnchor),
-            citationLabel.leadingAnchor.constraint(equalTo: goalsLabel.leadingAnchor),
-            citationLabel.bottomAnchor.constraint(lessThanOrEqualTo: self.bottomAnchor, constant: -14.0)
+            citationLabel.trailingAnchor.constraint(equalTo: goalsLabel.trailingAnchor),
+            citationLabel.bottomAnchor.constraint(lessThanOrEqualTo: containerView.bottomAnchor, constant: -14.0)
         ])
         
         let gestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(doOpenCitation))
@@ -92,6 +91,22 @@ class CheckinLogGoal: UITableViewCell {
     
     required init?(coder: NSCoder) {
         fatalError("init(coder:) has not been implemented")
+    }
+    
+    override func layoutSubviews() {
+        super.layoutSubviews()
+        
+        containerView.layer.cornerRadius = 5.0
+        containerView.layer.masksToBounds = true
+        
+        containerView.layer.shadowColor = UIColor.black.cgColor
+        containerView.layer.shadowOffset = CGSize(width: 0, height: 1.0)
+        containerView.layer.cornerRadius = 5.0
+        containerView.layer.shadowRadius = 3.0
+        containerView.layer.shadowOpacity = 0.25
+        containerView.layer.masksToBounds = false
+        containerView.layer.shadowPath = UIBezierPath(roundedRect: containerView.bounds,
+                                                      cornerRadius: containerView.layer.cornerRadius).cgPath
     }
     
     func setup(goal: Goal, index: Int) {
@@ -110,7 +125,6 @@ class CheckinLogGoal: UITableViewCell {
         
         goalsLabel.attributedText = attributedInfoText
         rowIndex.text = "\(index + 1)"
-        self.divider.isHidden = index == 0
         
         if let citation = goal.citation, !citation.isEmpty {
             self.citationURL = citation
