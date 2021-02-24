@@ -129,10 +129,10 @@ class AppleHealthTopCell: UITableViewCell {
         self.healthkitName.text = deviceName
         if isConnected == true {
             self.connectionStateIcon.tintColor = .themeColor
-            self.deviceStatus.isHidden = false
+            self.deviceStatus.textColor = UIColor(hexString: "#5AA7A7")
         } else {
             self.connectionStateIcon.tintColor = .lightGray
-            self.deviceStatus.isHidden = true
+            self.deviceStatus.textColor = .clear
         }
     }
 }
