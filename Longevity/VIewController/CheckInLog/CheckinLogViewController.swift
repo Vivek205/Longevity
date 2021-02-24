@@ -55,9 +55,8 @@ class CheckinLogViewController: BaseViewController {
             logsCollectionView.bottomAnchor.constraint(equalTo: self.view.bottomAnchor),
             closeButton.widthAnchor.constraint(equalToConstant: 30.0),
             closeButton.heightAnchor.constraint(equalTo: closeButton.widthAnchor),
-            closeButton.leadingAnchor.constraint(equalTo: self.titleView.leadingAnchor, constant: 20.0),
+            closeButton.trailingAnchor.constraint(equalTo: self.titleView.trailingAnchor, constant: -20.0),
             closeButton.centerYAnchor.constraint(equalTo: self.titleView.titleLabel.centerYAnchor),
-            
             checkinlognodataView.topAnchor.constraint(equalTo: self.view.topAnchor, constant: CGFloat(self.headerHeight + 30.0)),
             checkinlognodataView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
             checkinlognodataView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor)
@@ -73,6 +72,16 @@ class CheckinLogViewController: BaseViewController {
         layout.invalidateLayout()
         
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
+        
+//        self.showSpinner()
+//        UserInsightsAPI.instance.getLog { (log) in
+//            DispatchQueue.main.async {
+//                self.removeSpinner()
+//                guard let history = log?.details?.history else { return }
+//                self.history = history
+//                self.updateLogHistory()
+//            }
+//        }
         
         AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
             DispatchQueue.main.async {
@@ -117,11 +126,12 @@ class CheckinLogViewController: BaseViewController {
                 for index in 0..<(self?.history?.count ?? 0) {
                     if let submissionID = self?.history?[index].submissionID,
                        !submissionID.isEmpty,
-                       let surveyName = response[submissionID]?.surveyName {
+                       let surveyName = response[submissionID]?.surveyName,
+                       let surveyID = response[submissionID]?.surveyID {
                         self?.history?[index].surveyName = surveyName
+                        self?.history?[index].surveyID = surveyID
                     }
                 }
-                self?.history?.removeAll(where: { $0.surveyName == "Cough Test" })
                 self?.upadtedHistory = self?.history
                 self?.reloadLogData()
             } onFailure: { [weak self] (error) in

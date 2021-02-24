@@ -15,10 +15,13 @@ class CheckInLogDetailsViewController: UIViewController {
     var history: History! {
         didSet {
             self.logDetailsTableView.reloadData()
+            self.logTitle.text = history.surveyName
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy-MM-dd"
             if let date = dateformatter.date(from: history.recordDate) {
-                dateformatter.dateFormat = "MMM dd, yyyy"
+                dateformatter.dateFormat = "MMM dd, yyyy | hh:mm a"
+                dateformatter.amSymbol = "am"
+                dateformatter.pmSymbol = "pm"
                 self.logDate.text = dateformatter.string(from: date)
             }
         }
@@ -47,9 +50,18 @@ class CheckInLogDetailsViewController: UIViewController {
         return bezelview
     }()
     
+    lazy var logTitle: UILabel = {
+        let title = UILabel()
+        title.font = UIFont(name: AppFontName.semibold, size: 24.0)
+        title.textColor = UIColor(hexString: "#4E4E4E")
+        title.textAlignment = .center
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
     lazy var logDate: UILabel = {
         let date = UILabel()
-        date.font = UIFont(name: AppFontName.semibold, size: 24.0)
+        date.font = UIFont(name: AppFontName.light, size: 18.0)
         date.textColor = UIColor(hexString: "#4E4E4E")
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
@@ -86,6 +98,7 @@ class CheckInLogDetailsViewController: UIViewController {
         self.view.addSubview(transparentView)
         self.view.addSubview(containerView)
         self.containerView.addSubview(bezelView)
+        self.containerView.addSubview(logTitle)
         self.containerView.addSubview(logDate)
         self.containerView.addSubview(exportButton)
         self.containerView.addSubview(logDetailsTableView)
@@ -103,8 +116,11 @@ class CheckInLogDetailsViewController: UIViewController {
             bezelView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             bezelView.heightAnchor.constraint(equalToConstant: 5.0),
             bezelView.widthAnchor.constraint(equalToConstant: 36.0),
+            logTitle.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
+            logTitle.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
+            logTitle.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 15.0),
             logDate.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
-            logDate.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 14.5),
+            logDate.topAnchor.constraint(equalTo: logTitle.bottomAnchor, constant: 22.0),
             exportButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
             exportButton.centerYAnchor.constraint(equalTo: logDate.centerYAnchor),
             exportButton.widthAnchor.constraint(equalToConstant: 110.0),
@@ -211,13 +227,20 @@ class CheckInLogDetailsViewController: UIViewController {
 extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataSource {
     
     func numberOfSections(in tableView: UITableView) -> Int {
+        var sections = 1
+        if (history?.symptoms.count ?? 0) > 0 {
+            sections += 1
+        }
+        if (history?.insights.count ?? 0) > 0 {
+            sections += 1
+        }
         return 3
     }
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
+        if section == 0 && (history?.symptoms.count ?? 0) > 0 {
             return  history.symptoms.count
-        } else if section == 1 {
+        } else if (section == 0 || section == 1) && (history?.insights.count ?? 0) > 0 {
             return history.insights.count
         } else {
             return history.goals.count
@@ -225,18 +248,18 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && (history?.symptoms.count ?? 0) > 0 {
             guard let cell = tableView.getCell(with: CheckinLogSymptomsCell.self, at: indexPath) as? CheckinLogSymptomsCell else {
                 preconditionFailure("Invalid cell type")
             }
-            cell.symptom = history.symptoms[indexPath.row]
+            cell.symptom = history?.symptoms[indexPath.row]
             return cell
         }
-        else if indexPath.section == 1 {
+        else if (indexPath.section == 0 || indexPath.section == 1) && (history?.insights.count ?? 0) > 0 {
             guard let cell = tableView.getCell(with: CheckinLogInsightCell.self, at: indexPath) as? CheckinLogInsightCell else {
                 preconditionFailure("Invalid cell type")
             }
-            cell.insight = history.insights[indexPath.row]
+            cell.insight = history?.insights[indexPath.row]
             return cell
         } else {
             guard let cell = tableView.getCell(with: CheckinLogGoal.self, at: indexPath) as? CheckinLogGoal else {
@@ -249,9 +272,9 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     
     func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
         guard let header = tableView.getHeader(with: CommonHeader.self, index: section) as? CommonHeader else { return nil }
-        if section == 0 {
+        if section == 0 && (history?.symptoms.count ?? 0) > 0  {
             header.setupHeaderText(font: UIFont(name: AppFontName.regular, size: 18.0), title: "Recorded Symptoms")
-        } else if section == 1 {
+        } else if (section == 0 || section == 1) && (history?.insights.count ?? 0) > 0 {
             header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 24.0), title: "Insights")
         } else {
             header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 18.0), title: "Your next \(history.goals.count) goal(s)")
@@ -264,9 +287,9 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section < 1 {
+        if indexPath.section == 0 && (history?.symptoms.count ?? 0) > 0 {
             return 50.0
-        } else if indexPath.section == 1 {
+        } else if (indexPath.section == 0 || indexPath.section == 1) && (history?.insights.count ?? 0) > 0 {
             return 110.0
         } else {
             let goal = history.goals[indexPath.row]
