@@ -62,7 +62,8 @@ class MyDataViewController: BaseViewController {
 
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+                let status = SurveyTaskUtility.shared.containsInprogress()
+                self?.aiProcessingBand.isHidden = !status
             }
         }
         

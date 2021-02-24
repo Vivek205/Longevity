@@ -13,18 +13,12 @@ fileprivate let defaultModuleIconName:String = "icon : GI"
 
 fileprivate let appSyncmanager:AppSyncManager = AppSyncManager.instance
 
-enum SurveyStatus {
-    case unknown
-    case pending
-    case processed
-}
-
 final class SurveyTaskUtility: NSObject {
     static let shared = SurveyTaskUtility()
     private var surveyList:[SurveyListItem]?
     var repetitiveSurveyList: DynamicValue<[SurveyListItem]>
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
-    var surveyInProgress: DynamicValue<SurveyStatus>
+    var surveyInProgress: DynamicValue<[String: CheckInStatus]>
     let feelingTodayQuestionId = "3010"
     var coughTestFolderName: String = ""
     let symptomsCategory = "100"
@@ -45,7 +39,7 @@ final class SurveyTaskUtility: NSObject {
     var formQuestions:[String:[String:[String]]] = [String:[String:[String]]]()
     
     private override init() {
-        self.surveyInProgress = DynamicValue(.unknown)
+        self.surveyInProgress = DynamicValue([String: CheckInStatus]())
         self.repetitiveSurveyList = DynamicValue([SurveyListItem]())
         self.oneTimeSurveyList = DynamicValue([SurveyListItem]())
     }
@@ -63,9 +57,9 @@ final class SurveyTaskUtility: NSObject {
     private var lastSubmission: String?
     private var lastSubmissionId: String?
     private var lastResponse: [SurveyLastResponseData]?
-    var localSavedAnswers:[String:[String:String]] = [String:[String:String]]()//[SurveyId:[QuestionId:Answer]]
+    var localSavedAnswers:[String:[String:String]] = [String:[String:String]]()
     private var serverSubmittedAnswers:[String:[SurveyLastResponseData]] = [String:[SurveyLastResponseData]]()
-    var traversedQuestions: [String:[String]] = [String:[String]]() // [SurveyId:[QuestionId]]
+    var traversedQuestions: [String:[String]] = [String:[String]]()
 
     private var fileNameForModuleName: [String: String?] = [String:String?]()
     private var recordingLengthForModuleName: [String: Int?] = [String:Int?]()
@@ -90,9 +84,6 @@ final class SurveyTaskUtility: NSObject {
             guard surveyDetails != nil else { return completion(nil) }
             
             if surveyDetails!.surveyId.starts(with: "COUGH_TEST") {
-//                let format = DateFormatter()
-//                format.dateFormat="yyyyMMddHHmmssSSS"
-//                let coughDate = format.string(from: Date())
                 SurveyTaskUtility.shared.coughTestFolderName = "COUGH_TEST_\(UUID().uuidString)"
             }
             
@@ -237,25 +228,6 @@ final class SurveyTaskUtility: NSObject {
 
 
     func completeSurvey(completion: @escaping () -> Void, onFailure: @escaping (_ error: Error) -> Void) {
-//        if let isCurrentSurveyRepetitive = self.isCurrentSurveyRepetitive(),
-//           let currentSurveyId = self.currentSurveyId,
-//           let repetitiveList = self.repetitiveSurveyList.value,
-//           let oneTimeSurveyList = self.oneTimeSurveyList.value{
-//            if isCurrentSurveyRepetitive {
-//                for index in 0..<repetitiveList.count {
-//                    if repetitiveList[index].surveyId == currentSurveyId {
-//                        self.repetitiveSurveyList.value?[index].lastSurveyStatus = .pending
-//                    }
-//                }
-//            }else {
-//                for index in 0..<oneTimeSurveyList.count {
-//                    if oneTimeSurveyList[index].surveyId == currentSurveyId {
-//                        self.oneTimeSurveyList.value?[index].lastSurveyStatus = .pending
-//                    }
-//                }
-//            }
-//        }
-        
         func onSubmitCompletion() {
             print("survey submitted successfully")
             AppSyncManager.instance.refreshActivites.value = true
@@ -370,13 +342,8 @@ final class SurveyTaskUtility: NSObject {
     }
 
     func setSurveyList(list:[SurveyListItem]) {
-        if list.filter({$0.surveyId.starts(with: "COUGH_TEST") != true})
-            .contains(where: { return $0.lastSurveyStatus == .pending }) {
-            self.surveyInProgress.value = .pending
-        } else {
-            self.surveyInProgress.value = .processed
-        }
         self.surveyList = list
+        self.setSurveyStatus()
         self.repetitiveSurveyList.value = list.filter({ $0.isRepetitive == true })
         self.oneTimeSurveyList.value = list.filter({ $0.isRepetitive != true })
     }
@@ -535,5 +502,28 @@ final class SurveyTaskUtility: NSObject {
             return nil
         }
         return surveyItem.lastSubmissionId
+    }
+}
+
+
+extension SurveyTaskUtility {
+    func containsInprogress() -> Bool {
+       return self.surveyInProgress.value?.contains(where: { $0.value == .pending }) ?? false
+    }
+    
+    func setSurveyStatus() {
+        self.surveyList?.forEach({ (survey) in
+            if let status = self.surveyInProgress.value?[survey.surveyId],
+               status == .pending, survey.lastSurveyStatus != .pending {
+                DispatchQueue.main.async {
+                    Alert(title: "Risk Siginals Updated", message: "Your results are avaliable and also saved in \"My Data\"")
+                }
+            }
+            self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus
+        })
+    }
+    
+    func setStatus(surveyId: String) {
+        self.surveyInProgress.value?[surveyId] = .unknown
     }
 }

@@ -264,7 +264,7 @@ class AppSyncManager  {
         func completion(_ surveys:[SurveyListItem]) {
             self.surveysSyncStatus.value = .completed
             
-            if SurveyTaskUtility.shared.surveyInProgress.value == .pending {
+            if SurveyTaskUtility.shared.containsInprogress() {
                 self.startpollingSurveys()
             } else {
                 self.clearPollingTimer()
