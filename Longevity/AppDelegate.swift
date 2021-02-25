@@ -20,12 +20,12 @@ let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS/Rej
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
     var window : UIWindow?
-
+    
     override init() {
         super.init()
         UIFont.overrideInitialize()
     }
-
+    
     func application(_ application: UIApplication,
                      didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
@@ -42,10 +42,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             print("An error occurred setting up Amplify: \(error)")
         }
         
-//        SentrySDK.start(options: [
-//            "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
-//            "enableAutoSessionTracking": true
-//        ])
+        //        SentrySDK.start(options: [
+        //            "dsn": "https://fad7b602a82a42a6928403d810664c6f@o411850.ingest.sentry.io/5287662",
+        //            "enableAutoSessionTracking": true
+        //        ])
         
         UNUserNotificationCenter.current().delegate = self
         window = UIWindow(frame: UIScreen.main.bounds)
@@ -54,11 +54,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if #available(iOS 13.0, *) {
             self.window?.overrideUserInterfaceStyle = .light
         }
-
+        
         presentLoaderAnimationViewController()
         
         if #available(iOS 13.0, *) {
-            BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch", using: nil) { [weak self] (task) in
+            BGTaskScheduler.shared.register(forTaskWithIdentifier: "io.rejuve.Longevity.bgFetch",
+                                            using: nil) { [weak self] (task) in
                 guard let task = task as? BGProcessingTask else { return }
                 self?.appHandleRefreshTask(task: task)
             }
@@ -78,7 +79,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         return true
     }
-
+    
     func presentLoaderAnimationViewController() {
         let loaderVC = LoaderAnimationViewController()
         loaderVC.modalPresentationStyle = .fullScreen
@@ -133,7 +134,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             AppSyncManager.instance.syncSurveyList()
         }
     }
-
+    
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
         //        Implement this method if your app supports the fetch background mode. When an opportunity arises to download data, the system calls this method to give your app a chance to download any data it needs. Your implementation of this method should download the data, prepare that data for use, and call the block in the completionHandler parameter.
         //        When this method is called, your app has up to 30 seconds of wall-clock time to perform the download operation and call the specified completion handler block
@@ -158,15 +159,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             FitbitPublishBackground.shared.publishedCompletionHandler = completionHandler
         }
     }
-
+    
     func configureCognito() {
         let credentialsProvider = AWSCognitoCredentialsProvider(regionType:.USWest2,
                                                                 identityPoolId:"us-west-2:71e6c80c-3543-4a1c-b149-1dbfa77f0d40")
-
+        
         let configuration = AWSServiceConfiguration(region:.USWest2, credentialsProvider:credentialsProvider)
         AWSServiceManager.default().defaultServiceConfiguration = configuration
     }
-
+    
     func application(_ application: UIApplication, didRegisterForRemoteNotificationsWithDeviceToken deviceToken: Data){
         var token = ""
         for index in 0..<deviceToken.count {
@@ -178,16 +179,16 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         Logger.log("device token created \(token)")
         checkARNStatus()
     }
-
+    
     func application(_ application: UIApplication, didFailToRegisterForRemoteNotificationsWithError error: Error) {
         Logger.log("failed to register notification \(error.localizedDescription)")
     }
-
+    
     func application(
         _ application: UIApplication,
         didReceiveRemoteNotification userInfo: [AnyHashable: Any],
         fetchCompletionHandler completionHandler:
-        @escaping (UIBackgroundFetchResult) -> Void
+            @escaping (UIBackgroundFetchResult) -> Void
     ) {
         print("user info", userInfo)
         guard let apsData = userInfo["aps"] as? [String: AnyObject] else {
@@ -217,10 +218,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     return
                 }
             }
-
+            
         }
         if let alert = apsData["alert"] as? [String: Any] {
-
+            
             if let alertBody = alert["body"] as? String {
                 if alertBody == "Synchronize fitbit data." {
                     let fitbitModel = FitbitModel()
@@ -232,30 +233,30 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         completionHandler(.noData)
     }
-
-//    func userNotificationCenter(_ center: UNUserNotificationCenter,
-//                                willPresent notification: UNNotification,
-//                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-//        Logger.log("received foreground notification - will present")
-//        if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
-//            if let type =  apsData["type"] as? String {
-//                if let notificationType = PushNotificationType(rawValue: type) {
-//                    completionHandler(.alert)
-//                }
-//            }
-//            if let alert = apsData["alert"] as? [String: Any] {
-//                if let alertBody = alert["body"] as? String {
-//                    if alertBody == "Synchronize fitbit data." {
-//                        let fitbitModel = FitbitModel()
-//                        fitbitModel.refreshTheToken()
-//                        completionHandler(.alert)
-//                        return
-//                    }
-//                }
-//            }
-//        }
-//    }
-
+    
+    //    func userNotificationCenter(_ center: UNUserNotificationCenter,
+    //                                willPresent notification: UNNotification,
+    //                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
+    //        Logger.log("received foreground notification - will present")
+    //        if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
+    //            if let type =  apsData["type"] as? String {
+    //                if let notificationType = PushNotificationType(rawValue: type) {
+    //                    completionHandler(.alert)
+    //                }
+    //            }
+    //            if let alert = apsData["alert"] as? [String: Any] {
+    //                if let alertBody = alert["body"] as? String {
+    //                    if alertBody == "Synchronize fitbit data." {
+    //                        let fitbitModel = FitbitModel()
+    //                        fitbitModel.refreshTheToken()
+    //                        completionHandler(.alert)
+    //                        return
+    //                    }
+    //                }
+    //            }
+    //        }
+    //    }
+    
     func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
                                 withCompletionHandler completionHandler: @escaping () -> Void) {
         Logger.log("received foreground notification - did receive")
@@ -279,7 +280,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         return
                     }
                 }
-
+                
             }
         }
     }
@@ -324,7 +325,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         } catch let error {
             print(error.localizedDescription)
         }
-     }
+    }
     
     func updateARNToken() {
         let defaults = UserDefaults.standard
@@ -338,18 +339,18 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
             return
         }
-
+        
         let deviceIdForVendor = notificationAPI.getDeviceIdForVendor()
         if deviceIdForVendor == nil {
             _ = notificationAPI.createDeviceIdForVendor()
         }
-
+        
         let awsSNS = AWSSNS.default()
         let request = AWSSNSCreatePlatformEndpointInput()
         request?.token = token
         request?.platformApplicationArn = SNSPlatformApplicationARN
-
-
+        
+        
         awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
             if task.error != nil {
                 print("Error: \(String(describing: task.error))")
@@ -396,7 +397,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             }
         }
     }
-
+    
     func setSNSEndpointAttributes(endpointArn: String) {
         let awsSNS = AWSSNS.default()
         guard let request = AWSSNSSetEndpointAttributesInput() else {
@@ -408,7 +409,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
             return
         }
-
+        
         request.attributes = ["Enabled":"true", "Token":token]
         request.endpointArn = endpointArn
         awsSNS.setEndpointAttributes(request) { (error) in
@@ -440,7 +441,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                 if let endpointArnForSNS = createEndpointResponse.endpointArn {
                     print("endpointArn: \(endpointArnForSNS)")
                     Logger.log("ARN endpoint created")
-//                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
+                    //                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
                     AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
                     let notificationAPI = NotificationAPI()
                     notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
@@ -450,7 +451,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return nil
         })
     }
-
+    
     func deleteARNEndpoint(endpointArn: String ,completion: ((Error?) -> Void)?) {
         let awsSNS = AWSSNS.default()
         guard let request = AWSSNSDeleteEndpointInput() else {return}

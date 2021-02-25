@@ -78,20 +78,42 @@ class UserInsightsAPI: BaseAuthAPI {
         }
     }
     
-    func getLog(completion: @escaping(UserInsight?) -> Void) {
-        let request = RESTRequest(apiName: "rejuveDevelopmentAPI",
-                                  path: "/insights/log",
+    func getLog(completion: @escaping(CheckInLog?) -> Void) {
+        let request = RESTRequest(apiName: "insightsAPI",
+                                  path: "/user/insight/logs",
                                   headers: headers,
                                   queryParameters: nil,
                                   body: nil)
-        self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
             guard let data = data else  {
                 completion(nil)
                 return
             }
             do {
                 let decoder = JSONDecoder()
-                let value = try decoder.decode(UserInsight.self, from: data)
+                let value = try decoder.decode(CheckInLog.self, from: data)
+                completion(value)
+            } catch {
+                print("JSON error", error)
+                completion(nil)
+            }
+        }
+    }
+    
+    func getLog(submissionID: String, completion: @escaping(CheckInLog?) -> Void) {
+        let request = RESTRequest(apiName: "insightsAPI",
+                                  path: "/user/insight/logs",
+                                  headers: headers,
+                                  queryParameters: ["submission_id": submissionID],
+                                  body: nil)
+        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+            guard let data = data else  {
+                completion(nil)
+                return
+            }
+            do {
+                let decoder = JSONDecoder()
+                let value = try decoder.decode(CheckInLog.self, from: data)
                 completion(value)
             } catch {
                 print("JSON error", error)

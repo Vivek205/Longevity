@@ -79,7 +79,7 @@ class CheckInResultViewController: UIViewController {
             closeButton.topAnchor.constraint(equalTo: closePanel.topAnchor, constant: 22.0),
             closeButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
             closeButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
-            closeButton.heightAnchor.constraint(equalToConstant: 48.0),
+            closeButton.heightAnchor.constraint(equalToConstant: 48.0)
        ])
         
         closeButton.layer.cornerRadius = 10.0
@@ -124,7 +124,8 @@ class CheckInResultViewController: UIViewController {
                                      titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      titleView.topAnchor.constraint(equalTo: self.view.topAnchor),
                                      titleView.heightAnchor.constraint(equalToConstant: CGFloat(headerHeight)),
-                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -UIApplication.shared.statusBarFrame.height),
+                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor,
+                                                                                  constant: -UIApplication.shared.statusBarFrame.height),
                                      checkInResultCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      checkInResultCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      checkInResultCollection.bottomAnchor.constraint(equalTo: closeViewPanel.topAnchor),
@@ -146,11 +147,16 @@ class CheckInResultViewController: UIViewController {
         
         self.currentResultView = .analysis
 
-        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
-            self?.userInsights = insights?.filter({ $0.name != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            if  let result  = insights?.filter({ $0.name == .logs }), !result.isEmpty {
-                self?.checkinResult = result[0].details?.history?[0]
+        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [unowned self] (insights) in
+            self.userInsights = insights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+        }
+        
+        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [unowned self] (checkinlog) in
+            guard let loghistory = checkinlog?.details?.history else {
+                return
             }
+            guard let resultLog = loghistory.first(where: { $0.submissionID == self.submissionID }) else { return }
+            self.checkinResult = resultLog
         }
         
         self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
@@ -159,7 +165,9 @@ class CheckInResultViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        closeViewPanel.setupShadow(opacity: 0.12, radius: 8, offset: .init(width: 0, height: 3), color: .black)
+        closeViewPanel.setupShadow(opacity: 0.12, radius: 8,
+                                   offset: .init(width: 0, height: 3),
+                                   color: .black)
     }
     
     @objc func closeView() {

@@ -133,10 +133,10 @@ extension Sentiment {
 enum CardType: String, Codable {
     case coughlogs = "COUGH_LOGS"
     case logs = "COVID_LOGS"
-    case severity = "COVID_SEVERITY"
-    case anomalousWearables = "ANOMALOUS_WEARABLES"
-    case distancing = "SOCIAL_DISTANCING"
-    case overallInfection = "COVID_RISK"
+    case severity = "covid_severity"
+    case anomalousWearables = "anomalous_wearables"
+    case distancing = "social_distancing"
+    case overallInfection = "covid_risk"
 }
 
 extension CardType {
@@ -172,17 +172,40 @@ extension CardType {
 }
 
 struct UserInsight: Codable {
-    let name: CardType
-    let text, userInsightDescription: String
+    let insightType: CardType
+    let name, userInsightDescription: String
     let defaultOrder: Int
     var details: Details?
     var isExpanded: Bool?
     
     enum CodingKeys: String, CodingKey {
-        case text, name
+        case name
+        case insightType = "insight_type"
         case userInsightDescription = "description"
         case defaultOrder = "default_order"
         case details
+    }
+}
+
+struct CheckInLog: Codable {
+    let name: String
+    var details: LogDetails?
+    
+    enum CodingKeys: String, CodingKey {
+        case name
+//        case userInsightDescription = "description"
+        case details
+    }
+}
+
+// MARK: - Log Details
+struct LogDetails: Codable {
+    let lastLogged: String?
+    let history: [History]?
+    
+    enum CodingKeys: String, CodingKey {
+        case lastLogged = "last_logged"
+        case history
     }
 }
 
@@ -230,7 +253,7 @@ struct History: Codable {
     let symptoms: [String]
     let insights, goals: [Goal]
     var result: CoughResult?
-    var resultDescription: Goal?
+    var resultDescription: CoughResultDescription?
     var surveyName: String? // key for local use
     var surveyID: String? // key for local use
     
@@ -239,6 +262,8 @@ struct History: Codable {
         case submissionID = "submission_id"
         case resultDescription = "result_description"
         case symptoms, insights, goals
+        case surveyName = "survey_name"
+        case surveyID = "survey_id"
     }
 }
 
@@ -268,4 +293,14 @@ struct Submission: Codable {
 enum CoughResult: String {
     case positive = "POSITIVE"
     case negative = "NEGATIVE"
+}
+
+// MARK: - Goal
+struct CoughResultDescription: Codable {
+    var shortDescription, longDescription: String?
+
+    enum CodingKeys: String, CodingKey {
+        case shortDescription = "short_description"
+        case longDescription = "long_description"
+    }
 }

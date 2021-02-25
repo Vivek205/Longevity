@@ -11,8 +11,7 @@ import ResearchKit
 
 class CheckinLogViewController: BaseViewController {
     
-    fileprivate var history: [History]!
-    fileprivate var upadtedHistory: [History]!
+    fileprivate var checkinLog: [History]!
     
     lazy var checkinlognodataView: CheckInLogNoDataView = {
         let checkinlognodata = CheckInLogNoDataView()
@@ -73,33 +72,32 @@ class CheckinLogViewController: BaseViewController {
         
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
         
-//        self.showSpinner()
-//        UserInsightsAPI.instance.getLog { (log) in
-//            DispatchQueue.main.async {
-//                self.removeSpinner()
-//                guard let history = log?.details?.history else { return }
-//                self.history = history
-//                self.updateLogHistory()
-//            }
-//        }
-        
-        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
+        self.showSpinner()
+        UserInsightsAPI.instance.getLog { [unowned self] (log) in
             DispatchQueue.main.async {
-                self.showSpinner()
-            }
-            if let insights = AppSyncManager.instance.userInsights.value,
-               let dataLog = insights.first(where: { $0.name == .logs }),
-               let history = dataLog.details?.history {
-                self.history = history
-                self.updateLogHistory()
-            } else {
-                self.history = nil
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    self.logsCollectionView.reloadData()
-                }
+                self.removeSpinner()
+                self.checkinLog = log?.details?.history
+                self.reloadLogData()
             }
         }
+        
+//        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
+//            DispatchQueue.main.async {
+//                self.showSpinner()
+//            }
+//            if let insights = AppSyncManager.instance.userInsights.value,
+//               let dataLog = insights.first(where: { $0.name == .logs }),
+//               let history = dataLog.details?.history {
+//                self.history = history
+//                self.updateLogHistory()
+//            } else {
+//                self.history = nil
+//                DispatchQueue.main.async {
+//                    self.removeSpinner()
+//                    self.logsCollectionView.reloadData()
+//                }
+//            }
+//        }
     }
 
     init() {
@@ -114,33 +112,33 @@ class CheckinLogViewController: BaseViewController {
         AppSyncManager.instance.userInsights.remove(observer: self)
     }
 
-    func updateLogHistory() {
-        if self.history != nil {
-            let submissionIdList = history.map{ $0.submissionID }
-            SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
-                [weak self] (response) in
-                guard let response = response else {
-                    self?.reloadLogData()
-                    return
-                }
-                for index in 0..<(self?.history?.count ?? 0) {
-                    if let submissionID = self?.history?[index].submissionID,
-                       !submissionID.isEmpty,
-                       let surveyName = response[submissionID]?.surveyName,
-                       let surveyID = response[submissionID]?.surveyID {
-                        self?.history?[index].surveyName = surveyName
-                        self?.history?[index].surveyID = surveyID
-                    }
-                }
-                self?.upadtedHistory = self?.history
-                self?.reloadLogData()
-            } onFailure: { [weak self] (error) in
-                self?.reloadLogData()
-            }
-        } else {
-            self.reloadLogData()
-        }
-    }
+//    func updateLogHistory() {
+//        if self.history != nil {
+//            let submissionIdList = history.map{ $0.submissionID }
+//            SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
+//                [weak self] (response) in
+//                guard let response = response else {
+//                    self?.reloadLogData()
+//                    return
+//                }
+//                for index in 0..<(self?.history?.count ?? 0) {
+//                    if let submissionID = self?.history?[index].submissionID,
+//                       !submissionID.isEmpty,
+//                       let surveyName = response[submissionID]?.surveyName,
+//                       let surveyID = response[submissionID]?.surveyID {
+//                        self?.history?[index].surveyName = surveyName
+//                        self?.history?[index].surveyID = surveyID
+//                    }
+//                }
+//                self?.upadtedHistory = self?.history
+//                self?.reloadLogData()
+//            } onFailure: { [weak self] (error) in
+//                self?.reloadLogData()
+//            }
+//        } else {
+//            self.reloadLogData()
+//        }
+//    }
     
     fileprivate func reloadLogData() {
         DispatchQueue.main.async {
@@ -162,13 +160,15 @@ class CheckinLogViewController: BaseViewController {
                 if task != nil {
                     self.navigationController?.navigationBar.barTintColor = .orange
                     self.navigationController?.navigationBar.backgroundColor = .black
-//                    self.navigationItem.ba
-                    self.dismiss(animated: false) { [weak self] in
+
+                    self.dismiss(animated: false) {
                         let taskViewController = SurveyViewController(task: task, isFirstTask: true)
-                        NavigationUtility.presentOverCurrentContext(destination: taskViewController, style: .overCurrentContext)
+                        NavigationUtility.presentOverCurrentContext(destination: taskViewController,
+                                                                    style: .overCurrentContext)
                     }
                 } else {
-                    Alert(title: "Survey Not available", message: "No questions are found for the survey. Please try after sometime")
+                    Alert(title: "Survey Not available",
+                          message: "No questions are found for the survey. Please try after sometime")
                 }
             }
         }
@@ -183,22 +183,26 @@ class CheckinLogViewController: BaseViewController {
     }
 }
 
-extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension CheckinLogViewController: UICollectionViewDelegate,
+                                    UICollectionViewDataSource,
+                                    UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        let count = self.upadtedHistory?.count ?? 0
-        self.checkinlognodataView.isHidden = !(self.history?.isEmpty ?? true)
+        let count = self.checkinLog?.count ?? 0
+        self.checkinlognodataView.isHidden = !(self.checkinLog?.isEmpty ?? true)
         return count
     }
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
-        guard let header = collectionView.getSupplementaryView(with: CheckinLogHeader.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckinLogHeader else {
+        guard let header = collectionView.getSupplementaryView(with: CheckinLogHeader.self,
+                                                               viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckinLogHeader else {
             preconditionFailure("Invalid header")
         }
         return header
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        let sectionHeight = (self.upadtedHistory?.count ?? 0) > 0 ? 100.0 : 0.0
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout,
+                        referenceSizeForHeaderInSection section: Int) -> CGSize {
+        let sectionHeight = (self.checkinLog?.count ?? 0) > 0 ? 100.0 : 0.0
         return CGSize(width: collectionView.bounds.width, height: CGFloat(sectionHeight))
     }
     
@@ -207,14 +211,16 @@ extension CheckinLogViewController: UICollectionViewDelegate, UICollectionViewDa
             preconditionFailure("Invalid log cell type")
         }
         
-        if indexPath.item < (self.upadtedHistory?.count ?? 0) {
-            cell.history = self.upadtedHistory?[indexPath.item]
+        if indexPath.item < (self.checkinLog?.count ?? 0) {
+            cell.history = self.checkinLog?[indexPath.item]
         }
         
         return cell
     }
     
-    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    func collectionView(_ collectionView: UICollectionView,
+                        layout collectionViewLayout: UICollectionViewLayout,
+                        sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = collectionView.bounds.width - 30.0
         return CGSize(width: width, height: 92.0)
     }

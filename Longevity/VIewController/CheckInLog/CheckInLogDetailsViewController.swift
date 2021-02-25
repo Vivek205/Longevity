@@ -314,13 +314,13 @@ extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataS
                                                              .foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedCoughResult = NSMutableAttributedString(string: textheader, attributes: attributes)
             
-            let insightTitle = "\n\(logItem.resultDescription?.text ?? "")"
+            let insightTitle = "\n\(logItem.resultDescription?.shortDescription ?? "")"
             
             let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
                                                               .foregroundColor: UIColor(hexString: "#4E4E4E")]
             attributedCoughResult.append(NSMutableAttributedString(string: insightTitle, attributes: attributes2))
             
-            let insightText = "\n\(logItem.resultDescription?.goalDescription ?? "")"
+            let insightText = "\n\(logItem.resultDescription?.longDescription ?? "")"
             
             let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.italic, size: 18.0),
                                                               .foregroundColor: UIColor(hexString: "#4E4E4E")]
