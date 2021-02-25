@@ -233,34 +233,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         completionHandler(.noData)
     }
 
-    func userNotificationCenter(_ center: UNUserNotificationCenter,
-                                willPresent notification: UNNotification,
-                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
-        Logger.log("received foreground notification - will present")
-        if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
-            if let type =  apsData["type"] as? String {
-                if let notificationType = PushNotificationType(rawValue: type) {
-                    completionHandler(.alert)
-                }
-            }
-            if let alert = apsData["alert"] as? [String: Any] {
-                if let alertBody = alert["body"] as? String {
-                    if alertBody == "Synchronize fitbit data." {
-                        let fitbitModel = FitbitModel()
-                        fitbitModel.refreshTheToken()
-                        completionHandler(.alert)
-                        return
-                    }
-                }
-            }
-        }
+//    func userNotificationCenter(_ center: UNUserNotificationCenter,
+//                                willPresent notification: UNNotification,
+//                                withCompletionHandler completionHandler: @escaping (UNNotificationPresentationOptions) -> Void){
+//        Logger.log("received foreground notification - will present")
+//        if let apsData = notification.request.content.userInfo["aps"] as? [String: Any]  {
+//            if let type =  apsData["type"] as? String {
+//                if let notificationType = PushNotificationType(rawValue: type) {
+//                    completionHandler(.alert)
+//                }
+//            }
+//            if let alert = apsData["alert"] as? [String: Any] {
+//                if let alertBody = alert["body"] as? String {
+//                    if alertBody == "Synchronize fitbit data." {
+//                        let fitbitModel = FitbitModel()
+//                        fitbitModel.refreshTheToken()
+//                        completionHandler(.alert)
+//                        return
+//                    }
+//                }
+//            }
+//        }
+//    }
 
-        let fitbitModel = FitbitModel()
-        fitbitModel.refreshTheToken()
-        completionHandler(.alert)
-    }
-
-    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+    func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse,
+                                withCompletionHandler completionHandler: @escaping () -> Void) {
         Logger.log("received foreground notification - did receive")
         if let apsData = response.notification.request.content.userInfo["aps"] as? [String: Any] {
             if let type = apsData["type"] as? String {
@@ -273,7 +270,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         return
                     case .covidReportProcessed:
                         let checkInResultViewController = CheckInResultViewController()
-                        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController, style: .overCurrentContext)
+                        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                    style: .overCurrentContext)
                         completionHandler()
                         return
                     default:
@@ -284,9 +282,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
 
             }
         }
-        let fitbitModel = FitbitModel()
-        fitbitModel.refreshTheToken()
-        completionHandler()
     }
     
     fileprivate func gotoLogin() {
