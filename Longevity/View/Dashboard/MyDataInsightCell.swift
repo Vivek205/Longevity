@@ -14,7 +14,7 @@ class MyDataInsightCell: UICollectionViewCell {
         didSet {
             self.trendDirection.isHidden = false
             self.trendImage.isHidden = false
-            self.tileTitle.text = insightData?.text
+            self.tileTitle.text = insightData?.name
             
             if let details = insightData?.details {
                 if let risklevel = details.riskLevel {

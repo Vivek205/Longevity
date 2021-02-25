@@ -135,8 +135,8 @@ class CoughTestResultViewController: UIViewController {
         layout.invalidateLayout()
 
         UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
-            self?.userInsights = insights?.filter({ $0.name != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            if  let result  = insights?.filter({ $0.name == .logs }), !result.isEmpty {
+            self?.userInsights = insights?.filter({ $0.insightType != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            if  let result  = insights?.filter({ $0.insightType == .logs }), !result.isEmpty {
                 self?.checkinResult = result[0].details?.history?[0]
             }
         }

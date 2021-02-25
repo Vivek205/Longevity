@@ -508,19 +508,24 @@ final class SurveyTaskUtility: NSObject {
 
 extension SurveyTaskUtility {
     func containsInprogress() -> Bool {
-       return self.surveyInProgress.value?.contains(where: { $0.value == .pending }) ?? false
+        if let statuses = self.surveyInProgress.value {
+            return statuses.contains(where: { $0.value == .pending })
+        }
+       return false
     }
     
     func setSurveyStatus() {
-        self.surveyList?.forEach({ (survey) in
-            if let status = self.surveyInProgress.value?[survey.surveyId],
-               status == .pending, survey.lastSurveyStatus != .pending {
-                DispatchQueue.main.async {
-                    Alert(title: "Risk Siginals Updated", message: "Your results are avaliable and also saved in \"My Data\"")
+        if let list = self.surveyList, !list.isEmpty {
+            list.forEach({ (survey) in
+                if let status = self.surveyInProgress.value?[survey.surveyId],
+                   status == .pending, survey.lastSurveyStatus != .pending {
+                    DispatchQueue.main.async {
+                        Alert(title: "Risk Siginals Updated", message: "Your results are avaliable and also saved in \"My Data\"")
+                    }
                 }
-            }
-            self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus
-        })
+                self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus
+            })
+        }
     }
     
     func setStatus(surveyId: String) {
