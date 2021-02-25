@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
 		C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09AA24F4943800623CC3 /* HealthStore.swift */; };
@@ -265,6 +266,7 @@
 
 /* Begin PBXFileReference section */
 		2E5CCE2351F0884266C17993 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
 		A08C2A2315AB4A804CAA10F9 /* Pods-COVID Signals.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.debug.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.debug.xcconfig"; sourceTree = "<group>"; };
@@ -549,6 +551,7 @@
 			children = (
 				E27E294F24F79C9B00244CF7 /* CheckinLogViewController.swift */,
 				C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */,
+				4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */,
 			);
 			path = CheckInLog;
 			sourceTree = "<group>";
@@ -1403,6 +1406,7 @@
 				C1D672C125DF7B900000812F /* CoughTestResultViewController.swift in Sources */,
 				E2CFD96924B9853F009FE288 /* SetupProfileUnitSelectionCell.swift in Sources */,
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
+				4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */,
 				C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */,
 				C193943124EF0DC500BDB3BD /* UIFont+Extension.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,

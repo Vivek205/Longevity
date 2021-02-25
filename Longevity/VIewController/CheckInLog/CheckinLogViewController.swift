@@ -111,34 +111,6 @@ class CheckinLogViewController: BaseViewController {
     deinit {
         AppSyncManager.instance.userInsights.remove(observer: self)
     }
-
-//    func updateLogHistory() {
-//        if self.history != nil {
-//            let submissionIdList = history.map{ $0.submissionID }
-//            SurveysAPI.instance.surveySubmissionDetails(submissionIdList: submissionIdList) {
-//                [weak self] (response) in
-//                guard let response = response else {
-//                    self?.reloadLogData()
-//                    return
-//                }
-//                for index in 0..<(self?.history?.count ?? 0) {
-//                    if let submissionID = self?.history?[index].submissionID,
-//                       !submissionID.isEmpty,
-//                       let surveyName = response[submissionID]?.surveyName,
-//                       let surveyID = response[submissionID]?.surveyID {
-//                        self?.history?[index].surveyName = surveyName
-//                        self?.history?[index].surveyID = surveyID
-//                    }
-//                }
-//                self?.upadtedHistory = self?.history
-//                self?.reloadLogData()
-//            } onFailure: { [weak self] (error) in
-//                self?.reloadLogData()
-//            }
-//        } else {
-//            self.reloadLogData()
-//        }
-//    }
     
     fileprivate func reloadLogData() {
         DispatchQueue.main.async {

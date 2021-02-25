@@ -10,20 +10,20 @@ import UIKit
 
 class CoughLogResultCell: CheckInLogBaseCell {
     
-    var insight: Goal! {
+    var coughResultDescription: CoughResultDescription! {
         didSet {
             let textheader = "According to our cough classifier:"
             let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0),
                                                              .foregroundColor: UIColor(hexString: "#4E4E4E")]
             let attributedCoughResult = NSMutableAttributedString(string: textheader, attributes: attributes)
             
-            let insightTitle = "\n\(insight.text)"
+            let insightTitle = "\n\n\(coughResultDescription?.shortDescription ?? "")"
             
             let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
                                                               .foregroundColor: UIColor(hexString: "#4E4E4E")]
             attributedCoughResult.append(NSMutableAttributedString(string: insightTitle, attributes: attributes2))
             
-            let insightText = "\n\(insight.goalDescription)"
+            let insightText = "\n\n\(coughResultDescription?.longDescription ?? "")"
             
             let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.italic, size: 18.0),
                                                               .foregroundColor: UIColor(hexString: "#4E4E4E")]

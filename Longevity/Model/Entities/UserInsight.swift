@@ -193,7 +193,6 @@ struct CheckInLog: Codable {
     
     enum CodingKeys: String, CodingKey {
         case name
-//        case userInsightDescription = "description"
         case details
     }
 }
@@ -258,6 +257,7 @@ struct History: Codable {
     var surveyID: String? // key for local use
     
     enum CodingKeys: String, CodingKey {
+        case result
         case recordDate = "record_date"
         case submissionID = "submission_id"
         case resultDescription = "result_description"
@@ -290,7 +290,7 @@ struct Submission: Codable {
     }
 }
 
-enum CoughResult: String {
+enum CoughResult: String, Codable {
     case positive = "POSITIVE"
     case negative = "NEGATIVE"
 }
