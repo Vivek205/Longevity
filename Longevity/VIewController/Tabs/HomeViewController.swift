@@ -85,10 +85,11 @@ class HomeViewController: BaseViewController {
         
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [unowned self] in
             DispatchQueue.main.async {
-                self.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
-                if SurveyTaskUtility.shared.surveyInProgress.value != .pending {
-                          AppSyncManager.instance.syncUserInsights()
-                        }
+                let status = SurveyTaskUtility.shared.containsInprogress()
+                self.aiProcessingBand.isHidden = !status
+                if !status {
+                    AppSyncManager.instance.syncUserInsights()
+                }
             }
         }
         

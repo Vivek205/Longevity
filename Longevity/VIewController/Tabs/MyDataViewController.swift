@@ -27,7 +27,7 @@ class MyDataViewController: BaseViewController {
         mydataCollection.translatesAutoresizingMaskIntoConstraints = false
         return mydataCollection
     }()
-
+    
     lazy var aiProcessingBand: AIProgressBandView = {
         let processingband = AIProgressBandView()
         processingband.translatesAutoresizingMaskIntoConstraints = false
@@ -59,10 +59,11 @@ class MyDataViewController: BaseViewController {
             aiProcessingBand.heightAnchor.constraint(equalToConstant: 40.0),
             aiProcessingBand.bottomAnchor.constraint(equalTo: self.titleView.bottomAnchor, constant: -10.0)
         ])
-
+        
         SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.aiProcessingBand.isHidden = SurveyTaskUtility.shared.surveyInProgress.value != .pending
+                let status = SurveyTaskUtility.shared.containsInprogress()
+                self?.aiProcessingBand.isHidden = !status
             }
         }
         
@@ -81,7 +82,7 @@ class MyDataViewController: BaseViewController {
     }
     
     func expandItemfor(insightType: CardType) {
-        guard let expandedIndex = self.userInsights?.firstIndex(where: { $0.name == insightType }) else { return }
+        guard let expandedIndex = self.userInsights?.firstIndex(where: { $0.insightType == insightType }) else { return }
         for index in 0..<(self.userInsights?.count ?? 0) {
             self.userInsights?[index].isExpanded = expandedIndex == index
         }
@@ -94,26 +95,28 @@ class MyDataViewController: BaseViewController {
         SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
         AppSyncManager.instance.userInsights.remove(observer: self)
     }
+    
+    fileprivate func isLogsCell(index: Int) -> Bool {
+        return index == (self.userInsights?.count ?? 0)
+    }
 }
 
 extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = self.userInsights?.count ?? 0
-        return count
+        return count + 1
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        guard let insightData = self.userInsights?[indexPath.item] else {
-            return collectionView.getCell(with: UICollectionViewCell.self, at: indexPath)
-        }
-        
-        if insightData.name == .logs || insightData.name == .coughlogs {
+        if self.isLogsCell(index: indexPath.item) {
             guard let cell = collectionView.getCell(with: MyDataLogCell.self, at: indexPath) as? MyDataLogCell else {
                 preconditionFailure("Invalid insight cell")
             }
-            cell.logData = insightData
             return cell
         } else {
+            guard let insightData = self.userInsights?[indexPath.item] else {
+                return collectionView.getCell(with: UICollectionViewCell.self, at: indexPath)
+            }
             guard let cell = collectionView.getCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
                 preconditionFailure("Invalid insight cell")
             }
@@ -123,36 +126,41 @@ extension MyDataViewController: UICollectionViewDelegate, UICollectionViewDataSo
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        guard let insightData = self.userInsights?[indexPath.item] else { return }
-        
-        if insightData.name != .logs {
-            self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
-        } else {
+        if self.isLogsCell(index: indexPath.item) {
             let checkinLogViewController: CheckinLogViewController = CheckinLogViewController()
-            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController, style: .overCurrentContext)
+            NavigationUtility.presentOverCurrentContext(destination: checkinLogViewController,
+                                                        style: .overCurrentContext)
+        } else {
+            guard let insightData = self.userInsights?[indexPath.item] else { return }
+            self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat(collectionView.bounds.width) - 20.0
         var height: CGFloat = 80.0
-
-        guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
-
-        if insightData.name != .logs && insightData.name != .coughlogs && (insightData.isExpanded ?? false) {
+        
+        if !self.isLogsCell(index: indexPath.item) {
+            guard let insightData = self.userInsights?[indexPath.item] else {
+                return CGSize(width: width, height: height)
+            }
             
-            let headerHeight:CGFloat = 80.0
-            let descriptionHeight:CGFloat = insightData.userInsightDescription.height(withConstrainedWidth: width - 50.0,
-                                                                                      font: UIFont(name: "Montserrat-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0))
-            let gapsheight: CGFloat = 33.0
-            let histogramTitleHeight: CGFloat = 20.0
-            let histogramHeight:CGFloat = 120
-            let histogramDescriptionHeight: CGFloat = insightData.details?.histogram?.histogramDescription.height(withConstrainedWidth: width - 50.0, font: UIFont(name: "Montserrat-Regular", size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)) ?? 0
-            let bottomMarginHeight: CGFloat = 20.0
-            height = headerHeight + descriptionHeight + gapsheight + histogramTitleHeight +
-                histogramHeight + histogramDescriptionHeight + bottomMarginHeight
+            if indexPath.item < (self.userInsights?.count ?? 0) && (insightData.isExpanded ?? false) {
+                
+                let headerHeight:CGFloat = 80.0
+                let descriptionHeight:CGFloat = insightData.userInsightDescription.height(withConstrainedWidth: width - 50.0,
+                                                                                          font: UIFont(name: AppFontName.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0))
+                let gapsheight: CGFloat = 33.0
+                let histogramTitleHeight: CGFloat = 20.0
+                let histogramHeight:CGFloat = 120
+                let histogramDescriptionHeight: CGFloat = insightData.details?.histogram?.histogramDescription.height(withConstrainedWidth: width - 50.0,
+                                                                                                                      font: UIFont(name: AppFontName.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)) ?? 0
+                let bottomMarginHeight: CGFloat = 20.0
+                height = headerHeight + descriptionHeight + gapsheight + histogramTitleHeight +
+                    histogramHeight + histogramDescriptionHeight + bottomMarginHeight
+            }
         }
-
+        
         return CGSize(width: width, height: height)
     }
 }

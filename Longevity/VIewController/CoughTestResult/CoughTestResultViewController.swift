@@ -1,20 +1,18 @@
 //
-//  CheckInResultViewController.swift
-//  Longevity
+//  CoughTestResultViewController.swift
+//  COVID Signals
 //
-//  Created by Jagan Kumar Mudila on 06/09/2020.
-//  Copyright © 2020 vivek. All rights reserved.
+//  Created by Jagan Kumar Mudila on 19/02/2021.
+//  Copyright © 2021 vivek. All rights reserved.
 //
 
 import UIKit
 
-class CheckInResultViewController: UIViewController {
+class CoughTestResultViewController: UIViewController {
     
     var submissionID: String = ""
     var isCheckInResult: Bool = true
     var surveyName: String = ""
-    
-    var isCellExpanded: [Int:Bool] = [Int:Bool]()
     
     var userInsights: [UserInsight]? {
         didSet {
@@ -30,14 +28,6 @@ class CheckInResultViewController: UIViewController {
                 self.checkInResultCollection.reloadData()
                 self.removeSpinner()
             }
-        }
-    }
-    
-    var isSymptomsExpanded: Bool = false
-    
-    var currentResultView: CheckInResultView! {
-        didSet {
-            self.checkInResultCollection.reloadData()
         }
     }
     
@@ -79,7 +69,7 @@ class CheckInResultViewController: UIViewController {
             closeButton.topAnchor.constraint(equalTo: closePanel.topAnchor, constant: 22.0),
             closeButton.leadingAnchor.constraint(equalTo: closePanel.leadingAnchor, constant: 15.0),
             closeButton.trailingAnchor.constraint(equalTo: closePanel.trailingAnchor, constant: -15.0),
-            closeButton.heightAnchor.constraint(equalToConstant: 48.0)
+            closeButton.heightAnchor.constraint(equalToConstant: 48.0),
        ])
         
         closeButton.layer.cornerRadius = 10.0
@@ -124,8 +114,7 @@ class CheckInResultViewController: UIViewController {
                                      titleView.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      titleView.topAnchor.constraint(equalTo: self.view.topAnchor),
                                      titleView.heightAnchor.constraint(equalToConstant: CGFloat(headerHeight)),
-                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor,
-                                                                                  constant: -UIApplication.shared.statusBarFrame.height),
+                                     checkInResultCollection.topAnchor.constraint(equalTo: self.view.topAnchor, constant: -UIApplication.shared.statusBarFrame.height),
                                      checkInResultCollection.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
                                      checkInResultCollection.trailingAnchor.constraint(equalTo: self.view.trailingAnchor),
                                      checkInResultCollection.bottomAnchor.constraint(equalTo: closeViewPanel.topAnchor),
@@ -144,19 +133,12 @@ class CheckInResultViewController: UIViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
-        
-        self.currentResultView = .analysis
 
-        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [unowned self] (insights) in
-            self.userInsights = insights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-        }
-        
-        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [unowned self] (checkinlog) in
-            guard let loghistory = checkinlog?.details?.history else {
-                return
+        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
+            self?.userInsights = insights?.filter({ $0.insightType != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+            if  let result  = insights?.filter({ $0.insightType == .logs }), !result.isEmpty {
+                self?.checkinResult = result[0].details?.history?[0]
             }
-            guard let resultLog = loghistory.first(where: { $0.submissionID == self.submissionID }) else { return }
-            self.checkinResult = resultLog
         }
         
         self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
@@ -165,9 +147,7 @@ class CheckInResultViewController: UIViewController {
 
     override func viewDidLayoutSubviews() {
         super.viewDidLayoutSubviews()
-        closeViewPanel.setupShadow(opacity: 0.12, radius: 8,
-                                   offset: .init(width: 0, height: 3),
-                                   color: .black)
+        closeViewPanel.setupShadow(opacity: 0.12, radius: 8, offset: .init(width: 0, height: 3), color: .black)
     }
     
     @objc func closeView() {
@@ -175,44 +155,21 @@ class CheckInResultViewController: UIViewController {
     }
 }
 
-extension CheckInResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
+extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        if self.currentResultView == .analysis {
-            return 1
-        } else {
-            return 2
-        }
+        return 2
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
-        if section == 0 && self.currentResultView == .analysis {
-            return (self.userInsights?.count ?? 0) + 1
-        } else if section == 1 {
-            return self.checkinResult?.goals.count ?? 0
+        if section == 0 {
+            return 1
         } else {
-            return self.checkinResult?.insights.count ?? 0
+            return self.checkinResult?.goals.count ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 && self.currentResultView == .analysis {
-            if indexPath.item < (self.userInsights?.count ?? 0) {
-                guard let cell = collectionView.getUniqueCell(with: MyDataInsightCell.self, at: indexPath) as? MyDataInsightCell else {
-                    preconditionFailure("Invalid insight cell")
-                }
-                cell.insightData = self.userInsights?[indexPath.item]
-                return cell
-            } else {
-                guard let cell = collectionView.getCell(with: RecordedSymptomsCell.self, at: indexPath) as? RecordedSymptomsCell else {
-                    preconditionFailure("Invalid insight cell")
-                }
-                if let symptoms = self.checkinResult?.symptoms {
-                    cell.symptoms = symptoms
-                }
-                cell.isCellExpanded = self.isSymptomsExpanded
-                return cell
-            }
-        } else if indexPath.section == 1 {
+      if indexPath.section == 1 {
             guard let cell = collectionView.getCell(with: CheckInGoalCell.self, at: indexPath) as? CheckInGoalCell else {
                 preconditionFailure("Invalid cell type")
             }
@@ -231,42 +188,11 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if indexPath.section == 0 && self.currentResultView == .analysis {
-            if indexPath.item < (self.userInsights?.count ?? 0) {
-                guard let insightData = self.userInsights?[indexPath.item] else { return }
-                self.userInsights?[indexPath.item].isExpanded = !(insightData.isExpanded ?? false)
-            } else {
-                self.isSymptomsExpanded = !self.isSymptomsExpanded
-                collectionView.reloadItems(at: [indexPath])
-            }
-        }
-    }
-    
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat(collectionView.bounds.width) - 30.0
         var height: CGFloat = 80.0
         
-        if indexPath.section == 0 && self.currentResultView == .analysis {
-            if indexPath.item < (self.userInsights?.count ?? 0) {
-                guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
-                
-                if (insightData.isExpanded ?? false) {
-                    height = 430.0
-                }
-            } else {
-                if isSymptomsExpanded {
-                    if let symptoms = self.checkinResult?.symptoms {
-                        let headerHeight: CGFloat = 140.0
-                        let symptomsHeight: CGFloat = 37.0 * CGFloat(symptoms.count)
-                        height = headerHeight + symptomsHeight
-                    }else {
-                        height = 430.0
-                    }
-
-                }
-            }
-        } else if indexPath.section == 0 {
+        if indexPath.section == 0 {
             if let inSight = self.checkinResult?.insights[indexPath.row] {
                 let insightTitle = inSight.text
                 let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
@@ -342,8 +268,6 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 recoredDate = dateformatter.string(from: date)
             }
             headerView.setup(comletedDate: recoredDate, surveyName: self.surveyName, isCheckIn: self.isCheckInResult)
-            headerView.currentView = self.currentResultView
-            headerView.delegate = self
             return headerView
         } else {
             guard let headerView = collectionView.getSupplementaryView(with: CheckInNextGoals.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckInNextGoals else { preconditionFailure("Invalid header type") }
@@ -352,9 +276,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 && self.currentResultView == .analysis  {
-            return CGSize(width: collectionView.bounds.width, height: 220.0)
-        } else if section == 0  {
+        if section == 0  {
             return CGSize(width: collectionView.bounds.width, height: 260.0)
         } else {
             return CGSize(width: collectionView.bounds.width, height: 10.0)
@@ -368,11 +290,5 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         }
         let topGap = 44.0 + scrollView.contentOffset.y
         self.titleView.bgImageView.alpha = topGap > 1 ? 1 : topGap
-    }
-}
-
-extension CheckInResultViewController: CheckInResultHeaderDelegate {
-    func selected(resultView: CheckInResultView) {
-        self.currentResultView = resultView
     }
 }

@@ -10,16 +10,11 @@ import UIKit
 
 class MyDataLogCell: UICollectionViewCell {
     
-    var logData: UserInsight! {
-        didSet {
-            self.cellTitle.text = logData?.text
-        }
-    }
-    
     lazy var cellTitle: UILabel = {
         let title = UILabel()
+        title.text = "Results Data Log"
         title.textAlignment = .left
-        title.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+        title.font = UIFont(name: AppFontName.semibold, size: 18)
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.numberOfLines = 2
         title.lineBreakMode = .byWordWrapping

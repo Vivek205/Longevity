@@ -45,8 +45,8 @@ class AppSyncManager  {
     
     var pollingTimer: DispatchSourceTimer?
     
-    fileprivate let defaultInsights = [UserInsight(name: .overallInfection,
-                                                   text: "Overall Infection",
+    fileprivate let defaultInsights = [UserInsight(insightType: .overallInfection,
+                                                   name: "Overall Infection",
                                                    userInsightDescription: "How likely you are to have COVID right now. This factors in biosignals, lifestyle and all available data.",
                                                    defaultOrder: 0,
                                                    details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
@@ -54,8 +54,8 @@ class AppSyncManager  {
                                                                                            confidenceDescription: ""),
                                                                     histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
                                                    isExpanded: false),
-                                       UserInsight(name: .severity,
-                                                   text: "Severity Infection",
+                                       UserInsight(insightType: .severity,
+                                                   name: "Severity Infection",
                                                    userInsightDescription: "This estimates the risk you run of having a severe reaction, if you do get COVID.",
                                                    defaultOrder: 1,
                                                    details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
@@ -63,8 +63,8 @@ class AppSyncManager  {
                                                                                            confidenceDescription: ""),
                                                                     histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
                                                    isExpanded: false),
-                                       UserInsight(name: .distancing,
-                                                   text: "Biosignal Detection",
+                                       UserInsight(insightType: .distancing,
+                                                   name: "Biosignal Detection",
                                                    userInsightDescription: "How likely you have an infection (possibly but not necessarily COVID) now based on your biosignals from connected wearable devices or health trackers.",
                                                    defaultOrder: 2,
                                                    details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
@@ -72,27 +72,15 @@ class AppSyncManager  {
                                                                                            confidenceDescription: ""),
                                                                     histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
                                                    isExpanded: false),
-                                       UserInsight(name: .anomalousWearables,
-                                                   text: "Lifestyle Infection",
+                                       UserInsight(insightType: .anomalousWearables,
+                                                   name: "Lifestyle Infection",
                                                    userInsightDescription: "How high your risk of getting or having COVID based on your lifestyle and social distancing practices.",
                                                    defaultOrder: 3,
                                                    details: Details(lastLogged: nil, history: nil, riskLevel: nil, trending: nil, sentiment: nil,
                                                                     confidence: Confidence(value: "",
                                                                         confidenceDescription: ""),
                                                                     histogram: Histogram(histogramDescription: "Your risk over  time, based on your data and biosignals."), submissions: nil),
-                                                   isExpanded: false),
-                                       UserInsight(name: .logs,
-                                                    text: "Results Data Log",
-                                                    userInsightDescription: "COVID Check-in Log",
-                                                    defaultOrder: 4,
-                                                    details: nil,
-                                                    isExpanded: false)
-//                                       ,UserInsight(name: .coughlogs,
-//                                                    text: "Cough Test Log",
-//                                                    userInsightDescription: "Cough Test Log",
-//                                                    defaultOrder: 5,
-//                                                    details: nil,
-//                                                    isExpanded: false)
+                                                   isExpanded: false)
     ]
     
     fileprivate init() {
@@ -102,8 +90,7 @@ class AppSyncManager  {
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
-        self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.name != .logs &&
-                                                                            $0.name != .coughlogs }))
+        self.hexagonInsights = DynamicValue(self.defaultInsights)
     }
     
     func cleardata() {
@@ -113,8 +100,8 @@ class AppSyncManager  {
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
         self.userSubscriptions = DynamicValue([UserSubscription(subscriptionType: .longevityRelease, communicationType: .email, status: false)])
         self.userInsights = DynamicValue(self.defaultInsights)
-        self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.name != .logs &&
-                                                                            $0.name != .coughlogs }))
+        self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.insightType != .logs &&
+                                                                            $0.insightType != .coughlogs }))
         SurveyTaskUtility.shared.clearSurvey()
         // HACK
         preExistingMedicalConditionData = defaultPreExistingMedicalConditionData
@@ -186,10 +173,10 @@ class AppSyncManager  {
         UserInsightsAPI.instance.get { [weak self] (userinsights) in
             if let insights = userinsights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
                 self?.userInsights.value = insights
-                self?.hexagonInsights.value = insights.filter({ $0.name != .logs && $0.name != .coughlogs })
+                self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
             } else if let insights = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
                 self?.userInsights.value = insights
-                self?.hexagonInsights.value = insights.filter({ $0.name != .logs && $0.name != .coughlogs })
+                self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
             }
         }
     }
@@ -264,7 +251,7 @@ class AppSyncManager  {
         func completion(_ surveys:[SurveyListItem]) {
             self.surveysSyncStatus.value = .completed
             
-            if SurveyTaskUtility.shared.surveyInProgress.value == .pending {
+            if SurveyTaskUtility.shared.containsInprogress() {
                 self.startpollingSurveys()
             } else {
                 self.clearPollingTimer()

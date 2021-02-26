@@ -16,7 +16,7 @@ class ExportCheckinDataViewController: BasePopUpModalViewController {
         self.showBackdrop = true
         self.containerView.addSubview(self.actionButton)
 
-        self.titleLabel.text = "Check-in Data"
+        self.titleLabel.text = "Your Data"
         
         NSLayoutConstraint.activate([
             actionButton.topAnchor.constraint(greaterThanOrEqualTo: infoLabel.bottomAnchor, constant: 20.0),

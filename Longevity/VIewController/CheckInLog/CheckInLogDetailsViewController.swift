@@ -12,16 +12,23 @@ class CheckInLogDetailsViewController: UIViewController {
 
     private var dismissalDirection: ModalDismissDirection = .downwards
     
-    var history: History! {
+    var logItem: History! {
         didSet {
             self.logDetailsTableView.reloadData()
+            self.logTitle.text = logItem.surveyName
             let dateformatter = DateFormatter()
             dateformatter.dateFormat = "yyyy-MM-dd"
-            if let date = dateformatter.date(from: history.recordDate) {
-                dateformatter.dateFormat = "MMM dd, yyyy"
+            if let date = dateformatter.date(from: logItem.recordDate) {
+                dateformatter.dateFormat = "MMM dd, yyyy | hh:mm a"
+                dateformatter.amSymbol = "am"
+                dateformatter.pmSymbol = "pm"
                 self.logDate.text = dateformatter.string(from: date)
             }
         }
+    }
+    
+    var isCoughResult: Bool {
+        return logItem.surveyID?.starts(with: "COUGH_TEST") ?? false
     }
     
     lazy var transparentView: UIView = {
@@ -47,9 +54,18 @@ class CheckInLogDetailsViewController: UIViewController {
         return bezelview
     }()
     
+    lazy var logTitle: UILabel = {
+        let title = UILabel()
+        title.font = UIFont(name: AppFontName.semibold, size: 24.0)
+        title.textColor = UIColor(hexString: "#4E4E4E")
+        title.textAlignment = .center
+        title.translatesAutoresizingMaskIntoConstraints = false
+        return title
+    }()
+    
     lazy var logDate: UILabel = {
         let date = UILabel()
-        date.font = UIFont(name: AppFontName.semibold, size: 24.0)
+        date.font = UIFont(name: AppFontName.light, size: 18.0)
         date.textColor = UIColor(hexString: "#4E4E4E")
         date.translatesAutoresizingMaskIntoConstraints = false
         return date
@@ -75,7 +91,7 @@ class CheckInLogDetailsViewController: UIViewController {
         logdetailsTable.separatorStyle = .none
         logdetailsTable.delegate = self
         logdetailsTable.dataSource = self
-        logdetailsTable.backgroundColor = .white
+        logdetailsTable.backgroundColor = .clear
         logdetailsTable.translatesAutoresizingMaskIntoConstraints = false
         return logdetailsTable
     }()
@@ -86,6 +102,7 @@ class CheckInLogDetailsViewController: UIViewController {
         self.view.addSubview(transparentView)
         self.view.addSubview(containerView)
         self.containerView.addSubview(bezelView)
+        self.containerView.addSubview(logTitle)
         self.containerView.addSubview(logDate)
         self.containerView.addSubview(exportButton)
         self.containerView.addSubview(logDetailsTableView)
@@ -103,16 +120,19 @@ class CheckInLogDetailsViewController: UIViewController {
             bezelView.centerXAnchor.constraint(equalTo: containerView.centerXAnchor),
             bezelView.heightAnchor.constraint(equalToConstant: 5.0),
             bezelView.widthAnchor.constraint(equalToConstant: 36.0),
+            logTitle.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
+            logTitle.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
+            logTitle.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 15.0),
             logDate.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 25.0),
-            logDate.topAnchor.constraint(equalTo: bezelView.bottomAnchor, constant: 14.5),
+            logDate.topAnchor.constraint(equalTo: logTitle.bottomAnchor, constant: 22.0),
             exportButton.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -25.0),
             exportButton.centerYAnchor.constraint(equalTo: logDate.centerYAnchor),
             exportButton.widthAnchor.constraint(equalToConstant: 110.0),
             exportButton.heightAnchor.constraint(equalToConstant: 32.0),
             exportButton.leadingAnchor.constraint(greaterThanOrEqualTo: logDate.trailingAnchor, constant: 10.0),
             logDetailsTableView.topAnchor.constraint(equalTo: exportButton.bottomAnchor, constant: 25.0),
-            logDetailsTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor, constant: 15.0),
-            logDetailsTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor, constant: -15.0),
+            logDetailsTableView.leadingAnchor.constraint(equalTo: containerView.leadingAnchor),
+            logDetailsTableView.trailingAnchor.constraint(equalTo: containerView.trailingAnchor),
             logDetailsTableView.bottomAnchor.constraint(equalTo: containerView.bottomAnchor)
         ])
         
@@ -135,7 +155,7 @@ class CheckInLogDetailsViewController: UIViewController {
     
     @objc func handleExportData() {
         self.showSpinner()
-        UserInsightsAPI.instance.exportUserApplicationData(submissionID: history?.submissionID, completion: { [unowned self] in
+        UserInsightsAPI.instance.exportUserApplicationData(submissionID: logItem?.submissionID, completion: { [unowned self] in
             DispatchQueue.main.async {
                 Alert(title: "Success", message: "Your data has been sent to your email.")
                 self.removeSpinner()
@@ -205,148 +225,5 @@ class CheckInLogDetailsViewController: UIViewController {
                 self.containerView.center = CGPoint(x: self.view.center.x, y: self.view.center.y * 2)
             }
         }
-    }
-}
-
-extension CheckInLogDetailsViewController: UITableViewDelegate, UITableViewDataSource {
-    
-    func numberOfSections(in tableView: UITableView) -> Int {
-        return 3
-    }
-    
-    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        if section == 0 {
-            return  history.symptoms.count
-        } else if section == 1 {
-            return history.insights.count
-        } else {
-            return history.goals.count
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        if indexPath.section == 0 {
-            guard let cell = tableView.getCell(with: CheckinLogSymptomsCell.self, at: indexPath) as? CheckinLogSymptomsCell else {
-                preconditionFailure("Invalid cell type")
-            }
-            cell.symptom = history.symptoms[indexPath.row]
-            return cell
-        }
-        else if indexPath.section == 1 {
-            guard let cell = tableView.getCell(with: CheckinLogInsightCell.self, at: indexPath) as? CheckinLogInsightCell else {
-                preconditionFailure("Invalid cell type")
-            }
-            cell.insight = history.insights[indexPath.row]
-            return cell
-        } else {
-            guard let cell = tableView.getCell(with: CheckinLogGoal.self, at: indexPath) as? CheckinLogGoal else {
-                preconditionFailure("Invalid cell type")
-            }
-            cell.setup(goal: history.goals[indexPath.row], index: indexPath.row)
-            return cell
-        }
-    }
-    
-    func tableView(_ tableView: UITableView, viewForHeaderInSection section: Int) -> UIView? {
-        guard let header = tableView.getHeader(with: CommonHeader.self, index: section) as? CommonHeader else { return nil }
-        if section == 0 {
-            header.setupHeaderText(font: UIFont(name: AppFontName.regular, size: 18.0), title: "Recorded Symptoms")
-        } else if section == 1 {
-            header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 24.0), title: "Insights")
-        } else {
-            header.setupHeaderText(font: UIFont(name: AppFontName.semibold, size: 18.0), title: "Your next \(history.goals.count) goal(s)")
-        }
-        return header
-    }
-    
-    func tableView(_ tableView: UITableView, heightForHeaderInSection section: Int) -> CGFloat {
-        return 50.0
-    }
-    
-    func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        if indexPath.section < 1 {
-            return 50.0
-        } else if indexPath.section == 1 {
-            return 110.0
-        } else {
-            let goal = history.goals[indexPath.row]
-            
-            let insightTitle = goal.text
-            let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
-            let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
-            
-            let textAreaWidth = tableView.bounds.width - 66.0
-            
-            var goalHeight = 14.0 + attributedinsightTitle.height(containerWidth: textAreaWidth)
-            
-            if !goal.goalDescription.isEmpty {
-                let insightDesc = "\n\n\(goal.goalDescription)"
-                
-                let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
-                                                                                   size: 14.0),
-                                                                     .foregroundColor: UIColor(hexString: "#4E4E4E")]
-                let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
-                attributedinsightTitle.append(attributedDescText)
-                
-                goalHeight += attributedinsightTitle.height(containerWidth: textAreaWidth)
-            }
-            
-            if let citation = goal.citation, !citation.isEmpty {
-                let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
-                                                                                   size: 14.0),
-                                                                     .foregroundColor: UIColor(red: 0.05,
-                                                                                               green: 0.4, blue: 0.65, alpha: 1.0),
-                                                                     .underlineStyle: NSUnderlineStyle.single]
-                let attributedCitationText = NSMutableAttributedString(string: citation,
-                                                                       attributes: linkAttributes)
-                goalHeight += attributedCitationText.height(containerWidth: textAreaWidth)
-                goalHeight += 10.0
-            }
-            
-            goalHeight += 14.0
-            
-            return goalHeight
-        }
-    }
-}
-
-class CommonHeader: UITableViewHeaderFooterView {
-    
-    lazy var headerlabel: UILabel = {
-        let headerlabel = UILabel()
-        headerlabel.text = ""
-        headerlabel.font = UIFont(name: "Montserrat-SemiBold", size: 18.0)
-        headerlabel.textColor = UIColor(hexString: "#4E4E4E")
-        headerlabel.translatesAutoresizingMaskIntoConstraints = false
-        return headerlabel
-    }()
-    
-    override init(reuseIdentifier: String?) {
-        super.init(reuseIdentifier: reuseIdentifier)
-        
-        let view = UIView()
-        view.backgroundColor = .white
-        view.translatesAutoresizingMaskIntoConstraints = false
-        
-        self.addSubview(view)
-        view.addSubview(headerlabel)
-        
-        NSLayoutConstraint.activate([
-            view.leadingAnchor.constraint(equalTo: leadingAnchor),
-            view.trailingAnchor.constraint(equalTo: trailingAnchor),
-            view.topAnchor.constraint(equalTo: topAnchor),
-            view.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -1.0),
-            headerlabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 10.0),
-            headerlabel.centerYAnchor.constraint(equalTo: view.centerYAnchor)
-        ])
-    }
-    
-    required init?(coder: NSCoder) {
-        fatalError("init(coder:) has not been implemented")
-    }
-    
-    func setupHeaderText(font: UIFont?, title: String) {
-        self.headerlabel.text = title
-        self.headerlabel.font = font
     }
 }

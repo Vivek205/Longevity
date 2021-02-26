@@ -12,7 +12,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
     
     var insightData: UserInsight! {
         didSet {
-            self.tileTitle.text = insightData.name.hexagonTitle
+            self.tileTitle.text = insightData.insightType.hexagonTitle
             self.trendDirection.isHidden = false
             self.trendImage.isHidden = false
             
@@ -177,7 +177,7 @@ class DashboardCollectionTileCell: CommonHexagonCell {
         guard let viewController = tabBarController.viewControllers?[1] as? MyDataViewController else {
             return
         }
-        viewController.expandItemfor(insightType: self.insightData.name)
+        viewController.expandItemfor(insightType: self.insightData.insightType)
     }
     
     override func doOpenInfo() {
@@ -189,6 +189,6 @@ class DashboardCollectionTileCell: CommonHexagonCell {
         guard let viewController = tabBarController.viewControllers?[1] as? MyDataViewController else {
             return
         }
-        viewController.expandItemfor(insightType: self.insightData.name)
+        viewController.expandItemfor(insightType: self.insightData.insightType)
     }
 }

@@ -27,12 +27,20 @@ class CheckinLogCell: UICollectionViewCell {
                 self.logDate.text = dateformatter.string(from: date)
             }
             self.logName.text = self.history.surveyName ?? "COVID Check-in"
-            if self.history.surveyName == "COVID Risk Assessment" {
+            if self.history.surveyID == "COVID19_01" || self.history.surveyID == "COUGH_TEST_001" {
                 symptomsLabel.isHidden = true
                 noofSymptoms.isHidden = true
                 symptomsCircle.isHidden = true
                 logIcon.isHidden = false
-                
+                if self.history.surveyID == "COUGH_TEST_001" {
+                    if self.history.result == .positive {
+                        logIcon.image = UIImage(named: "cough-positive")
+                    } else {
+                        logIcon.image = UIImage(named: "cough-negative")
+                    }
+                } else {
+                    logIcon.image = UIImage(named: "logIcon:COVID Risk Assessment")
+                }
             } else {
                 symptomsLabel.isHidden = false
                 noofSymptoms.isHidden = false
@@ -150,7 +158,7 @@ class CheckinLogCell: UICollectionViewCell {
     
     func onViewDetails() {
         let detailsViewController = CheckInLogDetailsViewController()
-        detailsViewController.history = self.history
+        detailsViewController.logItem = self.history
         NavigationUtility.presentOverCurrentContext(destination: detailsViewController, style: .overCurrentContext, transitionStyle: .crossDissolve)
     }
 }
