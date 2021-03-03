@@ -76,8 +76,8 @@ class MyDataViewController: BaseViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
-        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [weak self] in
-            self?.userInsights = AppSyncManager.instance.userInsights.value
+        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
+            self.userInsights = AppSyncManager.instance.userInsights.value
         }
     }
     

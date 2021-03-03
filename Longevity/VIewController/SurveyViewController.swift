@@ -97,12 +97,18 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                             viewControllerFor step: ORKStep) -> ORKStepViewController? {
 
         if step is ORKInstructionStep {
+            let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
             if step is ORKCompletionStep {
-                let stepVC = CompletionStepVC()
-                stepVC.step = step
-                return stepVC
+                if isCoughTest {
+                    let completeVC = CoughTestCompleteViewController()
+                    completeVC.step = step
+                    return completeVC
+                } else {
+                    let stepVC = CompletionStepVC()
+                    stepVC.step = step
+                    return stepVC
+                }
             } else if step is ORKInstructionStep {
-                let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
                 let stepVC = SurveyIntroViewController(isCoughTest: isCoughTest)
                 stepVC.step = step
                 return stepVC

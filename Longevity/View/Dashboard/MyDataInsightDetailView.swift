@@ -171,8 +171,7 @@ class MyDataInsightDetailView: UIView {
             line.setColor(UIColor(hexString: "#6C8CBF"))
             line.circleRadius = 5
             line.setCircleColor(UIColor(hexString: "#6C8CBF"))
-            let data = LineChartData()
-            data.addDataSet(line)
+            let data = LineChartData(dataSet: line)
             self.histogramView.data = data
             self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: false)
             self.histogramView.xAxis.granularity = 1

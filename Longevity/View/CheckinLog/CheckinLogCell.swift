@@ -33,7 +33,7 @@ class CheckinLogCell: UICollectionViewCell {
                 symptomsCircle.isHidden = true
                 logIcon.isHidden = false
                 if self.history.surveyID == "COUGH_TEST_001" {
-                    if self.history.result == .positive {
+                    if self.history.result != .healthy {
                         logIcon.image = UIImage(named: "cough-positive")
                     } else {
                         logIcon.image = UIImage(named: "cough-negative")
