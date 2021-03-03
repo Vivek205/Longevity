@@ -63,7 +63,10 @@ class CoughTestCompleteViewController: CompleteStepBaseViewController {
     }
     
     @objc func doViewResults() {
-        let progressView = CoughTestResultProgressViewController()
+        guard let surveyId = self.currentSurveyId else {
+            return
+        }
+        let progressView = CoughTestResultProgressViewController(surveyId: surveyId)
         progressView.delegate = self
         NavigationUtility.presentOverCurrentContext(destination: progressView, style: .overFullScreen, transitionStyle: .crossDissolve, completion: nil)
     }

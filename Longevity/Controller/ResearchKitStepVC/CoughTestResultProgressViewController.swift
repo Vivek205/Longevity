@@ -16,6 +16,8 @@ class CoughTestResultProgressViewController: UIViewController {
     
     weak var delegate: CoughTestResultCancelDelegate?
     
+    private var _surveyID: String!
+    
     lazy var containerView: UIView = {
         let container = UIView()
         container.backgroundColor = .white
@@ -66,6 +68,15 @@ class CoughTestResultProgressViewController: UIViewController {
         return export
     }()
     
+    init(surveyId: String) {
+        super.init(nibName: nil, bundle: nil)
+        self._surveyID = surveyId
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -97,6 +108,20 @@ class CoughTestResultProgressViewController: UIViewController {
             actionButton.heightAnchor.constraint(equalToConstant: 48.0),
             actionButton.bottomAnchor.constraint(equalTo: containerView.bottomAnchor, constant: -24.0)
         ])
+        
+        SurveyTaskUtility.shared.suppressAlert = true
+//
+//        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [unowned self] in
+//            if SurveyTaskUtility.shared.getLastSubmissionStatus(surveyId: self._surveyID) != .pending {
+//                guard let submissionID = SurveyTaskUtility.shared.getLastSubmissionID(for: self._surveyID) else { return }
+//                DispatchQueue.main.async {
+//                    let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
+//                    checkInResultViewController.delegate = self
+//                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+//                                                                style: .overCurrentContext)
+//                }
+//            }
+//        }
     }
     
     override func viewDidLayoutSubviews() {
@@ -107,7 +132,18 @@ class CoughTestResultProgressViewController: UIViewController {
     
     @objc func closeView() {
         self.dismiss(animated: true) { [unowned self] in
+            SurveyTaskUtility.shared.suppressAlert = false
             self.delegate?.cancel()
         }
+    }
+    
+    deinit {
+        SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+    }
+}
+
+extension CoughTestResultProgressViewController: CoughTestResultViewDelegate {
+    func resultViewDismissed() {
+        self.closeView()
     }
 }

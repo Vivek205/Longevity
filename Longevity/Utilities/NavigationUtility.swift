@@ -37,6 +37,14 @@ class NavigationUtility {
         }
     }
     
+    static func presentOverRootViewController(destination: UIViewController, style: UIModalPresentationStyle = .pageSheet, completion: (() -> Void)? = nil) {
+        guard let topController = UIApplication.shared.keyWindow?.rootViewController else { return }
+        
+        destination.modalPresentationStyle = style
+        destination.modalTransitionStyle = .coverVertical
+        topController.present(destination, animated: true, completion: completion)
+    }
+    
     static func presentOverCurrentContext(destination: UIViewController, style: UIModalPresentationStyle = .pageSheet, transitionStyle: UIModalTransitionStyle = .coverVertical, completion: (() -> Void)? = nil) {
         if var topController = UIApplication.shared.keyWindow?.rootViewController {
             while let presentedViewController = topController.presentedViewController {
