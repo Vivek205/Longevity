@@ -8,8 +8,8 @@
 
 import UIKit
 import Amplify
-import GRPC
-import NIO
+//import GRPC
+//import NIO
 
 struct OnboardingCarouselData {
     var bgImageName:String
@@ -223,28 +223,28 @@ class OnboardingVC: UIViewController {
 
     @IBAction func handleGRPC(_ sender: Any) {
 
-        self.add()
+//        self.add()
 
     }
 
     func add(){
-        let address = "example-service-a.singularitynet.io:8092"
-        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
-        let channel = ClientConnection.insecure(group: group).connect(host: "example-service-a.singularitynet.io", port: 8092)
-
-        let service = Escrow_ExampleServiceClient(channel: channel)
-
-        var input = Escrow_Input()
-        input.message = "Hello Vivek here"
-
-        let request = service.ping(input)
-
-        do {
-            let response = try request.response.wait()
-            print("response" , response)
-        } catch  {
-            print("error", error)
-        }
+//        let address = "example-service-a.singularitynet.io:8092"
+//        let group = MultiThreadedEventLoopGroup(numberOfThreads: 1)
+//        let channel = ClientConnection.insecure(group: group).connect(host: "example-service-a.singularitynet.io", port: 8092)
+//
+//        let service = Escrow_ExampleServiceClient(channel: channel)
+//
+//        var input = Escrow_Input()
+//        input.message = "Hello Vivek here"
+//
+//        let request = service.ping(input)
+//
+//        do {
+//            let response = try request.response.wait()
+//            print("response" , response)
+//        } catch  {
+//            print("error", error)
+//        }
     }
     
     fileprivate func initView(offsetX: CGFloat) {

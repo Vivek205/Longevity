@@ -520,7 +520,20 @@ extension SurveyTaskUtility {
                 if let status = self.surveyInProgress.value?[survey.surveyId],
                    status == .pending, survey.lastSurveyStatus != .pending {
                     DispatchQueue.main.async {
-                        Alert(title: "Risk Siginals Updated", message: "Your results are avaliable and also saved in \"My Data\"")
+                        let viewResultsAction = UIAlertAction(title: "View Results", style: .default) { (action) in
+                            guard let submissionID = survey.lastSubmissionId else { return }
+                            if survey.surveyId.starts(with: "COUGH_TEST") {
+                                let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
+                                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                            style: .overCurrentContext)
+                            } else {
+                                let checkInResultViewController = CheckInResultViewController(submissionID: submissionID)
+                                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                            style: .overCurrentContext)
+                            }
+                        }
+                        let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
+                        Alert(title: "Risk Siginals Updated", message: "Your results are available and also saved in \"My Data\"", actions: viewResultsAction, okAction)
                     }
                 }
                 self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus
@@ -530,5 +543,15 @@ extension SurveyTaskUtility {
     
     func setStatus(surveyId: String) {
         self.surveyInProgress.value?[surveyId] = .unknown
+    }
+    
+    func doOpenResult(submissionID: String, surveyID: String) {
+        if surveyID.starts(with: "COUGH_TEST") {
+            print(submissionID)
+        } else {
+            let checkInResultViewController = CheckInResultViewController(submissionID: submissionID)
+            NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                        style: .overCurrentContext)
+        }
     }
 }

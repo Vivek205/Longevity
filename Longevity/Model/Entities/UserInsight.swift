@@ -291,8 +291,11 @@ struct Submission: Codable {
 }
 
 enum CoughResult: String, Codable {
-    case positive = "POSITIVE"
-    case negative = "NEGATIVE"
+    case healthy = "healthy"
+    case covidPositive = "covid_positive"
+    case positiveAsymp = "positive_asymp"
+    case positiveMild = "positive_mild"
+    case positiveModerate = "positive_moderate"
 }
 
 // MARK: - Goal

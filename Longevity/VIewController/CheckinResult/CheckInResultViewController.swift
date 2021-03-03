@@ -20,6 +20,7 @@ class CheckInResultViewController: UIViewController {
         didSet {
             DispatchQueue.main.async {
                 self.checkInResultCollection.reloadData()
+                self.removeSpinner()
             }
         }
     }

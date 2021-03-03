@@ -11,18 +11,8 @@ import UIKit
 class CoughTestResultViewController: UIViewController {
     
     var submissionID: String = ""
-    var isCheckInResult: Bool = true
-    var surveyName: String = ""
     
-    var userInsights: [UserInsight]? {
-        didSet {
-            DispatchQueue.main.async {
-                self.checkInResultCollection.reloadData()
-            }
-        }
-    }
-    
-    var checkinResult: History? {
+    var coughResult: History? {
         didSet {
             DispatchQueue.main.async {
                 self.checkInResultCollection.reloadData()
@@ -62,7 +52,6 @@ class CoughTestResultViewController: UIViewController {
         closeButton.translatesAutoresizingMaskIntoConstraints = false
         closePanel.addSubview(closeButton)
         
-        let checkInLogHeight: CGFloat = self.isCheckInResult ? 48.0 : 0.0
         let bottomMargin: CGFloat = UIDevice.hasNotch ? -54.0 : -30.0
         
         NSLayoutConstraint.activate([
@@ -82,11 +71,9 @@ class CoughTestResultViewController: UIViewController {
         super.init(nibName: nil, bundle: nil)
     }
         
-    init(submissionID: String, surveyName: String = "", isCheckIn: Bool = true) {
+    init(submissionID: String) {
         super.init(nibName: nil, bundle: nil)
         self.submissionID = submissionID
-        self.surveyName = surveyName
-        self.isCheckInResult = isCheckIn
     }
     
     required init?(coder: NSCoder) {
@@ -134,14 +121,15 @@ class CoughTestResultViewController: UIViewController {
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
 
-        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
-            self?.userInsights = insights?.filter({ $0.insightType != .logs }).sorted(by: { $0.defaultOrder <= $1.defaultOrder })
-            if  let result  = insights?.filter({ $0.insightType == .logs }), !result.isEmpty {
-                self?.checkinResult = result[0].details?.history?[0]
+        self.titleView.titleLabel.text = "Cough Test Result"
+        
+        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [unowned self] (checkinlog) in
+            guard let loghistory = checkinlog?.details?.history else {
+                return
             }
+            self.coughResult = loghistory.first(where: { $0.submissionID == self.submissionID })
         }
         
-        self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
         self.showSpinner()
     }
 
@@ -164,25 +152,23 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
         if section == 0 {
             return 1
         } else {
-            return self.checkinResult?.goals.count ?? 0
+            return self.coughResult?.goals.count ?? 0
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-      if indexPath.section == 1 {
-            guard let cell = collectionView.getCell(with: CheckInGoalCell.self, at: indexPath) as? CheckInGoalCell else {
-                preconditionFailure("Invalid cell type")
-            }
-            if let goal = self.checkinResult?.goals[indexPath.item] {
-                cell.setup(checkIngoal: goal, goalIndex: indexPath.item + 1)
-            }
-            return cell
-        } else {
-            guard let cell = collectionView.getCell(with: CheckInInsightCell.self, at: indexPath) as? CheckInInsightCell else {
+        if indexPath.section == 0 {
+            guard let cell = collectionView.getCell(with: CoughTestResultCell.self, at: indexPath) as? CoughTestResultCell else {
                 preconditionFailure("Invalid insight cell")
             }
-            if let insight = self.checkinResult?.insights[indexPath.item] {
-                cell.inSight = insight
+            cell.coughResultDescription = self.coughResult?.resultDescription
+            return cell
+        } else {
+            guard let cell = collectionView.getUniqueCell(with: CheckInGoalCell.self, at: indexPath) as? CheckInGoalCell else {
+                preconditionFailure("Invalid cell type")
+            }
+            if let goal = self.coughResult?.goals[indexPath.item] {
+                cell.setup(checkIngoal: goal, goalIndex: indexPath.item + 1)
             }
             return cell
         }
@@ -193,28 +179,29 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
         var height: CGFloat = 80.0
         
         if indexPath.section == 0 {
-            if let inSight = self.checkinResult?.insights[indexPath.row] {
-                let insightTitle = inSight.text
-                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
+            if let resultDescription = self.coughResult?.resultDescription {
+                let textheader = "According to our cough classifier:"
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0),
                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
-                let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
+                let attributedCoughResult = NSMutableAttributedString(string: textheader, attributes: attributes)
                 
-                if !inSight.goalDescription.isEmpty {
-                    let insightDesc = "\n\n\(inSight.goalDescription)"
-                    
-                    let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular, size: 14.0),
-                                                                         .foregroundColor: UIColor(hexString: "#4E4E4E")]
-                    let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
-                    attributedinsightTitle.append(attributedDescText)
-                }
+                let insightTitle = "\n\n\(resultDescription.shortDescription)"
                 
-                let textAreaWidth = width
+                let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
+                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                attributedCoughResult.append(NSMutableAttributedString(string: insightTitle, attributes: attributes2))
                 
-                let textHeight = attributedinsightTitle.height(containerWidth: textAreaWidth) + 40.0
-                return CGSize(width: width, height: textHeight)
+                let insightText = "\n\n\(resultDescription.longDescription)"
+                
+                let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.italic, size: 18.0),
+                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                attributedCoughResult.append(NSMutableAttributedString(string: insightText, attributes: attributes3))
+                var descriptionHeight = 14.0 + attributedCoughResult.height(containerWidth: width)
+                descriptionHeight += 14.0
+                return CGSize(width: collectionView.bounds.width, height: descriptionHeight)
             }
         } else if indexPath.section == 1 { //Calculating Goal Height
-            if let goal = self.checkinResult?.goals[indexPath.item] {
+            if let goal = self.coughResult?.goals[indexPath.item] {
                 let insightTitle = goal.text
                 let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
@@ -258,28 +245,28 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
         if indexPath.section == 0 {
-            guard let headerView = collectionView.getSupplementaryView(with: CheckInResultHeader.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckInResultHeader else { preconditionFailure("Invalid header type") }
+            guard let headerView = collectionView.getSupplementaryView(with: CoughTestResultHeader.self,
+                                                                       viewForSupplementaryElementOfKind: kind,
+                                                                       at: indexPath) as? CoughTestResultHeader
+            else { preconditionFailure("Invalid header type") }
             
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
-            var recoredDate = ""
-            if let datestring = checkinResult?.recordDate, !datestring.isEmpty, let date = dateformatter.date(from: datestring) {
-                dateformatter.dateFormat = "EEE.MMM.dd"
-                recoredDate = dateformatter.string(from: date)
-            }
-            headerView.setup(comletedDate: recoredDate, surveyName: self.surveyName, isCheckIn: self.isCheckInResult)
+            headerView.completionDate = coughResult?.recordDate
             return headerView
         } else {
-            guard let headerView = collectionView.getSupplementaryView(with: CheckInNextGoals.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckInNextGoals else { preconditionFailure("Invalid header type") }
+            guard let headerView = collectionView.getSupplementaryView(with: CheckInNextGoals.self,
+                                                                       viewForSupplementaryElementOfKind: kind,
+                                                                       at: indexPath) as? CheckInNextGoals
+            else { preconditionFailure("Invalid header type") }
+            headerView.goalsTitle = "COVID-19 PREVENTION GUIDELINES"
             return headerView
         }
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
         if section == 0  {
-            return CGSize(width: collectionView.bounds.width, height: 260.0)
+            return CGSize(width: collectionView.bounds.width, height: 150.0)
         } else {
-            return CGSize(width: collectionView.bounds.width, height: 10.0)
+            return CGSize(width: collectionView.bounds.width, height: 50.0)
         }
     }
     
