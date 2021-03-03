@@ -37,15 +37,12 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
     
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             stepViewControllerWillAppear stepViewController: ORKStepViewController) {
-//        taskViewController.navigationBar.barTintColor = .orange
         let taskViewAppearance =
             UIView.appearance(whenContainedInInstancesOf: [ORKTaskViewController.self])
         taskViewAppearance.tintColor = #colorLiteral(red: 0.3529411765, green: 0.6549019608, blue: 0.6549019608, alpha: 1)
-//        taskViewAppearance.tint
+
         if let step = stepViewController.step {
             if step is ORKInstructionStep || step is ORKCompletionStep {
-//                self.navigationItem.backBarButtonItem = UIBarButtonItem()
-
                 return
             }
             SurveyTaskUtility.shared.addTraversedQuestion(questionId: step.identifier)
@@ -61,16 +58,18 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                 appDelegate.window?.rootViewController = tabbarViewController
             }
         } else {
-            SurveysAPI.instance.getSurveys { (_) in
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-                }
-            } onFailure: { (_) in
-                DispatchQueue.main.async {
-                    self.removeSpinner()
-                    taskViewController.dismiss(animated: true) {print("task view controller dismissed")}
-                }
+            let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
+            if isCoughTest {
+                SurveyTaskUtility.shared.clearSurvey()
+                guard let documentURL = FileManager.default.urls(for: .documentDirectory,
+                                                                 in: .userDomainMask).first else { return }
+                let path = documentURL.appendingPathComponent(SurveyTaskUtility.shared.coughTestFolderName).absoluteURL
+                
+                try? FileManager.default.removeItem(at: path)
+            }
+            DispatchQueue.main.async {
+                self.removeSpinner()
+                taskViewController.dismiss(animated: true, completion: nil)
             }
         }
     }
@@ -97,12 +96,18 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
                             viewControllerFor step: ORKStep) -> ORKStepViewController? {
 
         if step is ORKInstructionStep {
+            let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
             if step is ORKCompletionStep {
-                let stepVC = CompletionStepVC()
-                stepVC.step = step
-                return stepVC
+                if isCoughTest {
+                    let completeVC = CoughTestCompleteViewController()
+                    completeVC.step = step
+                    return completeVC
+                } else {
+                    let stepVC = CompletionStepVC()
+                    stepVC.step = step
+                    return stepVC
+                }
             } else if step is ORKInstructionStep {
-                let isCoughTest = SurveyTaskUtility.shared.currentSurveyId?.contains("COUGH") ?? false
                 let stepVC = SurveyIntroViewController(isCoughTest: isCoughTest)
                 stepVC.step = step
                 return stepVC

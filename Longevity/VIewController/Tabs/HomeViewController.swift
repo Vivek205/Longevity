@@ -161,37 +161,39 @@ extension HomeViewController: UICollectionViewDataSource, UICollectionViewDelega
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        if let selectedCell = collectionView.cellForItem(at: indexPath) as? DashboardCheckInCell,
-           let surveyId = selectedCell.surveyId
-        {
+        if let selectedCell = collectionView.cellForItem(at: indexPath) as? DashboardCheckInCell
+           {
             //If Survey is submitted today and is under processing
             if selectedCell.status == .pending && selectedCell.isSurveySubmittedToday {
                 return
             } else if selectedCell.status == .completedToday { //If survey is completed today
-                let checkInResultViewController = CheckInResultViewController(submissionID: surveyId)
+                guard let submissionID = selectedCell.submissionID else { return }
+                let checkInResultViewController = CheckInResultViewController(submissionID: submissionID)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
             } else if selectedCell.status != .completedToday { //If not submitted today / ever
-                self.showSurvey(surveyId)
+                guard let surveyID = selectedCell.surveyId else { return }
+                self.showSurvey(surveyID)
                 return
             }
         }
         
-        if let taskCell = collectionView.cellForItem(at: indexPath) as? DashboardTaskCell,
-           let surveyId = taskCell.surveyDetails?.surveyId
+        if let taskCell = collectionView.cellForItem(at: indexPath) as? DashboardTaskCell
         {
             guard let surveyDetails = SurveyTaskUtility.shared.oneTimeSurveyList.value?[indexPath.row] else { return }
             if surveyDetails.lastSurveyStatus == .pending {
                 return
             } else if surveyDetails.lastSurveyStatus == .completed {
-                let checkInResultViewController = CheckInResultViewController(submissionID: surveyDetails.surveyId,
+                guard let submissionID = surveyDetails.lastSubmissionId else { return }
+                let checkInResultViewController = CheckInResultViewController(submissionID: submissionID,
                                                                               surveyName: surveyDetails.name,
                                                                               isCheckIn: false)
                 NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                             style: .overCurrentContext)
                 return
             } else {
+                guard let surveyId = taskCell.surveyDetails?.surveyId else { return }
                 self.showSurvey(surveyId)
                 return
             }

@@ -19,6 +19,12 @@ class CheckInNextGoals: UICollectionReusableView {
         return title
     }()
     
+    var goalsTitle: String! {
+        didSet {
+            self.titleLabel.text = goalsTitle
+        }
+    }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
 

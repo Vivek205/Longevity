@@ -3,10 +3,22 @@
 	archiveVersion = 1;
 	classes = {
 	};
-	objectVersion = 51;
+	objectVersion = 52;
 	objects = {
 
 /* Begin PBXBuildFile section */
+		464785B525EEC7280077A142 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 464785B425EEC7280077A142 /* SwiftyJSON */; };
+		464785E625EEC8130077A142 /* ChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 464785E525EEC8130077A142 /* ChartsDynamic */; };
+		464785E725EEC8130077A142 /* ChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 464785E525EEC8130077A142 /* ChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		464785ED25EEC8710077A142 /* CountryPickerView in Frameworks */ = {isa = PBXBuildFile; productRef = 464785EC25EEC8710077A142 /* CountryPickerView */; };
+		464785F025EEC8C60077A142 /* PhoneNumberKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */; };
+		464785F125EEC8C60077A142 /* PhoneNumberKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
+		464785F725EECB930077A142 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 464785F625EECB930077A142 /* Sentry */; };
+		4647866025EF5D7C0077A142 /* CoughTestCompleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647865F25EF5D7C0077A142 /* CoughTestCompleteViewController.swift */; };
+		4647866225EF5E590077A142 /* CompleteStepBaseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866125EF5E590077A142 /* CompleteStepBaseViewController.swift */; };
+		4647866425EF6B110077A142 /* CoughTestResultProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866325EF6B110077A142 /* CoughTestResultProgressViewController.swift */; };
+		4647866625EFA3DD0077A142 /* CoughTestResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */; };
+		4647866825EFA6890077A142 /* CoughTestResultHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866725EFA6890077A142 /* CoughTestResultHeader.swift */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
@@ -23,7 +35,6 @@
 		C12F09D124F85A0400623CC3 /* MyDataInsightDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D024F85A0400623CC3 /* MyDataInsightDetailView.swift */; };
 		C12F09D524F87D3F00623CC3 /* CheckInLogDetailsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D424F87D3F00623CC3 /* CheckInLogDetailsViewController.swift */; };
 		C12F09D724F9763C00623CC3 /* UIImageView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09D624F9763C00623CC3 /* UIImageView+Extension.swift */; };
-		C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = C12F09DC24F9E7FE00623CC3 /* Charts.framework */; };
 		C12F09E224FA20C200623CC3 /* UserAuthAPI.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E124FA20C200623CC3 /* UserAuthAPI.swift */; };
 		C12F09E824FD4BF300623CC3 /* AppSyncManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E724FD4BF300623CC3 /* AppSyncManager.swift */; };
 		C12F09EA24FD4C6200623CC3 /* DynamicValue.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12F09E924FD4C6200623CC3 /* DynamicValue.swift */; };
@@ -127,9 +138,6 @@
 		E22C1A4424A46DD100EC5B29 /* TermsOfServiceContent.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */; };
 		E22C1A4624A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */; };
 		E22DCFCE250F1F6C001E6891 /* SetupProfileCompleteCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = E22DCFCD250F1F6C001E6891 /* SetupProfileCompleteCell.swift */; };
-		E23269AB2493922700D2384C /* example_service.pb.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AA2493922700D2384C /* example_service.pb.swift */; };
-		E23269AD2493AFF600D2384C /* example_service.proto in Sources */ = {isa = PBXBuildFile; fileRef = E23269AC2493AFF600D2384C /* example_service.proto */; };
-		E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23269AE2493B5AA00D2384C /* example_service.grpc.swift */; };
 		E23634EC24F3A6A700B93490 /* HealthKitUtil.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */; };
 		E23634F224F4E8BB00B93490 /* LoggerViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634F124F4E8BB00B93490 /* LoggerViewController.swift */; };
 		E23634F724F4EACB00B93490 /* Logger.swift in Sources */ = {isa = PBXBuildFile; fileRef = E23634F624F4EACB00B93490 /* Logger.swift */; };
@@ -257,7 +265,9 @@
 			dstPath = "";
 			dstSubfolderSpec = 10;
 			files = (
+				464785F125EEC8C60077A142 /* PhoneNumberKit-Dynamic in Embed Frameworks */,
 				E26661F624EA64BB0049ED5E /* ResearchKit.framework in Embed Frameworks */,
+				464785E725EEC8130077A142 /* ChartsDynamic in Embed Frameworks */,
 			);
 			name = "Embed Frameworks";
 			runOnlyForDeploymentPostprocessing = 0;
@@ -266,6 +276,11 @@
 
 /* Begin PBXFileReference section */
 		2E5CCE2351F0884266C17993 /* Pods-Longevity.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.release.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.release.xcconfig"; sourceTree = "<group>"; };
+		4647865F25EF5D7C0077A142 /* CoughTestCompleteViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestCompleteViewController.swift; sourceTree = "<group>"; };
+		4647866125EF5E590077A142 /* CompleteStepBaseViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CompleteStepBaseViewController.swift; sourceTree = "<group>"; };
+		4647866325EF6B110077A142 /* CoughTestResultProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultProgressViewController.swift; sourceTree = "<group>"; };
+		4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultCell.swift; sourceTree = "<group>"; };
+		4647866725EFA6890077A142 /* CoughTestResultHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultHeader.swift; sourceTree = "<group>"; };
 		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
@@ -389,9 +404,6 @@
 		E22C1A4324A46DD100EC5B29 /* TermsOfServiceContent.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TermsOfServiceContent.swift; sourceTree = "<group>"; };
 		E22C1A4524A48A4900EC5B29 /* SetupProfileDisclaimerVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileDisclaimerVC.swift; sourceTree = "<group>"; };
 		E22DCFCD250F1F6C001E6891 /* SetupProfileCompleteCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfileCompleteCell.swift; sourceTree = "<group>"; };
-		E23269AA2493922700D2384C /* example_service.pb.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.pb.swift; path = GRPC/ExampleService/example_service.pb.swift; sourceTree = SOURCE_ROOT; };
-		E23269AC2493AFF600D2384C /* example_service.proto */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.protobuf; name = example_service.proto; path = GRPC/ExampleService/example_service.proto; sourceTree = SOURCE_ROOT; };
-		E23269AE2493B5AA00D2384C /* example_service.grpc.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = example_service.grpc.swift; path = GRPC/ExampleService/example_service.grpc.swift; sourceTree = SOURCE_ROOT; };
 		E23634EB24F3A6A700B93490 /* HealthKitUtil.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthKitUtil.swift; sourceTree = "<group>"; };
 		E23634F124F4E8BB00B93490 /* LoggerViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoggerViewController.swift; sourceTree = "<group>"; };
 		E23634F624F4EACB00B93490 /* Logger.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Logger.swift; sourceTree = "<group>"; };
@@ -504,9 +516,13 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C12F09DD24F9E7FE00623CC3 /* Charts.framework in Frameworks */,
+				464785ED25EEC8710077A142 /* CountryPickerView in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
+				464785F025EEC8C60077A142 /* PhoneNumberKit-Dynamic in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
+				464785F725EECB930077A142 /* Sentry in Frameworks */,
+				464785E625EEC8130077A142 /* ChartsDynamic in Frameworks */,
+				464785B525EEC7280077A142 /* SwiftyJSON in Frameworks */,
 				723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -559,9 +575,11 @@
 		C144579E258C8D86007093F2 /* CoughTest */ = {
 			isa = PBXGroup;
 			children = (
+				4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */,
 				C19237082582B19500AA5A92 /* AudioVisualizerView.swift */,
 				C144579F258C8D97007093F2 /* AudioWaveCell.swift */,
 				C14457A1258C8DC1007093F2 /* ShortRecordErrorView.swift */,
+				4647866725EFA6890077A142 /* CoughTestResultHeader.swift */,
 			);
 			path = CoughTest;
 			sourceTree = "<group>";
@@ -775,24 +793,6 @@
 			path = SetupProfile;
 			sourceTree = "<group>";
 		};
-		E23269A824938E6200D2384C /* GRPC */ = {
-			isa = PBXGroup;
-			children = (
-				E23269A924938E6D00D2384C /* ExampleService */,
-			);
-			path = GRPC;
-			sourceTree = "<group>";
-		};
-		E23269A924938E6D00D2384C /* ExampleService */ = {
-			isa = PBXGroup;
-			children = (
-				E23269AE2493B5AA00D2384C /* example_service.grpc.swift */,
-				E23269AC2493AFF600D2384C /* example_service.proto */,
-				E23269AA2493922700D2384C /* example_service.pb.swift */,
-			);
-			path = ExampleService;
-			sourceTree = "<group>";
-		};
 		E23A2CCB24813BCD0051EE7A /* Fonts */ = {
 			isa = PBXGroup;
 			children = (
@@ -841,6 +841,9 @@
 				E210AAC2255D1A1700EEEEB3 /* ValuePickerAnswerViewCell.swift */,
 				C192369A2582144800AA5A92 /* CoughRecorderViewController.swift */,
 				C19236A6258221D400AA5A92 /* BaseStepViewController.swift */,
+				4647865F25EF5D7C0077A142 /* CoughTestCompleteViewController.swift */,
+				4647866125EF5E590077A142 /* CompleteStepBaseViewController.swift */,
+				4647866325EF6B110077A142 /* CoughTestResultProgressViewController.swift */,
 			);
 			path = ResearchKitStepVC;
 			sourceTree = "<group>";
@@ -1009,7 +1012,6 @@
 				C19875B124DC6CFD00477185 /* Utilities */,
 				C19875AE24DC6A0800477185 /* VIewController */,
 				E2C59DFB2498DE8B00842105 /* Longevity.entitlements */,
-				E23269A824938E6200D2384C /* GRPC */,
 				E2BCA52724853826007204B9 /* AWS */,
 				E23A2CCB24813BCD0051EE7A /* Fonts */,
 				E2ECB8D4247FE3AE0020A27E /* Model */,
@@ -1110,6 +1112,13 @@
 			dependencies = (
 			);
 			name = "COVID Signals";
+			packageProductDependencies = (
+				464785B425EEC7280077A142 /* SwiftyJSON */,
+				464785E525EEC8130077A142 /* ChartsDynamic */,
+				464785EC25EEC8710077A142 /* CountryPickerView */,
+				464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */,
+				464785F625EECB930077A142 /* Sentry */,
+			);
 			productName = Longevity;
 			productReference = E2ECB8BB247FE2BA0020A27E /* COVID Signals.app */;
 			productType = "com.apple.product-type.application";
@@ -1138,6 +1147,14 @@
 				Base,
 			);
 			mainGroup = E2ECB8B2247FE2BA0020A27E;
+			packageReferences = (
+				464785B325EEC7280077A142 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
+				464785E425EEC8130077A142 /* XCRemoteSwiftPackageReference "Charts" */,
+				464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */,
+				464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
+				464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
+				4647863825EED3300077A142 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+			);
 			productRefGroup = E2ECB8BC247FE2BA0020A27E /* Products */;
 			projectDirPath = "";
 			projectReferences = (
@@ -1319,7 +1336,6 @@
 				E280BAD72538868600E1ED12 /* ConnectionManager.swift in Sources */,
 				E2726F8624FA30F00029277D /* DashboardTaskCompletedCell.swift in Sources */,
 				E2B467A32505F85B00D8C733 /* DeviceConnectionPopupCell.swift in Sources */,
-				E23269AF2493B5AA00D2384C /* example_service.grpc.swift in Sources */,
 				C14DBC0E25080131004D5180 /* CheckInInsightsHeader.swift in Sources */,
 				E274F08624C57C7A00969CD8 /* HomeVC.swift in Sources */,
 				C19875BC24DC7AA200477185 /* ShareAppViewController.swift in Sources */,
@@ -1329,6 +1345,7 @@
 				C12F09AE24F4943800623CC3 /* HealthStore.swift in Sources */,
 				C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */,
 				E2D127E2249B272900467E43 /* ConsentTask.swift in Sources */,
+				4647866225EF5E590077A142 /* CompleteStepBaseViewController.swift in Sources */,
 				E216EFBE24BE2CDA00B57A7F /* SetupCompleteVC.swift in Sources */,
 				C12F09C924F80F8700623CC3 /* HowItWorksCell.swift in Sources */,
 				E27C4F6824FF9BD00070A2D3 /* TemperatureScaleAnswerVC.swift in Sources */,
@@ -1336,6 +1353,7 @@
 				C14DBC0825056583004D5180 /* CheckInResultHeader.swift in Sources */,
 				E2637E7A252D97720040CFC7 /* ORKStepViewController+Extension.swift in Sources */,
 				C19236A52582193B00AA5A92 /* FitbitAPI.swift in Sources */,
+				4647866025EF5D7C0077A142 /* CoughTestCompleteViewController.swift in Sources */,
 				C14DBC1025080152004D5180 /* CheckInNextGoals.swift in Sources */,
 				C12F09B024F49AD500623CC3 /* HealthkitAPI.swift in Sources */,
 				C19875BF24DC7AF200477185 /* BaseViewController.swift in Sources */,
@@ -1350,7 +1368,6 @@
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
-				E23269AD2493AFF600D2384C /* example_service.proto in Sources */,
 				C19875D024DD629E00477185 /* DashboardHeaderView.swift in Sources */,
 				E258E66224ED0B3500676056 /* ContinuousScaleAnswerVC.swift in Sources */,
 				E2386A342487B7A40068030E /* TermsOfServiceVC.swift in Sources */,
@@ -1396,6 +1413,7 @@
 				C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */,
 				C14DBC122508179C004D5180 /* CheckInInsightCell.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
+				4647866425EF6B110077A142 /* CoughTestResultProgressViewController.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
 				C19875B324DC6D1600477185 /* UIColor+Extension.swift in Sources */,
@@ -1408,6 +1426,7 @@
 				E216EFC724BEF58300B57A7F /* MedicalHistoryAPI.swift in Sources */,
 				4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */,
 				C12F09EE24FD9A5900623CC3 /* AppleHealthConnectCell.swift in Sources */,
+				4647866825EFA6890077A142 /* CoughTestResultHeader.swift in Sources */,
 				C193943124EF0DC500BDB3BD /* UIFont+Extension.swift in Sources */,
 				E288BB2624D7CE3A001F093F /* SurveyCardView.swift in Sources */,
 				C1B399FF24E49B7E00D3991E /* BasePopupViewController.swift in Sources */,
@@ -1468,7 +1487,6 @@
 				E2BC505624A5E05E009E9818 /* SetupProfileNotificationVC.swift in Sources */,
 				C193941D24EDDEB700BDB3BD /* ProfileSettingsCell.swift in Sources */,
 				C14DBC0C25073465004D5180 /* RecordedSymptomsDetailView.swift in Sources */,
-				E23269AB2493922700D2384C /* example_service.pb.swift in Sources */,
 				E290B60824BCA1EA00C51655 /* CheckboxButton.swift in Sources */,
 				C19875CD24DD5F0C00477185 /* UICollectionView+Extension.swift in Sources */,
 				C19875BA24DC79EB00477185 /* ProfileViewController.swift in Sources */,
@@ -1481,6 +1499,7 @@
 				E2CFD96D24BB5202009FE288 /* Keychain.swift in Sources */,
 				C16AD1D3251E6859007AF0D4 /* CheckInLogNoDataView.swift in Sources */,
 				E2B40BFF255C591000CCC644 /* Struct+Extension.swift in Sources */,
+				4647866625EFA3DD0077A142 /* CoughTestResultCell.swift in Sources */,
 				C16AD1E1252276FB007AF0D4 /* AppleWatchConnectViewController.swift in Sources */,
 				C14ABA4F24E3220E00C81580 /* HexagonView.swift in Sources */,
 			);
@@ -1697,6 +1716,85 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCRemoteSwiftPackageReference section */
+		464785B325EEC7280077A142 /* XCRemoteSwiftPackageReference "SwiftyJSON" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/SwiftyJSON/SwiftyJSON.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.0.0;
+			};
+		};
+		464785E425EEC8130077A142 /* XCRemoteSwiftPackageReference "Charts" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/danielgindi/Charts";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 4.0.1;
+			};
+		};
+		464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/kizitonwose/CountryPickerView";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.1.3;
+			};
+		};
+		464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 3.3.3;
+			};
+		};
+		464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/getsentry/sentry-cocoa.git";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 6.2.1;
+			};
+		};
+		4647863825EED3300077A142 /* XCRemoteSwiftPackageReference "SwiftLint" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/realm/SwiftLint";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 0.42.0;
+			};
+		};
+/* End XCRemoteSwiftPackageReference section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		464785B425EEC7280077A142 /* SwiftyJSON */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464785B325EEC7280077A142 /* XCRemoteSwiftPackageReference "SwiftyJSON" */;
+			productName = SwiftyJSON;
+		};
+		464785E525EEC8130077A142 /* ChartsDynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464785E425EEC8130077A142 /* XCRemoteSwiftPackageReference "Charts" */;
+			productName = ChartsDynamic;
+		};
+		464785EC25EEC8710077A142 /* CountryPickerView */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */;
+			productName = CountryPickerView;
+		};
+		464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */;
+			productName = "PhoneNumberKit-Dynamic";
+		};
+		464785F625EECB930077A142 /* Sentry */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
+			productName = Sentry;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = E2ECB8B3247FE2BA0020A27E /* Project object */;
 }

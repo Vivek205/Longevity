@@ -1,24 +1,24 @@
 PODS:
-  - Amplify (1.4.4):
-    - Amplify/Default (= 1.4.4)
-  - Amplify/Default (1.4.4)
-  - AmplifyPlugins/AWSAPIPlugin (1.4.4):
+  - Amplify (1.5.0):
+    - Amplify/Default (= 1.5.0)
+  - Amplify/Default (1.5.0)
+  - AmplifyPlugins/AWSAPIPlugin (1.5.0):
     - AppSyncRealTimeClient (~> 1.4.0)
     - AWSCore (~> 2.19.0)
-    - AWSPluginsCore (= 1.4.4)
+    - AWSPluginsCore (= 1.5.0)
     - ReachabilitySwift (~> 5.0.0)
-  - AmplifyPlugins/AWSCognitoAuthPlugin (1.4.4):
+  - AmplifyPlugins/AWSCognitoAuthPlugin (1.5.0):
     - AWSAuthCore (~> 2.19.0)
     - AWSCognitoIdentityProvider (~> 2.19.0)
     - AWSCognitoIdentityProviderASF (~> 2.19.0)
     - AWSCore (~> 2.19.0)
     - AWSMobileClient (~> 2.19.0)
-    - AWSPluginsCore (= 1.4.4)
-  - AmplifyPlugins/AWSS3StoragePlugin (1.4.4):
+    - AWSPluginsCore (= 1.5.0)
+  - AmplifyPlugins/AWSS3StoragePlugin (1.5.0):
     - AWSCore (~> 2.19.0)
-    - AWSPluginsCore (= 1.4.4)
+    - AWSPluginsCore (= 1.5.0)
     - AWSS3 (~> 2.19.0)
-  - AppSyncRealTimeClient (1.4.2):
+  - AppSyncRealTimeClient (1.4.3):
     - Starscream (~> 3.1.0)
   - AWSAuthCore (2.19.1):
     - AWSCore (= 2.19.1)
@@ -36,87 +36,16 @@ PODS:
     - AWSCore (= 2.19.1)
   - AWSPinpoint (2.19.1):
     - AWSCore (= 2.19.1)
-  - AWSPluginsCore (1.4.4):
-    - Amplify (= 1.4.4)
+  - AWSPluginsCore (1.5.0):
+    - Amplify (= 1.5.0)
     - AWSCore (~> 2.19.0)
     - AWSMobileClient (~> 2.19.0)
   - AWSS3 (2.19.1):
     - AWSCore (= 2.19.1)
   - AWSSNS (2.19.1):
     - AWSCore (= 2.19.1)
-  - CGRPCZlib (1.0.0-alpha.12)
-  - Charts (3.6.0):
-    - Charts/Core (= 3.6.0)
-  - Charts/Core (3.6.0)
-  - CNIOAtomics (2.15.0)
-  - CNIOBoringSSL (2.7.1)
-  - CNIOBoringSSLShims (2.7.1):
-    - CNIOBoringSSL (= 2.7.1)
-  - CNIODarwin (2.15.0)
-  - CNIOHTTPParser (2.15.0)
-  - CNIOLinux (2.15.0)
-  - CNIOSHA1 (2.15.0)
-  - CountryPickerView (3.1.3)
-  - gRPC-Swift (1.0.0-alpha.12):
-    - CGRPCZlib (= 1.0.0-alpha.12)
-    - Logging (= 1.2.0)
-    - SwiftNIO (= 2.15.0)
-    - SwiftNIOHTTP2 (= 1.11.0)
-    - SwiftNIOSSL (= 2.7.1)
-    - SwiftNIOTransportServices (= 1.3.0)
-    - SwiftProtobuf (= 1.8.0)
-  - Logging (1.2.0)
-  - PhoneNumberKit (3.3.1):
-    - PhoneNumberKit/PhoneNumberKitCore (= 3.3.1)
-    - PhoneNumberKit/UIKit (= 3.3.1)
-  - PhoneNumberKit/PhoneNumberKitCore (3.3.1)
-  - PhoneNumberKit/UIKit (3.3.1):
-    - PhoneNumberKit/PhoneNumberKitCore
   - ReachabilitySwift (5.0.0)
-  - Sentry (5.1.5):
-    - Sentry/Core (= 5.1.5)
-  - Sentry/Core (5.1.5)
   - Starscream (3.1.1)
-  - SwiftLint (0.41.0)
-  - SwiftNIO (2.15.0):
-    - CNIOAtomics (= 2.15.0)
-    - CNIODarwin (= 2.15.0)
-    - CNIOLinux (= 2.15.0)
-    - CNIOSHA1 (= 2.15.0)
-    - SwiftNIOConcurrencyHelpers (= 2.15.0)
-  - SwiftNIOConcurrencyHelpers (2.15.0):
-    - CNIOAtomics (= 2.15.0)
-  - SwiftNIOFoundationCompat (2.15.0):
-    - SwiftNIO (= 2.15.0)
-  - SwiftNIOHPACK (1.11.0):
-    - SwiftNIO (= 2.15.0)
-    - SwiftNIOConcurrencyHelpers (= 2.15.0)
-    - SwiftNIOHTTP1 (= 2.15.0)
-  - SwiftNIOHTTP1 (2.15.0):
-    - CNIOHTTPParser (= 2.15.0)
-    - SwiftNIO (= 2.15.0)
-    - SwiftNIOConcurrencyHelpers (= 2.15.0)
-  - SwiftNIOHTTP2 (1.11.0):
-    - SwiftNIO (= 2.15.0)
-    - SwiftNIOConcurrencyHelpers (= 2.15.0)
-    - SwiftNIOHPACK (= 1.11.0)
-    - SwiftNIOHTTP1 (= 2.15.0)
-    - SwiftNIOTLS (= 2.15.0)
-  - SwiftNIOSSL (2.7.1):
-    - CNIOBoringSSL (= 2.7.1)
-    - CNIOBoringSSLShims (= 2.7.1)
-    - SwiftNIO (= 2.15.0)
-    - SwiftNIOConcurrencyHelpers (= 2.15.0)
-    - SwiftNIOTLS (= 2.15.0)
-  - SwiftNIOTLS (2.15.0):
-    - SwiftNIO (= 2.15.0)
-  - SwiftNIOTransportServices (1.3.0):
-    - SwiftNIO (~> 2.0)
-    - SwiftNIOConcurrencyHelpers (~> 2.0)
-    - SwiftNIOFoundationCompat (~> 2.0)
-    - SwiftNIOTLS (~> 2.0)
-  - SwiftProtobuf (1.8.0)
-  - SwiftyJSON (4.3.0)
 
 DEPENDENCIES:
   - Amplify
@@ -126,13 +55,6 @@ DEPENDENCIES:
   - AWSCognito
   - AWSPinpoint
   - AWSSNS
-  - Charts
-  - CountryPickerView
-  - gRPC-Swift (= 1.0.0-alpha.12)
-  - PhoneNumberKit (~> 3.3)
-  - Sentry (from `https://github.com/getsentry/sentry-cocoa.git`, tag `5.1.5`)
-  - SwiftLint (~> 0.39)
-  - SwiftyJSON (~> 4.0)
 
 SPEC REPOS:
   trunk:
@@ -149,48 +71,13 @@ SPEC REPOS:
     - AWSPluginsCore
     - AWSS3
     - AWSSNS
-    - CGRPCZlib
-    - Charts
-    - CNIOAtomics
-    - CNIOBoringSSL
-    - CNIOBoringSSLShims
-    - CNIODarwin
-    - CNIOHTTPParser
-    - CNIOLinux
-    - CNIOSHA1
-    - CountryPickerView
-    - gRPC-Swift
-    - Logging
-    - PhoneNumberKit
     - ReachabilitySwift
     - Starscream
-    - SwiftLint
-    - SwiftNIO
-    - SwiftNIOConcurrencyHelpers
-    - SwiftNIOFoundationCompat
-    - SwiftNIOHPACK
-    - SwiftNIOHTTP1
-    - SwiftNIOHTTP2
-    - SwiftNIOSSL
-    - SwiftNIOTLS
-    - SwiftNIOTransportServices
-    - SwiftProtobuf
-    - SwiftyJSON
-
-EXTERNAL SOURCES:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 5.1.5
-
-CHECKOUT OPTIONS:
-  Sentry:
-    :git: https://github.com/getsentry/sentry-cocoa.git
-    :tag: 5.1.5
 
 SPEC CHECKSUMS:
-  Amplify: c5bc69a3db5c25ae6835dc62c5334dab17ccce21
-  AmplifyPlugins: 6397d3132f3aa082a02a902fe576d051ad837426
-  AppSyncRealTimeClient: 7fb160294d067b6c0c4b3c4ab91e953fd4cfba30
+  Amplify: 4d188462f31a3dfde270e556a338bfbcee9132c7
+  AmplifyPlugins: 150ace360ecda03061c4f10677da4f0f9311e1be
+  AppSyncRealTimeClient: 04df4dffe57cfbd06da336d0bfcd5641ba9adcb5
   AWSAuthCore: 387c5e3482edbbb0fe754fa110a2a0203c783432
   AWSCognito: f50de600804941d083af37a7568905f31a774727
   AWSCognitoIdentityProvider: e6932c709d3e0b234128aeb5f2052c9bf1032d8d
@@ -198,38 +85,12 @@ SPEC CHECKSUMS:
   AWSCore: 55c154ae27efc5c98bdc30a0eeea5a35d10a2ab5
   AWSMobileClient: b908cada3c35da9cfe5b4ff9947fcf70142495e7
   AWSPinpoint: 8c07b9759eebe269a5b26d38a96f5ecd5478b1fb
-  AWSPluginsCore: c42c35ecc3c6afff1e98faf0a01d0cd1a362e77c
+  AWSPluginsCore: a278324b1a3ef7fdee4336382b7871991d0e98f2
   AWSS3: 2272253b098d07803af8dd20ce6ce7302bcffb47
   AWSSNS: fb69aa977382d5bfb40072d0940ef6893abf16fb
-  CGRPCZlib: a53e43fb0567e720e753dd172911b96baa3910d7
-  Charts: b1e3a1f5a1c9ba5394438ca3b91bd8c9076310af
-  CNIOAtomics: ba49b1c86f281e1ecfd84c9205fbc27a81826847
-  CNIOBoringSSL: e4766830ab6d7c7fcd3618331f05fcb11638314d
-  CNIOBoringSSLShims: c3f3c6f05b7ce9b576521328a5b1b566d8f4665b
-  CNIODarwin: 2e341dd283fa3972706568b12925366145a8e2cd
-  CNIOHTTPParser: 25e1d1bc84c0612cbbbd6baedc4be05d77a17e01
-  CNIOLinux: 61598a8e49510207acb74c87f8fc11f762f76b5a
-  CNIOSHA1: 7b1dcceef9682aef4c6578b9fc67f87a03f0c48e
-  CountryPickerView: 383c09949f7455de9892db7ce3400b10da090150
-  gRPC-Swift: d4432e8659f1d075b9d07963c18e6791c8b159c3
-  Logging: 7838d379d234d7e5ae1265fa02804a9084caf04c
-  PhoneNumberKit: ff153d5e299f6da566cb73c6aa71e354933b2932
   ReachabilitySwift: 985039c6f7b23a1da463388634119492ff86c825
-  Sentry: e73af5462d1e7978c571aa2fdb861053938d7efd
   Starscream: 4bb2f9942274833f7b4d296a55504dcfc7edb7b0
-  SwiftLint: c585ebd615d9520d7fbdbe151f527977b0534f1e
-  SwiftNIO: c9889dcd8aed2655af9163b42fc11ebd4ce94252
-  SwiftNIOConcurrencyHelpers: 2357037a16e9c51880c01b896a5ac3cd41066044
-  SwiftNIOFoundationCompat: f09ee499a8a9c636ec9007f73c5a1cedc23dcad3
-  SwiftNIOHPACK: 906596511ff9d1e095b7a72a0011351591bcae03
-  SwiftNIOHTTP1: b05f4061ba18482006a264a5aa087bbcd35d153c
-  SwiftNIOHTTP2: 3a52499594c6ec073af2a2801cf3c5d3d1c8700f
-  SwiftNIOSSL: 7c82b8393a6b69a3ef9b12fe74240e92c2bd7add
-  SwiftNIOTLS: 51580e51240d1a4d51efb2d317e92cf243181042
-  SwiftNIOTransportServices: 26d40c589fc8fe667af51b06ef0aa49fbc9ae7f2
-  SwiftProtobuf: 2cbd9409689b7df170d82a92a33443c8e3e14a70
-  SwiftyJSON: 6faa0040f8b59dead0ee07436cbf76b73c08fd08
 
-PODFILE CHECKSUM: 2a603c6c5610c5080294eaaf5a079cd215af0750
+PODFILE CHECKSUM: 03eb80b414221f59abfafe11763ebd24aa43c380
 
-COCOAPODS: 1.9.3
+COCOAPODS: 1.10.1
