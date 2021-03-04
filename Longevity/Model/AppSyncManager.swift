@@ -297,7 +297,7 @@ class AppSyncManager  {
         let queue = DispatchQueue.global(qos: .background)
         self.pollingTimer?.cancel()
         self.pollingTimer = DispatchSource.makeTimerSource(queue: queue)
-        pollingTimer?.schedule(deadline: .now() + 60)
+        pollingTimer?.schedule(deadline: .now() + 30)
         pollingTimer?.setEventHandler(handler: {
             self.syncSurveyList()
         })

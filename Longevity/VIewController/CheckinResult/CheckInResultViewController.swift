@@ -92,12 +92,24 @@ class CheckInResultViewController: UIViewController {
     init() {
         super.init(nibName: nil, bundle: nil)
     }
-        
+    
     init(submissionID: String, surveyName: String = "", isCheckIn: Bool = true) {
         super.init(nibName: nil, bundle: nil)
         self.submissionID = submissionID
         self.surveyName = surveyName
         self.isCheckInResult = isCheckIn
+    }
+        
+    init(checkinResult: History) {
+        super.init(nibName: nil, bundle: nil)
+        self.checkinResult = checkinResult
+        self.surveyName = checkinResult.surveyName ?? ""
+        self.submissionID = checkinResult.submissionID
+        if let surveyid = checkinResult.surveyID, surveyid.starts(with: "COVID19_01") {
+            self.isCheckInResult = true
+        } else {
+            self.isCheckInResult = false
+        }
     }
     
     required init?(coder: NSCoder) {
@@ -148,16 +160,17 @@ class CheckInResultViewController: UIViewController {
         
         self.currentResultView = .analysis
 
-        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [unowned self] (insights) in
-            self.userInsights = insights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
+        UserInsightsAPI.instance.get(submissionID: self.submissionID) { [weak self] (insights) in
+            self?.userInsights = insights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder })
         }
         
-        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [unowned self] (checkinlog) in
-            guard let loghistory = checkinlog?.details?.history else {
-                return
+        if self.checkinResult == nil {
+            UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [weak self] (checkinlog) in
+                guard let loghistory = checkinlog?.details?.history else {
+                    return
+                }
+                self?.checkinResult = loghistory.first
             }
-            guard let resultLog = loghistory.first(where: { $0.submissionID == self.submissionID }) else { return }
-            self.checkinResult = resultLog
         }
         
         self.titleView.titleLabel.text = self.isCheckInResult ? "Check-in Results" : "Results"
