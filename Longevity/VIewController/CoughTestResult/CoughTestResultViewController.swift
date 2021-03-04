@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol CoughTestResultViewDelegate: class {
+    func resultViewDismissed()
+}
+
 class CoughTestResultViewController: UIViewController {
+    
+    weak var delegate: CoughTestResultViewDelegate?
     
     var submissionID: String = ""
     
@@ -123,11 +129,11 @@ class CoughTestResultViewController: UIViewController {
 
         self.titleView.titleLabel.text = "Cough Test Result"
         
-        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [unowned self] (checkinlog) in
+        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [weak self] (checkinlog) in
             guard let loghistory = checkinlog?.details?.history else {
                 return
             }
-            self.coughResult = loghistory.first(where: { $0.submissionID == self.submissionID })
+            self?.coughResult = loghistory.first(where: { $0.submissionID == self?.submissionID })
         }
         
         self.showSpinner()
@@ -139,7 +145,10 @@ class CoughTestResultViewController: UIViewController {
     }
     
     @objc func closeView() {
-        self.dismiss(animated: true, completion: nil)
+        self.dismiss(animated: true) {
+            SurveyTaskUtility.shared.suppressAlert = false
+            self.delegate?.resultViewDismissed()
+        }
     }
 }
 
