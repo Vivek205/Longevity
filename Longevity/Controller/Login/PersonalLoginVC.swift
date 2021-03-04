@@ -169,19 +169,19 @@ class PersonalLoginVC: UIViewController {
     @IBAction func handleSigninWithFacebook(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!, listener: authHandler)
+        _ = Amplify.Auth.signInWithWebUI(for: .facebook, presentationAnchor: self.view.window!, options: .preferPrivateSession(), listener: authHandler)
     }
 
     @IBAction func handleSigninWithGoogle(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!, listener: authHandler)
+        _ = Amplify.Auth.signInWithWebUI(for: .google, presentationAnchor: self.view.window!, options: .preferPrivateSession(), listener: authHandler)
     }
 
     @IBAction func handleSigninWithApple(_ sender: Any) {
         self.closeKeyboard()
         self.showSpinner()
-        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!, listener: authHandler)
+        _ = Amplify.Auth.signInWithWebUI(for: .apple, presentationAnchor: self.view.window!, options: .preferPrivateSession(), listener: authHandler)
     }
 
     @IBAction func unwindToLogin(_ sender: UIStoryboardSegue){

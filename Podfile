@@ -13,7 +13,7 @@ target 'COVID Signals' do
   pod 'AmplifyPlugins/AWSAPIPlugin'
   pod 'AWSPinpoint'
   pod "AWSSNS"
-  pod "AWSCognito"
+#  pod "AWSCognito"
 #  MARK: Linter
 #  pod 'SwiftLint', '~> 0.39'
 #  MARK: GRPC
@@ -23,6 +23,6 @@ target 'COVID Signals' do
 #  MARK: JSON
 #  pod 'SwiftyJSON', '~> 4.0'
 #  pod 'Charts'
-#  pod 'CountryPickerView'
+  pod 'CountryPickerView'
 #  pod 'PhoneNumberKit', '~> 3.3'
 end

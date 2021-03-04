@@ -10,7 +10,7 @@
 #define Longevity_Bridging_Header_h
 
 #import <AWSCore/AWSCore.h>
-#import <AWSCognito/AWSCognito.h>
+//#import <AWSCognito/AWSCognito.h>
 
 
 #endif /* Longevity_Bridging_Header_h */
