@@ -270,7 +270,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         completionHandler()
                         return
                     case .covidReportProcessed:
-                        guard let data = apsData["data"] as? [String: Any],
+                        guard let data = apsData["notification_data"] as? [String: Any],
                               let submissionID = data["submission_id"] as? String else {
                             completionHandler()
                             return

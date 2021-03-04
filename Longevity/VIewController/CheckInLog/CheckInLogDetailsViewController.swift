@@ -16,19 +16,15 @@ class CheckInLogDetailsViewController: UIViewController {
         didSet {
             self.logDetailsTableView.reloadData()
             self.logTitle.text = logItem.surveyName
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
-            if let date = dateformatter.date(from: logItem.recordDate) {
-                dateformatter.dateFormat = "MMM dd, yyyy | hh:mm a"
-                dateformatter.amSymbol = "am"
-                dateformatter.pmSymbol = "pm"
-                self.logDate.text = dateformatter.string(from: date)
+            if !logItem.recordDate.isEmpty {
+                let toformat = self.isCoughResult ? "MMM dd, yyyy | hh:mm a" : "MMM dd, yyyy"
+                self.logDate.text = DateUtility.getString(from: logItem.recordDate, toFormat: toformat)
             }
         }
     }
     
     var isCoughResult: Bool {
-        return logItem.surveyID?.starts(with: "COUGH_TEST") ?? false
+        return logItem.surveyID?.starts(with: Strings.coughTest) ?? false
     }
     
     lazy var transparentView: UIView = {

@@ -19,6 +19,8 @@
 		4647866625EFA3DD0077A142 /* CoughTestResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */; };
 		4647866825EFA6890077A142 /* CoughTestResultHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866725EFA6890077A142 /* CoughTestResultHeader.swift */; };
 		464786B425F0CDBF0077A142 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 464786B325F0CDBF0077A142 /* Reachability */; };
+		464786E325F152770077A142 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E225F152770077A142 /* DateUtility.swift */; };
+		464786E525F15C5D0077A142 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E425F15C5D0077A142 /* Strings.swift */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
@@ -281,6 +283,8 @@
 		4647866325EF6B110077A142 /* CoughTestResultProgressViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultProgressViewController.swift; sourceTree = "<group>"; };
 		4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultCell.swift; sourceTree = "<group>"; };
 		4647866725EFA6890077A142 /* CoughTestResultHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultHeader.swift; sourceTree = "<group>"; };
+		464786E225F152770077A142 /* DateUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
+		464786E425F15C5D0077A142 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
@@ -680,6 +684,8 @@
 				C17F08162574C08400D9955E /* FitbitRefreshOperations.swift */,
 				C19237032582318C00AA5A92 /* CoughRecordUploader.swift */,
 				C1B3732B25D14C0C00A6108A /* HealthKitBackgroundSync.swift */,
+				464786E225F152770077A142 /* DateUtility.swift */,
+				464786E425F15C5D0077A142 /* Strings.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -1413,6 +1419,7 @@
 				C1C8220424EB49F60074AF11 /* ProfileActivityCell.swift in Sources */,
 				C14DBC122508179C004D5180 /* CheckInInsightCell.swift in Sources */,
 				E2D127E4249B5BCF00467E43 /* SurveyTask.swift in Sources */,
+				464786E325F152770077A142 /* DateUtility.swift in Sources */,
 				4647866425EF6B110077A142 /* CoughTestResultProgressViewController.swift in Sources */,
 				E2386A382488F4DE0068030E /* ResetPasswordVC.swift in Sources */,
 				E23A2CC62480C92C0051EE7A /* GradientView.swift in Sources */,
@@ -1433,6 +1440,7 @@
 				C12F09CB24F837DD00623CC3 /* AppleHealthTopCell.swift in Sources */,
 				C12F09CF24F84D7D00623CC3 /* MyDataLogCell.swift in Sources */,
 				C19875C124DC884300477185 /* NavigationUtility.swift in Sources */,
+				464786E525F15C5D0077A142 /* Strings.swift in Sources */,
 				E25074322512216E00CB171E /* UserSubscriptionAPI.swift in Sources */,
 				C14ABA3E24E2378E00C81580 /* UserInsightsAPI.swift in Sources */,
 				E2B9893C248E27EC00453E0E /* UserAccount.swift in Sources */,
