@@ -567,13 +567,25 @@ extension SurveyTaskUtility {
         return survey.lastSurveyStatus
     }
     
-    func doOpenResult(submissionID: String, surveyID: String) {
-        if surveyID.starts(with: "COUGH_TEST") {
-            print(submissionID)
-        } else {
-            let checkInResultViewController = CheckInResultViewController(submissionID: submissionID)
-            NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                        style: .overCurrentContext)
+    func doOpenResult(submissionID: String) {
+        UserInsightsAPI.instance.getLog(submissionID: submissionID) { (checkinlog) in
+            guard let loghistory = checkinlog?.details?.history else {
+                return
+            }
+            guard let result = loghistory.first else { return }
+            
+            DispatchQueue.main.async {
+                if result.surveyID?.starts(with: "COUGH_TEST") ?? false {
+                    let checkInResultViewController = CoughTestResultViewController()
+                    checkInResultViewController.coughResult = result
+                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                style: .overCurrentContext)
+                } else {
+                    let checkInResultViewController = CheckInResultViewController(checkinResult: result)
+                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                style: .overCurrentContext)
+                }
+            }
         }
     }
 }

@@ -129,14 +129,15 @@ class CoughTestResultViewController: UIViewController {
 
         self.titleView.titleLabel.text = "Cough Test Result"
         
-        UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [weak self] (checkinlog) in
-            guard let loghistory = checkinlog?.details?.history else {
-                return
+        if !self.submissionID.isEmpty {
+            UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [weak self] (checkinlog) in
+                guard let loghistory = checkinlog?.details?.history else {
+                    return
+                }
+                self?.coughResult = loghistory.first(where: { $0.submissionID == self?.submissionID })
             }
-            self?.coughResult = loghistory.first(where: { $0.submissionID == self?.submissionID })
+            self.showSpinner()
         }
-        
-        self.showSpinner()
     }
 
     override func viewDidLayoutSubviews() {

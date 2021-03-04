@@ -270,9 +270,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         completionHandler()
                         return
                     case .covidReportProcessed:
-                        let checkInResultViewController = CheckInResultViewController()
-                        NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                    style: .overCurrentContext)
+                        SurveyTaskUtility.shared.doOpenResult(submissionID: "")
                         completionHandler()
                         return
                     default:
