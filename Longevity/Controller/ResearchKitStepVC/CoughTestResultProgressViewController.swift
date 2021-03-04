@@ -126,6 +126,7 @@ class CoughTestResultProgressViewController: UIViewController {
     }
     
     deinit {
+        SurveyTaskUtility.shared.suppressAlert = false
         SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
     }
 }

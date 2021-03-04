@@ -84,7 +84,7 @@ final class SurveyTaskUtility: NSObject {
         func onGetQuestionCompletion(_ surveyDetails: SurveyDetails?) -> Void {
             guard surveyDetails != nil else { return completion(nil) }
             
-            if surveyDetails!.surveyId.starts(with: "COUGH_TEST") {
+            if surveyDetails!.surveyId.starts(with: Strings.coughTest) {
                 SurveyTaskUtility.shared.coughTestFolderName = "COUGH_TEST_\(UUID().uuidString)"
             }
             
@@ -524,7 +524,7 @@ extension SurveyTaskUtility {
                         DispatchQueue.main.async {
                             let viewResultsAction = UIAlertAction(title: "View Results", style: .default) { (action) in
                                 guard let submissionID = survey.lastSubmissionId else { return }
-                                if survey.surveyId.starts(with: "COUGH_TEST") {
+                                if survey.surveyId.starts(with: Strings.coughTest) {
                                     let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
                                     NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
                                                                                 style: .overCurrentContext)
@@ -538,7 +538,7 @@ extension SurveyTaskUtility {
                             Alert(title: "Risk Siginals Updated", message: "Your results are available and also saved in \"My Data\"", actions: viewResultsAction, okAction)
                         }
                     } else {
-                        if survey.surveyId.starts(with: "COUGH_TEST") {
+                        if survey.surveyId.starts(with: Strings.coughTest) {
                             DispatchQueue.main.async {
                                 guard let submissionID = survey.lastSubmissionId else { return }
                                 let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
@@ -575,7 +575,7 @@ extension SurveyTaskUtility {
             guard let result = loghistory.first else { return }
             
             DispatchQueue.main.async {
-                if result.surveyID?.starts(with: "COUGH_TEST") ?? false {
+                if result.surveyID?.starts(with: Strings.coughTest) ?? false {
                     let checkInResultViewController = CoughTestResultViewController()
                     checkInResultViewController.coughResult = result
                     NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,

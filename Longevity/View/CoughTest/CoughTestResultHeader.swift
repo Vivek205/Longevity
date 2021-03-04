@@ -12,16 +12,10 @@ class CoughTestResultHeader: UICollectionReusableView {
     
     var completionDate: String! {
         didSet {
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
-            var recoredDate = ""
-            if let datestring = completionDate, !datestring.isEmpty, let date = dateformatter.date(from: datestring) {
-                dateformatter.dateFormat = "EEE.MMM.dd | hh:mm a"
-                dateformatter.amSymbol = "am"
-                dateformatter.pmSymbol = "pm"
-                recoredDate = dateformatter.string(from: date)
+            if let datestring = completionDate, !datestring.isEmpty {
+                let recoredDate = DateUtility.getString(from: datestring, toFormat: "EEE.MMM.dd | hh:mm a")
+                self.titleLabel.text = "Completed \(recoredDate)"
             }
-            self.titleLabel.text = "Completed \(recoredDate)"
         }
     }
     

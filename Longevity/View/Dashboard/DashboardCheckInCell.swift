@@ -122,7 +122,7 @@ class DashboardCheckInCell: UICollectionViewCell {
             self.surveyId = surveyResponse.surveyId
             self.submissionID = surveyResponse.lastSubmissionId
             
-            if surveyResponse.surveyId.starts(with: "COUGH_TEST") {
+            if surveyResponse.surveyId.starts(with: Strings.coughTest) {
                 self.setupCoughTestCell(title: surveyResponse.name,
                                         subtext: surveyResponse.description.shortDescription)
             } else {

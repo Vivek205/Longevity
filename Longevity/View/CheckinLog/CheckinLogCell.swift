@@ -20,19 +20,19 @@ class CheckinLogCell: UICollectionViewCell {
             }
             self.noofSymptoms.text = "\(symptomsCount)"
             
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
-            if let date = dateformatter.date(from: history.recordDate) {
-                dateformatter.dateFormat = "EEE | MMM dd, yyyy"
-                self.logDate.text = dateformatter.string(from: date)
+            if !history.recordDate.isEmpty {
+                let toformat = self.history.surveyID == Strings.coughTest ? "EEE | MMM dd, yyyy | hh:mm a" : "EEE | MMM dd, yyyy"
+                let recoredDate = DateUtility.getString(from: history.recordDate, toFormat: toformat)
+                self.logDate.text = recoredDate
             }
+            
             self.logName.text = self.history.surveyName ?? "COVID Check-in"
-            if self.history.surveyID == "COVID19_01" || self.history.surveyID == "COUGH_TEST_001" {
+            if self.history.surveyID == Strings.covidCheckIn || self.history.surveyID == Strings.coughTest {
                 symptomsLabel.isHidden = true
                 noofSymptoms.isHidden = true
                 symptomsCircle.isHidden = true
                 logIcon.isHidden = false
-                if self.history.surveyID == "COUGH_TEST_001" {
+                if self.history.surveyID == Strings.coughTest {
                     if self.history.result != .healthy {
                         logIcon.image = UIImage(named: "cough-positive")
                     } else {
@@ -59,9 +59,9 @@ class CheckinLogCell: UICollectionViewCell {
     
     lazy var noofSymptoms: UILabel = {
         let noofsymptoms = UILabel()
-        noofsymptoms.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        noofsymptoms.font = UIFont(name: AppFontName.semibold, size: 24.0)
         noofsymptoms.textColor = .white
-        noofsymptoms.text = "99"
+        noofsymptoms.text = ""
         noofsymptoms.textAlignment = .center
         noofsymptoms.translatesAutoresizingMaskIntoConstraints = false
         return noofsymptoms
@@ -71,7 +71,7 @@ class CheckinLogCell: UICollectionViewCell {
         let symptomslabel = UILabel()
         symptomslabel.text = "Symptoms"
         symptomslabel.textAlignment = .center
-        symptomslabel.font = UIFont(name: "Montserrat-Regular", size: 10.0)
+        symptomslabel.font = UIFont(name: AppFontName.regular, size: 10.0)
         symptomslabel.textColor = UIColor(hexString: "#9B9B9B")
         symptomslabel.translatesAutoresizingMaskIntoConstraints = false
         return symptomslabel
