@@ -10,7 +10,6 @@
 		464785B525EEC7280077A142 /* SwiftyJSON in Frameworks */ = {isa = PBXBuildFile; productRef = 464785B425EEC7280077A142 /* SwiftyJSON */; };
 		464785E625EEC8130077A142 /* ChartsDynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 464785E525EEC8130077A142 /* ChartsDynamic */; };
 		464785E725EEC8130077A142 /* ChartsDynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 464785E525EEC8130077A142 /* ChartsDynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
-		464785ED25EEC8710077A142 /* CountryPickerView in Frameworks */ = {isa = PBXBuildFile; productRef = 464785EC25EEC8710077A142 /* CountryPickerView */; };
 		464785F025EEC8C60077A142 /* PhoneNumberKit-Dynamic in Frameworks */ = {isa = PBXBuildFile; productRef = 464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */; };
 		464785F125EEC8C60077A142 /* PhoneNumberKit-Dynamic in Embed Frameworks */ = {isa = PBXBuildFile; productRef = 464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */; settings = {ATTRIBUTES = (CodeSignOnCopy, ); }; };
 		464785F725EECB930077A142 /* Sentry in Frameworks */ = {isa = PBXBuildFile; productRef = 464785F625EECB930077A142 /* Sentry */; };
@@ -517,7 +516,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				464785ED25EEC8710077A142 /* CountryPickerView in Frameworks */,
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				464785F025EEC8C60077A142 /* PhoneNumberKit-Dynamic in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
@@ -1117,7 +1115,6 @@
 			packageProductDependencies = (
 				464785B425EEC7280077A142 /* SwiftyJSON */,
 				464785E525EEC8130077A142 /* ChartsDynamic */,
-				464785EC25EEC8710077A142 /* CountryPickerView */,
 				464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */,
 				464785F625EECB930077A142 /* Sentry */,
 				464786B325F0CDBF0077A142 /* Reachability */,
@@ -1153,7 +1150,6 @@
 			packageReferences = (
 				464785B325EEC7280077A142 /* XCRemoteSwiftPackageReference "SwiftyJSON" */,
 				464785E425EEC8130077A142 /* XCRemoteSwiftPackageReference "Charts" */,
-				464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */,
 				464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				4647863825EED3300077A142 /* XCRemoteSwiftPackageReference "SwiftLint" */,
@@ -1738,14 +1734,6 @@
 				minimumVersion = 4.0.1;
 			};
 		};
-		464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */ = {
-			isa = XCRemoteSwiftPackageReference;
-			repositoryURL = "https://github.com/kizitonwose/CountryPickerView";
-			requirement = {
-				kind = upToNextMajorVersion;
-				minimumVersion = 3.1.3;
-			};
-		};
 		464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/marmelroy/PhoneNumberKit";
@@ -1790,11 +1778,6 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 464785E425EEC8130077A142 /* XCRemoteSwiftPackageReference "Charts" */;
 			productName = ChartsDynamic;
-		};
-		464785EC25EEC8710077A142 /* CountryPickerView */ = {
-			isa = XCSwiftPackageProductDependency;
-			package = 464785EB25EEC8710077A142 /* XCRemoteSwiftPackageReference "CountryPickerView" */;
-			productName = CountryPickerView;
 		};
 		464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */ = {
 			isa = XCSwiftPackageProductDependency;

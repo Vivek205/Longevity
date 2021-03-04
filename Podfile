@@ -23,6 +23,6 @@ target 'COVID Signals' do
 #  MARK: JSON
 #  pod 'SwiftyJSON', '~> 4.0'
 #  pod 'Charts'
-#  pod 'CountryPickerView'
+  pod 'CountryPickerView'
 #  pod 'PhoneNumberKit', '~> 3.3'
 end
