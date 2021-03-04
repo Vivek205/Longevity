@@ -110,18 +110,6 @@ class CoughTestResultProgressViewController: UIViewController {
         ])
         
         SurveyTaskUtility.shared.suppressAlert = true
-//
-//        SurveyTaskUtility.shared.surveyInProgress.addAndNotify(observer: self) { [unowned self] in
-//            if SurveyTaskUtility.shared.getLastSubmissionStatus(surveyId: self._surveyID) != .pending {
-//                guard let submissionID = SurveyTaskUtility.shared.getLastSubmissionID(for: self._surveyID) else { return }
-//                DispatchQueue.main.async {
-//                    let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
-//                    checkInResultViewController.delegate = self
-//                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-//                                                                style: .overCurrentContext)
-//                }
-//            }
-//        }
     }
     
     override func viewDidLayoutSubviews() {
