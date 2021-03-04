@@ -270,7 +270,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                         completionHandler()
                         return
                     case .covidReportProcessed:
-                        SurveyTaskUtility.shared.doOpenResult(submissionID: "")
+                        guard let data = apsData["data"] as? [String: Any],
+                              let submissionID = data["submission_id"] as? String else {
+                            completionHandler()
+                            return
+                        }
+                        SurveyTaskUtility.shared.doOpenResult(submissionID: submissionID)
                         completionHandler()
                         return
                     default:

@@ -600,3 +600,12 @@ extension SurveyTaskUtility : CoughTestResultViewDelegate {
         }
     }
 }
+
+extension Array {
+    func copiedElements() -> Array<Element> {
+        return self.map{
+            let copiable = $0 as! NSCopying
+            return copiable.copy() as! Element
+        }
+    }
+}
