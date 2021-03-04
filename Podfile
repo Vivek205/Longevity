@@ -13,7 +13,7 @@ target 'COVID Signals' do
   pod 'AmplifyPlugins/AWSAPIPlugin'
   pod 'AWSPinpoint'
   pod "AWSSNS"
-  pod "AWSCognito"
+#  pod "AWSCognito"
 #  MARK: Linter
 #  pod 'SwiftLint', '~> 0.39'
 #  MARK: GRPC
