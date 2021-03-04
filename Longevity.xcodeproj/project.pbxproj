@@ -19,6 +19,7 @@
 		4647866425EF6B110077A142 /* CoughTestResultProgressViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866325EF6B110077A142 /* CoughTestResultProgressViewController.swift */; };
 		4647866625EFA3DD0077A142 /* CoughTestResultCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866525EFA3DD0077A142 /* CoughTestResultCell.swift */; };
 		4647866825EFA6890077A142 /* CoughTestResultHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4647866725EFA6890077A142 /* CoughTestResultHeader.swift */; };
+		464786B425F0CDBF0077A142 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 464786B325F0CDBF0077A142 /* Reachability */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
@@ -520,6 +521,7 @@
 				E2C59DFD2498DE8C00842105 /* HealthKit.framework in Frameworks */,
 				464785F025EEC8C60077A142 /* PhoneNumberKit-Dynamic in Frameworks */,
 				E26661F524EA64BB0049ED5E /* ResearchKit.framework in Frameworks */,
+				464786B425F0CDBF0077A142 /* Reachability in Frameworks */,
 				464785F725EECB930077A142 /* Sentry in Frameworks */,
 				464785E625EEC8130077A142 /* ChartsDynamic in Frameworks */,
 				464785B525EEC7280077A142 /* SwiftyJSON in Frameworks */,
@@ -1118,6 +1120,7 @@
 				464785EC25EEC8710077A142 /* CountryPickerView */,
 				464785EF25EEC8C60077A142 /* PhoneNumberKit-Dynamic */,
 				464785F625EECB930077A142 /* Sentry */,
+				464786B325F0CDBF0077A142 /* Reachability */,
 			);
 			productName = Longevity;
 			productReference = E2ECB8BB247FE2BA0020A27E /* COVID Signals.app */;
@@ -1154,6 +1157,7 @@
 				464785EE25EEC8C60077A142 /* XCRemoteSwiftPackageReference "PhoneNumberKit" */,
 				464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */,
 				4647863825EED3300077A142 /* XCRemoteSwiftPackageReference "SwiftLint" */,
+				464786B225F0CDBF0077A142 /* XCRemoteSwiftPackageReference "Reachability" */,
 			);
 			productRefGroup = E2ECB8BC247FE2BA0020A27E /* Products */;
 			projectDirPath = "";
@@ -1766,6 +1770,14 @@
 				minimumVersion = 0.42.0;
 			};
 		};
+		464786B225F0CDBF0077A142 /* XCRemoteSwiftPackageReference "Reachability" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/ashleymills/Reachability.swift";
+			requirement = {
+				kind = upToNextMajorVersion;
+				minimumVersion = 5.1.0;
+			};
+		};
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
@@ -1793,6 +1805,11 @@
 			isa = XCSwiftPackageProductDependency;
 			package = 464785F525EECB930077A142 /* XCRemoteSwiftPackageReference "sentry-cocoa" */;
 			productName = Sentry;
+		};
+		464786B325F0CDBF0077A142 /* Reachability */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 464786B225F0CDBF0077A142 /* XCRemoteSwiftPackageReference "Reachability" */;
+			productName = Reachability;
 		};
 /* End XCSwiftPackageProductDependency section */
 	};
