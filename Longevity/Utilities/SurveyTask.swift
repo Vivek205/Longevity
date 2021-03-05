@@ -568,22 +568,26 @@ extension SurveyTaskUtility {
     }
     
     func doOpenResult(submissionID: String) {
+        SurveyTaskUtility.shared.suppressAlert = true
         UserInsightsAPI.instance.getLog(submissionID: submissionID) { (checkinlog) in
             guard let loghistory = checkinlog?.details?.history else {
                 return
             }
             guard let result = loghistory.first else { return }
-            
             DispatchQueue.main.async {
                 if result.surveyID?.starts(with: Strings.coughTest) ?? false {
                     let checkInResultViewController = CoughTestResultViewController()
                     checkInResultViewController.coughResult = result
                     NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                style: .overCurrentContext)
+                                                                style: .overCurrentContext) {
+                        SurveyTaskUtility.shared.suppressAlert = false
+                    }
                 } else {
                     let checkInResultViewController = CheckInResultViewController(checkinResult: result)
                     NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                style: .overCurrentContext)
+                                                                style: .overCurrentContext) {
+                        SurveyTaskUtility.shared.suppressAlert = false
+                    }
                 }
             }
         }

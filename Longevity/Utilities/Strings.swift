@@ -11,4 +11,10 @@ import Foundation
 class Strings {
     static let coughTest = "COUGH_TEST_001"
     static let covidCheckIn = "COVID19_01"
+    
+    #if DEBUG
+    static let configFile = "amplify-debug"
+    #else
+    static let configFile = "amplify-production"
+    #endif
 }
