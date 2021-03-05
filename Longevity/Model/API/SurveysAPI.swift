@@ -78,7 +78,7 @@ class SurveysAPI : BaseAuthAPI {
         do {
             let data = try encoder.encode(payload)
             
-            guard let path = Bundle.main.path(forResource: "amplifyconfiguration", ofType: "json"),
+            guard let path = Bundle.main.path(forResource: Strings.configFile, ofType: "json"),
                   let fileURL = URL(fileURLWithPath: path) as? URL,
                   let fileData = try? String(contentsOf: fileURL).data(using: .utf8) else {
                 return nextQuestionIdentifier

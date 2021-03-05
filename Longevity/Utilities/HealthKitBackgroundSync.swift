@@ -42,7 +42,7 @@ class HealthKitBackgroundSync: NSObject {
 
     func start(accessToken: String, userID: String, userToken: String) -> URLSessionUploadTask? {
         
-        guard let path = Bundle.main.path(forResource: "amplifyconfiguration", ofType: "json"),
+        guard let path = Bundle.main.path(forResource: Strings.configFile, ofType: "json"),
               let fileURL = URL(fileURLWithPath: path) as? URL,
               let fileData = try? String(contentsOf: fileURL).data(using: .utf8) else {
             self.delegate?.published(success: false)
