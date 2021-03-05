@@ -105,7 +105,7 @@ class CheckInResultViewController: UIViewController {
         self.checkinResult = checkinResult
         self.surveyName = checkinResult.surveyName ?? ""
         self.submissionID = checkinResult.submissionID
-        if let surveyid = checkinResult.surveyID, surveyid.starts(with: "COVID19_01") {
+        if let surveyid = checkinResult.surveyID, surveyid.starts(with: Strings.covidCheckIn) {
             self.isCheckInResult = true
         } else {
             self.isCheckInResult = false
@@ -348,12 +348,9 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
         if indexPath.section == 0 {
             guard let headerView = collectionView.getSupplementaryView(with: CheckInResultHeader.self, viewForSupplementaryElementOfKind: kind, at: indexPath) as? CheckInResultHeader else { preconditionFailure("Invalid header type") }
             
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
             var recoredDate = ""
-            if let datestring = checkinResult?.recordDate, !datestring.isEmpty, let date = dateformatter.date(from: datestring) {
-                dateformatter.dateFormat = "EEE.MMM.dd"
-                recoredDate = dateformatter.string(from: date)
+            if let datestring = checkinResult?.recordDate, !datestring.isEmpty {
+                recoredDate = DateUtility.getString(from: datestring, toFormat: "EEE.MMM.dd")
             }
             headerView.setup(comletedDate: recoredDate, surveyName: self.surveyName, isCheckIn: self.isCheckInResult)
             headerView.currentView = self.currentResultView

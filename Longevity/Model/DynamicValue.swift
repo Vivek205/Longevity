@@ -11,8 +11,8 @@ import Foundation
 typealias CompletionHandler = (() -> Void)
 
 final class Ref<T> {
-    var value: T
-    init(value: T) {
+    var value: T?
+    init(value: T?) {
         self.value = value
     }
 }
@@ -34,11 +34,10 @@ class DynamicValue<T> {
         get { return ref.value }
         set {
             guard isKnownUniquelyReferenced(&ref) else {
-                ref = Ref(value: newValue!)
+                ref = Ref(value: newValue)
                 return
             }
-            ref.value = newValue!
-            
+            ref.value = newValue
             self.notifyAll()
         }
     }

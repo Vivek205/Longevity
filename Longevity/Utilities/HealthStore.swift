@@ -45,12 +45,6 @@ final class HealthStore {
     
     var healthReadings: [HealthReading] = [HealthReading]()
     
-    var todaysDate: String {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-MM-dd"
-        return dateformatter.string(from: Date())
-    }
-    
     private var healthDataTypes: Set<HKObjectType> {
         return Set([
             HKObjectType.characteristicType(forIdentifier: .dateOfBirth)!,
@@ -154,11 +148,9 @@ final class HealthStore {
             if let quantity = statistics?.sumQuantity() {
                 let steps = quantity.doubleValue(for: HKUnit.count())
                 var healthReadings = [HealthReading]()
-                let dateformatter = DateFormatter()
-                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 healthReadings.append(HealthReading(value: steps.rounded(), unit: "steps",
-                                                    readingDate: dateformatter.string(from: Date())))
+                                                    readingDate: DateUtility.getTodayString()))
                 self?.saveHealthData(deviceType: .applehealth, healthType: .steps, healthReadings: healthReadings)
             }
             completion()
@@ -189,11 +181,9 @@ final class HealthStore {
                 
                 let flights = quantity.doubleValue(for: HKUnit.count())
                 var healthReadings = [HealthReading]()
-                let dateformatter = DateFormatter()
-                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 healthReadings.append(HealthReading(value: flights.rounded(), unit: "floors",
-                                                    readingDate: dateformatter.string(from: Date())))
+                                                    readingDate: DateUtility.getTodayString()))
                 self?.saveHealthData(deviceType: .applehealth,
                                     healthType: .flights, healthReadings: healthReadings)
             }
@@ -225,11 +215,9 @@ final class HealthStore {
             if let quantity = statistics?.sumQuantity() {
                 let calories = quantity.doubleValue(for: HKUnit.largeCalorie())
                 var healthReadings = [HealthReading]()
-                let dateformatter = DateFormatter()
-                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 healthReadings.append(HealthReading(value: calories, unit: "kCal",
-                                                    readingDate: dateformatter.string(from: Date())))
+                                                    readingDate: DateUtility.getTodayString()))
                 self?.saveHealthData(deviceType: .applewatch,healthType: .caloriesBurned, healthReadings: healthReadings)
             }
             completion()
@@ -261,11 +249,9 @@ final class HealthStore {
                 var distance = quantity.doubleValue(for: HKUnit.meter())
                 distance = (100 * (distance / 1000)).rounded()/100
                  var healthReadings = [HealthReading]()
-                               let dateformatter = DateFormatter()
-                               dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                                
                                healthReadings.append(HealthReading(value: distance, unit: "km",
-                                                                   readingDate: dateformatter.string(from: Date())))
+                                                                   readingDate: DateUtility.getTodayString()))
                 let devicetype = healthType == .walking ? HealthDevices.applehealth : HealthDevices.applewatch
                 self?.saveHealthData(deviceType: devicetype, healthType: healthType, healthReadings: healthReadings)
             }
@@ -296,11 +282,9 @@ final class HealthStore {
             if let quantity = statistics?.sumQuantity() {
                 let excerciseTime = quantity.doubleValue(for: HKUnit.minute())
                 var healthReadings = [HealthReading]()
-                let dateformatter = DateFormatter()
-                dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                 
                 healthReadings.append(HealthReading(value: excerciseTime, unit: "min",
-                                                    readingDate: dateformatter.string(from: Date())))
+                                                    readingDate: DateUtility.getTodayString()))
                 self?.saveHealthData(deviceType: .applewatch, healthType: .exercise, healthReadings: healthReadings)
             }
             completion()
@@ -343,10 +327,8 @@ final class HealthStore {
                 for result in resultArray {
                     guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for:
                                                                                                             HKUnit(from: "count/min")) else { continue }
-                    let dateformatter = DateFormatter()
-                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
                     healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm", readingDate:
-                                                            dateformatter.string(from: result.startDate)))
+                                                            DateUtility.getString(from: result.startDate)))
                 }
                 self?.saveHealthData(deviceType: .applewatch, healthType: .heartRate, healthReadings: healthReadings)
             }
@@ -461,9 +443,8 @@ final class HealthStore {
                 var healthReadings = [HealthReading]()
                 for result in resultArray {
                     guard let beatsPerMinute: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit(from: "count/min")) else { continue }
-                    let dateformatter = DateFormatter()
-                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    let dateString = dateformatter.string(from: result.startDate)
+
+                    let dateString = DateUtility.getString(from: result.startDate)
                     healthReadings.append(HealthReading(value: beatsPerMinute, unit: "bpm",
                                                         readingDate: dateString))
                 }
@@ -509,11 +490,8 @@ final class HealthStore {
                 var healthReadings = [HealthReading]()
                 for result in resultArray {
                     guard let oxygenPercentage: Double = (result as? HKQuantitySample)?.quantity.doubleValue(for: HKUnit.percent()) else { continue }
-                    let dateformatter = DateFormatter()
-                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    
                     healthReadings.append(HealthReading(value: oxygenPercentage, unit: "%", readingDate:
-                                                            dateformatter.string(from: result.startDate)))
+                                                            DateUtility.getString(from: result.startDate)))
                 }
                 
                 self?.saveHealthData(deviceType: .applewatch, healthType: .oxygenlevel, healthReadings: healthReadings)
@@ -559,11 +537,8 @@ final class HealthStore {
                 for result in resultArray {
                     guard let handwashtimes: Int = (result as? HKCategorySample)?.value else { continue }
                     
-                    let dateformatter = DateFormatter()
-                    dateformatter.dateFormat = "yyyy-MM-dd HH:mm:ss"
-                    
                     healthReadings.append(HealthReading(value: 1.0, unit: "wash",
-                                                        readingDate: dateformatter.string(from: result.startDate)))
+                                                        readingDate: DateUtility.getString(from: result.startDate)))
                 }
                 
                 self?.saveHealthData(deviceType: .applewatch, healthType: .handwashing, healthReadings: healthReadings)
@@ -664,7 +639,7 @@ final class HealthStore {
             self.operationQueue?.maxConcurrentOperationCount = 3
         }
         self.operationQueue?.addOperation({
-            let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: self.todaysDate)
+            let healthData = Healthdata(dataType: healthType, data: healthReadings, recordDate: DateUtility.getTodayString())
             HealthkitAPI.instance.synchronizeHealthkit(deviceName: deviceType.deviceType, healthData: healthData, completion: {
                 
             }) { (error) in
