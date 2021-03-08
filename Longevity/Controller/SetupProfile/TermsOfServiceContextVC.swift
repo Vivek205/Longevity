@@ -43,9 +43,9 @@ class TermsOfServiceContextVC: UIViewController {
                 NSAttributedString.Key.font: UIFont(name: AppFontName.semibold, size: 17)]
         }
 
-        let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
+        let leftbutton = UIBarButtonItem(image: UIImage(named: "closex"), style: .plain, target: self, action: #selector(closeView))
         leftbutton.tintColor = .themeColor
-        self.navigationItem.leftBarButtonItem = leftbutton
+        self.navigationItem.rightBarButtonItem = leftbutton
 //        self.containerView.backgroundColor = .orange
         self.view.addSubview(containerView)
         self.containerView.addSubview(webView)
