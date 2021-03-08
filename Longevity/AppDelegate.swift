@@ -217,9 +217,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     return
                 case .covidReportProcessed:
                     // TODO: redirect to mydata page
-                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-                        tabBarController.selectedIndex = 1
-                    }
+//                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+//                        tabBarController.selectedIndex = 1
+//                    }
                     completionHandler(.newData)
                     return
                 default:
