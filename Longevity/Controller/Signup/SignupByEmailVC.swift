@@ -232,7 +232,7 @@ class SignupByEmailVC: UIViewController {
                     return false
                 }
                 if phone.isEmpty || !(phone.isValidPhone) {
-                    Alert(title: "Error - Invalid Phone", message: "Please provide a valid phone number in the format \n +{CountryCode}{PhoneNumber}")
+                    Alert(title: "Error - Invalid Phone", message: "Please provide a valid phone number in the format \n {AreaCode}{PhoneNumber}")
                     return false
                 }
                 if password.isEmpty {

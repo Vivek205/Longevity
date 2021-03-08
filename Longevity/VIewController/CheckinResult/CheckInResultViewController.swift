@@ -363,10 +363,11 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
-        if section == 0 && self.currentResultView == .analysis  {
+//        if section == 0 && self.currentResultView == .analysis  {
+//            return CGSize(width: collectionView.bounds.width, height: 220.0)
+//        } else
+        if section == 0  {
             return CGSize(width: collectionView.bounds.width, height: 220.0)
-        } else if section == 0  {
-            return CGSize(width: collectionView.bounds.width, height: 260.0)
         } else {
             return CGSize(width: collectionView.bounds.width, height: 10.0)
         }

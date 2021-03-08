@@ -15,7 +15,11 @@ import UserNotifications
 import BackgroundTasks
 import AWSSNS
 
+#if DEBUG
+let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS_SANDBOX/RejuveDevelopment"
+#else
 let SNSPlatformApplicationARN = "arn:aws:sns:us-west-2:533793137436:app/APNS/RejuveProduction"
+#endif
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterDelegate {
@@ -33,7 +37,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             try Amplify.add(plugin: AWSCognitoAuthPlugin())
             try Amplify.add(plugin: AWSS3StoragePlugin())
             try Amplify.add(plugin: AWSAPIPlugin())
-            try Amplify.configure()
+            if let path = Bundle.main.path(forResource: Strings.configFile, ofType: "json"),
+               let fileURL = URL(fileURLWithPath: path) as? URL {
+                try Amplify.configure(AmplifyConfiguration(configurationFile: fileURL))
+            } else {
+                try Amplify.configure()
+            }
             configureCognito()
             print("Amplify configured with auth plugin")
             ConnectionManager.instance.addConnectionObserver()
@@ -208,9 +217,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     return
                 case .covidReportProcessed:
                     // TODO: redirect to mydata page
-                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-                        tabBarController.selectedIndex = 1
-                    }
+//                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+//                        tabBarController.selectedIndex = 1
+//                    }
                     completionHandler(.newData)
                     return
                 default:

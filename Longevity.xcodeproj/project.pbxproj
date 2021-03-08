@@ -21,6 +21,8 @@
 		464786B425F0CDBF0077A142 /* Reachability in Frameworks */ = {isa = PBXBuildFile; productRef = 464786B325F0CDBF0077A142 /* Reachability */; };
 		464786E325F152770077A142 /* DateUtility.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E225F152770077A142 /* DateUtility.swift */; };
 		464786E525F15C5D0077A142 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E425F15C5D0077A142 /* Strings.swift */; };
+		464786EB25F21A450077A142 /* amplify-production.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786E725F21A450077A142 /* amplify-production.json */; };
+		464786ED25F21CB00077A142 /* amplify-debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786EC25F21CB00077A142 /* amplify-debug.json */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
@@ -285,6 +287,8 @@
 		4647866725EFA6890077A142 /* CoughTestResultHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoughTestResultHeader.swift; sourceTree = "<group>"; };
 		464786E225F152770077A142 /* DateUtility.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DateUtility.swift; sourceTree = "<group>"; };
 		464786E425F15C5D0077A142 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
+		464786E725F21A450077A142 /* amplify-production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-production.json"; sourceTree = SOURCE_ROOT; };
+		464786EC25F21CB00077A142 /* amplify-debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-debug.json"; sourceTree = SOURCE_ROOT; };
 		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
@@ -943,6 +947,8 @@
 		E2BCA52724853826007204B9 /* AWS */ = {
 			isa = PBXGroup;
 			children = (
+				464786EC25F21CB00077A142 /* amplify-debug.json */,
+				464786E725F21A450077A142 /* amplify-production.json */,
 				E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */,
 				E2A25F8F24923309008DAD25 /* awsconfiguration.json */,
 			);
@@ -1201,6 +1207,7 @@
 				C19875A924DAF11C00477185 /* Montserrat-Regular.ttf in Resources */,
 				C19875AC24DAF11C00477185 /* Montserrat-Medium.ttf in Resources */,
 				E2C59DFA2498A2DE00842105 /* ProfileSetup.storyboard in Resources */,
+				464786ED25F21CB00077A142 /* amplify-debug.json in Resources */,
 				E274F07E24C55DA600969CD8 /* Dashboard.storyboard in Resources */,
 				C19875AD24DAF11C00477185 /* Montserrat-Light.ttf in Resources */,
 				C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */,
@@ -1215,6 +1222,7 @@
 				E2ECB8CB247FE2BE0020A27E /* LaunchScreen.storyboard in Resources */,
 				E2ECB8C6247FE2BA0020A27E /* UserLogin.storyboard in Resources */,
 				E2BCA5222485007B007204B9 /* Assets.xcassets in Resources */,
+				464786EB25F21A450077A142 /* amplify-production.json in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
