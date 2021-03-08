@@ -26,7 +26,7 @@ class CheckInResultHeader: UICollectionReusableView {
             self.segmentedControl.removeTarget(self, action: #selector(resultViewSelected), for: .allEvents)
             self.segmentedControl.selectedSegmentIndex = currentView.rawValue
             self.segmentedControl.addTarget(self, action: #selector(resultViewSelected), for: .valueChanged)
-            self.headerTitle.isHidden = currentView == .analysis
+//            self.headerTitle.isHidden = currentView == .analysis
         }
     }
     
@@ -65,15 +65,15 @@ class CheckInResultHeader: UICollectionReusableView {
         return segment
     }()
     
-    lazy var headerTitle: UILabel = {
-        let title = UILabel()
-        title.text = "According to our analysis you should:"
-        title.font = UIFont(name: AppFontName.medium, size: 14.0)
-        title.textColor = UIColor(hexString: "#4E4E4E")
-        title.sizeToFit()
-        title.translatesAutoresizingMaskIntoConstraints = false
-        return title
-    }()
+//    lazy var headerTitle: UILabel = {
+//        let title = UILabel()
+//        title.text = "According to our analysis you should:"
+//        title.font = UIFont(name: AppFontName.medium, size: 14.0)
+//        title.textColor = UIColor(hexString: "#4E4E4E")
+//        title.sizeToFit()
+//        title.translatesAutoresizingMaskIntoConstraints = false
+//        return title
+//    }()
     
     override init(frame: CGRect) {
         super.init(frame: frame)
@@ -81,7 +81,7 @@ class CheckInResultHeader: UICollectionReusableView {
         self.addSubview(bgImageView)
         self.addSubview(titleLabel)
         self.addSubview(segmentedControl)
-        self.addSubview(headerTitle)
+//        self.addSubview(headerTitle)
         
         NSLayoutConstraint.activate([
             bgImageView.leadingAnchor.constraint(equalTo: self.leadingAnchor),
@@ -96,9 +96,10 @@ class CheckInResultHeader: UICollectionReusableView {
             segmentedControl.centerXAnchor.constraint(equalTo: centerXAnchor),
             segmentedControl.heightAnchor.constraint(equalToConstant: 30.0),
             segmentedControl.widthAnchor.constraint(equalToConstant: 230.0),
-            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
-            headerTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
-            headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
+            segmentedControl.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
+//            headerTitle.leadingAnchor.constraint(equalTo: leadingAnchor, constant: 15.0),
+//            headerTitle.trailingAnchor.constraint(equalTo: trailingAnchor, constant: -15.0),
+//            headerTitle.bottomAnchor.constraint(equalTo: bottomAnchor, constant: -10.0)
         ])
     }
     
