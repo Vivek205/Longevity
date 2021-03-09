@@ -142,6 +142,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         if AppSyncManager.instance.pollingTimer != nil {
             AppSyncManager.instance.syncSurveyList()
         }
+        
+        if #available(iOS 13.0, *) {
+            BGTaskScheduler.shared.getPendingTaskRequests { (pendingTasks) in
+                pendingTasks.forEach { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: $0.identifier) }
+            }
+        }
     }
     
     func application(_ application: UIApplication, performFetchWithCompletionHandler completionHandler: @escaping (UIBackgroundFetchResult) -> Void) {
@@ -307,7 +313,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     @available(iOS 13.0, *)
     func appHandleRefreshTask(task: BGProcessingTask) {
         scheduleBackgroundFetch()
-        Logger.log("BG Task Started")
         
         let queue = OperationQueue()
         queue.maxConcurrentOperationCount = 1
@@ -315,12 +320,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         task.expirationHandler = {
             operations.forEach { $0.cancel() }
-            Logger.log("BG Task Expired")
             task.setTaskCompleted(success: false)
         }
         
         operations.last?.completionBlock = {
-            Logger.log("BG Task Completed")
             task.setTaskCompleted(success: !(queue.operations.last?.isCancelled ?? false))
         }
         queue.addOperations(operations, waitUntilFinished: true)
@@ -330,7 +333,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     func scheduleBackgroundFetch() {
         let rejuveFetchTask = BGProcessingTaskRequest(identifier: "io.rejuve.Longevity.bgFetch")
         rejuveFetchTask.requiresNetworkConnectivity = true
-        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 1 * 60 * 60)
+        rejuveFetchTask.earliestBeginDate = Date(timeIntervalSinceNow: 3 * 60 * 60)
         
         do {
             try BGTaskScheduler.shared.submit(rejuveFetchTask)

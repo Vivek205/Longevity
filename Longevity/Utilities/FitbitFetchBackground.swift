@@ -49,7 +49,7 @@ class FitbitFetchBackground: NSObject {
         var urlRequest = URLRequest(url: (urlComponents?.url)!)
         urlRequest.httpMethod = "POST"
         urlRequest.addValue("Basic \(encodedBasicAuth)", forHTTPHeaderField: "Authorization")
-        urlRequest.setValue("application/json", forHTTPHeaderField: "Content-Type")
+        urlRequest.setValue("application/x-www-form-urlencoded", forHTTPHeaderField: "Content-Type")
         
         let downloadTask = session.downloadTask(with: urlRequest)
         downloadTask.resume()
@@ -83,7 +83,6 @@ extension FitbitFetchBackground: URLSessionTaskDelegate {
     }
 
     func urlSession(_ session: URLSession, dataTask: URLSessionDataTask, didReceive data: Data) {
-        //self.delegate?.receivedtoken(data: data)
         self.receivedData?.append(data)
     }
 

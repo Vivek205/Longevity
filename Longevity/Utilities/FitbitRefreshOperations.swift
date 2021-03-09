@@ -89,8 +89,6 @@ class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
    
     var succeeded: Bool = false
     
-    var uploadTask: URLSessionUploadTask?
-    
     override var isAsynchronous: Bool {
         return true
     }
@@ -105,7 +103,7 @@ class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
     
     override func cancel() {
         super.cancel()
-        self.uploadTask?.cancel()
+        FitbitPublishBackground.shared.uploadTask?.cancel()
     }
     
     private var downloading = false
@@ -134,7 +132,7 @@ class PublishFitbitTokenOperation: Operation, FitbitPublishBackgroundDelegate {
         do {
             let idToken = try KeyChain(service: KeychainConfiguration.serviceName, account: KeychainKeys.idToken).readItem()
             
-            self.uploadTask = FitbitPublishBackground.shared.start(accessToken: accessToken,
+            FitbitPublishBackground.shared.start(accessToken: accessToken,
                                                                     userID: userID,
                                                                     userToken: idToken)
             FitbitPublishBackground.shared.delegate = self
