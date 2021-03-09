@@ -40,20 +40,20 @@ class FitbitPublishBackground: NSObject {
         session = URLSession(configuration: configuration, delegate: self, delegateQueue: nil)
     }
 
-    func start(accessToken: String, userID: String, userToken: String) -> URLSessionUploadTask? {
+    func start(accessToken: String, userID: String, userToken: String) {
         
         guard let path = Bundle.main.path(forResource: Strings.configFile, ofType: "json"),
               let fileURL = URL(fileURLWithPath: path) as? URL,
               let fileData = try? String(contentsOf: fileURL).data(using: .utf8) else {
             self.delegate?.published(success: false)
-            return nil
+            return
         }
         let decoder = JSONDecoder()
         decoder.keyDecodingStrategy = .convertFromSnakeCase
         guard let configData = try? decoder.decode(AWSAmplifyConfig.self, from: fileData) as? AWSAmplifyConfig,
               let apiURL = URL(string: "\(configData.api.plugins.awsAPIPlugin.rejuveDevelopmentAPI.endpoint)/health/application/FITBIT/synchronize") else {
             self.delegate?.published(success: false)
-            return nil
+            return
         }
         
         var urlRequest = URLRequest(url: apiURL)
@@ -66,12 +66,10 @@ class FitbitPublishBackground: NSObject {
         } catch let error {
             print(error.localizedDescription)
             self.delegate?.published(success: false)
-            return nil
         }
         
-        let uploadTask = session.uploadTask(withStreamedRequest: urlRequest)
-        uploadTask.resume()
-        return uploadTask
+        self.uploadTask = session.uploadTask(withStreamedRequest: urlRequest)
+        self.uploadTask?.resume()
     }
 }
 
