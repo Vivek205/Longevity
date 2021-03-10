@@ -43,7 +43,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userName: UILabel = {
         let username = UILabel()
-        username.text = "User"
+        username.text = "User Name"
         username.font = UIFont(name: AppFontName.medium, size: 20.0)
         username.textColor = UIColor.black.withAlphaComponent(0.87)
         username.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +52,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userEmail: UILabel = {
         let useremail = UILabel()
-        useremail.text = "email id"
+        useremail.text = ""
         useremail.font = UIFont(name: AppFontName.regular, size: 14.0)
         useremail.textColor = UIColor(hexString: "#9B9B9B")
         useremail.translatesAutoresizingMaskIntoConstraints = false
@@ -89,9 +89,9 @@ class UserProfileHeader: UITableViewHeaderFooterView {
             segment.tintColor = .themeColor
         }
         
-        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 14.0)]
+        let titleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.black, NSAttributedString.Key.font: UIFont(name: AppFontName.regular, size: 14.0)]
         segment.setTitleTextAttributes(titleAttributes, for: .normal)
-        let selectedTitleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: "Montserrat-Regular", size: 14.0)]
+        let selectedTitleAttributes: [NSAttributedString.Key : Any] = [NSAttributedString.Key.foregroundColor: UIColor.white, NSAttributedString.Key.font: UIFont(name: AppFontName.regular, size: 14.0)]
         segment.setTitleTextAttributes(selectedTitleAttributes, for: .selected)
         segment.translatesAutoresizingMaskIntoConstraints = false
         return segment
@@ -152,7 +152,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         AppSyncManager.instance.fetchUserProfile()
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.userName.text = AppSyncManager.instance.userProfile.value?.name ?? "User"
+                self?.userName.text = AppSyncManager.instance.userProfile.value?.name ?? "User Name"
                 self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email ?? "email id"
             }
         }

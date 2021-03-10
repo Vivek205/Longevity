@@ -84,7 +84,7 @@ class AppSyncManager  {
     ]
     
     fileprivate init() {
-        self.userProfile = DynamicValue(UserProfile(name: "User", email: "", phone: ""))
+        self.userProfile = DynamicValue(UserProfile(name: "User Name", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
@@ -94,7 +94,7 @@ class AppSyncManager  {
     }
     
     func cleardata() {
-        self.userProfile = DynamicValue(UserProfile(name: "User", email: "", phone: ""))
+        self.userProfile = DynamicValue(UserProfile(name: "User Name", email: "", phone: ""))
         self.healthProfile = DynamicValue(UserHealthProfile(weight: "", height: "", gender: "", birthday: "", unit: .metric, devices: [:], preExistingConditions: []))
         self.appShareLink = ""
         self.userNotification = DynamicValue(UserNotification(username: nil, deviceId: nil, platform: nil, endpointArn: nil, lastSent: nil, isEnabled: nil))
