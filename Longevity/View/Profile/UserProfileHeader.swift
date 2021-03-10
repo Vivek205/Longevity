@@ -152,8 +152,18 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         AppSyncManager.instance.fetchUserProfile()
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.userName.text = AppSyncManager.instance.userProfile.value?.name ?? "User Name"
-                self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email ?? "email id"
+                if let username = AppSyncManager.instance.userProfile.value?.name, !username.isEmpty {
+                    self?.userName.text = username
+                } else {
+                    self?.userName.text = "User Name"
+                }
+                
+                if let emailid = AppSyncManager.instance.userProfile.value?.email, !emailid.isEmpty {
+                    self?.userEmail.text = emailid
+                } else {
+                    self?.userEmail.text = "email id"
+                }
+                
             }
         }
         
