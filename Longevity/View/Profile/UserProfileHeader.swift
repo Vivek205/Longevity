@@ -43,7 +43,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userName: UILabel = {
         let username = UILabel()
-        username.text = ""
+        username.text = "User"
         username.font = UIFont(name: AppFontName.medium, size: 20.0)
         username.textColor = UIColor.black.withAlphaComponent(0.87)
         username.translatesAutoresizingMaskIntoConstraints = false
@@ -52,7 +52,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
     
     lazy var userEmail: UILabel = {
         let useremail = UILabel()
-        useremail.text = ""
+        useremail.text = "email id"
         useremail.font = UIFont(name: AppFontName.regular, size: 14.0)
         useremail.textColor = UIColor(hexString: "#9B9B9B")
         useremail.translatesAutoresizingMaskIntoConstraints = false
@@ -152,8 +152,8 @@ class UserProfileHeader: UITableViewHeaderFooterView {
         AppSyncManager.instance.fetchUserProfile()
         AppSyncManager.instance.userProfile.addAndNotify(observer: self) { [weak self] in
             DispatchQueue.main.async {
-                self?.userName.text = AppSyncManager.instance.userProfile.value?.name
-                self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email
+                self?.userName.text = AppSyncManager.instance.userProfile.value?.name ?? "User"
+                self?.userEmail.text = AppSyncManager.instance.userProfile.value?.email ?? "email id"
             }
         }
         
