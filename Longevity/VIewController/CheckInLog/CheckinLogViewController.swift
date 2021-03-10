@@ -80,24 +80,6 @@ class CheckinLogViewController: BaseViewController {
                 self.reloadLogData()
             }
         }
-        
-//        AppSyncManager.instance.userInsights.addAndNotify(observer: self) { [unowned self] in
-//            DispatchQueue.main.async {
-//                self.showSpinner()
-//            }
-//            if let insights = AppSyncManager.instance.userInsights.value,
-//               let dataLog = insights.first(where: { $0.name == .logs }),
-//               let history = dataLog.details?.history {
-//                self.history = history
-//                self.updateLogHistory()
-//            } else {
-//                self.history = nil
-//                DispatchQueue.main.async {
-//                    self.removeSpinner()
-//                    self.logsCollectionView.reloadData()
-//                }
-//            }
-//        }
     }
 
     init() {
@@ -160,7 +142,7 @@ extension CheckinLogViewController: UICollectionViewDelegate,
                                     UICollectionViewDelegateFlowLayout {
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         let count = self.checkinLog?.count ?? 0
-        self.checkinlognodataView.isHidden = !(self.checkinLog?.isEmpty ?? true)
+        self.checkinlognodataView.isHidden = !(self.checkinLog?.isEmpty ?? false)
         return count
     }
     
