@@ -152,19 +152,17 @@ class MyDataInsightDetailView: UIView {
         histogramView.layer.insertSublayer(layerGradient, at: 0)
     }
     
+    var referenceTimeInterval: TimeInterval = 0
+    
     fileprivate func createHistogramData() {
-        if let submissions = insightData?.details?.submissions, !submissions.isEmpty {
-            let chartDataEntry = submissions.map { ChartDataEntry(x: Double(parseDate(recordDate: $0.recordDate)), y: Double($0.value) ?? 0.0) }.sorted { $0.x < $1.x }
-            
-            var label = "Month"
-            let dateformatter = DateFormatter()
-            dateformatter.dateFormat = "yyyy-MM-dd"
-            if let date = dateformatter.date(from: submissions[0].recordDate) {
-                dateformatter.dateFormat = "MMM"
-                label = dateformatter.string(from: date)
+        if let submissions = insightData?.details?.submissions?.suffix(14), !submissions.isEmpty {
+            if let minTimeInterval = (submissions.map { (DateUtility.getDate(from: $0.recordDate)?.timeIntervalSince1970 ?? 0) }).min() {
+                referenceTimeInterval = minTimeInterval
             }
             
-            let line = LineChartDataSet(entries: chartDataEntry, label: label)
+            let chartDataEntry = submissions.map { ChartDataEntry(x: self.parseDate(recordDate: $0.recordDate), y: Double($0.value) ?? 0.0) }.sorted { $0.x < $1.x }
+
+            let line = LineChartDataSet(entries: chartDataEntry, label: "Risk")
             line.drawCircleHoleEnabled = false
             line.drawValuesEnabled = false
             line.lineWidth = 2.0
@@ -173,19 +171,49 @@ class MyDataInsightDetailView: UIView {
             line.setCircleColor(UIColor(hexString: "#6C8CBF"))
             let data = LineChartData(dataSet: line)
             self.histogramView.data = data
-            self.histogramView.xAxis.setLabelCount(chartDataEntry.count, force: false)
+            self.histogramView.dragXEnabled = true
             self.histogramView.xAxis.granularity = 1
+            let formatter = DateFormatter()
+            formatter.dateFormat = "dd\nMMM"
+
+            let xValuesNumberFormatter = ChartXAxisFormatter(referenceTimeInterval: referenceTimeInterval, dateFormatter: formatter)
+             xValuesNumberFormatter.dateFormatter = formatter
+            
+            self.histogramView.xAxis.valueFormatter = xValuesNumberFormatter
             self.chartNoDataLabel.isHidden = true
         }
     }
-    
-    fileprivate func parseDate(recordDate: String) -> Int {
-        let dateformatter = DateFormatter()
-        dateformatter.dateFormat = "yyyy-MM-dd"
-        if let date = dateformatter.date(from: recordDate) {
-            let calendar = Calendar.current
-            return calendar.dateComponents([.day], from: date).day ?? 0
+
+    fileprivate func parseDate(recordDate: String) -> Double {
+        if let date = DateUtility.getDate(from: recordDate) {
+            let timeInterval = date.timeIntervalSince1970
+            return (timeInterval - referenceTimeInterval) / (3600 * 24)
         }
-        return 0
+        return 0.0
+    }
+}
+
+class ChartXAxisFormatter: NSObject {
+    fileprivate var dateFormatter: DateFormatter?
+    fileprivate var referenceTimeInterval: TimeInterval?
+
+    convenience init(referenceTimeInterval: TimeInterval, dateFormatter: DateFormatter) {
+        self.init()
+        self.referenceTimeInterval = referenceTimeInterval
+        self.dateFormatter = dateFormatter
+    }
+}
+
+
+extension ChartXAxisFormatter: AxisValueFormatter {
+    func stringForValue(_ value: Double, axis: AxisBase?) -> String {
+        guard let dateFormatter = dateFormatter,
+        let referenceTimeInterval = referenceTimeInterval
+        else {
+            return ""
+        }
+
+        let date = Date(timeIntervalSince1970: value * 3600 * 24 + referenceTimeInterval)
+        return dateFormatter.string(from: date)
     }
 }

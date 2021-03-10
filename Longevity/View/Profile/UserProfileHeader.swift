@@ -160,10 +160,7 @@ class UserProfileHeader: UITableViewHeaderFooterView {
                 
                 if let emailid = AppSyncManager.instance.userProfile.value?.email, !emailid.isEmpty {
                     self?.userEmail.text = emailid
-                } else {
-                    self?.userEmail.text = "email id"
                 }
-                
             }
         }
         
