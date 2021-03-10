@@ -12,7 +12,14 @@ class ActivityCard : UIView {
     var activity:UserActivityDetails? {
         didSet {
             activityTitle.text = activity?.title
-            activitySubTitle.text = activity?.description
+            if activity?.title.starts(with: "Cough Test") ?? false {
+                let timeString = DateUtility.getString(from: activity?.loggedAt ?? "",
+                                                       fromFormat: "yyyy-MM-dd HH:mm:ss",
+                                                       toFormat: "hh:mm a")
+                activitySubTitle.text = "submitted at \(timeString)"
+            } else {
+                activitySubTitle.text = activity?.description
+            }
             let dateString = UTCStringToLocalDateString(dateString: activity?.loggedAt ?? "",
                                                         dateFormat: "yyyy-MM-dd HH:mm:ss",
                                                         outputDateFormat: "E. MMM. d")
@@ -42,7 +49,7 @@ class ActivityCard : UIView {
     
     lazy var activityTitle: UILabel = {
         let activitytitle = UILabel()
-        activitytitle.font = UIFont(name: "Montserrat-Medium", size: 14.0)
+        activitytitle.font = UIFont(name: AppFontName.medium, size: 14.0)
         activitytitle.textColor = UIColor.black.withAlphaComponent(0.87)
         activitytitle.translatesAutoresizingMaskIntoConstraints = false
         activitytitle.numberOfLines = 0
@@ -51,7 +58,7 @@ class ActivityCard : UIView {
     
     lazy var activityDate: UILabel = {
         let activitydate = UILabel()
-        activitydate.font = UIFont(name: "Montserrat-Medium", size: 12.0)
+        activitydate.font = UIFont(name: AppFontName.medium, size: 12.0)
         activitydate.textColor = UIColor(hexString: "#4A4A4A")
         activitydate.translatesAutoresizingMaskIntoConstraints = false
         return activitydate
@@ -59,7 +66,7 @@ class ActivityCard : UIView {
     
     lazy var activitySubTitle: UILabel = {
         let activitysubtitle = UILabel()
-        activitysubtitle.font = UIFont(name: "Montserrat-Regular", size: 12.0)
+        activitysubtitle.font = UIFont(name: AppFontName.regular, size: 12.0)
         activitysubtitle.textColor = UIColor(hexString: "#4A4A4A")
         activitysubtitle.translatesAutoresizingMaskIntoConstraints = false
         activitysubtitle.numberOfLines = 0

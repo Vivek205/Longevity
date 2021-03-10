@@ -23,6 +23,7 @@
 		464786E525F15C5D0077A142 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E425F15C5D0077A142 /* Strings.swift */; };
 		464786EB25F21A450077A142 /* amplify-production.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786E725F21A450077A142 /* amplify-production.json */; };
 		464786ED25F21CB00077A142 /* amplify-debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786EC25F21CB00077A142 /* amplify-debug.json */; };
+		46ED785D25F8AF7100E256B0 /* UserActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
 		C12CBFC9252B303E001C0A9F /* SurveyIntroViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12CBFC8252B303E001C0A9F /* SurveyIntroViewController.swift */; };
@@ -289,6 +290,7 @@
 		464786E425F15C5D0077A142 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		464786E725F21A450077A142 /* amplify-production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-production.json"; sourceTree = SOURCE_ROOT; };
 		464786EC25F21CB00077A142 /* amplify-debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-debug.json"; sourceTree = SOURCE_ROOT; };
+		46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDetails.swift; sourceTree = "<group>"; };
 		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
 		87589D6B7A8E4DA157A0805E /* Pods-Longevity.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-Longevity.debug.xcconfig"; path = "Target Support Files/Pods-Longevity/Pods-Longevity.debug.xcconfig"; sourceTree = "<group>"; };
@@ -623,6 +625,7 @@
 				C14ABA4624E3039900C81580 /* UserInsight.swift */,
 				E25185EB24CF042000F3068C /* Survey.swift */,
 				C19236A2258218AE00AA5A92 /* AWSAmplifyConfig.swift */,
+				46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */,
 			);
 			path = Entities;
 			sourceTree = "<group>";
@@ -1379,6 +1382,7 @@
 				E2B467A525061BBC00D8C733 /* MyTasksInfoPopupViewController.swift in Sources */,
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C1D6734B25E66D990000812F /* CoughLogResultCell.swift in Sources */,
+				46ED785D25F8AF7100E256B0 /* UserActivityDetails.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
