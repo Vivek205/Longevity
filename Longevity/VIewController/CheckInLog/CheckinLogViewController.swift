@@ -73,11 +73,11 @@ class CheckinLogViewController: BaseViewController {
         self.checkinlognodataView.checkinButton.addTarget(self, action: #selector(showSurvey), for: .touchUpInside)
         
         self.showSpinner()
-        UserInsightsAPI.instance.getLog { [unowned self] (log) in
+        UserInsightsAPI.instance.getLog { [weak self] (log) in
             DispatchQueue.main.async {
-                self.removeSpinner()
-                self.checkinLog = log?.details?.history
-                self.reloadLogData()
+                self?.removeSpinner()
+                self?.checkinLog = log?.details?.history
+                self?.reloadLogData()
             }
         }
     }
