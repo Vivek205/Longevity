@@ -266,7 +266,17 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
                 guard let insightData = self.userInsights?[indexPath.item] else { return CGSize(width: width, height: height) }
                 
                 if (insightData.isExpanded ?? false) {
-                    height = 430.0
+                    let headerHeight:CGFloat = 80.0
+                    let descriptionHeight:CGFloat = insightData.userInsightDescription.height(withConstrainedWidth: width - 50.0,
+                                                                                              font: UIFont(name: AppFontName.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0))
+                    let gapsheight: CGFloat = 33.0
+                    let histogramTitleHeight: CGFloat = 20.0
+                    let histogramHeight:CGFloat = 120.0
+                    let histogramDescriptionHeight: CGFloat = insightData.details?.histogram?.histogramDescription.height(withConstrainedWidth: width - 50.0,
+                                                                                                                          font: UIFont(name: AppFontName.regular, size: 14.0) ?? UIFont.systemFont(ofSize: 14.0)) ?? 0
+                    let bottomMarginHeight: CGFloat = 20.0
+                    height = headerHeight + descriptionHeight + gapsheight + histogramTitleHeight +
+                        histogramHeight + histogramDescriptionHeight + bottomMarginHeight
                 }
             } else {
                 if isSymptomsExpanded {
