@@ -200,8 +200,6 @@
 		E290B60A24BCAC0B00C51655 /* SetupProfilePreConditionVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */; };
 		E2939A4524E15D9500069026 /* UICollectionView+Extension.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2939A4124E15D9500069026 /* UICollectionView+Extension.swift */; };
 		E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */; };
-		E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */; };
-		E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */ = {isa = PBXBuildFile; fileRef = E2A25F8F24923309008DAD25 /* awsconfiguration.json */; };
 		E2A5705824CAC88E00DC07AB /* BranchingOrderedTask.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5705724CAC88E00DC07AB /* BranchingOrderedTask.swift */; };
 		E2A5705D24CB095000DC07AB /* Array.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2A5705C24CB095000DC07AB /* Array.swift */; };
 		E2B0333824AA04A600929D39 /* TempSignoutVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = E2B0333724AA04A600929D39 /* TempSignoutVC.swift */; };
@@ -472,8 +470,6 @@
 		E290B60924BCAC0B00C51655 /* SetupProfilePreConditionVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SetupProfilePreConditionVC.swift; sourceTree = "<group>"; };
 		E2939A4124E15D9500069026 /* UICollectionView+Extension.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = "UICollectionView+Extension.swift"; sourceTree = "<group>"; };
 		E2A25F852490D3C4008DAD25 /* ConfirmEmailVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ConfirmEmailVC.swift; sourceTree = "<group>"; };
-		E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = amplifyconfiguration.json; sourceTree = SOURCE_ROOT; };
-		E2A25F8F24923309008DAD25 /* awsconfiguration.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = awsconfiguration.json; sourceTree = SOURCE_ROOT; };
 		E2A5705724CAC88E00DC07AB /* BranchingOrderedTask.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BranchingOrderedTask.swift; sourceTree = "<group>"; };
 		E2A5705C24CB095000DC07AB /* Array.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Array.swift; sourceTree = "<group>"; };
 		E2B0333724AA04A600929D39 /* TempSignoutVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TempSignoutVC.swift; sourceTree = "<group>"; };
@@ -952,8 +948,6 @@
 			children = (
 				464786EC25F21CB00077A142 /* amplify-debug.json */,
 				464786E725F21A450077A142 /* amplify-production.json */,
-				E2A25F8B24923120008DAD25 /* amplifyconfiguration.json */,
-				E2A25F8F24923309008DAD25 /* awsconfiguration.json */,
 			);
 			path = AWS;
 			sourceTree = "<group>";
@@ -1216,8 +1210,6 @@
 				C19875A824DAF11C00477185 /* Montserrat-Italic.ttf in Resources */,
 				C19875AA24DAF11C00477185 /* Montserrat-Bold.ttf in Resources */,
 				E2BCA5202484B597007204B9 /* Muli-Regular.ttf in Resources */,
-				E2A25F9024923309008DAD25 /* awsconfiguration.json in Resources */,
-				E2A25F8D24923121008DAD25 /* amplifyconfiguration.json in Resources */,
 				E274F08E24C820C900969CD8 /* CovidCheckin.storyboard in Resources */,
 				E2BCA51D2484B53C007204B9 /* Muli-Bold.ttf in Resources */,
 				C19875AB24DAF11C00477185 /* Montserrat-SemiBold.ttf in Resources */,

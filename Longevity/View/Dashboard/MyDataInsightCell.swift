@@ -81,7 +81,7 @@ class MyDataInsightCell: UICollectionViewCell {
     lazy var tileTitle: UILabel = {
         let title = UILabel()
         title.textAlignment = .left
-        title.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+        title.font = UIFont(name: AppFontName.semibold, size: 18)
         title.textColor = UIColor(hexString: "#4E4E4E")
         title.numberOfLines = 2
         title.lineBreakMode = .byWordWrapping
@@ -100,7 +100,7 @@ class MyDataInsightCell: UICollectionViewCell {
         let risk = UILabel()
         risk.textAlignment = .center
         risk.text = "Medium Risk"
-        risk.font = UIFont(name: "Montserrat-SemiBold", size: 18)
+        risk.font = UIFont(name: AppFontName.semibold, size: 18)
         risk.textColor = UIColor(hexString: "#9B9B9B")
         risk.numberOfLines = 2
         risk.lineBreakMode = .byWordWrapping
@@ -155,14 +155,14 @@ class MyDataInsightCell: UICollectionViewCell {
             
             self.tileTitle.leadingAnchor.constraint(equalTo: self.expandCollapseImage.trailingAnchor, constant: 10.0),
             self.tileTitle.topAnchor.constraint(equalTo: self.expandCollapseImage.topAnchor),
-            self.tileTitle.widthAnchor.constraint(equalToConstant: 110.0),
+            self.tileTitle.widthAnchor.constraint(equalToConstant: 120.0),
             
             self.guageView.leadingAnchor.constraint(equalTo: self.tileTitle.trailingAnchor, constant: 10.0),
             self.guageView.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.guageView.widthAnchor.constraint(equalToConstant: 48.0),
             self.guageView.heightAnchor.constraint(equalTo: self.guageView.widthAnchor),
             
-            self.riskType.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor),
+            self.riskType.leadingAnchor.constraint(equalTo: self.guageView.trailingAnchor, constant: 5.0),
             self.riskType.topAnchor.constraint(equalTo: self.tileTitle.topAnchor),
             self.riskType.widthAnchor.constraint(equalToConstant: 80.0),
             
