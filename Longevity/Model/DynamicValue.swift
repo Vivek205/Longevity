@@ -35,6 +35,7 @@ class DynamicValue<T> {
         set {
             guard isKnownUniquelyReferenced(&ref) else {
                 ref = Ref(value: newValue)
+                self.notifyAll()
                 return
             }
             ref.value = newValue
