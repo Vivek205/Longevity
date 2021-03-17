@@ -1673,7 +1673,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 113;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1698,7 +1698,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 110;
+				CURRENT_PROJECT_VERSION = 113;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (
