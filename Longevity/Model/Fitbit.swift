@@ -59,8 +59,8 @@ struct Constants {
     static let codeVerifier = codeVerifierString
     static let codeChallenge = codeChallengeString
     static let codeChallengeMethod = "S256"
-    static let clientId = "22BNS6"
-    static let clientSecret = "e10696ffdc570f7206d55bd5c61fedfc"
+    static let clientId = "22BWKP"
+    static let clientSecret = "08f31a56e82e20c41b4b1a3cd0588acb"
     static let redirectScheme = "myapp://" // YOU MUST DEFINE THAT SCHEME IN PROJECT SETTIGNS
     static let redirectUrl = "\(redirectScheme)fitbit/auth"
     static let scope = ["activity", "heartrate", "location", "nutrition", "profile", "settings", "sleep", "social", "weight"]

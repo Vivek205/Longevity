@@ -28,7 +28,7 @@
 		<dict>
 			<key>CFBundleURLSchemes</key>
 			<array>
-				<string>fb721380498616396</string>
+				<string>fb737583490237915</string>
 				<string>myapp</string>
 			</array>
 		</dict>
@@ -36,9 +36,9 @@
 	<key>CFBundleVersion</key>
 	<string>$(CURRENT_PROJECT_VERSION)</string>
 	<key>FacebookAppID</key>
-	<string>721380498616396</string>
+	<string>737583490237915</string>
 	<key>FacebookDisplayName</key>
-	<string>Longevity</string>
+	<string>CovidSignals</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
 		<string>fbapi</string>
@@ -115,6 +115,6 @@
 	<key>UIViewControllerBasedStatusBarAppearance</key>
 	<true/>
 	<key>WebDomain</key>
-	<string>https://development-rejuve.auth.us-west-2.amazoncognito.com</string>
+	<string>https://rejuvedevelopment-dev.auth.us-west-2.amazoncognito.com</string>
 </dict>
 </plist>
