@@ -324,7 +324,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
         
         operations.last?.completionBlock = {
-            task.setTaskCompleted(success: !(queue.operations.last?.isCancelled ?? false))
+            task.setTaskCompleted(success: !(operations.last?.isCancelled ?? false))
         }
         queue.addOperations(operations, waitUntilFinished: true)
     }

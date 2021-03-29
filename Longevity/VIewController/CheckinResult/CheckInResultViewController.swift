@@ -258,7 +258,7 @@ extension CheckInResultViewController: UICollectionViewDelegate, UICollectionVie
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
-        let width = CGFloat(collectionView.bounds.width) - 30.0
+        let width = CGFloat(collectionView.bounds.width) - 20.0
         var height: CGFloat = 80.0
         
         if indexPath.section == 0 && self.currentResultView == .analysis {

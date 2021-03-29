@@ -23,6 +23,7 @@
 		464786E525F15C5D0077A142 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E425F15C5D0077A142 /* Strings.swift */; };
 		464786EB25F21A450077A142 /* amplify-production.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786E725F21A450077A142 /* amplify-production.json */; };
 		464786ED25F21CB00077A142 /* amplify-debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786EC25F21CB00077A142 /* amplify-debug.json */; };
+		468AB51E2611E5A800A48301 /* ErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468AB51D2611E5A800A48301 /* ErrorCell.swift */; };
 		46ED785D25F8AF7100E256B0 /* UserActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
@@ -288,6 +289,7 @@
 		464786E425F15C5D0077A142 /* Strings.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Strings.swift; sourceTree = "<group>"; };
 		464786E725F21A450077A142 /* amplify-production.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-production.json"; sourceTree = SOURCE_ROOT; };
 		464786EC25F21CB00077A142 /* amplify-debug.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = "amplify-debug.json"; sourceTree = SOURCE_ROOT; };
+		468AB51D2611E5A800A48301 /* ErrorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ErrorCell.swift; sourceTree = "<group>"; };
 		46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = UserActivityDetails.swift; sourceTree = "<group>"; };
 		4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "CheckInLogDetails+UITableViewExtension.swift"; sourceTree = "<group>"; };
 		74C713AD1B3A5874C0C88558 /* Pods-COVID Signals.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-COVID Signals.release.xcconfig"; path = "Target Support Files/Pods-COVID Signals/Pods-COVID Signals.release.xcconfig"; sourceTree = "<group>"; };
@@ -1052,6 +1054,7 @@
 				E274F07D24C55DA600969CD8 /* Dashboard.storyboard */,
 				E274F08D24C820C900969CD8 /* CovidCheckin.storyboard */,
 				C19875C424DC926D00477185 /* TitleView.swift */,
+				468AB51D2611E5A800A48301 /* ErrorCell.swift */,
 			);
 			path = View;
 			sourceTree = "<group>";
@@ -1375,6 +1378,7 @@
 				C19875B024DC6B6B00477185 /* LNTabBarViewController.swift in Sources */,
 				C1D6734B25E66D990000812F /* CoughLogResultCell.swift in Sources */,
 				46ED785D25F8AF7100E256B0 /* UserActivityDetails.swift in Sources */,
+				468AB51E2611E5A800A48301 /* ErrorCell.swift in Sources */,
 				C14ABA4324E2384F00C81580 /* BaseAuthAPI.swift in Sources */,
 				C12F09BB24F704C900623CC3 /* EditAccountViewController.swift in Sources */,
 				E2A25F862490D3C4008DAD25 /* ConfirmEmailVC.swift in Sources */,
@@ -1665,7 +1669,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 115;
+				CURRENT_PROJECT_VERSION = 116;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
@@ -1690,7 +1694,7 @@
 				CODE_SIGN_ENTITLEMENTS = Longevity/Longevity.entitlements;
 				CODE_SIGN_IDENTITY = "Apple Development";
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 115;
+				CURRENT_PROJECT_VERSION = 116;
 				DEVELOPMENT_TEAM = LXR24SP9HV;
 				INFOPLIST_FILE = Longevity/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = (

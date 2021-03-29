@@ -132,12 +132,14 @@ class CoughTestResultViewController: UIViewController {
         if !self.submissionID.isEmpty {
             UserInsightsAPI.instance.getLog(submissionID: self.submissionID) { [weak self] (checkinlog) in
                 guard let loghistory = checkinlog?.details?.history else {
+                    self?.coughResult = nil
                     return
                 }
                 self?.coughResult = loghistory.first(where: { $0.submissionID == self?.submissionID })
             }
-            self.showSpinner()
         }
+        
+        self.showSpinner()
     }
 
     override func viewDidLayoutSubviews() {
@@ -155,7 +157,10 @@ class CoughTestResultViewController: UIViewController {
 
 extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
     func numberOfSections(in collectionView: UICollectionView) -> Int {
-        return 2
+        if self.coughResult != nil {
+            return 2
+        }
+        return 1
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -167,7 +172,13 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && self.coughResult == nil {
+            guard let cell = collectionView.getCell(with: ErrorCell.self, at: indexPath) as? ErrorCell else {
+                preconditionFailure("Invalid insight cell")
+            }
+            return cell
+        }
+        else if indexPath.section == 0 {
             guard let cell = collectionView.getCell(with: CoughTestResultCell.self, at: indexPath) as? CoughTestResultCell else {
                 preconditionFailure("Invalid insight cell")
             }
@@ -186,26 +197,31 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = CGFloat(collectionView.bounds.width) - 30.0
-        var height: CGFloat = 80.0
+        let height: CGFloat = 80.0
         
-        if indexPath.section == 0 {
+        if indexPath.section == 0 && self.coughResult != nil {
             if let resultDescription = self.coughResult?.resultDescription {
                 let textheader = "According to our cough classifier:"
-                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0),
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0)!,
                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let attributedCoughResult = NSMutableAttributedString(string: textheader, attributes: attributes)
                 
-                let insightTitle = "\n\n\(resultDescription.shortDescription)"
+                if let title = resultDescription.shortDescription, !title.isEmpty {
+                    let insightTitle = "\n\n\(title)"
+                    let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0)!,
+                                                                      .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                    attributedCoughResult.append(NSMutableAttributedString(string: insightTitle, attributes: attributes2))
+                }
                 
-                let attributes2: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 24.0),
-                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
-                attributedCoughResult.append(NSMutableAttributedString(string: insightTitle, attributes: attributes2))
+                if let text = resultDescription.longDescription, !text.isEmpty {
+                    let insightText = "\n\n\(text)"
+                    
+                    let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.italic, size: 18.0)!,
+                                                                      .foregroundColor: UIColor(hexString: "#4E4E4E")]
+                    attributedCoughResult.append(NSMutableAttributedString(string: insightText, attributes: attributes3))
+                }
                 
-                let insightText = "\n\n\(resultDescription.longDescription)"
                 
-                let attributes3: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.italic, size: 18.0),
-                                                                  .foregroundColor: UIColor(hexString: "#4E4E4E")]
-                attributedCoughResult.append(NSMutableAttributedString(string: insightText, attributes: attributes3))
                 var descriptionHeight = 14.0 + attributedCoughResult.height(containerWidth: width)
                 descriptionHeight += 14.0
                 return CGSize(width: collectionView.bounds.width, height: descriptionHeight)
@@ -213,7 +229,8 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
         } else if indexPath.section == 1 { //Calculating Goal Height
             if let goal = self.coughResult?.goals[indexPath.item] {
                 let insightTitle = goal.text
-                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0),.foregroundColor: UIColor(hexString: "#4E4E4E")]
+                let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.semibold, size: 18.0)!,
+                                                                 .foregroundColor: UIColor(hexString: "#4E4E4E")]
                 let attributedinsightTitle = NSMutableAttributedString(string: insightTitle, attributes: attributes)
                 
                 let textAreaWidth = width - 66.0
@@ -224,7 +241,7 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
                     let insightDesc = "\n\n\(goal.goalDescription)"
                     
                     let descAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
-                                                                                       size: 14.0),
+                                                                                       size: 14.0)!,
                                                                          .foregroundColor: UIColor(hexString: "#4E4E4E")]
                     let attributedDescText = NSMutableAttributedString(string: insightDesc, attributes: descAttributes)
                     attributedinsightTitle.append(attributedDescText)
@@ -234,7 +251,7 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
                 
                 if let citation = goal.citation, !citation.isEmpty {
                     let linkAttributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.regular,
-                                                                                       size: 14.0),
+                                                                                       size: 14.0)!,
                                                                          .foregroundColor: UIColor(red: 0.05,
                                                                                                    green: 0.4, blue: 0.65, alpha: 1.0),
                                                                          .underlineStyle: NSUnderlineStyle.single]

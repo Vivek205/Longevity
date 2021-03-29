@@ -17,11 +17,12 @@ class CoughRecordUploader {
         guard let documentURL = FileManager.default.urls(for: .documentDirectory,
                                                          in: .userDomainMask).first else { return }
         let path = documentURL.appendingPathComponent(SurveyTaskUtility.shared.coughTestFolderName).absoluteURL
-            do {
-                try FileManager.default.createDirectory(atPath: path.relativePath, withIntermediateDirectories: true)
-                let directoryContents = try FileManager.default.contentsOfDirectory(at: path,
-                                                                                    includingPropertiesForKeys: nil,
-                                                                                    options: [])
+        do {
+            try FileManager.default.createDirectory(atPath: path.relativePath, withIntermediateDirectories: true)
+            let directoryContents = try FileManager.default.contentsOfDirectory(at: path,
+                                                                                includingPropertiesForKeys: nil,
+                                                                                options: [])
+            if directoryContents.count > 0 {
                 let filesPath = directoryContents.filter{ $0.pathExtension == "wav" }
                 let fileNames = filesPath.map{ (filekey: $0.lastPathComponent, fileURL: $0) }
                 CoughRecordUploader.uploadedFileCount = 0
@@ -47,9 +48,12 @@ class CoughRecordUploader {
                 } else {
                     failure("Failed to upload files")
                 }
-            } catch {
+            } else {
                 failure("Failed to upload files")
             }
+        } catch {
+            failure("Failed to upload files")
+        }
     }
     
     func uploadVoiceData(fileKey: String, coughData: Data, completion: @escaping(Bool) -> Void) {
