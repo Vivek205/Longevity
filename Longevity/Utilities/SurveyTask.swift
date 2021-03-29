@@ -522,31 +522,16 @@ extension SurveyTaskUtility {
                    status == .pending, survey.lastSurveyStatus != .pending {
                     if !self.suppressAlert {
                         DispatchQueue.main.async {
-                            let viewResultsAction = UIAlertAction(title: "View Results", style: .default) { (action) in
+                            let viewResultsAction = UIAlertAction(title: "View Results", style: .default) { [unowned self] (action) in
                                 guard let submissionID = survey.lastSubmissionId else { return }
-                                if survey.surveyId.starts(with: Strings.coughTest) {
-                                    let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
-                                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                                style: .overCurrentContext)
-                                } else {
-                                    let checkInResultViewController = CheckInResultViewController(submissionID: submissionID)
-                                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                                style: .overCurrentContext)
-                                }
+                                self.doOpenResult(submissionID: submissionID)
                             }
                             let okAction = UIAlertAction(title: "OK", style: .default, handler: nil)
                             Alert(title: "Risk Siginals Updated", message: "Your results are available and also saved in \"My Data\"", actions: viewResultsAction, okAction)
                         }
                     } else {
-                        if survey.surveyId.starts(with: Strings.coughTest) {
-                            DispatchQueue.main.async {
-                                guard let submissionID = survey.lastSubmissionId else { return }
-                                let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
-                                checkInResultViewController.delegate = self
-                                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
-                                                                            style: .overCurrentContext)
-                            }
-                        }
+                        guard let submissionID = survey.lastSubmissionId else { return }
+                        self.doOpenResult(submissionID: submissionID, isdelegated: true)
                     }
                 }
                 self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus
@@ -567,18 +552,28 @@ extension SurveyTaskUtility {
         return survey.lastSurveyStatus
     }
     
-    func doOpenResult(submissionID: String) {
+    func doOpenResult(submissionID: String, isdelegated: Bool = false) {
         SurveyTaskUtility.shared.suppressAlert = true
-        UserInsightsAPI.instance.getLog(submissionID: submissionID) { (checkinlog) in
+        UserInsightsAPI.instance.getLog(submissionID: submissionID) { [unowned self] (checkinlog) in
             guard let loghistory = checkinlog?.details?.history else {
+                SurveyTaskUtility.shared.suppressAlert = false
+                DispatchQueue.main.async {
+                    let okAction = UIAlertAction(title: "OK", style: .default) { [unowned self] (action) in
+                        self.resultViewDismissed()
+                    }
+                    Alert(title: "Error", message: "Error occurred while fetching the result. Please check Results Data Log for updates later.", action: okAction)
+                }
                 return
             }
             guard let result = loghistory.first else { return }
             DispatchQueue.main.async {
                 if result.surveyID?.starts(with: Strings.coughTest) ?? false {
-                    let checkInResultViewController = CoughTestResultViewController()
-                    checkInResultViewController.coughResult = result
-                    NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                    let coughTestResultView = CoughTestResultViewController()
+                    coughTestResultView.coughResult = result
+                    if isdelegated {
+                        coughTestResultView.delegate = self
+                    }
+                    NavigationUtility.presentOverCurrentContext(destination: coughTestResultView,
                                                                 style: .overCurrentContext) {
                         SurveyTaskUtility.shared.suppressAlert = false
                     }
