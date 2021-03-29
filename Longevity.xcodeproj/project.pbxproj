@@ -23,6 +23,7 @@
 		464786E525F15C5D0077A142 /* Strings.swift in Sources */ = {isa = PBXBuildFile; fileRef = 464786E425F15C5D0077A142 /* Strings.swift */; };
 		464786EB25F21A450077A142 /* amplify-production.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786E725F21A450077A142 /* amplify-production.json */; };
 		464786ED25F21CB00077A142 /* amplify-debug.json in Resources */ = {isa = PBXBuildFile; fileRef = 464786EC25F21CB00077A142 /* amplify-debug.json */; };
+		468AB51E2611E5A800A48301 /* ErrorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 468AB51D2611E5A800A48301 /* ErrorCell.swift */; };
 		46ED785D25F8AF7100E256B0 /* UserActivityDetails.swift in Sources */ = {isa = PBXBuildFile; fileRef = 46ED785C25F8AF7100E256B0 /* UserActivityDetails.swift */; };
 		4A8A986B25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = 4A8A986A25E838BC00E64BCB /* CheckInLogDetails+UITableViewExtension.swift */; };
 		723EF7293E884B9CA94BCF1C /* Pods_COVID_Signals.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = FBC2F1CEB9EABAE4D05D8459 /* Pods_COVID_Signals.framework */; };
