@@ -108,12 +108,23 @@ class HomeViewController: BaseViewController {
         layout.minimumInteritemSpacing = 10
         layout.scrollDirection = .vertical
         layout.invalidateLayout()
+        
+        NotificationCenter.default.addObserver(self,
+                                               selector:#selector(self.refreshView),
+                                               name: UIApplication.willEnterForegroundNotification,
+                                               object: nil)
     }
     
     deinit {
         SurveyTaskUtility.shared.repetitiveSurveyList.remove(observer: self)
         SurveyTaskUtility.shared.oneTimeSurveyList.remove(observer: self)
         SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
+        NotificationCenter.default.removeObserver(self)
+    }
+    
+    @objc func refreshView() {
+        AppSyncManager.instance.syncUserInsights()
+        AppSyncManager.instance.syncSurveyList()
     }
 }
 

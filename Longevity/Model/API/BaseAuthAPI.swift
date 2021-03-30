@@ -34,6 +34,8 @@ class BaseAuthAPI {
         return ["token": self.userToken ?? "", "content-type":"application/json", "login_type":LoginType.PERSONAL]
     }
     
+    var isSyncInprogress = false
+    
     fileprivate func fetchUserToken(isSuccess: @escaping(Bool) -> Void) {
         _ = Amplify.Auth.fetchAuthSession { result in
             guard let session = try? result.get() as? AuthCognitoTokensProvider,

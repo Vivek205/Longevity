@@ -74,23 +74,23 @@ class SurveyViewController: ORKTaskViewController, ORKTaskViewControllerDelegate
         }
     }
     
-    func getSurveyList() {
-        self.showSpinner()
-
-        func completion(_ surveys:[SurveyListItem]) {
-            DispatchQueue.main.async {
-                self.removeSpinner()
-            }
-        }
-
-        func onFailure(_ error:Error) {
-            DispatchQueue.main.async {
-                print(error)
-                self.removeSpinner()
-            }
-        }
-        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
-    }
+//    func getSurveyList() {
+//        self.showSpinner()
+//
+//        func completion(_ surveys:[SurveyListItem]) {
+//            DispatchQueue.main.async {
+//                self.removeSpinner()
+//            }
+//        }
+//
+//        func onFailure(_ error:Error) {
+//            DispatchQueue.main.async {
+//                print(error)
+//                self.removeSpinner()
+//            }
+//        }
+//        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+//    }
 
     func taskViewController(_ taskViewController: ORKTaskViewController,
                             viewControllerFor step: ORKStep) -> ORKStepViewController? {
