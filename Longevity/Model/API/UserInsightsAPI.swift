@@ -15,12 +15,14 @@ class UserInsightsAPI: BaseAuthAPI {
     static var instance = UserInsightsAPI()
     
     func get(completion: @escaping([UserInsight]?) -> Void) {
+        self.isSyncInprogress = true
         let request = RESTRequest(apiName: "insightsAPI",
                                   path: "/user/insight/cards",
                                   headers: headers,
                                   queryParameters: nil,
                                   body: nil)
-        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+        self.makeAPICall(callType: .apiGET, request: request) { [weak self] (data, error) in
+            self?.isSyncInprogress = false
             guard let data = data else  {
                 completion(nil)
                 return

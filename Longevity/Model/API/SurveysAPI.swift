@@ -16,11 +16,12 @@ class SurveysAPI : BaseAuthAPI {
     
     func getSurveys(completion:@escaping (_ surveys:[SurveyListItem]) -> Void,
                     onFailure:@escaping (_ error:Error) -> Void) {
-        
+        self.isSyncInprogress = true
         let request = RESTRequest(apiName: "surveyAPI", path: "/surveys", headers: headers, queryParameters: nil,
                                   body: nil)
         
-        self.makeAPICall(callType: .apiGET, request: request) { (data, error) in
+        self.makeAPICall(callType: .apiGET, request: request) { [weak self] (data, error) in
+            self?.isSyncInprogress = false
             guard let data = data else {
                 completion([])
                 return

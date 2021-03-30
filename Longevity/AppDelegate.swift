@@ -139,10 +139,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
     }
     
     func applicationDidBecomeActive(_ application: UIApplication) {
-        if AppSyncManager.instance.pollingTimer != nil {
-            AppSyncManager.instance.syncSurveyList()
-        }
-        
         if #available(iOS 13.0, *) {
             BGTaskScheduler.shared.getPendingTaskRequests { (pendingTasks) in
                 pendingTasks.forEach { BGTaskScheduler.shared.cancel(taskRequestWithIdentifier: $0.identifier) }
@@ -290,6 +286,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                             completionHandler()
                             return
                         }
+                        SurveyTaskUtility.shared.openResultView = false
                         SurveyTaskUtility.shared.doOpenResult(submissionID: submissionID)
                         completionHandler()
                         return

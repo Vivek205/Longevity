@@ -20,6 +20,7 @@ final class SurveyTaskUtility: NSObject {
     var oneTimeSurveyList: DynamicValue<[SurveyListItem]>
     var surveyInProgress: DynamicValue<[String: CheckInStatus]>
     var suppressAlert: Bool = false
+    var openResultView: Bool = false
     let feelingTodayQuestionId = "3010"
     var coughTestFolderName: String = ""
     let symptomsCategory = "100"
@@ -530,8 +531,15 @@ extension SurveyTaskUtility {
                             Alert(title: "Risk Siginals Updated", message: "Your results are available and also saved in \"My Data\"", actions: viewResultsAction, okAction)
                         }
                     } else {
-                        guard let submissionID = survey.lastSubmissionId else { return }
-                        self.doOpenResult(submissionID: submissionID, isdelegated: true)
+                        if survey.surveyId.starts(with: Strings.coughTest) && self.openResultView {
+                            DispatchQueue.main.async {
+                                guard let submissionID = survey.lastSubmissionId else { return }
+                                let checkInResultViewController = CoughTestResultViewController(submissionID: submissionID)
+                                checkInResultViewController.delegate = self
+                                NavigationUtility.presentOverCurrentContext(destination: checkInResultViewController,
+                                                                            style: .overCurrentContext)
+                            }
+                        }
                     }
                 }
                 self.surveyInProgress.value?[survey.surveyId] = survey.lastSurveyStatus

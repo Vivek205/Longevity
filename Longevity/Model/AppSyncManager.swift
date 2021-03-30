@@ -170,13 +170,15 @@ class AppSyncManager  {
     }
     
     func syncUserInsights() {
-        UserInsightsAPI.instance.get { [weak self] (userinsights) in
-            if let insights = userinsights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
-                self?.userInsights.value = insights
-                self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
-            } else if let insights = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
-                self?.userInsights.value = insights
-                self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
+        if !UserInsightsAPI.instance.isSyncInprogress {
+            UserInsightsAPI.instance.get { [weak self] (userinsights) in
+                if let insights = userinsights?.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
+                    self?.userInsights.value = insights
+                    self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
+                } else if let insights = self?.defaultInsights.sorted(by: { $0.defaultOrder <= $1.defaultOrder }) {
+                    self?.userInsights.value = insights
+                    self?.hexagonInsights.value = insights.filter({ $0.insightType != .logs && $0.insightType != .coughlogs })
+                }
             }
         }
     }
@@ -264,7 +266,9 @@ class AppSyncManager  {
         }
         
         self.surveysSyncStatus.value = .inprogress
-        SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        if !SurveysAPI.instance.isSyncInprogress {
+            SurveysAPI.instance.getSurveys(completion: completion(_:), onFailure: onFailure(_:))
+        }
     }
     
     var opeartionqueue: OperationQueue?
