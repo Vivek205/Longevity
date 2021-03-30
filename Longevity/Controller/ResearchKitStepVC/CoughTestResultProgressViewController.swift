@@ -110,6 +110,7 @@ class CoughTestResultProgressViewController: UIViewController {
         ])
         
         SurveyTaskUtility.shared.suppressAlert = true
+        SurveyTaskUtility.shared.openResultView = true
     }
     
     override func viewDidLayoutSubviews() {
@@ -127,6 +128,7 @@ class CoughTestResultProgressViewController: UIViewController {
     
     deinit {
         SurveyTaskUtility.shared.suppressAlert = false
+        SurveyTaskUtility.shared.openResultView = false
         SurveyTaskUtility.shared.surveyInProgress.remove(observer: self)
     }
 }

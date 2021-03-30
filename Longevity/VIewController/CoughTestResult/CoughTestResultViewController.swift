@@ -160,7 +160,7 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
         if self.coughResult != nil {
             return 2
         }
-        return 1
+        return 0
     }
     
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -172,13 +172,7 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
     }
     
     func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        if indexPath.section == 0 && self.coughResult == nil {
-            guard let cell = collectionView.getCell(with: ErrorCell.self, at: indexPath) as? ErrorCell else {
-                preconditionFailure("Invalid insight cell")
-            }
-            return cell
-        }
-        else if indexPath.section == 0 {
+        if indexPath.section == 0 {
             guard let cell = collectionView.getCell(with: CoughTestResultCell.self, at: indexPath) as? CoughTestResultCell else {
                 preconditionFailure("Invalid insight cell")
             }
@@ -199,7 +193,7 @@ extension CoughTestResultViewController: UICollectionViewDelegate, UICollectionV
         let width = CGFloat(collectionView.bounds.width) - 30.0
         let height: CGFloat = 80.0
         
-        if indexPath.section == 0 && self.coughResult != nil {
+        if indexPath.section == 0 {
             if let resultDescription = self.coughResult?.resultDescription {
                 let textheader = "According to our cough classifier:"
                 let attributes: [NSAttributedString.Key: Any] = [.font: UIFont(name: AppFontName.medium, size: 14.0)!,
