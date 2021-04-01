@@ -45,10 +45,11 @@ class AppleHealthConnectionViewController: UIViewController {
         titleLabel.translatesAutoresizingMaskIntoConstraints = false
         
         self.navigationItem.titleView = titleLabel
-        let leftbutton = UIBarButtonItem(image: UIImage(named: "icon: arrow")?.withHorizontallyFlippedOrientation(), style: .plain, target: self, action: #selector(closeView))
-        leftbutton.tintColor = .themeColor
-        self.navigationItem.leftBarButtonItem = leftbutton
         self.navigationController?.navigationBar.tintColor = UIColor(hexString: "#FFFFFF")
+        let rightbutton = UIBarButtonItem(image: UIImage(named: "closex"),
+                                          style: .plain, target: self, action: #selector(closeView))
+        rightbutton.tintColor = .themeColor
+        self.navigationItem.rightBarButtonItem = rightbutton
         
         NSLayoutConstraint.activate([
             self.connectionTableView.leadingAnchor.constraint(equalTo: self.view.leadingAnchor),
