@@ -103,6 +103,7 @@ class AppSyncManager  {
         self.hexagonInsights = DynamicValue(self.defaultInsights.filter({ $0.insightType != .logs &&
                                                                             $0.insightType != .coughlogs }))
         SurveyTaskUtility.shared.clearSurvey()
+        SurveyTaskUtility.shared.surveyInProgress = DynamicValue([String: CheckInStatus]())
         // HACK
         preExistingMedicalConditionData = defaultPreExistingMedicalConditionData
     }

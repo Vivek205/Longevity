@@ -64,10 +64,12 @@ class BranchingOrderedTask: ORKOrderedTask {
         
         if let nextStepIdentifier = SurveysAPI.instance.findNextQuestion(moduleId: Int(moduleId ?? ""),
                                                                          questionId: identifier,
-                                                                         answerValue: answer!) {
+                                                                         answerValue: answer!), !nextStepIdentifier.isEmpty {
             if let nextDynamicStep = self.steps.first(where: { $0.identifier == nextStepIdentifier }) {
                 nextStep = nextDynamicStep
             }
+        } else {
+            nextStep = self.steps[self.steps.count - 1]
         }
 
         return nextStep
