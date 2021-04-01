@@ -23,8 +23,8 @@ class CheckInLogNoDataView: UIView {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
         label.textColor = UIColor.checkinCompleted
-        label.font = UIFont(name: "Montserrat-Light", size: 16)
-        label.text = "No Check-ins recorded"
+        label.font = UIFont(name: AppFontName.light, size: 16)
+        label.text = "No data results recorded"
         label.numberOfLines = 0
         label.textAlignment = .center
         return label
@@ -33,8 +33,8 @@ class CheckInLogNoDataView: UIView {
     lazy var info:UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
-        label.font = UIFont(name: "Montserrat-Light", size: 14)
-        label.text = "Start your first one today"
+        label.font = UIFont(name: AppFontName.light, size: 14)
+        label.text = "Start by completing your"
         label.textColor = UIColor.infoColor
         label.numberOfLines = 0
         label.textAlignment = .center
@@ -43,8 +43,8 @@ class CheckInLogNoDataView: UIView {
     
     lazy var checkinButton: UIButton = {
         let checkinButton = UIButton()
-        checkinButton.setTitle("Check-in", for: .normal)
-        checkinButton.titleLabel?.font = UIFont(name: "Montserrat-SemiBold", size: 24.0)
+        checkinButton.setTitle("COVID Risk Assessment", for: .normal)
+        checkinButton.titleLabel?.font = UIFont(name: AppFontName.semibold, size: 24.0)
         checkinButton.setTitleColor(.themeColor, for: .normal)
         checkinButton.backgroundColor = .clear
         checkinButton.translatesAutoresizingMaskIntoConstraints = false
@@ -74,8 +74,8 @@ class CheckInLogNoDataView: UIView {
             info.topAnchor.constraint(equalTo: titleLabel.bottomAnchor, constant: CGFloat(5)),
             info.widthAnchor.constraint(equalTo: self.widthAnchor, constant: -40),
             
-            checkinButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 75.0),
-            checkinButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -75.0),
+            checkinButton.leadingAnchor.constraint(equalTo: self.leadingAnchor, constant: 15.0),
+            checkinButton.trailingAnchor.constraint(equalTo: self.trailingAnchor, constant: -15.0),
             checkinButton.topAnchor.constraint(equalTo: self.info.bottomAnchor, constant: 20.0),
             checkinButton.bottomAnchor.constraint(equalTo: self.bottomAnchor, constant: -10.0)
         ])
