@@ -28,13 +28,13 @@ class UserAuthAPI {
     func fetchAuthentication(completion: @escaping(Bool, Error?) -> Void) {
         _ = Amplify.Auth.fetchAuthSession { (result) in
             switch result {
-            case .success(let loginSession):
+            case .success( _):
                 guard let session = try? result.get() as? AuthCognitoTokensProvider,
                       let tokens = try? session.getCognitoTokens().get() else {
                     completion(false, nil)
                     return
                 }
-
+                
                 try? KeyChain(service: KeychainConfiguration.serviceName,
                               account: KeychainKeys.idToken).saveItem(tokens.idToken)
                 completion(true, nil)
@@ -45,7 +45,7 @@ class UserAuthAPI {
             }
         }
     }
-
+    
     func signout(completion: ((Error?) -> Void)?) {
         func signoutFromAws() {
             _ = Amplify.Auth.signOut(listener: { (result) in
@@ -60,23 +60,21 @@ class UserAuthAPI {
                 }
             })
         }
-
+        
         guard let endpointArn = AppSyncManager.instance.userNotification.value?.endpointArn
         else {
             signoutFromAws()
             return
         }
-
-        let notificationAPI = NotificationAPI()
-        let appDelegate = AppDelegate()
-
+        
+        guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
         appDelegate.deleteARNEndpoint(endpointArn: endpointArn) { (error) in
             guard error == nil else {
                 completion?(error)
                 return
             }
-
-            notificationAPI.deleteNotification { (error) in
+            
+            NotificationAPI.instance.deleteNotification { (error) in
                 guard error == nil else {
                     signoutFromAws()
                     return
@@ -99,7 +97,7 @@ class UserAuthAPI {
                 
                 let tncattribute = attributes.first { $0.key.rawValue == CustomCognitoAttributes.longevityTNC }
                 
-                guard let data = tncattribute?.value.data(using: .utf8) as? Data else {
+                guard let data = tncattribute?.value.data(using: .utf8) else {
                     completion(.unknown)
                     return
                 }
@@ -107,7 +105,7 @@ class UserAuthAPI {
                     completion(.unknown)
                     return
                 }
-
+                
                 if json["isAccepted"] as! NSNumber == 1 {
                     completion(.accepted)
                 } else {
