@@ -62,7 +62,6 @@ class NotificationAPI: BaseAuthAPI {
             Logger.log("unable to save deviceIdForVendor in KeyChain \(error)")
             return nil
         }
-        return deviceIdForVendor
     }
     
     
@@ -146,32 +145,27 @@ class NotificationAPI: BaseAuthAPI {
         let body = NotificationPayload(platform: platform.rawValue, endpointArn: arnEndpoint, isEnabled:  true)
         let encoder = JSONEncoder()
         encoder.keyEncodingStrategy = .convertToSnakeCase
-        var data:Data = Data()
         
-        do {
-            data = try encoder.encode(body)
-        } catch {
-            print("register ARN json error", error)
-        }
+        guard let data = try? encoder.encode(body) else { return }
         
         var deviceIdForVendor = self.getDeviceIdForVendor()
         if deviceIdForVendor == nil {
             deviceIdForVendor = createDeviceIdForVendor()
         }
-        let path = "/device/\(deviceIdForVendor!)/notification/\(NotificationType.pushNotification.rawValue)"
+        
+        guard let deviceId = deviceIdForVendor else { return }
+        
+        let path = "/device/\(deviceId)/notification/\(NotificationType.pushNotification.rawValue)"
         let request = RESTRequest(apiName:self.apiName, path: path , headers: headers, body: data)
         
         self.makeAPICall(callType: .apiPOST, request: request) { (data, error) in
             if error != nil {
                 AppSyncManager.instance.userNotification.value?.endpointArn = nil
                 AppSyncManager.instance.userNotification.value?.isEnabled = false
-                Logger.log("registerARN failed \(error)")
             } else {
-                guard let data = data else { return }
+                guard let _ = data else { return }
                 AppSyncManager.instance.userNotification.value?.endpointArn = arnEndpoint
                 AppSyncManager.instance.userNotification.value?.isEnabled = true
-                let responseString = String(data: data, encoding: .utf8)
-                Logger.log("register ARN sucess \(responseString)")
             }
         }
     }

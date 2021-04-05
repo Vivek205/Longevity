@@ -219,9 +219,9 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
                     return
                 case .covidReportProcessed:
                     // TODO: redirect to mydata page
-//                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
-//                        tabBarController.selectedIndex = 1
-//                    }
+                    //                    if let tabBarController = self.window!.rootViewController as? LNTabBarViewController {
+                    //                        tabBarController.selectedIndex = 1
+                    //                    }
                     completionHandler(.newData)
                     return
                 default:
@@ -339,46 +339,6 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         }
     }
     
-    func updateARNToken() {
-        let defaults = UserDefaults.standard
-        let keys = UserDefaultsKeys()
-        let notificationAPI = NotificationAPI()
-        // Check if ARN is created already
-        guard AppSyncManager.instance.userNotification.value?.endpointArn == nil else {
-            return
-        }
-        
-        guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
-            return
-        }
-        
-        let deviceIdForVendor = notificationAPI.getDeviceIdForVendor()
-        if deviceIdForVendor == nil {
-            _ = notificationAPI.createDeviceIdForVendor()
-        }
-        
-        let awsSNS = AWSSNS.default()
-        let request = AWSSNSCreatePlatformEndpointInput()
-        request?.token = token
-        request?.platformApplicationArn = SNSPlatformApplicationARN
-        
-        
-        awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
-            if task.error != nil {
-                print("Error: \(String(describing: task.error))")
-            } else {
-                let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
-                if let endpointArnForSNS = createEndpointResponse.endpointArn {
-                    print("endpointArn: \(endpointArnForSNS)")
-                    Logger.log("ARN endpoint created")
-                    AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
-                    notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
-                }
-            }
-            return nil
-        })
-    }
-    
     func checkARNStatus() {
         guard let endpointARN = AppSyncManager.instance.userNotification.value?.endpointArn else {
             self.createARNEndPoint()
@@ -387,33 +347,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         let defaults = UserDefaults.standard
         let keys = UserDefaultsKeys()
-        guard let token = defaults.string(forKey: keys.deviceTokenForSNS) else {
+        guard let _ = defaults.string(forKey: keys.deviceTokenForSNS) else {
             return
         }
         
-        let awsSNS = AWSSNS.default()
-        let request = AWSSNSGetEndpointAttributesInput()
-        request?.endpointArn = endpointARN
-        awsSNS.getEndpointAttributes(request!) { [weak self] (response, error) in
+        guard let request = AWSSNSGetEndpointAttributesInput() else { return }
+        request.endpointArn = endpointARN
+        AWSSNS.default().getEndpointAttributes(request) { [weak self] (response, error) in
             if error != nil {
                 self?.createARNEndPoint()
             } else {
                 print("arn", endpointARN)
-                if let response = response as? AWSSNSGetEndpointAttributesResponse {
-                    let isEnabledSNS = response.attributes!["Enabled"]
-                    print("isEnabledSNS", isEnabledSNS)
-                    if isEnabledSNS != "true" {
-                        self?.setSNSEndpointAttributes(endpointArn: endpointARN)
-                    }
+                guard let response = response,
+                      let attributes = response.attributes,
+                      let isEnabledSNS = attributes["Enabled"],
+                      isEnabledSNS != "true" else {
+                    return
                 }
+                
+                self?.setSNSEndpointAttributes(endpointArn: endpointARN)
             }
         }
     }
     
     func setSNSEndpointAttributes(endpointArn: String) {
-        let awsSNS = AWSSNS.default()
         guard let request = AWSSNSSetEndpointAttributesInput() else {
-            print("request unavailable")
             return
         }
         let defaults = UserDefaults.standard
@@ -424,12 +382,10 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
         
         request.attributes = ["Enabled":"true", "Token":token]
         request.endpointArn = endpointArn
-        awsSNS.setEndpointAttributes(request) { (error) in
+        AWSSNS.default().setEndpointAttributes(request) { (error) in
             if error != nil {
-                let notificationAPI = NotificationAPI()
-                notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArn)
+                NotificationAPI.instance.registerARN(platform: .iphone, arnEndpoint: endpointArn)
             }
-            print("setEndpointAttributes error", error)
         }
     }
     
@@ -441,34 +397,31 @@ class AppDelegate: UIResponder, UIApplicationDelegate, UNUserNotificationCenterD
             return
         }
         
-        let request = AWSSNSCreatePlatformEndpointInput()
-        request?.token = token
-        request?.platformApplicationArn = SNSPlatformApplicationARN
-        let awsSNS = AWSSNS.default()
-        awsSNS.createPlatformEndpoint(request!).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
+        guard let request = AWSSNSCreatePlatformEndpointInput() else { return }
+        request.token = token
+        request.platformApplicationArn = SNSPlatformApplicationARN
+        
+        AWSSNS.default().createPlatformEndpoint(request).continueWith(executor: AWSExecutor.mainThread(), block: { (task: AWSTask!) -> AnyObject? in
             if task.error != nil {
                 print("Error: \(String(describing: task.error))")
             } else {
-                let createEndpointResponse = task.result! as AWSSNSCreateEndpointResponse
-                if let endpointArnForSNS = createEndpointResponse.endpointArn {
-                    print("endpointArn: \(endpointArnForSNS)")
-                    Logger.log("ARN endpoint created")
-                    //                    defaults.set(endpointArnForSNS, forKey: keys.snsARN)
-                    AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
-                    let notificationAPI = NotificationAPI()
-                    notificationAPI.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
-                    
+                guard let createEndpointResponse = task.result,
+                      let endpointArnForSNS = createEndpointResponse.endpointArn else {
+                    return nil
                 }
+                print("endpointArn: \(endpointArnForSNS)")
+                
+                AppSyncManager.instance.userNotification.value?.endpointArn = endpointArnForSNS
+                NotificationAPI.instance.registerARN(platform: .iphone, arnEndpoint: endpointArnForSNS)
             }
             return nil
         })
     }
     
     func deleteARNEndpoint(endpointArn: String ,completion: ((Error?) -> Void)?) {
-        let awsSNS = AWSSNS.default()
-        guard let request = AWSSNSDeleteEndpointInput() else {return}
+        guard let request = AWSSNSDeleteEndpointInput() else { return }
         request.endpointArn = endpointArn
-        awsSNS.deleteEndpoint(request, completionHandler: completion)
+        AWSSNS.default().deleteEndpoint(request, completionHandler: completion)
     }
 }
 

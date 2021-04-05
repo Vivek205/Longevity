@@ -160,7 +160,7 @@ class AppSyncManager  {
             
             //Checking ARN Satus
             DispatchQueue.main.async {
-                let appDelegate = UIApplication.shared.delegate as! AppDelegate
+                guard let appDelegate = UIApplication.shared.delegate as? AppDelegate else { return }
                 appDelegate.checkARNStatus()
             }
         }
